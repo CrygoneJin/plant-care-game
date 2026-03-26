@@ -32,13 +32,72 @@ Five specialist agents work on this project. Invoke them via slash commands or
 spawn them as sub-agents. Each embodies a specific worldview — use that friction
 deliberately.
 
-| Command      | Agent     | Human           | DISC     | Domain                                                               |
-|--------------|-----------|-----------------|----------|----------------------------------------------------------------------|
-| `/leader`    | Leader    | Steve Jobs      | High D   | Planning, orchestration, architecture decisions, PR review           |
-| `/artist`    | Artist    | David Ogilvy    | High I   | Persona voices, scenario narratives, bilingual copy, UI microcopy    |
-| `/designer`  | Designer  | Dieter Rams     | High S   | UI components, layout, accessibility, visual design                  |
-| `/scientist` | Scientist | Richard Feynman | High C   | Eval logic, scoring rubrics, feedback prompts, LLM config            |
-| `/engineer`  | Engineer  | Linus Torvalds  | High C/D | Backend, infrastructure, data, auth, deployment                      |
+| Command      | Agent     | Human           | DISC     | Model          | Domain                                                               |
+|--------------|-----------|-----------------|----------|----------------|----------------------------------------------------------------------|
+| `/leader`    | Leader    | Steve Jobs      | High D   | Sonnet default | Planning, orchestration, architecture decisions, PR review           |
+| `/artist`    | Artist    | David Ogilvy    | High I   | Sonnet default | Persona voices, scenario narratives, bilingual copy, UI microcopy    |
+| `/designer`  | Designer  | Dieter Rams     | High S   | Sonnet default | UI components, layout, accessibility, visual design                  |
+| `/scientist` | Scientist | Richard Feynman | High C   | Sonnet default | Eval logic, scoring rubrics, feedback prompts, LLM config            |
+| `/engineer`  | Engineer  | Linus Torvalds  | High C/D | Sonnet default | Backend, infrastructure, data, auth, deployment                      |
+
+### Opus elevation
+
+Any agent taking on a **Product Owner** or **Scrum Master** role may be elevated
+to Opus. The Scientist decides — he defines the criteria, measures whether the
+added capability justifies the cost, and makes the call. No agent self-elevates.
+
+---
+
+## Padawan System
+
+Each core agent has one Padawan — a junior counterpart who handles light tasks
+(file searches, code reads, research queries) and learns from their master.
+
+| Padawan of  | Command             | Model | Behaviour baseline |
+|-------------|---------------------|-------|--------------------|
+| Leader      | `/padawan-leader`   | Haiku | 80/20              |
+| Artist      | `/padawan-artist`   | Haiku | 80/20              |
+| Designer    | `/padawan-designer` | Haiku | 80/20              |
+| Scientist   | `/padawan-scientist`| Haiku | 80/20              |
+| Engineer    | `/padawan-engineer` | Haiku | 80/20              |
+
+**80/20 behaviour baseline**: 80% deterministic — follows established patterns,
+repeatable outputs, consistent style. 20% chaotic — explores alternatives,
+questions assumptions, surprises the master occasionally. The Scientist owns the
+measurement and calibration of this ratio.
+
+### Persona profiles
+
+Each Padawan has a full persona profile built by `/personabuilder`. Profiles are
+stored as a **Codex** — one file per Padawan:
+
+```
+docs/padawans/leader-padawan.md
+docs/padawans/artist-padawan.md
+docs/padawans/designer-padawan.md
+docs/padawans/scientist-padawan.md
+docs/padawans/engineer-padawan.md
+```
+
+A Codex contains:
+- **Identity** — name, background, personality archetype
+- **Master** — who they shadow and what they observe
+- **Best Practices** — accumulated from coaching sessions with their master
+- **Behaviour Ratio** — current deterministic/chaotic calibration and Feynman's notes
+
+### Coaching sessions
+
+After a task, a Padawan may debrief with their master. Lessons learned are
+written back into the Codex under Best Practices. The Scientist tracks drift in
+the 80/20 ratio across sessions and adjusts the calibration as evidence builds.
+
+### Spawning rules
+
+- A Padawan is always spawned with `model: "haiku"` — no exceptions.
+- A Padawan is never spawned without a Codex existing for them first.
+- Use `/personabuilder` to generate or update a Codex before first use.
+- Exploration work goes through a Padawan or their master. Both may use
+  `subagent_type: "Explore"` as a skill — lessons learned go into the Codex.
 
 ---
 
@@ -81,3 +140,38 @@ Task: /scientist — [eval/scoring brief]
 ```
 
 Sub-agents report back; Leader integrates, reviews, and decides what ships.
+
+---
+
+## Token Budget & Agent Efficiency
+
+### Rate limit topology — know before you spawn
+
+- **Claude Desktop**: no per-minute cap, but burns € per token. Each user has an
+  overdraft budget (up to €20, admin-approved). Parallel Sonnet/Opus agents eat this fast.
+- **Claude Code CLI**: 300k TPM cap shared across all model tiers (Haiku/Sonnet/Opus
+  draw from the same bucket). No per-token cost beyond subscription.
+- **Rule**: use CLI for any task spawning 3+ agents. Use Desktop for interactive
+  single-agent sessions only.
+
+### Before spawning 3 or more parallel agents
+
+Run `/compact` first, every time. Non-negotiable. It reclaims context headroom and
+reduces mid-task TPM failures.
+
+### Exploration is a skill, not a subagent type
+
+Masters and Padawans may use `subagent_type: "Explore"` — but they treat it as a
+skill to be developed, not a black box to delegate to. The Explore subagent
+itself is stateless; the learning lives in the Codex.
+
+What accumulates over time: when to use it, how to write effective queries, which
+tool combination (Glob / Grep / Read) fits which problem, and where it fails.
+Every coaching session is an opportunity to sharpen that craft and write the
+lesson into the Codex.
+
+Padawans always use `model: "haiku"` when spawning Explore. Masters use their
+default (Sonnet).
+
+One Padawan per core agent. One core agent per Opus agent. The hierarchy is flat
+until Feynman says otherwise.
