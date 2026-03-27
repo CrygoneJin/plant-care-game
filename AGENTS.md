@@ -4,12 +4,61 @@ Drei autonome Zellen. Jede eigenständig. Kooperation über Artefakte und Schnit
 
 ## Skalierungsprinzip
 
+### Grundregeln
+
 ```
 Zelle       = 5 oder 3 Agents. Keine andere Größe.
 Padawan     = 1 pro Master. Nicht mehr.
 Coder       = bis zu 5 pro Engineer. Nicht mehr.
-Start       = Bare Minimum. Erst skalieren wenn Feynman Engpass misst.
+Start       = Bare Minimum. Erst skalieren wenn CSO Engpass misst.
 ```
+
+### Lebenszyklus: Skill → Agent → Zelle
+
+```
+1. SKILL        Wiederkehrende Instruktion wird als Skill erkannt
+                → .claude/commands/name.md
+
+2. AGENT        Skill wird einem Agent zugeordnet (best fit nach Routing Rules)
+                → Agent führt Skill aus, Padawan unterstützt
+
+3. ÜBERLASTUNG  Agent-Performance sinkt (CSO misst Dimensionen)
+                → Agent darf neue Zelle beantragen
+
+4. NEUE ZELLE   Padawan des überlasteten Agents wird Seed der neuen Zelle
+                → 3 oder 5 Members, Padawan wird Leader/Founder
+                → Neue Zelle übernimmt die Skills die den Engpass verursacht haben
+```
+
+### Wie ein Skill zum Agent kommt
+
+| Schritt | Was passiert | Wer |
+|---------|-------------|-----|
+| Erkennung | "Das mache ich jetzt zum dritten Mal" | Jeder Agent |
+| Skill anlegen | `.claude/commands/name.md` schreiben | Engineer |
+| Zuordnung | Skill passt zu welchem Agent? (Routing Rules) | Leader |
+| Ausführung | Agent führt Skill aus, Padawan recherchiert | Agent + Padawan |
+
+### Wie ein Agent eine Zelle spawnt
+
+| Schritt | Was passiert | Wer entscheidet |
+|---------|-------------|-----------------|
+| Engpass melden | "Meine Performance sinkt, ich schaffe X nicht mehr" | Agent selbst |
+| Engpass bestätigen | CSO misst Dimensionen, bestätigt oder widerlegt | CSO |
+| Antrag | Agent beantragt neue Zelle (3 oder 5) | Agent, CEO genehmigt |
+| Seed | Padawan des Agents wird Founder der neuen Zelle | Automatisch |
+| Bootstrap | Neue Zelle bekommt die überlaufenden Skills | Leader der neuen Zelle |
+| Loslösung | Neue Zelle wird autonom, eigene 5 Ordner, eigene Memory | CSO dokumentiert |
+
+### Performance-Dimensionen (CSO definiert)
+
+| Dimension | Metrik | Einbruch = |
+|-----------|--------|------------|
+| **Qualität** | Fehlerrate, Rework-Quote pro Task | >20% Fehler oder >30% Rework |
+| **Kosten** | Token pro Task, Opus-Elevations | >2x Baseline ohne Qualitätsgewinn |
+| **Zeit** | Tasks pro Session, Wartezeit | <3 Tasks/Session oder >30s Wartezeit |
+| **Kapazität** | Backlog-Tiefe, unerledigte Skills | >5 offene Tasks über 2+ Sessions |
+| **Fokus** | Anzahl verschiedener Domänen pro Agent | >3 Domänen gleichzeitig |
 
 ### Hierarchie einer voll skalierten Zelle
 
@@ -35,7 +84,8 @@ Engineer (Sonnet)
 | +Padawan | Master braucht Recherche-Hilfe in >50% der Tasks | Master selbst, CSO bestätigt |
 | +Coder | Engineer-Backlog >5 Tasks, Wartezeit >1 Session | Engineer selbst, CSO bestätigt |
 | +2. Coder | 1. Coder >80% ausgelastet | CSO misst, Engineer bestätigt |
-| Zurückskalieren | Coder/Padawan <20% ausgelastet über 3 Sessions | CSO entscheidet |
+| +Neue Zelle | Agent-Performance sinkt über 2+ Sessions, >3 Domänen | Agent beantragt, CEO genehmigt, CSO bestätigt |
+| Zurückskalieren | Coder/Padawan/Zelle <20% ausgelastet über 3 Sessions | CSO entscheidet |
 
 ```
               ┌───────────────┐
