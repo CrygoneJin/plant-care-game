@@ -3,20 +3,35 @@
 Drei autonome Zellen. Jede eigenständig. Kooperation über Artefakte und Schnittstellen.
 
 ```
-┌───────────────┐       ┌───────────────┐       ┌───────────────┐
-│  org-support  │◄─────►│   team-dev    │◄─────►│  team-sales   │
-│   (3 CxOs)   │       │  (5 Agents)   │       │  (5 Agents)   │
-│               │       │               │       │               │
-│  CEO          │       │  Steve Jobs   │       │ Peter Drucker │
-│  CTO          │       │  David Ogilvy │       │ Jack Welch    │
-│  CSO          │       │  Dieter Rams  │       │ J. Habermas   │
-│               │       │  R. Feynman   │       │ Noam Chomsky  │
-│               │       │  L. Torvalds  │       │ N. Mandela    │
-└───────┬───────┘       └───────────────┘       └───────────────┘
-        │                       ▲                       ▲
-        └───────────────────────┴───────────────────────┘
-                    Artefakte, Memory, Feedback
+              ┌───────────────┐
+              │  org-support  │
+              │   (3 CxOs)   │
+              │  CEO CTO CSO │
+              └──┬─────────┬─┘
+                 │         │
+    Aufträge,    │         │  Markt-Richtung,
+    Standards,   │         │  Constraints,
+    Messung      │         │  Messung
+                 │         │
+                 ▼         ▼
+       ┌─────────────┐  ┌──────────────┐
+       │  team-dev   │  │  team-sales  │
+       │ (5 Agents)  │◄►│  (5 Agents)  │
+       │             │  │              │
+       │ Steve Jobs  │  │ P. Drucker   │
+       │ D. Ogilvy   │  │ Jack Welch   │
+       │ Dieter Rams │  │ J. Habermas  │
+       │ R. Feynman  │  │ N. Chomsky   │
+       │ L. Torvalds │  │ N. Mandela   │
+       └─────────────┘  └──────────────┘
+              ▲                  ▲
+              │  Artefakte,      │
+              │  Feedback,       │
+              │  Memory          │
+              └──────────────────┘
 ```
+
+Jede Kante ist bidirektional. Keine Zelle ist "Mitte" oder "Rand".
 
 ---
 
@@ -25,11 +40,11 @@ Drei autonome Zellen. Jede eigenständig. Kooperation über Artefakte und Schnit
 Eigenständige Zelle. Keine Agents aus team-dev oder team-sales. Eigene Rollen,
 eigene Verantwortung. Koordiniert die beiden operativen Teams.
 
-| Rolle | Owns | Interaktion |
-|-------|------|-------------|
-| **CEO** | Strategie, Priorisierung, Go/No-Go | Gibt team-dev Aufträge, nimmt von team-sales Markt-Feedback |
-| **CTO** | Technische Architektur, Standards, Qualitätsgates | Definiert Constraints für team-dev, reviewed Ergebnisse |
-| **CSO** (Scientist) | Messung, Test-Design, Performance-Monitoring | Misst beide Teams, dokumentiert in Memory |
+| Rolle | Owns | ↔ team-dev | ↔ team-sales |
+|-------|------|------------|--------------|
+| **CEO** | Strategie, Priorisierung, Go/No-Go | Gibt Aufträge, nimmt Blocker | Gibt Markt-Richtung, nimmt Kunden-Insights |
+| **CTO** | Technische Architektur, Standards, Qualitätsgates | Definiert Constraints, reviewed Code | Definiert Tool-Constraints, reviewed Demos |
+| **CSO** | Messung, Test-Design, Performance-Monitoring | Misst Qualität/Kosten/Zeit | Misst Sales-Performance, dokumentiert Feedback |
 
 ### Besetzung
 
@@ -96,21 +111,34 @@ Eigenständige Zelle. Folgt der 5-Ordner-Struktur.
 
 ## Interaktion zwischen Zellen
 
+Jede Kante ist bidirektional. Gleiche Detailtiefe.
+
 ### org-support ↔ team-dev
-- CEO gibt Aufträge (Prioritäten, Go/No-Go)
-- CTO setzt technische Standards (Architektur-Constraints)
-- CSO misst Ergebnisse (Qualität, Kosten, Zeit)
-- team-dev liefert Artefakte (Code, Designs, Evals)
+| Richtung | Was fließt | Artefakt |
+|----------|-----------|----------|
+| org → dev | Aufträge, Prioritäten, Go/No-Go | `docs/SPRINT.md`, `docs/BACKLOG.md` |
+| org → dev | Technische Standards, Architektur-Constraints | `docs/ARCHITECTURE.md` |
+| org → dev | Performance-Messung, Feedback | `docs/MEMORY.md` |
+| dev → org | Fertige Artefakte (Code, Designs, Evals) | Pull Requests, Commits |
+| dev → org | Blocker, technische Risiken, Aufwandschätzungen | `docs/SPRINT.md` |
 
 ### org-support ↔ team-sales
-- CEO gibt Markt-Richtung vor
-- CSO misst Sales-Performance
-- team-sales liefert Markt-Feedback, Kunden-Insights
+| Richtung | Was fließt | Artefakt |
+|----------|-----------|----------|
+| org → sales | Markt-Richtung, Zielgruppen-Priorisierung | `docs/BACKLOG.md` |
+| org → sales | Technische Constraints für Tooling/Demos | `docs/ARCHITECTURE.md` |
+| org → sales | Performance-Messung, Feedback | `docs/MEMORY.md` |
+| sales → org | Markt-Feedback, Kunden-Insights | `docs/MEMORY.md` |
+| sales → org | Feature-Requests aus dem Markt | `docs/BACKLOG.md` |
 
 ### team-dev ↔ team-sales
-- team-dev liefert Produkt-Artefakte
-- team-sales liefert Nutzer-Feedback, Feature-Requests
-- Kommunikation über geteilte docs/ (Memory, Backlog)
+| Richtung | Was fließt | Artefakt |
+|----------|-----------|----------|
+| dev → sales | Produkt-Artefakte, Releases, Demos | Commits, Deployments |
+| dev → sales | Technische Doku für Sales-Enablement | `docs/` |
+| sales → dev | Nutzer-Feedback, Bug-Reports | `docs/BACKLOG.md` |
+| sales → dev | Feature-Requests, Markt-Anforderungen | `docs/BACKLOG.md` |
+| sales → dev | Copy-Anforderungen, Messaging-Feedback | `docs/MEMORY.md` |
 
 ---
 
