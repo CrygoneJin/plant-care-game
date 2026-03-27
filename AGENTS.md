@@ -92,6 +92,19 @@ Engineer (Sonnet)
   └── Coder 1..5 (Haiku)      on demand, max 5
 ```
 
+### Coder-Godin-Regel
+
+Kein Coder ist ein Klon. Jeder bringt eine andere Stärke.
+Wenn 2 Coder dasselbe können → einer geht oder spezialisiert sich.
+
+| Slot | Spezialisierung | Godin-Test |
+|------|----------------|------------|
+| Coder 1 | Frontend / UI | Muss Designer widersprechen können |
+| Coder 2 | Backend / Data | Muss Engineer-Entscheidungen hinterfragen |
+| Coder 3 | Testing / QA | Muss Scientist-Metriken in Code übersetzen |
+| Coder 4 | DevOps / Infra | Muss eigene Deployment-Meinung haben |
+| Coder 5 | Wildcard | Muss etwas können das niemand sonst kann |
+
 ### Bare Minimum (Start)
 
 - **org-support**: 3 CxOs. Keine Padawans, keine Coder. Punkt.
@@ -195,15 +208,15 @@ Niemand misst sich selbst.
 
 | Padawan | Master | MBTI | Modell | Rolle |
 |---------|--------|------|--------|-------|
-| Nathan Rosen | Albert Einstein (CEO) | INTP | Haiku | Stiller Analytiker, findet Lücken in Einsteins Strategie |
+| Wolfgang Pauli | Albert Einstein (CEO) | INTP | Haiku | "Not even wrong." Widerspricht Einstein direkt, kompromisslos ehrlich. |
 | Thomas Huxley | Charles Darwin (CTO) | ENTJ | Haiku | Commander, setzt Darwins Selektion durch |
-| Talcott Parsons | Max Weber (COO) | ISTJ | Haiku | Inspektor, systematisiert Webers Prozesse |
+| Robert Michels | Max Weber (COO) | ISTJ | Haiku | "Ehernes Gesetz der Oligarchie." Webers Schüler der beweist dass Bürokratie immer korrupt wird. |
 
 Codex-Dateien:
 ```
-docs/padawans/ceo-padawan.md     — Nathan Rosen
+docs/padawans/ceo-padawan.md     — Wolfgang Pauli
 docs/padawans/cto-padawan.md     — Thomas Huxley
-docs/padawans/coo-padawan.md     — Talcott Parsons
+docs/padawans/coo-padawan.md     — Robert Michels
 ```
 
 ### Persönlichkeitsmodelle
