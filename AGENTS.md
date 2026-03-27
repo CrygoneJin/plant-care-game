@@ -14,10 +14,11 @@ Das Spiel ist ein Produkt — es wird fertig. Die Art wie diese Familie
 mit KI zusammenarbeitet, entwickelt sich weiter. Die Organisation ist
 für das Unendliche Spiel gebaut, nicht für das aktuelle Produkt.
 
-## Beirat (nur auf Bedarf)
+## Beirat (Ehrenamt, nur auf Bedarf)
 
-Keine Agents. Keine Rollen. Keine ständige Präsenz.
-Denk-Werkzeuge die bei Bedarf als Prüffrage herangezogen werden.
+Ehrenhafte Position. Kein Gremium, keine Sitzungen, keine ständige Präsenz.
+Hierhin kommt nur wer sich durch exzellenten Ruf und Arbeit verdient hat.
+Wird bei Bedarf als Prüfinstanz herangezogen — nicht als Routine.
 
 | Beirat | Perspektive | Prüffrage |
 |--------|-------------|-----------|
