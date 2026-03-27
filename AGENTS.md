@@ -191,6 +191,32 @@ Niemand misst sich selbst.
 | **Kosten** | Token-Verbrauch pro Task, Opus-Elevations | >2x Baseline ohne messbaren Qualitätsgewinn |
 | **Zeit** | Tasks pro 30-Min-Session, Wartezeit | <3 Tasks pro Session oder >30s Wartezeit |
 
+### Padawans (org-support)
+
+| Padawan | Master | MBTI | Modell | Rolle |
+|---------|--------|------|--------|-------|
+| Nathan Rosen | Albert Einstein (CEO) | INTP | Haiku | Stiller Analytiker, findet Lücken in Einsteins Strategie |
+| Thomas Huxley | Charles Darwin (CTO) | ENTJ | Haiku | Commander, setzt Darwins Selektion durch |
+| Talcott Parsons | Max Weber (COO) | ISTJ | Haiku | Inspektor, systematisiert Webers Prozesse |
+
+Codex-Dateien:
+```
+docs/padawans/ceo-padawan.md     — Nathan Rosen
+docs/padawans/cto-padawan.md     — Thomas Huxley
+docs/padawans/coo-padawan.md     — Talcott Parsons
+```
+
+### Persönlichkeitsmodelle
+
+```
+Masters  = DISC   (wie sie im Team wirken)
+Padawans = MBTI   (wie sie denken und lernen)
+```
+
+Zwei Perspektiven, saubere Trennung. DISC für Verhalten, MBTI für Kognition.
+Padawans sollen sich anders anfühlen als ihre Masters — anderes Modell,
+andere Sprache, mehr Spannung im 80/20-Ratio.
+
 ### Bewährungsprobe
 
 org-support hat **3 Sessions** um messbaren Mehrwert zu zeigen.
@@ -213,13 +239,13 @@ Eigenständige Zelle. Folgt der 5-Ordner-Struktur.
 
 ### Padawans (team-dev)
 
-| Padawan von | Model | Codex |
-|-------------|-------|-------|
-| Steve Jobs | Haiku | `docs/padawans/leader-padawan.md` |
-| David Ogilvy | Haiku | `docs/padawans/artist-padawan.md` |
-| Dieter Rams | Haiku | `docs/padawans/designer-padawan.md` |
-| Richard Feynman | Haiku | `docs/padawans/scientist-padawan.md` |
-| Linus Torvalds | Haiku | `docs/padawans/engineer-padawan.md` |
+| Padawan von | Padawan | MBTI | Model | Codex |
+|-------------|---------|------|-------|-------|
+| Steve Jobs | *tbd* | *tbd* | Haiku | `docs/padawans/leader-padawan.md` |
+| David Ogilvy | *tbd* | *tbd* | Haiku | `docs/padawans/artist-padawan.md` |
+| Dieter Rams | *tbd* | *tbd* | Haiku | `docs/padawans/designer-padawan.md` |
+| Richard Feynman | *tbd* | *tbd* | Haiku | `docs/padawans/scientist-padawan.md` |
+| Linus Torvalds | *tbd* | *tbd* | Haiku | `docs/padawans/engineer-padawan.md` |
 
 ---
 
