@@ -418,3 +418,199 @@ header h1 {
     70% { transform: scale(1.2); }
     100% { transform: scale(1); opacity: 1; }
 }
+
+/* === MOBILE: iPhone SE (< 768px) === */
+@media (max-width: 767px) {
+    body {
+        overflow: auto;
+        height: auto;
+    }
+
+    #game-container {
+        height: auto;
+        min-height: 100vh;
+    }
+
+    header h1 {
+        font-size: 16px;
+    }
+
+    header {
+        padding: 6px 10px;
+    }
+
+    /* Toolbar: kompakter */
+    #toolbar {
+        padding: 6px 8px;
+        gap: 6px;
+    }
+
+    .toolbar-label {
+        display: none;
+    }
+
+    .tool-btn, .action-btn {
+        font-size: 14px;
+        padding: 6px 8px;
+    }
+
+    #project-name {
+        width: 100px;
+        font-size: 13px;
+        padding: 5px 8px;
+    }
+
+    /* Hauptbereich: vertikal stacken */
+    #main-area {
+        flex-direction: column;
+        overflow: auto;
+    }
+
+    /* Palette: horizontal, scrollbar oben */
+    #palette {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 4px;
+        padding: 6px;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    #palette h2 {
+        display: none;
+    }
+
+    .material-btn {
+        flex-direction: row;
+        min-height: auto;
+        padding: 5px 8px;
+        gap: 4px;
+    }
+
+    .mat-emoji {
+        font-size: 18px;
+    }
+
+    .mat-label {
+        font-size: 10px;
+    }
+
+    /* Canvas: volle Breite */
+    #canvas-wrapper {
+        min-height: 0;
+        padding: 4px;
+    }
+
+    #game-canvas {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    /* Stats: horizontal unter dem Canvas */
+    #stats {
+        width: 100%;
+        padding: 8px;
+    }
+
+    #stats h2 {
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+
+    #stats-content {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    #stats-content p {
+        font-size: 12px;
+        margin-bottom: 0;
+    }
+
+    /* Toast: kleiner */
+    #toast {
+        font-size: 14px;
+        padding: 10px 16px;
+        bottom: 10px;
+    }
+
+    /* Intro: kleiner auf Handy */
+    .intro-content {
+        padding: 24px 20px;
+        margin: 10px;
+    }
+
+    .intro-emoji {
+        font-size: 50px;
+    }
+
+    .intro-content h1 {
+        font-size: 22px;
+    }
+
+    .intro-story {
+        font-size: 16px;
+    }
+
+    #start-button {
+        font-size: 22px;
+        padding: 12px 32px;
+    }
+
+    /* Lade-Dialog: volle Breite */
+    .dialog-content {
+        min-width: auto;
+        width: 90vw;
+        padding: 16px;
+    }
+}
+
+/* === TABLET (768px - 1024px) === */
+@media (min-width: 768px) and (max-width: 1024px) {
+    #palette {
+        width: 100px;
+    }
+
+    #stats {
+        width: 150px;
+    }
+
+    .material-btn {
+        min-height: 48px;
+        padding: 4px;
+    }
+}
+
+/* === 4K / HiDPI (> 2560px) === */
+@media (min-width: 2560px) {
+    header h1 {
+        font-size: 32px;
+    }
+
+    .tool-btn, .action-btn {
+        font-size: 20px;
+        padding: 12px 20px;
+    }
+
+    #palette {
+        width: 160px;
+    }
+
+    .mat-emoji {
+        font-size: 32px;
+    }
+
+    .mat-label {
+        font-size: 14px;
+    }
+
+    #stats {
+        width: 240px;
+    }
+
+    #stats-content p {
+        font-size: 16px;
+    }
+}

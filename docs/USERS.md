@@ -42,6 +42,21 @@ Siehe `docs/SCHNIPSEL.md` für das vollständige Profil.
 | **Entwicklung** | Claude Code CLI + LiteLLM/Langdock Proxy |
 | **Deployment** | GitHub Pages |
 
+### Spielgeräte (darauf wird gezockt)
+
+| Gerät | Display | Wer | Hinweise |
+|-------|---------|-----|----------|
+| Mac Mini M4 + 27" 4K | 3840x2160 | Schnipsel, Familie | Hauptgerät, Maus+Tastatur |
+| MacBook Pro 13" (2013) | 2560x1600 | Schnipsel, Testgerät | macOS Monterey (gepatcht), älterer Browser, Trackpad |
+| iPhone SE | 4.7" (750x1334) | Tochter | Winziger Bildschirm! Touch only. |
+
+### Design-Implikationen der Spielgeräte
+
+- **4K 27"**: Canvas muss scharf skalieren, kein Pixel-Matsch
+- **MacBook 2013**: Ältere GPU, Safari 16 -- keine fancy CSS-Features. Performance zählt.
+- **iPhone SE**: Layout MUSS stacken (Palette oben, Canvas darunter). Sidebar geht nicht. Buttons extra groß.
+- **Alle drei**: Touch + Maus/Trackpad müssen funktionieren
+
 ### Design-Implikationen
 
 - **4K Display**: Spiel muss auf 3840x2160 gut aussehen -- keine pixeligen Elemente, Canvas skaliert sauber

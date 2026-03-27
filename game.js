@@ -1,4 +1,4 @@
-// === OSKARS INSEL-ARCHITEKT ===
+// === SCHNIPSELS INSEL-ARCHITEKT ===
 
 (function () {
     'use strict';
@@ -6,8 +6,33 @@
     // --- Konfiguration ---
     const COLS = 24;
     const ROWS = 16;
-    const CELL_SIZE = 36;
     const WATER_BORDER = 2; // Zellen Wasser um die Insel
+
+    // Dynamische Zellgröße basierend auf Bildschirm
+    function calcCellSize() {
+        const isMobile = window.innerWidth < 768;
+        const totalCols = COLS + WATER_BORDER * 2;
+        const totalRows = ROWS + WATER_BORDER * 2;
+
+        if (isMobile) {
+            // Canvas soll die volle Breite nutzen, mit etwas Padding
+            const availW = window.innerWidth - 16;
+            const availH = window.innerHeight * 0.55; // ~55% der Höhe für Canvas
+            return Math.max(12, Math.min(
+                Math.floor(availW / totalCols),
+                Math.floor(availH / totalRows)
+            ));
+        }
+        // Desktop: verfügbare Höhe abzüglich Header+Toolbar (~100px), mit Seitenleisten (~300px)
+        const availW = window.innerWidth - 320;
+        const availH = window.innerHeight - 110;
+        return Math.max(20, Math.min(
+            Math.floor(availW / totalCols),
+            Math.floor(availH / totalRows)
+        ));
+    }
+
+    let CELL_SIZE = calcCellSize();
 
     // --- Materialien ---
     const MATERIALS = {
@@ -47,8 +72,23 @@
     // --- Canvas Größe ---
     const totalCols = COLS + WATER_BORDER * 2;
     const totalRows = ROWS + WATER_BORDER * 2;
-    canvas.width = totalCols * CELL_SIZE;
-    canvas.height = totalRows * CELL_SIZE;
+
+    function resizeCanvas() {
+        CELL_SIZE = calcCellSize();
+        canvas.width = totalCols * CELL_SIZE;
+        canvas.height = totalRows * CELL_SIZE;
+        // CSS-Größe für scharfe Darstellung auf HiDPI/4K
+        canvas.style.width = (totalCols * CELL_SIZE) + 'px';
+        canvas.style.height = (totalRows * CELL_SIZE) + 'px';
+        // Auf Mobilgeräten Canvas in den Container einpassen
+        if (window.innerWidth < 768) {
+            canvas.style.width = '100%';
+            canvas.style.height = 'auto';
+        }
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
     // --- Grid initialisieren ---
     function initGrid() {
