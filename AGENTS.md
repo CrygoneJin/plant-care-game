@@ -39,16 +39,37 @@ Start       = Bare Minimum. Erst skalieren wenn CSO Engpass misst.
 | Zuordnung | Skill passt zu welchem Agent? (Routing Rules) | Leader |
 | Ausführung | Agent führt Skill aus, Padawan recherchiert | Agent + Padawan |
 
-### Wie ein Agent eine Zelle spawnt
+### Zellteilung: Spawn vs. Replikation
 
-| Schritt | Was passiert | Wer entscheidet |
-|---------|-------------|-----------------|
-| Engpass melden | "Meine Performance sinkt, ich schaffe X nicht mehr" | Agent selbst |
-| Engpass bestätigen | CSO misst Dimensionen, bestätigt oder widerlegt | CSO |
-| Antrag | Agent beantragt neue Zelle (3 oder 5) | Agent, CEO genehmigt |
-| Seed | Padawan des Agents wird Founder der neuen Zelle | Automatisch |
-| Bootstrap | Neue Zelle bekommt die überlaufenden Skills | Leader der neuen Zelle |
-| Loslösung | Neue Zelle wird autonom, eigene 5 Ordner, eigene Memory | CSO dokumentiert |
+**Nur org-support darf neue Zelltypen spawnen** (z.B. team-ops, team-research).
+Operative Zellen (team-dev, team-sales) dürfen sich nur **replizieren** — eine
+Kopie ihrer selbst mit gleicher Struktur, gleichen Rollen, anderem Scope.
+
+| Aktion | Wer darf | Beispiel |
+|--------|----------|----------|
+| **Spawn** (neuer Zelltyp) | Nur org-support | "Wir brauchen ein team-ops" → CEO entscheidet, CSO bestätigt |
+| **Replikation** (gleicher Typ) | Jede operative Zelle | "team-dev ist überlastet" → team-dev-2 mit gleichem Aufbau |
+
+### Spawn (org-support only)
+
+| Schritt | Was passiert | Wer |
+|---------|-------------|-----|
+| Bedarf erkennen | Neue Domäne passt in keine bestehende Zelle | CEO |
+| Typ definieren | Name, Mission, 5-Ordner-Struktur | CEO + CTO |
+| Seed | Padawan eines überlasteten Agents wird Founder | CEO bestimmt |
+| Bootstrap | Neue Zelle bekommt initiale Skills | Founder |
+| Messung | CSO dokumentiert, misst ab Tag 1 | CSO |
+
+### Replikation (operative Zellen)
+
+| Schritt | Was passiert | Wer |
+|---------|-------------|-----|
+| Engpass melden | "Meine Performance sinkt über 2+ Sessions" | Agent selbst |
+| Engpass bestätigen | CSO misst, bestätigt | CSO |
+| Antrag | Zelle beantragt Replikation bei org-support | Leader der Zelle |
+| Genehmigung | CEO genehmigt | CEO |
+| Seed | Padawan wird Founder der Replik | Automatisch |
+| Scope teilen | Original behält Scope A, Replik bekommt Scope B | Leader beider Zellen |
 
 ### Performance-Dimensionen (CSO definiert)
 
@@ -84,7 +105,8 @@ Engineer (Sonnet)
 | +Padawan | Master braucht Recherche-Hilfe in >50% der Tasks | Master selbst, CSO bestätigt |
 | +Coder | Engineer-Backlog >5 Tasks, Wartezeit >1 Session | Engineer selbst, CSO bestätigt |
 | +2. Coder | 1. Coder >80% ausgelastet | CSO misst, Engineer bestätigt |
-| +Neue Zelle | Agent-Performance sinkt über 2+ Sessions, >3 Domänen | Agent beantragt, CEO genehmigt, CSO bestätigt |
+| +Replikation | Performance sinkt über 2+ Sessions, >3 Domänen | Agent beantragt, CEO genehmigt, CSO bestätigt |
+| +Neuer Zelltyp | Neue Domäne passt nirgends rein | Nur org-support (CEO entscheidet) |
 | Zurückskalieren | Coder/Padawan/Zelle <20% ausgelastet über 3 Sessions | CSO entscheidet |
 
 ```
