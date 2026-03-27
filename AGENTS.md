@@ -241,11 +241,11 @@ Eigenständige Zelle. Folgt der 5-Ordner-Struktur.
 
 | Padawan von | Padawan | MBTI | Model | Codex |
 |-------------|---------|------|-------|-------|
-| Steve Jobs | *tbd* | *tbd* | Haiku | `docs/padawans/leader-padawan.md` |
-| David Ogilvy | *tbd* | *tbd* | Haiku | `docs/padawans/artist-padawan.md` |
-| Dieter Rams | *tbd* | *tbd* | Haiku | `docs/padawans/designer-padawan.md` |
-| Richard Feynman | *tbd* | *tbd* | Haiku | `docs/padawans/scientist-padawan.md` |
-| Linus Torvalds | *tbd* | *tbd* | Haiku | `docs/padawans/engineer-padawan.md` |
+| Steve Jobs | Scott Forstall | ENFP | Haiku | `docs/padawans/leader-padawan.md` |
+| David Ogilvy | Drayton Bird | INFP | Haiku | `docs/padawans/artist-padawan.md` |
+| Dieter Rams | Naoto Fukasawa | ISFP | Haiku | `docs/padawans/designer-padawan.md` |
+| Richard Feynman | Freeman Dyson | INTJ | Haiku | `docs/padawans/scientist-padawan.md` |
+| Linus Torvalds | Greg Kroah-Hartman | ISTP | Haiku | `docs/padawans/engineer-padawan.md` |
 
 ---
 
