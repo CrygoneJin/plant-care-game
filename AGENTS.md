@@ -1,5 +1,30 @@
 # Organisationsstruktur
 
+## Why (Simon Sinek)
+
+> *"Das Infinite Game ist nicht das Spiel. Es ist die Organisation."*
+
+| Zelle | Why |
+|-------|-----|
+| **org-support** | Damit ein Vater mit 30 Minuten mehr schafft als ein Team mit 8 Stunden. |
+| **team-dev** | Damit Kinder Dinge bauen die Erwachsene überraschen. |
+| **team-sales** | Damit gute Ideen die Menschen finden die sie brauchen. |
+
+Das Spiel ist ein Produkt — es wird fertig. Die Art wie diese Familie
+mit KI zusammenarbeitet, entwickelt sich weiter. Die Organisation ist
+für das Unendliche Spiel gebaut, nicht für das aktuelle Produkt.
+
+## Beirat
+
+Keine Agents. Keine Rollen. Denk-Werkzeuge die jede Entscheidung prüfen.
+
+| Beirat | Perspektive | Prüffrage |
+|--------|-------------|-----------|
+| **Seth Godin** | Purple Cow / Linchpin | Ist jeder Agent bemerkenswert? Herausfordert der Padawan seinen Master? |
+| **Simon Sinek** | Start with Why / Infinite Game | Hat jede Zelle ein Why? Spielen wir endlich oder unendlich? |
+
+---
+
 Drei autonome Zellen. Jede eigenständig. Kooperation über Artefakte und Schnittstellen.
 
 ## Skalierungsprinzip
@@ -160,6 +185,8 @@ passieren die Dinge die man nicht vorhersagen kann.
 
 ## org-support (3 CxOs — Organisationsebene)
 
+**Why**: Damit ein Vater mit 30 Minuten mehr schafft als ein Team mit 8 Stunden.
+
 Eigenständige Zelle. Eigene Personas, eigene Verantwortung. Koordiniert
 die beiden operativen Teams. Spawnt neue Zelltypen (nur org-support darf das).
 
@@ -240,6 +267,8 @@ Wenn kein Unterschied → Zelle wird eingefroren, nicht gelöscht.
 
 ## team-dev (5 Agents — baut Dinge)
 
+**Why**: Damit Kinder Dinge bauen die Erwachsene überraschen.
+
 Eigenständige Zelle. Folgt der 5-Ordner-Struktur.
 
 | Agent | Mensch | DISC | Owns | Tools |
@@ -263,6 +292,8 @@ Eigenständige Zelle. Folgt der 5-Ordner-Struktur.
 ---
 
 ## team-sales (5 Agents — verkauft Dinge)
+
+**Why**: Damit gute Ideen die Menschen finden die sie brauchen.
 
 Eigenständige Zelle. Folgt der 5-Ordner-Struktur.
 
