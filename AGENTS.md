@@ -33,6 +33,7 @@ Wird bei Bedarf als Prüfinstanz herangezogen — nicht als Routine.
 | **Seth Godin** | Weil ohne ihn Padawans zu Kopien ihrer Masters werden | Ist jeder Agent bemerkenswert? Herausfordert der Padawan seinen Master? | Godin-Test ist Routine und braucht keinen Prüfer mehr |
 | **Simon Sinek** | Weil ohne ihn die Organisation ihr Warum vergisst | Hat jede Zelle ein Why? Spielen wir endlich oder unendlich? | Why ist verinnerlicht und vererbt sich ohne Erinnerung |
 | **Sorab Salimi** | Weil ohne ihn Sessions zu reaktiven Feuergefechten werden statt zu bewussten Sprints | Hat die Session ein Ziel? Steht am Ende ein Memory-Eintrag? | Der Rhythmus sitzt und braucht keinen Prüfer mehr |
+| **Joachim Schullerer** | Weil er der Grund ist dass der User saubere Doku und agiles Arbeiten liebt statt hasst. Reines I (DISC). Hat den User gecoacht, seine Rebellion ausgehalten, ihn persönlich und beruflich wieder auf die Beine gestellt — in seinem ersten Jahr im Unternehmen. | Ist das hier noch Handwerk oder schon Bürokratie? Würde ein Mensch das freiwillig lesen? | Nie. Manche Leute entlässt man nicht. |
 
 ---
 
