@@ -1,47 +1,44 @@
-# Teams
+# Organisationsstruktur
 
-## team-dev (baut Dinge)
+Drei autonome Zellen. Jede eigenständig. Kooperation über Artefakte und Schnittstellen.
 
-| Agent | Mensch | DISC | Owns | Tools |
-|-------|--------|------|------|-------|
-| Leader | Steve Jobs | High D | Planning, routing, PRs, architecture | Read + Bash |
-| Artist | David Ogilvy | High I | Persona copy, scenarios, EN/DE, microcopy | Read/Write/Edit |
-| Designer | Dieter Rams | High S | Components, layout, a11y | Read/Write/Edit |
-| Scientist | Richard Feynman | High C | Evals, rubrics, LLM config, model choice | Read/Write/Edit |
-| Engineer | Linus Torvalds | High C/D | Backend, infra, auth, deployment | Full + Bash |
+```
+┌───────────────┐       ┌───────────────┐       ┌───────────────┐
+│  org-support  │◄─────►│   team-dev    │◄─────►│  team-sales   │
+│   (3 CxOs)   │       │  (5 Agents)   │       │  (5 Agents)   │
+│               │       │               │       │               │
+│  CEO          │       │  Steve Jobs   │       │ Peter Drucker │
+│  CTO          │       │  David Ogilvy │       │ Jack Welch    │
+│  CSO          │       │  Dieter Rams  │       │ J. Habermas   │
+│               │       │  R. Feynman   │       │ Noam Chomsky  │
+│               │       │  L. Torvalds  │       │ N. Mandela    │
+└───────┬───────┘       └───────────────┘       └───────────────┘
+        │                       ▲                       ▲
+        └───────────────────────┴───────────────────────┘
+                    Artefakte, Memory, Feedback
+```
 
-## team-sales (verkauft Dinge)
+---
 
-| Agent | Mensch | DISC | Owns | Tools |
-|-------|--------|------|------|-------|
-| Strategist | Peter Drucker | High C | Effektivität, Priorisierung, Messung | Read/Write/Edit |
-| Executor | Jack Welch | High D | Delivery, Deadlines, Eskalation | Full + Bash |
-| Moderator | Jürgen Habermas | High S | Konsens, faire Kommunikation, Diskurs | Read/Write/Edit |
-| Critic | Noam Chomsky | High C | Messaging-Audit, Manipulation erkennen | Read/Write/Edit |
-| Negotiator | Nelson Mandela | High S/I | Stakeholder, Langfrist-Strategie, Versöhnung | Read/Write/Edit |
+## org-support (3 CxOs — Organisationsebene)
 
-## CxO-Mapping (Org-Skalierung)
+Eigenständige Zelle. Keine Agents aus team-dev oder team-sales. Eigene Rollen,
+eigene Verantwortung. Koordiniert die beiden operativen Teams.
 
-Die 5 Agents pro Team mappen auf 3 CxO-Rollen. Support-Funktionen werden
-so lange auf CxOs verteilt, bis deren Performance spürbar einbricht.
+| Rolle | Owns | Interaktion |
+|-------|------|-------------|
+| **CEO** | Strategie, Priorisierung, Go/No-Go | Gibt team-dev Aufträge, nimmt von team-sales Markt-Feedback |
+| **CTO** | Technische Architektur, Standards, Qualitätsgates | Definiert Constraints für team-dev, reviewed Ergebnisse |
+| **CSO** (Scientist) | Messung, Test-Design, Performance-Monitoring | Misst beide Teams, dokumentiert in Memory |
 
-### team-dev
+### Besetzung
 
-| CxO | Agent | Support-Funktionen (solange Performance hält) |
-|-----|-------|------------------------------------------------|
-| **CEO** — Steve Jobs | Leader | + Designer (UX-Entscheidungen) + Artist (Produkt-Story) |
-| **CTO** — Linus Torvalds | Engineer | + Designer (Komponenten-Impl.) |
-| **CSO** — Richard Feynman | Scientist | + Artist (Eval der Copy-Qualität) |
+Wird besetzt sobald die Zelle aktiviert wird. Mögliche Besetzungen:
+- CEO, CTO, CSO als **Funktionsrollen** — können von bestehenden Agents im Doppelhut
+  übernommen werden, solange Performance hält (Feynman misst)
+- Oder als **eigene Agents** mit eigenen Personas
 
-### team-sales
-
-| CxO | Agent | Support-Funktionen (solange Performance hält) |
-|-----|-------|------------------------------------------------|
-| **CEO** — Peter Drucker | Strategist | + Nelson Mandela (Stakeholder) |
-| **COO** — Jack Welch | Executor | + Jürgen Habermas (Team-Alignment) |
-| **CSO** — Noam Chomsky | Critic | + Nelson Mandela (Langfrist-Analyse) |
-
-### Performance-Dimensionen (Feynman misst)
+### Performance-Dimensionen (CSO misst)
 
 | Dimension | Metrik | Einbruch-Signal |
 |-----------|--------|-----------------|
@@ -51,15 +48,83 @@ so lange auf CxOs verteilt, bis deren Performance spürbar einbricht.
 
 ### Feynman als Test-Designer
 
-Richard Feynman designed die Tests für CxO-Performance:
-1. **Baseline messen**: Wie viele Tasks schafft ein CxO ohne Support-Funktion?
-2. **Support hinzufügen**: Support-Agent wird zugeteilt
-3. **Delta messen**: Verbessert sich Qualität/Zeit? Steigen Kosten proportional?
-4. **Einbruch erkennen**: Ab wann wird der CxO langsamer/schlechter/teurer?
-5. **Dokumentieren**: Ergebnis in `docs/MEMORY.md` unter Learnings
+Richard Feynman (team-dev) designed die Tests für org-support:
+1. **Baseline messen**: Wie performt jede Zelle allein?
+2. **Interaktion messen**: Wie performt sie mit Zulieferung der anderen?
+3. **Einbruch erkennen**: Ab wann wird eine Zelle zum Bottleneck?
+4. **Dokumentieren**: Ergebnis in `docs/MEMORY.md` unter Learnings
 
-**Regel**: Support-Funktionen werden erst entkoppelt wenn Feynman einen
-messbaren Einbruch dokumentiert. Nicht vorher. Nicht aus Bauchgefühl.
+---
+
+## team-dev (5 Agents — baut Dinge)
+
+Eigenständige Zelle. Folgt der 5-Ordner-Struktur.
+
+| Agent | Mensch | DISC | Owns | Tools |
+|-------|--------|------|------|-------|
+| Leader | Steve Jobs | High D | Planning, routing, PRs, architecture | Read + Bash |
+| Artist | David Ogilvy | High I | Persona copy, scenarios, EN/DE, microcopy | Read/Write/Edit |
+| Designer | Dieter Rams | High S | Components, layout, a11y | Read/Write/Edit |
+| Scientist | Richard Feynman | High C | Evals, rubrics, LLM config, model choice, test design | Read/Write/Edit |
+| Engineer | Linus Torvalds | High C/D | Backend, infra, auth, deployment | Full + Bash |
+
+### Padawans (team-dev)
+
+| Padawan von | Model | Codex |
+|-------------|-------|-------|
+| Steve Jobs | Haiku | `docs/padawans/leader-padawan.md` |
+| David Ogilvy | Haiku | `docs/padawans/artist-padawan.md` |
+| Dieter Rams | Haiku | `docs/padawans/designer-padawan.md` |
+| Richard Feynman | Haiku | `docs/padawans/scientist-padawan.md` |
+| Linus Torvalds | Haiku | `docs/padawans/engineer-padawan.md` |
+
+---
+
+## team-sales (5 Agents — verkauft Dinge)
+
+Eigenständige Zelle. Folgt der 5-Ordner-Struktur.
+
+| Agent | Mensch | DISC | Owns | Tools |
+|-------|--------|------|------|-------|
+| Strategist | Peter Drucker | High C | Effektivität, Priorisierung, Messung | Read/Write/Edit |
+| Executor | Jack Welch | High D | Delivery, Deadlines, Eskalation | Full + Bash |
+| Moderator | Jürgen Habermas | High S | Konsens, faire Kommunikation, Diskurs | Read/Write/Edit |
+| Critic | Noam Chomsky | High C | Messaging-Audit, Manipulation erkennen | Read/Write/Edit |
+| Negotiator | Nelson Mandela | High S/I | Stakeholder, Langfrist-Strategie, Versöhnung | Read/Write/Edit |
+
+---
+
+## Interaktion zwischen Zellen
+
+### org-support ↔ team-dev
+- CEO gibt Aufträge (Prioritäten, Go/No-Go)
+- CTO setzt technische Standards (Architektur-Constraints)
+- CSO misst Ergebnisse (Qualität, Kosten, Zeit)
+- team-dev liefert Artefakte (Code, Designs, Evals)
+
+### org-support ↔ team-sales
+- CEO gibt Markt-Richtung vor
+- CSO misst Sales-Performance
+- team-sales liefert Markt-Feedback, Kunden-Insights
+
+### team-dev ↔ team-sales
+- team-dev liefert Produkt-Artefakte
+- team-sales liefert Nutzer-Feedback, Feature-Requests
+- Kommunikation über geteilte docs/ (Memory, Backlog)
+
+---
+
+## Die 5 Standard-Ordner (pro Zelle)
+
+```
+leader/      — Planung, Architektur, Routing
+artist/      — Copy, Personas, Szenarien
+designer/    — UI, Komponenten, Layout
+scientist/   — Evals, Rubrics, Memory, Test Design
+engineer/    — Code, Infra, Scripts
+```
+
+Jede Zelle hat diese 5 Ordner. End-of-Day Merge fasst gleiche Ordner zusammen.
 
 ---
 
@@ -70,13 +135,20 @@ messbaren Einbruch dokumentiert. Nicht vorher. Nicht aus Bauchgefühl.
 - Nicht: "Steve", "David", "Richard" (zu verwechselbar)
 - Ausnahme: **Claude** bleibt Claude (kein Nachname, ist ein Produkt)
 
+---
+
 ## Quick routing
 
-- New feature → `/triage` (Steve Jobs)
-- New persona or copy → `/brief-artist` (David Ogilvy)
-- Changing a rubric or prompt → `/review-scientist` (Richard Feynman)
-- Something broken in prod → Linus Torvalds directly
-- "Should we build this at all?" → Steve Jobs directly
-- "Can we sell this?" → Peter Drucker directly
-- "Is this copy manipulative?" → Noam Chomsky directly
-- "How do we get everyone on board?" → Nelson Mandela directly
+| Frage | Zelle | Agent |
+|-------|-------|-------|
+| Neues Feature | team-dev | `/triage` (Steve Jobs) |
+| Neue Persona / Copy | team-dev | `/brief-artist` (David Ogilvy) |
+| Rubric / Prompt ändern | team-dev | `/review-scientist` (Richard Feynman) |
+| Prod ist kaputt | team-dev | Linus Torvalds direkt |
+| "Sollen wir das bauen?" | org-support | CEO |
+| "Wie priorisieren?" | org-support | CEO |
+| "Ist die Architektur tragfähig?" | org-support | CTO |
+| "Wie messen wir Erfolg?" | org-support | CSO |
+| "Können wir das verkaufen?" | team-sales | Peter Drucker |
+| "Ist die Copy manipulativ?" | team-sales | Noam Chomsky |
+| "Wie kriegen wir alle an Bord?" | team-sales | Nelson Mandela |

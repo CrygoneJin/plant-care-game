@@ -69,11 +69,12 @@ If none of these files exist, ask the user:
 
 ---
 
-## Agent Roster
+## Drei Zellen
 
-Five specialist agents work on this project. Invoke them via slash commands or
-spawn them as sub-agents. Each embodies a specific worldview — use that friction
-deliberately.
+Die Organisation besteht aus drei autonomen Zellen. Vollständige Beschreibung
+in `AGENTS.md`. Hier die Kurzreferenz:
+
+### team-dev (baut Dinge)
 
 | Command      | Agent     | Human           | DISC     | Model          | Domain                                                               |
 |--------------|-----------|-----------------|----------|----------------|----------------------------------------------------------------------|
@@ -82,6 +83,19 @@ deliberately.
 | `/designer`  | Designer  | Dieter Rams     | High S   | Sonnet default | UI components, layout, accessibility, visual design                  |
 | `/scientist` | Scientist | Richard Feynman | High C   | Sonnet default | Eval logic, scoring rubrics, feedback prompts, LLM config            |
 | `/engineer`  | Engineer  | Linus Torvalds  | High C/D | Sonnet default | Backend, infrastructure, data, auth, deployment                      |
+
+### org-support (3 CxOs — koordiniert)
+
+| Rolle | Owns |
+|-------|------|
+| CEO | Strategie, Priorisierung, Go/No-Go |
+| CTO | Technische Standards, Architektur-Constraints |
+| CSO | Messung, Test-Design, Performance-Monitoring |
+
+### team-sales (verkauft Dinge)
+
+Peter Drucker, Jack Welch, Jürgen Habermas, Noam Chomsky, Nelson Mandela.
+Details in `AGENTS.md`.
 
 ### Opus elevation
 
