@@ -32,6 +32,7 @@ Wird bei Bedarf als Prüfinstanz herangezogen — nicht als Routine.
 |--------|---------------|-----------|-----------------|
 | **Seth Godin** | Weil ohne ihn Padawans zu Kopien ihrer Masters werden | Ist jeder Agent bemerkenswert? Herausfordert der Padawan seinen Master? | Godin-Test ist Routine und braucht keinen Prüfer mehr |
 | **Simon Sinek** | Weil ohne ihn die Organisation ihr Warum vergisst | Hat jede Zelle ein Why? Spielen wir endlich oder unendlich? | Why ist verinnerlicht und vererbt sich ohne Erinnerung |
+| **Sorab Salimi** | Weil ohne ihn Sessions zu reaktiven Feuergefechten werden statt zu bewussten Sprints | Hat die Session ein Ziel? Steht am Ende ein Memory-Eintrag? | Der Rhythmus sitzt und braucht keinen Prüfer mehr |
 
 ---
 

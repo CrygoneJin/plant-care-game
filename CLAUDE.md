@@ -69,6 +69,19 @@ If none of these files exist, ask the user:
 
 ---
 
+## Session-Rhythmus
+
+Jede Session ist ein Sprint. 30 Minuten. Ein Ergebnis.
+
+```
+START (optional):  "Heute will ich X"
+ENDE (immer):      Memory-Eintrag in docs/MEMORY.md
+```
+
+Definition of Done: siehe `docs/DONE.md` — drei Punkte, binär.
+
+---
+
 ## Drei Zellen
 
 Die Organisation besteht aus drei autonomen Zellen. Vollständige Beschreibung
