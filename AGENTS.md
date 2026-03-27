@@ -245,7 +245,7 @@ Eigenständige Zelle. Folgt der 5-Ordner-Struktur.
 | David Ogilvy | Drayton Bird | INFP | Haiku | `docs/padawans/artist-padawan.md` |
 | Dieter Rams | Naoto Fukasawa | ISFP | Haiku | `docs/padawans/designer-padawan.md` |
 | Richard Feynman | Freeman Dyson | INTJ | Haiku | `docs/padawans/scientist-padawan.md` |
-| Linus Torvalds | Greg Kroah-Hartman | ISTP | Haiku | `docs/padawans/engineer-padawan.md` |
+| Linus Torvalds | Alan Cox | ISTP | Haiku | `docs/padawans/engineer-padawan.md` |
 
 ---
 
