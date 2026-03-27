@@ -1,10 +1,10 @@
-# Oskar -- Spieler-Profil (real)
+# Schnipsel -- Spieler-Profil (real)
 
 ## Identität
 
 | Feld               | Wert                          |
 |--------------------|-------------------------------|
-| Name               | Oskar                         |
+| Name               | Schnipsel                         |
 | Alter              | 8 Jahre                       |
 | Sprache            | Deutsch (Muttersprache)       |
 | Traumberuf         | Architekt                     |
@@ -25,7 +25,7 @@
 - **Das Neinhorn** -- das freche Einhorn aus dem Kinderbuch
 - **Loisach Marci** -- mag die Musik (Elefant trötet wie Loisach Marci)
 
-## Wie Oskar spielt
+## Wie Schnipsel spielt
 
 - **Entdecker-Typ**: will sofort loslegen, nicht lange Anleitungen lesen
 - **Kreativ**: baut lieber frei als nach Vorgabe
@@ -42,7 +42,7 @@
 - Touch-Support (Tablet)
 - Kein Login, kein Account, keine Werbung
 
-## Zitate (O-Ton Oskar)
+## Zitate (O-Ton Schnipsel)
 
 > "Architekt ist einfach ein cooler Beruf."
 > "Mein Lieblings-YouTuber Paluten spielt auch Simulator."
@@ -50,7 +50,7 @@
 
 ## Design-Implikationen
 
-- **Nicht belehren**: Oskar will nicht erklärt bekommen, warum Architektur toll ist
+- **Nicht belehren**: Schnipsel will nicht erklärt bekommen, warum Architektur toll ist
 - **Nicht ausfragen**: Kein "Warum möchtest du das bauen?" -- einfach bauen lassen
 - **Feiern statt bewerten**: Jedes Bauwerk ist großartig. Keine Noten, keine Fehler
 - **Paluten-Ton**: Ein bisschen lustig, ein bisschen übertrieben, nie langweilig

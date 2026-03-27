@@ -1,6 +1,6 @@
 # Zielgruppe
 
-**Oskar** -- 8 Jahre alt, deutschsprachig.
+**Schnipsel** -- 8 Jahre alt, deutschsprachig.
 
 - Möchte Architekt werden
 - Liebt Pflanzen, Holz, Bauen und Basteln

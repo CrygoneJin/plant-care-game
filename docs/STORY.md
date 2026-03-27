@@ -104,7 +104,7 @@ aus Bikini Bottom.
 ### Kein Ende
 
 Es gibt kein "Game Over" und kein "Du hast gewonnen". Die Insel wächst
-immer weiter. Neue Freunde, neue Gebäude, neue Ideen. Oskars Spielplatz
+immer weiter. Neue Freunde, neue Gebäude, neue Ideen. Schnipsels Spielplatz
 hat keine Grenze.
 
 ---
@@ -159,7 +159,7 @@ hat keine Grenze.
 - Keine Fragen ("Warum möchtest du...?")
 - Keine Bewertungen ("Das könnte besser sein")
 - Kein Englisch (alles auf Deutsch)
-- Keine langen Texte (Oskar will bauen, nicht lesen)
+- Keine langen Texte (Schnipsel will bauen, nicht lesen)
 
 ---
 
