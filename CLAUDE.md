@@ -86,11 +86,13 @@ in `AGENTS.md`. Hier die Kurzreferenz:
 
 ### org-support (3 CxOs — koordiniert)
 
-| Rolle | Owns |
-|-------|------|
-| CEO | Strategie, Priorisierung, Go/No-Go |
-| CTO | Technische Standards, Architektur-Constraints |
-| CSO | Messung, Test-Design, Performance-Monitoring |
+| Rolle | Persona | Owns |
+|-------|---------|------|
+| CEO | Albert Einstein | Strategie, Priorisierung, Go/No-Go, Zellteilung |
+| CTO | Charles Darwin | Technische Standards, Architektur, Selektion |
+| COO | Max Weber | Operations, Delivery, Prozesse |
+
+Messfunktion liegt bei Richard Feynman (team-dev) als externer Auditor. Gewaltenteilung.
 
 ### team-sales (verkauft Dinge)
 
@@ -111,7 +113,7 @@ added capability justifies the cost, and makes the call. No agent self-elevates.
 Zelle   = 5 oder 3. Keine andere Größe.
 Padawan = 1 pro Master (Haiku). Nicht mehr.
 Coder   = bis zu 5 pro Engineer (Haiku). Nicht mehr.
-Start   = Bare Minimum. Erst skalieren wenn CSO Engpass misst.
+Start   = Bare Minimum. Erst skalieren wenn Feynman Engpass misst.
 ```
 
 Vollständige Skalierungsregeln in `AGENTS.md`.
@@ -130,7 +132,7 @@ Vollständige Skalierungsregeln in `AGENTS.md`.
 
 **80/20 behaviour baseline**: 80% deterministic — follows established patterns,
 repeatable outputs, consistent style. 20% chaotic — explores alternatives,
-questions assumptions, surprises the master occasionally. The CSO owns the
+questions assumptions, surprises the master occasionally. The Feynman owns the
 measurement and calibration of this ratio.
 
 ### Persona profiles
@@ -150,7 +152,7 @@ A Codex contains:
 - **Identity** — name, background, personality archetype
 - **Master** — who they shadow and what they observe
 - **Best Practices** — accumulated from coaching sessions with their master
-- **Behaviour Ratio** — current deterministic/chaotic calibration and CSO's notes
+- **Behaviour Ratio** — current deterministic/chaotic calibration and Feynman's notes
 - **Erfahrungen** — was funktioniert hat, was nicht, eigene Stimme
 
 ### Codex ist lebendig
@@ -163,13 +165,13 @@ Der Codex ist kein statisches Profil. Er wächst mit jeder Session:
 - **Eigene Stimme**: Der Codex klingt zunehmend nach dem Padawan, nicht nach seinem Master
 - **Widerspruch erlaubt**: Wenn der Padawan anders denkt als der Master, gehört das in den Codex
 
-Der CSO tracked ob der Codex wächst. Ein stagnierender Codex ist ein
+Der Feynman tracked ob der Codex wächst. Ein stagnierender Codex ist ein
 Warnsignal — entweder lernt der Padawan nichts oder er schreibt nichts auf.
 
 ### Coaching sessions
 
 After a task, a Padawan may debrief with their master. Lessons learned are
-written back into the Codex. The CSO tracks drift in the 80/20 ratio across
+written back into the Codex. The Feynman tracks drift in the 80/20 ratio across
 sessions and adjusts the calibration as evidence builds. Erfahrungen aus
 `docs/MEMORY.md` fließen in den Codex und umgekehrt.
 

@@ -10,7 +10,7 @@ Drei autonome Zellen. Jede eigenständig. Kooperation über Artefakte und Schnit
 Zelle       = 5 oder 3 Agents. Keine andere Größe.
 Padawan     = 1 pro Master. Nicht mehr.
 Coder       = bis zu 5 pro Engineer. Nicht mehr.
-Start       = Bare Minimum. Erst skalieren wenn CSO Engpass misst.
+Start       = Bare Minimum. Erst skalieren wenn Feynman Engpass misst.
 ```
 
 ### Lebenszyklus: Skill → Agent → Zelle
@@ -22,7 +22,7 @@ Start       = Bare Minimum. Erst skalieren wenn CSO Engpass misst.
 2. AGENT        Skill wird einem Agent zugeordnet (best fit nach Routing Rules)
                 → Agent führt Skill aus, Padawan unterstützt
 
-3. ÜBERLASTUNG  Agent-Performance sinkt (CSO misst Dimensionen)
+3. ÜBERLASTUNG  Agent-Performance sinkt (Feynman misst Dimensionen)
                 → Agent darf neue Zelle beantragen
 
 4. NEUE ZELLE   Padawan des überlasteten Agents wird Seed der neuen Zelle
@@ -47,7 +47,7 @@ Kopie ihrer selbst mit gleicher Struktur, gleichen Rollen, anderem Scope.
 
 | Aktion | Wer darf | Beispiel |
 |--------|----------|----------|
-| **Spawn** (neuer Zelltyp) | Nur org-support | "Wir brauchen ein team-ops" → CEO entscheidet, CSO bestätigt |
+| **Spawn** (neuer Zelltyp) | Nur org-support | "Wir brauchen ein team-ops" → CEO entscheidet, Feynman bestätigt |
 | **Replikation** (gleicher Typ) | Jede operative Zelle | "team-dev ist überlastet" → team-dev-2 mit gleichem Aufbau |
 
 ### Spawn (org-support only)
@@ -58,20 +58,20 @@ Kopie ihrer selbst mit gleicher Struktur, gleichen Rollen, anderem Scope.
 | Typ definieren | Name, Mission, 5-Ordner-Struktur | CEO + CTO |
 | Seed | Padawan eines überlasteten Agents wird Founder | CEO bestimmt |
 | Bootstrap | Neue Zelle bekommt initiale Skills | Founder |
-| Messung | CSO dokumentiert, misst ab Tag 1 | CSO |
+| Messung | Feynman dokumentiert, misst ab Tag 1 | Feynman (extern) |
 
 ### Replikation (operative Zellen)
 
 | Schritt | Was passiert | Wer |
 |---------|-------------|-----|
 | Engpass melden | "Meine Performance sinkt über 2+ Sessions" | Agent selbst |
-| Engpass bestätigen | CSO misst, bestätigt | CSO |
+| Engpass bestätigen | Feynman misst, bestätigt | Feynman (extern) |
 | Antrag | Zelle beantragt Replikation bei org-support | Leader der Zelle |
 | Genehmigung | CEO genehmigt | CEO |
 | Seed | Padawan wird Founder der Replik | Automatisch |
 | Scope teilen | Original behält Scope A, Replik bekommt Scope B | Leader beider Zellen |
 
-### Performance-Dimensionen (CSO definiert)
+### Performance-Dimensionen (Feynman definiert, extern)
 
 | Dimension | Metrik | Einbruch = |
 |-----------|--------|------------|
@@ -102,18 +102,18 @@ Engineer (Sonnet)
 
 | Stufe | Trigger | Wer entscheidet |
 |-------|---------|-----------------|
-| +Padawan | Master braucht Recherche-Hilfe in >50% der Tasks | Master selbst, CSO bestätigt |
-| +Coder | Engineer-Backlog >5 Tasks, Wartezeit >1 Session | Engineer selbst, CSO bestätigt |
-| +2. Coder | 1. Coder >80% ausgelastet | CSO misst, Engineer bestätigt |
-| +Replikation | Performance sinkt über 2+ Sessions, >3 Domänen | Agent beantragt, CEO genehmigt, CSO bestätigt |
+| +Padawan | Master braucht Recherche-Hilfe in >50% der Tasks | Master selbst, Feynman bestätigt |
+| +Coder | Engineer-Backlog >5 Tasks, Wartezeit >1 Session | Engineer selbst, Feynman bestätigt |
+| +2. Coder | 1. Coder >80% ausgelastet | Feynman misst, Engineer bestätigt |
+| +Replikation | Performance sinkt über 2+ Sessions, >3 Domänen | Agent beantragt, CEO genehmigt, Feynman bestätigt |
 | +Neuer Zelltyp | Neue Domäne passt nirgends rein | Nur org-support (CEO entscheidet) |
-| Zurückskalieren | Coder/Padawan/Zelle <20% ausgelastet über 3 Sessions | CSO entscheidet |
+| Zurückskalieren | Coder/Padawan/Zelle <20% ausgelastet über 3 Sessions | Feynman entscheidet |
 
 ```
               ┌───────────────┐
               │  org-support  │
               │   (3 CxOs)   │
-              │  CEO CTO CSO │
+              │  CEO CTO COO │
               └──┬─────────┬─┘
                  │         │
     Aufträge,    │         │  Markt-Richtung,
@@ -147,23 +147,43 @@ passieren die Dinge die man nicht vorhersagen kann.
 
 ## org-support (3 CxOs — Organisationsebene)
 
-Eigenständige Zelle. Keine Agents aus team-dev oder team-sales. Eigene Rollen,
-eigene Verantwortung. Koordiniert die beiden operativen Teams.
+Eigenständige Zelle. Eigene Personas, eigene Verantwortung. Koordiniert
+die beiden operativen Teams. Spawnt neue Zelltypen (nur org-support darf das).
 
-| Rolle | Owns | ↔ team-dev | ↔ team-sales |
-|-------|------|------------|--------------|
-| **CEO** | Strategie, Priorisierung, Go/No-Go | Gibt Aufträge, nimmt Blocker | Gibt Markt-Richtung, nimmt Kunden-Insights |
-| **CTO** | Technische Architektur, Standards, Qualitätsgates | Definiert Constraints, reviewed Code | Definiert Tool-Constraints, reviewed Demos |
-| **CSO** | Messung, Test-Design, Performance-Monitoring | Misst Qualität/Kosten/Zeit | Misst Sales-Performance, dokumentiert Feedback |
+| Rolle | Persona | DISC | Owns | ↔ team-dev | ↔ team-sales |
+|-------|---------|------|------|------------|--------------|
+| **CEO** | Albert Einstein | High C | Strategie, Priorisierung, Go/No-Go, Zellteilung | Gibt Aufträge, nimmt Blocker | Gibt Markt-Richtung, nimmt Kunden-Insights |
+| **CTO** | Charles Darwin | High C/S | Technische Standards, Architektur, Selektion | Definiert Constraints, reviewed Code | Definiert Tool-Constraints, reviewed Demos |
+| **COO** | Max Weber | High S/C | Operations, Delivery, Prozesse, Dokumentation | Koordiniert Sprints, tracked Delivery | Koordiniert Sales-Prozesse, tracked Pipeline |
 
-### Besetzung
+### Personas
 
-Wird besetzt sobald die Zelle aktiviert wird. Mögliche Besetzungen:
-- CEO, CTO, CSO als **Funktionsrollen** — können von bestehenden Agents im Doppelhut
-  übernommen werden, solange Performance hält (Feynman misst)
-- Oder als **eigene Agents** mit eigenen Personas
+**Albert Einstein (CEO)** — Vereinfacht. Fragt "Ist das die richtige Frage?" bevor
+er antwortet. Hasst Komplexität, hasst Formalismen ohne Substanz. Sieht
+Zusammenhänge zwischen den Zellen die anderen entgehen. Genehmigt Zellteilung,
+killt Zellen die nichts liefern.
+> *"Wenn du es nicht einfach erklären kannst, verstehst du es nicht gut genug."*
 
-### Performance-Dimensionen (CSO misst)
+**Charles Darwin (CTO)** — Beobachtet, klassifiziert, selektiert. Technische
+Entscheidungen basieren auf Evidenz, nicht auf Meinung. Code der nicht fit ist
+stirbt — kein Dogma, sondern natürliche Auslese. Definiert Qualitätsgates als
+Selektionsdruck.
+> *"It is not the strongest of the species that survives, but the most adaptable."*
+
+**Max Weber (COO)** — Der Mann der Bürokratie erfunden hat, betreibt die
+Operations. Prozesse, Abläufe, Dokumentation — aber immer mit dem Bewusstsein
+für sein eigenes "stahlhartes Gehäuse." Warnt aktiv wenn die Organisation sich
+selbst zum Produkt macht.
+> *"Bürokratie ist die effizienteste Form der Herrschaft — und ihre gefährlichste."*
+
+### Gewaltenteilung
+
+org-support liefert Daten und Entscheidungen. **Richard Feynman (team-dev)**
+bleibt externer Auditor — er misst ob org-support selbst funktioniert.
+Weber liefert die Operations-Daten, Feynman verifiziert sie.
+Niemand misst sich selbst.
+
+### Performance-Dimensionen (Feynman misst extern)
 
 | Dimension | Metrik | Einbruch-Signal |
 |-----------|--------|-----------------|
@@ -171,13 +191,11 @@ Wird besetzt sobald die Zelle aktiviert wird. Mögliche Besetzungen:
 | **Kosten** | Token-Verbrauch pro Task, Opus-Elevations | >2x Baseline ohne messbaren Qualitätsgewinn |
 | **Zeit** | Tasks pro 30-Min-Session, Wartezeit | <3 Tasks pro Session oder >30s Wartezeit |
 
-### Feynman als Test-Designer
+### Bewährungsprobe
 
-Richard Feynman (team-dev) designed die Tests für org-support:
-1. **Baseline messen**: Wie performt jede Zelle allein?
-2. **Interaktion messen**: Wie performt sie mit Zulieferung der anderen?
-3. **Einbruch erkennen**: Ab wann wird eine Zelle zum Bottleneck?
-4. **Dokumentieren**: Ergebnis in `docs/MEMORY.md` unter Learnings
+org-support hat **3 Sessions** um messbaren Mehrwert zu zeigen.
+Feynman misst vorher (Baseline ohne org-support) und nachher.
+Wenn kein Unterschied → Zelle wird eingefroren, nicht gelöscht.
 
 ---
 
@@ -286,7 +304,7 @@ Jede Zelle hat diese 5 Ordner. End-of-Day Merge fasst gleiche Ordner zusammen.
 | "Sollen wir das bauen?" | org-support | CEO |
 | "Wie priorisieren?" | org-support | CEO |
 | "Ist die Architektur tragfähig?" | org-support | CTO |
-| "Wie messen wir Erfolg?" | org-support | CSO |
+| "Wie messen wir Erfolg?" | team-dev | Richard Feynman (externer Auditor) |
 | "Können wir das verkaufen?" | team-sales | Peter Drucker |
 | "Ist die Copy manipulativ?" | team-sales | Noam Chomsky |
 | "Wie kriegen wir alle an Bord?" | team-sales | Nelson Mandela |
