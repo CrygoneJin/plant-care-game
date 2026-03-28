@@ -1033,6 +1033,7 @@
     const AUTOSAVE_KEY = '~autosave~';
     let lastSaveHash = '';
     function autoSave() {
+        if (!grid || !grid.length) return;
         const hasContent = grid.some(row => row.some(cell => cell !== null));
         if (!hasContent) return;
         // Nur speichern wenn sich was geändert hat
@@ -1083,13 +1084,23 @@
         loadDialog.classList.remove('hidden');
     }
 
+    function isValidGrid(g) {
+        return Array.isArray(g) && g.length === ROWS && g[0]?.length === COLS;
+    }
+
     function loadProject(name) {
         const projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
         if (projects[name]) {
-            grid = projects[name].grid;
-            window.grid = grid; // Chat-Integration aktuell halten
-            projectNameInput.value = name;
+            const saved = projects[name].grid;
+            if (isValidGrid(saved)) {
+                grid = saved;
+            } else {
+                initGrid(); // Fallback bei kaputtem Grid
+            }
+            window.grid = grid;
+            projectNameInput.value = name === AUTOSAVE_KEY ? '' : name;
             updateStats();
+            draw();
             loadDialog.classList.add('hidden');
             showToast(`📂 "${name}" geladen!`);
         }
@@ -1107,6 +1118,7 @@
         initGrid();
         projectNameInput.value = '';
         updateStats();
+        draw();
         showToast('🆕 Neue Insel!');
     }
 
@@ -1796,7 +1808,7 @@
 
     // Auto-Save wiederherstellen wenn vorhanden
     const savedProjects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
-    if (savedProjects[AUTOSAVE_KEY]) {
+    if (savedProjects[AUTOSAVE_KEY] && isValidGrid(savedProjects[AUTOSAVE_KEY].grid)) {
         grid = savedProjects[AUTOSAVE_KEY].grid;
         window.grid = grid;
         showToast('🔄 Letzte Insel wiederhergestellt');
