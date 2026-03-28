@@ -634,10 +634,14 @@
         krabs:     { emoji: '🦀', prefix: 'Krabs:', ticks: ['💰', 'Taler!', 'Geld!'], style: 'money' },
         tommy:     { emoji: '🎬', prefix: 'Tommy:', ticks: ['Klick-klack!', 'JA!', 'CUT!'], style: 'chaos' },
         bernd:     { emoji: '🍞', prefix: 'Bernd:', ticks: ['*seufz*', 'Mist.', 'Toll.'], style: 'grumpy' },
+        kaenguru:  { emoji: '🦘', prefix: 'Känguru:', ticks: ['Das ist Kommunismus!', 'Ich bin ja kein Rassist, ABER:', 'Schnapspraline?'], style: 'kaenguru' },
+        marcuwe:   { emoji: '📖', prefix: 'Marc-Uwe:', ticks: ['Ähm...', 'Das Känguru hat...', 'Ich wollte eigentlich nur...'], style: 'marcuwe' },
     };
 
     const MAT_ADJECTIVES = {
+        metal: ['glänzendes', 'hartes', 'schweres', 'kühles', 'solides'],
         wood: ['rustikales', 'solides', 'gemütliches', 'warmes', 'klassisches'],
+        earth: ['dunkle', 'fruchtbare', 'schwere', 'feuchte', 'warme'],
         stone: ['robuster', 'starker', 'massiver', 'ewiger', 'grauer'],
         glass: ['durchsichtiges', 'glänzendes', 'funkelndes', 'modernes', 'schickes'],
         plant: ['grüne', 'lebendige', 'frische', 'wilde', 'wuchernde'],
@@ -666,7 +670,9 @@
         nein:    ['...ist eigentlich gut.', '...naja. Geht so. OK es ist toll.', '...NEIN! Doch. Ja.', '...pfff. Hübsch.'],
         money:   ['Das bringt Kunden!', 'Wertsteigerung!', 'Cha-ching!', 'Investment!', 'Rendite!'],
         chaos:   ['SCHNITT! Nochmal! BESSER!', 'Das wird im Film GEIL!', 'KAMERA LÄUFT!', 'Action!'],
-        grumpy:  ['Na toll.', 'Muss das sein?', 'Kann man machen.', 'Hab ich auch mal probiert. War schlecht.'],
+        grumpy:   ['Na toll.', 'Muss das sein?', 'Kann man machen.', 'Hab ich auch mal probiert. War schlecht.'],
+        kaenguru: ['Das gehört verstaatlicht!', 'Eigentum ist Diebstahl!', 'Das geht auf meine Rechnung. Also auf deine.', 'In Australien macht man das anders.', 'Das ist MEIN Revier!'],
+        marcuwe:  ['Aha. Ja. OK.', 'Das Känguru würde das anders sehen.', 'Ich schreib das auf.', 'Kann man so machen.', 'Mein Mitbewohner hat letztens...'],
     };
 
     const TEMPLATES = [
