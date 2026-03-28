@@ -1757,6 +1757,64 @@
         });
     });
 
+    // === LABEL-RÄTSEL (A/B-Test als Feature) ===
+    // 80%: Labels komplett weg — Emojis sprechen für sich
+    // 20%: Labels im falschen Feld + Sprachmix — Zuordnungsrätsel
+    (function shuffleLabels() {
+        const btns = [...document.querySelectorAll('.material-btn')];
+        const labels = btns.map(b => b.querySelector('.mat-label')).filter(Boolean);
+        if (!labels.length) return;
+
+        const isRiddleMode = Math.random() < 0.2;
+
+        if (!isRiddleMode) {
+            // 80%: Labels weg
+            labels.forEach(l => l.remove());
+        } else {
+            // 20%: Labels shufflen + in zufällige Sprachen übersetzen
+            const TRANSLATIONS = {
+                wood:     ['Bois', 'Madera', 'Legno', '木', 'Drevo', 'Puu', 'Ahşap'],
+                stone:    ['Pierre', 'Piedra', 'Pietra', '石', 'Kamen', 'Kivi', 'Taş'],
+                glass:    ['Verre', 'Vidrio', 'Vetro', '硝子', 'Steklo', 'Lasi', 'Cam'],
+                plant:    ['Plante', 'Planta', 'Pianta', '草', 'Rastenie', 'Kasvi', 'Bitki'],
+                tree:     ['Arbre', 'Árbol', 'Albero', '木', 'Derevo', 'Puu', 'Ağaç'],
+                flower:   ['Fleur', 'Flor', 'Fiore', '花', 'Tsvetok', 'Kukka', 'Çiçek'],
+                door:     ['Porte', 'Puerta', 'Porta', '扉', 'Dver', 'Ovi', 'Kapı'],
+                roof:     ['Toit', 'Techo', 'Tetto', '屋根', 'Krysha', 'Katto', 'Çatı'],
+                lamp:     ['Lampe', 'Lámpara', 'Lampada', 'ランプ', 'Lampa', 'Lamppu', 'Lamba'],
+                sand:     ['Sable', 'Arena', 'Sabbia', '砂', 'Pesok', 'Hiekka', 'Kum'],
+                water:    ['Eau', 'Agua', 'Acqua', '水', 'Voda', 'Vesi', 'Su'],
+                path:     ['Chemin', 'Camino', 'Sentiero', '道', 'Tropinka', 'Polku', 'Yol'],
+                fence:    ['Clôture', 'Valla', 'Recinzione', '柵', 'Zabor', 'Aita', 'Çit'],
+                boat:     ['Bateau', 'Barco', 'Barca', '船', 'Lodka', 'Vene', 'Tekne'],
+                fish:     ['Poisson', 'Pez', 'Pesce', '魚', 'Ryba', 'Kala', 'Balık'],
+                fountain: ['Fontaine', 'Fuente', 'Fontana', '噴水', 'Fontan', 'Suihkulähde', 'Çeşme'],
+                flag:     ['Drapeau', 'Bandera', 'Bandiera', '旗', 'Flag', 'Lippu', 'Bayrak'],
+                bridge:   ['Pont', 'Puente', 'Ponte', '橋', 'Most', 'Silta', 'Köprü'],
+                cactus:   ['Cactus', 'Cacto', 'Cactus', 'サボテン', 'Kaktus', 'Kaktus', 'Kaktüs'],
+                mushroom: ['Champignon', 'Hongo', 'Fungo', 'キノコ', 'Grib', 'Sieni', 'Mantar'],
+            };
+
+            // Labels einsammeln, shufflen, in fremder Sprache ins nächste Feld
+            const labelTexts = btns.map(b => {
+                const matId = b.dataset.material;
+                const pool = TRANSLATIONS[matId];
+                if (!pool) return b.querySelector('.mat-label')?.textContent || '';
+                return pool[Math.floor(Math.random() * pool.length)];
+            });
+
+            // Verschiebe jedes Label um 1-3 Positionen
+            const shifted = [...labelTexts];
+            const shift = 1 + Math.floor(Math.random() * 2);
+            for (let i = 0; i < shifted.length; i++) {
+                const target = (i + shift) % shifted.length;
+                labels[target].textContent = labelTexts[i];
+                labels[target].style.opacity = '0.6';
+                labels[target].style.fontStyle = 'italic';
+            }
+        }
+    })();
+
     // Canvas Maus-Events
     canvas.addEventListener('mousedown', (e) => {
         isMouseDown = true;
