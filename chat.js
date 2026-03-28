@@ -539,26 +539,69 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
     // API Settings Dialog
     const providerSelect = document.getElementById('api-provider');
     const apiUrlInput = document.getElementById('api-url-input');
+    const apiUrlRow = document.getElementById('api-url-row');
+    const apiStatus = document.getElementById('api-status');
+    const apiKeyToggle = document.getElementById('api-key-toggle');
+
+    function updateApiStatus() {
+        const hasKey = !!getApiKey();
+        const pId = localStorage.getItem('api-provider') || 'langdock';
+        const pName = providerSelect.options[providerSelect.selectedIndex]?.text || pId;
+        if (hasKey) {
+            apiStatus.textContent = `✅ ${pName} — Key gespeichert`;
+            apiStatus.style.background = '#e8f5e9';
+            apiStatus.style.color = '#2e7d32';
+            settingsBtn.textContent = '⚙️';
+            settingsBtn.style.position = 'relative';
+        } else {
+            apiStatus.textContent = '⚠️ Kein API-Key — Chat braucht einen Key';
+            apiStatus.style.background = '#fff3e0';
+            apiStatus.style.color = '#e65100';
+        }
+    }
+
+    function updateUrlRowVisibility() {
+        apiUrlRow.style.display = providerSelect.value === 'custom' ? 'block' : 'none';
+    }
 
     settingsBtn.addEventListener('click', () => {
         apiKeyInput.value = getApiKey();
         apiUrlInput.value = getApiUrl();
         providerSelect.value = localStorage.getItem('api-provider') || 'langdock';
+        apiKeyInput.type = 'password';
+        apiKeyToggle.textContent = '👁';
+        updateApiStatus();
+        updateUrlRowVisibility();
         apiKeyDialog.classList.remove('hidden');
     });
 
     providerSelect.addEventListener('change', () => {
         const p = PROVIDERS[providerSelect.value];
         if (p && p.url) apiUrlInput.value = p.url;
+        updateUrlRowVisibility();
+    });
+
+    apiKeyToggle.addEventListener('click', () => {
+        const isHidden = apiKeyInput.type === 'password';
+        apiKeyInput.type = isHidden ? 'text' : 'password';
+        apiKeyToggle.textContent = isHidden ? '🙈' : '👁';
     });
 
     apiKeySave.addEventListener('click', () => {
-        setApiKey(apiKeyInput.value.trim());
+        const key = apiKeyInput.value.trim();
+        if (!key) {
+            apiStatus.textContent = '❌ Bitte Key eingeben';
+            apiStatus.style.background = '#fce4ec';
+            apiStatus.style.color = '#c62828';
+            apiKeyInput.focus();
+            return;
+        }
+        setApiKey(key);
         setApiUrl(apiUrlInput.value.trim());
         localStorage.setItem('api-provider', providerSelect.value);
         apiKeyDialog.classList.add('hidden');
         const pName = providerSelect.options[providerSelect.selectedIndex].text;
-        addMessage(`${pName} konfiguriert!`, 'system');
+        addMessage(`${pName} konfiguriert — Key gespeichert! 🔒`, 'system');
     });
 
     apiKeyClose.addEventListener('click', () => {

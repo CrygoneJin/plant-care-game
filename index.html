@@ -222,7 +222,7 @@
         <div id="api-key-dialog" class="dialog-overlay hidden">
             <div class="dialog-content" style="max-width: 420px;">
                 <h2>🔑 KI-Einstellungen</h2>
-                <p style="font-size: 13px; color: #666; margin-bottom: 12px;">Wähle deinen KI-Anbieter. Alles bleibt lokal gespeichert.</p>
+                <div id="api-status" style="font-size: 13px; padding: 8px 12px; border-radius: 8px; margin-bottom: 12px; text-align: center;"></div>
 
                 <label style="font-size: 13px; font-weight: bold; display: block; margin-bottom: 4px;">Anbieter:</label>
                 <select id="api-provider" style="width: 100%; padding: 8px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; margin-bottom: 12px;">
@@ -234,16 +234,21 @@
                 </select>
 
                 <label style="font-size: 13px; font-weight: bold; display: block; margin-bottom: 4px;">API-Key:</label>
-                <input type="password" id="api-key-input" placeholder="sk-..." style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; margin-bottom: 12px;">
+                <div style="position: relative;">
+                    <input type="password" id="api-key-input" placeholder="sk-..." style="width: 100%; padding: 10px; padding-right: 44px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; margin-bottom: 12px; box-sizing: border-box;">
+                    <button id="api-key-toggle" type="button" style="position: absolute; right: 8px; top: 8px; background: none; border: none; cursor: pointer; font-size: 18px; padding: 2px 4px;" title="Key anzeigen/verbergen">👁</button>
+                </div>
 
-                <label style="font-size: 13px; font-weight: bold; display: block; margin-bottom: 4px;">Endpoint URL:</label>
-                <input type="text" id="api-url-input" placeholder="https://api.langdock.com/openai/eu/v1/chat/completions" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 13px; margin-bottom: 12px;">
+                <div id="api-url-row" style="display: none;">
+                    <label style="font-size: 13px; font-weight: bold; display: block; margin-bottom: 4px;">Endpoint URL:</label>
+                    <input type="text" id="api-url-input" placeholder="https://..." style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 13px; margin-bottom: 12px; box-sizing: border-box;">
+                </div>
 
-                <p style="font-size: 12px; color: #999; margin-bottom: 12px;">Token-Budget: 2000 pro Charakter pro Session. Damit nichts explodiert. 💸</p>
+                <p style="font-size: 12px; color: #999; margin-bottom: 12px;">Einmal eingeben — bleibt gespeichert. 🔒</p>
 
                 <div style="display: flex; gap: 8px; justify-content: center;">
                     <button class="action-btn" id="api-key-save">💾 Speichern</button>
-                    <button class="action-btn" id="api-key-close">❌ Schließen</button>
+                    <button class="action-btn" id="api-key-close">Schließen</button>
                 </div>
             </div>
         </div>
