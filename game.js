@@ -1413,20 +1413,8 @@
 
     // === EVENT LISTENERS ===
 
-    // Intro — Name speichern + Session-Uhr starten
-    const playerNameInput = document.getElementById('player-name');
-    if (playerNameInput) {
-        const savedName = localStorage.getItem('insel-player-name') || '';
-        if (savedName) playerNameInput.value = savedName;
-        playerNameInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') startButton.click();
-        });
-    }
-
+    // Intro — Session-Uhr starten
     function startGame() {
-        const name = (playerNameInput && playerNameInput.value.trim()) || 'Architekt';
-        localStorage.setItem('insel-player-name', name);
-        projectNameInput.value = name + 's Insel';
         introOverlay.classList.add('hiding');
         setTimeout(() => {
             introOverlay.style.display = 'none';
