@@ -173,6 +173,15 @@ vom Ankommen — er kommt vom Spüren dass man sich nähert.
 
 Prüffrage für jedes Feature: *Fühlt sich das an wie ein Schalter oder wie ein Regler?*
 
+### Tonalität für Erwachsene
+
+> "Humor ist wenn man trotzdem lacht."
+
+Bernd, die Org-Easter-Eggs, die LLM-Macken — das ist die Erwachsenen-Ebene.
+Kinder lachen weil SpongeBob lustig ist. Eltern lachen weil Bernd über sein
+Haiku-Budget motzt und der Elefant sich für sein Törööö entschuldigt.
+Zwei Schichten, ein Spiel. Pixar-Prinzip.
+
 ### Nächste Session
 - Voice-Pipeline: Cartesia + vapi.ai (API-Keys vorhanden)
 - Padawans spawnen + Codex-Dateien anlegen
