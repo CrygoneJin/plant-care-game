@@ -2097,12 +2097,22 @@
         });
     }
 
-    // --- Code-View-Button ---
+    // --- Abstraktions-Aufzug-Button ---
     const codeViewBtn = document.getElementById('code-view-btn');
     if (codeViewBtn) {
         codeViewBtn.addEventListener('click', () => {
             window.toggleCodeView();
             codeViewBtn.classList.toggle('active', codeViewActive);
+        });
+        // Rechtsklick = eine Ebene hoch (Aufzug ▲)
+        codeViewBtn.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            if (abstractionLevel > 0) {
+                abstractionLevel -= 2; // -2 weil toggleCodeView +1 macht
+                if (abstractionLevel < -1) abstractionLevel = ABSTRACTION_LEVELS.length - 2;
+                window.toggleCodeView();
+                codeViewBtn.classList.toggle('active', codeViewActive);
+            }
         });
     }
 
@@ -2270,52 +2280,299 @@
         return result;
     };
 
-    // --- Code-View: zeigt den "Quellcode" hinter den Blöcken ---
-    let codeViewActive = false;
+    // --- Abstraction Level Explorer: Aufzug durch die Computer-Ebenen ---
+    // User < Pixel < Worte < ASCII < Hex < Byte < Nibble < Bit
+    const ABSTRACTION_LEVELS = [
+        { id: 'user',   label: '🎮 User',    desc: 'So siehst du die Insel' },
+        { id: 'pixel',  label: '🖥️ Pixel',   desc: 'Alles besteht aus winzigen Punkten' },
+        { id: 'worte',  label: '📝 Worte',   desc: 'Hinter jedem Emoji steckt ein Wort' },
+        { id: 'ascii',  label: '🔤 ASCII',   desc: 'Jeder Buchstabe hat eine Nummer' },
+        { id: 'hex',    label: '🔢 Hex',     desc: 'Computer zählen mit 16 Ziffern' },
+        { id: 'byte',   label: '📦 Byte',    desc: '8 Bits = 1 Byte = 1 Buchstabe' },
+        { id: 'nibble', label: '🧩 Nibble',  desc: 'Ein halbes Byte — zum Anknabbern' },
+        { id: 'bit',    label: '💡 Bit',     desc: 'An oder Aus. 1 oder 0. Das ist alles.' },
+    ];
 
+    let abstractionLevel = 0; // 0 = User (normal), 7 = Bit (tiefste Ebene)
+    let codeViewActive = false; // Backward compat
+    let bitFlips = []; // { r, c, charIdx, bitIdx, original, flipped, time }
+    const CRC_REPAIR_MS = 3000; // CRC-Polizei repariert nach 3 Sekunden
+
+    // Text-Encoder: Material-Key → Bytes für tiefe Ebenen
+    function textToBytes(text) {
+        const bytes = [];
+        for (let i = 0; i < text.length; i++) {
+            bytes.push(text.charCodeAt(i));
+        }
+        return bytes;
+    }
+
+    function byteToBits(byte) {
+        return byte.toString(2).padStart(8, '0');
+    }
+
+    function byteToHex(byte) {
+        return byte.toString(16).toUpperCase().padStart(2, '0');
+    }
+
+    function byteToNibbles(byte) {
+        const hi = (byte >> 4) & 0xF;
+        const lo = byte & 0xF;
+        return [hi.toString(16).toUpperCase(), lo.toString(16).toUpperCase()];
+    }
+
+    // Abstraktionsebene wechseln (Aufzug)
     window.toggleCodeView = function () {
-        codeViewActive = !codeViewActive;
-        showToast(codeViewActive ? '👨‍💻 Code-Ansicht AN — so sieht ein Programmierer die Insel!' : '🎨 Normal-Ansicht');
-        if (codeViewActive) {
+        abstractionLevel++;
+        if (abstractionLevel >= ABSTRACTION_LEVELS.length) {
+            abstractionLevel = 0;
+        }
+        codeViewActive = abstractionLevel > 0;
+        const lvl = ABSTRACTION_LEVELS[abstractionLevel];
+        showToast(`${lvl.label} / ${lvl.desc}`);
+
+        // Button-Text aktualisieren
+        const btn = document.getElementById('code-view-btn');
+        if (btn) {
+            if (abstractionLevel === 0) {
+                btn.innerHTML = '&lt;/&gt;';
+            } else {
+                btn.textContent = '/' + abstractionLevel;
+            }
+        }
+
+        if (abstractionLevel === 1) {
             recordMilestone('firstCodeView');
-            trackEvent('code_view_toggle', { state: 'on' });
+            trackEvent('abstraction_level', { level: lvl.id });
+        } else if (abstractionLevel > 1) {
+            trackEvent('abstraction_level', { level: lvl.id });
         }
     };
 
-    // Code-View Rendering in draw() einhängen — überschreibt Emoji-Darstellung
-    const _originalDraw = draw;
+    // Bit flippen — nur auf Bit-Ebene (Level 7)
+    function flipBitAt(r, c) {
+        if (abstractionLevel !== 7 || !grid[r][c]) return;
+        const text = grid[r][c];
+        const charIdx = Math.floor(Math.random() * text.length);
+        const bitIdx = Math.floor(Math.random() * 8);
+        const origByte = text.charCodeAt(charIdx);
+        const flippedByte = origByte ^ (1 << bitIdx);
+        const flippedChar = String.fromCharCode(flippedByte);
+        const flippedText = text.substring(0, charIdx) + flippedChar + text.substring(charIdx + 1);
 
-    // Erweiterte draw-Funktion mit Code-View-Overlay
+        // Temporär Grid verändern — Konsequenz sichtbar auf ALLEN Ebenen
+        const original = grid[r][c];
+        grid[r][c] = flippedText;
+
+        bitFlips.push({
+            r, c, charIdx, bitIdx,
+            original: original,
+            flipped: flippedText,
+            origByte, flippedByte,
+            time: Date.now()
+        });
+
+        showToast(`⚡ Bit geflippt! ${byteToBits(origByte)} → ${byteToBits(flippedByte)}`);
+        trackEvent('bit_flip', { material: original, result: flippedText });
+
+        // CRC-Polizei repariert nach 3 Sekunden
+        setTimeout(() => {
+            // Nur reparieren wenn der Flip noch aktiv ist
+            if (grid[r][c] === flippedText) {
+                grid[r][c] = original;
+                showToast('🧬 CRC-Polizei: Fehler erkannt & repariert! Doppelhelix-Backup.');
+            }
+            bitFlips = bitFlips.filter(f => !(f.r === r && f.c === c && f.time === bitFlips.find(bf => bf.r === r && bf.c === c)?.time));
+        }, CRC_REPAIR_MS);
+    }
+
+    // Rendering für jede Abstraktionsebene
     function drawCodeOverlay() {
-        if (!codeViewActive) return;
+        if (abstractionLevel === 0) return;
+
+        const lvl = ABSTRACTION_LEVELS[abstractionLevel];
+        const now = Date.now();
+
         for (let r = 0; r < ROWS; r++) {
             for (let c = 0; c < COLS; c++) {
-                if (grid[r][c]) {
-                    const x = (c + WATER_BORDER) * CELL_SIZE;
-                    const y = (r + WATER_BORDER) * CELL_SIZE;
-                    // Dunkler Hintergrund
-                    ctx.fillStyle = 'rgba(30, 30, 30, 0.85)';
-                    ctx.fillRect(x + 1, y + 1, CELL_SIZE - 2, CELL_SIZE - 2);
-                    // Code-Text (Material-Key)
-                    ctx.fillStyle = '#00FF41'; // Matrix-Grün
-                    ctx.font = `bold ${Math.max(8, CELL_SIZE * 0.28)}px monospace`;
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillText(grid[r][c], x + CELL_SIZE / 2, y + CELL_SIZE / 2);
+                if (!grid[r][c]) continue;
+                const x = (c + WATER_BORDER) * CELL_SIZE;
+                const y = (r + WATER_BORDER) * CELL_SIZE;
+                const material = grid[r][c];
+                const bytes = textToBytes(material);
+
+                // Ist dieses Feld gerade bit-geflippt? (Glitch-Effekt)
+                const activeFlip = bitFlips.find(f => f.r === r && f.c === c);
+                const isGlitched = !!activeFlip;
+                const glitchAge = activeFlip ? (now - activeFlip.time) / CRC_REPAIR_MS : 0;
+
+                // Hintergrundfarbe: normal = dunkel, glitched = rot pulsierend
+                if (isGlitched) {
+                    const pulse = Math.sin(now * 0.01) * 0.2 + 0.5;
+                    ctx.fillStyle = `rgba(200, 30, 30, ${0.7 + pulse * 0.2})`;
+                } else {
+                    ctx.fillStyle = 'rgba(30, 30, 30, 0.88)';
+                }
+                ctx.fillRect(x + 1, y + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+
+                // Textfarbe: Programm = cyan, Daten = grün
+                // Alles im Grid ist "Daten" — das Grid selbst ist "Programm"
+                const dataColor = isGlitched ? '#FF4444' : '#00FF41';
+                const fontSize = Math.max(7, CELL_SIZE * 0.22);
+
+                ctx.fillStyle = dataColor;
+                ctx.font = `bold ${fontSize}px monospace`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+
+                switch (abstractionLevel) {
+                    case 1: // Pixel — Mosaikeffekt
+                        drawPixelLevel(x, y, material, isGlitched);
+                        break;
+                    case 2: // Worte — Material-Key als Text
+                        ctx.fillText(material, x + CELL_SIZE / 2, y + CELL_SIZE / 2);
+                        break;
+                    case 3: // ASCII — Zeichencodes
+                        ctx.font = `bold ${Math.max(6, CELL_SIZE * 0.18)}px monospace`;
+                        ctx.fillText(bytes.join(' '), x + CELL_SIZE / 2, y + CELL_SIZE / 2);
+                        break;
+                    case 4: // Hex
+                        ctx.font = `bold ${Math.max(6, CELL_SIZE * 0.18)}px monospace`;
+                        ctx.fillText(bytes.map(byteToHex).join(' '), x + CELL_SIZE / 2, y + CELL_SIZE / 2);
+                        break;
+                    case 5: // Byte — Binär
+                        ctx.font = `bold ${Math.max(5, CELL_SIZE * 0.12)}px monospace`;
+                        ctx.fillText(bytes.map(byteToBits).join(' '), x + CELL_SIZE / 2, y + CELL_SIZE / 2);
+                        break;
+                    case 6: // Nibble — Halbe Bytes
+                        ctx.font = `bold ${Math.max(6, CELL_SIZE * 0.16)}px monospace`;
+                        const nibbles = bytes.flatMap(byteToNibbles);
+                        ctx.fillText(nibbles.join(' '), x + CELL_SIZE / 2, y + CELL_SIZE / 2);
+                        break;
+                    case 7: // Bit — Einzelne Bits, klickbar
+                        drawBitLevel(x, y, bytes, isGlitched, activeFlip);
+                        break;
                 }
             }
         }
-        // Code-View Label
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-        ctx.fillRect(5, 5, 200, 24);
+
+        // Grid-Koordinaten als "Programm" (cyan) — zeigt den Unterschied Programm/Daten
+        if (abstractionLevel >= 3) {
+            ctx.fillStyle = '#00DDFF'; // Cyan = Programm
+            ctx.font = `${Math.max(6, CELL_SIZE * 0.15)}px monospace`;
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
+            for (let r = 0; r < ROWS; r++) {
+                const y = (r + WATER_BORDER) * CELL_SIZE;
+                ctx.fillText(`[${r}]`, 2, y + 2);
+            }
+            for (let c = 0; c < COLS; c++) {
+                const x = (c + WATER_BORDER) * CELL_SIZE;
+                ctx.fillText(`[${c}]`, x + 2, 2);
+            }
+        }
+
+        // Level-Anzeige (Aufzug-Display)
+        const labelW = 280;
+        const labelH = abstractionLevel >= 3 ? 42 : 28;
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+        ctx.fillRect(5, 5, labelW, labelH);
+        ctx.strokeStyle = '#00FF41';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(5, 5, labelW, labelH);
+
         ctx.fillStyle = '#00FF41';
         ctx.font = 'bold 12px monospace';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'top';
-        ctx.fillText('</> CODE-VIEW: grid[r][c]', 10, 10);
+        ctx.fillText(`/${abstractionLevel} ${lvl.label} — ${lvl.desc}`, 10, 9);
+
+        // Programm/Daten Legende ab Level 3
+        if (abstractionLevel >= 3) {
+            ctx.fillStyle = '#00DDFF';
+            ctx.fillText('■ Programm (Adressen)', 10, 26);
+            ctx.fillStyle = '#00FF41';
+            ctx.fillText('■ Daten (Inhalt)', 180, 26);
+        }
     }
 
-    // Monkey-patch requestAnimationFrame callback to add overlay
+    // Pixel-Ebene: Emoji als grobe Pixelblöcke darstellen
+    function drawPixelLevel(x, y, material, isGlitched) {
+        // Erzeuge einen deterministischen "Pixel-Hash" aus dem Material-Namen
+        const hash = material.split('').reduce((h, ch) => ((h << 5) - h + ch.charCodeAt(0)) | 0, 0);
+        const blockSize = Math.max(3, Math.floor(CELL_SIZE / 5));
+        const cols = Math.floor(CELL_SIZE / blockSize);
+        const rows = Math.floor(CELL_SIZE / blockSize);
+
+        for (let pr = 0; pr < rows; pr++) {
+            for (let pc = 0; pc < cols; pc++) {
+                const seed = hash + pr * 7 + pc * 13;
+                const r = (seed * 2654435761 >>> 0) % 256;
+                const g = (seed * 2246822519 >>> 0) % 256;
+                const b = (seed * 3266489917 >>> 0) % 256;
+                const a = isGlitched ? 0.5 + Math.sin(Date.now() * 0.005 + pr + pc) * 0.3 : 0.8;
+                ctx.fillStyle = `rgba(${r},${g},${b},${a})`;
+                ctx.fillRect(x + 1 + pc * blockSize, y + 1 + pr * blockSize, blockSize - 1, blockSize - 1);
+            }
+        }
+    }
+
+    // Bit-Ebene: Jedes Bit einzeln, Matrix-Regen-Stil
+    function drawBitLevel(x, y, bytes, isGlitched, activeFlip) {
+        const allBits = bytes.map(byteToBits).join('');
+        const fontSize = Math.max(5, CELL_SIZE * 0.1);
+        ctx.font = `bold ${fontSize}px monospace`;
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+
+        const chW = fontSize * 0.65;
+        const chH = fontSize * 1.2;
+        const colsPerRow = Math.floor((CELL_SIZE - 4) / chW);
+        const now = Date.now();
+
+        for (let i = 0; i < allBits.length; i++) {
+            const col = i % colsPerRow;
+            const row = Math.floor(i / colsPerRow);
+            const bx = x + 2 + col * chW;
+            const by = y + 2 + row * chH;
+
+            if (by > y + CELL_SIZE - 2) break;
+
+            // Matrix-Regen-Effekt: Bits flackern leicht
+            const flicker = Math.sin(now * 0.003 + i * 0.5) * 0.15;
+            const bit = allBits[i];
+
+            if (isGlitched && activeFlip) {
+                // Geflipptes Bit rot hervorheben
+                const byteIdx = Math.floor(i / 8);
+                const bitInByte = 7 - (i % 8);
+                if (byteIdx === activeFlip.charIdx && bitInByte === activeFlip.bitIdx) {
+                    ctx.fillStyle = '#FF0000';
+                    ctx.font = `bold ${fontSize * 1.5}px monospace`;
+                } else {
+                    ctx.fillStyle = `rgba(255, 68, 68, ${0.6 + flicker})`;
+                }
+            } else {
+                ctx.fillStyle = bit === '1'
+                    ? `rgba(0, 255, 65, ${0.7 + flicker})`
+                    : `rgba(0, 180, 40, ${0.3 + flicker * 0.5})`;
+            }
+
+            ctx.fillText(bit, bx, by);
+            ctx.font = `bold ${fontSize}px monospace`;
+        }
+    }
+
+    // Click-Handler für Bit-Flip
+    const origCanvasClick = canvas.onclick;
+    canvas.addEventListener('click', function bitFlipHandler(e) {
+        if (abstractionLevel !== 7) return;
+        const cell = getGridCell(e);
+        if (cell && grid[cell.r] && grid[cell.r][cell.c]) {
+            flipBitAt(cell.r, cell.c);
+        }
+    });
+
     const origRAF = window.requestAnimationFrame;
 
     // --- Testdaten: Export + anonymer Ping ---
