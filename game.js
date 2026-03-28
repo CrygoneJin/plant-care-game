@@ -622,6 +622,7 @@
             '🍴 Am Boot liegt eine Gabel. "Das ist ein FORK!" ruft C. "Wie bei Git?" — "Nein, wie bei Bitcoin! Forks over knives! Messer brauchst du nicht wenn du eine Blockchain hast!"',
             '🍺 "Bitte ein Bit!" ruft jemand vom Boot. Alle lachen. Fortran krächzt: "Das sind 8 Bit! Ein ganzes BYTE!" Die Ente quakt: "Ich nehm zwei Byte. Ich hab Hunger. *quak*"',
             '🪙 "Zahlen Sie mit Coins?" fragt Mr. Krabs am Boot. "KRABBEN-COINS! Auf der Blockchain! Dezentral!" Bram flüstert: "Proof of Krabben-Taler..."',
+            '🥷 Am Boot steht Token Takamoto. Keiner weiß woher er kommt. Er verteilt kleine Münzen an alle. "Was sind die wert?" — "Das entscheidet ihr." Dann verschwindet er. Wie Satoshi.',
         ],
         fence: [
             '🐦 Ein schneller Vogel fliegt über den Zaun! "Ich bin Swift!" Zack, schon weg.',
