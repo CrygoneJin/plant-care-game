@@ -1110,11 +1110,11 @@
     let unlockedMaterials = new Set();
 
     function saveUnlocked() {
-        localStorage.setItem('insel-unlocked', JSON.stringify([...unlockedMaterials]));
+        localStorage.setItem('insel-unlocked-materials', JSON.stringify([...unlockedMaterials]));
     }
 
     function loadUnlocked() {
-        const saved = JSON.parse(localStorage.getItem('insel-unlocked') || '[]');
+        const saved = JSON.parse(localStorage.getItem('insel-unlocked-materials') || '[]');
         unlockedMaterials = new Set(saved);
     }
 
