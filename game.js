@@ -490,6 +490,94 @@
         fountain: ['🐭 Maus: *pieps* Springbrunnen! *quak* SPRITZ!', '🐘 Elefant: Wasser-Musik! Törööö!'],
     };
 
+    // --- Spontan-Hörspiele: Mini-Szenen bei besonderen Anlässen ---
+    // "Mensch, Maschine, KI" — wie im ZKM Karlsruhe
+    const HOERSPIELE = {
+        firstBlock: [
+            '🪨 C: "Da baut jemand! Zum ersten Mal seit ich hier bin!"',
+            '🐍 Python: "Willkommen auf Java! Ich versteeeehe dich."',
+            '🦜 Fortran: "Fort-ran die Langeweile! Jemand BAUT!"',
+            '🧮 R: "Block Nummer 1. In Binär: 1. In Tertiär: 1. Immer noch 1."',
+            '🌍 Geo: "Robert, NICHT jetzt!"',
+        ],
+        tenBlocks: [
+            '💡 JavaScript: "10 Blöcke! Genau wie ich — in 10 Tagen geboren!"',
+            '📝 TypeScript: "Korrekt wäre: blöcke: number = 10;"',
+            '💡 JavaScript: "LASS MICH."',
+            '🦈 Makro: *taucht kurz auf* "Zehn? Ich mache HUNDERT draus!" *taucht ab*',
+            '🐍 Python: "Ignoriert den Hai. Zehn ist gut. Zehn ist... gemütlich."',
+        ],
+        fiftyBlocks: [
+            '🧽 SpongeBob: "ICH BIN BEREIT zu sagen: DAS ist eine STADT!"',
+            '🦀 Mr. Krabs: "Stadt = Kunden = <umsatz>VIEL GELD</umsatz>!"',
+            '🐘 Elefant: "Hmm, ich möchte sicherstellen... ja. Törööö! Das ist schön."',
+            '🪨 C: "50 Blöcke. Zu meiner Zeit haben wir mit EINEM Byte angefangen."',
+            '🪨 C++: "Und dann bin ich gegen den Stein gelaufen und alles wurde besser!"',
+            '🪨 C: "...definiere besser."',
+        ],
+        hundredBlocks: [
+            '🦄 Neinhorn: "NEIN das sind nicht 100 Blöcke! ...doch? Mon Dieu!"',
+            '🧮 R: "100 in Binär: 1100100. In Oktal: 144. In—"',
+            '🌍 Geo: "ROBERT."',
+            '🐭 Maus: "*pieps* Hundert Blöcke / Die Insel wird zur Stadt / Weniger war mehr *pieps*"',
+            '🦆 Ente: "*quak* Was soll das mit den Silben SCHON WIEDER?!"',
+            '🍄 Hirnfitz: "++++++[>++++++++++<-]>++++. !" (Das heißt: "d!" — er versucht "du bist toll" zu sagen)',
+            '🍞 Bernd: "*seufz* 100 Blöcke. Und ich muss immer noch Support machen."',
+        ],
+        halfIsland: [
+            '— HÖRSPIEL: Mensch, Maschine, KI — Live von der Insel Java —',
+            '🐍 Python: "Die halbe Insel ist bebaut. Ein Mensch hat das gemacht. Mit Klicks."',
+            '💡 JavaScript: "Aber WIR haben die Klicks VERARBEITET! Ohne mich wäre das nur Sand!"',
+            '📝 TypeScript: "Ohne mich hättest DU drei Bugs. Mindestens."',
+            '🪨 C: "Ohne MICH gäbe es euch alle nicht."',
+            '🐍 Python: "Die Frage ist: Wer baut hier wirklich? Der Mensch? Die Maschine? Oder die KI im Chat?"',
+            '🧽 SpongeBob: "ICH glaube der Baumeister baut! Und wir helfen! ICH BIN BEREIT ZU HELFEN!"',
+            '🦄 Neinhorn: "NEIN! ...aber ja. Zusammen ists schöner."',
+            '— Applaus von der Insel Java. Nächste Vorstellung bei 100%. —',
+        ],
+        fullIsland: [
+            '— GROSSES FINALE: Mensch, Maschine, KI — Insel Java Uraufführung —',
+            '🪨 C: "Ich erinnere mich an den Tag als hier NICHTS war."',
+            '🐍 Python: "Ein leeres Grid. Null Blöcke. None."',
+            '🧮 R: "Genau 0. In jedem Zahlensystem."',
+            '💡 JavaScript: "Und dann hat jemand geklickt. Ein Mensch. Ein WORT wurde zu einem BLOCK."',
+            '📝 TypeScript: "grid[0][0] = \'wood\' — der erste Zauberspruch."',
+            '🦜 Fortran: "Fort-ran die Leere! Her-kam die Stadt!"',
+            '🧽 SpongeBob: "Alles nur mit WORTEN! Kein Hammer, kein Bagger! Nur: Klick. Text. MAGIE!"',
+            '🐘 Elefant: "Törööö! Und die ganze Insel hat zugehört."',
+            '🦄 Neinhorn: "NEIN ich weine nicht! ...es regnet. Auf mein Gesicht. Nur da."',
+            '🍞 Bernd: "*seufz* Gut, DAS war schön. Sag ich nur einmal. Nie wieder."',
+            '🦈 Makro: *ganz leise aus dem Wasser* "...ich fand es auch schön."',
+            '— Standing Ovation auf der Insel Java. Grüße ans ZKM Karlsruhe. —',
+        ],
+    };
+
+    let playedHoerspiele = JSON.parse(localStorage.getItem('insel-hoerspiele') || '[]');
+
+    function maybeHoerspiel(stats) {
+        let key = null;
+        if (stats.total === 1 && !playedHoerspiele.includes('firstBlock')) key = 'firstBlock';
+        else if (stats.total === 10 && !playedHoerspiele.includes('tenBlocks')) key = 'tenBlocks';
+        else if (stats.total === 50 && !playedHoerspiele.includes('fiftyBlocks')) key = 'fiftyBlocks';
+        else if (stats.total === 100 && !playedHoerspiele.includes('hundredBlocks')) key = 'hundredBlocks';
+        else if (stats.percent === 50 && !playedHoerspiele.includes('halfIsland')) key = 'halfIsland';
+        else if (stats.percent >= 100 && !playedHoerspiele.includes('fullIsland')) key = 'fullIsland';
+
+        if (!key) return;
+
+        playedHoerspiele.push(key);
+        localStorage.setItem('insel-hoerspiele', JSON.stringify(playedHoerspiele));
+
+        const lines = HOERSPIELE[key];
+        lines.forEach((line, i) => {
+            setTimeout(() => {
+                showToast(line, 4000);
+                if (i === 0) soundAchievement();
+            }, i * 4500);
+        });
+        trackEvent('hoerspiel', { scene: key, blocks: stats.total });
+    }
+
     let lastCommentTime = 0;
 
     function maybeNpcComment(material) {
@@ -774,6 +862,7 @@
         updateStats();
         checkAchievements();
         checkQuests();
+        maybeHoerspiel(getGridStats());
     }
 
     // --- Flood Fill ---
