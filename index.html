@@ -253,8 +253,8 @@
         <!-- Toast-Nachricht -->
         <div id="toast" class="hidden"></div>
 
-        <!-- NPC Chat -->
-        <div id="chat-bubble" title="Mit Inselbewohnern reden" role="button" aria-label="Chat mit Inselbewohnern öffnen" tabindex="0">💬</div>
+        <!-- NPC Chat — deaktiviert bis API-Sicherheit gewährleistet -->
+        <div id="chat-bubble" title="Mit Inselbewohnern reden" role="button" aria-label="Chat mit Inselbewohnern öffnen" tabindex="0" style="display:none">💬</div>
         <div id="chat-panel" class="hidden">
             <div id="chat-header">
                 <select id="chat-character">
@@ -324,6 +324,7 @@
 
     <script src="game.js"></script>
     <script src="config.js" onerror="/* config.js optional */"></script>
-    <script src="chat.js"></script>
+    <!-- chat.js deaktiviert — API-Key-Leak-Risiko, reaktivieren wenn serverseitig -->
+    <!-- <script src="chat.js"></script> -->
 </body>
 </html>
