@@ -1051,3 +1051,250 @@ header h1 {
         font-size: 16px;
     }
 }
+
+/* ============================================================
+   === INVENTAR ===
+   ============================================================ */
+#inventory-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 4px 0;
+}
+
+.inv-item {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-size: 13px;
+    cursor: default;
+}
+
+.inv-emoji {
+    font-size: 18px;
+}
+
+.inv-count {
+    font-weight: bold;
+    color: #F9E79F;
+    font-size: 13px;
+}
+
+.inv-empty {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    padding: 4px;
+}
+
+.craft-open-btn {
+    width: 100%;
+    margin-top: 8px;
+    text-align: center;
+    font-size: 14px !important;
+}
+
+/* ============================================================
+   === CRAFTING DIALOG ===
+   ============================================================ */
+.crafting-content {
+    max-width: 680px !important;
+    width: 90vw;
+}
+
+.crafting-layout {
+    display: flex;
+    gap: 16px;
+    margin: 12px 0;
+    align-items: flex-start;
+}
+
+.crafting-left {
+    flex: 1;
+    min-width: 120px;
+}
+
+.crafting-left h3,
+.crafting-right h3 {
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: #555;
+}
+
+.craft-inventory {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: 240px;
+    overflow-y: auto;
+}
+
+.craft-inv-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    background: #f0f0f0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-size: 13px;
+}
+
+.craft-inv-item:hover {
+    background: #e0e0e0;
+}
+
+.craft-inv-item.selected {
+    background: #D4EFDF;
+    outline: 2px solid #27AE60;
+}
+
+.craft-inv-item .inv-emoji {
+    font-size: 20px;
+}
+
+.craft-inv-item .inv-label {
+    flex: 1;
+}
+
+.craft-inv-item .inv-count {
+    color: #555;
+    font-weight: bold;
+}
+
+.craft-hint {
+    font-size: 11px;
+    color: #999;
+    margin-top: 8px;
+    line-height: 1.3;
+}
+
+.crafting-center {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.crafting-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 56px);
+    grid-template-rows: repeat(3, 56px);
+    gap: 4px;
+}
+
+.craft-slot {
+    width: 56px;
+    height: 56px;
+    background: #f5f5f5;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.craft-slot:hover {
+    background: #e8e8e8;
+    border-color: #aaa;
+}
+
+.craft-slot.filled {
+    background: #D5F5E3;
+    border: 2px solid #27AE60;
+}
+
+.craft-emoji {
+    font-size: 28px;
+}
+
+.craft-arrow {
+    font-size: 28px;
+}
+
+.craft-result-box {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #FEF9E7, #FCF3CF);
+    border: 3px solid #F1C40F;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.craft-question {
+    font-size: 28px;
+    color: #ccc;
+}
+
+.craft-result-count {
+    font-size: 11px;
+    font-weight: bold;
+    color: #8B6914;
+}
+
+.crafting-right {
+    flex: 1;
+    min-width: 140px;
+}
+
+.recipe-book {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: 240px;
+    overflow-y: auto;
+}
+
+.recipe-entry {
+    font-size: 12px;
+    padding: 4px 6px;
+    background: rgba(241, 196, 15, 0.1);
+    border-radius: 6px;
+    line-height: 1.3;
+}
+
+.crafting-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+/* Mobile: Crafting vertikal stapeln */
+@media (max-width: 767px) {
+    .crafting-layout {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .crafting-left,
+    .crafting-right {
+        width: 100%;
+    }
+
+    .crafting-center {
+        flex-direction: column;
+    }
+
+    .craft-arrow {
+        transform: rotate(90deg);
+    }
+
+    .crafting-grid {
+        grid-template-columns: repeat(3, 48px);
+        grid-template-rows: repeat(3, 48px);
+    }
+
+    .craft-slot {
+        width: 48px;
+        height: 48px;
+    }
+}

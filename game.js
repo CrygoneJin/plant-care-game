@@ -40,11 +40,14 @@
         stone:    { emoji: '🧱', label: 'Stein',    color: '#95A5A6', border: '#7F8C8D' },
         glass:    { emoji: '🪟', label: 'Glas',     color: '#AED6F1', border: '#85C1E9' },
         plant:    { emoji: '🌿', label: 'Pflanze',  color: '#52BE80', border: '#27AE60' },
+        sapling:  { emoji: '🌱', label: 'Setzling', color: '#7DCEA0', border: '#52BE80' },
+        small_tree: { emoji: '🌲', label: 'Kleiner Baum', color: '#229954', border: '#1E8449' },
         tree:     { emoji: '🌳', label: 'Baum',     color: '#1E8449', border: '#196F3D' },
         flower:   { emoji: '🌸', label: 'Blume',    color: '#F1948A', border: '#E74C3C' },
         door:     { emoji: '🚪', label: 'Tür',      color: '#6E3B1A', border: '#4A2510' },
         roof:     { emoji: '🏠', label: 'Dach',     color: '#E74C3C', border: '#C0392B' },
         lamp:     { emoji: '💡', label: 'Lampe',    color: '#F9E79F', border: '#F1C40F' },
+        fire:     { emoji: '🔥', label: 'Feuer',    color: '#E67E22', border: '#D35400' },
         sand:     { emoji: '⬜', label: 'Sand',     color: '#F5DEB3', border: '#DCC89E' },
         water:    { emoji: '🌊', label: 'Wasser',   color: '#3498DB', border: '#2980B9' },
         path:     { emoji: '🟫', label: 'Weg',      color: '#A0522D', border: '#8B4513' },
@@ -56,6 +59,8 @@
         bridge:   { emoji: '🌉', label: 'Brücke',   color: '#B7950B', border: '#9A7D0A' },
         cactus:   { emoji: '🌵', label: 'Kaktus',   color: '#28B463', border: '#1D8348' },
         mushroom: { emoji: '🍄', label: 'Pilz',     color: '#E59866', border: '#CA6F1E' },
+        planks:   { emoji: '🪵', label: 'Bretter',  color: '#C19A6B', border: '#A0784A' },
+        window_pane: { emoji: '🪟', label: 'Fenster', color: '#D4EFFC', border: '#AED6F1' },
     };
 
     // ============================================================
@@ -707,6 +712,251 @@
         showToast(comment, 3500);
     }
 
+    // ============================================================
+    // === BAUM-WACHSTUM === Setzling → kleiner Baum → großer Baum
+    // ============================================================
+    const TREE_GROWTH_TIME_1 = 30000; // Setzling → kleiner Baum: 30s
+    const TREE_GROWTH_TIME_2 = 60000; // Kleiner Baum → großer Baum: 60s
+    let treeGrowth = {}; // { "r,c": timestamp }
+
+    function updateTreeGrowth() {
+        const now = Date.now();
+        let changed = false;
+        for (const key of Object.keys(treeGrowth)) {
+            const [r, c] = key.split(',').map(Number);
+            if (r >= ROWS || c >= COLS || r < 0 || c < 0) {
+                delete treeGrowth[key];
+                continue;
+            }
+            const planted = treeGrowth[key];
+            const age = now - planted;
+            const cell = grid[r]?.[c];
+
+            if (cell === 'sapling' && age >= TREE_GROWTH_TIME_1) {
+                grid[r][c] = 'small_tree';
+                addPlaceAnimation(r, c);
+                changed = true;
+            } else if (cell === 'small_tree' && age >= TREE_GROWTH_TIME_1 + TREE_GROWTH_TIME_2) {
+                grid[r][c] = 'tree';
+                delete treeGrowth[key];
+                addPlaceAnimation(r, c);
+                changed = true;
+            } else if (cell !== 'sapling' && cell !== 'small_tree') {
+                delete treeGrowth[key];
+            }
+        }
+        if (changed) updateStats();
+    }
+
+    // Alle 5s prüfen
+    setInterval(updateTreeGrowth, 5000);
+
+    function soundChop() {
+        if (!canPlaySound()) return;
+        playRichTone(180, 0.15, 'sawtooth', 0.1);
+        setTimeout(() => playTone(120, 0.2, 'square', 0.08), 80);
+    }
+
+    function soundCraft() {
+        if (!canPlaySound()) return;
+        playRichTone(440, 0.1, 'sine', 0.1);
+        setTimeout(() => playRichTone(554, 0.1, 'sine', 0.1), 100);
+        setTimeout(() => playRichTone(659, 0.2, 'triangle', 0.12), 200);
+    }
+
+    // ============================================================
+    // === INVENTAR ===
+    // ============================================================
+    let inventory = {};
+
+    function addToInventory(material, count) {
+        count = count || 1;
+        inventory[material] = (inventory[material] || 0) + count;
+        updateInventoryDisplay();
+        saveInventory();
+    }
+
+    function removeFromInventory(material, count) {
+        count = count || 1;
+        if ((inventory[material] || 0) < count) return false;
+        inventory[material] -= count;
+        if (inventory[material] <= 0) delete inventory[material];
+        updateInventoryDisplay();
+        saveInventory();
+        return true;
+    }
+
+    function getInventoryCount(material) {
+        return inventory[material] || 0;
+    }
+
+    function saveInventory() {
+        localStorage.setItem('insel-inventar', JSON.stringify(inventory));
+    }
+
+    function loadInventory() {
+        inventory = JSON.parse(localStorage.getItem('insel-inventar') || '{}');
+    }
+
+    function updateInventoryDisplay() {
+        const container = document.getElementById('inventory-content');
+        if (!container) return;
+        const items = Object.entries(inventory).filter(([, count]) => count > 0);
+        if (items.length === 0) {
+            container.innerHTML = '<p class="inv-empty">Noch nichts gesammelt!</p>';
+            return;
+        }
+        container.innerHTML = items.map(([mat, count]) => {
+            const info = MATERIALS[mat];
+            if (!info) return '';
+            return `<div class="inv-item" data-material="${mat}" title="${info.label}: ${count}">
+                <span class="inv-emoji">${info.emoji}</span>
+                <span class="inv-count">${count}</span>
+            </div>`;
+        }).join('');
+    }
+
+    // ============================================================
+    // === CRAFTING === 3x3 Werkbank
+    // ============================================================
+    const CRAFTING_RECIPES = [
+        { name: 'Glas',    result: 'glass',      resultCount: 1, ingredients: { sand: 1, fire: 1 },  desc: 'Sand + Feuer = Glas' },
+        { name: 'Fenster', result: 'window_pane', resultCount: 1, ingredients: { glass: 1, wood: 1 }, desc: 'Glas + Holz = Fenster' },
+        { name: 'Bretter', result: 'planks',     resultCount: 3, ingredients: { wood: 2 },            desc: '2 Holz = 3 Bretter' },
+        { name: 'Lampe',   result: 'lamp',       resultCount: 1, ingredients: { glass: 1, fire: 1 },  desc: 'Glas + Feuer = Lampe' },
+        { name: 'Brunnen', result: 'fountain',   resultCount: 1, ingredients: { stone: 3, water: 1 }, desc: '3 Stein + Wasser = Brunnen' },
+        { name: 'Brücke',  result: 'bridge',     resultCount: 1, ingredients: { planks: 2, stone: 1 },desc: '2 Bretter + Stein = Brücke' },
+        { name: 'Zaun',    result: 'fence',      resultCount: 2, ingredients: { planks: 1, wood: 1 }, desc: 'Bretter + Holz = 2 Zäune' },
+        { name: 'Tür',     result: 'door',       resultCount: 1, ingredients: { planks: 2 },          desc: '2 Bretter = Tür' },
+        { name: 'Feuer',   result: 'fire',       resultCount: 2, ingredients: { wood: 1 },            desc: 'Holz = 2 Feuer' },
+    ];
+
+    let craftingGrid = Array(9).fill(null); // 3x3 = 9 Slots
+
+    function getCraftingIngredients() {
+        const counts = {};
+        for (const slot of craftingGrid) {
+            if (slot) counts[slot] = (counts[slot] || 0) + 1;
+        }
+        return counts;
+    }
+
+    function findMatchingRecipe() {
+        const placed = getCraftingIngredients();
+        const placedKeys = Object.keys(placed);
+        if (placedKeys.length === 0) return null;
+
+        for (const recipe of CRAFTING_RECIPES) {
+            const needed = recipe.ingredients;
+            const neededKeys = Object.keys(needed);
+            // Exact match: same ingredients, same counts
+            if (neededKeys.length !== placedKeys.length) continue;
+            let match = true;
+            for (const key of neededKeys) {
+                if ((placed[key] || 0) !== needed[key]) { match = false; break; }
+            }
+            if (match) return recipe;
+        }
+        return null;
+    }
+
+    function doCraft() {
+        const recipe = findMatchingRecipe();
+        if (!recipe) {
+            showToast('🤔 Kein Rezept gefunden!');
+            return;
+        }
+
+        // Remove items from crafting grid
+        craftingGrid = Array(9).fill(null);
+
+        // Add result to inventory
+        addToInventory(recipe.result, recipe.resultCount);
+        soundCraft();
+
+        const info = MATERIALS[recipe.result];
+        showToast(`⚒️ ${info.emoji} ${recipe.resultCount}x ${info.label} hergestellt!`);
+        trackEvent('craft', { recipe: recipe.name, result: recipe.result });
+        updateCraftingDisplay();
+    }
+
+    function openCraftingDialog() {
+        const dialog = document.getElementById('crafting-dialog');
+        if (dialog) {
+            dialog.classList.remove('hidden');
+            updateCraftingDisplay();
+        }
+    }
+
+    function closeCraftingDialog() {
+        const dialog = document.getElementById('crafting-dialog');
+        if (dialog) dialog.classList.add('hidden');
+        // Return crafting grid items to inventory
+        for (let i = 0; i < 9; i++) {
+            if (craftingGrid[i]) {
+                addToInventory(craftingGrid[i]);
+                craftingGrid[i] = null;
+            }
+        }
+    }
+
+    let selectedInventoryItem = null;
+
+    function updateCraftingDisplay() {
+        // Update crafting grid slots
+        for (let i = 0; i < 9; i++) {
+            const slot = document.getElementById('craft-slot-' + i);
+            if (!slot) continue;
+            if (craftingGrid[i]) {
+                const info = MATERIALS[craftingGrid[i]];
+                slot.innerHTML = `<span class="craft-emoji">${info.emoji}</span>`;
+                slot.classList.add('filled');
+            } else {
+                slot.innerHTML = '';
+                slot.classList.remove('filled');
+            }
+        }
+
+        // Update recipe preview
+        const recipe = findMatchingRecipe();
+        const preview = document.getElementById('craft-result');
+        if (preview) {
+            if (recipe) {
+                const info = MATERIALS[recipe.result];
+                preview.innerHTML = `<span class="craft-emoji">${info.emoji}</span><span class="craft-result-count">${recipe.resultCount > 1 ? recipe.resultCount + 'x' : ''}</span>`;
+                preview.title = recipe.name;
+            } else {
+                preview.innerHTML = '<span class="craft-question">?</span>';
+                preview.title = '';
+            }
+        }
+
+        // Update inventory items in crafting dialog
+        const invList = document.getElementById('craft-inventory');
+        if (invList) {
+            const items = Object.entries(inventory).filter(([, count]) => count > 0);
+            invList.innerHTML = items.map(([mat, count]) => {
+                const info = MATERIALS[mat];
+                if (!info) return '';
+                const selected = selectedInventoryItem === mat ? ' selected' : '';
+                return `<div class="craft-inv-item${selected}" data-material="${mat}">
+                    <span class="inv-emoji">${info.emoji}</span>
+                    <span class="inv-label">${info.label}</span>
+                    <span class="inv-count">${count}</span>
+                </div>`;
+            }).join('') || '<p class="inv-empty">Inventar leer!</p>';
+        }
+
+        // Update recipe book
+        const recipeBook = document.getElementById('recipe-book');
+        if (recipeBook) {
+            recipeBook.innerHTML = CRAFTING_RECIPES.map(r => {
+                const info = MATERIALS[r.result];
+                return `<div class="recipe-entry">${info.emoji} ${r.desc}</div>`;
+            }).join('');
+        }
+    }
+
     // --- Zustand ---
     let grid = [];
     let currentMaterial = 'wood';
@@ -853,6 +1103,17 @@
                 ctx.setLineDash([4, 4]);
                 ctx.strokeRect(hx + 2, hy + 2, CELL_SIZE - 4, CELL_SIZE - 4);
                 ctx.setLineDash([]);
+            } else if (currentTool === 'axe') {
+                const cell = grid[hoverCell.r]?.[hoverCell.c];
+                if (cell === 'tree' || cell === 'small_tree' || cell === 'sapling') {
+                    ctx.strokeStyle = '#8B4513';
+                    ctx.lineWidth = 3;
+                    ctx.strokeRect(hx + 2, hy + 2, CELL_SIZE - 4, CELL_SIZE - 4);
+                    ctx.font = `${CELL_SIZE * 0.4}px serif`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('🪓', hx + CELL_SIZE / 2, hy + CELL_SIZE / 2);
+                }
             }
         }
 
@@ -973,7 +1234,17 @@
         if (currentTool === 'build') {
             if (grid[r][c] !== currentMaterial) {
                 if (!undoPushedThisStroke) { pushUndo(); undoPushedThisStroke = true; }
-                grid[r][c] = currentMaterial;
+                // Wenn man einen Baum pflanzt, startet er als Setzling
+                if (currentMaterial === 'tree' && grid[r][c] === null) {
+                    grid[r][c] = 'sapling';
+                    treeGrowth[r + ',' + c] = Date.now();
+                } else {
+                    grid[r][c] = currentMaterial;
+                    // Setzling direkt platzieren startet auch Wachstum
+                    if (currentMaterial === 'sapling') {
+                        treeGrowth[r + ',' + c] = Date.now();
+                    }
+                }
                 addPlaceAnimation(r, c);
                 soundBuild();
                 maybeNpcComment(currentMaterial);
@@ -984,6 +1255,7 @@
             if (grid[r][c] !== null) {
                 if (!undoPushedThisStroke) { pushUndo(); undoPushedThisStroke = true; }
                 const removed = grid[r][c];
+                delete treeGrowth[r + ',' + c];
                 grid[r][c] = null;
                 addPlaceAnimation(r, c);
                 soundDemolish();
@@ -992,6 +1264,20 @@
             pushUndo();
             floodFill(r, c, grid[r][c], currentMaterial);
             soundBuild();
+        } else if (currentTool === 'axe') {
+            const cell = grid[r][c];
+            if (cell === 'tree' || cell === 'small_tree' || cell === 'sapling') {
+                if (!undoPushedThisStroke) { pushUndo(); undoPushedThisStroke = true; }
+                // Größerer Baum = mehr Holz
+                const woodYield = cell === 'tree' ? 3 : cell === 'small_tree' ? 2 : 1;
+                grid[r][c] = null;
+                delete treeGrowth[r + ',' + c];
+                addToInventory('wood', woodYield);
+                addPlaceAnimation(r, c);
+                soundChop();
+                showToast(`🪓 ${woodYield}x 🪵 Holz gesammelt!`);
+                trackEvent('chop_tree', { type: cell, wood: woodYield });
+            }
         }
         // Teure Checks nur alle 200ms (nicht bei jedem Pixel beim Drag)
         requestStatsUpdate();
@@ -1114,9 +1400,12 @@
         projects[name] = {
             grid: grid,
             date: new Date().toLocaleDateString('de-DE'),
+            treeGrowth: treeGrowth,
+            inventory: inventory,
         };
 
         localStorage.setItem('insel-projekte', JSON.stringify(projects));
+        saveInventory();
         showToast(`💾 "${name}" gespeichert!`);
     }
 
@@ -1135,7 +1424,9 @@
         projects[AUTOSAVE_KEY] = {
             grid: grid,
             date: new Date().toLocaleDateString('de-DE'),
-            auto: true
+            auto: true,
+            treeGrowth: treeGrowth,
+            inventory: inventory,
         };
         localStorage.setItem('insel-projekte', JSON.stringify(projects));
         // Subtiler Indikator: Save-Button blinkt kurz
@@ -1188,9 +1479,12 @@
             } else {
                 initGrid(); // Fallback bei kaputtem Grid
             }
+            treeGrowth = projects[name].treeGrowth || {};
+            inventory = projects[name].inventory || {};
             window.grid = grid;
             projectNameInput.value = name === AUTOSAVE_KEY ? '' : name;
             updateStats();
+            updateInventoryDisplay();
             draw();
             loadDialog.classList.add('hidden');
             showToast(`📂 "${name}" geladen!`);
@@ -1207,8 +1501,12 @@
 
     function newProject() {
         initGrid();
+        treeGrowth = {};
+        inventory = {};
+        saveInventory();
         projectNameInput.value = '';
         updateStats();
+        updateInventoryDisplay();
         draw();
         showToast('🆕 Neue Insel!');
     }
@@ -1475,7 +1773,7 @@
             undo();
             return;
         }
-        // Werkzeug-Shortcuts: B=Bauen, D=Abreißen, F=Füllen
+        // Werkzeug-Shortcuts: B=Bauen, D=Abreißen, F=Füllen, A=Axt
         if (e.key === 'b' || e.key === 'B') {
             currentTool = 'build';
             document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
@@ -1488,6 +1786,10 @@
             currentTool = 'fill';
             document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
             document.querySelector('[data-tool="fill"]')?.classList.add('active');
+        } else if (e.key === 'a' || e.key === 'A') {
+            currentTool = 'axe';
+            document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-tool="axe"]')?.classList.add('active');
         }
     });
 
@@ -1525,6 +1827,7 @@
             case 'b': selectTool('build'); break;
             case 'd': selectTool('demolish'); break;
             case 'f': selectTool('fill'); break;
+            case 'a': selectTool('axe'); break;
             case 's':
                 if (e.ctrlKey || e.metaKey) {
                     e.preventDefault();
@@ -1897,10 +2200,15 @@
     // === START ===
     initGrid();
 
+    // Inventar laden
+    loadInventory();
+
     // Auto-Save wiederherstellen wenn vorhanden
     const savedProjects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
     if (savedProjects[AUTOSAVE_KEY] && isValidGrid(savedProjects[AUTOSAVE_KEY].grid)) {
         grid = savedProjects[AUTOSAVE_KEY].grid;
+        treeGrowth = savedProjects[AUTOSAVE_KEY].treeGrowth || {};
+        inventory = savedProjects[AUTOSAVE_KEY].inventory || inventory;
         window.grid = grid;
         showToast('🔄 Letzte Insel wiederhergestellt');
     }
@@ -1908,6 +2216,65 @@
     draw();
     updateAchievementDisplay();
     updateQuestDisplay();
+    updateInventoryDisplay();
+
+    // --- Crafting Dialog Events ---
+    const craftBtn = document.getElementById('craft-btn');
+    if (craftBtn) craftBtn.addEventListener('click', openCraftingDialog);
+
+    const craftCloseBtn = document.getElementById('close-crafting-dialog');
+    if (craftCloseBtn) craftCloseBtn.addEventListener('click', closeCraftingDialog);
+
+    const craftDoBtn = document.getElementById('do-craft-btn');
+    if (craftDoBtn) craftDoBtn.addEventListener('click', doCraft);
+
+    const craftClearBtn = document.getElementById('clear-craft-btn');
+    if (craftClearBtn) craftClearBtn.addEventListener('click', () => {
+        for (let i = 0; i < 9; i++) {
+            if (craftingGrid[i]) {
+                addToInventory(craftingGrid[i]);
+                craftingGrid[i] = null;
+            }
+        }
+        updateCraftingDisplay();
+    });
+
+    // Crafting grid slot clicks
+    document.getElementById('crafting-dialog')?.addEventListener('click', (e) => {
+        // Click on crafting slot → remove item back to inventory
+        const slot = e.target.closest('.craft-slot');
+        if (slot) {
+            const idx = parseInt(slot.dataset.index);
+            if (craftingGrid[idx]) {
+                addToInventory(craftingGrid[idx]);
+                craftingGrid[idx] = null;
+                updateCraftingDisplay();
+            } else if (selectedInventoryItem && getInventoryCount(selectedInventoryItem) > 0) {
+                removeFromInventory(selectedInventoryItem);
+                craftingGrid[idx] = selectedInventoryItem;
+                updateCraftingDisplay();
+            }
+            return;
+        }
+
+        // Click on inventory item → select it
+        const invItem = e.target.closest('.craft-inv-item');
+        if (invItem) {
+            selectedInventoryItem = invItem.dataset.material;
+            updateCraftingDisplay();
+            return;
+        }
+    });
+
+    // Escape closes crafting dialog
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const craftDialog = document.getElementById('crafting-dialog');
+            if (craftDialog && !craftDialog.classList.contains('hidden')) {
+                closeCraftingDialog();
+            }
+        }
+    });
 
     // Theme anwenden (gespeichertes oder A/B-Test)
     if (!localStorage.getItem('insel-theme')) {

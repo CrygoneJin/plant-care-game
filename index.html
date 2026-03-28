@@ -53,6 +53,7 @@
                 <button class="tool-btn active" data-tool="build" title="Bauen">🖌️ Bauen</button>
                 <button class="tool-btn" data-tool="demolish" title="Abreißen">🗑️ Abreißen</button>
                 <button class="tool-btn" data-tool="fill" title="Füllen">🪣 Füllen</button>
+                <button class="tool-btn" data-tool="axe" title="Axt — Bäume fällen für Holz">🪓 Axt</button>
             </div>
             <div class="toolbar-section">
                 <button class="tool-btn" id="weather-btn" title="Wetter ändern">☀️</button>
@@ -93,8 +94,12 @@
                     <span class="mat-label">Pflanze</span>
                 </button>
                 <button class="material-btn" data-material="tree">
-                    <span class="mat-emoji">🌳</span>
-                    <span class="mat-label">Baum</span>
+                    <span class="mat-emoji">🌱</span>
+                    <span class="mat-label">Baum pflanzen</span>
+                </button>
+                <button class="material-btn" data-material="fire">
+                    <span class="mat-emoji">🔥</span>
+                    <span class="mat-label">Feuer</span>
                 </button>
                 <button class="material-btn" data-material="flower">
                     <span class="mat-emoji">🌸</span>
@@ -176,6 +181,12 @@
                     <p class="no-quests">Rede mit den Inselbewohnern! 💬</p>
                 </div>
 
+                <h2 class="stats-section-title">🎒 Inventar</h2>
+                <div id="inventory-content">
+                    <p class="inv-empty">Noch nichts gesammelt!</p>
+                </div>
+                <button class="action-btn craft-open-btn" id="craft-btn" title="Werkbank öffnen">⚒️ Werkbank</button>
+
                 <h2 class="stats-section-title">🏆 Erfolge</h2>
                 <div id="achievement-list"></div>
             </div>
@@ -188,6 +199,46 @@
                 <h2 id="load-dialog-title">📂 Projekt laden</h2>
                 <div id="saved-projects-list"></div>
                 <button class="action-btn" id="close-load-dialog">❌ Schließen</button>
+            </div>
+        </div>
+
+        <!-- Crafting Dialog -->
+        <div id="crafting-dialog" class="dialog-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="crafting-dialog-title">
+            <div class="dialog-content crafting-content">
+                <h2 id="crafting-dialog-title">⚒️ Werkbank</h2>
+                <div class="crafting-layout">
+                    <div class="crafting-left">
+                        <h3>Dein Inventar</h3>
+                        <div id="craft-inventory" class="craft-inventory"></div>
+                        <p class="craft-hint">Klicke ein Material, dann klicke ein Feld in der Werkbank.</p>
+                    </div>
+                    <div class="crafting-center">
+                        <div class="crafting-grid">
+                            <div class="craft-slot" id="craft-slot-0" data-index="0"></div>
+                            <div class="craft-slot" id="craft-slot-1" data-index="1"></div>
+                            <div class="craft-slot" id="craft-slot-2" data-index="2"></div>
+                            <div class="craft-slot" id="craft-slot-3" data-index="3"></div>
+                            <div class="craft-slot" id="craft-slot-4" data-index="4"></div>
+                            <div class="craft-slot" id="craft-slot-5" data-index="5"></div>
+                            <div class="craft-slot" id="craft-slot-6" data-index="6"></div>
+                            <div class="craft-slot" id="craft-slot-7" data-index="7"></div>
+                            <div class="craft-slot" id="craft-slot-8" data-index="8"></div>
+                        </div>
+                        <div class="craft-arrow">➡️</div>
+                        <div class="craft-result-box" id="craft-result">
+                            <span class="craft-question">?</span>
+                        </div>
+                    </div>
+                    <div class="crafting-right">
+                        <h3>📖 Rezepte</h3>
+                        <div id="recipe-book" class="recipe-book"></div>
+                    </div>
+                </div>
+                <div class="crafting-actions">
+                    <button class="action-btn" id="do-craft-btn">⚒️ Craften!</button>
+                    <button class="action-btn" id="clear-craft-btn">🔄 Leeren</button>
+                    <button class="action-btn" id="close-crafting-dialog">❌ Schließen</button>
+                </div>
             </div>
         </div>
 
