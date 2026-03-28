@@ -502,10 +502,12 @@
     // Kinder entdecken sie beim Bauen — lernen die Namen spielerisch
     const CODE_EASTER_EGGS = {
         stone: [
-            '🪨 Du findest eine Inschrift im Stein: "C war hier. Erster!" Wer ist C?',
+            '🪨 Du findest eine Inschrift im Stein: "C war hier. Erster!" Daneben hat jemand gekritzelt: "LÜGNER! — Fortran, seit 1957"',
             '🪨 Autsch! Jemand ist hier gegen den Stein gelaufen. Daneben steht "C++" geritzt.',
-            '🪨 In den Stein ist geritzt: "10 PRINT HALLO 20 GOTO 10" — "Das ist BASIC!" ruft C. "Mit dem hab ich angefangen!"',
+            '🪨 In den Stein ist geritzt: "10 PRINT HALLO 20 GOTO 10" — "Das ist BASIC!" ruft C. "Mit dem hab ich angefangen!" Fortran krächzt: "ICH war 15 Jahre vor dir da!"',
             '🪨 BASIC sitzt auf dem Stein und zählt: "10... 20... 30..." — "Was machst du?" — "Ich bin die einfachste Sprache der Insel! Jeder fängt mit mir an!"',
+            '🪨 Am Stein lehnt eine alte Tafel: "Pythagoras war hier. 2500 Jahre vor euch ALLEN." C schweigt. Fortran schweigt. Sogar BASIC schweigt.',
+            '🪨 Pascal sitzt auf dem Stein und rechnet. "Blaise Pascal! 1642! MEIN Rechner war der ERSTE!" C murmelt: "Ja, aber konntest du Schleifen?" Pascal: "Ich konnte ADDIEREN. Das reicht."',
         ],
         tree: [
             '🐍 Hinter dem Baum raschelt es! Eine freundliche Schlange: "Hallo, ich bin Python!"',
