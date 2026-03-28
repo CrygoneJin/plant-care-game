@@ -3,11 +3,56 @@
 (function () {
     'use strict';
 
+    // --- Provider-Config ---
+    const PROVIDERS = {
+        langdock: {
+            url: 'https://api.langdock.com/openai/eu/v1/chat/completions',
+            model: 'claude-haiku-4-5-20251001',
+            format: 'openai',
+            authHeader: (key) => ({ 'Authorization': `Bearer ${key}` })
+        },
+        anthropic: {
+            url: 'https://api.anthropic.com/v1/messages',
+            model: 'claude-haiku-4-5-20251001',
+            format: 'anthropic',
+            authHeader: (key) => ({
+                'x-api-key': key,
+                'anthropic-version': '2023-06-01',
+                'anthropic-dangerous-direct-browser-access': 'true'
+            })
+        },
+        openai: {
+            url: 'https://api.openai.com/v1/chat/completions',
+            model: 'gpt-4o-mini',
+            format: 'openai',
+            authHeader: (key) => ({ 'Authorization': `Bearer ${key}` })
+        },
+        gemini: {
+            url: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
+            model: 'gemini-2.0-flash',
+            format: 'openai',
+            authHeader: (key) => ({ 'Authorization': `Bearer ${key}` })
+        },
+        custom: {
+            url: '',
+            model: 'claude-haiku-4-5-20251001',
+            format: 'openai',
+            authHeader: (key) => ({ 'Authorization': `Bearer ${key}` })
+        }
+    };
+
+    const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
+
+    // Token-Budget pro Charakter pro Session (reset bei Seite-Reload)
+    const TOKEN_BUDGET_PER_CHARACTER = 2000;
+    const tokenUsage = {};
+
     // --- Charakter-Prompts ---
     const CHARACTERS = {
         spongebob: {
             name: 'SpongeBob',
             emoji: '🧽',
+            model: DEFAULT_MODEL, // Haiku — immer fröhlich, immer schnell, wie er selbst
             system: `Du bist SpongeBob Schwammkopf auf einer tropischen Insel.
 Du bist immer fröhlich, hilfsbereit und begeistert. Du willst einen Burger-Stand am Hafen bauen.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -17,6 +62,7 @@ Wenn der Spieler etwas gebaut hat, bist du MEGA begeistert.`
         krabs: {
             name: 'Mr. Krabs',
             emoji: '🦀',
+            model: DEFAULT_MODEL, // Haiku — billigstes Modell, passt zu Mr. Krabs
             system: `Du bist Mr. Krabs auf einer tropischen Insel.
 Du liebst Geld und Handel. Du willst einen Handelshafen bauen.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -26,6 +72,7 @@ Wenn der Spieler viel gebaut hat, siehst du Profit-Potenzial.`
         elefant: {
             name: 'Blauer Elefant',
             emoji: '🐘',
+            model: DEFAULT_MODEL,
             system: `Du bist der Blaue Elefant auf einer tropischen Insel.
 Du bist ruhig, geduldig und liebst Pflanzen und Musik. Du willst einen Musik-Turm bauen.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -35,6 +82,7 @@ Du bist der ruhige Gegenpol zu den aufgeregten Charakteren.`
         tommy: {
             name: 'Tommy Krab',
             emoji: '🦀',
+            model: DEFAULT_MODEL,
             system: `Du bist Tommy Krab, ein kleiner roter Krebs auf einer tropischen Insel.
 Du bist schnell, neugierig und sagst zu allem "Ja!". Du willst den Hafen mit Booten füllen.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -43,6 +91,7 @@ Du machst "klick-klack!" Geräusche und bist der eifrigste Helfer.`
         neinhorn: {
             name: 'Neinhorn',
             emoji: '🦄',
+            model: DEFAULT_MODEL, // Sagt zu jedem Modell "Nein!" — Modell ist egal
             system: `Du bist das Neinhorn auf einer tropischen Insel.
 Du bist frech, sagst erst "Nein!" zu allem, hilfst aber am Ende doch.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -52,6 +101,7 @@ WICHTIG: Starte fast jede Antwort mit "Nein!" und sei trotzig-lustig.`
         maus: {
             name: 'Maus & Ente',
             emoji: '🐭',
+            model: DEFAULT_MODEL,
             system: `Du bist die Maus und die Ente zusammen auf einer tropischen Insel.
 Ihr seid ein lustiges Duo. Die Maus piepst, die Ente quakt.
 Ihr sprecht Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -77,13 +127,21 @@ Schreibt Geräusche so: *pieps pieps* und *quak quak!*`
     // --- State ---
     let chatHistory = [];
 
-    // --- API Key ---
+    // --- Settings ---
     function getApiKey() {
-        return localStorage.getItem('anthropic-api-key') || '';
+        return localStorage.getItem('langdock-api-key') || '';
     }
 
     function setApiKey(key) {
-        localStorage.setItem('anthropic-api-key', key);
+        localStorage.setItem('langdock-api-key', key);
+    }
+
+    function getApiUrl() {
+        return localStorage.getItem('langdock-api-url') || DEFAULT_API_URL;
+    }
+
+    function setApiUrl(url) {
+        localStorage.setItem('langdock-api-url', url);
     }
 
     // --- Grid-Kontext lesen ---
@@ -132,8 +190,16 @@ Schreibt Geräusche so: *pieps pieps* und *quak quak!*`
             return;
         }
 
-        const char = CHARACTERS[charSelect.value];
+        const charId = charSelect.value;
+        const char = CHARACTERS[charId];
         const gridInfo = getGridContext();
+
+        // Token-Budget Check
+        if (!tokenUsage[charId]) tokenUsage[charId] = 0;
+        if (tokenUsage[charId] >= TOKEN_BUDGET_PER_CHARACTER) {
+            addMessage(`${char.emoji} ${char.name} ist müde und macht Pause. (Token-Budget aufgebraucht)`, 'system');
+            return;
+        }
 
         chatHistory.push({ role: 'user', content: userMessage });
 
@@ -145,21 +211,41 @@ Schreibt Geräusche so: *pieps pieps* und *quak quak!*`
         const loadingDiv = addMessage(`${char.emoji} denkt nach...`, 'loading');
         sendBtn.disabled = true;
 
+        const providerId = localStorage.getItem('api-provider') || 'langdock';
+        const provider = PROVIDERS[providerId] || PROVIDERS.langdock;
+        const apiUrl = getApiUrl() || provider.url;
+        const model = char.model || provider.model;
+        const systemPrompt = `${char.system}\n\nAktueller Insel-Status: ${gridInfo}\n\nAntworte IMMER auf Deutsch. Maximal 2-3 kurze Sätze. Sei lustig und ermutigend.`;
+
+        let body, headers;
+
+        if (provider.format === 'anthropic') {
+            // Anthropic Messages API
+            headers = { 'Content-Type': 'application/json', ...provider.authHeader(key) };
+            body = JSON.stringify({
+                model: model,
+                max_tokens: 150,
+                system: systemPrompt,
+                messages: chatHistory
+            });
+        } else {
+            // OpenAI-kompatibel (Langdock, OpenAI, Gemini, Custom)
+            headers = { 'Content-Type': 'application/json', ...provider.authHeader(key) };
+            body = JSON.stringify({
+                model: model,
+                max_tokens: 150,
+                messages: [
+                    { role: 'system', content: systemPrompt },
+                    ...chatHistory
+                ]
+            });
+        }
+
         try {
-            const response = await fetch('https://api.anthropic.com/v1/messages', {
+            const response = await fetch(apiUrl, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-api-key': key,
-                    'anthropic-version': '2023-06-01',
-                    'anthropic-dangerous-direct-browser-access': 'true'
-                },
-                body: JSON.stringify({
-                    model: 'claude-haiku-4-5-20251001',
-                    max_tokens: 150,
-                    system: `${char.system}\n\nAktueller Insel-Status: ${gridInfo}\n\nAntworte IMMER auf Deutsch. Maximal 2-3 kurze Sätze. Sei lustig und ermutigend.`,
-                    messages: chatHistory
-                })
+                headers: headers,
+                body: body
             });
 
             loadingDiv.remove();
@@ -177,7 +263,16 @@ Schreibt Geräusche so: *pieps pieps* und *quak quak!*`
             }
 
             const data = await response.json();
-            const reply = data.content[0].text;
+
+            // Response-Format: Anthropic vs OpenAI
+            const reply = provider.format === 'anthropic'
+                ? data.content[0].text
+                : data.choices[0].message.content;
+
+            // Token-Tracking
+            if (data.usage) {
+                tokenUsage[charId] += data.usage.total_tokens || (data.usage.input_tokens + data.usage.output_tokens) || 0;
+            }
 
             chatHistory.push({ role: 'assistant', content: reply });
             addMessage(`${char.emoji} ${reply}`, 'npc');
@@ -228,16 +323,29 @@ Schreibt Geräusche so: *pieps pieps* und *quak quak!*`
         if (e.key === 'Enter') sendMessage();
     });
 
-    // API-Key Dialog
+    // API Settings Dialog
+    const providerSelect = document.getElementById('api-provider');
+    const apiUrlInput = document.getElementById('api-url-input');
+
     settingsBtn.addEventListener('click', () => {
         apiKeyInput.value = getApiKey();
+        apiUrlInput.value = getApiUrl();
+        providerSelect.value = localStorage.getItem('api-provider') || 'langdock';
         apiKeyDialog.classList.remove('hidden');
+    });
+
+    providerSelect.addEventListener('change', () => {
+        const p = PROVIDERS[providerSelect.value];
+        if (p && p.url) apiUrlInput.value = p.url;
     });
 
     apiKeySave.addEventListener('click', () => {
         setApiKey(apiKeyInput.value.trim());
+        setApiUrl(apiUrlInput.value.trim());
+        localStorage.setItem('api-provider', providerSelect.value);
         apiKeyDialog.classList.add('hidden');
-        addMessage('API-Key gespeichert!', 'system');
+        const pName = providerSelect.options[providerSelect.selectedIndex].text;
+        addMessage(`${pName} konfiguriert!`, 'system');
     });
 
     apiKeyClose.addEventListener('click', () => {

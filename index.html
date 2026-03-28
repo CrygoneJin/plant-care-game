@@ -155,12 +155,29 @@
             </div>
         </div>
 
-        <!-- API-Key Dialog -->
+        <!-- API Settings Dialog -->
         <div id="api-key-dialog" class="dialog-overlay hidden">
-            <div class="dialog-content" style="max-width: 400px;">
-                <h2>🔑 API-Key</h2>
-                <p style="font-size: 14px; color: #666; margin-bottom: 12px;">Anthropic API-Key für die Insel-Charaktere. Wird nur lokal gespeichert.</p>
-                <input type="password" id="api-key-input" placeholder="sk-ant-..." style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; margin-bottom: 12px;">
+            <div class="dialog-content" style="max-width: 420px;">
+                <h2>🔑 KI-Einstellungen</h2>
+                <p style="font-size: 13px; color: #666; margin-bottom: 12px;">Wähle deinen KI-Anbieter. Alles bleibt lokal gespeichert.</p>
+
+                <label style="font-size: 13px; font-weight: bold; display: block; margin-bottom: 4px;">Anbieter:</label>
+                <select id="api-provider" style="width: 100%; padding: 8px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; margin-bottom: 12px;">
+                    <option value="langdock">Langdock (EU)</option>
+                    <option value="anthropic">Anthropic (direkt)</option>
+                    <option value="openai">OpenAI</option>
+                    <option value="gemini">Google Gemini</option>
+                    <option value="custom">Eigener Endpoint (LiteLLM etc.)</option>
+                </select>
+
+                <label style="font-size: 13px; font-weight: bold; display: block; margin-bottom: 4px;">API-Key:</label>
+                <input type="password" id="api-key-input" placeholder="sk-..." style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; margin-bottom: 12px;">
+
+                <label style="font-size: 13px; font-weight: bold; display: block; margin-bottom: 4px;">Endpoint URL:</label>
+                <input type="text" id="api-url-input" placeholder="https://api.langdock.com/openai/eu/v1/chat/completions" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 13px; margin-bottom: 12px;">
+
+                <p style="font-size: 12px; color: #999; margin-bottom: 12px;">Token-Budget: 2000 pro Charakter pro Session. Damit nichts explodiert. 💸</p>
+
                 <div style="display: flex; gap: 8px; justify-content: center;">
                     <button class="action-btn" id="api-key-save">💾 Speichern</button>
                     <button class="action-btn" id="api-key-close">❌ Schließen</button>
