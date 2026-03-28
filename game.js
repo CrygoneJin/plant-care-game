@@ -1129,6 +1129,54 @@
         }
     });
 
+    // --- Postkarte von Java (Godin: "Ein Share-Moment fehlt") ---
+    const postcardBtn = document.getElementById('postcard-btn');
+    if (postcardBtn) {
+        postcardBtn.addEventListener('click', () => {
+            const stats = getGridStats();
+            const name = projectNameInput.value.trim() || 'Meine Insel';
+
+            // Temporäres Canvas für Postkarte
+            const pc = document.createElement('canvas');
+            const pcCtx = pc.getContext('2d');
+            pc.width = canvas.width;
+            pc.height = canvas.height + 80;
+
+            // Insel kopieren
+            pcCtx.drawImage(canvas, 0, 0);
+
+            // Postkarten-Banner unten
+            pcCtx.fillStyle = 'rgba(0, 0, 0, 0.75)';
+            pcCtx.fillRect(0, canvas.height, pc.width, 80);
+
+            pcCtx.fillStyle = '#F9E79F';
+            pcCtx.font = 'bold 18px Fredoka, sans-serif';
+            pcCtx.textAlign = 'center';
+            pcCtx.fillText(`📸 Grüße von der Insel Java!`, pc.width / 2, canvas.height + 28);
+
+            pcCtx.fillStyle = '#FFFFFF';
+            pcCtx.font = '14px Comic Neue, sans-serif';
+            const discoveries = discoveredEggs.length;
+            pcCtx.fillText(
+                `🏗️ ${stats.total} Blöcke · 🎨 ${stats.uniqueMats} Materialien · 🔍 ${discoveries} Bewohner entdeckt · 🏆 ${unlockedAchievements.length} Erfolge`,
+                pc.width / 2, canvas.height + 52
+            );
+
+            pcCtx.font = '11px Comic Neue, sans-serif';
+            pcCtx.fillStyle = '#AAA';
+            pcCtx.fillText('Außer Text nix gehext. 🏝️', pc.width / 2, canvas.height + 72);
+
+            // Download
+            const link = document.createElement('a');
+            link.download = `postkarte-von-java-${name.replace(/\s+/g, '-')}.png`;
+            link.href = pc.toDataURL('image/png');
+            link.click();
+
+            showToast('📸 Postkarte gespeichert! Zeig sie deinen Freunden!');
+            trackEvent('postcard', { blocks: stats.total, discoveries });
+        });
+    }
+
     // Lade-Dialog Events
     document.getElementById('close-load-dialog').addEventListener('click', () => {
         loadDialog.classList.add('hidden');
