@@ -465,21 +465,18 @@
                 ctx.fillRect(0, -5, canvas.width * 1.5, 10 + i * 3);
                 ctx.restore();
             }
-        } else if (weather === 'rainbow') {
-            // Regenbogen über der Insel!
-            const colors = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#4B0082', '#9400D3'];
-            const cx = canvas.width / 2;
-            const cy = canvas.height * 0.8;
-            const radius = canvas.width * 0.35;
-            ctx.globalAlpha = 0.25;
-            colors.forEach((color, i) => {
-                ctx.strokeStyle = color;
-                ctx.lineWidth = 4;
-                ctx.beginPath();
-                ctx.arc(cx, cy, radius - i * 5, Math.PI, 0);
-                ctx.stroke();
-            });
-            ctx.globalAlpha = 1;
+        }
+
+        // Regenbogen als Hintergrund-Effekt (nicht auf Canvas)
+        const rainbowBg = document.getElementById('rainbow-bg');
+        if (rainbowBg) {
+            if (weather === 'rainbow') {
+                rainbowBg.classList.add('rainbow-visible');
+                rainbowBg.classList.remove('rainbow-hidden');
+            } else {
+                rainbowBg.classList.remove('rainbow-visible');
+                rainbowBg.classList.add('rainbow-hidden');
+            }
         }
     }
 
