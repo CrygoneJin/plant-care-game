@@ -192,6 +192,9 @@ Zwei Schichten, ein Spiel. Pixar-Prinzip.
 - Haiku-Bauanleitungen als Quests
 - Mobile UX polieren: Touch besser, Palette scrollbar
 - **Regler statt Schalter**: Alle Feedback-Systeme auf Spektrum umbauen (Dusch-Prinzip)
+- **Undo testen**: Drag-Undo muss pro Stroke pushen, nicht pro Zelle (Bug gefunden + gefixt)
+- **Mehr Quests**: 20 reicht für Start, 3 Schwierigkeitsrunden geben natürliche Progression
+- **Quest-Wärmer/Kälter**: "Fast! Noch 2x wood!" — Oskars Dusch-Prinzip direkt im Spiel umgesetzt
 
 ---
 
