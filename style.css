@@ -552,10 +552,24 @@ header h1 {
         padding: 6px 10px;
     }
 
-    /* Toolbar: kompakter */
+    /* Toolbar: eine Zeile, scrollbar */
     #toolbar {
         padding: 6px 8px;
-        gap: 6px;
+        gap: 4px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    #toolbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .toolbar-section {
+        flex-wrap: nowrap;
+        flex-shrink: 0;
+        gap: 4px;
     }
 
     .toolbar-label {
@@ -563,14 +577,31 @@ header h1 {
     }
 
     .tool-btn, .action-btn {
-        font-size: 14px;
-        padding: 6px 8px;
-    }
-
-    #project-name {
-        width: 100px;
         font-size: 13px;
         padding: 5px 8px;
+        white-space: nowrap;
+    }
+
+    /* Nur Icons auf Mobile, Text weg */
+    .action-btn {
+        font-size: 0;
+    }
+    .action-btn::before {
+        font-size: 16px;
+    }
+    #save-btn { font-size: 0; }
+    #save-btn::after { content: '💾'; font-size: 16px; }
+    #load-btn { font-size: 0; }
+    #load-btn::after { content: '📂'; font-size: 16px; }
+    #new-btn { font-size: 0; }
+    #new-btn::after { content: '🆕'; font-size: 16px; }
+    #postcard-btn { font-size: 0; }
+    #postcard-btn::after { content: '📸'; font-size: 16px; }
+
+    #project-name {
+        width: 80px;
+        font-size: 12px;
+        padding: 4px 6px;
     }
 
     /* Hauptbereich: vertikal stacken */
@@ -579,15 +610,21 @@ header h1 {
         overflow: auto;
     }
 
-    /* Palette: horizontal, scrollbar oben */
+    /* Palette: horizontal, scrollbar */
     #palette {
         width: 100%;
         flex-direction: row;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         gap: 4px;
         padding: 6px;
         overflow-x: auto;
         overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    #palette::-webkit-scrollbar {
+        display: none;
     }
 
     #palette h2 {
@@ -595,14 +632,19 @@ header h1 {
     }
 
     .material-btn {
-        flex-direction: row;
+        flex-direction: column;
         min-height: auto;
-        padding: 5px 8px;
-        gap: 4px;
+        padding: 4px 6px;
+        gap: 2px;
+        flex-shrink: 0;
     }
 
     .mat-emoji {
-        font-size: 18px;
+        font-size: 20px;
+    }
+
+    .mat-name {
+        font-size: 9px;
     }
 
     .mat-label {
