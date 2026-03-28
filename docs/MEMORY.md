@@ -266,6 +266,73 @@ Zwei Schichten, ein Spiel. Pixar-Prinzip.
 
 ---
 
+## Session 2026-03-28 (Nachmittag — Oskars erster echter Test)
+
+### Feynman-Messung: Oskar (8), iPhone, ~15 Minuten
+
+**Ergebnis:** "Das Spiel gefällt ihm. Papa: du hast dir richtig Mühe gegeben."
+Danach: "Jetzt ist wieder Minecraft dran." → Ehrlichster Benchmark der Welt.
+
+### Was Oskar gemacht hat (Beobachtung)
+- **5+ Minuten reines Bauen** — Flow-State, nichts anderes angefasst
+- **Freischaltungen sofort ausprobiert** — jedes neue Material direkt getestet
+- **Counter/Statistiken ignoriert** — null Interesse an Zahlen
+- **Wetter-Button entdeckt** — Regenbogen aktiviert, dann nicht gewusst wie weg
+- **"Alles löschen" vermisst** — Workaround selbst gefunden
+- **Toasts/Kommentare ignoriert** — blockierten Baufeld, dann einfach weggeklickt
+
+### Was Oskar NICHT gemacht hat
+- Chat mit NPCs geöffnet
+- Quests angeschaut
+- Statistiken gelesen
+- Theme gewechselt
+- Code-View geöffnet
+- Gespeichert/Geladen
+
+### Was den Papa genervt hat
+- Symbole auf iPhone viel zu klein (gefixt: 20→28px)
+- Klickton monoton (gefixt: pentatonische Zufallsmelodie)
+- Toast blockiert Baufeld (gefixt: nach oben verschoben)
+- API-Key auf dem Handy nicht zur Hand
+- 10 Minuten Setup auf MacBook — viel zu lang
+
+### Erkenntnisse
+| # | Erkenntnis | Feynman-Bewertung |
+|---|------------|-------------------|
+| 1 | **Bauen ist DAS Feature.** Alles andere ist Beiwerk. | Falsifizierbar: Bauen = 100% der Spielzeit |
+| 2 | **Freischaltungen motivieren.** Unlock-System funktioniert. | Beobachtet: sofortiges Ausprobieren neuer Materialien |
+| 3 | **Statistiken sind für Erwachsene.** Kinder bauen, Eltern zählen. | Falsifizierbar: 0% Interaktion mit Stats-Panel |
+| 4 | **Setup-Zeit > 2 Minuten = Frustration.** | 10 Min Setup → "sohn ist enttäuscht" |
+| 5 | **Sound muss Chaos haben.** Monoton = nervig nach 30 Sekunden. | Papa nach 5 Min: "der klickton geht mir auf die nerven" |
+| 6 | **Minecraft ist der Benchmark.** Wenn er zurückgeht ist das kein Versagen — das ist Realität. | "Jetzt ist wieder Minecraft dran" = normales Verhalten |
+| 7 | **"Du hast dir Mühe gegeben" > jede App-Store-Bewertung.** | Unquantifizierbar. Aber wahr. |
+
+### Erfolge (live deployed)
+| Datum | Was |
+|-------|-----|
+| 2026-03-28 | Toast auf Mobile nach oben verschoben — blockiert Baufeld nicht mehr |
+| 2026-03-28 | Chaos-Sounds: Pentatonische Zufallsmelodie beim Bauen |
+| 2026-03-28 | Dorisch/Lydisch/Mixolydisch — Kirchentonarten mit Pythagoras-Stimmung |
+| 2026-03-28 | Symbole 40% größer (iPhone-tauglich, Kinderfinger-kompatibel) |
+| 2026-03-28 | Demolish-Sound: je leerer die Insel desto tiefer (Feynman+Krapweis) |
+
+### Auf Feature-Branch (noch nicht live)
+| Was | Status |
+|-----|--------|
+| Hexagonal Grid (Buckminster Fuller meets Catan) | Committed, nicht gemergt |
+| 6-Nachbarn Flood Fill | Committed, nicht gemergt |
+| Hex-Geometrie (pixelToHex, hexCenter, hexPath) | Committed, nicht gemergt |
+
+### Nächste Session
+- **Hex-Grid testen und mergen** — größte Architekturänderung bisher
+- **Tetris-Mode** — Oskar-Wunsch, Details klären
+- **API-Key-Portabilität** — QR-Code oder URL-Parameter?
+- **Setup-Zeit unter 2 Minuten** — GitHub Pages muss zuverlässig laufen
+- **Key rotieren** — immer noch offen
+- **Bauen priorisieren** — alles was Bauen verbessert > alles andere
+
+---
+
 ## Offene Fragen
 
 - [ ] Wie misst man ob die 80/20-Ratio der Padawans stimmt?
