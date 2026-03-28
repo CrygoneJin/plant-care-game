@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hau den Lukas – Pumpen-Check</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a1628;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 24px 16px 40px;
+    color: #fff;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #4fc3f7;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    font-size: 0.85rem;
+    color: #78909c;
+    margin-bottom: 32px;
+    letter-spacing: 0.08em;
+  }
+
+  .scene {
+    display: flex;
+    align-items: flex-end;
+    gap: 50px;
+    margin-bottom: 30px;
+  }
+
+  /* Tower */
+  .tower-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+  }
+
+  .bell {
+    font-size: 2.9rem;
+    transition: all 0.15s;
+    filter: grayscale(1) brightness(0.5);
+  }
+  .bell.ring {
+    filter: grayscale(0) brightness(1.5) drop-shadow(0 0 18px gold);
+    animation: ringBell 0.6s ease;
+  }
+  @keyframes ringBell {
+    0%,100%{transform:rotate(0)}
+    20%{transform:rotate(-22deg)}
+    50%{transform:rotate(18deg)}
+    75%{transform:rotate(-12deg)}
+  }
+
+  .tower {
+    width: 34px;
+    height: 370px;
+    background: linear-gradient(to right, #1a2940, #243554, #1a2940);
+    border-radius: 8px;
+    border: 2px solid #2a3f60;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .zone-band {
+    position: absolute;
+    left: 0; right: 0;
+    border-radius: 4px;
+  }
+
+  .puck {
+    position: absolute;
+    left: 3px; right: 3px;
+    height: 22px;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #4fc3f7, #0288d1);
+    box-shadow: 0 0 14px #4fc3f7aa;
+    transition: bottom 0.75s cubic-bezier(0.22, 0.68, 0, 1.3);
+  }
+
+  .tower-labels {
+    position: absolute;
+    right: -78px;
+    top: 0; bottom: 0;
+    width: 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  .zone-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-align: left;
+  }
+
+  .base {
+    width: 92px;
+    height: 18px;
+    background: #1e3050;
+    border-radius: 6px;
+    border: 2px solid #2a3f60;
+  }
+
+  /* Pump */
+  .pump-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .pump-svg {
+    width: 110px;
+    height: 110px;
+    filter: drop-shadow(0 0 12px #0288d155);
+    transition: filter 0.4s;
+  }
+  .pump-svg.danger {
+    filter: drop-shadow(0 0 20px #ef5350cc);
+    animation: shake 0.5s ease;
+  }
+  @keyframes shake {
+    0%,100%{transform:translateX(0)}
+    25%{transform:translateX(-6px)}
+    75%{transform:translateX(6px)}
+  }
+
+  .pump-label {
+    font-size: 0.78rem;
+    color: #78909c;
+    text-align: center;
+  }
+
+  /* Hammer Button */
+  .hammer-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin: 25px 0;
+  }
+  .hammer-btn {
+    cursor: pointer;
+    font-size: 4.2rem;
+    background: none;
+    border: none;
+    transition: transform 0.1s;
+    user-select: none;
+  }
+  .hammer-btn:active {
+    transform: rotate(-38deg) scale(0.82);
+  }
+
+  .hit-label {
+    font-size: 0.78rem;
+    color: #546e7a;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* Scenarios */
+  .scenarios {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+  .scenario-btn {
+    background: #132033;
+    border: 1px solid #2a3f60;
+    color: #90caf9;
+    font-size: 0.8rem;
+    padding: 9px 18px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .scenario-btn:hover { background: #1e3050; border-color: #4fc3f7; }
+  .scenario-btn.active {
+    background: #0d47a1;
+    border-color: #4fc3f7;
+    color: #fff;
+  }
+
+  /* Status Card */
+  .status-card {
+    background: #0e1e30;
+    border: 1px solid #1e3555;
+    border-radius: 14px;
+    padding: 22px 24px;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    min-height: 140px;
+    position: relative;
+  }
+  .status-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 14px 14px 0 0;
+  }
+  .status-card.ok::before    { background: #26a69a; }
+  .status-card.warn::before  { background: #ffa726; }
+  .status-card.alarm::before { background: #ef5350; }
+
+  .status-icon { font-size: 2.1rem; margin-bottom: 8px; }
+  .status-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .status-text {
+    font-size: 0.85rem;
+    color: #90a4ae;
+    line-height: 1.55;
+  }
+
+  .footer {
+    margin-top: 40px;
+    font-size: 0.7rem;
+    color: #37474f;
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+
+<h1>Hau den Lukas</h1>
+<div class="subtitle">Wie krank ist deine Pumpe?</div>
+
+<div class="scene">
+  <!-- Tower -->
+  <div class="tower-wrap">
+    <div class="bell" id="bell">🔔</div>
+    <div class="tower" id="tower">
+      <div class="puck" id="puck"></div>
+    </div>
+    <div class="base"></div>
+    <div class="tower-labels" id="towerLabels"></div>
+  </div>
+
+  <!-- Pump -->
+  <div class="pump-wrap">
+    <svg class="pump-svg" id="pumpSvg" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Motor body -->
+      <rect x="12" y="38" width="52" height="34" rx="6" fill="#1a3a5c" stroke="#4fc3f7" stroke-width="2"/>
+      <!-- Ribs -->
+      <line x1="22" y1="38" x2="22" y2="72" stroke="#2a5080" stroke-width="2"/>
+      <line x1="34" y1="38" x2="34" y2="72" stroke="#2a5080" stroke-width="2"/>
+      <line x1="46" y1="38" x2="46" y2="72" stroke="#2a5080" stroke-width="2"/>
+      <!-- Shaft -->
+      <rect x="64" y="50" width="14" height="8" rx="2" fill="#4fc3f7" opacity="0.75"/>
+      <!-- Volute -->
+      <circle cx="88" cy="55" r="19" fill="#132a45" stroke="#4fc3f7" stroke-width="2"/>
+      <circle cx="88" cy="55" r="11" fill="#0d47a1" stroke="#4fc3f7" stroke-width="1.5"/>
+      <!-- Impeller -->
+      <line x1="88" y1="42" x2="88" y2="68" stroke="#4fc3f7" stroke-width="2" opacity="0.6"/>
+      <line x1="75" y1="55" x2="101" y2="55" stroke="#4fc3f7" stroke-width="2" opacity="0.6"/>
+      <line x1="78" y1="46" x2="98" y2="64" stroke="#4fc3f7" stroke-width="2" opacity="0.5"/>
+      <line x1="98" y1="46" x2="78" y2="64" stroke="#4fc3f7" stroke-width="2" opacity="0.5"/>
+      <!-- Nozzle -->
+      <rect x="102" y="48" width="12" height="10" rx="2" fill="#1a3a5c" stroke="#4fc3f7" stroke-width="2"/>
+      <!-- Vibration waves -->
+      <g id="vibeWaves" opacity="0">
+        <path d="M8 55 Q2 45 8 35" stroke="#ef5350" stroke-width="2.5" fill="none" stroke-dasharray="4,3"/>
+        <path d="M3 55 Q-5 42 3 29" stroke="#ef5350" stroke-width="1.5" fill="none" stroke-dasharray="4,3" opacity="0.6"/>
+      </g>
+    </svg>
+    <div class="pump-label" id="pumpLabel">Pumpe #1 — Kühlwasser</div>
+  </div>
+</div>
+
+<!-- Scenarios -->
+<div class="scenarios">
+  <button class="scenario-btn active" data-level="0.08" data-id="healthy" onclick="setScenario(this)">🟢 Gesund</button>
+  <button class="scenario-btn" data-level="0.42" data-id="wear" onclick="setScenario(this)">🟡 Lager-Verschleiß</button>
+  <button class="scenario-btn" data-level="0.68" data-id="misalign" onclick="setScenario(this)">🟠 Unwucht</button>
+  <button class="scenario-btn" data-level="0.91" data-id="critical" onclick="setScenario(this)">🔴 Kritischer Zustand</button>
+</div>
+
+<!-- Hammer -->
+<div class="hammer-area">
+  <button class="hammer-btn" id="hammerBtn" onclick="swing()" title="Hau drauf!">🔨</button>
+  <div class="hit-label">Messung auslösen</div>
+</div>
+
+<!-- Status -->
+<div class="status-card ok" id="statusCard">
+  <div class="status-icon" id="statusIcon">✅</div>
+  <div class="status-title" id="statusTitle">PUMPE IN ORDNUNG</div>
+  <div class="status-text" id="statusText">Alle Werte im grünen Bereich. Keine Maßnahmen erforderlich.</div>
+</div>
+
+<div class="footer">Hau den Lukas • Pumpen-Zustand • Spaß-Edition</div>
+
+<script>
+const TOWER_H = 370;
+const ZONES = [
+  { id: 'off',    label: 'AUS',          color: '#37474f', from: 0.00, to: 0.08 },
+  { id: 'ok',     label: 'NORMAL',       color: '#26a69a', from: 0.08, to: 0.35 },
+  { id: 'iso7',   label: 'ISO 7 ⚠',     color: '#fdd835', from: 0.35, to: 0.55 },
+  { id: 'iso6',   label: 'ISO 6 🔶',    color: '#ff9800', from: 0.55, to: 0.75 },
+  { id: 'alarm',  label: 'ALARM 🚨',    color: '#ef5350', from: 0.75, to: 1.00 },
+];
+
+const STATUSES = {
+  healthy: {
+    card: 'ok',
+    icon: '✅',
+    title: 'PUMPE IN ORDNUNG',
+    text: 'Alle Werte im grünen Bereich. Keine Maßnahmen erforderlich.',
+  },
+  wear: {
+    card: 'warn',
+    icon: '⚠️',
+    title: 'LAGER-VERSCHLEISS ERKANNT',
+    text: 'Dynamische Grenzwerte überschritten. Lageraustausch bei nächster Wartung empfohlen.',
+  },
+  misalign: {
+    card: 'warn',
+    icon: '🔶',
+    title: 'UNWUCHT / FEHLAUSRICHTUNG',
+    text: 'Erhöhte Schwingungen durch Unwucht oder Fehlausrichtung. Überprüfung empfohlen.',
+  },
+  critical: {
+    card: 'alarm',
+    icon: '🚨',
+    title: 'KRITISCHER ZUSTAND',
+    text: 'Schwingungspegel im Alarmbereich. Sofortige Inspektion und Abschaltung empfohlen!',
+  },
+};
+
+let currentLevel = 0.08;
+let currentId = 'healthy';
+
+function drawZones() {
+  const tower = document.getElementById('tower');
+  const labels = document.getElementById('towerLabels');
+  labels.innerHTML = '';
+
+  ZONES.forEach(z => {
+    const band = document.createElement('div');
+    band.className = 'zone-band';
+    const bot = z.from * TOWER_H;
+    const ht  = (z.to - z.from) * TOWER_H;
+    band.style.cssText = `bottom:${bot}px; height:${ht}px; background:${z.color}22; border-top:1px solid ${z.color}44;`;
+    tower.insertBefore(band, document.getElementById('puck'));
+
+    const lbl = document.createElement('div');
+    lbl.className = 'zone-label';
+    lbl.style.cssText = `color:${z.color}; position:absolute; bottom:${bot + ht/2 - 10}px;`;
+    lbl.textContent = z.label;
+    labels.appendChild(lbl);
+  });
+}
+
+function movePuck(level) {
+  const puck = document.getElementById('puck');
+  const targetBottom = Math.max(0, Math.min(0.97, level) * TOWER_H - 11);
+  puck.style.bottom = targetBottom + 'px';
+
+  const zone = ZONES.find(z => level >= z.from && level < z.to) || ZONES[ZONES.length-1];
+  puck.style.background = `linear-gradient(90deg, ${zone.color}cc, ${zone.color})`;
+  puck.style.boxShadow = `0 0 14px ${zone.color}88`;
+}
+
+function ringBell(ring) {
+  document.getElementById('bell').classList.toggle('ring', ring);
+}
+
+function shakePump(shake) {
+  const svg = document.getElementById('pumpSvg');
+  const waves = document.getElementById('vibeWaves');
+  svg.classList.toggle('danger', shake);
+  waves.style.opacity = shake ? '1' : '0';
+}
+
+function updateStatus(id) {
+  const s = STATUSES[id];
+  const card = document.getElementById('statusCard');
+  card.className = `status-card ${s.card}`;
+  document.getElementById('statusIcon').textContent = s.icon;
+  document.getElementById('statusTitle').textContent = s.title;
+  document.getElementById('statusText').textContent = s.text;
+}
+
+function setScenario(btn) {
+  document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  currentLevel = parseFloat(btn.dataset.level);
+  currentId = btn.dataset.id;
+
+  const puck = document.getElementById('puck');
+  puck.style.transition = 'none';
+  puck.style.bottom = '0px';
+  ringBell(false);
+  shakePump(false);
+
+  setTimeout(() => {
+    puck.style.transition = 'bottom 0.75s cubic-bezier(0.22, 0.68, 0, 1.3)';
+  }, 50);
+}
+
+function swing() {
+  const btn = document.getElementById('hammerBtn');
+  btn.style.transform = 'rotate(-40deg) scale(0.82)';
+  setTimeout(() => btn.style.transform = '', 180);
+
+  const noise = (Math.random() - 0.5) * 0.05;
+  const level = Math.max(0.02, Math.min(0.99, currentLevel + noise));
+
+  movePuck(level);
+  ringBell(level >= 0.75);
+  shakePump(level >= 0.55);
+  updateStatus(currentId);
+}
+
+// Init
+drawZones();
+movePuck(0.08);
+updateStatus('healthy');
+</script>
+</body>
+</html>
