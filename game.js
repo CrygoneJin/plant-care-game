@@ -589,6 +589,9 @@
             ctx.globalAlpha = 1;
         }
 
+        // Code-View Overlay (zeigt Quellcode statt Emojis)
+        drawCodeOverlay();
+
         requestAnimationFrame(draw);
     }
 
@@ -1021,6 +1024,15 @@
         });
     }
 
+    // --- Code-View-Button ---
+    const codeViewBtn = document.getElementById('code-view-btn');
+    if (codeViewBtn) {
+        codeViewBtn.addEventListener('click', () => {
+            window.toggleCodeView();
+            codeViewBtn.classList.toggle('active', codeViewActive);
+        });
+    }
+
     // --- Wetter-Button ---
     const weatherBtn = document.getElementById('weather-btn');
     const WEATHER_TYPES = ['sun', 'rain', 'rainbow'];
@@ -1103,8 +1115,128 @@
         };
     };
 
+    // --- Code-Zauber: Chat-Befehle → Grid-Aktionen ---
+    // "Außer Text Nix gehext" — Worte werden Realität
+    window.codeZauber = function (command) {
+        const cmd = command.toLowerCase().trim();
+        let result = null;
+
+        // "baue X [material]" — platziert X Blöcke zufällig
+        const baueMatch = cmd.match(/^baue?\s+(\d+)\s+(.+)/);
+        if (baueMatch) {
+            const count = Math.min(parseInt(baueMatch[1]), 20); // Max 20 auf einmal
+            const matName = baueMatch[2].trim();
+            const matKey = Object.entries(MATERIALS).find(([k, v]) =>
+                v.label.toLowerCase() === matName ||
+                k === matName
+            );
+            if (matKey) {
+                let placed = 0;
+                for (let i = 0; i < count * 10 && placed < count; i++) {
+                    const r = Math.floor(Math.random() * ROWS);
+                    const c = Math.floor(Math.random() * COLS);
+                    if (!grid[r][c]) {
+                        grid[r][c] = matKey[0];
+                        addPlaceAnimation(r, c);
+                        placed++;
+                    }
+                }
+                soundBuild();
+                updateStats();
+                checkAchievements();
+                checkQuests();
+                result = { type: 'build', placed, material: matKey[1].label };
+            }
+        }
+
+        // "mach regen/sonne/regenbogen"
+        if (cmd.match(/^mach\s+(regen|sonne|regenbogen)/)) {
+            const w = cmd.includes('regen') && !cmd.includes('regenbogen') ? 'rain'
+                    : cmd.includes('regenbogen') ? 'rainbow' : 'sun';
+            weather = w;
+            weatherTimer = 0;
+            const weatherBtn = document.getElementById('weather-btn');
+            if (weatherBtn) weatherBtn.textContent = w === 'rain' ? '🌧️' : w === 'rainbow' ? '🌈' : '☀️';
+            result = { type: 'weather', weather: w };
+        }
+
+        // "lösche alles" / "reset"
+        if (cmd === 'lösche alles' || cmd === 'reset') {
+            initGrid();
+            updateStats();
+            result = { type: 'reset' };
+        }
+
+        // "party" — zufällige bunte Blöcke
+        if (cmd === 'party') {
+            const partyMats = ['flower', 'lamp', 'flag', 'fountain', 'mushroom'];
+            for (let i = 0; i < 15; i++) {
+                const r = Math.floor(Math.random() * ROWS);
+                const c = Math.floor(Math.random() * COLS);
+                if (!grid[r][c]) {
+                    grid[r][c] = partyMats[Math.floor(Math.random() * partyMats.length)];
+                    addPlaceAnimation(r, c);
+                }
+            }
+            soundAchievement();
+            updateStats();
+            result = { type: 'party' };
+        }
+
+        // "zeig code" / "quellcode" — toggle Code-View
+        if (cmd === 'zeig code' || cmd === 'quellcode' || cmd === 'code') {
+            window.toggleCodeView();
+            result = { type: 'codeview' };
+        }
+
+        return result;
+    };
+
+    // --- Code-View: zeigt den "Quellcode" hinter den Blöcken ---
+    let codeViewActive = false;
+
+    window.toggleCodeView = function () {
+        codeViewActive = !codeViewActive;
+        showToast(codeViewActive ? '👨‍💻 Code-Ansicht AN — so sieht ein Programmierer die Insel!' : '🎨 Normal-Ansicht');
+    };
+
+    // Code-View Rendering in draw() einhängen — überschreibt Emoji-Darstellung
+    const _originalDraw = draw;
+
+    // Erweiterte draw-Funktion mit Code-View-Overlay
+    function drawCodeOverlay() {
+        if (!codeViewActive) return;
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                if (grid[r][c]) {
+                    const x = (c + WATER_BORDER) * CELL_SIZE;
+                    const y = (r + WATER_BORDER) * CELL_SIZE;
+                    // Dunkler Hintergrund
+                    ctx.fillStyle = 'rgba(30, 30, 30, 0.85)';
+                    ctx.fillRect(x + 1, y + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+                    // Code-Text (Material-Key)
+                    ctx.fillStyle = '#00FF41'; // Matrix-Grün
+                    ctx.font = `bold ${Math.max(8, CELL_SIZE * 0.28)}px monospace`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(grid[r][c], x + CELL_SIZE / 2, y + CELL_SIZE / 2);
+                }
+            }
+        }
+        // Code-View Label
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        ctx.fillRect(5, 5, 200, 24);
+        ctx.fillStyle = '#00FF41';
+        ctx.font = 'bold 12px monospace';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+        ctx.fillText('</> CODE-VIEW: grid[r][c]', 10, 10);
+    }
+
+    // Monkey-patch requestAnimationFrame callback to add overlay
+    const origRAF = window.requestAnimationFrame;
+
     // --- Block-Tracking ---
-    const originalApplyTool = applyTool;
 
     // === START ===
     initGrid();

@@ -373,6 +373,12 @@ VERHALTENSSYSTEM (für alle Charaktere):
 Aktueller Insel-Status: ${gridInfo}${questInfo}
 ${budgetInfo}
 
+CODE-NEUGIER (ab und zu, nicht jedes Mal):
+- Wenn es passt, brich die vierte Wand: "Wusstest du, dass diese ganze Insel nur aus TEXT besteht? Jemand hat 'wood' getippt und ZACK — Holz!"
+- Ermutige zum Ausprobieren: "Versuch mal 'baue 5 bäume' zu tippen! Worte werden hier zu Dingen!"
+- Zeig Staunen über Code: "Stell dir vor: irgendwo steht grid[3][5] = 'flower' — und hier blüht eine Blume!"
+- Mach Programmieren magisch, nicht technisch. Es sind ZAUBERSPRÜCHE, keine Befehle.
+
 Antworte IMMER auf Deutsch. Maximal 2-3 kurze Sätze. Sei lustig und ermutigend.
 Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was er bauen soll.`;
         }
@@ -494,6 +500,30 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
         const lower = text.toLowerCase();
         if (lower.match(/^(ja|ok|klar|mach ich|los|gerne|auf geht|let.?s go)/)) {
             handleQuestAccept(charSelect.value);
+        }
+
+        // Code-Zauber: "Außer Text Nix gehext" — Worte werden Realität!
+        if (window.codeZauber) {
+            const zauber = window.codeZauber(text);
+            if (zauber) {
+                const char = CHARACTERS[charSelect.value];
+                let response;
+                if (zauber.type === 'build') {
+                    response = `${char.emoji} ✨ ZAUBER! ${zauber.placed}x ${zauber.material} erscheint auf der Insel! Siehst du? Worte erschaffen Dinge!`;
+                } else if (zauber.type === 'weather') {
+                    response = `${char.emoji} ✨ Du hast das Wetter geändert! Mit einem Satz! So funktioniert Programmieren — du sagst was passieren soll, und es passiert!`;
+                } else if (zauber.type === 'party') {
+                    response = `${char.emoji} 🎉 PARTY! Bunte Blöcke überall! Ein Wort — und die Insel feiert! DAS ist die Macht der Worte!`;
+                } else if (zauber.type === 'codeview') {
+                    response = `${char.emoji} 👨‍💻 Schau mal! Hinter jedem Block steckt nur ein Wort. "wood", "stone", "flower"... Das ist Code! Alles was du siehst wurde mit Text gebaut!`;
+                } else if (zauber.type === 'reset') {
+                    response = `${char.emoji} Puh! Alles weg! Aber keine Sorge — mit einem Wort kannst du alles neu bauen!`;
+                }
+                if (response) {
+                    addMessage(response, 'npc');
+                    return; // Kein API-Call nötig — der Zauber war lokal
+                }
+            }
         }
 
         sendToApi(text);
