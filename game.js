@@ -805,11 +805,35 @@
     function maybeNpcComment(material) {
         const now = Date.now();
         if (now - lastCommentTime < 10000) return; // Max alle 10 Sekunden
-        if (Math.random() > 0.20) return; // 20% Chance (weniger spam)
+        if (Math.random() > 0.15) return; // 15% Chance (Game-Design Best Practice)
 
         lastCommentTime = now;
-        const comment = generateNpcComment(material);
-        // Kurzer Toast (2s) — verschwindet sofort bei nächstem Klick
+
+        // Zufälligen NPC wählen (für Kontext-Übergabe an KI-Puffer)
+        const npcKeys = Object.keys(NPC_VOICES);
+        const npcId = npcKeys[Math.floor(Math.random() * npcKeys.length)];
+        const npc = NPC_VOICES[npcId];
+
+        // Grid-Stats für KI-Kontext (10% der Aufrufe)
+        const stats = Math.random() < 0.1 && typeof getGridStats === 'function'
+            ? getGridStats()
+            : null;
+
+        // KI-Puffer versuchen (nur wenn chat.js geladen und online)
+        let comment = null;
+        if (typeof window.requestAiComment === 'function') {
+            const aiText = window.requestAiComment(material, npcId, stats);
+            if (aiText) {
+                // KI-Text mit NPC-Emoji versehen
+                comment = `${npc.emoji} ${aiText}`;
+            }
+        }
+
+        // Fallback: Template-System
+        if (!comment) {
+            comment = generateNpcComment(material);
+        }
+
         showToast(comment, 2000);
     }
 
