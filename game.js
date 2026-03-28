@@ -388,6 +388,8 @@
         stone: [
             '🪨 Du findest eine Inschrift im Stein: "C war hier. Erster!" Wer ist C?',
             '🪨 Autsch! Jemand ist hier gegen den Stein gelaufen. Daneben steht "C++" geritzt.',
+            '🪨 In den Stein ist geritzt: "10 PRINT HALLO 20 GOTO 10" — "Das ist BASIC!" ruft C. "Mit dem hab ich angefangen!"',
+            '🪨 BASIC sitzt auf dem Stein und zählt: "10... 20... 30..." — "Was machst du?" — "Ich bin die einfachste Sprache der Insel! Jeder fängt mit mir an!"',
         ],
         tree: [
             '🐍 Hinter dem Baum raschelt es! Eine freundliche Schlange: "Hallo, ich bin Python!"',
@@ -407,18 +409,36 @@
         fence: [
             '🐦 Ein schneller Vogel fliegt über den Zaun! "Ich bin Swift!" Zack, schon weg.',
         ],
+        fish: [
+            '🦈 Ein Fisch flüstert: "Psst! Pass auf Makro auf! Der große Hai macht alles RIESIG!"',
+            '🐟 Der Fisch schwimmt Kreise: "Ich bin eine Schleife! while(schwimmen) { schwimm(); }"',
+        ],
         bridge: [
             '🎲 Unter der Brücke spielen zwei Krabben ein Brettspiel. "Das heißt Go!"',
         ],
         water: [
             '☕ Das Wasser dampft! "Auf der Insel Java wird viel Kaffee getrunken", murmelt C.',
+            '🦈 Im Wasser schwimmt ein Schatten! "MAKRO!" ruft C. "Der böse Hai! Er frisst alles und macht es RIESIG!"',
+            '🦈 Makro der Hai taucht auf: "ICH MACHE ALLES GRÖSSER!" Python zischt: "Genau deswegen mag dich keiner."',
+            '🦈 "Vorsicht vor Makro!" warnt Rust. "Er sieht klein aus, aber dann EXPLODIERT alles!"',
         ],
         mushroom: [
             '🍄 Unter dem Pilz sitzt eine kleine Elfe. "Ich spreche Elixir!"',
+            '🍄 Hinter dem Pilz sitzt ein wirres Wesen und murmelt: "++++++++[>++++<-]>+. Ich bin... äh... HIRNFITZ!" Keiner versteht ihn. Aber er lächelt.',
+            '🍄 Hirnfitz redet wieder: ">><< ..++--!!" Die anderen Inselbewohner nicken höflich. "Ja, Hirnfitz. Sehr gut."',
+            '🍄 "Was hat Hirnfitz gesagt?" fragt Python. "Ich glaube: Hallo." — "Dafür braucht er 100 Zeichen?!" — C',
         ],
         lamp: [
             '💡 Die Lampe flackert. In der Birne steht winzig: "Powered by JavaScript".',
             '💡 "Wusstest du: JavaScript wurde in 10 Tagen erfunden? Auf einer Insel!" — C++',
+        ],
+        cactus: [
+            '🦜 Auf dem Kaktus sitzt ein alter Papagei: "Ich bin FORTRAN! Fort-ran ich, und kam nie zurück!"',
+            '🦜 Fortran der Papagei krächzt: "Was macht ein Baum im Internet? Er LOGGT sich ein!"',
+            '🦜 Fortran flattert auf: "Warum können Geister nicht lügen? Weil man durch sie DURCH-C-T!" *krächz*',
+            '🦜 "Was ist das Lieblings-Essen eines Programmierers? SPAM! Fort-ran ich zum Kühlschrank!" *krächz*',
+            '🦜 Fortran der Papagei: "Welche Sprache sprechen Fische? BUBB-L! Fort-ran der Witz!"',
+            '🦜 "Warum sitze ich auf dem Kaktus? Weil der STACK übergelaufen ist!" *krächz-krächz*',
         ],
     };
 
