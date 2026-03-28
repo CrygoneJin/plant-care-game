@@ -266,6 +266,32 @@ Zwei Schichten, ein Spiel. Pixar-Prinzip.
 
 ---
 
+## Session 2026-03-28 (Crafting-Sprint)
+
+### Erfolge
+| Datum | Was |
+|-------|-----|
+| 2026-03-28 | Baumwachstum: Setzling 🌱 → kleiner Baum 🌲 (30s) → großer Baum 🌳 (60s) — zeitbasiert, persistiert |
+| 2026-03-28 | Axt-Werkzeug: Bäume fällen → Holz ins Inventar (1/2/3 je nach Baumgröße) |
+| 2026-03-28 | Inventar-System: Sidebar-UI, localStorage-Persistenz, Save/Load-Integration |
+| 2026-03-28 | 3x3 Crafting-Werkbank: 9 Rezepte, Drag&Click, Rezeptbuch, Mobile-responsive |
+| 2026-03-28 | Neue Materialien: Setzling, Feuer, Bretter, Fensterscheibe |
+| 2026-03-28 | Crafting-Rezepte: Sand+Feuer=Glas, Glas+Holz=Fenster, Holz=Feuer, 2Holz=3Bretter, etc. |
+
+### Learnings
+- **Minecraft-Mechanik passt**: Pflanze Baum → warte → fälle → crafte. Kinder kennen den Loop.
+- **Shapeless Recipes**: Position egal, nur Zutaten zählen — einfacher für 8-Jährige als Minecraft-Patterns.
+- **Wachstums-Timer**: 30s + 60s ist kurz genug für Kinder-Geduld, lang genug für Spannung.
+- **Inventar als Bridge**: Verbindet Grid-Gameplay mit Crafting — zwei Systeme die sich gegenseitig füttern.
+
+### Nächste Session
+- Crafted items auf Grid platzierbar machen (aus Inventar ins Grid)
+- Mehr Rezepte (Stein-basiert, Wasser-basiert)
+- Axt-Achievement ("Holzfäller": 10 Bäume gefällt)
+- Sound-Feedback bei Baumwachstum (leises "pling")
+
+---
+
 ## Offene Fragen
 
 - [ ] Wie misst man ob die 80/20-Ratio der Padawans stimmt?
