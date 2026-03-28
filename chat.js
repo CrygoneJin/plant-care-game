@@ -214,6 +214,8 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
 
     // --- Settings ---
     // --- Config: config.js > localStorage > Dialog ---
+    // Hirn-Transplantation: Nerds können pro Charakter das Modell tauschen
+    // config.js: { models: { bernd: 'gpt-4o', neinhorn: 'claude-opus-4-5' } }
     const CFG = window.INSEL_CONFIG || {};
 
     function getApiKey() {
@@ -341,11 +343,13 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
         const providerId = getProvider();
         const provider = PROVIDERS[providerId] || PROVIDERS.langdock;
         const apiUrl = getApiUrl() || provider.url;
-        // Charakter-Modell nutzen wenn Langdock (routet alle Modelle),
-        // sonst Provider-Default (sicher)
-        const model = (providerId === 'langdock' || providerId === 'custom')
-            ? (char.model || provider.model)
-            : provider.model;
+        // Hirn-Transplantation: config.js models > char.model > provider.model
+        // Nerds können pro Charakter ein anderes Modell setzen
+        const configModel = CFG.models && CFG.models[charId];
+        const model = configModel
+            || ((providerId === 'langdock' || providerId === 'custom')
+                ? (char.model || provider.model)
+                : provider.model);
         const questInfo = charId === 'bernd' ? '' : getQuestContext(charId);
         const totalBudget = TOKEN_BUDGET_PER_CHARACTER + (tokenBonuses[charId] || 0);
         const energyPercent = Math.round(((totalBudget - tokenUsage[charId]) / totalBudget) * 100);
@@ -485,12 +489,32 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
         panel.classList.add('hidden');
     });
 
+    function getActiveModel(charId) {
+        const char = CHARACTERS[charId];
+        const configModel = CFG.models && CFG.models[charId];
+        const providerId = getProvider();
+        return configModel
+            || ((providerId === 'langdock' || providerId === 'custom')
+                ? (char.model || PROVIDERS[providerId]?.model || DEFAULT_MODEL)
+                : (PROVIDERS[providerId]?.model || DEFAULT_MODEL));
+    }
+
+    function shortModel(m) {
+        // claude-haiku-4-5-20251001 → Haiku 4.5, gpt-5-nano → GPT-5 Nano
+        return m.replace(/-\d{8,}$/, '')
+            .replace('claude-', '').replace('gpt-', 'GPT-')
+            .replace('gemini-', 'Gemini ').replace('llama-', 'Llama ')
+            .replace('mistral-', 'Mistral ')
+            .split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
+    }
+
     charSelect.addEventListener('change', () => {
         chatHistory = [];
         messages.innerHTML = '';
         const charId = charSelect.value;
         const char = CHARACTERS[charId];
-        addMessage(`${char.emoji} ${char.name} ist da!`, 'system');
+        const brain = shortModel(getActiveModel(charId));
+        addMessage(`${char.emoji} ${char.name} ist da! [${brain}]`, 'system');
         updateTokenDisplay(charId);
     });
 
