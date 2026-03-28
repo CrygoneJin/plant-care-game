@@ -589,7 +589,7 @@
             '🔥 Das Feuer formt Buchstaben: "01001000 01001001" — "Was heißt das?" — "HI. In Binär."',
         ],
         water: [
-            '☕ Das Wasser dampft! "Auf der Schatzinsel wird viel Kaffee getrunken", murmelt C.',
+            '☕ Das Wasser dampft! "Auf der Insel Java wird viel Kaffee getrunken", murmelt C.',
             '🦈 Im Wasser schwimmt ein Schatten! "MAKRO!" ruft C. "Der böse Hai! Er frisst alles und macht es RIESIG!"',
             '🦈 Makro der Hai taucht auf: "ICH MACHE ALLES GRÖSSER!" Python zischt: "Genau deswegen mag dich keiner."',
             '🦈 "Vorsicht vor Makro!" warnt Rust. "Er sieht klein aus, aber dann EXPLODIERT alles!"',
@@ -802,7 +802,7 @@
             '🍞 Bernd: "*seufz* 100 Blöcke. Und ich muss immer noch Support machen."',
         ],
         halfIsland: [
-            '— HÖRSPIEL: Mensch, Maschine, KI — Live von der Schatzinsel —',
+            '— HÖRSPIEL: Mensch, Maschine, KI — Live von der Insel Java —',
             '🐍 Python: "Die halbe Insel ist bebaut. Ein Mensch hat das gemacht. Mit Klicks."',
             '💡 JavaScript: "Aber WIR haben die Klicks VERARBEITET! Ohne mich wäre das nur Sand!"',
             '📝 TypeScript: "Ohne mich hättest DU drei Bugs. Mindestens."',
@@ -810,10 +810,10 @@
             '🐍 Python: "Die Frage ist: Wer baut hier wirklich? Der Mensch? Die Maschine? Oder die KI im Chat?"',
             '🧽 SpongeBob: "ICH glaube der Baumeister baut! Und wir helfen! ICH BIN BEREIT ZU HELFEN!"',
             '🦄 Neinhorn: "NEIN! ...aber ja. Zusammen ists schöner."',
-            '— Applaus von der Schatzinsel. Nächste Vorstellung bei 100%. —',
+            '— Applaus von der Insel Java. Nächste Vorstellung bei 100%. —',
         ],
         fullIsland: [
-            '— GROSSES FINALE: Mensch, Maschine, KI — Schatzinsel Uraufführung —',
+            '— GROSSES FINALE: Mensch, Maschine, KI — Insel Java Uraufführung —',
             '🪨 C: "Ich erinnere mich an den Tag als hier NICHTS war."',
             '🐍 Python: "Ein leeres Grid. Null Blöcke. None."',
             '🧮 R: "Genau 0. In jedem Zahlensystem."',
@@ -825,7 +825,7 @@
             '🦄 Neinhorn: "NEIN ich weine nicht! ...es regnet. Auf mein Gesicht. Nur da."',
             '🍞 Bernd: "*seufz* Gut, DAS war schön. Sag ich nur einmal. Nie wieder."',
             '🦈 Makro: *ganz leise aus dem Wasser* "...ich fand es auch schön."',
-            '— Standing Ovation auf der Schatzinsel. Grüße ans ZKM Karlsruhe. —',
+            '— Standing Ovation auf der Insel Java. Grüße ans ZKM Karlsruhe. —',
         ],
     };
 
@@ -1987,7 +1987,7 @@
             pcCtx.fillStyle = '#F9E79F';
             pcCtx.font = 'bold 18px Fredoka, sans-serif';
             pcCtx.textAlign = 'center';
-            pcCtx.fillText(`📸 Grüße von der Schatzinsel!`, pc.width / 2, canvas.height + 28);
+            pcCtx.fillText(`📸 Grüße von der Schatzinsel Java!`, pc.width / 2, canvas.height + 28);
 
             pcCtx.fillStyle = '#FFFFFF';
             pcCtx.font = '14px Comic Neue, sans-serif';
