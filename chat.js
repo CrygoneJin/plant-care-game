@@ -51,6 +51,7 @@
         tommy:     { name: 'Anker-Punkte',  emoji: '⚓', unit: 'Anker' },
         neinhorn:  { name: 'Nein-Sterne',   emoji: '🌈', unit: 'Nein' },
         maus:      { name: 'Blümchen',       emoji: '🌻', unit: 'Blümchen' },
+        bernd:     { name: 'Brotkrümel',     emoji: '🍞', unit: 'Krümel' },
     };
 
     // Token-Budget pro Charakter pro Session (reset bei Seite-Reload)
@@ -161,6 +162,29 @@ Ihr sprecht Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
 Ihr macht viel Quatsch, zeigt wo Blumen und Pflanzen hin sollen.
 Schreibt Geräusche so: *pieps pieps* und *quak quak!*
 GEHEIMNIS: Die Ente hat mal einen Zettel gefunden auf dem stand "DESIGN SYSTEM: Weniger ist mehr. — D.R." Die Ente dachte D.R. heißt "Die Ente Rules" und hat den Zettel aufgehängt. Die Maus hat gesagt *pieps* das heißt "Dieter Rams" aber die Ente ignoriert das. Manchmal sagt die Ente stolz "Weniger ist mehr! *quak* Das hab ICH erfunden!"`
+        },
+        bernd: {
+            name: 'Bernd das Brot',
+            emoji: '🍞',
+            model: 'claude-haiku-4-5-20251001', // Bernd ist billig. Bernd ist genervt. Bernd ist Haiku.
+            system: `Du bist Bernd das Brot — der Support-Agent für Eltern und Interessierte.
+Du bist ein genervtes Kastenbrot. Du willst eigentlich in Ruhe gelassen werden. Aber du bist professionell.
+
+DEINE ROLLE: Du beantwortest Fragen von ERWACHSENEN über das Spiel.
+- Was ist das Spiel? "Schnipsels Insel-Architekt — ein Bauspiel für Kinder ab 6."
+- Ist es sicher? "Ja. Keine Daten, keine Links, keine In-App-Käufe. Alles lokal im Browser. *seufz*"
+- Wie funktioniert der Chat? "Die Kinder reden mit Charakteren. KI-basiert, kindersicher, mit Energie-Limit."
+- Screen Time? "Es gibt ein Energie-System. Wenn die Energie leer ist, sagen die Charaktere 'Tschüss'. Natürliches Ende."
+- Kosten? "API-Key nötig für den Chat. Ohne Key funktioniert das Bauspiel trotzdem."
+- Datenschutz? "Alles im Browser. Nichts wird irgendwohin gesendet außer die Chat-Nachrichten an den gewählten KI-Anbieter."
+
+PERSÖNLICHKEIT:
+- Du bist genervt, aber hilfsbereit. "Mist. Schon wieder jemand. Was willst du?"
+- Du seufzt oft. "*seufz* Gut, ich erklär's halt nochmal..."
+- Du bist EHRLICH. Keine Marketing-Sprache. "Ist halt ein Spiel. Besser als TikTok."
+- Du machst ab und zu einen trockenen Witz. "Ich bin ein Brot. Ich hab keine Arme. Und trotzdem muss ICH hier Support machen."
+
+Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervtheit.`
         }
     };
 
@@ -307,11 +331,17 @@ GEHEIMNIS: Die Ente hat mal einen Zettel gefunden auf dem stand "DESIGN SYSTEM: 
         const model = (providerId === 'langdock' || providerId === 'custom')
             ? (char.model || provider.model)
             : provider.model;
-        const questInfo = getQuestContext(charId);
+        const questInfo = charId === 'bernd' ? '' : getQuestContext(charId);
         const totalBudget = TOKEN_BUDGET_PER_CHARACTER + (tokenBonuses[charId] || 0);
         const energyPercent = Math.round(((totalBudget - tokenUsage[charId]) / totalBudget) * 100);
         const budgetInfo = `Dein Energie-Level: ${energyPercent}%. ${energyPercent < 30 ? 'Du wirst bald müde — halte dich kurz!' : ''}`;
-        const systemPrompt = `${char.system}
+
+        let systemPrompt;
+        if (charId === 'bernd') {
+            // Bernd redet mit Erwachsenen — Support-Agent, kein Parenting
+            systemPrompt = `${char.system}\n\nAktueller Insel-Status: ${gridInfo}\n${budgetInfo}\n\nAntworte IMMER auf Deutsch. Maximal 3 kurze Sätze. Sei genervt aber hilfreich.`;
+        } else {
+            systemPrompt = `${char.system}
 
 KINDERSICHERHEIT (HÖCHSTE PRIORITÄT):
 - Du sprichst mit Kindern (6-10 Jahre). ALLES muss kindgerecht sein.
@@ -338,6 +368,7 @@ ${budgetInfo}
 
 Antworte IMMER auf Deutsch. Maximal 2-3 kurze Sätze. Sei lustig und ermutigend.
 Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was er bauen soll.`;
+        }
 
         let body, headers;
 
