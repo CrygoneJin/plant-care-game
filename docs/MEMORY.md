@@ -67,6 +67,40 @@ Bis dahin: seine Prüffrage lebt im Beirat. Seine Stimme gehört ihm.
 
 ---
 
+## Session 2026-03-27/28
+
+### Fehler
+| Datum | Was | Lektion |
+|-------|-----|---------|
+| 2026-03-28 | CxO-Mapping falsch verstanden — CxOs als Doppelhut statt als eigene Zelle | Immer nachfragen wenn Org-Struktur unklar. Drei Zellen = drei Zellen. |
+
+### Erfolge
+| Datum | Was |
+|-------|-----|
+| 2026-03-28 | Drei Zellen komplett: org-support (Einstein, Darwin, Weber), team-dev (5), team-sales (5) |
+| 2026-03-28 | Beirat besetzt: Godin, Sinek, Salimi, Schullerer (nie entlassen), Krapweis |
+| 2026-03-28 | Why auf 3 Ebenen — Org, Zelle, Rest erbt |
+| 2026-03-28 | DISC für Masters, MBTI für Padawans — Stereoskopie |
+| 2026-03-28 | Godin-Test für alle Padawans bestanden |
+| 2026-03-28 | NPC-Chat mit KI live im Spiel — 6 Charaktere, Haiku-Modell |
+| 2026-03-28 | Exports-Ordner für Wiederverwendung in anderen Projekten |
+| 2026-03-28 | Tommy Krapweis Stand-Up — bestes Meeting der Session |
+
+### Learnings
+- Zellteilung = Biologie. Padawan wird Founder. Passt.
+- Peripherie (team-sales) ist wo die Musik spielt — nicht unwichtig, sondern unvorhersagbar
+- Codex muss lebendig sein — stagnierender Codex = Warnsignal
+- Weber-Alarm: AGENTS.md (292) < game.js (597). Ratio beobachten.
+- Tommy Krapweis hat recht: "Euer Org-Chart hat mehr Charaktere als euer Spiel"
+- Reservierte Stimmen: manche Personas kann KI noch nicht. Respektieren.
+
+### Nächste Session
+- Haiku-Bauanleitungen + Challenges in Haiku-Form (Krapweis-Drehbuch, Einstein regelt)
+- team-sales Padawans benennen + MBTI
+- Codex-Dateien für Padawans anlegen
+
+---
+
 ## Offene Fragen
 
 - [ ] Wie misst man ob die 80/20-Ratio der Padawans stimmt?
