@@ -684,11 +684,14 @@ header h1 {
         margin-bottom: 0;
     }
 
-    /* Toast: kleiner */
+    /* Toast: oben statt unten, blockiert nicht das Baufeld */
     #toast {
-        font-size: 14px;
-        padding: 10px 16px;
-        bottom: 10px;
+        font-size: 12px;
+        padding: 6px 12px;
+        bottom: auto;
+        top: 50px;
+        max-width: 80vw;
+        opacity: 0.85;
     }
 
     /* Intro: kleiner auf Handy */
