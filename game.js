@@ -2022,9 +2022,14 @@
     function updateAchievementDisplay() {
         const achList = document.getElementById('achievement-list');
         if (!achList) return;
-        achList.innerHTML = Object.entries(ACHIEVEMENTS).map(([id, ach]) => {
-            const unlocked = unlockedAchievements.includes(id);
-            return `<span class="ach-badge ${unlocked ? '' : 'ach-locked'}" title="${ach.title}: ${ach.desc}">${ach.emoji}</span>`;
+        // Nur entdeckte Erfolge zeigen — der Rest bleibt geheim
+        const discovered = Object.entries(ACHIEVEMENTS).filter(([id]) => unlockedAchievements.includes(id));
+        if (discovered.length === 0) {
+            achList.innerHTML = '';
+            return;
+        }
+        achList.innerHTML = discovered.map(([id, ach]) => {
+            return `<span class="ach-badge" title="${ach.title}: ${ach.desc}">${ach.emoji}</span>`;
         }).join('');
     }
 
