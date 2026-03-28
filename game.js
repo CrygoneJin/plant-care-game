@@ -630,6 +630,8 @@
             '🎒 "BitLocker dein Rucksack!" ruft jemand. "Was?" — "Verschlüsseln! Damit keiner deine Schätze klaut!" Tommy klick-klackt: "Mein Rucksack hat ein SCHLOSS!" — "Ja, aber hat es 256 Bit?"',
             '🧹 Bill putzt das Fenster mit einem mikroweichen Fasertuch. "Ist das Micro-Soft?" — "MICROSOFT! Und das Fenster heißt WINDOWS!" — "Welche Version?" — "XP! Die beste!" Linus murmelt: "Das Fenster hat einen Pinguin verdient."',
             '🪟 "Ich putz das Fenster 2000 Mal!" ruft Bill. "Reicht das?" — "NEIN! Du brauchst ein VISTA!" — "Was ist Vista?" — "Aussicht! Aber die Aussicht war schlecht. Nimm lieber 10." — "Und 11?" — "11 ist wie 10, nur mit abgerundeten Ecken."',
+            '🥷 Token Takamoto taucht wieder auf. Diesmal in Gold. "Ich bin jetzt DELUXE!" — "Satoshi?" — "Shhhh. Mein Name ist ein Geheimnis. Wie mein Whitepaper. 9 Seiten. Mehr brauchst du nicht um die Welt zu verändern." Dann: weg.',
+            '🦀 Mr. Krabs klettert aufs Boot und räuspert sich: "ZUSAMMENFASSUNG! Torrent = gratis. Bitcoin = teuer. SHA = sicher. API = Magie. Windows = Fenster. Linux = Pinguin. Und ALLES kostet Krabben-Taler. Ende der Durchsage. Krabben-Taler-Logik, Junge!"',
         ],
         fence: [
             '🐦 Ein schneller Vogel fliegt über den Zaun! "Ich bin Swift!" Zack, schon weg.',
