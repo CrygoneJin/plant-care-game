@@ -198,6 +198,74 @@ Zwei Schichten, ein Spiel. Pixar-Prinzip.
 
 ---
 
+## Session 2026-03-28 (Morgen-Sprint)
+
+### Fehler
+| Datum | Was | Lektion |
+|-------|-----|---------|
+| 2026-03-28 | 41 Commits unreviewed direkt nach main gemergt | Panik ist kein Deployment-Prozess. Egal wie wenig Zeit: PR → Review → Merge. Immer. |
+| 2026-03-28 | API-Key in Klartext im Chat geteilt | Temporär oder nicht — Keys gehören nie in einen Chat-Log. Nächstes Mal: direkt in Datei schreiben lassen oder im Browser-Dialog eingeben. |
+| 2026-03-28 | Unlock-Threshold Mathe falsch (3 statt 0 am Start) | Vereinfache Formeln sofort. Wenn `a + b - a` da steht, ist es falsch. |
+| 2026-03-28 | sendToApi und getActiveModel hatten verschiedene Fallback-Chains | Eine Quelle der Wahrheit. Nie die gleiche Logik duplizieren. |
+| 2026-03-28 | Undo pushte pro Zelle statt pro Stroke | Immer den ganzen User-Gesture testen (Drag = viele Zellen), nicht nur Einzelklick. |
+| 2026-03-28 | loadProject/newProject riefen draw() nicht auf | Jede Grid-Mutation muss mit draw() enden. Kein Ausnahme. |
+
+### Erfolge
+| Datum | Was |
+|-------|-----|
+| 2026-03-28 | BYOK-System: config.js + Dialog + Provider-Hints — Zero-Setup für Familien |
+| 2026-03-28 | Hirn-Transplantation: Pro Charakter anderes Modell, Persönlichkeit bleibt |
+| 2026-03-28 | Charakter-Freischaltung: Starter + Unlock (20% fest, 80% Zufall) |
+| 2026-03-28 | Auto-Save: 30s + beforeunload + Grid-Validierung + Restore |
+| 2026-03-28 | Undo: Strg+Z, 50 Schritte, pro Stroke statt pro Zelle |
+| 2026-03-28 | Quest-Wärmer/Kälter: Dusch-Prinzip als Feedback-System |
+| 2026-03-28 | 20 Quests (3 Schwierigkeitsrunden) |
+| 2026-03-28 | NPC-Stimmen geschärft: Elefant klammert Törööö, Krabs rechnet Taler, Tommy unterbricht sich |
+| 2026-03-28 | Mobile UX: Toolbar + Palette horizontal scrollbar |
+| 2026-03-28 | 3 Audit-Agents parallel → 11 Bugs gefunden und gefixt |
+| 2026-03-28 | Spielername im Intro, Enter-Start, Keyboard-Shortcuts |
+
+### Learnings
+- **Merge-Disziplin**: Kein direkter Push nach main. Nie. Egal ob 2 Minuten oder 2 Stunden. PR ist Pflicht. Linus hat recht.
+- **Keys im Chat**: Temporär existiert nicht in einem Log. Key sofort rotieren wenn er in einem Gesprächsprotokoll auftaucht.
+- **Eine Quelle der Wahrheit**: Wenn zwei Funktionen die gleiche Logik brauchen, ruft eine die andere auf. Keine Duplikation.
+- **Audit-Agents lohnen sich**: 3 parallele Audits (game.js, chat.js, HTML/CSS) fanden 11 echte Bugs. Kosten: 3 Minuten. ROI: unbezahlbar.
+- **Dusch-Prinzip ist universell**: "Regler statt Schalter" gilt für Quest-Feedback, NPC-Antworten, Unlock-Progression — überall.
+- **Autonome Sprints funktionieren**: 15 Commits in 30 Minuten. Aber nur mit klarem Backlog und Definition of Done.
+
+### Nächste Session
+- **Key rotieren** — der geleakte Key muss in Langdock erneuert werden
+- Voice-Pipeline: Cartesia + vapi.ai
+- Langdock-Modelle checken und Character-Models anpassen
+- GitHub Pages aktivieren / testen
+- Zellteilung game.js (jetzt 1800+ Zeilen)
+
+---
+
+## Best Practices (aktualisiert 2026-03-28)
+
+### Git
+1. **Nie direkt nach main pushen.** Feature-Branch → PR → Review → Merge.
+2. **Nie ohne Review mergen.** Auch nicht bei Zeitdruck. Besonders nicht bei Zeitdruck.
+3. **config.js ist gitignored.** Keys, Secrets, lokale Config → nie committen.
+4. **Commit-Messages erklären Warum**, nicht Was. "fix: Unlock-Threshold" sagt nichts. "fix: Unlock brauchte 3 Quests statt 0 am Start" sagt alles.
+
+### Code
+5. **Eine Quelle der Wahrheit.** Keine duplizierte Logik. Wenn getActiveModel() existiert, nutze es überall.
+6. **Jede Grid-Mutation endet mit draw().** Keine Ausnahme.
+7. **Teste den ganzen Gesture.** Klick UND Drag. Touch UND Mouse. Mit Key UND ohne Key.
+8. **Vereinfache Formeln sofort.** `a + b - a` = Bug. Immer.
+
+### Secrets
+9. **Keys nie in Chat/Log teilen.** Direkt in Datei oder im Browser-Dialog eingeben.
+10. **Geleakte Keys sofort rotieren.** "Temporär" existiert nicht in einem Log.
+
+### Agents
+11. **Audit-Agents parallel laufen lassen.** 3 Minuten für 11 Bugs. Immer machen nach großen Änderungen.
+12. **Autonome Sprints brauchen klares Backlog.** Ohne priorisierte Liste wird random gearbeitet.
+
+---
+
 ## Offene Fragen
 
 - [ ] Wie misst man ob die 80/20-Ratio der Padawans stimmt?
