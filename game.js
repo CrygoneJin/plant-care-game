@@ -973,6 +973,22 @@
         showToast(`💾 "${name}" gespeichert!`);
     }
 
+    // --- Auto-Save: alle 30s still im Hintergrund ---
+    const AUTOSAVE_KEY = '~autosave~';
+    function autoSave() {
+        const hasContent = grid.some(row => row.some(cell => cell !== null));
+        if (!hasContent) return;
+        const projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+        projects[AUTOSAVE_KEY] = {
+            grid: grid,
+            date: new Date().toLocaleDateString('de-DE'),
+            auto: true
+        };
+        localStorage.setItem('insel-projekte', JSON.stringify(projects));
+    }
+    setInterval(autoSave, 30000);
+    window.addEventListener('beforeunload', autoSave);
+
     // --- Laden-Dialog ---
     function showLoadDialog() {
         const projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
@@ -983,10 +999,11 @@
         } else {
             savedProjectsList.innerHTML = names.map(name => {
                 const proj = projects[name];
+                const displayName = name === AUTOSAVE_KEY ? '🔄 Letzte Session (Auto)' : escapeHtml(name);
                 return `
                     <div class="saved-project-item" data-name="${escapeHtml(name)}">
                         <div>
-                            <div class="saved-project-name">${escapeHtml(name)}</div>
+                            <div class="saved-project-name">${displayName}</div>
                             <div class="saved-project-date">${proj.date}</div>
                         </div>
                         <button class="saved-project-delete" data-delete="${escapeHtml(name)}" title="Löschen">🗑️</button>
@@ -1662,6 +1679,15 @@
 
     // === START ===
     initGrid();
+
+    // Auto-Save wiederherstellen wenn vorhanden
+    const savedProjects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+    if (savedProjects[AUTOSAVE_KEY]) {
+        grid = savedProjects[AUTOSAVE_KEY].grid;
+        window.grid = grid;
+        showToast('🔄 Letzte Insel wiederhergestellt');
+    }
+
     draw();
     updateAchievementDisplay();
     updateQuestDisplay();
