@@ -460,6 +460,7 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
         panel.classList.toggle('hidden');
         if (!panel.classList.contains('hidden')) {
             input.focus();
+            if (window.recordMilestone) window.recordMilestone('firstChat');
             if (messages.children.length === 0) {
                 const char = CHARACTERS[charSelect.value];
                 addMessage(`${char.emoji} ${char.name} ist da! Sag hallo!`, 'system');
@@ -521,6 +522,7 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
                 }
                 if (response) {
                     addMessage(response, 'npc');
+                    if (window.trackEvent) window.trackEvent('code_zauber', { type: zauber.type });
                     return; // Kein API-Call nötig — der Zauber war lokal
                 }
             }

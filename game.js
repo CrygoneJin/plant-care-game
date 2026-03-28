@@ -486,6 +486,7 @@
             localStorage.setItem('insel-easter-eggs', JSON.stringify(discoveredEggs));
         }
         showToast(egg, 5000);
+        recordMilestone('firstEasterEgg');
         trackEvent('easter_egg', { material, egg: egg.slice(0, 30) });
     }
 
@@ -856,6 +857,7 @@
                 soundBuild();
                 maybeNpcComment(currentMaterial);
                 maybeCodeEasterEgg(currentMaterial);
+                recordMilestone('firstBlock');
                 trackEvent('build', { material: currentMaterial });
             }
         } else if (currentTool === 'demolish') {
@@ -1048,14 +1050,69 @@
         return div.innerHTML;
     }
 
+    // ============================================================
+    // === FEYNMAN-MESSPUNKTE === (Testprotokoll-Daten)
+    // ============================================================
+    const sessionClock = { start: null, firstBlock: null, firstChat: null, firstCodeView: null, firstEasterEgg: null };
+
+    window.startSessionClock = function () {
+        sessionClock.start = Date.now();
+        trackEvent('clock_start', {});
+    };
+
+    function recordMilestone(key) {
+        if (sessionClock.start && !sessionClock[key]) {
+            sessionClock[key] = Date.now();
+            const elapsed = Math.round((sessionClock[key] - sessionClock.start) / 1000);
+            trackEvent('milestone', { key, seconds: elapsed });
+        }
+    }
+
+    // Exportieren für chat.js
+    window.recordMilestone = recordMilestone;
+
+    // Feynman-Dashboard: alle Messpunkte auf einmal
+    window.getTestData = function () {
+        const s = sessionClock;
+        const elapsed = (key) => s.start && s[key] ? Math.round((s[key] - s.start) / 1000) + 's' : '—';
+        const analytics = getAnalytics();
+        const events = analytics.events || [];
+        const builds = events.filter(e => e.e === 'build').length;
+        const demolishes = events.filter(e => e.e === 'demolish').length;
+        const uniqueMats = new Set(events.filter(e => e.e === 'build').map(e => e.d?.material)).size;
+        const easterEggs = events.filter(e => e.e === 'easter_egg').length;
+        const hoerspiele = events.filter(e => e.e === 'hoerspiel').length;
+        const codeZauber = events.filter(e => e.e === 'code_zauber').length;
+        const postcards = events.filter(e => e.e === 'postcard').length;
+        const sessionDuration = s.start ? Math.round((Date.now() - s.start) / 1000) : 0;
+
+        return {
+            '⏱️ Session-Dauer': sessionDuration + 's',
+            '🧱 Zeit bis 1. Block': elapsed('firstBlock'),
+            '💬 Zeit bis 1. Chat': elapsed('firstChat'),
+            '👨‍💻 Zeit bis Code-View': elapsed('firstCodeView'),
+            '🔍 Zeit bis 1. Easter Egg': elapsed('firstEasterEgg'),
+            '🧱 Blöcke gebaut': builds,
+            '💥 Blöcke abgerissen': demolishes,
+            '🎨 Materialien benutzt': uniqueMats,
+            '🔍 Easter Eggs entdeckt': easterEggs,
+            '🎭 Hörspiele gehört': hoerspiele,
+            '✨ Zaubersprüche': codeZauber,
+            '📸 Postkarten': postcards,
+            '🏆 Achievements': unlockedAchievements.length,
+            '📜 Quests abgeschlossen': completedQuests.length,
+        };
+    };
+
     // === EVENT LISTENERS ===
 
-    // Intro
+    // Intro — Startet die Session-Uhr!
     startButton.addEventListener('click', () => {
         introOverlay.classList.add('hiding');
         setTimeout(() => {
             introOverlay.style.display = 'none';
         }, 600);
+        window.startSessionClock();
     });
 
     // Werkzeug-Buttons
@@ -1352,6 +1409,9 @@
     }
 
     // Kennzahlen exportieren (für Feynman)
+    // trackEvent für chat.js exportieren
+    window.trackEvent = trackEvent;
+
     window.getMetrics = function () {
         const analytics = getAnalytics();
         const stats = getGridStats();
@@ -1460,6 +1520,10 @@
     window.toggleCodeView = function () {
         codeViewActive = !codeViewActive;
         showToast(codeViewActive ? '👨‍💻 Code-Ansicht AN — so sieht ein Programmierer die Insel!' : '🎨 Normal-Ansicht');
+        if (codeViewActive) {
+            recordMilestone('firstCodeView');
+            trackEvent('code_view_toggle', { state: 'on' });
+        }
     };
 
     // Code-View Rendering in draw() einhängen — überschreibt Emoji-Darstellung
