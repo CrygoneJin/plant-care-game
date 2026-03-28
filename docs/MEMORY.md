@@ -209,6 +209,22 @@ Das ist kein Easter Egg. Das ist das Curriculum.
 
 ---
 
+### Brainstorm-Parkplatz (nächste Session sortieren)
+
+- **Tommy Krappweis** als NPC / Easter Egg (Bernd-Erfinder)
+- **Willy Astor** Spitzname "Der Wortbrecher" — ist schon als NPC-Kommentator drin
+- **ELIZA** Spitzname "Die Therapeutin" — lebt in Bernd als Offline-Fallback
+- **Lisa Lispel** — LISP (1958) zwischen Blumen, sortiert Klammern
+- **Vim Wenders** — :wq und weg
+- **Nano Banano** — kleinster Editor der Insel
+- Spiegelschrift-Easter-Egg auf Stein ist drin
+- Känguru + Marc-Uwe als vollwertige Chat-NPCs (wenn Proxy steht)
+- ELIZA-Regeln erweitern (aktuell 12 Patterns)
+- Cloudflare Worker deployen + testen (LANGDOCK_KEY ist gesetzt)
+- n8n Modell-Routing pro NPC einbauen (gpt-4o default, gpt-4.1 für Elefant?)
+
+---
+
 ### Session 2026-03-28 (Abend): Wu Xing + Harvest + Crafting-Loop
 
 **Was gebaut wurde:**
