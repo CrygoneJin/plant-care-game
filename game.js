@@ -76,7 +76,7 @@
             const gain = ctx.createGain();
             osc.type = type || 'sine';
             osc.frequency.value = freq;
-            gain.gain.value = vol || 0.15;
+            gain.gain.setValueAtTime(vol || 0.15, ctx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
             osc.connect(gain);
             gain.connect(ctx.destination);
@@ -85,18 +85,67 @@
         } catch (e) { /* Audio nicht verfügbar — kein Problem */ }
     }
 
-    function soundBuild() { playTone(440, 0.08, 'square', 0.1); }
-    function soundDemolish() { playTone(220, 0.15, 'sawtooth', 0.08); }
+    // Reicherer Sound: 2 Oszillatoren + leichtes Detune = Chorus-Effekt
+    function playRichTone(freq, duration, type, vol) {
+        try {
+            const ctx = ensureAudio();
+            const t = ctx.currentTime;
+            for (let detune of [0, 7]) {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = type || 'sine';
+                osc.frequency.value = freq;
+                osc.detune.value = detune;
+                gain.gain.setValueAtTime((vol || 0.1) * 0.6, t);
+                gain.gain.exponentialRampToValueAtTime(0.001, t + duration);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(t);
+                osc.stop(t + duration);
+            }
+        } catch (e) {}
+    }
+
+    // Pentatonische Skala — klingt immer gut, egal welche Kombination
+    const PENTA = [262, 294, 330, 392, 440, 523, 587, 659, 784, 880];
+    const BUILD_WAVES = ['sine', 'triangle', 'square'];
+    let lastBuildNote = -1;
+    let buildNoteDir = 1; // Melodie steigt oder fällt
+
+    function soundBuild() {
+        // Tendenz: Melodie steigt beim Bauen (fühlt sich aufbauend an)
+        let idx;
+        if (lastBuildNote < 0) {
+            idx = Math.floor(Math.random() * PENTA.length);
+        } else {
+            // 70% in gleicher Richtung, 30% Richtungswechsel
+            if (Math.random() < 0.3) buildNoteDir *= -1;
+            idx = lastBuildNote + buildNoteDir * (1 + Math.floor(Math.random() * 2));
+            if (idx >= PENTA.length) { idx = PENTA.length - 2; buildNoteDir = -1; }
+            if (idx < 0) { idx = 1; buildNoteDir = 1; }
+        }
+        lastBuildNote = idx;
+        const type = BUILD_WAVES[Math.floor(Math.random() * BUILD_WAVES.length)];
+        playRichTone(PENTA[idx], 0.06 + Math.random() * 0.06, type, 0.06 + Math.random() * 0.04);
+    }
+    function soundDemolish() {
+        // Absteigender Ton — fühlt sich nach "weg" an
+        const freq = 300 + Math.random() * 150;
+        playTone(freq, 0.15, 'sawtooth', 0.06);
+        setTimeout(() => playTone(freq * 0.7, 0.1, 'sawtooth', 0.04), 50);
+    }
     function soundAchievement() {
-        playTone(523, 0.1, 'sine', 0.15);
-        setTimeout(() => playTone(659, 0.1, 'sine', 0.15), 100);
-        setTimeout(() => playTone(784, 0.2, 'sine', 0.15), 200);
+        // Zelda-Chest-artig: aufsteigende Fanfare mit Chorus
+        playRichTone(523, 0.12, 'sine', 0.12);
+        setTimeout(() => playRichTone(659, 0.12, 'sine', 0.12), 100);
+        setTimeout(() => playRichTone(784, 0.25, 'triangle', 0.14), 200);
     }
     function soundQuestComplete() {
-        playTone(392, 0.1, 'sine', 0.2);
-        setTimeout(() => playTone(523, 0.1, 'sine', 0.2), 120);
-        setTimeout(() => playTone(659, 0.1, 'sine', 0.2), 240);
-        setTimeout(() => playTone(784, 0.3, 'sine', 0.2), 360);
+        // Mario-Level-Complete-artig: längere Fanfare
+        const notes = [392, 523, 659, 784, 880];
+        notes.forEach((f, i) => {
+            setTimeout(() => playRichTone(f, i === notes.length - 1 ? 0.4 : 0.1, 'sine', 0.12), i * 100);
+        });
     }
 
     // ============================================================
