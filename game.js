@@ -422,6 +422,8 @@
         ],
         bridge: [
             '🎲 Unter der Brücke spielen zwei Krabben ein Brettspiel. "Das heißt Go!"',
+            '🌉 Auf der Brücke stehen zwei Figuren. Der Große sagt: "Ich baue die Brücke die du nicht sehen kannst." Der Kleine: "Und ICH baue die Brücke die du SEHEN kannst!" Beide lachen.',
+            '🌉 "Es gibt zwei Arten von Architekten", sagt C. "Die einen bauen Häuser. Die anderen bauen die Sprache, in der man Häuser beschreibt."',
         ],
         water: [
             '☕ Das Wasser dampft! "Auf der Insel Java wird viel Kaffee getrunken", murmelt C.',
