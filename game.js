@@ -106,27 +106,45 @@
         } catch (e) {}
     }
 
-    // Pentatonische Skala — klingt immer gut, egal welche Kombination
-    const PENTA = [262, 294, 330, 392, 440, 523, 587, 659, 784, 880];
+    // Modi — Kirchentonarten, Pythagoräische Stimmverhältnisse ab C4
+    // Grundton × Intervall = reine Frequenz (Pythagoras + Bach)
+    const C4 = 261.63;
+    const SCALES = {
+        // Dorisch (D-Modus): 1 9/8 32/27 4/3 3/2 27/16 16/9 2
+        dorian:     [C4, C4*9/8, C4*32/27, C4*4/3, C4*3/2, C4*27/16, C4*16/9, C4*2, C4*9/4, C4*32/13.5, C4*8/3, C4*3],
+        // Lydisch (F-Modus): 1 9/8 81/64 729/512 3/2 27/16 243/128 2
+        lydian:     [C4, C4*9/8, C4*81/64, C4*729/512, C4*3/2, C4*27/16, C4*243/128, C4*2, C4*9/4, C4*81/32, C4*729/256, C4*3],
+        // Mixolydisch (G-Modus): 1 9/8 81/64 4/3 3/2 27/16 16/9 2
+        mixolydian: [C4, C4*9/8, C4*81/64, C4*4/3, C4*3/2, C4*27/16, C4*16/9, C4*2, C4*9/4, C4*81/32, C4*8/3, C4*3],
+    };
+    const SCALE_NAMES = Object.keys(SCALES);
+    let currentScale = SCALES[SCALE_NAMES[Math.floor(Math.random() * SCALE_NAMES.length)]];
+    let scaleChangeCounter = 0;
+
     const BUILD_WAVES = ['sine', 'triangle', 'square'];
     let lastBuildNote = -1;
-    let buildNoteDir = 1; // Melodie steigt oder fällt
+    let buildNoteDir = 1;
 
     function soundBuild() {
-        // Tendenz: Melodie steigt beim Bauen (fühlt sich aufbauend an)
+        // Alle ~30 Klicks: neuer Modus = neue Stimmung
+        scaleChangeCounter++;
+        if (scaleChangeCounter > 25 + Math.floor(Math.random() * 15)) {
+            scaleChangeCounter = 0;
+            currentScale = SCALES[SCALE_NAMES[Math.floor(Math.random() * SCALE_NAMES.length)]];
+        }
+
         let idx;
         if (lastBuildNote < 0) {
-            idx = Math.floor(Math.random() * PENTA.length);
+            idx = Math.floor(Math.random() * currentScale.length);
         } else {
-            // 70% in gleicher Richtung, 30% Richtungswechsel
             if (Math.random() < 0.3) buildNoteDir *= -1;
             idx = lastBuildNote + buildNoteDir * (1 + Math.floor(Math.random() * 2));
-            if (idx >= PENTA.length) { idx = PENTA.length - 2; buildNoteDir = -1; }
+            if (idx >= currentScale.length) { idx = currentScale.length - 2; buildNoteDir = -1; }
             if (idx < 0) { idx = 1; buildNoteDir = 1; }
         }
         lastBuildNote = idx;
         const type = BUILD_WAVES[Math.floor(Math.random() * BUILD_WAVES.length)];
-        playRichTone(PENTA[idx], 0.06 + Math.random() * 0.06, type, 0.06 + Math.random() * 0.04);
+        playRichTone(currentScale[idx], 0.06 + Math.random() * 0.06, type, 0.06 + Math.random() * 0.04);
     }
     function soundDemolish() {
         // Absteigender Ton — fühlt sich nach "weg" an
