@@ -200,8 +200,8 @@ sessions and adjusts the calibration as evidence builds. Erfahrungen aus
 
 ## Die 5 Standard-Ordner
 
-Jedes Team, jedes Repo, jede Sammlung folgt dieser Struktur. Immer. Überall.
-Egal ob team-dev, team-sales, skills, oder ein neues Repo.
+Jedes Team of 5 folgt dieser Struktur. Immer. Überall.
+Egal ob team-dev, team-sales, team-...
 
 ```
 leader/      — Planung, Architektur, Routing, Triage
@@ -289,5 +289,5 @@ lesson into the Codex.
 Padawans always use `model: "haiku"` when spawning Explore. Masters use their
 default (Sonnet).
 
-One Padawan per core agent. One core agent per Opus agent. The hierarchy is flat
+One Padawan per core agent. The hierarchy is flat
 until Feynman says otherwise.
