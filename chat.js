@@ -272,16 +272,22 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
     let chatHistory = [];
 
     // --- Settings ---
-    // --- Config: config.js > localStorage > Dialog ---
-    // Hirn-Transplantation: Nerds können pro Charakter das Modell tauschen
-    // config.js: { models: { bernd: 'gpt-4o', neinhorn: 'claude-opus-4-5' } }
+    // --- Config: Proxy > config.js > localStorage > Dialog ---
+    // Proxy = zero setup. Key bleibt serverseitig. User merkt nichts.
+    // config.js: { proxy: 'https://insel.workers.dev', models: { bernd: 'gpt-4o' } }
     const CFG = window.INSEL_CONFIG || {};
 
+    function hasProxy() {
+        return !!(CFG.proxy);
+    }
+
     function getApiKey() {
+        if (hasProxy()) return '__proxy__'; // Proxy braucht keinen Client-Key
         return localStorage.getItem('langdock-api-key') || CFG.apiKey || '';
     }
 
     function getProvider() {
+        if (hasProxy()) return 'langdock'; // Proxy routet intern
         return localStorage.getItem('api-provider') || CFG.provider || 'langdock';
     }
 
@@ -290,6 +296,7 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
     }
 
     function getApiUrl() {
+        if (hasProxy()) return CFG.proxy;
         const stored = localStorage.getItem('langdock-api-url');
         if (stored) return stored;
         if (CFG.endpoint) return CFG.endpoint;
@@ -451,7 +458,18 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
 
         let body, headers;
 
-        if (provider.format === 'anthropic') {
+        if (hasProxy()) {
+            // Proxy: kein Auth-Header nötig, Key ist serverseitig
+            headers = { 'Content-Type': 'application/json' };
+            body = JSON.stringify({
+                model: model,
+                max_tokens: 150,
+                messages: [
+                    { role: 'system', content: systemPrompt },
+                    ...chatHistory
+                ]
+            });
+        } else if (provider.format === 'anthropic') {
             // Anthropic Messages API
             headers = { 'Content-Type': 'application/json', ...provider.authHeader(key) };
             body = JSON.stringify({
