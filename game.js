@@ -99,6 +99,7 @@
                 grid[r][c] = null;
             }
         }
+        window.grid = grid; // Chat-Integration aktuell halten
     }
 
     // --- Zeichnen ---
@@ -395,6 +396,7 @@
         const projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
         if (projects[name]) {
             grid = projects[name].grid;
+            window.grid = grid; // Chat-Integration aktuell halten
             projectNameInput.value = name;
             updateStats();
             loadDialog.classList.add('hidden');

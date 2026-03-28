@@ -137,7 +137,11 @@ Schreibt Geräusche so: *pieps pieps* und *quak quak!*`
     }
 
     function getApiUrl() {
-        return localStorage.getItem('langdock-api-url') || DEFAULT_API_URL;
+        const stored = localStorage.getItem('langdock-api-url');
+        if (stored) return stored;
+        const providerId = localStorage.getItem('api-provider') || 'langdock';
+        const provider = PROVIDERS[providerId] || PROVIDERS.langdock;
+        return provider.url;
     }
 
     function setApiUrl(url) {
@@ -214,7 +218,11 @@ Schreibt Geräusche so: *pieps pieps* und *quak quak!*`
         const providerId = localStorage.getItem('api-provider') || 'langdock';
         const provider = PROVIDERS[providerId] || PROVIDERS.langdock;
         const apiUrl = getApiUrl() || provider.url;
-        const model = char.model || provider.model;
+        // Charakter-Modell nutzen wenn Langdock (routet alle Modelle),
+        // sonst Provider-Default (sicher)
+        const model = (providerId === 'langdock' || providerId === 'custom')
+            ? (char.model || provider.model)
+            : provider.model;
         const systemPrompt = `${char.system}\n\nAktueller Insel-Status: ${gridInfo}\n\nAntworte IMMER auf Deutsch. Maximal 2-3 kurze Sätze. Sei lustig und ermutigend.`;
 
         let body, headers;
@@ -254,11 +262,12 @@ Schreibt Geräusche so: *pieps pieps* und *quak quak!*`
                 const err = await response.json().catch(() => ({}));
                 if (response.status === 401) {
                     addMessage('API-Key ungültig. Bitte neu eingeben (⚙️)', 'system');
-                    chatHistory.pop();
+                } else if (response.status === 404 || (err.error?.message || '').includes('model')) {
+                    addMessage(`Modell "${model}" nicht verfügbar bei ${providerId}. Versuch einen anderen Anbieter (⚙️)`, 'system');
                 } else {
-                    addMessage(`Fehler: ${err.error?.message || response.statusText}`, 'system');
-                    chatHistory.pop();
+                    addMessage(`Fehler ${response.status}: ${err.error?.message || response.statusText}`, 'system');
                 }
+                chatHistory.pop();
                 return;
             }
 
