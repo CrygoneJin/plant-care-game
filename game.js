@@ -1090,7 +1090,7 @@
             btn.classList.add('craft-unlocked');
         }
         const info = MATERIALS[mat];
-        if (info) showToast(`✨ Neues Element: ${info.emoji} ${info.label}!`);
+        if (info) showToast(`✨ Neues Artefakt: ${info.emoji} ${info.label}!`);
     }
 
     function updatePaletteVisibility() {
