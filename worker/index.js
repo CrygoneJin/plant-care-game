@@ -38,8 +38,10 @@ export default {
         })),
       };
 
-      // Route 1: n8n Gateway (Model-Routing, Logging, Analytics)
-      if (env.N8N_WEBHOOK_URL) {
+      // 80% Cloudflare direkt (schnell), 20% n8n Gateway (Logging, Analytics)
+      const useN8n = env.N8N_WEBHOOK_URL && Math.random() < 0.2;
+
+      if (useN8n) {
         try {
           const n8nResponse = await fetch(env.N8N_WEBHOOK_URL, {
             method: 'POST',
