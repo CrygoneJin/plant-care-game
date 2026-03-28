@@ -539,6 +539,55 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
         }
     }
 
+    // --- DSGVO: Eltern-Gate für Chat (Art. 8 DSGVO — Kinder unter 16) ---
+    const CONSENT_KEY = 'insel-chat-consent';
+
+    function hasParentConsent() {
+        return localStorage.getItem(CONSENT_KEY) === 'yes';
+    }
+
+    function showConsentGate() {
+        // Alle bisherigen Nachrichten löschen
+        messages.innerHTML = '';
+        addMessage('🔒 Chat mit KI-Charakteren', 'system');
+        addMessage('Nachrichten werden an einen KI-Dienst gesendet. Bitte keine echten Namen, Adressen oder persönliche Daten eingeben.', 'system');
+        addMessage('Ein Elternteil muss einmalig zustimmen:', 'system');
+
+        const consentDiv = document.createElement('div');
+        consentDiv.className = 'chat-msg system';
+        consentDiv.style.textAlign = 'center';
+
+        const yesBtn = document.createElement('button');
+        yesBtn.textContent = '✅ Elternteil: Ich stimme zu';
+        yesBtn.style.cssText = 'padding:10px 16px;border:none;border-radius:8px;background:#27AE60;color:white;font-size:14px;cursor:pointer;margin:4px;';
+        yesBtn.addEventListener('click', () => {
+            localStorage.setItem(CONSENT_KEY, 'yes');
+            messages.innerHTML = '';
+            initChat();
+        });
+
+        const noBtn = document.createElement('button');
+        noBtn.textContent = '❌ Nein danke';
+        noBtn.style.cssText = 'padding:10px 16px;border:none;border-radius:8px;background:#E74C3C;color:white;font-size:14px;cursor:pointer;margin:4px;';
+        noBtn.addEventListener('click', () => {
+            panel.classList.add('hidden');
+        });
+
+        consentDiv.appendChild(yesBtn);
+        consentDiv.appendChild(noBtn);
+        messages.appendChild(consentDiv);
+    }
+
+    function initChat() {
+        const char = CHARACTERS[charSelect.value];
+        const brain = shortModel(getActiveModel(charSelect.value));
+        addMessage(`${char.emoji} ${char.name} ist da! [${brain}]`, 'system');
+        addMessage('⚠️ Bitte keine echten Namen oder Adressen eingeben.', 'system');
+        if (!getApiKey() || getApiKey() === '__proxy__' && !hasProxy()) {
+            addMessage('🔑 Klick auf ⚙️ oben und gib deinen API-Key ein — dann können wir reden!', 'system');
+        }
+    }
+
     // --- Events ---
     function toggleChat() {
         panel.classList.toggle('hidden');
@@ -546,11 +595,10 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
             input.focus();
             if (window.recordMilestone) window.recordMilestone('firstChat');
             if (messages.children.length === 0) {
-                const char = CHARACTERS[charSelect.value];
-                const brain = shortModel(getActiveModel(charSelect.value));
-                addMessage(`${char.emoji} ${char.name} ist da! [${brain}]`, 'system');
-                if (!getApiKey()) {
-                    addMessage('🔑 Klick auf ⚙️ oben und gib deinen API-Key ein — dann können wir reden!', 'system');
+                if (!hasParentConsent()) {
+                    showConsentGate();
+                } else {
+                    initChat();
                 }
             }
         }
