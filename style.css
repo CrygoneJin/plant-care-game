@@ -350,6 +350,20 @@ header h1 {
     box-shadow: 0 0 0 2px var(--accent);
 }
 
+.material-btn.craft-locked {
+    display: none;
+}
+
+.material-btn.craft-unlocked {
+    display: flex;
+    animation: unlockPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes unlockPop {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
 .mat-emoji {
     font-size: 32px;
 }

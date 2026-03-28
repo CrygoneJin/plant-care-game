@@ -35,10 +35,8 @@
         <div id="toolbar" role="toolbar" aria-label="Werkzeuge und Aktionen">
             <div class="toolbar-section">
                 <span class="toolbar-label">Werkzeuge:</span>
-                <button class="tool-btn active" data-tool="build" title="Bauen">🖌️ Bauen</button>
-                <button class="tool-btn" data-tool="axe" title="Axt — Bäume fällen für Holz">🪓 Axt</button>
-                <button class="tool-btn" data-tool="demolish" title="Abreißen">🗑️ Abreißen</button>
-                <button class="tool-btn" data-tool="fill" title="Füllen">🪣 Füllen</button>
+                <button class="tool-btn active" data-tool="build" title="Bauen (B)">🖌️ Bauen</button>
+                <button class="tool-btn" data-tool="harvest" title="Ernten (E) — Materialien einsammeln">⛏️ Ernten</button>
             </div>
             <div class="toolbar-section">
                 <button class="tool-btn" id="weather-btn" title="Wetter ändern">☀️</button>
@@ -61,90 +59,64 @@
 
             <!-- Material-Palette -->
             <div id="palette" role="toolbar" aria-label="Materialien zum Bauen">
-                <h2>Materialien</h2>
-                <button class="material-btn active" data-material="wood">
-                    <span class="mat-emoji">🪵</span>
-                    <span class="mat-label">Holz</span>
+                <h2>Elemente</h2>
+                <!-- 5 Basis-Elemente: immer sichtbar -->
+                <button class="material-btn active" data-material="tree" data-base="true">
+                    <span class="mat-emoji">🌱</span>
+                    <span class="mat-label">Baum</span>
                 </button>
-                <button class="material-btn" data-material="stone">
+                <button class="material-btn" data-material="stone" data-base="true">
                     <span class="mat-emoji">🧱</span>
                     <span class="mat-label">Stein</span>
                 </button>
-                <button class="material-btn" data-material="glass">
-                    <span class="mat-emoji">🪟</span>
-                    <span class="mat-label">Glas</span>
-                </button>
-                <button class="material-btn" data-material="plant">
-                    <span class="mat-emoji">🌿</span>
-                    <span class="mat-label">Pflanze</span>
-                </button>
-                <button class="material-btn" data-material="tree">
-                    <span class="mat-emoji">🌱</span>
-                    <span class="mat-label">Baum pflanzen</span>
-                </button>
-                <button class="material-btn" data-material="fire">
-                    <span class="mat-emoji">🔥</span>
-                    <span class="mat-label">Feuer</span>
-                </button>
-                <button class="material-btn" data-material="flower">
-                    <span class="mat-emoji">🌸</span>
-                    <span class="mat-label">Blume</span>
-                </button>
-                <button class="material-btn" data-material="door">
-                    <span class="mat-emoji">🚪</span>
-                    <span class="mat-label">Tür</span>
-                </button>
-                <button class="material-btn" data-material="roof">
-                    <span class="mat-emoji">🏠</span>
-                    <span class="mat-label">Dach</span>
-                </button>
-                <button class="material-btn" data-material="lamp">
-                    <span class="mat-emoji">💡</span>
-                    <span class="mat-label">Lampe</span>
-                </button>
-                <button class="material-btn" data-material="sand">
+                <button class="material-btn" data-material="sand" data-base="true">
                     <span class="mat-emoji">⬜</span>
                     <span class="mat-label">Sand</span>
                 </button>
-                <button class="material-btn" data-material="water">
+                <button class="material-btn" data-material="water" data-base="true">
                     <span class="mat-emoji">🌊</span>
                     <span class="mat-label">Wasser</span>
                 </button>
-                <button class="material-btn" data-material="path">
-                    <span class="mat-emoji">🟫</span>
-                    <span class="mat-label">Weg</span>
+                <button class="material-btn" data-material="fire" data-base="true">
+                    <span class="mat-emoji">🔥</span>
+                    <span class="mat-label">Feuer</span>
                 </button>
-                <button class="material-btn" data-material="fence">
+                <!-- Craftbare Elemente: erscheinen erst nach Herstellung -->
+                <button class="material-btn craft-locked" data-material="wood">
+                    <span class="mat-emoji">🪵</span>
+                    <span class="mat-label">Holz</span>
+                </button>
+                <button class="material-btn craft-locked" data-material="planks">
+                    <span class="mat-emoji">🪵</span>
+                    <span class="mat-label">Bretter</span>
+                </button>
+                <button class="material-btn craft-locked" data-material="glass">
+                    <span class="mat-emoji">🪟</span>
+                    <span class="mat-label">Glas</span>
+                </button>
+                <button class="material-btn craft-locked" data-material="window_pane">
+                    <span class="mat-emoji">🪟</span>
+                    <span class="mat-label">Fenster</span>
+                </button>
+                <button class="material-btn craft-locked" data-material="lamp">
+                    <span class="mat-emoji">💡</span>
+                    <span class="mat-label">Lampe</span>
+                </button>
+                <button class="material-btn craft-locked" data-material="door">
+                    <span class="mat-emoji">🚪</span>
+                    <span class="mat-label">Tür</span>
+                </button>
+                <button class="material-btn craft-locked" data-material="fence">
                     <span class="mat-emoji">🏗️</span>
                     <span class="mat-label">Zaun</span>
                 </button>
-                <button class="material-btn" data-material="boat">
-                    <span class="mat-emoji">⛵</span>
-                    <span class="mat-label">Boot</span>
-                </button>
-                <button class="material-btn" data-material="fish">
-                    <span class="mat-emoji">🐟</span>
-                    <span class="mat-label">Fisch</span>
-                </button>
-                <button class="material-btn" data-material="fountain">
+                <button class="material-btn craft-locked" data-material="fountain">
                     <span class="mat-emoji">⛲</span>
                     <span class="mat-label">Brunnen</span>
                 </button>
-                <button class="material-btn" data-material="flag">
-                    <span class="mat-emoji">🚩</span>
-                    <span class="mat-label">Flagge</span>
-                </button>
-                <button class="material-btn" data-material="bridge">
+                <button class="material-btn craft-locked" data-material="bridge">
                     <span class="mat-emoji">🌉</span>
                     <span class="mat-label">Brücke</span>
-                </button>
-                <button class="material-btn" data-material="cactus">
-                    <span class="mat-emoji">🌵</span>
-                    <span class="mat-label">Kaktus</span>
-                </button>
-                <button class="material-btn" data-material="mushroom">
-                    <span class="mat-emoji">🍄</span>
-                    <span class="mat-label">Pilz</span>
                 </button>
             </div>
 

@@ -971,8 +971,9 @@
         // Remove items from crafting grid
         craftingGrid = Array(9).fill(null);
 
-        // Add result to inventory
+        // Add result to inventory + unlock in palette
         addToInventory(recipe.result, recipe.resultCount);
+        unlockMaterial(recipe.result);
         soundCraft();
 
         const info = MATERIALS[recipe.result];
@@ -1060,8 +1061,58 @@
 
     // --- Zustand ---
     let grid = [];
-    let currentMaterial = 'wood';
+    let currentMaterial = 'tree';
     let currentTool = 'build';
+
+    // Basis-Elemente sind immer in der Palette sichtbar
+    const BASE_MATERIALS = ['tree', 'stone', 'sand', 'water', 'fire'];
+
+    // Freigeschaltete Materialien (durch Ernten oder Crafting)
+    let unlockedMaterials = new Set();
+
+    function saveUnlocked() {
+        localStorage.setItem('insel-unlocked', JSON.stringify([...unlockedMaterials]));
+    }
+
+    function loadUnlocked() {
+        const saved = JSON.parse(localStorage.getItem('insel-unlocked') || '[]');
+        unlockedMaterials = new Set(saved);
+    }
+
+    function unlockMaterial(mat) {
+        if (BASE_MATERIALS.includes(mat) || unlockedMaterials.has(mat)) return;
+        unlockedMaterials.add(mat);
+        saveUnlocked();
+        // Button in Palette sichtbar machen
+        const btn = document.querySelector(`.material-btn[data-material="${mat}"]`);
+        if (btn) {
+            btn.classList.remove('craft-locked');
+            btn.classList.add('craft-unlocked');
+        }
+        const info = MATERIALS[mat];
+        if (info) showToast(`✨ Neues Element: ${info.emoji} ${info.label}!`);
+    }
+
+    function updatePaletteVisibility() {
+        document.querySelectorAll('.material-btn').forEach(btn => {
+            const mat = btn.dataset.material;
+            if (BASE_MATERIALS.includes(mat) || btn.dataset.base) return;
+            if (unlockedMaterials.has(mat)) {
+                btn.classList.remove('craft-locked');
+                btn.classList.add('craft-unlocked');
+            } else {
+                btn.classList.add('craft-locked');
+                btn.classList.remove('craft-unlocked');
+            }
+        });
+    }
+
+    // Was gibt Ernten? Bäume → Holz, alles andere → sich selbst
+    const HARVEST_YIELD = {
+        tree:       { material: 'wood', count: 3 },
+        small_tree: { material: 'wood', count: 2 },
+        sapling:    { material: 'wood', count: 1 },
+    };
     let isMouseDown = false;
     let hoverCell = null;
     let animations = [];
@@ -1185,35 +1236,16 @@
                 ctx.globalAlpha = 0.5;
                 ctx.fillText(mat.emoji, hx + CELL_SIZE / 2, hy + CELL_SIZE / 2 + 1);
                 ctx.globalAlpha = 1;
-            } else if (currentTool === 'demolish') {
-                ctx.strokeStyle = '#E74C3C';
-                ctx.lineWidth = 3;
-                ctx.strokeRect(hx + 2, hy + 2, CELL_SIZE - 4, CELL_SIZE - 4);
-                // X markierung
-                ctx.beginPath();
-                ctx.moveTo(hx + 8, hy + 8);
-                ctx.lineTo(hx + CELL_SIZE - 8, hy + CELL_SIZE - 8);
-                ctx.moveTo(hx + CELL_SIZE - 8, hy + 8);
-                ctx.lineTo(hx + 8, hy + CELL_SIZE - 8);
-                ctx.strokeStyle = 'rgba(231, 76, 60, 0.6)';
-                ctx.lineWidth = 2;
-                ctx.stroke();
-            } else if (currentTool === 'fill') {
-                ctx.strokeStyle = '#F39C12';
-                ctx.lineWidth = 3;
-                ctx.setLineDash([4, 4]);
-                ctx.strokeRect(hx + 2, hy + 2, CELL_SIZE - 4, CELL_SIZE - 4);
-                ctx.setLineDash([]);
-            } else if (currentTool === 'axe') {
+            } else if (currentTool === 'harvest') {
                 const cell = grid[hoverCell.r]?.[hoverCell.c];
-                if (cell === 'tree' || cell === 'small_tree' || cell === 'sapling') {
-                    ctx.strokeStyle = '#8B4513';
+                if (cell !== null) {
+                    ctx.strokeStyle = '#F39C12';
                     ctx.lineWidth = 3;
                     ctx.strokeRect(hx + 2, hy + 2, CELL_SIZE - 4, CELL_SIZE - 4);
                     ctx.font = `${CELL_SIZE * 0.4}px serif`;
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
-                    ctx.fillText('🪓', hx + CELL_SIZE / 2, hy + CELL_SIZE / 2);
+                    ctx.fillText('⛏️', hx + CELL_SIZE / 2, hy + CELL_SIZE / 2);
                 }
             }
         }
@@ -1352,32 +1384,20 @@
                 maybeCodeEasterEgg(currentMaterial);
                 recordMilestone('firstBlock');
             }
-        } else if (currentTool === 'demolish') {
-            if (grid[r][c] !== null) {
-                if (!undoPushedThisStroke) { pushUndo(); undoPushedThisStroke = true; }
-                const removed = grid[r][c];
-                delete treeGrowth[r + ',' + c];
-                grid[r][c] = null;
-                addPlaceAnimation(r, c);
-                soundDemolish();
-            }
-        } else if (currentTool === 'fill') {
-            pushUndo();
-            floodFill(r, c, grid[r][c], currentMaterial);
-            soundBuild();
-        } else if (currentTool === 'axe') {
+        } else if (currentTool === 'harvest') {
             const cell = grid[r][c];
-            if (cell === 'tree' || cell === 'small_tree' || cell === 'sapling') {
+            if (cell !== null) {
                 if (!undoPushedThisStroke) { pushUndo(); undoPushedThisStroke = true; }
-                // Größerer Baum = mehr Holz
-                const woodYield = cell === 'tree' ? 3 : cell === 'small_tree' ? 2 : 1;
+                const yield_ = HARVEST_YIELD[cell] || { material: cell, count: 1 };
                 grid[r][c] = null;
                 delete treeGrowth[r + ',' + c];
-                addToInventory('wood', woodYield);
+                addToInventory(yield_.material, yield_.count);
+                unlockMaterial(yield_.material);
                 addPlaceAnimation(r, c);
                 soundChop();
-                showToast(`🪓 ${woodYield}x 🪵 Holz gesammelt!`);
-                trackEvent('chop_tree', { type: cell, wood: woodYield });
+                const info = MATERIALS[yield_.material];
+                if (info) showToast(`⛏️ ${yield_.count}x ${info.emoji} ${info.label} geerntet!`);
+                trackEvent('harvest', { source: cell, result: yield_.material, count: yield_.count });
             }
         }
         // Teure Checks nur alle 200ms (nicht bei jedem Pixel beim Drag)
@@ -1503,10 +1523,12 @@
             date: new Date().toLocaleDateString('de-DE'),
             treeGrowth: treeGrowth,
             inventory: inventory,
+            unlocked: [...unlockedMaterials],
         };
 
         localStorage.setItem('insel-projekte', JSON.stringify(projects));
         saveInventory();
+        saveUnlocked();
         showToast(`💾 "${name}" gespeichert!`);
     }
 
@@ -1528,6 +1550,7 @@
             auto: true,
             treeGrowth: treeGrowth,
             inventory: inventory,
+            unlocked: [...unlockedMaterials],
         };
         localStorage.setItem('insel-projekte', JSON.stringify(projects));
         // Subtiler Indikator: Save-Button blinkt kurz
@@ -1582,10 +1605,15 @@
             }
             treeGrowth = projects[name].treeGrowth || {};
             inventory = projects[name].inventory || {};
+            if (projects[name].unlocked) {
+                unlockedMaterials = new Set(projects[name].unlocked);
+                saveUnlocked();
+            }
             window.grid = grid;
             projectNameInput.value = name === AUTOSAVE_KEY ? '' : name;
             updateStats();
             updateInventoryDisplay();
+            updatePaletteVisibility();
             draw();
             loadDialog.classList.add('hidden');
             showToast(`📂 "${name}" geladen!`);
@@ -1604,10 +1632,13 @@
         initGrid();
         treeGrowth = {};
         inventory = {};
+        unlockedMaterials = new Set();
         saveInventory();
+        saveUnlocked();
         projectNameInput.value = '';
         updateStats();
         updateInventoryDisplay();
+        updatePaletteVisibility();
         draw();
         showToast('🆕 Neue Insel!');
     }
@@ -1756,7 +1787,7 @@
 
     canvas.addEventListener('mousemove', (e) => {
         hoverCell = getGridCell(e);
-        if (isMouseDown && hoverCell && currentTool !== 'fill') {
+        if (isMouseDown && hoverCell) {
             applyTool(hoverCell.r, hoverCell.c);
         }
     });
@@ -1786,7 +1817,7 @@
         e.preventDefault();
         const touch = e.touches[0];
         hoverCell = getGridCell(touch);
-        if (isMouseDown && hoverCell && currentTool !== 'fill') {
+        if (isMouseDown && hoverCell) {
             applyTool(hoverCell.r, hoverCell.c);
         }
     });
@@ -1872,23 +1903,11 @@
             undo();
             return;
         }
-        // Werkzeug-Shortcuts: B=Bauen, D=Abreißen, F=Füllen, A=Axt
+        // Werkzeug-Shortcuts: B=Bauen, E=Ernten
         if (e.key === 'b' || e.key === 'B') {
-            currentTool = 'build';
-            document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-            document.querySelector('[data-tool="build"]')?.classList.add('active');
-        } else if (e.key === 'd' || e.key === 'D') {
-            currentTool = 'demolish';
-            document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-            document.querySelector('[data-tool="demolish"]')?.classList.add('active');
-        } else if (e.key === 'f' || e.key === 'F') {
-            currentTool = 'fill';
-            document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-            document.querySelector('[data-tool="fill"]')?.classList.add('active');
-        } else if (e.key === 'a' || e.key === 'A') {
-            currentTool = 'axe';
-            document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-            document.querySelector('[data-tool="axe"]')?.classList.add('active');
+            selectTool('build');
+        } else if (e.key === 'e' || e.key === 'E') {
+            selectTool('harvest');
         }
     });
 
@@ -1924,9 +1943,7 @@
             case '8': selectMaterial('roof'); break;
             case '9': selectMaterial('lamp'); break;
             case 'b': selectTool('build'); break;
-            case 'd': selectTool('demolish'); break;
-            case 'f': selectTool('fill'); break;
-            case 'a': selectTool('axe'); break;
+            case 'e': selectTool('harvest'); break;
             case 's':
                 if (e.ctrlKey || e.metaKey) {
                     e.preventDefault();
@@ -2299,8 +2316,9 @@
     // === START ===
     initGrid();
 
-    // Inventar laden
+    // Inventar + freigeschaltete Materialien laden
     loadInventory();
+    loadUnlocked();
 
     // Auto-Save wiederherstellen wenn vorhanden
     const savedProjects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
@@ -2308,6 +2326,9 @@
         grid = savedProjects[AUTOSAVE_KEY].grid;
         treeGrowth = savedProjects[AUTOSAVE_KEY].treeGrowth || {};
         inventory = savedProjects[AUTOSAVE_KEY].inventory || inventory;
+        if (savedProjects[AUTOSAVE_KEY].unlocked) {
+            unlockedMaterials = new Set(savedProjects[AUTOSAVE_KEY].unlocked);
+        }
         window.grid = grid;
         showToast('🔄 Letzte Insel wiederhergestellt');
     }
@@ -2316,6 +2337,7 @@
     updateAchievementDisplay();
     updateQuestDisplay();
     updateInventoryDisplay();
+    updatePaletteVisibility();
 
     // --- Crafting Dialog Events ---
     const craftBtn = document.getElementById('craft-btn');
