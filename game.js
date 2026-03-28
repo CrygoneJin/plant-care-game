@@ -382,6 +382,71 @@
 
     initRaindrops();
 
+    // --- Programmiersprachen-Easter-Eggs auf der Insel Java ---
+    // Kinder entdecken sie beim Bauen — lernen die Namen spielerisch
+    const CODE_EASTER_EGGS = {
+        stone: [
+            '🪨 Du findest eine Inschrift im Stein: "C war hier. Erster!" Wer ist C?',
+            '🪨 Autsch! Jemand ist hier gegen den Stein gelaufen. Daneben steht "C++" geritzt.',
+        ],
+        tree: [
+            '🐍 Hinter dem Baum raschelt es! Eine freundliche Schlange: "Hallo, ich bin Python!"',
+            '🐍 Python die Schlange zwinkert dir zu: "Ich bin leicht zu verstehen, oder?"',
+            '🐍 Python gähnt: "Ich bin zwar laaangsam... aber ich verstehe jeden! Und jeder versteht mich!"',
+            '🐍 Python wickelt sich gemütlich um den Baum: "Die anderen rennen. Ich denke. Wer ist schlauer?"',
+        ],
+        flower: [
+            '💎 Zwischen den Blumen glitzert etwas Rotes! Ein Edelstein: "Ruby"!',
+            '📿 Im Blumenbeet liegt eine Perlenkette! "PERL" steht auf dem Verschluss. Hübsch!',
+            '📿 "Meine PERLenkette!" ruft eine alte Schildkröte. "Die hab ich 1987 hier verloren!"',
+        ],
+        boat: [
+            '⚓ Am Boot hängt ein rostiger Anker. Jemand hat "Rust" draufgeritzt. "Ich war mal neu!"',
+            '🦀 Unter dem Boot sitzt ein kleiner Krebs mit einem Zahnrad. "Ich bin Rust!"',
+        ],
+        fence: [
+            '🐦 Ein schneller Vogel fliegt über den Zaun! "Ich bin Swift!" Zack, schon weg.',
+        ],
+        bridge: [
+            '🎲 Unter der Brücke spielen zwei Krabben ein Brettspiel. "Das heißt Go!"',
+        ],
+        water: [
+            '☕ Das Wasser dampft! "Auf der Insel Java wird viel Kaffee getrunken", murmelt C.',
+        ],
+        mushroom: [
+            '🍄 Unter dem Pilz sitzt eine kleine Elfe. "Ich spreche Elixir!"',
+        ],
+        lamp: [
+            '💡 Die Lampe flackert. In der Birne steht winzig: "Powered by JavaScript".',
+            '💡 "Wusstest du: JavaScript wurde in 10 Tagen erfunden? Auf einer Insel!" — C++',
+        ],
+    };
+
+    let lastEasterEggTime = 0;
+    let discoveredEggs = JSON.parse(localStorage.getItem('insel-easter-eggs') || '[]');
+
+    function maybeCodeEasterEgg(material) {
+        const now = Date.now();
+        if (now - lastEasterEggTime < 20000) return; // Max alle 20 Sekunden
+        if (Math.random() > 0.12) return; // 12% Chance
+
+        const eggs = CODE_EASTER_EGGS[material];
+        if (!eggs) return;
+
+        // Neue Eggs bevorzugen
+        const unseen = eggs.filter(e => !discoveredEggs.includes(e));
+        const pool = unseen.length > 0 ? unseen : eggs;
+        const egg = pool[Math.floor(Math.random() * pool.length)];
+
+        lastEasterEggTime = now;
+        if (!discoveredEggs.includes(egg)) {
+            discoveredEggs.push(egg);
+            localStorage.setItem('insel-easter-eggs', JSON.stringify(discoveredEggs));
+        }
+        showToast(egg, 5000);
+        trackEvent('easter_egg', { material, egg: egg.slice(0, 30) });
+    }
+
     // --- NPC-Kommentare beim Bauen ---
     const NPC_BUILD_COMMENTS = {
         boat:     ['⛵ Tommy: Klick-klack! BOOTE! JA!', '🦀 Krabs: Ein Boot? Das bringt Kunden!'],
@@ -660,6 +725,7 @@
                 addPlaceAnimation(r, c);
                 soundBuild();
                 maybeNpcComment(currentMaterial);
+                maybeCodeEasterEgg(currentMaterial);
                 trackEvent('build', { material: currentMaterial });
             }
         } else if (currentTool === 'demolish') {
