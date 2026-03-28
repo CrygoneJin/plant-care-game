@@ -2472,6 +2472,9 @@
             }
         }
 
+        // Dungeon-Bewohner zeichnen
+        drawDungeonNPCs();
+
         // Level-Anzeige (Aufzug-Display)
         const labelW = 280;
         const labelH = abstractionLevel >= 3 ? 42 : 28;
@@ -2562,6 +2565,238 @@
             ctx.font = `bold ${fontSize}px monospace`;
         }
     }
+
+    // --- Dungeon-Bewohner: NPCs die auf verschiedenen Ebenen leben ---
+    // Inspiriert von Schnipsels Sohn: HEXen, ASCIIs, Hüte, Kernel-Bewohner
+
+    const DUNGEON_NPCS = [
+        // Freundliche Bewohner
+        { id: 'hexe_hilda',  emoji: '🧙‍♀️', name: 'Hilda die HEXe',     level: 4, type: 'friend',
+          say: 'Hex hex! Ich verwandle alles in Sechzehner-Zahlen!', speed: 0.8 },
+        { id: 'hexe_hexa',   emoji: '🧙',   name: 'Hexa die HEXe',     level: 4, type: 'friend',
+          say: '0x48 0x65 0x78 — das bin ICH als Hex!', speed: 1.1 },
+        { id: 'ascii_alex',  emoji: '⚡',    name: 'ASCII Alex',         level: 3, type: 'friend',
+          say: 'Ich bin voller Energie! 65 66 67 — A B C!', speed: 1.5 },
+        { id: 'ascii_anna',  emoji: '💃',    name: 'ASCII Anna',         level: 3, type: 'friend',
+          say: 'Jeder Buchstabe hat Power! 65=A, 97=a — ich tanze zwischen Groß und Klein!', speed: 1.3 },
+        { id: 'wort_wilma',  emoji: '📖',    name: 'Wort-Wilma',         level: 2, type: 'friend',
+          say: 'Worte sind Zaubersprüche. Schreib eins und die Welt verändert sich!', speed: 0.6 },
+        { id: 'pixel_petra', emoji: '🎨',    name: 'Pixel Petra',        level: 1, type: 'friend',
+          say: 'Ich male mit winzigen Punkten! Ganz viele Punkte = ein Bild!', speed: 0.9 },
+
+        // Fiese Typen
+        { id: 'flipper',     emoji: '👾',    name: 'Bit-Flipper',        level: 7, type: 'villain',
+          say: 'Hehe! Ich dreh deine Bits um! Aus 0 wird 1!', speed: 2.0 },
+        { id: 'spion',       emoji: '👀',    name: 'Seiten-Kanal-Spion', level: 6, type: 'villain',
+          say: 'Pssst... ich schau beim Nachbar-Byte ab! Nibble für Nibble...', speed: 0.7 },
+        { id: 'overflow',    emoji: '🫠',    name: 'Buffer Overflow',    level: 5, type: 'villain',
+          say: 'Ich quetsche mich in Bytes die mir nicht gehören! Platzmangel? Egal!', speed: 1.8 },
+
+        // Die Hüte (Hacker-Typen)
+        { id: 'white_hat',   emoji: '🤠',    name: 'Weißer Hut',         level: 5, type: 'hat_white',
+          say: 'Ich finde Fehler und repariere sie. Das ist mein Job.', speed: 1.0 },
+        { id: 'grey_hat',    emoji: '🎩',    name: 'Grauer Hut',         level: 6, type: 'hat_grey',
+          say: 'Hmm... ich schau mal ob hier Lücken sind. Nur gucken!', speed: 1.2 },
+        { id: 'black_hat',   emoji: '🕵️',    name: 'Schwarzer Hut',      level: 7, type: 'hat_black',
+          say: 'Die Lücke gehört mir! *lacht böse*', speed: 1.6 },
+        { id: 'red_hat',     emoji: '👹',    name: 'Red Hat — der Sonderling', level: 5, type: 'hat_red',
+          say: 'Ich bin anders. Open Source! Jeder darf meinen Code lesen. Kommt rein!', speed: 0.5 },
+
+        // Kernel-Bewohner (sitzen fest in den tiefsten Ebenen)
+        { id: 'kernel_karl', emoji: '🔒',    name: 'Kernel Karl',        level: 7, type: 'kernel',
+          say: 'Ich darf hier NICHT raus. Ich bewache die tiefste Ebene. Ohne mich läuft nichts.', speed: 0.0 },
+        { id: 'kernel_kira', emoji: '⚙️',    name: 'Kernel Kira',        level: 7, type: 'kernel',
+          say: 'Ring 0 — hier unten entscheidet sich alles. Ich starte den ganzen Computer.', speed: 0.0 },
+        { id: 'scheduler',   emoji: '⏰',    name: 'Der Scheduler',      level: 6, type: 'kernel',
+          say: 'Ich sage wer wann dran ist. Ohne mich reden alle durcheinander.', speed: 0.3 },
+    ];
+
+    // NPC-Positionen (wandern am Canvas-Rand oder zwischen Zellen)
+    const npcStates = DUNGEON_NPCS.map(npc => ({
+        ...npc,
+        x: Math.random() * (COLS + WATER_BORDER * 2) * CELL_SIZE,
+        y: Math.random() * (ROWS + WATER_BORDER * 2) * CELL_SIZE,
+        dx: (Math.random() - 0.5) * npc.speed,
+        dy: (Math.random() - 0.5) * npc.speed,
+        showBubble: false,
+        bubbleTimer: 0,
+    }));
+
+    // NPC-Bewegung updaten
+    function updateNPCs(now) {
+        const canvasW = (COLS + WATER_BORDER * 2) * CELL_SIZE;
+        const canvasH = (ROWS + WATER_BORDER * 2) * CELL_SIZE;
+
+        for (const npc of npcStates) {
+            if (npc.speed === 0) continue; // Kernel-Bewohner sitzen fest
+
+            // Leichte Richtungsänderung (organisches Wandern)
+            npc.dx += (Math.random() - 0.5) * 0.1;
+            npc.dy += (Math.random() - 0.5) * 0.1;
+            const maxSpd = npc.speed;
+            const spd = Math.sqrt(npc.dx * npc.dx + npc.dy * npc.dy);
+            if (spd > maxSpd) {
+                npc.dx = (npc.dx / spd) * maxSpd;
+                npc.dy = (npc.dy / spd) * maxSpd;
+            }
+
+            npc.x += npc.dx;
+            npc.y += npc.dy;
+
+            // Bounce an Rändern
+            if (npc.x < 0 || npc.x > canvasW - 20) npc.dx *= -1;
+            if (npc.y < 0 || npc.y > canvasH - 20) npc.dy *= -1;
+            npc.x = Math.max(0, Math.min(canvasW - 20, npc.x));
+            npc.y = Math.max(0, Math.min(canvasH - 20, npc.y));
+
+            // Sprechblase timeout
+            if (npc.showBubble && now - npc.bubbleTimer > 4000) {
+                npc.showBubble = false;
+            }
+        }
+    }
+
+    // NPCs auf ihrer Ebene zeichnen
+    function drawDungeonNPCs() {
+        if (abstractionLevel === 0) return;
+        const now = Date.now();
+        updateNPCs(now);
+
+        const emojiSize = Math.max(14, CELL_SIZE * 0.6);
+
+        for (const npc of npcStates) {
+            // Nur NPCs der aktuellen Ebene zeigen (± 1 Ebene = halbtransparent)
+            const dist = Math.abs(npc.level - abstractionLevel);
+            if (dist > 1) continue;
+            const alpha = dist === 0 ? 1.0 : 0.3;
+
+            ctx.globalAlpha = alpha;
+
+            // Typ-abhängige Effekte
+            if (npc.type === 'villain') {
+                // Villains: leichtes rotes Glühen
+                const glow = Math.sin(now * 0.005 + npc.x) * 3 + 5;
+                ctx.shadowColor = '#FF0000';
+                ctx.shadowBlur = glow;
+            } else if (npc.type === 'kernel') {
+                // Kernel: goldenes Leuchten, sitzen fest
+                ctx.shadowColor = '#FFD700';
+                ctx.shadowBlur = 4;
+            } else if (npc.type.startsWith('hat_')) {
+                // Hüte: farbiger Schimmer je nach Hut
+                const hatColors = { hat_white: '#FFFFFF', hat_grey: '#888888', hat_black: '#333333', hat_red: '#FF2200' };
+                ctx.shadowColor = hatColors[npc.type] || '#888';
+                ctx.shadowBlur = 6;
+            } else {
+                ctx.shadowColor = '#00FF41';
+                ctx.shadowBlur = 3;
+            }
+
+            // Emoji zeichnen
+            ctx.font = `${emojiSize}px serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(npc.emoji, npc.x, npc.y);
+
+            // Name (klein, unter dem NPC)
+            ctx.shadowBlur = 0;
+            ctx.font = `bold ${Math.max(7, CELL_SIZE * 0.18)}px monospace`;
+            ctx.fillStyle = npc.type === 'villain' ? '#FF6666' :
+                           npc.type === 'kernel' ? '#FFD700' :
+                           npc.type === 'hat_red' ? '#FF4444' :
+                           '#00FF41';
+            ctx.fillText(npc.name, npc.x, npc.y + emojiSize * 0.6);
+
+            // Sprechblase
+            if (npc.showBubble) {
+                drawSpeechBubble(npc.x, npc.y - emojiSize * 0.8, npc.say, npc.type);
+            }
+
+            ctx.globalAlpha = 1;
+            ctx.shadowBlur = 0;
+        }
+    }
+
+    // Sprechblase zeichnen
+    function drawSpeechBubble(x, y, text, type) {
+        const maxW = 180;
+        const padding = 6;
+        const fontSize = 9;
+        ctx.font = `${fontSize}px monospace`;
+
+        // Text umbrechen
+        const words = text.split(' ');
+        const lines = [];
+        let currentLine = '';
+        for (const word of words) {
+            const test = currentLine ? currentLine + ' ' + word : word;
+            if (ctx.measureText(test).width > maxW - padding * 2) {
+                if (currentLine) lines.push(currentLine);
+                currentLine = word;
+            } else {
+                currentLine = test;
+            }
+        }
+        if (currentLine) lines.push(currentLine);
+
+        const lineH = fontSize + 3;
+        const bubbleW = Math.min(maxW, Math.max(...lines.map(l => ctx.measureText(l).width)) + padding * 2);
+        const bubbleH = lines.length * lineH + padding * 2;
+        const bx = x - bubbleW / 2;
+        const by = y - bubbleH;
+
+        // Hintergrund
+        const bgColor = type === 'villain' ? 'rgba(80, 0, 0, 0.9)' :
+                        type === 'kernel' ? 'rgba(40, 30, 0, 0.9)' :
+                        'rgba(0, 30, 0, 0.9)';
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(bx, by, bubbleW, bubbleH);
+        ctx.strokeStyle = type === 'villain' ? '#FF4444' : '#00FF41';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(bx, by, bubbleW, bubbleH);
+
+        // Dreieck (Pfeil nach unten)
+        ctx.beginPath();
+        ctx.moveTo(x - 5, by + bubbleH);
+        ctx.lineTo(x, by + bubbleH + 6);
+        ctx.lineTo(x + 5, by + bubbleH);
+        ctx.fillStyle = bgColor;
+        ctx.fill();
+
+        // Text
+        ctx.fillStyle = type === 'villain' ? '#FF8888' : '#00FF41';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+        for (let i = 0; i < lines.length; i++) {
+            ctx.fillText(lines[i], bx + padding, by + padding + i * lineH);
+        }
+    }
+
+    // Klick auf NPC → Sprechblase
+    canvas.addEventListener('click', function npcClickHandler(e) {
+        if (abstractionLevel === 0) return;
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        const mx = (e.clientX - rect.left) * scaleX;
+        const my = (e.clientY - rect.top) * scaleY;
+
+        const emojiSize = Math.max(14, CELL_SIZE * 0.6);
+
+        for (const npc of npcStates) {
+            const dist = Math.abs(npc.level - abstractionLevel);
+            if (dist > 1) continue;
+            const dx = mx - npc.x;
+            const dy = my - npc.y;
+            if (Math.sqrt(dx * dx + dy * dy) < emojiSize) {
+                npc.showBubble = true;
+                npc.bubbleTimer = Date.now();
+                trackEvent('dungeon_npc_talk', { npc: npc.id, level: abstractionLevel });
+                showToast(`${npc.emoji} ${npc.name}: "${npc.say.substring(0, 40)}..."`);
+                return; // Nur ein NPC pro Klick
+            }
+        }
+    });
 
     // Click-Handler für Bit-Flip
     const origCanvasClick = canvas.onclick;
