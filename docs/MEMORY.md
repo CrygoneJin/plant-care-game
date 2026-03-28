@@ -158,6 +158,21 @@ Bis dahin: seine Prüffrage lebt im Beirat. Seine Stimme gehört ihm.
 - **Code-View als Aha-Erlebnis**: Hinter jedem Emoji steckt nur ein Wort. "wood", "flower". Das ist Code. Alles was du siehst wurde mit Text gebaut.
 - **Weber-Alarm Update**: game.js (~1200 Zeilen) + chat.js (~580 Zeilen) > AGENTS.md (292). Produkt wächst schneller als Bürokratie. Gut.
 
+### Dusch-Erkenntnis (Oskar, 8)
+
+> "Ich will nicht heiß oder kalt. Ich will genau richtig."
+
+**Binäres Feedback ist beschissen.** Heiß/kalt, richtig/falsch, gut/schlecht —
+das ist ein Schalter. Kinder wollen keinen Schalter. Sie wollen einen **Regler**.
+Sie wollen spüren dass sie sich dem Sweet Spot nähern. Flow ist kein Zustand,
+Flow ist eine Richtung.
+
+**Für die Insel:** Kein "richtig/falsch" Feedback. Stattdessen Spektrum.
+Wärmer/kälter. Näher/weiter. Der Höhenrausch des "genau richtig" kommt nicht
+vom Ankommen — er kommt vom Spüren dass man sich nähert.
+
+Prüffrage für jedes Feature: *Fühlt sich das an wie ein Schalter oder wie ein Regler?*
+
 ### Nächste Session
 - Voice-Pipeline: Cartesia + vapi.ai (API-Keys vorhanden)
 - Padawans spawnen + Codex-Dateien anlegen
@@ -167,6 +182,7 @@ Bis dahin: seine Prüffrage lebt im Beirat. Seine Stimme gehört ihm.
 - Musik on demand: Loisach Marci Stil, Hardstyle kinderkompatibel
 - Haiku-Bauanleitungen als Quests
 - Mobile UX polieren: Touch besser, Palette scrollbar
+- **Regler statt Schalter**: Alle Feedback-Systeme auf Spektrum umbauen (Dusch-Prinzip)
 
 ---
 
