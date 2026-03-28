@@ -85,6 +85,13 @@ Bis dahin: seine Prüffrage lebt im Beirat. Seine Stimme gehört ihm.
 | 2026-03-28 | NPC-Chat mit KI live im Spiel — 6 Charaktere, Haiku-Modell |
 | 2026-03-28 | Exports-Ordner für Wiederverwendung in anderen Projekten |
 | 2026-03-28 | Tommy Krapweis Stand-Up — bestes Meeting der Session |
+| 2026-03-28 | Charakter-spezifische Modelle via Langdock (SpongeBob→Gemini, Krabs→Llama, etc.) |
+| 2026-03-28 | 3 Bugs gefixt: DEFAULT_API_URL undefiniert, window.grid stale, Modell-Provider-Mismatch |
+
+### Fehler (Nacht-Audit)
+- `DEFAULT_API_URL` wurde referenziert aber nie deklariert — wäre beim ersten Chat-Versuch gecrasht
+- `window.grid` wurde nach newProject/loadProject nicht aktualisiert — Chat hätte leere Insel gemeldet
+- Charakter-Modelle wurden an jeden Provider geschickt — nur Langdock kann alle routen
 
 ### Learnings
 - Zellteilung = Biologie. Padawan wird Founder. Passt.
@@ -92,6 +99,7 @@ Bis dahin: seine Prüffrage lebt im Beirat. Seine Stimme gehört ihm.
 - Codex muss lebendig sein — stagnierender Codex = Warnsignal
 - Weber-Alarm: AGENTS.md (292) < game.js (597). Ratio beobachten.
 - Tommy Krapweis hat recht: "Euer Org-Chart hat mehr Charaktere als euer Spiel"
+- Nacht-Audit lohnt sich: 3 Bugs gefunden die morgens sofort gecrasht hätten. Immer nach dem "fertig für heute" nochmal durchgehen.
 - Reservierte Stimmen: manche Personas kann KI noch nicht. Respektieren.
 
 ### Nächste Session
