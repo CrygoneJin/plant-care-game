@@ -15,9 +15,9 @@
         const totalRows = ROWS + WATER_BORDER * 2;
 
         if (isMobile) {
-            // Canvas soll die volle Breite nutzen, maximale Höhe
-            const availW = window.innerWidth - 8;
-            const availH = window.innerHeight * 0.72;
+            // Canvas soll die volle Breite nutzen, mit etwas Padding
+            const availW = window.innerWidth - 16;
+            const availH = window.innerHeight * 0.55; // ~55% der Höhe für Canvas
             return Math.max(12, Math.min(
                 Math.floor(availW / totalCols),
                 Math.floor(availH / totalRows)
@@ -831,35 +831,11 @@
     function maybeNpcComment(material) {
         const now = Date.now();
         if (now - lastCommentTime < 10000) return; // Max alle 10 Sekunden
-        if (Math.random() > 0.15) return; // 15% Chance (Game-Design Best Practice)
+        if (Math.random() > 0.20) return; // 20% Chance (weniger spam)
 
         lastCommentTime = now;
-
-        // Zufälligen NPC wählen (für Kontext-Übergabe an KI-Puffer)
-        const npcKeys = Object.keys(NPC_VOICES);
-        const npcId = npcKeys[Math.floor(Math.random() * npcKeys.length)];
-        const npc = NPC_VOICES[npcId];
-
-        // Grid-Stats für KI-Kontext (10% der Aufrufe)
-        const stats = Math.random() < 0.1 && typeof getGridStats === 'function'
-            ? getGridStats()
-            : null;
-
-        // KI-Puffer versuchen (nur wenn chat.js geladen und online)
-        let comment = null;
-        if (typeof window.requestAiComment === 'function') {
-            const aiText = window.requestAiComment(material, npcId, stats);
-            if (aiText) {
-                // KI-Text mit NPC-Emoji versehen
-                comment = `${npc.emoji} ${aiText}`;
-            }
-        }
-
-        // Fallback: Template-System
-        if (!comment) {
-            comment = generateNpcComment(material);
-        }
-
+        const comment = generateNpcComment(material);
+        // Kurzer Toast (2s) — verschwindet sofort bei nächstem Klick
         showToast(comment, 2000);
     }
 
@@ -997,6 +973,13 @@
 
     let craftingGrid = Array(9).fill(null); // 3x3 = 9 Slots
 
+    // Entdeckte Rezepte — Spieler sieht nur was er schon gefunden hat
+    let discoveredRecipes = new Set(JSON.parse(localStorage.getItem('insel-discovered-recipes') || '[]'));
+
+    function saveDiscoveredRecipes() {
+        localStorage.setItem('insel-discovered-recipes', JSON.stringify([...discoveredRecipes]));
+    }
+
     function getCraftingIngredients() {
         const counts = {};
         for (const slot of craftingGrid) {
@@ -1034,13 +1017,20 @@
         // Remove items from crafting grid
         craftingGrid = Array(9).fill(null);
 
-        // Add result to inventory + unlock in palette
+        // Add result to inventory + unlock in palette + discover recipe
         addToInventory(recipe.result, recipe.resultCount);
         unlockMaterial(recipe.result);
+        const isNew = !discoveredRecipes.has(recipe.name);
+        discoveredRecipes.add(recipe.name);
+        saveDiscoveredRecipes();
         soundCraft();
 
         const info = MATERIALS[recipe.result];
-        showToast(`⚒️ ${info.emoji} ${recipe.resultCount}x ${info.label} hergestellt!`);
+        if (isNew) {
+            showToast(`🔮 Neues Rezept entdeckt: ${info.emoji} ${recipe.desc}!`);
+        } else {
+            showToast(`⚒️ ${info.emoji} ${recipe.resultCount}x ${info.label} hergestellt!`);
+        }
         trackEvent('craft', { recipe: recipe.name, result: recipe.result });
         updateCraftingDisplay();
     }
@@ -1112,13 +1102,18 @@
             }).join('') || '<p class="inv-empty">Inventar leer!</p>';
         }
 
-        // Update recipe book
+        // Update recipe book — nur entdeckte Rezepte zeigen
         const recipeBook = document.getElementById('recipe-book');
         if (recipeBook) {
-            recipeBook.innerHTML = CRAFTING_RECIPES.map(r => {
-                const info = MATERIALS[r.result];
-                return `<div class="recipe-entry">${info.emoji} ${r.desc}</div>`;
-            }).join('');
+            const discovered = CRAFTING_RECIPES.filter(r => discoveredRecipes.has(r.name));
+            if (discovered.length === 0) {
+                recipeBook.innerHTML = '<p class="craft-discover-hint">Mische die Elemente und finde heraus was entsteht!</p>';
+            } else {
+                recipeBook.innerHTML = discovered.map(r => {
+                    const info = MATERIALS[r.result];
+                    return `<div class="recipe-entry">${info.emoji} ${r.desc}</div>`;
+                }).join('') + `<p class="craft-discover-hint">${discovered.length}/${CRAFTING_RECIPES.length} entdeckt</p>`;
+            }
         }
     }
 
@@ -1126,17 +1121,6 @@
     let grid = [];
     let currentMaterial = 'metal';
     let currentTool = 'build';
-
-    // NPC-Discovery: Tippe einen Block im Build-Modus an → öffnet Chat mit passendem NPC
-    const MATERIAL_NPC = {
-        boat: 'krabs', fish: 'krabs', water: 'krabs',
-        door: 'spongebob', roof: 'spongebob', lamp: 'spongebob',
-        flower: 'maus', plant: 'maus', fountain: 'maus',
-        fence: 'neinhorn', mushroom: 'neinhorn',
-        tree: 'elefant', stone: 'elefant', path: 'elefant',
-        bridge: 'tommy', sand: 'tommy',
-        wood: 'bernd', fire: 'bernd',
-    };
 
     // Die 5 Elemente (五行 Wu Xing) — immer in der Palette sichtbar
     const BASE_MATERIALS = ['metal', 'wood', 'fire', 'water', 'earth'];
@@ -1221,6 +1205,9 @@
     const introOverlay = document.getElementById('intro-overlay');
     const startButton = document.getElementById('start-button');
     const statsContent = document.getElementById('stats-content');
+    const projectNameInput = document.getElementById('project-name');
+    const loadDialog = document.getElementById('load-dialog');
+    const savedProjectsList = document.getElementById('saved-projects-list');
     const toast = document.getElementById('toast');
 
     // --- Canvas Größe ---
@@ -1465,16 +1452,6 @@
     let undoPushedThisStroke = false;
 
     function applyTool(r, c) {
-        // Im Build-Modus: Tippe existierenden Block an → öffne Chat mit zugehörigem NPC
-        if (currentTool === 'build' && grid[r][c] !== null) {
-            const material = grid[r][c];
-            const npcId = MATERIAL_NPC[material];
-            if (npcId && window.openChat) {
-                window.openChat(npcId);
-                return;
-            }
-        }
-
         if (currentTool === 'build') {
             if (grid[r][c] !== currentMaterial) {
                 if (!undoPushedThisStroke) { pushUndo(); undoPushedThisStroke = true; }
@@ -1622,6 +1599,146 @@
         statsContent.innerHTML = html;
     }
 
+    // --- Speichern ---
+    function saveProject() {
+        const name = projectNameInput.value.trim() || 'Mein Bauwerk';
+        const projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+
+        projects[name] = {
+            grid: grid,
+            date: new Date().toLocaleDateString('de-DE'),
+            treeGrowth: treeGrowth,
+            inventory: inventory,
+            unlocked: [...unlockedMaterials],
+            discovered: [...discoveredRecipes],
+        };
+
+        localStorage.setItem('insel-projekte', JSON.stringify(projects));
+        saveInventory();
+        saveUnlocked();
+        showToast(`💾 "${name}" gespeichert!`);
+    }
+
+    // --- Auto-Save: alle 30s still im Hintergrund ---
+    const AUTOSAVE_KEY = '~autosave~';
+    let lastSaveHash = '';
+    function autoSave() {
+        if (!grid || !grid.length) return;
+        const hasContent = grid.some(row => row.some(cell => cell !== null));
+        if (!hasContent) return;
+        // Nur speichern wenn sich was geändert hat
+        const hash = JSON.stringify(grid);
+        if (hash === lastSaveHash) return;
+        lastSaveHash = hash;
+        const projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+        projects[AUTOSAVE_KEY] = {
+            grid: grid,
+            date: new Date().toLocaleDateString('de-DE'),
+            auto: true,
+            treeGrowth: treeGrowth,
+            inventory: inventory,
+            unlocked: [...unlockedMaterials],
+            discovered: [...discoveredRecipes],
+        };
+        localStorage.setItem('insel-projekte', JSON.stringify(projects));
+        // Subtiler Indikator: Save-Button blinkt kurz
+        const saveBtn = document.getElementById('save-btn');
+        if (saveBtn) {
+            saveBtn.style.transition = 'opacity 0.3s';
+            saveBtn.style.opacity = '0.5';
+            setTimeout(() => { saveBtn.style.opacity = '1'; }, 600);
+        }
+    }
+    setInterval(autoSave, 30000);
+    window.addEventListener('beforeunload', autoSave);
+
+    // --- Laden-Dialog ---
+    function showLoadDialog() {
+        const projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+        const names = Object.keys(projects);
+
+        if (names.length === 0) {
+            savedProjectsList.innerHTML = '<p class="no-projects">Keine Projekte gespeichert!</p>';
+        } else {
+            savedProjectsList.innerHTML = names.map(name => {
+                const proj = projects[name];
+                const displayName = name === AUTOSAVE_KEY ? '🔄 Letzte Session (Auto)' : escapeHtml(name);
+                return `
+                    <div class="saved-project-item" data-name="${escapeHtml(name)}">
+                        <div>
+                            <div class="saved-project-name">${displayName}</div>
+                            <div class="saved-project-date">${proj.date}</div>
+                        </div>
+                        <button class="saved-project-delete" data-delete="${escapeHtml(name)}" title="Löschen">🗑️</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        loadDialog.classList.remove('hidden');
+    }
+
+    function isValidGrid(g) {
+        return Array.isArray(g) && g.length === ROWS && g[0]?.length === COLS;
+    }
+
+    function loadProject(name) {
+        const projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+        if (projects[name]) {
+            const saved = projects[name].grid;
+            if (isValidGrid(saved)) {
+                grid = saved;
+            } else {
+                initGrid(); // Fallback bei kaputtem Grid
+            }
+            treeGrowth = projects[name].treeGrowth || {};
+            inventory = projects[name].inventory || {};
+            if (projects[name].unlocked) {
+                unlockedMaterials = new Set(projects[name].unlocked);
+                saveUnlocked();
+            } else {
+                unlockedMaterials = new Set();
+            }
+            if (projects[name].discovered) {
+                discoveredRecipes = new Set(projects[name].discovered);
+                saveDiscoveredRecipes();
+            }
+            window.grid = grid;
+            migrateUnlocked();
+            projectNameInput.value = name === AUTOSAVE_KEY ? '' : name;
+            updateStats();
+            updateInventoryDisplay();
+            updatePaletteVisibility();
+            draw();
+            loadDialog.classList.add('hidden');
+            showToast(`📂 "${name}" geladen!`);
+        }
+    }
+
+    function deleteProject(name) {
+        const projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+        delete projects[name];
+        localStorage.setItem('insel-projekte', JSON.stringify(projects));
+        showLoadDialog(); // Dialog aktualisieren
+        showToast(`🗑️ "${name}" gelöscht!`);
+    }
+
+    function newProject() {
+        initGrid();
+        treeGrowth = {};
+        inventory = {};
+        unlockedMaterials = new Set();
+        discoveredRecipes = new Set();
+        saveInventory();
+        saveUnlocked();
+        saveDiscoveredRecipes();
+        projectNameInput.value = '';
+        updateStats();
+        updateInventoryDisplay();
+        updatePaletteVisibility();
+        draw();
+        showToast('🆕 Neue Insel!');
+    }
 
     // --- Toast-Queue (Weber: "Ein Toast nach dem anderen. Ordnung muss sein.") ---
     const toastQueue = [];
@@ -1757,64 +1874,6 @@
         });
     });
 
-    // === LABEL-RÄTSEL (A/B-Test als Feature) ===
-    // 80%: Labels komplett weg — Emojis sprechen für sich
-    // 20%: Labels im falschen Feld + Sprachmix — Zuordnungsrätsel
-    (function shuffleLabels() {
-        const btns = [...document.querySelectorAll('.material-btn')];
-        const labels = btns.map(b => b.querySelector('.mat-label')).filter(Boolean);
-        if (!labels.length) return;
-
-        const isRiddleMode = Math.random() < 0.2;
-
-        if (!isRiddleMode) {
-            // 80%: Labels weg
-            labels.forEach(l => l.remove());
-        } else {
-            // 20%: Labels shufflen + in zufällige Sprachen übersetzen
-            const TRANSLATIONS = {
-                wood:     ['Bois', 'Madera', 'Legno', '木', 'Drevo', 'Puu', 'Ahşap'],
-                stone:    ['Pierre', 'Piedra', 'Pietra', '石', 'Kamen', 'Kivi', 'Taş'],
-                glass:    ['Verre', 'Vidrio', 'Vetro', '硝子', 'Steklo', 'Lasi', 'Cam'],
-                plant:    ['Plante', 'Planta', 'Pianta', '草', 'Rastenie', 'Kasvi', 'Bitki'],
-                tree:     ['Arbre', 'Árbol', 'Albero', '木', 'Derevo', 'Puu', 'Ağaç'],
-                flower:   ['Fleur', 'Flor', 'Fiore', '花', 'Tsvetok', 'Kukka', 'Çiçek'],
-                door:     ['Porte', 'Puerta', 'Porta', '扉', 'Dver', 'Ovi', 'Kapı'],
-                roof:     ['Toit', 'Techo', 'Tetto', '屋根', 'Krysha', 'Katto', 'Çatı'],
-                lamp:     ['Lampe', 'Lámpara', 'Lampada', 'ランプ', 'Lampa', 'Lamppu', 'Lamba'],
-                sand:     ['Sable', 'Arena', 'Sabbia', '砂', 'Pesok', 'Hiekka', 'Kum'],
-                water:    ['Eau', 'Agua', 'Acqua', '水', 'Voda', 'Vesi', 'Su'],
-                path:     ['Chemin', 'Camino', 'Sentiero', '道', 'Tropinka', 'Polku', 'Yol'],
-                fence:    ['Clôture', 'Valla', 'Recinzione', '柵', 'Zabor', 'Aita', 'Çit'],
-                boat:     ['Bateau', 'Barco', 'Barca', '船', 'Lodka', 'Vene', 'Tekne'],
-                fish:     ['Poisson', 'Pez', 'Pesce', '魚', 'Ryba', 'Kala', 'Balık'],
-                fountain: ['Fontaine', 'Fuente', 'Fontana', '噴水', 'Fontan', 'Suihkulähde', 'Çeşme'],
-                flag:     ['Drapeau', 'Bandera', 'Bandiera', '旗', 'Flag', 'Lippu', 'Bayrak'],
-                bridge:   ['Pont', 'Puente', 'Ponte', '橋', 'Most', 'Silta', 'Köprü'],
-                cactus:   ['Cactus', 'Cacto', 'Cactus', 'サボテン', 'Kaktus', 'Kaktus', 'Kaktüs'],
-                mushroom: ['Champignon', 'Hongo', 'Fungo', 'キノコ', 'Grib', 'Sieni', 'Mantar'],
-            };
-
-            // Labels einsammeln, shufflen, in fremder Sprache ins nächste Feld
-            const labelTexts = btns.map(b => {
-                const matId = b.dataset.material;
-                const pool = TRANSLATIONS[matId];
-                if (!pool) return b.querySelector('.mat-label')?.textContent || '';
-                return pool[Math.floor(Math.random() * pool.length)];
-            });
-
-            // Verschiebe jedes Label um 1-3 Positionen
-            const shifted = [...labelTexts];
-            const shift = 1 + Math.floor(Math.random() * 2);
-            for (let i = 0; i < shifted.length; i++) {
-                const target = (i + shift) % shifted.length;
-                labels[target].textContent = labelTexts[i];
-                labels[target].style.opacity = '0.6';
-                labels[target].style.fontStyle = 'italic';
-            }
-        }
-    })();
-
     // Canvas Maus-Events
     canvas.addEventListener('mousedown', (e) => {
         isMouseDown = true;
@@ -1867,99 +1926,73 @@
         hoverCell = null;
     });
 
+    // Aktions-Buttons
+    document.getElementById('save-btn').addEventListener('click', saveProject);
+    document.getElementById('load-btn').addEventListener('click', showLoadDialog);
+    document.getElementById('new-btn').addEventListener('click', () => {
+        if (confirm('Wirklich eine neue Insel anfangen? Nicht gespeicherte Änderungen gehen verloren!')) {
+            newProject();
+        }
+    });
 
     // --- Postkarte von Java (Godin: "Ein Share-Moment fehlt") ---
-    // Postkarten-Texte: Wie ein stolzer 8-Jähriger der eine magische Insel entdeckt hat
-    // Die Insel verschwindet wenn man wegschaut — nur die Postkarte bleibt
-    const POSTCARD_LINES = [
-        'Ich war auf einer Insel die es eigentlich nicht gibt.',
-        'Die Insel ist weg. Aber ich war dort.',
-        'Niemand glaubt mir. Aber ich habe Beweise.',
-        'Wenn man wegschaut, verschwindet sie. Ich habe schnell fotografiert.',
-        'Schatzinsel: nur sichtbar wenn man daran glaubt.',
-        'Ich hab alles selbst gebaut. Dann war es weg.',
-        'Vielleicht träum ich. Aber die Postkarte ist echt.',
-    ];
-
-    const POSTCARD_SENDERS = [
-        'Dein Entdecker 🗺️',
-        'Der einzige Zeuge 🏴‍☠️',
-        'Schnipsel, Architekt 🏗️',
-        'Ich war hier. Ich schwör\'s. 🌴',
-    ];
-
     const postcardBtn = document.getElementById('postcard-btn');
     if (postcardBtn) {
         postcardBtn.addEventListener('click', () => {
             const stats = getGridStats();
-            const discoveries = discoveredEggs.length;
+            const name = projectNameInput.value.trim() || 'Meine Insel';
 
-            // Zufällige Postkarten-Botschaft
-            const line = POSTCARD_LINES[Math.floor(Math.random() * POSTCARD_LINES.length)];
-            const sender = POSTCARD_SENDERS[Math.floor(Math.random() * POSTCARD_SENDERS.length)];
-
-            // Temporäres Canvas für Postkarte — extra Platz für den Brief unten
-            const BANNER_H = 120;
+            // Temporäres Canvas für Postkarte
             const pc = document.createElement('canvas');
             const pcCtx = pc.getContext('2d');
             pc.width = canvas.width;
-            pc.height = canvas.height + BANNER_H;
+            pc.height = canvas.height + 80;
 
-            // Insel einkopieren
+            // Insel kopieren
             pcCtx.drawImage(canvas, 0, 0);
 
-            // Pergament-Banner: warmes Beige statt hartem Schwarz
-            const bannerGrad = pcCtx.createLinearGradient(0, canvas.height, 0, pc.height);
-            bannerGrad.addColorStop(0, 'rgba(62, 39, 12, 0.92)');
-            bannerGrad.addColorStop(1, 'rgba(30, 15, 5, 0.97)');
-            pcCtx.fillStyle = bannerGrad;
-            pcCtx.fillRect(0, canvas.height, pc.width, BANNER_H);
+            // Postkarten-Banner unten
+            pcCtx.fillStyle = 'rgba(0, 0, 0, 0.75)';
+            pcCtx.fillRect(0, canvas.height, pc.width, 80);
 
-            // Dekorative Linie
-            pcCtx.strokeStyle = 'rgba(241, 196, 15, 0.4)';
-            pcCtx.lineWidth = 1;
-            pcCtx.beginPath();
-            pcCtx.moveTo(20, canvas.height + 8);
-            pcCtx.lineTo(pc.width - 20, canvas.height + 8);
-            pcCtx.stroke();
-
-            // Haupttext: die magische Botschaft
             pcCtx.fillStyle = '#F9E79F';
-            pcCtx.font = 'bold 15px "Comic Neue", "Comic Sans MS", cursive';
+            pcCtx.font = 'bold 18px Fredoka, sans-serif';
             pcCtx.textAlign = 'center';
-            pcCtx.fillText(`"${line}"`, pc.width / 2, canvas.height + 34);
+            pcCtx.fillText(`📸 Grüße von der Insel Java!`, pc.width / 2, canvas.height + 28);
 
-            // Absender
-            pcCtx.fillStyle = 'rgba(255,255,255,0.75)';
-            pcCtx.font = '12px "Comic Neue", "Comic Sans MS", cursive';
-            pcCtx.fillText(`— ${sender}`, pc.width / 2, canvas.height + 56);
-
-            // Entdeckungs-Zeile: klein, dezent, Fakten
-            pcCtx.fillStyle = 'rgba(255,255,255,0.45)';
-            pcCtx.font = '11px "Fredoka", sans-serif';
+            pcCtx.fillStyle = '#FFFFFF';
+            pcCtx.font = '14px Comic Neue, sans-serif';
+            const discoveries = discoveredEggs.length;
             pcCtx.fillText(
-                `🏗️ ${stats.total} Blöcke · 🎨 ${stats.uniqueMats} Arten · 🔍 ${discoveries} entdeckt · 🏆 ${unlockedAchievements.length} Erfolge`,
-                pc.width / 2, canvas.height + 78
+                `🏗️ ${stats.total} Blöcke · 🎨 ${stats.uniqueMats} Materialien · 🔍 ${discoveries} Bewohner entdeckt · 🏆 ${unlockedAchievements.length} Erfolge`,
+                pc.width / 2, canvas.height + 52
             );
 
-            // Signatur
-            pcCtx.fillStyle = 'rgba(241, 196, 15, 0.35)';
-            pcCtx.font = '10px "Fredoka", sans-serif';
-            pcCtx.fillText('✦ Schatzinsel — sie verschwindet wenn du wegschaust ✦', pc.width / 2, canvas.height + 106);
+            pcCtx.font = '11px Comic Neue, sans-serif';
+            pcCtx.fillStyle = '#AAA';
+            pcCtx.fillText('Außer Text nix gehext. 🏝️', pc.width / 2, canvas.height + 72);
 
-            // Download — Dateiname mit Zeitstempel (die Insel hat keine Namen mehr)
-            const ts = new Date().toISOString().slice(0, 10);
+            // Download
             const link = document.createElement('a');
-            link.download = `schatzinsel-${ts}.png`;
+            link.download = `postkarte-von-java-${name.replace(/\s+/g, '-')}.png`;
             link.href = pc.toDataURL('image/png');
             link.click();
 
-            showToast('📸 Postkarte von der Schatzinsel! Die einzige Erinnerung.');
+            showToast('📸 Postkarte gespeichert! Zeig sie deinen Freunden!');
             trackEvent('postcard', { blocks: stats.total, discoveries });
         });
     }
 
+    // Lade-Dialog Events
+    document.getElementById('close-load-dialog').addEventListener('click', () => {
+        loadDialog.classList.add('hidden');
+    });
+
     document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !loadDialog.classList.contains('hidden')) {
+            loadDialog.classList.add('hidden');
+            return;
+        }
         // Nicht triggern wenn Input/Textarea fokussiert
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
@@ -1979,6 +2012,23 @@
         }
     });
 
+    savedProjectsList.addEventListener('click', (e) => {
+        const deleteBtn = e.target.closest('.saved-project-delete');
+        if (deleteBtn) {
+            e.stopPropagation();
+            const name = deleteBtn.dataset.delete;
+            if (confirm(`"${name}" wirklich löschen?`)) {
+                deleteProject(name);
+            }
+            return;
+        }
+
+        const item = e.target.closest('.saved-project-item');
+        if (item) {
+            loadProject(item.dataset.name);
+        }
+    });
+
     // Tastatur-Shortcuts
     document.addEventListener('keydown', (e) => {
         if (e.target.tagName === 'INPUT') return;
@@ -1995,7 +2045,7 @@
             case 's':
                 if (e.ctrlKey || e.metaKey) {
                     e.preventDefault();
-                    // Save gelöscht — jede Session ist ephemär
+                    saveProject();
                 }
                 break;
         }
@@ -2022,14 +2072,9 @@
     function updateAchievementDisplay() {
         const achList = document.getElementById('achievement-list');
         if (!achList) return;
-        // Nur entdeckte Erfolge zeigen — der Rest bleibt geheim
-        const discovered = Object.entries(ACHIEVEMENTS).filter(([id]) => unlockedAchievements.includes(id));
-        if (discovered.length === 0) {
-            achList.innerHTML = '';
-            return;
-        }
-        achList.innerHTML = discovered.map(([id, ach]) => {
-            return `<span class="ach-badge" title="${ach.title}: ${ach.desc}">${ach.emoji}</span>`;
+        achList.innerHTML = Object.entries(ACHIEVEMENTS).map(([id, ach]) => {
+            const unlocked = unlockedAchievements.includes(id);
+            return `<span class="ach-badge ${unlocked ? '' : 'ach-locked'}" title="${ach.title}: ${ach.desc}">${ach.emoji}</span>`;
         }).join('');
     }
 
@@ -2233,7 +2278,6 @@
 
     window.toggleCodeView = function () {
         codeViewActive = !codeViewActive;
-        document.body.classList.toggle('code-view-active', codeViewActive);
         showToast(codeViewActive ? '👨‍💻 Code-Ansicht AN — so sieht ein Programmierer die Insel!' : '🎨 Normal-Ansicht');
         if (codeViewActive) {
             recordMilestone('firstCodeView');
@@ -2374,7 +2418,24 @@
     loadInventory();
     loadUnlocked();
 
-    // Jede Session beginnt frisch — die Insel verschwindet wenn man wegschaut
+    // Auto-Save wiederherstellen wenn vorhanden
+    const savedProjects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+    if (savedProjects[AUTOSAVE_KEY] && isValidGrid(savedProjects[AUTOSAVE_KEY].grid)) {
+        grid = savedProjects[AUTOSAVE_KEY].grid;
+        treeGrowth = savedProjects[AUTOSAVE_KEY].treeGrowth || {};
+        inventory = savedProjects[AUTOSAVE_KEY].inventory || inventory;
+        if (savedProjects[AUTOSAVE_KEY].unlocked) {
+            unlockedMaterials = new Set(savedProjects[AUTOSAVE_KEY].unlocked);
+        } else {
+            unlockedMaterials = new Set();
+        }
+        if (savedProjects[AUTOSAVE_KEY].discovered) {
+            discoveredRecipes = new Set(savedProjects[AUTOSAVE_KEY].discovered);
+        }
+        window.grid = grid;
+        migrateUnlocked();
+        showToast('🔄 Letzte Insel wiederhergestellt');
+    }
 
     draw();
     updateAchievementDisplay();
@@ -2385,8 +2446,6 @@
     // --- Crafting Dialog Events ---
     const craftBtn = document.getElementById('craft-btn');
     if (craftBtn) craftBtn.addEventListener('click', openCraftingDialog);
-    const craftBtnSidebar = document.getElementById('craft-btn-sidebar');
-    if (craftBtnSidebar) craftBtnSidebar.addEventListener('click', openCraftingDialog);
 
     const craftCloseBtn = document.getElementById('close-crafting-dialog');
     if (craftCloseBtn) craftCloseBtn.addEventListener('click', closeCraftingDialog);
