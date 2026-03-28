@@ -699,6 +699,10 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
                     initChat();
                 }
             }
+            // Puffer vorwärmen — erste Materialien sind meistens Holz oder Stein
+            if ((hasProxy() || getApiKey()) && AI_COMMENT_BUFFER.length < 3) {
+                fillAiCommentBuffer('wood', 'spongebob', null);
+            }
         }
     }
 
