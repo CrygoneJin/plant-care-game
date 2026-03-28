@@ -255,8 +255,8 @@ header h1 {
 
 .tool-btn, .action-btn {
     font-family: var(--font-body);
-    font-size: 16px;
-    padding: 8px 14px;
+    font-size: 18px;
+    padding: 10px 16px;
     border: 2px solid transparent;
     border-radius: 10px;
     cursor: pointer;
@@ -351,11 +351,11 @@ header h1 {
 }
 
 .mat-emoji {
-    font-size: 24px;
+    font-size: 32px;
 }
 
 .mat-label {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: bold;
     color: #2C3E50;
     margin-top: 2px;
@@ -577,9 +577,11 @@ header h1 {
     }
 
     .tool-btn, .action-btn {
-        font-size: 13px;
-        padding: 5px 8px;
+        font-size: 20px;
+        padding: 8px 12px;
         white-space: nowrap;
+        min-width: 44px;
+        min-height: 44px;
     }
 
     /* Nur Icons auf Mobile, Text weg */
@@ -587,16 +589,16 @@ header h1 {
         font-size: 0;
     }
     .action-btn::before {
-        font-size: 16px;
+        font-size: 22px;
     }
     #save-btn { font-size: 0; }
-    #save-btn::after { content: '💾'; font-size: 16px; }
+    #save-btn::after { content: '💾'; font-size: 22px; }
     #load-btn { font-size: 0; }
-    #load-btn::after { content: '📂'; font-size: 16px; }
+    #load-btn::after { content: '📂'; font-size: 22px; }
     #new-btn { font-size: 0; }
-    #new-btn::after { content: '🆕'; font-size: 16px; }
+    #new-btn::after { content: '🆕'; font-size: 22px; }
     #postcard-btn { font-size: 0; }
-    #postcard-btn::after { content: '📸'; font-size: 16px; }
+    #postcard-btn::after { content: '📸'; font-size: 22px; }
 
     #project-name {
         width: 80px;
@@ -633,22 +635,23 @@ header h1 {
 
     .material-btn {
         flex-direction: column;
-        min-height: auto;
-        padding: 4px 6px;
+        min-height: 52px;
+        min-width: 52px;
+        padding: 6px 8px;
         gap: 2px;
         flex-shrink: 0;
     }
 
     .mat-emoji {
-        font-size: 20px;
+        font-size: 28px;
     }
 
     .mat-name {
-        font-size: 9px;
+        font-size: 10px;
     }
 
     .mat-label {
-        font-size: 10px;
+        font-size: 11px;
     }
 
     /* Canvas: volle Breite */
@@ -736,8 +739,8 @@ header h1 {
     }
 
     .material-btn {
-        min-height: 48px;
-        padding: 4px;
+        min-height: 52px;
+        padding: 6px;
     }
 }
 
