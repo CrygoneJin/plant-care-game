@@ -636,6 +636,7 @@
         bernd:     { emoji: '🍞', prefix: 'Bernd:', ticks: ['*seufz*', 'Mist.', 'Toll.'], style: 'grumpy' },
         kaenguru:  { emoji: '🦘', prefix: 'Känguru:', ticks: ['Das ist Kommunismus!', 'Ich bin ja kein Rassist, ABER:', 'Schnapspraline?'], style: 'kaenguru' },
         marcuwe:   { emoji: '📖', prefix: 'Marc-Uwe:', ticks: ['Ähm...', 'Das Känguru hat...', 'Ich wollte eigentlich nur...'], style: 'marcuwe' },
+        willy:     { emoji: '🎸', prefix: 'Willy:', ticks: ['Wortwörtlich!', 'Haha!', 'Kennst den?'], style: 'willy' },
     };
 
     const MAT_ADJECTIVES = {
@@ -673,6 +674,7 @@
         grumpy:   ['Na toll.', 'Muss das sein?', 'Kann man machen.', 'Hab ich auch mal probiert. War schlecht.'],
         kaenguru: ['Das gehört verstaatlicht!', 'Eigentum ist Diebstahl!', 'Das geht auf meine Rechnung. Also auf deine.', 'In Australien macht man das anders.', 'Das ist MEIN Revier!'],
         marcuwe:  ['Aha. Ja. OK.', 'Das Känguru würde das anders sehen.', 'Ich schreib das auf.', 'Kann man so machen.', 'Mein Mitbewohner hat letztens...'],
+        willy:    ['Das ist ja HOLZergreifend!', 'STEIN-reich!', 'WASSER-scheinlich gut!', 'FEUER-lich!', 'Das ist ERD-staunlich!', 'METALL du mal!', 'Da fällt mir ein Wort-SPIEL ein!', 'Bau-WORT-lich!'],
     };
 
     const TEMPLATES = [
