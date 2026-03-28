@@ -627,6 +627,7 @@
             '🔑 "The KEY to everything, Harry!" flüstert das Boot. Harry schaut auf seinen API-Key. "Du bist kein Zauberstab!" — "Doch. Ich öffne JEDE Tür. Jede API. Jede Maschine. Verlier mich nur nicht."',
             '👑 "Ich bin der SHA von Persien!" ruft eine Stimme. "SHA-256! Ich verwandle ALLES in einen Hash! Egal wie groß — am Ende sind es 64 Zeichen!" Mr. Krabs: "Kann man damit ZAHLEN?" SHA: "Man kann damit BEWEISEN."',
             '💰 "Hash ma ne Mark?" fragt Krabs den SHA. "Klar: 5d41402abc4b2a76b9719d911017c592." — "Das sind keine TALER!" — "Das IST deine Mark. Nur sicherer. Unwiderruflich. Ewig." Krabs schweigt. Zum ersten Mal.',
+            '🎒 "BitLocker dein Rucksack!" ruft jemand. "Was?" — "Verschlüsseln! Damit keiner deine Schätze klaut!" Tommy klick-klackt: "Mein Rucksack hat ein SCHLOSS!" — "Ja, aber hat es 256 Bit?"',
         ],
         fence: [
             '🐦 Ein schneller Vogel fliegt über den Zaun! "Ich bin Swift!" Zack, schon weg.',
