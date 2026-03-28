@@ -1137,6 +1137,30 @@
         });
     }
 
+    // Save-Migration: alte Saves ohne unlocked → Grid + Inventar scannen
+    function migrateUnlocked() {
+        if (unlockedMaterials.size > 0) return; // Schon migriert
+        // Grid scannen: alle vorhandenen Materialien freischalten
+        for (let r = 0; r < grid.length; r++) {
+            for (let c = 0; c < grid[r].length; c++) {
+                const cell = grid[r]?.[c];
+                if (cell && !BASE_MATERIALS.includes(cell) && MATERIALS[cell]) {
+                    unlockedMaterials.add(cell);
+                }
+            }
+        }
+        // Inventar scannen
+        for (const mat of Object.keys(inventory)) {
+            if (inventory[mat] > 0 && !BASE_MATERIALS.includes(mat) && MATERIALS[mat]) {
+                unlockedMaterials.add(mat);
+            }
+        }
+        if (unlockedMaterials.size > 0) {
+            saveUnlocked();
+            updatePaletteVisibility();
+        }
+    }
+
     // Was gibt Ernten? Bäume → Holz, alles andere → sich selbst
     const HARVEST_YIELD = {
         tree:       { material: 'wood', count: 3 },
@@ -1642,8 +1666,11 @@
             if (projects[name].unlocked) {
                 unlockedMaterials = new Set(projects[name].unlocked);
                 saveUnlocked();
+            } else {
+                unlockedMaterials = new Set();
             }
             window.grid = grid;
+            migrateUnlocked();
             projectNameInput.value = name === AUTOSAVE_KEY ? '' : name;
             updateStats();
             updateInventoryDisplay();
@@ -2363,8 +2390,11 @@
         inventory = savedProjects[AUTOSAVE_KEY].inventory || inventory;
         if (savedProjects[AUTOSAVE_KEY].unlocked) {
             unlockedMaterials = new Set(savedProjects[AUTOSAVE_KEY].unlocked);
+        } else {
+            unlockedMaterials = new Set();
         }
         window.grid = grid;
+        migrateUnlocked();
         showToast('🔄 Letzte Insel wiederhergestellt');
     }
 
