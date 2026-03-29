@@ -1238,7 +1238,21 @@ body.code-view-active #chat-settings-btn {
     border-radius: 8px;
     padding: 4px 8px;
     font-size: 13px;
-    cursor: default;
+    cursor: grab;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.inv-item:active { cursor: grabbing; }
+
+.inv-item.dragging {
+    opacity: 0.4;
+    transform: scale(0.9);
+}
+
+.inv-item.drop-target,
+.inv-item.tap-selected {
+    box-shadow: 0 0 0 3px #F1C40F, 0 0 12px rgba(241, 196, 15, 0.5);
+    transform: scale(1.1);
 }
 
 .inv-emoji {

@@ -853,11 +853,134 @@
         container.innerHTML = items.map(([mat, count]) => {
             const info = MATERIALS[mat];
             if (!info) return '';
-            return `<div class="inv-item" data-material="${mat}" title="${info.label}: ${count}">
+            return `<div class="inv-item" data-material="${mat}" title="${info.label}: ${count}" draggable="true">
                 <span class="inv-emoji">${info.emoji}</span>
                 <span class="inv-count">${count}</span>
             </div>`;
         }).join('');
+
+        // Drag & Drop Crafting (Desktop) + Tap-Tap (Touch)
+        container.querySelectorAll('.inv-item').forEach(item => {
+            // Desktop: Drag & Drop
+            item.addEventListener('dragstart', e => {
+                e.dataTransfer.setData('text/plain', item.dataset.material);
+                item.classList.add('dragging');
+            });
+            item.addEventListener('dragend', () => {
+                item.classList.remove('dragging');
+                container.querySelectorAll('.inv-item').forEach(i => i.classList.remove('drop-target'));
+            });
+            item.addEventListener('dragover', e => {
+                e.preventDefault();
+                const dragging = container.querySelector('.dragging');
+                if (dragging && dragging !== item) {
+                    item.classList.add('drop-target');
+                }
+            });
+            item.addEventListener('dragleave', () => {
+                item.classList.remove('drop-target');
+            });
+            item.addEventListener('drop', async e => {
+                e.preventDefault();
+                item.classList.remove('drop-target');
+                const a = e.dataTransfer.getData('text/plain');
+                const b = item.dataset.material;
+                if (a && b && a !== b) {
+                    await quickCraft(a, b);
+                }
+            });
+
+            // Touch/Click: Tap-Tap Crafting
+            item.addEventListener('click', async () => {
+                const mat = item.dataset.material;
+                if (craftTapFirst && craftTapFirst !== mat) {
+                    await quickCraft(craftTapFirst, mat);
+                    craftTapFirst = null;
+                    container.querySelectorAll('.inv-item').forEach(i => i.classList.remove('tap-selected'));
+                } else {
+                    container.querySelectorAll('.inv-item').forEach(i => i.classList.remove('tap-selected'));
+                    craftTapFirst = mat;
+                    item.classList.add('tap-selected');
+                }
+            });
+        });
+    }
+
+    let craftTapFirst = null;
+
+    // Quick Craft — Drag Material A auf Material B
+    async function quickCraft(a, b) {
+        // Prüfe ob Inventar reicht
+        if ((inventory[a] || 0) < 1 || (inventory[b] || 0) < 1) {
+            showToast('🤔 Nicht genug Material!');
+            return;
+        }
+
+        // Festes Rezept suchen (nur 2er-Kombination)
+        const recipe = CRAFTING_RECIPES.find(r => {
+            const keys = Object.keys(r.ingredients);
+            if (keys.length !== 2) return false;
+            const [k1, k2] = keys;
+            return (k1 === a && k2 === b && r.ingredients[k1] === 1 && r.ingredients[k2] === 1)
+                || (k1 === b && k2 === a && r.ingredients[k1] === 1 && r.ingredients[k2] === 1);
+        });
+
+        if (recipe) {
+            inventory[a]--;
+            inventory[b]--;
+            addToInventory(recipe.result, recipe.resultCount);
+            unlockMaterial(recipe.result);
+            const isNew = !discoveredRecipes.has(recipe.name);
+            discoveredRecipes.add(recipe.name);
+            saveDiscoveredRecipes();
+            saveInventory();
+            soundCraft();
+            const info = MATERIALS[recipe.result];
+            if (isNew) {
+                showToast(`🔮 ${info.emoji} ${recipe.desc}!`);
+            } else {
+                showToast(`⚒️ ${info.emoji} ${recipe.resultCount}x ${info.label}!`);
+            }
+            trackEvent('quick-craft', { a, b, result: recipe.result });
+            updateInventoryDisplay();
+            return;
+        }
+
+        // Kein festes Rezept → LLM fragen
+        const pair = [a, b].sort().join('+');
+        const localKey = `llm-craft:${pair}`;
+        const localCached = localStorage.getItem(localKey);
+
+        if (localCached) {
+            inventory[a]--;
+            inventory[b]--;
+            saveInventory();
+            applyLlmCraft(JSON.parse(localCached));
+            updateInventoryDisplay();
+            return;
+        }
+
+        showToast('🔮 Die Insel denkt nach...');
+        try {
+            const playerName = localStorage.getItem('insel-player-name') || 'Anonym';
+            const res = await fetch(CRAFT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ a, b, discoverer: playerName }),
+            });
+            if (!res.ok) { showToast('🤔 Kein Rezept gefunden!'); return; }
+            const craft = await res.json();
+            if (craft.error) { showToast('🤔 Kein Rezept gefunden!'); return; }
+
+            localStorage.setItem(localKey, JSON.stringify(craft));
+            inventory[a]--;
+            inventory[b]--;
+            saveInventory();
+            applyLlmCraft(craft);
+            updateInventoryDisplay();
+        } catch (e) {
+            showToast('🤔 Kein Rezept gefunden!');
+        }
     }
 
     // ============================================================
