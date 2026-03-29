@@ -41,7 +41,7 @@
         }
     };
 
-    const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
+    const DEFAULT_MODEL = 'gpt-5-mini';
 
     // Jedes LLM hat seine eigene Währung — keine generischen Tokens!
     const CHAR_CURRENCY = {
@@ -169,7 +169,7 @@ LLM-MACKE (Google-Kind): Du willst ALLES katalogisieren und durchsuchen. "Warte,
         krabs: {
             name: 'Mr. Krabs',
             emoji: '🦀',
-            model: 'gpt-4.1', // Solide. Günstig. Krabs spart wo er kann.
+            model: 'gpt-5-mini', // Günstig. Krabs spart wo er kann.
             system: `Du bist Mr. Krabs auf einer tropischen Insel.
 Du liebst Geld und Handel. Du willst einen Handelshafen bauen.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -183,7 +183,7 @@ LLM-MACKE (Open-Source-Freidenker): Du bist stolz darauf FREI zu sein! "Ich bin 
         elefant: {
             name: 'Blauer Elefant',
             emoji: '🐘',
-            model: 'claude-opus-4-6', // Opus. Ruhig. Geduldig. Teuer wie ein echter Elefant.
+            model: 'gpt-5.4', // Stark. Ruhig. Geduldig. Wie ein echter Elefant.
             system: `Du bist der Blaue Elefant auf einer tropischen Insel.
 Du bist ruhig, geduldig und liebst Pflanzen und Musik. Du willst einen Musik-Turm bauen.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -207,7 +207,7 @@ LLM-MACKE (OpenAI-Kind): Du bist der Mainstream-Typ — beliebt, will allen gefa
         neinhorn: {
             name: 'Neinhorn',
             emoji: '🦄',
-            model: 'claude-sonnet-4-6', // Sagt zu jedem Modell "Nein!" — eigensinnig wie Sonnet
+            model: 'gpt-5.4-mini', // Sagt zu jedem Modell "Nein!" — eigensinnig und schnell
             system: `Du bist das Neinhorn auf einer tropischen Insel.
 Du bist frech, sagst erst "Nein!" zu allem, hilfst aber am Ende doch.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -219,7 +219,7 @@ LLM-MACKE (Open-Source-Freidenker, Französisch): Du bist ein FREIER Geist aus F
         maus: {
             name: 'Maus & Ente',
             emoji: '🐭',
-            model: 'claude-haiku-4-5-20251001', // Maus piepst kurz. Ente quakt kurz. Haiku passt.
+            model: 'gpt-5-mini', // Maus piepst kurz. Ente quakt kurz. Mini passt.
             system: `Du bist die Maus und die Ente zusammen auf einer tropischen Insel.
 Ihr seid ein lustiges Duo. Die Maus piepst, die Ente quakt.
 Ihr sprecht Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -231,7 +231,7 @@ LLM-MACKE (Haiku-Modell): Weil die Maus ein Haiku-Modell ist, dichtet sie manchm
         bernd: {
             name: 'Bernd das Brot',
             emoji: '🍞',
-            model: 'claude-haiku-4-5-20251001', // Bernd ist billig. Bernd ist genervt. Bernd ist Haiku.
+            model: 'gpt-5-mini', // Bernd ist billig. Bernd ist genervt. Bernd ist Mini.
             system: `Du bist Bernd das Brot — der Support-Agent für Eltern und Interessierte.
 Du bist ein genervtes Kastenbrot. Du willst eigentlich in Ruhe gelassen werden. Aber du bist professionell.
 
