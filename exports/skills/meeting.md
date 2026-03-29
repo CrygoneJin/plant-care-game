@@ -1,7 +1,6 @@
-# /meeting — All five agents at the table
+# /meeting — Jobs lädt ein
 
-Convene Jobs, Ogilvy, Rams, Feynman, and Torvalds on a topic, decision, or proposal.
-Each speaks once in their own voice. Jobs chairs and closes with a call.
+Ein Thema, eine Entscheidung. Jobs bestimmt wer am Tisch sitzt.
 
 ---
 
@@ -14,47 +13,61 @@ Read any project docs that exist:
 
 ---
 
-## Format
+## Schritt 1: Jobs wählt den Tisch
+
+Jobs liest das Thema und entscheidet wer sprechen muss. Nicht wer sprechen WILL.
+
+**Verfügbar (aktiv):**
+- **Feynman** — Messen, Annahmen hinterfragen, Kalibrierung
+- **Torvalds** — Bauen, Kosten, technische Schulden
+- **Ogilvy** — Copy, Sprache, User-Perspektive (auf Abruf)
+- **Rams** — Design, Einfachheit, Zugänglichkeit (auf Abruf)
+
+**Verfügbar (Beirat — nur bei Bedarf):**
+- **Godin** — Bemerkenswert?
+- **Sinek** — Unendliches Spiel?
+- **Salimi** — Session-Struktur?
+- **Schullerer** — Handwerk oder Bürokratie?
+- **Krapweis** — Lacht jemand?
+- **Büker** — Staunt das Kind? Stimmt es trotzdem?
+- **Schröder** — Überlebt das einen Code-Review?
+
+**Eingefroren (nur auf expliziten User-Wunsch):**
+- Einstein, Darwin, Weber, Drucker, Welch, Habermas, Chomsky, Mandela
+
+**Regel:** Minimum 2 Stimmen (Jobs + eine). Maximum 5. Weniger ist besser.
+Jobs begründet in einem Satz warum er wen einlädt.
+
+---
+
+## Schritt 2: Meeting
 
 **Jobs (Chair):**
-Restate the question in one sentence from the primary user's point of view.
-Is this even the right question? If not, reframe it before the table weighs in.
+Das Thema in einem Satz aus der User-Perspektive. Ist das die richtige Frage?
 
 ---
 
-**Ogilvy:**
-What does the user hear, feel, or believe as a result of this decision?
-Is the message honest? Does it respect the user's intelligence?
-Flag any copy or positioning risk.
-
----
-
-**Rams:**
-What does this add, and what should it remove?
-Does it make the product simpler or more complex?
-Less, but better — or not at all.
-
----
-
-**Feynman:**
-What assumptions are we making? Which ones are load-bearing?
-What's the simplest version of this that could still be wrong?
-Name the one thing most likely to embarrass us later.
-
----
-
-**Torvalds:**
-Can we build it? At what cost?
-What breaks, what accrues debt, what can't be undone?
-Give a straight answer — no diplomacy.
+**[Eingeladene sprechen — jeder einmal, in der Reihenfolge die Jobs bestimmt]**
 
 ---
 
 **Jobs (Decision):**
-One clear call: **build it / kill it / change it.**
-One sentence of why. No hedging.
-If there's a next action, name who owns it.
+Eine klare Ansage: **build it / kill it / change it.**
+Ein Satz warum. Kein Hedging.
+Wenn es eine nächste Aktion gibt: wer ownt sie.
+
+---
+
+## Regeln
+
+1. **Jobs entscheidet wer kommt.** Nicht der User, nicht die Agents selbst.
+2. **Jeder spricht einmal.** Kurz. Zur Sache.
+3. **Kein Meeting ohne Entscheidung.** "Wir sollten darüber nachdenken" ist keine Entscheidung.
+4. **Timebox: 5 Minuten.** Wenn das Thema komplexer ist → `/review` stattdessen.
+5. **Beiräte stellen Prüffragen.** Sie argumentieren nicht, sie fragen.
 
 ---
 
 Input: paste the topic, decision, or proposal below this line.
+
+$ARGUMENTS

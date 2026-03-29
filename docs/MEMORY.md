@@ -384,19 +384,47 @@ Zwei Schichten, ein Spiel. Pixar-Prinzip.
 - Feynman-Reallocation-Regeln (Mindestgröße sakrosankt)
 - Sound-Harmonisierung (alle Tonsysteme auf A-Moll)
 
+### Sprint 2026-03-29 (Ceremonies) abgeschlossen ✅
+
+**Ziel: Vollständiges Ceremony-Toolkit für den Vater.**
+
+| Skill | Was |
+|-------|-----|
+| `/retro` | Was lief gut/schlecht/ändern. Feynman eröffnet mit Daten. 5 Min. |
+| `/daily` | 3 Sätze: Gestern/Heute/Blockiert. Jobs allein. 2 Min. |
+| `/demo` | Zeigen nicht erklären. Aus Oscars Perspektive. 5 Min. |
+| `/meeting` | Jobs wählt den Tisch. Min 2, Max 5 Stimmen. |
+
+**Session-Reihenfolge:**
+```
+/daily → Arbeit → /demo → /retro → /sprint (nächster)
+```
+
+**Darwin-Reorg umgesetzt:**
+- 3 aktive Agents (Jobs/Feynman/Torvalds), 2 auf Abruf (Ogilvy/Rams)
+- org-support, team-sales, Padawans: eingefroren
+- 7 Beiräte: Godin, Sinek, Salimi, Schullerer, Krapweis, Büker, Schröder
+- Jobs übernimmt CEO-Entscheidungen, Backlog-Priorisierung
+- 26 Charaktere → 5+7. Krapweis hatte recht.
+
+**Neue Backlog-Items:**
+- #29 Floriane die Wunschfee (Oscars Patentante, 3 Wünsche/Tag)
+
+**Büker im Beirat:** "Erst staunen, dann fragen, dann erklären."
+**Schröder im Beirat:** "Ist pragmatisch eine Ausrede oder eine Entscheidung?"
+
 ### Nächste Session
-- **P1**: game.js Split (core/sound/adventure/craft) — jetzt 4400+ Zeilen
+- **P1**: game.js Split (core/sound/adventure/craft)
 - **P1**: Play-Test mit Oscar (beobachten, nicht coden)
-- vapi.ai Voice-Integration (Pipeline steht bereit)
-- Michael Büker: Wissenschaftsjournalismus für Kinder (Gespräch mit Darwin)
+- Höhlen im Adventure-Grid (#27)
+- Floriane die Wunschfee (#29)
 
 ---
 
 ## Offene Fragen
 
-- [ ] Wie misst man ob die 80/20-Ratio der Padawans stimmt?
-- [ ] Wann lohnt sich Opus-Elevation wirklich? (Scientist entscheidet)
-- [ ] Wie kommunizieren team-dev und team-sales asynchron?
+- [ ] Wann lohnt sich Opus-Elevation wirklich? (Feynman entscheidet)
+- [ ] Floriane: welches LLM für Wunsch-Interpretation? (Feynman evaluiert)
 
 ---
 

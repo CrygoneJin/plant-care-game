@@ -1,21 +1,20 @@
-# Sprint 2026-03-29
+# Sprint 2026-03-29 (Ceremonies)
 
-**Ziel:** Oscar hat einen Grund auf der Insel zu sein — ein Schatz wartet.
+**Ziel:** Alle Scrum-Ceremonies existieren als Skills — der Vater hat ein vollständiges Toolkit.
 
 **Timebox:** 30 Minuten
 
 | # | Task | Owner | Done | Est. |
 |---|------|-------|------|------|
-| 1 | `playAmbientNote()` Build-Modus Crash fixen — getMoodFromOskarPosition() darf im Build-Modus nicht auf oskar/adventure-grid zugreifen | Engineer | [x] | 5m |
-| 2 | Doppelte Emojis fixen: Setzling (🌱→🪴), Fenster (🪟→🔲), Weg (🟫→🟤) | Designer | [x] | 3m |
-| 3 | Schatzsuche-Quest: Ein NPC gibt Auftrag → Schatz auf Map versteckt → Hinlaufen + Einsammeln = Toast "Schatz gefunden!" | Engineer + Artist | [x] | 15m |
-| 4 | Commit + Push + MEMORY.md | — | [x] | 2m |
+| 1 | `/retro` Skill — Was lief gut, was schlecht, was ändern wir | Engineer | [x] | 7m |
+| 2 | `/daily` Skill — 2-Minuten Standup für Solo-Dev | Engineer | [x] | 5m |
+| 3 | `/demo` Skill — Oscar/Familie zeigt was gebaut wurde | Engineer | [x] | 5m |
+| 4 | `/meeting` updaten — Jobs entscheidet wer kommt statt automatisch alle 5 | Engineer | [x] | 5m |
+| 5 | Commit + Push + MEMORY.md | — | [x] | 3m |
 
-**Reihenfolge:** 1 → 3, 2 ∥ 3, 4 nach allem
+**Reihenfolge:** 1 ∥ 2 ∥ 3, dann 4, dann 5
 
 **Nicht in diesem Sprint:**
-- game.js Split (wichtig, aber eigener Sprint — min. 30 Min allein)
-- Abstraktions-Aufzug entfernen (kein User-Impact jetzt)
-- Sound Mute-Button (erst nach Play-Test mit Oscar)
-- ARCHITECTURE.md updaten (kein User-Impact)
-- vapi.ai Voice-Integration (Pipeline steht, aber Adventure-Gameplay first)
+- game.js Split (eigener Sprint)
+- Höhlen im Adventure-Grid (eigener Sprint)
+- Floriane die Wunschfee (eigener Sprint)
