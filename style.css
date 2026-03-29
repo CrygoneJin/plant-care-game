@@ -1139,7 +1139,26 @@ header h1 {
 .inv-count {
     font-weight: bold;
     color: #F9E79F;
-    font-size: 13px;
+    font-size: 11px;
+}
+
+.inv-full {
+    opacity: 0.6;
+    border: 1px solid rgba(231, 76, 60, 0.4);
+}
+
+.inv-full .inv-count {
+    color: #E74C3C;
+}
+
+.inv-slots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.4);
+    padding: 2px 6px;
+    margin-left: auto;
 }
 
 .inv-empty {

@@ -917,15 +917,100 @@
     }
 
     // ============================================================
+    // Die 5 Elemente (五行 Wu Xing) — immer in der Palette sichtbar
+    const BASE_MATERIALS = ['metal', 'wood', 'fire', 'water', 'earth'];
+
     // === INVENTAR ===
     // ============================================================
     let inventory = {};
 
+    // --- Inventar-Limits: Slots + Stack-Größen in Zweierpotenzen ---
+    // Slots starten klein, wachsen still mit (ohne zu sagen warum).
+    // Stack-Limit hängt von der Wertigkeit ab: Basis-Elemente stacken hoch,
+    // komplexe Artefakte (viele Eltern) stacken niedrig.
+
+    const BASE_INVENTORY_SLOTS = 4; // Start: 4 Slots
+
+    // Crafting-Tiefe: wie viele Eltern-Generationen hat ein Material?
+    function getCraftDepth(material, seen) {
+        seen = seen || new Set();
+        if (seen.has(material)) return 0;
+        seen.add(material);
+        // Basis-Elemente haben Tiefe 0
+        if (BASE_MATERIALS.includes(material)) return 0;
+        // Suche das Rezept
+        const recipe = CRAFTING_RECIPES.find(r => r.result === material);
+        if (!recipe) return 0;
+        let maxParentDepth = 0;
+        for (const ing of Object.keys(recipe.ingredients)) {
+            maxParentDepth = Math.max(maxParentDepth, getCraftDepth(ing, seen));
+        }
+        return maxParentDepth + 1;
+    }
+
+    // Stack-Limit: Zweierpotenzen, je wertvoller desto kleiner
+    // Tiefe 0 (Basis): 2^6 = 64
+    // Tiefe 1 (Stufe 1): 2^4 = 16
+    // Tiefe 2 (Stufe 2): 2^3 = 8
+    // Tiefe 3+: 2^1 = 2
+    function getStackLimit(material) {
+        const depth = getCraftDepth(material);
+        if (depth === 0) return 64;  // 2^6
+        if (depth === 1) return 16;  // 2^4
+        if (depth === 2) return 8;   // 2^3
+        return 2;                    // 2^1
+    }
+
+    // Inventar-Slots: wachsen still mit Erfahrung
+    // Trigger: einzigartige Materialien gecrafter, Achievements, Quests
+    function getInventorySlots() {
+        const base = BASE_INVENTORY_SLOTS;
+        // +2 Slots für je 3 verschiedene gecraftete Materialien
+        const uniqueCrafted = Object.keys(inventory).filter(m => !BASE_MATERIALS.includes(m)).length;
+        const craftBonus = Math.floor(uniqueCrafted / 3) * 2;
+        // +2 Slots pro 5 erledigte Quests
+        const questsDone = parseInt(localStorage.getItem('insel-quests-done') || '0');
+        const questBonus = Math.floor(questsDone / 5) * 2;
+        // +1 pro freigeschaltetem Material über die 5 Basis hinaus
+        const unlockBonus = Math.max(0, unlockedMaterials.size - 5);
+        // Max 24 Slots (genug für alles)
+        return Math.min(24, base + craftBonus + questBonus + unlockBonus);
+    }
+
+    function getUsedSlots() {
+        return Object.keys(inventory).filter(m => (inventory[m] || 0) > 0).length;
+    }
+
     function addToInventory(material, count) {
         count = count || 1;
-        inventory[material] = (inventory[material] || 0) + count;
+        const current = inventory[material] || 0;
+        const stackLimit = getStackLimit(material);
+
+        // Neues Material → braucht einen freien Slot
+        if (current === 0) {
+            const used = getUsedSlots();
+            const max = getInventorySlots();
+            if (used >= max) {
+                showToast(`📦 Inventar voll! (${used}/${max} Slots)`);
+                return false;
+            }
+        }
+
+        // Stack-Limit prüfen
+        const newCount = Math.min(current + count, stackLimit);
+        const actualAdded = newCount - current;
+        if (actualAdded <= 0) {
+            showToast(`📦 ${MATERIALS[material]?.label || material} ist voll! (max ${stackLimit})`);
+            return false;
+        }
+
+        inventory[material] = newCount;
+        if (actualAdded < count) {
+            showToast(`📦 Nur ${actualAdded}x passt rein (max ${stackLimit})`);
+        }
         updateInventoryDisplay();
         saveInventory();
+        return true;
     }
 
     function removeFromInventory(material, count) {
@@ -954,18 +1039,23 @@
         const container = document.getElementById('inventory-content');
         if (!container) return;
         const items = Object.entries(inventory).filter(([, count]) => count > 0);
+        const maxSlots = getInventorySlots();
+        const used = items.length;
+
         if (items.length === 0) {
-            container.innerHTML = '<p class="inv-empty">Noch nichts gesammelt!</p>';
+            container.innerHTML = `<p class="inv-empty">Noch nichts gesammelt! (${maxSlots} Slots frei)</p>`;
             return;
         }
         container.innerHTML = items.map(([mat, count]) => {
             const info = MATERIALS[mat];
             if (!info) return '';
-            return `<div class="inv-item" data-material="${mat}" title="${info.label}: ${count}">
+            const stackLimit = getStackLimit(mat);
+            const full = count >= stackLimit;
+            return `<div class="inv-item${full ? ' inv-full' : ''}" data-material="${mat}" title="${info.label}: ${count}/${stackLimit}">
                 <span class="inv-emoji">${info.emoji}</span>
-                <span class="inv-count">${count}</span>
+                <span class="inv-count">${count}/${stackLimit}</span>
             </div>`;
-        }).join('');
+        }).join('') + `<div class="inv-slots" title="Inventar-Plätze">${used}/${maxSlots}</div>`;
     }
 
     // ============================================================
@@ -1126,9 +1216,6 @@
     let grid = [];
     let currentMaterial = 'metal';
     let currentTool = 'build';
-
-    // Die 5 Elemente (五行 Wu Xing) — immer in der Palette sichtbar
-    const BASE_MATERIALS = ['metal', 'wood', 'fire', 'water', 'earth'];
 
     // Freigeschaltete Materialien (durch Ernten oder Crafting)
     let unlockedMaterials = new Set();
