@@ -276,8 +276,8 @@
 
     let unlockedAchievements = JSON.parse(localStorage.getItem('insel-achievements') || '[]');
 
-    function checkAchievements() {
-        const stats = getGridStats();
+    function checkAchievements(stats) {
+        if (!stats) stats = getGridStats();
         let newUnlocks = [];
         for (const [id, ach] of Object.entries(ACHIEVEMENTS)) {
             if (!unlockedAchievements.includes(id) && ach.check(stats)) {
@@ -374,8 +374,8 @@
         updateQuestDisplay();
     }
 
-    function checkQuests() {
-        const stats = getGridStats();
+    function checkQuests(stats) {
+        if (!stats) stats = getGridStats();
         let completed = [];
         activeQuests = activeQuests.filter(quest => {
             const done = Object.entries(quest.needs).every(([mat, count]) =>
@@ -1617,19 +1617,20 @@
         statsUpdatePending = true;
         setTimeout(() => {
             statsUpdatePending = false;
+            const stats = getGridStats();
             updateStats();
-            checkAchievements();
-            checkQuests();
-            maybeQuestHint(currentMaterial);
-            maybeHoerspiel(getGridStats());
+            checkAchievements(stats);
+            checkQuests(stats);
+            maybeQuestHint(currentMaterial, stats);
+            maybeHoerspiel(stats);
         }, 200);
     }
 
     // Dusch-Prinzip: "Wärmer/Kälter" bei Quest-Fortschritt
     let lastQuestHintTime = 0;
-    function maybeQuestHint(material) {
+    function maybeQuestHint(material, stats) {
         if (Date.now() - lastQuestHintTime < 5000) return; // Max alle 5s
-        const stats = getGridStats();
+        if (!stats) stats = getGridStats();
         for (const quest of activeQuests) {
             if (!quest.needs[material]) continue;
             const have = stats.counts[material] || 0;
@@ -2172,13 +2173,22 @@
             undo();
             return;
         }
-        // Werkzeug-Shortcuts: B=Bauen, E=Ernten, F=Füllen
-        if (e.key === 'b' || e.key === 'B') {
-            selectTool('build');
-        } else if (e.key === 'e' || e.key === 'E') {
-            selectTool('harvest');
-        } else if (e.key === 'f' || e.key === 'F') {
-            selectTool('fill');
+        // Strg+S / Cmd+S = Speichern
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+            e.preventDefault();
+            saveProject();
+            return;
+        }
+
+        switch (e.key) {
+            case '1': selectMaterial('metal'); break;
+            case '2': selectMaterial('wood'); break;
+            case '3': selectMaterial('fire'); break;
+            case '4': selectMaterial('water'); break;
+            case '5': selectMaterial('earth'); break;
+            case 'b': case 'B': selectTool('build'); break;
+            case 'e': case 'E': selectTool('harvest'); break;
+            case 'f': case 'F': selectTool('fill'); break;
         }
     });
 
@@ -2198,38 +2208,6 @@
             loadProject(item.dataset.name);
         }
     });
-
-    // Tastatur-Shortcuts
-    document.addEventListener('keydown', (e) => {
-        if (e.target.tagName === 'INPUT') return;
-
-        switch (e.key) {
-            case '1': selectMaterial('metal'); break;
-            case '2': selectMaterial('wood'); break;
-            case '3': selectMaterial('fire'); break;
-            case '4': selectMaterial('water'); break;
-            case '5': selectMaterial('earth'); break;
-            case 'b': selectTool('build'); break;
-            case 'e': selectTool('harvest'); break;
-            case 'f': selectTool('fill'); break;
-            case 's':
-                if (e.ctrlKey || e.metaKey) {
-                    e.preventDefault();
-                    saveProject();
-                }
-                break;
-        }
-    });
-
-    function selectMaterial(mat) {
-        currentMaterial = mat;
-        document.querySelectorAll('.material-btn').forEach(b => b.classList.remove('active'));
-        const btn = document.querySelector(`[data-material="${mat}"]`);
-        if (btn) btn.classList.add('active');
-        currentTool = 'build';
-        document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-        document.querySelector('[data-tool="build"]').classList.add('active');
-    }
 
     function selectTool(tool) {
         currentTool = tool;

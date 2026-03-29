@@ -705,7 +705,7 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
             ],
             krabs: [
                 { pattern: /hallo|hi|hey/, reply: ['Ahoy! Geschäft?', 'Willkommen! Kostet dich nix. Dieses Mal.'] },
-                { pattern: /geld|geld|taler|reich/, reply: ['Geld! Das beste Wort der Welt! 💰', 'Mit Geld kann ich alles haben!'] },
+                { pattern: /geld|münze|taler|reich/, reply: ['Geld! Das beste Wort der Welt! 💰', 'Mit Geld kann ich alles haben!'] },
                 { pattern: /boot|schiff|hafen/, reply: ['Boote! Jedes Boot bringt mir Gewinn! 💰', 'Ein Boot = ein Taler! Baue mir welche!'] },
                 { pattern: /.+/, reply: ['Und was bringt mir das ein?', 'Ist das profitabel?', 'Ar ar ar ar!'] }
             ],
