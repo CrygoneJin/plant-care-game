@@ -1260,9 +1260,8 @@
                 const info = MATERIALS[mat];
                 if (!info) return '';
                 const selected = selectedInventoryItem === mat ? ' selected' : '';
-                return `<div class="craft-inv-item${selected}" data-material="${mat}">
+                return `<div class="craft-inv-item${selected}" data-material="${mat}" title="${info.label}">
                     <span class="inv-emoji">${info.emoji}</span>
-                    <span class="inv-label">${info.label}</span>
                     <span class="inv-count">${count}</span>
                 </div>`;
             }).join('') || '<p class="inv-empty">Inventar leer!</p>';

@@ -832,6 +832,15 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
         panel.classList.add('hidden');
     });
 
+    // Chat-Bubble (💬 FAB) öffnet den Chat
+    const chatBubble = document.getElementById('chat-bubble');
+    if (chatBubble) {
+        chatBubble.addEventListener('click', toggleChat);
+        chatBubble.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') toggleChat();
+        });
+    }
+
     function getActiveModel(charId) {
         const char = CHARACTERS[charId];
         const configModel = CFG.models && CFG.models[charId];
