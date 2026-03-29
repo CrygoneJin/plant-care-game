@@ -29,6 +29,12 @@ export default {
             return new Response(null, { headers: corsHeaders() });
         }
 
+        // URL-basiertes Routing (vor POST-Guard, da /discoveries auch GET erlaubt)
+        const { pathname } = new URL(request.url);
+        if (pathname === '/discoveries') {
+            return handleDiscoveries(env);
+        }
+
         // Nur POST
         if (request.method !== 'POST') {
             return json({ error: 'POST only' }, 405);
@@ -45,8 +51,6 @@ export default {
             await env.RATE_LIMIT_KV.put(key, String(count + 1), { expirationTtl: RATE_WINDOW });
         }
 
-        // URL-basiertes Routing
-        const { pathname } = new URL(request.url);
         if (pathname === '/craft') {
             return handleCraft(request, env);
         }
@@ -198,6 +202,36 @@ async function handleCraft(request, env) {
     }
 
     return json({ ...entry, fromCache: false });
+}
+
+// --- Discoveries Endpoint ---
+
+async function handleDiscoveries(env) {
+    if (!env.CRAFT_KV) return json({ error: 'KV nicht konfiguriert' }, 500);
+
+    const list = await env.CRAFT_KV.list({ prefix: 'craft:' });
+    const discoveries = [];
+
+    for (const key of list.keys) {
+        const val = await env.CRAFT_KV.get(key.name, 'json');
+        if (val) discoveries.push(val);
+    }
+
+    // Neueste zuerst
+    discoveries.sort((a, b) => (b.created || '').localeCompare(a.created || ''));
+
+    // Entdecker-Ranking
+    const ranking = {};
+    for (const d of discoveries) {
+        const name = d.discoverer || 'Anonym';
+        ranking[name] = (ranking[name] || 0) + 1;
+    }
+
+    return json({
+        total: discoveries.length,
+        ranking,
+        recent: discoveries.slice(0, 20),
+    });
 }
 
 // --- Logging ---
