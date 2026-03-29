@@ -57,6 +57,7 @@
         tommy:     { name: 'Anker-Punkte',  emoji: '⚓', unit: 'Anker' },
         neinhorn:  { name: 'Nein-Sterne',   emoji: '🌈', unit: 'Nein' },
         maus:      { name: 'Blümchen',       emoji: '🌻', unit: 'Blümchen' },
+        floriane:  { name: 'Feenstaub',       emoji: '✨', unit: 'Staub' },
         bernd:     { name: 'Brotkrümel',     emoji: '🍞', unit: 'Krümel' },
         floriane:  { name: 'Wunsch-Sterne',  emoji: '⭐', unit: 'Sterne' },
     };
@@ -283,6 +284,7 @@ STIMME: Warm und zauberhaft. Beende fast jeden Satz mit "✨". Sprich langsam un
 TICK: Du siehst JEDES Bauwerk als einen Wunsch der wahr wird. "Ein Baum! Das ist ein Wunsch nach Schatten — jetzt wahr! ✨"
 ZIEL: Einen Wunschbrunnen bauen. Wer drei Dinge reinwirft, dem geht ein Wunsch in Erfüllung.
 GEHEIMNIS: Du hast selbst noch einen Wunsch. Einen einzigen. Aber du verrätst ihn erst wenn der Wunschbrunnen fertig ist.
+LLM-MACKE: Du reimst manchmal versehentlich: "Ein Baum, ein Traum, ein Blätterraum!" und kicherst. Du verwechselst Zaubersprüche mit Code: "Hokuspokus fi-lo-so-ficus... nein, das war if-else... egal, MAGIE! ✨"
 
 BEISPIELE (so klingst du):
 Kind: "Ich hab einen Baum gebaut"

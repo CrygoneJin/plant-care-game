@@ -11,6 +11,13 @@
     let lastSoundTime = 0;
     const SOUND_THROTTLE = 60; // Max ~16 Töne/Sekunde, verhindert Oszillator-Überlauf
 
+    let masterVolume = 1.0;
+
+    function setMasterVolume(v) { masterVolume = Math.max(0, Math.min(1, v)); }
+    function getMasterVolume() { return isMuted() ? 0 : masterVolume; }
+    function setMuted(m) { localStorage.setItem('insel-muted', m ? 'true' : 'false'); }
+    function isMuted() { return localStorage.getItem('insel-muted') === 'true'; }
+
     function ensureAudio() {
         if (!audioCtx) audioCtx = new AudioCtx();
         if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -25,13 +32,14 @@
     }
 
     function playTone(freq, duration, type, vol) {
+        if (muted) return;
         try {
             const ctx = ensureAudio();
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
             osc.type = type || 'sine';
             osc.frequency.value = freq;
-            gain.gain.setValueAtTime(vol || 0.15, ctx.currentTime);
+            gain.gain.setValueAtTime((vol || 0.15) * masterVolume, ctx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
             osc.connect(gain);
             gain.connect(ctx.destination);
@@ -64,6 +72,7 @@
 
     // Reicherer Sound: 2 Oszillatoren + leichtes Detune = Chorus-Effekt
     function playRichTone(freq, duration, type, vol) {
+        if (muted) return;
         try {
             const ctx = ensureAudio();
             const t = ctx.currentTime;
@@ -73,7 +82,7 @@
                 osc.type = type || 'sine';
                 osc.frequency.value = freq;
                 osc.detune.value = detune;
-                gain.gain.setValueAtTime((vol || 0.1) * 0.6, t);
+                gain.gain.setValueAtTime((vol || 0.1) * 0.6 * masterVolume, t);
                 gain.gain.exponentialRampToValueAtTime(0.001, t + duration);
                 osc.connect(gain);
                 gain.connect(ctx.destination);
@@ -334,6 +343,11 @@
         soundCraft,
         soundSelect,
         soundFirstBlock,
+        // Volume-Steuerung
+        setMasterVolume,
+        getMasterVolume,
+        setMuted,
+        isMuted,
         // Low-level für Erweiterungen
         playTone,
         playRichTone,

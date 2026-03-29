@@ -624,6 +624,51 @@
 
     let playedHoerspiele = JSON.parse(localStorage.getItem('insel-hoerspiele') || '[]');
 
+    // TTS: Emoji und Markup aus Text strippen für Sprachausgabe
+    function stripForTTS(text) {
+        return text
+            .replace(/[\u{1F000}-\u{1FFFF}]|[\u{2600}-\u{27BF}]|[\u{FE00}-\u{FEFF}]|[\u{1F900}-\u{1F9FF}]/gu, '')
+            .replace(/<[^>]+>/g, '')
+            .replace(/—/g, '–')
+            .replace(/\s+/g, ' ')
+            .trim();
+    }
+
+    let hoerspielSpeaking = false;
+
+    function speakLines(lines, onDone) {
+        if (!window.speechSynthesis) {
+            if (onDone) onDone();
+            return;
+        }
+        hoerspielSpeaking = true;
+        INSEL_SOUND.setMasterVolume(0.15); // Bau-Töne leiser während Hörspiel
+
+        let index = 0;
+        function speakNext() {
+            if (index >= lines.length) {
+                hoerspielSpeaking = false;
+                INSEL_SOUND.setMasterVolume(1.0);
+                if (onDone) onDone();
+                return;
+            }
+            const text = stripForTTS(lines[index]);
+            showToast(lines[index], 4000);
+            if (index === 0) soundAchievement();
+            index++;
+
+            if (!text) { setTimeout(speakNext, 500); return; }
+
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang = 'de-DE';
+            utter.rate = 0.95;
+            utter.onend = () => setTimeout(speakNext, 600);
+            utter.onerror = () => setTimeout(speakNext, 600);
+            window.speechSynthesis.speak(utter);
+        }
+        speakNext();
+    }
+
     function maybeHoerspiel(stats) {
         let key = null;
         if (stats.total === 1 && !playedHoerspiele.includes('firstBlock')) key = 'firstBlock';
@@ -639,12 +684,7 @@
         localStorage.setItem('insel-hoerspiele', JSON.stringify(playedHoerspiele));
 
         const lines = HOERSPIELE[key];
-        lines.forEach((line, i) => {
-            setTimeout(() => {
-                showToast(line, 4000);
-                if (i === 0) soundAchievement();
-            }, i * 4500);
-        });
+        speakLines(lines);
         trackEvent('hoerspiel', { scene: key, blocks: stats.total });
     }
 
@@ -2868,13 +2908,12 @@
 
     // --- Mute-Button ---
     const muteBtn = document.getElementById('mute-btn');
-    let muted = localStorage.getItem('insel-muted') === 'true';
     if (muteBtn) {
-        muteBtn.textContent = muted ? '🔇' : '🔊';
         muteBtn.addEventListener('click', () => {
-            muted = !muted;
-            localStorage.setItem('insel-muted', String(muted));
-            muteBtn.textContent = muted ? '🔇' : '🔊';
+            const nowMuted = !INSEL_SOUND.isMuted();
+            INSEL_SOUND.setMuted(nowMuted);
+            muteBtn.textContent = nowMuted ? '🔇' : '🔊';
+            showToast(nowMuted ? 'Ton aus' : 'Ton an');
         });
     }
 
