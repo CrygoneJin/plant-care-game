@@ -3883,6 +3883,22 @@
             }
         }
 
+        // Schatz zeichnen (blinkend)
+        if (treasurePos && grid[treasurePos.r]?.[treasurePos.c] === 'treasure') {
+            const tScreenX = (treasurePos.c + WATER_BORDER - camera.c) * CELL_SIZE;
+            const tScreenY = (treasurePos.r + WATER_BORDER - camera.r) * CELL_SIZE;
+            if (tScreenX > -CELL_SIZE && tScreenX < canvas.width + CELL_SIZE &&
+                tScreenY > -CELL_SIZE && tScreenY < canvas.height + CELL_SIZE) {
+                const pulse = 0.7 + Math.sin(time * 4) * 0.3;
+                ctx.globalAlpha = pulse;
+                ctx.font = `${CELL_SIZE * 0.7}px serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('💎', tScreenX + CELL_SIZE / 2, tScreenY + CELL_SIZE / 2);
+                ctx.globalAlpha = 1.0;
+            }
+        }
+
         // NPCs zeichnen
         for (const npc of adventureNPCs) {
             const screenX = (npc.c + WATER_BORDER - camera.c) * CELL_SIZE;
@@ -3952,6 +3968,16 @@
         for (const npc of adventureNPCs) {
             ctx.fillStyle = '#FF0';
             ctx.fillRect(mmX + npc.c * cellW - 1, mmY + npc.r * cellH - 1, 3, 3);
+        }
+
+        // Schatz als blinkender goldener Punkt
+        if (treasurePos && treasureQuestActive && !treasureQuestComplete &&
+            grid[treasurePos.r]?.[treasurePos.c] === 'treasure') {
+            const blink = Math.floor(Date.now() / 500) % 2 === 0;
+            if (blink) {
+                ctx.fillStyle = '#FFD700';
+                ctx.fillRect(mmX + treasurePos.c * cellW - 2, mmY + treasurePos.r * cellH - 2, 4, 4);
+            }
         }
 
         // Oskar als roter Punkt
