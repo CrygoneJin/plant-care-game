@@ -13,6 +13,7 @@
 | 3 | **Mobile Palette** — klappbar oder horizontal scrollbar auf iPad | Designer | ✅ Done |
 | 4 | **Toolbar-Overflow auf Mobile** — 7 Buttons brechen auf kleinen Screens | Designer | ✅ Done |
 | 5 | **Google Sheet Webhook einrichten** — Testdaten automatisch einsammeln | Engineer | 🔲 Offen |
+| 44 | **schatzinsel.app → GitHub Pages** — DNS in Cloudflare auf GitHub IPs, Custom Domain setzen | Engineer | 🔲 Offen |
 
 ## 🟡 P1 — Vor Spielplatz-Phase (10 User)
 
@@ -101,6 +102,12 @@
 | ✅ | Regenbogen als Hintergrund-Effekt | 61dda7a |
 | ✅ | 20 Crafting-Rezepte, alle Quests lösbar | e743185 |
 | ✅ | Save-Migration (alte Saves ohne unlocked) | be08f18 |
+| ✅ | Infinite Craft — LLM-generierte Rezepte mit KV-Cache | 695eff10 |
+| ✅ | Entdecker-System — Erster Finder steht am Rezept | 695eff10 |
+| ✅ | /discoveries Leaderboard-Endpoint | 8cf45f0c |
+| ✅ | Labels weg + Erde braun + Wasser blau | a75cb576 |
+| ✅ | Requesty Migration (Langdock → Requesty) | 01a52fb |
+| ✅ | Wu Xing Farben korrekt (Holz=Qing) | 01a52fb |
 | ✅ | Easter Egg Fix: C war nicht Erster | 38a711b |
 
 ---
@@ -181,6 +188,18 @@ Idee: Die leere Insel (nur Wasser) wird in einer Sequenz erschaffen. Verschieden
 | 37 | **Schöpfungsgeschichte als Tutorial** — 7 Level, Insel beginnt als reines Wasser | P2 | Leader |
 | 38 | **A/B Test Mythologie** — Bibel vs. Griechisch vs. Maori vs. Nordisch | P2 | Scientist |
 | 39 | **Tutorial-Gating: Postkarte erst in Schritt 7 (Sonntag)** — Motivation, Tutorium ohne Hilfetext abzuschließen | P2 | Engineer |
+| 40 | **Insel-Identität zurückbringen** — Wasser-Rand sichtbar, Strand-Gradient, Palmen-Starter, Canvas fühlt sich an wie Insel nicht wie Spreadsheet | P0 | Designer + Engineer |
+| 41 | **Sidebar Tabs** — nur eine Sektion sichtbar (Inventar/Quests/Erfolge als Tabs), nicht alles gestapelt | P1 | Designer |
+| 42 | **Werkbank als Canvas-Drag** — Drag Element-A auf Element-B statt 3×3 Modal (Infinite Craft Pattern) | P2 | Engineer |
+| 43 | **Save-System** — localStorage Grid-Persist, Oskar baut nicht nochmal | P0 | Engineer |
+| 45 | **Canvas 16:9 auf PC, iPad-Ratio auf iPad, iPhone-Ratio auf iPhone** — Grid-Dimensionen responsive | P1 | Engineer + Designer |
+| 46 | **Drag & Drop Crafting** — Materialien auf Canvas ziehen statt Klick (Oscars Wunsch) | P1 | Engineer |
+| 47 | **Quests/Achievements zu schnell** — Schwierigkeitsgrad erhöhen, passen nicht zur leeren Insel | P1 | Scientist |
+| 48 | **NPCs nicht sichtbar** — Chat-Button/NPCs tauchen nicht auf bei schatzinsel.app | P0 | Engineer |
+| 49 | **Bernd Support-Chat fehlt** — Bernd als Hilfe-NPC nicht erreichbar | P0 | Engineer |
+| 50 | **Höhle fehlt** — kein Höhlen-Feature obwohl erwartet | P2 | Designer + Engineer |
+| 51 | **Wu Xing Philosophie im Craft-Prompt** — Holz=Expansion, Feuer=Aktion, Erde=Wandlung, Metall=Reife, Wasser=Ruhe | P1 | Scientist |
+| 52 | **Kung Fu Panda Wuxi** — Ästhetik-Inspiration für Wu Xing Elemente | P2 | Artist |
 
 ---
 
