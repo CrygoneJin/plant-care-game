@@ -1705,7 +1705,7 @@
 
         for (const [mat, count] of Object.entries(counts).sort((a, b) => b[1] - a[1])) {
             const info = MATERIALS[mat];
-            html += `<p>${info.emoji} ${info.label}: <strong>${count}</strong></p>`;
+            html += `<p>${info.emoji} <strong>${count}</strong></p>`;
         }
 
         // Fortschritt
