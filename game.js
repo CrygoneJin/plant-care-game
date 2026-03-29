@@ -37,10 +37,10 @@
     // --- Materialien ---
     const MATERIALS = {
         // === DIE 5 ELEMENTE (五行 Wu Xing) ===
-        metal:    { emoji: '⚙️', label: 'Metall',   color: '#C0C0C0', border: '#A0A0A0' },
-        wood:     { emoji: '🪵', label: 'Holz',     color: '#8B5E3C', border: '#6B3F1F' },
-        fire:     { emoji: '🔥', label: 'Feuer',    color: '#E67E22', border: '#D35400' },
-        water:    { emoji: '🌊', label: 'Wasser',   color: '#3498DB', border: '#2980B9' },
+        metal:    { emoji: '⬜', label: 'Metall',   color: '#C0C0C0', border: '#A0A0A0' },
+        wood:     { emoji: '🟩', label: 'Holz',     color: '#2E7D32', border: '#1B5E20' },
+        fire:     { emoji: '🟥', label: 'Feuer',    color: '#D32F2F', border: '#B71C1C' },
+        water:    { emoji: '🟦', label: 'Wasser',   color: '#1976D2', border: '#0D47A1' },
         earth:    { emoji: '🟫', label: 'Erde',     color: '#8B6914', border: '#6B4F0A' },
         // === ABGELEITETE MATERIALIEN ===
         stone:    { emoji: '🧱', label: 'Stein',    color: '#95A5A6', border: '#7F8C8D' },
@@ -1491,7 +1491,6 @@
         // Code-View Overlay (zeigt Quellcode statt Emojis)
         drawCodeOverlay();
 
-        requestAnimationFrame(draw);
     }
 
     // --- Animationen ---
@@ -1574,6 +1573,16 @@
     function applyTool(r, c) {
         if (currentTool === 'build') {
             if (grid[r][c] !== currentMaterial) {
+                // Nicht-Basis-Materialien brauchen Inventar
+                if (!BASE_MATERIALS.includes(currentMaterial)) {
+                    if ((inventory[currentMaterial] || 0) <= 0) {
+                        showToast(`Kein ${MATERIALS[currentMaterial]?.label || currentMaterial} im Inventar!`);
+                        return;
+                    }
+                    inventory[currentMaterial]--;
+                    if (inventory[currentMaterial] <= 0) delete inventory[currentMaterial];
+                    updateInventoryDisplay();
+                }
                 if (!undoPushedThisStroke) { pushUndo(); undoPushedThisStroke = true; }
                 grid[r][c] = currentMaterial;
                 // Setzling platzieren startet Baumwachstum
@@ -2606,7 +2615,16 @@
         setTimeout(() => showToast('🏝️ Hier fehlt noch was... Bau los!', 3500), 2000);
     }
 
-    draw();
+    // 15fps gameLoop — ~75% CPU-Reduktion gegenüber 60fps
+    let lastDrawTime = 0;
+    function gameLoop(timestamp) {
+        if (timestamp - lastDrawTime >= 66) {
+            lastDrawTime = timestamp;
+            draw();
+        }
+        requestAnimationFrame(gameLoop);
+    }
+    requestAnimationFrame(gameLoop);
     updateAchievementDisplay();
     updateQuestDisplay();
     updateInventoryDisplay();
