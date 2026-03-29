@@ -2230,10 +2230,21 @@
     function updateAchievementDisplay() {
         const achList = document.getElementById('achievement-list');
         if (!achList) return;
-        achList.innerHTML = Object.entries(ACHIEVEMENTS).map(([id, ach]) => {
+        achList.innerHTML = '';
+        Object.entries(ACHIEVEMENTS).forEach(([id, ach]) => {
             const unlocked = unlockedAchievements.includes(id);
-            return `<span class="ach-badge ${unlocked ? '' : 'ach-locked'}" title="${ach.title}: ${ach.desc}">${ach.emoji}</span>`;
-        }).join('');
+            const span = document.createElement('span');
+            span.className = 'ach-badge' + (unlocked ? '' : ' ach-locked');
+            if (unlocked) {
+                span.title = ach.title + ': ' + ach.desc;
+                span.textContent = ach.emoji;
+            } else {
+                span.title = '???';
+                span.textContent = '❓';
+                span.style.opacity = '0.4';
+            }
+            achList.appendChild(span);
+        });
     }
 
     // --- Theme-Switcher ---
@@ -2344,6 +2355,7 @@
             questsCompleted: completedQuests.length,
             questsActive: activeQuests.length,
             events: (analytics.events || []).length,
+            sessionDuration: sessionClock.start ? Math.round((Date.now() - sessionClock.start) / 1000) : 0,
             // Engagement-Score (0-100)
             engagement: Math.min(100, Math.round(
                 (stats.total * 0.3) +
