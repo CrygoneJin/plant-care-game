@@ -1053,6 +1053,30 @@
                 }).join('') + `<p class="craft-discover-hint">${discovered.length}/${CRAFTING_RECIPES.length} entdeckt</p>`;
             }
         }
+
+        // Crafting-Hints: Zeige bis zu 3 machbare Rezepte (Ergebnis bleibt ???)
+        const hintsBox = document.getElementById('craft-hints');
+        if (hintsBox) {
+            const craftable = CRAFTING_RECIPES.filter(r => {
+                // Prüfe ob alle Zutaten im Inventar vorhanden (inklusive Grid-Inhalt nicht abziehen)
+                return Object.entries(r.ingredients).every(([mat, needed]) => {
+                    return (inventory[mat] || 0) >= needed;
+                });
+            });
+            if (craftable.length === 0) {
+                hintsBox.innerHTML = '<p class="craft-hint-empty">🤔 Sammle mehr Materialien!</p>';
+            } else {
+                const shown = craftable.slice(0, 3);
+                const lines = shown.map(r => {
+                    const parts = Object.entries(r.ingredients).map(([mat, count]) => {
+                        const info = MATERIALS[mat];
+                        return count > 1 ? `${info.emoji}×${count}` : info.emoji;
+                    });
+                    return `<div class="craft-hint-line">${parts.join(' + ')} → ???</div>`;
+                }).join('');
+                hintsBox.innerHTML = `<p class="craft-hint-label">💡 Probier mal:</p>${lines}`;
+            }
+        }
     }
 
     // --- Zustand ---
@@ -2486,6 +2510,8 @@
     // --- Crafting Dialog Events ---
     const craftBtn = document.getElementById('craft-btn');
     if (craftBtn) craftBtn.addEventListener('click', openCraftingDialog);
+    const craftBtnSidebar = document.getElementById('craft-btn-sidebar');
+    if (craftBtnSidebar) craftBtnSidebar.addEventListener('click', openCraftingDialog);
 
     const craftCloseBtn = document.getElementById('close-crafting-dialog');
     if (craftCloseBtn) craftCloseBtn.addEventListener('click', closeCraftingDialog);
