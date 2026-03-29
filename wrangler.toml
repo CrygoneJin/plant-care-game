@@ -1,0 +1,7 @@
+name = "schatzinsel"
+main = "worker.js"
+compatibility_date = "2026-03-29"
+
+[[kv_namespaces]]
+binding = "CRAFT_KV"
+id = "5ec6f85fac3940c9b9b3337c1d5b5ef1"
