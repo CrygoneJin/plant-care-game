@@ -34,12 +34,6 @@ export default {
             return json({ error: 'POST only' }, 405);
         }
 
-        // URL-basiertes Routing
-        const { pathname } = new URL(request.url);
-        if (pathname === '/craft') {
-            return handleCraft(request, env);
-        }
-
         // Rate Limit (Cloudflare KV optional, sonst skip)
         if (env.RATE_LIMIT_KV) {
             const ip = request.headers.get('cf-connecting-ip') || 'unknown';
@@ -49,6 +43,12 @@ export default {
                 return json({ error: 'Zu viele Anfragen. Versuch es in einer Stunde nochmal.' }, 429);
             }
             await env.RATE_LIMIT_KV.put(key, String(count + 1), { expirationTtl: RATE_WINDOW });
+        }
+
+        // URL-basiertes Routing
+        const { pathname } = new URL(request.url);
+        if (pathname === '/craft') {
+            return handleCraft(request, env);
         }
 
         const apiKey = env['schatzinsel-requesty'] || env.API_KEY;
@@ -116,14 +116,26 @@ async function handleCraft(request, env) {
         return json({ error: 'a und b sind erforderlich' }, 400);
     }
 
+    // Fix 1: Prompt Injection — Materialbezeichnungen validieren
+    const MAX_MAT_LEN = 40;
+    const SAFE_MAT = /^[\p{L}\p{N}\s\-_]+$/u;
+    if (!SAFE_MAT.test(a) || !SAFE_MAT.test(b) || a.length > MAX_MAT_LEN || b.length > MAX_MAT_LEN) {
+        return json({ error: 'Ungültige Materialbezeichnung' }, 400);
+    }
+
     const apiKey = env['schatzinsel-requesty'] || env.API_KEY;
     if (!apiKey) {
         return json({ error: 'Server nicht konfiguriert (kein API Key)' }, 500);
     }
 
-    // Kanonischer Cache-Key: alphabetisch sortiert
-    const [first, second] = [a, b].sort();
-    const cacheKey = `craft:${first}+${second}`;
+    // Fix 4: Discoverer validieren
+    const safeDiscoverer = typeof discoverer === 'string' ? discoverer.trim().slice(0, 30) : 'Anonym';
+
+    // Fix 3: Cache-Keys normalisieren (trim + lowercase)
+    const na = a.trim().toLowerCase();
+    const nb = b.trim().toLowerCase();
+    const pair = [na, nb].sort().join('+');
+    const cacheKey = `craft:${pair}`;
 
     // Cache-Check (KV optional)
     if (env.CRAFT_KV) {
@@ -153,6 +165,10 @@ async function handleCraft(request, env) {
             }),
         });
 
+        // Fix 5: LLM response.ok prüfen
+        if (!response.ok) {
+            return json({ error: 'LLM nicht erreichbar' }, 502);
+        }
         const data = await response.json();
         const content = data?.choices?.[0]?.message?.content || '';
         const match = content.match(/{[\s\S]*}/);
@@ -161,7 +177,8 @@ async function handleCraft(request, env) {
         }
         result = JSON.parse(match[0]);
     } catch (e) {
-        return json({ error: 'Craft-Fehler: ' + e.message }, 500);
+        // Fix 6: Keine Error-Details an den Client
+        return json({ error: 'Craft-Fehler' }, 500);
     }
 
     // In KV speichern
@@ -172,7 +189,7 @@ async function handleCraft(request, env) {
         border:     result.border     || '#999999',
         a,
         b,
-        discoverer: discoverer        || null,
+        discoverer: safeDiscoverer,
         created:    new Date().toISOString(),
     };
 
