@@ -24,6 +24,8 @@
 | 9 | **Mehr Quests** — 11 Templates sind zu wenig, mindestens 20 | Artist + Leader | 🔲 Offen |
 | 10 | **Favicon + Meta-Tags** — Torvalds: "10 Minuten, großer Unterschied" | Engineer | ✅ Done |
 | 11 | **Zellteilung game.js** — Sound, Quests, Effects, Stories, Analytics rausziehen | Engineer | 🔲 Offen |
+| 27 | **Höhlen im Adventure-Grid** — Oscars Idee: Höhlen auf der Insel. Dunkel, Fackeln, Fledermäuse, Tropfgeräusche. Ersetzen den Abstraktions-Aufzug. Höhlen werden ins 64x64 Grid generiert (seeded PRNG). Pro Höhle 1 NPC aus Papas IT-Security-Sammlung (HEX-Hexe, ECC-Polizei, Kernel-Bewohner etc.). Entdeckung statt Curriculum — Oscar findet sie zufällig beim Erkunden. 3-5 Höhlen zum Start, weitere freispielen. Abstraktions-Aufzug-Button + 10-Level-Code entfernen (~500 Zeilen). | Engineer + Artist | 🔲 Offen |
+| 28 | **Büker-Sätze für NPCs** — 20 Sätze die stimmen UND verblüffen. "Ein Glas Wasser enthält mehr Moleküle als es Gläser Wasser im Ozean gibt." Büker liefert Physik, Ogilvy liefert Copy. Jeder Satz passt zu einem NPC. Erst staunen, dann fragen, dann erklären. | Artist + Scientist | 🔲 Offen |
 
 ## 🟢 P2 — Vor "100 User"-Phase
 
