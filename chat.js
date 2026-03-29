@@ -306,6 +306,11 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
     // Lokal: { proxy: 'http://localhost:4000', proxyKey: 'sk-proxy' }
     const CFG = window.INSEL_CONFIG || {};
 
+    // Default Proxy — Cloudflare Worker hat den Requesty-Key serverseitig
+    if (!CFG.proxy && !CFG.apiKey) {
+        CFG.proxy = 'https://schatzinsel.hoffmeyer-zlotnik.workers.dev';
+    }
+
     // === KI-BAUKOMMENTAR-PUFFER ===
     // Hält 5 vorproduzierte KI-Kommentare. Wird im Hintergrund aufgefüllt.
     // game.js ruft window.requestAiComment() auf — bekommt sync einen String zurück.
