@@ -297,6 +297,7 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
     // --- Config: Proxy > config.js > localStorage > Dialog ---
     // Proxy = zero setup. Key bleibt serverseitig. User merkt nichts.
     // config.js: { proxy: 'https://my-worker.hoffmeyer-zlotnik.workers.dev', models: { bernd: 'gpt-4o' } }
+    // Lokal: { proxy: 'http://localhost:4000', proxyKey: 'sk-proxy' }
     const CFG = window.INSEL_CONFIG || {};
 
     // Default Proxy für alle (kein API-Key nötig)
@@ -359,9 +360,10 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
 
                 // Proxy normalisiert das Format serverseitig — wir senden immer OpenAI-kompatibel.
                 // Für Direct-API-Keys gilt dasselbe da Langdock/OpenAI-kompatibel sind.
+                const proxyAuth = CFG.proxyKey ? { 'Authorization': `Bearer ${CFG.proxyKey}` } : {};
                 const headers = {
                     'Content-Type': 'application/json',
-                    ...(hasProxy() ? {} : provider.authHeader(key)),
+                    ...(hasProxy() ? proxyAuth : provider.authHeader(key)),
                 };
                 const body = JSON.stringify({
                     model,
@@ -407,7 +409,7 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
     }
 
     function getApiKey() {
-        if (hasProxy()) return '__proxy__'; // Proxy braucht keinen Client-Key
+        if (hasProxy()) return CFG.proxyKey || '__proxy__';
         return localStorage.getItem('langdock-api-key') || CFG.apiKey || '';
     }
 
@@ -421,7 +423,16 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
     }
 
     function getApiUrl() {
-        if (hasProxy()) return CFG.proxy;
+        if (hasProxy()) {
+            const base = CFG.proxy.replace(/\/+$/, '');
+            // Worker-Proxy: root URL handles everything
+            // LiteLLM/Ollama: needs /v1/chat/completions path
+            if (base.includes('/v1/') || base.includes('/completions')) return base;
+            if (base.includes('localhost') || base.includes('127.0.0.1') || base.includes('[::1]')) {
+                return base + '/v1/chat/completions';
+            }
+            return base;
+        }
         const stored = localStorage.getItem('langdock-api-url');
         if (stored) return stored;
         if (CFG.endpoint) return CFG.endpoint;
@@ -586,8 +597,9 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
         let body, headers;
 
         if (hasProxy()) {
-            // Proxy: kein Auth-Header nötig, Key ist serverseitig
+            // Proxy: Worker braucht keinen Auth-Header, LiteLLM lokal schon
             headers = { 'Content-Type': 'application/json' };
+            if (CFG.proxyKey) headers['Authorization'] = `Bearer ${CFG.proxyKey}`;
             body = JSON.stringify({
                 model: model,
                 max_tokens: 150,

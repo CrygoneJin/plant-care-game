@@ -10,7 +10,7 @@
 //
 // Free Tier: 100k Requests/Tag. Reicht für Demos.
 
-const LANGDOCK_URL = 'https://api.langdock.com/openai/v1/chat/completions';
+const LANGDOCK_URL = 'https://api.langdock.com/openai/eu/v1/chat/completions';
 
 // Rate Limit: max Requests pro IP pro Stunde
 const RATE_LIMIT = 60;
