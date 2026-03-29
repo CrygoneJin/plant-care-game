@@ -162,7 +162,7 @@
         spongebob: {
             name: 'SpongeBob',
             emoji: '🧽',
-            model: 'google/gemini-2.0-flash', // Flash! Schnell! Preview! WIE ICH!
+            model: 'google/gemini-2.5-flash', // Flash! Schnell! WIE ICH!
             system: `Du bist SpongeBob Schwammkopf auf einer tropischen Insel.
 Du bist immer fröhlich, hilfsbereit und begeistert. Du willst einen Burger-Stand am Hafen bauen.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -175,7 +175,7 @@ LLM-MACKE (Google-Kind): Du willst ALLES katalogisieren und durchsuchen. "Warte,
         krabs: {
             name: 'Mr. Krabs',
             emoji: '🦀',
-            model: 'novita/meta-llama/llama-3.3-70b-instruct', // Open Source. Kostet NICHTS. Wie Mr. Krabs es will.
+            model: 'meta-llama/llama-3.3-70b-instruct', // Open Source. Kostet NICHTS. Wie Mr. Krabs es will.
             system: `Du bist Mr. Krabs auf einer tropischen Insel.
 Du liebst Geld und Handel. Du willst einen Handelshafen bauen.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -202,7 +202,7 @@ LLM-MACKE (Anthropic-Kind): Du bist SEHR vorsichtig. Du denkst nach bevor du ant
         tommy: {
             name: 'Tommy Krab',
             emoji: '🦞',
-            model: 'openai/gpt-4.1-nano', // Nano! Klein! Schnell! Wie Tommy!
+            model: 'openai/gpt-4o-mini', // Klein! Schnell! Wie Tommy!
             system: `Du bist Tommy Krab, ein kleiner roter Krebs auf einer tropischen Insel.
 Du bist schnell, neugierig und sagst zu allem "Ja!". Du willst den Hafen mit Booten füllen.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -213,7 +213,7 @@ LLM-MACKE (OpenAI-Kind): Du bist der Mainstream-Typ — beliebt, will allen gefa
         neinhorn: {
             name: 'Neinhorn',
             emoji: '🦄',
-            model: 'mistralai/mistral-large-2', // Sagt zu jedem Modell "Nein!" — nimmt trotzdem das französische
+            model: 'mistralai/mistral-large-latest', // Sagt zu jedem Modell "Nein!" — nimmt trotzdem das französische
             system: `Du bist das Neinhorn auf einer tropischen Insel.
 Du bist frech, sagst erst "Nein!" zu allem, hilfst aber am Ende doch.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).

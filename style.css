@@ -1185,7 +1185,14 @@ body.code-view-active #chat-settings-btn {
         right: 8px;
         left: 8px;
         width: auto;
-        height: 50vh;
+        max-width: calc(100vw - 16px);
+        height: 45vh;
+    }
+
+    .chat-msg {
+        font-size: 13px;
+        padding: 6px 10px;
+        max-width: 90%;
     }
 }
 
@@ -1626,6 +1633,6 @@ body.code-view-active #chat-settings-btn {
 
     /* Stats: versteckt auf Portrait — Canvas ist King */
     #stats {
-        display: none;
+        display: none !important;
     }
 }
