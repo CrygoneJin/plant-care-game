@@ -1570,6 +1570,27 @@ body.code-view-active #chat-settings-btn {
         flex-direction: column;
     }
 
+    /* Header: minimal */
+    header {
+        padding: 2px 8px;
+    }
+
+    header h1 {
+        font-size: 13px;
+    }
+
+    /* Toolbar: kompakter */
+    #toolbar {
+        padding: 2px 6px;
+        gap: 2px;
+    }
+
+    .tool-btn, .action-btn {
+        padding: 4px 8px;
+        min-width: 36px;
+        min-height: 36px;
+    }
+
     /* Palette: horizontal scrollbar oben statt vertikal links */
     #palette {
         width: 100%;
@@ -1577,16 +1598,17 @@ body.code-view-active #chat-settings-btn {
         flex-direction: row;
         overflow-x: auto;
         overflow-y: hidden;
-        padding: 4px 8px;
-        gap: 4px;
+        padding: 2px 4px;
+        gap: 2px;
         order: -1; /* Palette über Canvas */
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    /* Palette-Buttons: 52x52px — touch-freundlich */
+    /* Palette-Buttons: 40x40px — kompakt aber touchbar */
     #palette .material-btn {
-        min-width: 52px;
-        min-height: 52px;
+        min-width: 40px;
+        min-height: 40px;
+        padding: 2px;
         flex-shrink: 0;
     }
 
@@ -1602,23 +1624,8 @@ body.code-view-active #chat-settings-btn {
         max-height: 100%;
     }
 
-    /* Stats: jetzt sichtbar unten, kompakt — so klein wie möglich */
+    /* Stats: versteckt auf Portrait — Canvas ist King */
     #stats {
-        width: 100%;
-        max-height: 100px;
-        padding: 6px 10px;
-        overflow-y: auto;
-        display: block;
-        box-shadow: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    #stats h2 {
-        font-size: 14px;
-        margin-bottom: 8px;
-    }
-
-    #stats-content p {
-        font-size: 12px;
+        display: none;
     }
 }

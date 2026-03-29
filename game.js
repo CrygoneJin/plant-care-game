@@ -15,9 +15,9 @@
         const totalRows = ROWS + WATER_BORDER * 2;
 
         if (isMobile) {
-            // Canvas soll die volle Breite nutzen, mit etwas Padding
-            const availW = window.innerWidth - 16;
-            const availH = window.innerHeight * 0.55; // ~55% der Höhe für Canvas
+            // Canvas soll die volle Breite nutzen, Header+Toolbar+Palette abziehen (~100px)
+            const availW = window.innerWidth - 8;
+            const availH = window.innerHeight - 100;
             return Math.max(12, Math.min(
                 Math.floor(availW / totalCols),
                 Math.floor(availH / totalRows)
