@@ -501,6 +501,8 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
 
     // --- API-Call ---
     async function sendToApi(userMessage) {
+        const charId = currentNpcId;
+        const char = CHARACTERS[charId];
         const key = getApiKey();
         if (!key) {
             // Kein Key und kein Proxy → ELIZA Fallback
@@ -509,9 +511,6 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
             chatHistory.push({ role: 'assistant', content: elizaReply });
             return;
         }
-
-        const charId = currentNpcId;
-        const char = CHARACTERS[charId];
         const gridInfo = getGridContext();
 
         // Token-Budget Check (Basis + Quest-Bonus)
