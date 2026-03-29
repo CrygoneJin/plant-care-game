@@ -415,13 +415,6 @@ header h1 {
     letter-spacing: 0.3px;
 }
 
-.recent-label {
-    font-size: 9px;
-    color: rgba(255, 255, 255, 0.5);
-    writing-mode: vertical-lr;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
 
 .recent-btn {
     min-height: 40px !important;
@@ -474,9 +467,6 @@ header h1 {
     cursor: not-allowed;
 }
 
-.material-btn.craft-locked .mat-label {
-    display: none;
-}
 
 .material-btn.craft-unlocked {
     display: flex;
@@ -510,9 +500,6 @@ header h1 {
     font-size: 32px;
 }
 
-.mat-label {
-    display: none;
-}
 
 /* === CANVAS === */
 #canvas-wrapper {
@@ -1207,10 +1194,6 @@ body.code-view-active #chat-settings-btn {
         font-size: 32px;
     }
 
-    .mat-label {
-        display: none;
-    }
-
     #stats {
         width: 240px;
     }
@@ -1365,11 +1348,6 @@ body.code-view-active #chat-settings-btn {
     font-size: 13px;
 }
 
-.craft-hint-label {
-    margin: 0 0 6px 0;
-    font-weight: bold;
-    color: #b8860b;
-}
 
 .craft-hint-line {
     margin: 3px 0;

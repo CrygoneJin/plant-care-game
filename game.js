@@ -1301,7 +1301,8 @@
                     });
                     return `<div class="craft-hint-line">${parts.join(' + ')} → ???</div>`;
                 }).join('');
-                hintsBox.innerHTML = `<p class="craft-hint-label">💡 Probier mal:</p>${lines}`;
+                hintsBox.title = '💡 Probier mal';
+                hintsBox.innerHTML = lines;
             }
         }
     }
@@ -2139,7 +2140,8 @@
 
         bar.style.display = '';
         // Label behalten, Buttons neu bauen
-        bar.innerHTML = '<span class="recent-label">Zuletzt</span>' +
+        bar.title = 'Zuletzt benutzt';
+        bar.innerHTML = '' +
             sorted.map(([mat]) => {
                 const info = MATERIALS[mat];
                 return `<button class="material-btn recent-btn" data-material="${mat}" title="${info.label}">

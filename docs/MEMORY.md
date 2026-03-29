@@ -49,6 +49,20 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 
 ---
 
+## Sprint 6 Session — 2026-03-29
+
+| Item | Was | Ergebnis |
+|------|-----|---------|
+| S6-1 | Entdeckungszähler dynamisch | `updateDiscoveryCounter()` in game.js — zählt unlockedMaterials.size + BASE_MATERIALS.length |
+| S6-2 | Quests erweitert | 12 neue Templates (Drachen/Einhorn/Roboter/Phönix/Raumfahrt/Geister) — 32 Quests gesamt |
+| S6-3 | Label-Cleanup | mat-label Spans weg, title-Attribute auf Palette-Buttons, CSS-Toten-Code (.mat-label, .recent-label, .craft-hint-label) gelöscht |
+
+**Lerning**: Commits mit misleadendem Titel prüfen — "Entdeckungszähler dynamisch" war S6-1, aber SPRINT.md zeigte es noch als 🔲. Beim nächsten Sprint: SPRINT.md im selben Commit als ✅ updaten.
+
+**Für Oscar**: 12 neue Quests warten — Einhorn-Schrein, Drachen-Nester, Ritter-Festung, Raumfahrt-Zentrum. Der Sprint ist fertig.
+
+---
+
 ## Reservierte Stimmen
 
 Personas die noch keine KI der Welt glaubwürdig abbilden kann.
