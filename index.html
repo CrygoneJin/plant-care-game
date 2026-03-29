@@ -180,25 +180,41 @@
                 <canvas id="game-canvas" role="img" aria-label="Insel Java — dein Baugrund. Wähle ein Material und klicke zum Bauen."></canvas>
             </div>
 
-            <!-- Statistiken + Quests + Achievements -->
+            <!-- Sidebar Tabs -->
             <div id="stats">
-                <h2>Insel-Info</h2>
-                <div id="stats-content">
-                    <p>Deine Insel wartet! 🏝️</p>
-                    <p>Klick links, bau los!</p>
+                <div class="sidebar-tabs">
+                    <button class="sidebar-tab active" data-tab="info">🏝️</button>
+                    <button class="sidebar-tab" data-tab="inventory">🎒</button>
+                    <button class="sidebar-tab" data-tab="quests">📜</button>
+                    <button class="sidebar-tab" data-tab="achievements">🏆</button>
                 </div>
 
-                <h2 class="stats-section-title">📜 Quests</h2>
-                <div id="quest-list">
-                    <p class="no-quests">Bau was — die Bewohner melden sich! 💬</p>
+                <div class="sidebar-panel active" id="panel-info">
+                    <h2>Insel-Info</h2>
+                    <div id="stats-content">
+                        <p>Deine Insel wartet! 🏝️</p>
+                        <p>Klick links, bau los!</p>
+                    </div>
                 </div>
 
-                <h2 class="stats-section-title">🎒 Inventar</h2>
-                <div id="inventory-content">
-                    <p class="inv-empty">Ernte Bäume für Holz! ⛏️</p>
+                <div class="sidebar-panel" id="panel-inventory">
+                    <h2>🎒 Inventar</h2>
+                    <div id="inventory-content">
+                        <p class="inv-empty">Ernte Bäume für Holz! ⛏️</p>
+                    </div>
                 </div>
-                <h2 class="stats-section-title">🏆 Erfolge</h2>
-                <div id="achievement-list"></div>
+
+                <div class="sidebar-panel" id="panel-quests">
+                    <h2>📜 Quests</h2>
+                    <div id="quest-list">
+                        <p class="no-quests">Bau was — die Bewohner melden sich! 💬</p>
+                    </div>
+                </div>
+
+                <div class="sidebar-panel" id="panel-achievements">
+                    <h2>🏆 Erfolge</h2>
+                    <div id="achievement-list"></div>
+                </div>
             </div>
 
         </div>
@@ -333,7 +349,7 @@
     <script src="recipes.js"></script>
     <script src="sound.js"></script>
     <script src="game.js"></script>
-    <script src="config.js" onerror="/* config.js optional */"></script>
+    <script src="config.js"></script>
     <script src="chat.js"></script>
 </body>
 </html>

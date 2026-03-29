@@ -2632,6 +2632,17 @@
     updateInventoryDisplay();
     updatePaletteVisibility();
 
+    // --- Sidebar Tabs ---
+    document.querySelectorAll('.sidebar-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.sidebar-panel').forEach(p => p.classList.remove('active'));
+            tab.classList.add('active');
+            const panel = document.getElementById('panel-' + tab.dataset.tab);
+            if (panel) panel.classList.add('active');
+        });
+    });
+
     // --- Crafting Dialog Events ---
     const craftBtn = document.getElementById('craft-btn');
     if (craftBtn) craftBtn.addEventListener('click', openCraftingDialog);
