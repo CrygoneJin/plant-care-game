@@ -55,7 +55,7 @@
         stone:    { emoji: '🧱', label: 'Stein',    color: '#B5654A', border: '#964F38' },
         glass:    { emoji: '🪟', label: 'Glas',     color: '#C5E8F7', border: '#A0D4ED' },
         plant:    { emoji: '🌿', label: 'Pflanze',  color: '#5EAA5E', border: '#3D8B3D' },
-        sapling:  { emoji: '🌱', label: 'Setzling', color: '#7DCE82', border: '#5CB85C' },
+        sapling:  { emoji: '🪴', label: 'Setzling', color: '#7DCE82', border: '#5CB85C' },
         small_tree: { emoji: '🌲', label: 'Kleiner Baum', color: '#2D7D46', border: '#1F6334' },
         tree:     { emoji: '🌳', label: 'Baum',     color: '#3A8C3A', border: '#2D6E2D' },
         flower:   { emoji: '🌸', label: 'Blume',    color: '#F4B4C4', border: '#E88DA0' },
@@ -63,7 +63,7 @@
         roof:     { emoji: '🏠', label: 'Dach',     color: '#D14B4B', border: '#B33A3A' },
         lamp:     { emoji: '💡', label: 'Lampe',    color: '#FCE885', border: '#F5D54A' },
         sand:     { emoji: '⬜', label: 'Sand',     color: '#F0E6D0', border: '#DDD0B5' },
-        path:     { emoji: '🟫', label: 'Weg',      color: '#9B7340', border: '#7A5A2F' },
+        path:     { emoji: '🟤', label: 'Weg',      color: '#9B7340', border: '#7A5A2F' },
         fence:    { emoji: '🏗️', label: 'Zaun',     color: '#D4A84B', border: '#B89040' },
         boat:     { emoji: '⛵', label: 'Boot',     color: '#5DADE2', border: '#2E86C1' },
         fish:     { emoji: '🐟', label: 'Fisch',    color: '#5BC0B0', border: '#3AA898' },
@@ -73,7 +73,7 @@
         cactus:   { emoji: '🌵', label: 'Kaktus',   color: '#4CAD5C', border: '#3A8C48' },
         mushroom: { emoji: '🍄', label: 'Pilz',     color: '#D4785A', border: '#B5604A' },
         planks:   { emoji: '🪵', label: 'Bretter',  color: '#C19A6B', border: '#A0784A' },
-        window_pane: { emoji: '🪟', label: 'Fenster', color: '#D4EFFC', border: '#AED6F1' },
+        window_pane: { emoji: '🔲', label: 'Fenster', color: '#D4EFFC', border: '#AED6F1' },
     };
 
     // ============================================================
@@ -347,8 +347,7 @@
     let ambientPhrase = 0;    // Zähler für Phrasenwechsel
 
     function playAmbientNote() {
-        if (!ambientPlaying || gameMode !== 'adventure') {
-            ambientPlaying = false;
+        if (!ambientPlaying) {
             return;
         }
 
@@ -3747,6 +3746,11 @@
         { id: 'turtle',   emoji: '🐢', name: 'Schildkröte Opa', r: 55, c: 55,
           lines: ['Langsam, langsam. Die besten Sachen brauchen Zeit.', 'Ich bin seit 100 Jahren auf dieser Insel.', 'Früher war hier alles Wasser. Dann kam das Land. Dann kamst du.'] },
     ];
+
+    // --- Schatzsuche-Quest ---
+    let treasureQuestActive = false;
+    let treasureQuestComplete = false;
+    let treasurePos = null; // { r, c, biome }
 
     // Prüfe ob ein NPC neben Oskar steht
     function checkNPCProximity() {
