@@ -475,7 +475,7 @@ header h1 {
 }
 
 .material-btn.craft-locked .mat-label {
-    color: #999;
+    display: none;
 }
 
 .material-btn.craft-unlocked {
@@ -492,15 +492,9 @@ header h1 {
 /* Wu Xing — 5 Grundelemente mit traditionellen Farben */
 .material-btn[data-material="wood"]  { background: #1A7A4A; color: #fff; } /* 青 Qing — Grün+Blau */
 .material-btn[data-material="fire"]  { background: #CC2222; color: #fff; }
-.material-btn[data-material="earth"] { background: #F5C800; color: #222; }
+.material-btn[data-material="earth"] { background: #8B6914; color: #fff; }
 .material-btn[data-material="metal"] { background: #D0D0D0; color: #222; border-color: #aaa; }
-.material-btn[data-material="water"] { background: #1A1A1A; color: #fff; }
-
-.material-btn[data-material="wood"] .mat-label,
-.material-btn[data-material="fire"] .mat-label  { color: #fff; }
-.material-btn[data-material="earth"] .mat-label { color: #222; }
-.material-btn[data-material="metal"] .mat-label { color: #222; }
-.material-btn[data-material="water"] .mat-label { color: #fff; }
+.material-btn[data-material="water"] { background: #1976D2; color: #fff; }
 
 .material-btn[data-material="wood"].active,
 .material-btn[data-material="fire"].active,
@@ -517,10 +511,7 @@ header h1 {
 }
 
 .mat-label {
-    font-size: 12px;
-    font-weight: bold;
-    color: #2C3E50;
-    margin-top: 2px;
+    display: none;
 }
 
 /* === CANVAS === */
@@ -1178,7 +1169,7 @@ body.code-view-active #chat-settings-btn {
     }
 
     .mat-label {
-        font-size: 14px;
+        display: none;
     }
 
     #stats {
