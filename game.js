@@ -1840,6 +1840,7 @@
             updateStats();
             updateInventoryDisplay();
             updatePaletteVisibility();
+            updateDiscoveryCounter();
             draw();
             loadDialog.classList.add('hidden');
             showToast(`📂 "${name}" geladen!`);
@@ -1867,6 +1868,7 @@
         updateStats();
         updateInventoryDisplay();
         updatePaletteVisibility();
+        updateDiscoveryCounter();
         draw();
         showToast('🆕 Neue Insel!');
     }
