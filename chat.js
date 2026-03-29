@@ -256,7 +256,7 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
 
     // --- DOM ---
     const panel = document.getElementById('chat-panel');
-    const charSelect = document.getElementById('chat-character');
+    const charNameDisplay = document.getElementById('chat-character-name');
     const messages = document.getElementById('chat-messages');
     const input = document.getElementById('chat-input');
     const sendBtn = document.getElementById('chat-send-btn');
@@ -267,22 +267,42 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
     const apiKeySave = document.getElementById('api-key-save');
     const apiKeyClose = document.getElementById('api-key-close');
 
+    // --- State ---
+    let currentNpcId = 'spongebob';
+    let chatHistory = [];
+
+    function updateChatHeader() {
+        const char = CHARACTERS[currentNpcId];
+        if (char && charNameDisplay) charNameDisplay.textContent = char.emoji + ' ' + char.name;
+    }
+
     // --- Öffnen von außen (game.js ruft das auf wenn man einen NPC-Block antippt) ---
     window.openChat = function(npcId) {
         if (!npcId || !CHARACTERS[npcId]) return;
-        charSelect.value = npcId;
+        const switching = currentNpcId !== npcId;
+        currentNpcId = npcId;
+        updateChatHeader();
+        if (switching) {
+            chatHistory = [];
+            while (messages.firstChild) messages.removeChild(messages.firstChild);
+            const char = CHARACTERS[npcId];
+            addMessage(char.emoji + ' ' + char.name + ' ist da!', 'system');
+            updateTokenDisplay(npcId);
+        }
         panel.classList.remove('hidden');
         input.focus();
     };
 
-    // --- State ---
-    let chatHistory = [];
-
     // --- Settings ---
     // --- Config: Proxy > config.js > localStorage > Dialog ---
     // Proxy = zero setup. Key bleibt serverseitig. User merkt nichts.
-    // config.js: { proxy: 'https://insel.workers.dev', models: { bernd: 'gpt-4o' } }
+    // config.js: { proxy: 'https://my-worker.hoffmeyer-zlotnik.workers.dev', models: { bernd: 'gpt-4o' } }
     const CFG = window.INSEL_CONFIG || {};
+
+    // Default Proxy für alle (kein API-Key nötig)
+    if (!CFG.proxy) {
+        CFG.proxy = 'https://my-worker.hoffmeyer-zlotnik.workers.dev';
+    }
 
     // === KI-BAUKOMMENTAR-PUFFER ===
     // Hält 5 vorproduzierte KI-Kommentare. Wird im Hintergrund aufgefüllt.
@@ -487,7 +507,7 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
             return;
         }
 
-        const charId = charSelect.value;
+        const charId = currentNpcId;
         const char = CHARACTERS[charId];
         const gridInfo = getGridContext();
 
@@ -684,8 +704,8 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
     }
 
     function initChat() {
-        const char = CHARACTERS[charSelect.value];
-        const brain = shortModel(getActiveModel(charSelect.value));
+        const char = CHARACTERS[currentNpcId];
+        const brain = shortModel(getActiveModel(currentNpcId));
         addMessage(`${char.emoji} ${char.name} ist da! [${brain}]`, 'system');
         addMessage('⚠️ Bitte keine echten Namen oder Adressen eingeben.', 'system');
         if (!getApiKey() || getApiKey() === '__proxy__' && !hasProxy()) {
@@ -751,16 +771,6 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
             .split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
     }
 
-    charSelect.addEventListener('change', () => {
-        chatHistory = [];
-        messages.innerHTML = '';
-        const charId = charSelect.value;
-        const char = CHARACTERS[charId];
-        const brain = shortModel(getActiveModel(charId));
-        addMessage(`${char.emoji} ${char.name} ist da! [${brain}]`, 'system');
-        updateTokenDisplay(charId);
-    });
-
     function sendMessage() {
         let text = input.value.trim();
         if (!text || sendBtn.disabled) return;
@@ -775,14 +785,14 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
         // Quest-Annahme erkennen
         const lower = text.toLowerCase();
         if (lower.match(/^(ja|ok|klar|mach ich|los|gerne|auf geht|let.?s go)/)) {
-            handleQuestAccept(charSelect.value);
+            handleQuestAccept(currentNpcId);
         }
 
         // Code-Zauber: "Außer Text Nix gehext" — Worte werden Realität!
         if (window.codeZauber) {
             const zauber = window.codeZauber(text);
             if (zauber) {
-                const char = CHARACTERS[charSelect.value];
+                const char = CHARACTERS[currentNpcId];
                 let response;
                 if (zauber.type === 'build') {
                     response = `${char.emoji} ✨ ZAUBER! ${zauber.placed}x ${zauber.material} erscheint auf der Insel! Siehst du? Worte erschaffen Dinge!`;
