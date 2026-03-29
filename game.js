@@ -1570,6 +1570,7 @@
                 }
                 addPlaceAnimation(r, c);
                 soundBuild(currentMaterial);
+                trackMaterialUsage(currentMaterial);
                 maybeNpcComment(currentMaterial);
                 maybeCodeEasterEgg(currentMaterial);
                 recordMilestone('firstBlock');
@@ -1967,20 +1968,69 @@
         });
     });
 
+    // --- Zuletzt benutzt: die 5 meistgenutzten Materialien oben ---
+    let materialUsage = JSON.parse(localStorage.getItem('insel-mat-usage') || '{}');
+
+    function trackMaterialUsage(mat) {
+        materialUsage[mat] = (materialUsage[mat] || 0) + 1;
+        localStorage.setItem('insel-mat-usage', JSON.stringify(materialUsage));
+        updateRecentBar();
+    }
+
+    function updateRecentBar() {
+        const bar = document.getElementById('recent-materials');
+        if (!bar) return;
+
+        // Top 5 nach Nutzung, nur freigeschaltete, keine Basis-Elemente (die sind eh da)
+        const sorted = Object.entries(materialUsage)
+            .filter(([mat]) => !BASE_MATERIALS.includes(mat) && MATERIALS[mat] && unlockedMaterials.has(mat))
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 5);
+
+        if (sorted.length === 0) {
+            bar.style.display = 'none';
+            return;
+        }
+
+        bar.style.display = '';
+        // Label behalten, Buttons neu bauen
+        bar.innerHTML = '<span class="recent-label">Zuletzt</span>' +
+            sorted.map(([mat]) => {
+                const info = MATERIALS[mat];
+                return `<button class="material-btn recent-btn" data-material="${mat}" title="${info.label}">
+                    <span class="mat-emoji">${info.emoji}</span>
+                </button>`;
+            }).join('');
+
+        // Click-Handler für die neuen Buttons
+        bar.querySelectorAll('.material-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                selectMaterial(btn.dataset.material);
+            });
+        });
+    }
+
+    function selectMaterial(mat) {
+        document.querySelectorAll('.material-btn').forEach(b => b.classList.remove('active'));
+        // Active-Klasse auf den passenden Button setzen
+        const target = document.querySelector(`.material-btn[data-material="${mat}"]`);
+        if (target) target.classList.add('active');
+        currentMaterial = mat;
+        soundBuild(currentMaterial);
+        currentTool = 'build';
+        document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector('[data-tool="build"]').classList.add('active');
+    }
+
     // Material-Buttons — Klick = Ton spielen (Palette als Klavier)
     document.querySelectorAll('.material-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            document.querySelectorAll('.material-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentMaterial = btn.dataset.material;
-            // Ton spielen!
-            soundBuild(currentMaterial);
-            // Automatisch auf "Bauen" wechseln
-            currentTool = 'build';
-            document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-            document.querySelector('[data-tool="build"]').classList.add('active');
+            selectMaterial(btn.dataset.material);
         });
     });
+
+    // Beim Start die Leiste füllen
+    updateRecentBar();
 
     // Canvas Maus-Events
     canvas.addEventListener('mousedown', (e) => {

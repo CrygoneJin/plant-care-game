@@ -393,6 +393,35 @@ header h1 {
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
 }
 
+.recent-bar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 6px;
+    margin-bottom: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.recent-label {
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.5);
+    writing-mode: vertical-lr;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.recent-btn {
+    min-height: 40px !important;
+    padding: 4px !important;
+    flex: 0 0 auto;
+}
+
+.recent-btn .mat-emoji {
+    font-size: 20px;
+}
+
 #palette h2 {
     color: white;
     font-size: 14px;
