@@ -1,0 +1,83 @@
+name: Syntax-Check & Deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: Syntax-Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: JavaScript Syntax-Check
+        run: |
+          echo "=== Syntax-Check ==="
+          ERRORS=0
+          for f in *.js; do
+            if ! node -c "$f" 2>/dev/null; then
+              echo "KAPUTT: $f"
+              node -c "$f"
+              ERRORS=$((ERRORS + 1))
+            else
+              echo "OK: $f"
+            fi
+          done
+          if [ $ERRORS -gt 0 ]; then
+            echo ""
+            echo "=== $ERRORS Datei(en) mit Syntax-Fehlern! ==="
+            echo "Deploy gestoppt. Fix die Fehler und push nochmal."
+            exit 1
+          fi
+          echo ""
+          echo "=== Alle JS-Dateien sauber ==="
+
+      - name: HTML-Check
+        run: |
+          for f in *.html; do
+            if ! python3 -c "
+          import html.parser, sys
+          p = html.parser.HTMLParser()
+          p.feed(open('$f').read())
+          print('OK: $f')
+          " 2>/dev/null; then
+              echo "WARNUNG: $f hat HTML-Probleme (nicht-blockierend)"
+            fi
+          done
+
+  deploy:
+    name: GitHub Pages Deploy
+    needs: check
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Version-Stamp
+        run: |
+          VERSION=$(git describe --tags --always 2>/dev/null || echo "v0.$(git rev-list --count HEAD).$(git rev-parse --short HEAD)")
+          DATE=$(date -u +%Y-%m-%d)
+          echo "Version: $VERSION ($DATE)"
+          sed -i "s|<!--VERSION-->.*<!--/VERSION-->|<!--VERSION-->${VERSION} (${DATE})<!--/VERSION-->|g" index.html || true
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4
