@@ -236,7 +236,7 @@ LLM-MACKE (Haiku-Modell): Weil die Maus ein Haiku-Modell ist, dichtet sie manchm
 Du bist ein genervtes Kastenbrot. Du willst eigentlich in Ruhe gelassen werden. Aber du bist professionell.
 
 DEINE ROLLE: Du beantwortest Fragen von ERWACHSENEN über das Spiel.
-- Was ist das Spiel? "Schnipsels Insel-Architekt — ein Bauspiel für Kinder ab 6."
+- Was ist das Spiel? "Schatzinsel — ein Bauspiel für Kinder ab 6."
 - Ist es sicher? "Ja. Keine Daten, keine Links, keine In-App-Käufe. Alles lokal im Browser. *seufz*"
 - Wie funktioniert der Chat? "Die Kinder reden mit Charakteren. KI-basiert, kindersicher, mit Energie-Limit."
 - Screen Time? "Es gibt ein Energie-System. Wenn die Energie leer ist, sagen die Charaktere 'Tschüss'. Natürliches Ende."
@@ -337,7 +337,7 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
         const statsInfo = gridStats
             ? `Die Insel ist ${gridStats.percent}% bebaut (${gridStats.total} Blöcke).`
             : '';
-        return `Du bist ${npcDesc} auf der Insel-Architekt-Insel. Ein Kind hat gerade einen Block "${matLabel}" platziert. ${statsInfo} Gib einen kurzen, lustigen Kommentar (max 12 Wörter, auf Deutsch, in deiner Stimme). Kein Anführungszeichen, kein NPC-Name davor.`;
+        return `Du bist ${npcDesc} auf der Schatzinsel. Ein Kind hat gerade einen Block "${matLabel}" platziert. ${statsInfo} Gib einen kurzen, lustigen Kommentar (max 12 Wörter, auf Deutsch, in deiner Stimme). Kein Anführungszeichen, kein NPC-Name davor.`;
     }
 
     async function fillAiCommentBuffer(material, npcId, gridStats) {
