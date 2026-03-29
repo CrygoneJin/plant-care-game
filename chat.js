@@ -503,7 +503,10 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
     async function sendToApi(userMessage) {
         const key = getApiKey();
         if (!key) {
-            addMessage('🔑 Die Inselbewohner brauchen einen Schlüssel um zu sprechen. Klick oben auf ⚙️ und gib deinen API-Key ein.', 'system');
+            // Kein Key und kein Proxy → ELIZA Fallback
+            const elizaReply = getElizaReply(userMessage, charId);
+            addMessage(char.emoji + ' ' + elizaReply, 'npc');
+            chatHistory.push({ role: 'assistant', content: elizaReply });
             return;
         }
 
@@ -656,12 +659,62 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
 
         } catch (err) {
             loadingDiv.remove();
-            addMessage('Verbindungsfehler. Bist du online?', 'system');
+            // ELIZA Fallback wenn Netzwerk/API fehlt
+            const elizaReply = getElizaReply(userMessage, currentNpcId);
             chatHistory.pop();
+            chatHistory.push({ role: 'assistant', content: elizaReply });
+            const char = CHARACTERS[currentNpcId];
+            addMessage(`${char.emoji} ${elizaReply}`, 'npc');
         } finally {
             sendBtn.disabled = false;
             input.focus();
         }
+    }
+
+    // --- ELIZA Fallback (kein API nötig, läuft 100% lokal) ---
+    function getElizaReply(input, npcId) {
+        const lower = input.toLowerCase();
+
+        const elizaRules = {
+            spongebob: [
+                { pattern: /hallo|hi|hey/, reply: ['Hallo! Bist du bereit zu BAUEN?! 😄', 'Hi! Lass uns etwas TOLLES machen!'] },
+                { pattern: /wasser|meer|ozean/, reply: ['Das Wasser ist mein Zuhause! 🌊', 'Ich liebe das Meer so sehr!'] },
+                { pattern: /essen|burger|krabbenburger/, reply: ['Die beste Krabbenburger überhaupt! 🍔', 'Mmm, Krabbenburger... träum...'] },
+                { pattern: //./, reply: ['Das klingt toll! 😄', 'Ich bin so glücklich! 🧽', 'Lass uns bauen!'] }
+            ],
+            krabs: [
+                { pattern: /hallo|hi|hey/, reply: ['Ahoy! Geschäft?', 'Willkommen! Kostet dich nix. Dieses Mal.'] },
+                { pattern: /geld|geld|taler|reich/, reply: ['Geld! Das beste Wort der Welt! 💰', 'Mit Geld kann ich alles haben!'] },
+                { pattern: /boot|schiff|hafen/, reply: ['Boote! Jedes Boot bringt mir Gewinn! 💰', 'Ein Boot = ein Taler! Baue mir welche!'] },
+                { pattern: //./, reply: ['Und was bringt mir das ein?', 'Ist das profitabel?', 'Ar ar ar ar!'] }
+            ],
+            neinhorn: [
+                { pattern: /.*/, reply: ['Nein! Aber... okay, vielleicht. 🦄', 'Nein! Warte... vielleicht doch ja?', 'Nein nein nein... gut. Lass machen.'] }
+            ],
+            elefant: [
+                { pattern: /musik|lied|singen/, reply: ['Musik macht das Leben lebendig! 🎵', 'Töröööö! Ein schönes Lied! 🐘'] },
+                { pattern: /hallo|hi/, reply: ['Guten Tag! Schön dich zu treffen.', 'Hallo zusammen! 🐘'] },
+                { pattern: //./, reply: ['Bedacht gesprochen... interessant.', 'Hmm, lässt mich überlegen...', 'Töröö! Das gefällt mir!'] }
+            ],
+            tommy: [
+                { pattern: /.*/, reply: ['Klick-klack! JA! 🦞', 'Das ist — klick-klack! — die BESTE Idee!', 'Schnell, schnell, klick-klack!'] }
+            ],
+            maus: [
+                { pattern: /hallo|hi/, reply: ['*pieps* Hallo! 🐭', 'Hiii! *quietsch*'] },
+                { pattern: //./, reply: ['*pieps pieps*', 'Ente sagt ja! 🦆', '*süßes Quietschen*'] }
+            ],
+            bernd: [
+                { pattern: /.*/, reply: ['Mhm... und was willst du von mir?', 'Gib mir einen Kaffee und ich überleg es.', 'Okay, aber schnell. Ich hab noch was zu backen.'] }
+            ]
+        };
+
+        const rules = elizaRules[npcId] || elizaRules.spongebob;
+        for (const rule of rules) {
+            if (rule.pattern.test(lower)) {
+                return rule.reply[Math.floor(Math.random() * rule.reply.length)];
+            }
+        }
+        return 'Ähm... ja... okay!';
     }
 
     // --- DSGVO: Eltern-Gate für Chat (Art. 8 DSGVO — Kinder unter 16) ---
