@@ -1,6 +1,6 @@
 # Product Backlog — Schnipsels Insel-Architekt
 
-**Product Goal:** Kinder entdecken spielerisch dass Worte Dinge erschaffen. "Außer Text nix gehext."
+**Product Goal:** Kinder entdecken spielerisch dass Worte Dinge erschaffen. "Außer Text nix gehext." — Tao: Everything flows. Die 5 Elemente sind ein Kreislauf, kein Inventar.
 
 ---
 
@@ -200,6 +200,10 @@ Idee: Die leere Insel (nur Wasser) wird in einer Sequenz erschaffen. Verschieden
 | 50 | **Höhle fehlt** — kein Höhlen-Feature obwohl erwartet | P2 | Designer + Engineer |
 | 51 | **Wu Xing Philosophie im Craft-Prompt** — Holz=Expansion, Feuer=Aktion, Erde=Wandlung, Metall=Reife, Wasser=Ruhe | P1 | Scientist |
 | 52 | **Kung Fu Panda Wuxi** — Ästhetik-Inspiration für Wu Xing Elemente | P2 | Artist |
+| 53 | **Echtes Atlantik-Wetter** — Open-Meteo API (29°N, 31°W — halber Weg Martinique↔Bayonne), 🌊 im Meer wetterabhängig | P1 | Engineer |
+| 54 | **Wu Xing als Tutorial** — 5 Elemente = 5 Level Tutorial (wie Candy Crush/Tetris), danach Insel: Bauen ODER Abenteuer ODER beides | P1 | Leader + Designer |
+| 55 | **Spielfigur auf der Insel** — Kind benennt selbst (max 8 Buchstaben), bewegbar mit Pfeiltasten (PC) oder Finger-Drag (Touch) | P1 | Engineer + Designer |
+| 56 | **Wiki-Game für Crafting** — "Von Wasser zu Drache in X Schritten" — Crafting-Pfad-Challenge, freigeschaltet als Quest-Belohnung in der Bibliothek | P2 | Scientist + Engineer |
 
 ---
 
