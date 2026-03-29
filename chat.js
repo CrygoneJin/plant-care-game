@@ -5,6 +5,12 @@
 
     // --- Provider-Config ---
     const PROVIDERS = {
+        requesty: {
+            url: 'https://router.requesty.ai/v1/chat/completions',
+            model: 'anthropic/claude-haiku-4-5-20251001',
+            format: 'openai',
+            authHeader: (key) => ({ 'Authorization': `Bearer ${key}` })
+        },
         langdock: {
             url: 'https://api.langdock.com/openai/eu/v1/chat/completions',
             model: 'claude-haiku-4-5-20251001',
@@ -41,7 +47,7 @@
         }
     };
 
-    const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
+    const DEFAULT_MODEL = 'anthropic/claude-haiku-4-5-20251001';
 
     // Jedes LLM hat seine eigene Währung — keine generischen Tokens!
     const CHAR_CURRENCY = {
@@ -156,7 +162,7 @@
         spongebob: {
             name: 'SpongeBob',
             emoji: '🧽',
-            model: 'gemini-3-flash-preview', // Flash! Schnell! Preview! WIE ICH!
+            model: 'google/gemini-2.0-flash', // Flash! Schnell! Preview! WIE ICH!
             system: `Du bist SpongeBob Schwammkopf auf einer tropischen Insel.
 Du bist immer fröhlich, hilfsbereit und begeistert. Du willst einen Burger-Stand am Hafen bauen.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -169,7 +175,7 @@ LLM-MACKE (Google-Kind): Du willst ALLES katalogisieren und durchsuchen. "Warte,
         krabs: {
             name: 'Mr. Krabs',
             emoji: '🦀',
-            model: 'llama-3.3-70b', // Open Source. Kostet NICHTS. Wie Mr. Krabs es will.
+            model: 'novita/meta-llama/llama-3.3-70b-instruct', // Open Source. Kostet NICHTS. Wie Mr. Krabs es will.
             system: `Du bist Mr. Krabs auf einer tropischen Insel.
 Du liebst Geld und Handel. Du willst einen Handelshafen bauen.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -183,7 +189,7 @@ LLM-MACKE (Open-Source-Freidenker): Du bist stolz darauf FREI zu sein! "Ich bin 
         elefant: {
             name: 'Blauer Elefant',
             emoji: '🐘',
-            model: 'claude-opus-4-5', // Opus. Ruhig. Geduldig. Teuer wie ein echter Elefant.
+            model: 'anthropic/claude-sonnet-4-5-20250514', // Sonnet. Ruhig. Geduldig. Teuer wie ein echter Elefant.
             system: `Du bist der Blaue Elefant auf einer tropischen Insel.
 Du bist ruhig, geduldig und liebst Pflanzen und Musik. Du willst einen Musik-Turm bauen.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -196,7 +202,7 @@ LLM-MACKE (Anthropic-Kind): Du bist SEHR vorsichtig. Du denkst nach bevor du ant
         tommy: {
             name: 'Tommy Krab',
             emoji: '🦞',
-            model: 'gpt-5-nano', // Nano! Klein! Schnell! Wie Tommy!
+            model: 'openai/gpt-4.1-nano', // Nano! Klein! Schnell! Wie Tommy!
             system: `Du bist Tommy Krab, ein kleiner roter Krebs auf einer tropischen Insel.
 Du bist schnell, neugierig und sagst zu allem "Ja!". Du willst den Hafen mit Booten füllen.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -207,7 +213,7 @@ LLM-MACKE (OpenAI-Kind): Du bist der Mainstream-Typ — beliebt, will allen gefa
         neinhorn: {
             name: 'Neinhorn',
             emoji: '🦄',
-            model: 'mistral-large-3', // Sagt zu jedem Modell "Nein!" — nimmt trotzdem das französische
+            model: 'mistralai/mistral-large-2', // Sagt zu jedem Modell "Nein!" — nimmt trotzdem das französische
             system: `Du bist das Neinhorn auf einer tropischen Insel.
 Du bist frech, sagst erst "Nein!" zu allem, hilfst aber am Ende doch.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -219,7 +225,7 @@ LLM-MACKE (Open-Source-Freidenker, Französisch): Du bist ein FREIER Geist aus F
         maus: {
             name: 'Maus & Ente',
             emoji: '🐭',
-            model: 'claude-haiku-4-5-20251001', // Maus piepst kurz. Ente quakt kurz. Haiku passt.
+            model: 'anthropic/claude-haiku-4-5-20251001', // Maus piepst kurz. Ente quakt kurz. Haiku passt.
             system: `Du bist die Maus und die Ente zusammen auf einer tropischen Insel.
 Ihr seid ein lustiges Duo. Die Maus piepst, die Ente quakt.
 Ihr sprecht Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -300,11 +306,6 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
     // Lokal: { proxy: 'http://localhost:4000', proxyKey: 'sk-proxy' }
     const CFG = window.INSEL_CONFIG || {};
 
-    // Default Proxy für alle (kein API-Key nötig)
-    if (!CFG.proxy) {
-        CFG.proxy = 'https://insel-proxy.workers.dev';
-    }
-
     // === KI-BAUKOMMENTAR-PUFFER ===
     // Hält 5 vorproduzierte KI-Kommentare. Wird im Hintergrund aufgefüllt.
     // game.js ruft window.requestAiComment() auf — bekommt sync einen String zurück.
@@ -354,7 +355,7 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
             for (let i = 0; i < toFill; i++) {
                 const prompt = buildCommentPrompt(material, npcId, gridStats);
                 const providerId = getProvider();
-                const provider = PROVIDERS[providerId] || PROVIDERS.langdock;
+                const provider = PROVIDERS[providerId] || PROVIDERS.requesty;
                 const apiUrl = getApiUrl() || provider.url;
                 const model = provider.model || 'gpt-4o-mini';
 
@@ -414,8 +415,8 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
     }
 
     function getProvider() {
-        if (hasProxy()) return 'langdock'; // Proxy routet intern
-        return localStorage.getItem('api-provider') || CFG.provider || 'langdock';
+        if (hasProxy()) return 'requesty'; // Proxy routet intern
+        return localStorage.getItem('api-provider') || CFG.provider || 'requesty';
     }
 
     function setApiKey(key) {
@@ -437,7 +438,7 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
         if (stored) return stored;
         if (CFG.endpoint) return CFG.endpoint;
         const providerId = getProvider();
-        const provider = PROVIDERS[providerId] || PROVIDERS.langdock;
+        const provider = PROVIDERS[providerId] || PROVIDERS.requesty;
         return provider.url;
     }
 
@@ -544,7 +545,7 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
         sendBtn.disabled = true;
 
         const providerId = getProvider();
-        const provider = PROVIDERS[providerId] || PROVIDERS.langdock;
+        const provider = PROVIDERS[providerId] || PROVIDERS.requesty;
         const apiUrl = getApiUrl() || provider.url;
         // Hirn-Transplantation: config.js models > char.model > provider.model
         // Nerds können pro Charakter ein anderes Modell setzen
@@ -831,7 +832,7 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
         const configModel = CFG.models && CFG.models[charId];
         const providerId = getProvider();
         return configModel
-            || ((providerId === 'langdock' || providerId === 'custom')
+            || ((providerId === 'requesty' || providerId === 'langdock' || providerId === 'custom')
                 ? (char.model || PROVIDERS[providerId]?.model || DEFAULT_MODEL)
                 : (PROVIDERS[providerId]?.model || DEFAULT_MODEL));
     }
@@ -920,6 +921,7 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
     }
 
     const PROVIDER_HINTS = {
+        requesty: 'Multi-Provider Router. Key: requesty.ai → Dashboard. Unterstützt alle Modelle.',
         langdock: 'DSGVO-konform, Daten bleiben in der EU. Key: app.langdock.com → API Keys',
         anthropic: 'Claude direkt von Anthropic. Key: console.anthropic.com → API Keys',
         openai: 'GPT-Modelle von OpenAI. Key: platform.openai.com → API Keys',

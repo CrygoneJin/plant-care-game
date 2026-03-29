@@ -1,14 +1,13 @@
 // Cloudflare Worker — API-Proxy für Insel-Architekt
-// Direkt → Langdock (kritischer Pfad)
-// Fire & forget → Logging (n8n oder direkt, per Schalter)
+// Direkt → Requesty (kritischer Pfad)
+// Fire & forget → Logging (direkt, per Schalter)
 //
 // Setup:
 // 1. https://dash.cloudflare.com → Workers & Pages → Create
 // 2. Code reinkopieren
 // 3. Environment Variables setzen:
-//    LANGDOCK_API_KEY    = sk-...
-//    LOGGING_MODE        = direct      (oder: n8n)
-//    N8N_WEBHOOK_URL     = https://...  (nur bei LOGGING_MODE=n8n)
+//    API_KEY             = sk-...      (Requesty Key von requesty.ai)
+//    LOGGING_MODE        = direct
 //    AIRTABLE_TOKEN      = pat...       (nur bei LOGGING_MODE=direct)
 //    AIRTABLE_BASE_ID    = app...       (nur bei LOGGING_MODE=direct)
 //    AIRTABLE_TABLE_NAME = Feynman Sessions
@@ -17,7 +16,7 @@
 //
 // Free Tier: 100k Requests/Tag. Reicht für Demos.
 
-const LANGDOCK_URL = 'https://api.langdock.com/openai/eu/v1/chat/completions';
+const API_URL = 'https://router.requesty.ai/v1/chat/completions';
 
 // Rate Limit: max Requests pro IP pro Stunde
 const RATE_LIMIT = 60;
@@ -46,7 +45,7 @@ export default {
             await env.RATE_LIMIT_KV.put(key, String(count + 1), { expirationTtl: RATE_WINDOW });
         }
 
-        const apiKey = env.LANGDOCK_API_KEY;
+        const apiKey = env.API_KEY;
         if (!apiKey) {
             return json({ error: 'Server nicht konfiguriert (kein API Key)' }, 500);
         }
@@ -72,19 +71,19 @@ export default {
         // Fire & forget — Logging läuft parallel, blockiert nichts
         logAsync(body, meta, env).catch(() => {});
 
-        // Direkt → Langdock (kritischer Pfad)
+        // Direkt → Requesty (kritischer Pfad)
         try {
-            // _feynman nicht an Langdock weiterschicken
-            const langdockBody = { ...body };
-            delete langdockBody._feynman;
+            // _feynman nicht an Requesty weiterschicken
+            const apiBody = { ...body };
+            delete apiBody._feynman;
 
-            const response = await fetch(LANGDOCK_URL, {
+            const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${apiKey}`,
                 },
-                body: JSON.stringify(langdockBody),
+                body: JSON.stringify(apiBody),
             });
 
             const data = await response.json();

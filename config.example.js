@@ -1,18 +1,18 @@
-// === VARIANTE 1: Proxy (empfohlen) ===
+// === VARIANTE 1: Requesty (empfohlen — Direct API) ===
+// Key von requesty.ai → Dashboard → API Keys
+// Routet alle Modelle (Anthropic, OpenAI, Google, Mistral…)
+//
+// window.INSEL_CONFIG = {
+//     provider: 'requesty',
+//     apiKey: 'sk-...',
+// };
+
+// === VARIANTE 2: Proxy (zero-setup für Spieler) ===
 // Key bleibt serverseitig. User braucht nichts. Einfach spielen.
 // Siehe worker.js für Cloudflare Worker Setup.
 //
 // window.INSEL_CONFIG = {
 //     proxy: 'https://dein-worker.workers.dev',
-// };
-
-// === VARIANTE 2: Direkter Key ===
-// Für lokale Entwicklung oder eigenes Hosting.
-// config.js ist gitignored — Key bleibt lokal.
-//
-// window.INSEL_CONFIG = {
-//     provider: 'langdock',
-//     apiKey: 'sk-...',
 // };
 
 // === VARIANTE 3: Lokaler LiteLLM-Proxy ===
@@ -26,15 +26,15 @@
 
 // === VARIANTE 4: Nerd-Mode (Hirn-Transplantation) ===
 // Pro Charakter ein anderes Modell. Persönlichkeit bleibt.
-// Geht mit Worker, LiteLLM oder direktem Key.
+// Geht mit Requesty, LiteLLM oder direktem Key.
 //
 // window.INSEL_CONFIG = {
-//     proxy: 'http://localhost:4000',
-//     proxyKey: 'sk-proxy',
+//     provider: 'requesty',
+//     apiKey: 'sk-...',
 //     models: {
-//         bernd:     'gpt-4o',
-//         neinhorn:  'claude-opus-4-5',
-//         spongebob: 'gemini-2.0-flash',
+//         bernd:     'anthropic/claude-haiku-4-5-20251001',
+//         neinhorn:  'mistralai/mistral-large-2',
+//         spongebob: 'google/gemini-2.0-flash',
 //     }
 // };
 
