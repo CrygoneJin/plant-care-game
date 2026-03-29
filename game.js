@@ -2617,6 +2617,15 @@
         window.grid = grid;
         migrateUnlocked();
         showToast('🔄 Letzte Insel wiederhergestellt');
+    } else {
+        // Starter-Insel: kein Save vorhanden — Oskar soll sofort verstehen was zu tun ist
+        grid[12][5] = 'sand';
+        grid[12][6] = 'sand';
+        grid[12][7] = 'sand';
+        grid[10][6] = 'tree';
+        grid[13][6] = 'water';
+        window.grid = grid;
+        setTimeout(() => showToast('🏝️ Hier fehlt noch was... Bau los!', 3500), 2000);
     }
 
     draw();
