@@ -45,7 +45,7 @@ export default {
             await env.RATE_LIMIT_KV.put(key, String(count + 1), { expirationTtl: RATE_WINDOW });
         }
 
-        const apiKey = env.API_KEY;
+        const apiKey = env['schatzinsel-requesty'] || env.API_KEY;
         if (!apiKey) {
             return json({ error: 'Server nicht konfiguriert (kein API Key)' }, 500);
         }
