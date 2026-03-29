@@ -65,6 +65,48 @@
         mushroom: { emoji: '🍄', label: 'Pilz',     color: '#E59866', border: '#CA6F1E' },
         planks:   { emoji: '🪵', label: 'Bretter',  color: '#C19A6B', border: '#A0784A' },
         window_pane: { emoji: '🪟', label: 'Fenster', color: '#D4EFFC', border: '#AED6F1' },
+        // === MAGISCHE ARTEFAKTE ===
+        steam:    { emoji: '💨', label: 'Dampf',    color: '#D5D8DC', border: '#AEB6BF' },
+        ice:      { emoji: '🧊', label: 'Eis',      color: '#D6EAF8', border: '#AED6F1' },
+        snow:     { emoji: '❄️', label: 'Schnee',   color: '#EBF5FB', border: '#D6EAF8' },
+        cloud:    { emoji: '☁️', label: 'Wolke',    color: '#F2F4F4', border: '#D5D8DC' },
+        rain:     { emoji: '🌧️', label: 'Regen',   color: '#85C1E9', border: '#5DADE2' },
+        rainbow:  { emoji: '🌈', label: 'Regenbogen', color: '#F9E79F', border: '#F4D03F' },
+        sun:      { emoji: '☀️', label: 'Sonne',    color: '#F9E79F', border: '#F1C40F' },
+        star:     { emoji: '⭐', label: 'Stern',    color: '#F9E79F', border: '#F4D03F' },
+        moon:     { emoji: '🌙', label: 'Mond',     color: '#F7DC6F', border: '#F1C40F' },
+        lightning:{ emoji: '⚡', label: 'Blitz',    color: '#F7DC6F', border: '#F4D03F' },
+        volcano:  { emoji: '🌋', label: 'Vulkan',   color: '#E74C3C', border: '#C0392B' },
+        mountain: { emoji: '🏔️', label: 'Berg',    color: '#95A5A6', border: '#7F8C8D' },
+        diamond:  { emoji: '💎', label: 'Diamant',  color: '#AED6F1', border: '#85C1E9' },
+        sword:    { emoji: '⚔️', label: 'Schwert',  color: '#BDC3C7', border: '#95A5A6' },
+        shield:   { emoji: '🛡️', label: 'Schild',  color: '#F0B27A', border: '#E59866' },
+        crown:    { emoji: '👑', label: 'Krone',    color: '#F9E79F', border: '#F4D03F' },
+        key:      { emoji: '🔑', label: 'Schlüssel', color: '#F9E79F', border: '#F4D03F' },
+        treasure: { emoji: '💰', label: 'Schatz',   color: '#F9E79F', border: '#F4D03F' },
+        dragon:   { emoji: '🐉', label: 'Drache',   color: '#27AE60', border: '#1E8449' },
+        unicorn:  { emoji: '🦄', label: 'Einhorn',  color: '#D2B4DE', border: '#BB8FCE' },
+        ghost:    { emoji: '👻', label: 'Geist',    color: '#F2F4F4', border: '#D5D8DC' },
+        alien:    { emoji: '👽', label: 'Alien',    color: '#82E0AA', border: '#58D68D' },
+        robot:    { emoji: '🤖', label: 'Roboter',  color: '#AEB6BF', border: '#85929E' },
+        potion:   { emoji: '🧪', label: 'Trank',    color: '#AF7AC5', border: '#8E44AD' },
+        crystal:  { emoji: '🔮', label: 'Kristall', color: '#D2B4DE', border: '#BB8FCE' },
+        egg:      { emoji: '🥚', label: 'Ei',       color: '#FDEBD0', border: '#FAD7A0' },
+        nest:     { emoji: '🪺', label: 'Nest',     color: '#D4AC0D', border: '#B7950B' },
+        butterfly:{ emoji: '🦋', label: 'Schmetterling', color: '#85C1E9', border: '#5DADE2' },
+        bee:      { emoji: '🐝', label: 'Biene',    color: '#F9E79F', border: '#F4D03F' },
+        honey:    { emoji: '🍯', label: 'Honig',    color: '#F0B27A', border: '#E59866' },
+        apple:    { emoji: '🍎', label: 'Apfel',    color: '#E74C3C', border: '#C0392B' },
+        cake:     { emoji: '🎂', label: 'Kuchen',   color: '#F1948A', border: '#E74C3C' },
+        music:    { emoji: '🎵', label: 'Musik',    color: '#AF7AC5', border: '#8E44AD' },
+        heart:    { emoji: '❤️', label: 'Herz',     color: '#E74C3C', border: '#C0392B' },
+        skull:    { emoji: '💀', label: 'Skelett',  color: '#F2F4F4', border: '#D5D8DC' },
+        poop:     { emoji: '💩', label: 'Haufen',   color: '#8B6914', border: '#6B4F0A' },
+        rocket:   { emoji: '🚀', label: 'Rakete',   color: '#E74C3C', border: '#C0392B' },
+        ufo:      { emoji: '🛸', label: 'UFO',      color: '#82E0AA', border: '#58D68D' },
+        tornado:  { emoji: '🌪️', label: 'Tornado', color: '#AEB6BF', border: '#85929E' },
+        wave:     { emoji: '🌊', label: 'Tsunami',  color: '#2980B9', border: '#1F618D' },
+        phoenix:  { emoji: '🔥', label: 'Phönix',   color: '#F39C12', border: '#E67E22' },
     };
 
     // ============================================================
@@ -831,35 +873,11 @@
     function maybeNpcComment(material) {
         const now = Date.now();
         if (now - lastCommentTime < 10000) return; // Max alle 10 Sekunden
-        if (Math.random() > 0.15) return; // 15% Chance (Game-Design Best Practice)
+        if (Math.random() > 0.20) return; // 20% Chance (weniger spam)
 
         lastCommentTime = now;
-
-        // Zufälligen NPC wählen (für Kontext-Übergabe an KI-Puffer)
-        const npcKeys = Object.keys(NPC_VOICES);
-        const npcId = npcKeys[Math.floor(Math.random() * npcKeys.length)];
-        const npc = NPC_VOICES[npcId];
-
-        // Grid-Stats für KI-Kontext (10% der Aufrufe)
-        const stats = Math.random() < 0.1 && typeof getGridStats === 'function'
-            ? getGridStats()
-            : null;
-
-        // KI-Puffer versuchen (nur wenn chat.js geladen und online)
-        let comment = null;
-        if (typeof window.requestAiComment === 'function') {
-            const aiText = window.requestAiComment(material, npcId, stats);
-            if (aiText) {
-                // KI-Text mit NPC-Emoji versehen
-                comment = `${npc.emoji} ${aiText}`;
-            }
-        }
-
-        // Fallback: Template-System
-        if (!comment) {
-            comment = generateNpcComment(material);
-        }
-
+        const comment = generateNpcComment(material);
+        // Kurzer Toast (2s) — verschwindet sofort bei nächstem Klick
         showToast(comment, 2000);
     }
 
@@ -993,9 +1011,61 @@
         { name: 'Fisch',    result: 'fish',       resultCount: 2, ingredients: { water: 2, wood: 1 },  desc: '2 Wasser + Holz = 2 Fische' },
         { name: 'Brunnen',  result: 'fountain',   resultCount: 1, ingredients: { stone: 3, water: 1 }, desc: '3 Stein + Wasser = Brunnen' },
         { name: 'Brücke',   result: 'bridge',     resultCount: 1, ingredients: { planks: 2, metal: 1 },desc: '2 Bretter + Metall = Brücke' },
+        // === NATUR & WETTER (Feynman-approved) ===
+        { name: 'Dampf',       result: 'steam',     resultCount: 1, ingredients: { water: 1, fire: 1 },    desc: 'Wasser + Feuer = Dampf' },
+        { name: 'Eis',         result: 'ice',       resultCount: 1, ingredients: { water: 2, metal: 1 },   desc: '2 Wasser + Metall = Eis' },
+        { name: 'Schnee',      result: 'snow',      resultCount: 1, ingredients: { ice: 1, cloud: 1 },     desc: 'Eis + Wolke = Schnee' },
+        { name: 'Wolke',       result: 'cloud',     resultCount: 1, ingredients: { steam: 2 },             desc: '2 Dampf = Wolke' },
+        { name: 'Regen',       result: 'rain',      resultCount: 1, ingredients: { cloud: 1, water: 1 },   desc: 'Wolke + Wasser = Regen' },
+        { name: 'Regenbogen',  result: 'rainbow',   resultCount: 1, ingredients: { rain: 1, fire: 1 },     desc: 'Regen + Feuer = Regenbogen' },
+        { name: 'Blitz',       result: 'lightning',  resultCount: 1, ingredients: { cloud: 1, metal: 1 },  desc: 'Wolke + Metall = Blitz' },
+        { name: 'Tornado',     result: 'tornado',   resultCount: 1, ingredients: { cloud: 2, fire: 1 },    desc: '2 Wolken + Feuer = Tornado' },
+        { name: 'Vulkan',      result: 'volcano',   resultCount: 1, ingredients: { mountain: 1, fire: 2 }, desc: 'Berg + 2 Feuer = Vulkan' },
+        { name: 'Berg',        result: 'mountain',  resultCount: 1, ingredients: { stone: 3, earth: 2 },   desc: '3 Stein + 2 Erde = Berg' },
+        { name: 'Sonne',       result: 'sun',       resultCount: 1, ingredients: { fire: 3 },              desc: '3 Feuer = Sonne' },
+        { name: 'Mond',        result: 'moon',      resultCount: 1, ingredients: { stone: 2, fire: 1 },    desc: '2 Stein + Feuer = Mond' },
+        { name: 'Stern',       result: 'star',      resultCount: 1, ingredients: { sun: 1, metal: 1 },     desc: 'Sonne + Metall = Stern' },
+        // === LEBEN (absurd aber logisch) ===
+        { name: 'Ei',          result: 'egg',       resultCount: 1, ingredients: { earth: 1, fire: 1, water: 1 }, desc: 'Erde + Feuer + Wasser = Ei' },
+        { name: 'Nest',        result: 'nest',      resultCount: 1, ingredients: { wood: 2, plant: 1 },    desc: '2 Holz + Pflanze = Nest' },
+        { name: 'Schmetterling', result: 'butterfly', resultCount: 1, ingredients: { flower: 1, cloud: 1 },desc: 'Blume + Wolke = Schmetterling' },
+        { name: 'Biene',       result: 'bee',       resultCount: 1, ingredients: { flower: 2, sun: 1 },    desc: '2 Blumen + Sonne = Biene' },
+        { name: 'Honig',       result: 'honey',     resultCount: 1, ingredients: { bee: 1, flower: 1 },    desc: 'Biene + Blume = Honig' },
+        { name: 'Apfel',       result: 'apple',     resultCount: 2, ingredients: { tree: 1, sun: 1 },      desc: 'Baum + Sonne = 2 Äpfel' },
+        { name: 'Kuchen',      result: 'cake',      resultCount: 1, ingredients: { apple: 1, honey: 1, fire: 1 }, desc: 'Apfel + Honig + Feuer = Kuchen' },
+        // === MAGIE (absurd und wunderbar) ===
+        { name: 'Trank',       result: 'potion',    resultCount: 1, ingredients: { mushroom: 1, water: 1, fire: 1 }, desc: 'Pilz + Wasser + Feuer = Trank' },
+        { name: 'Kristall',    result: 'crystal',   resultCount: 1, ingredients: { diamond: 1, potion: 1 },desc: 'Diamant + Trank = Kristall' },
+        { name: 'Diamant',     result: 'diamond',   resultCount: 1, ingredients: { stone: 3, fire: 3 },    desc: '3 Stein + 3 Feuer = Diamant' },
+        { name: 'Drache',      result: 'dragon',    resultCount: 1, ingredients: { fire: 3, egg: 1 },      desc: '3 Feuer + Ei = Drache' },
+        { name: 'Einhorn',     result: 'unicorn',   resultCount: 1, ingredients: { rainbow: 1, potion: 1 },desc: 'Regenbogen + Trank = Einhorn' },
+        { name: 'Phönix',      result: 'phoenix',   resultCount: 1, ingredients: { fire: 2, egg: 1, star: 1 }, desc: '2 Feuer + Ei + Stern = Phönix' },
+        // === DINGE & ABENTEUER ===
+        { name: 'Schwert',     result: 'sword',     resultCount: 1, ingredients: { metal: 2, fire: 1 },    desc: '2 Metall + Feuer = Schwert' },
+        { name: 'Schild',      result: 'shield',    resultCount: 1, ingredients: { metal: 2, wood: 1 },    desc: '2 Metall + Holz = Schild' },
+        { name: 'Krone',       result: 'crown',     resultCount: 1, ingredients: { metal: 1, diamond: 1 }, desc: 'Metall + Diamant = Krone' },
+        { name: 'Schlüssel',   result: 'key',       resultCount: 1, ingredients: { metal: 1, fire: 1 },    desc: 'Metall + Feuer = Schlüssel' },
+        { name: 'Schatz',      result: 'treasure',  resultCount: 1, ingredients: { key: 1, earth: 2 },     desc: 'Schlüssel + 2 Erde = Schatz' },
+        // === ABSURD (💩🚀👻👽🤖) ===
+        { name: 'Geist',       result: 'ghost',     resultCount: 1, ingredients: { cloud: 1, moon: 1 },    desc: 'Wolke + Mond = Geist' },
+        { name: 'Skelett',     result: 'skull',     resultCount: 1, ingredients: { stone: 2, lightning: 1 },desc: '2 Stein + Blitz = Skelett' },
+        { name: 'Haufen',      result: 'poop',      resultCount: 1, ingredients: { earth: 2, water: 2 },   desc: '2 Erde + 2 Wasser = ...du weißt schon' },
+        { name: 'Rakete',      result: 'rocket',    resultCount: 1, ingredients: { metal: 2, fire: 2 },    desc: '2 Metall + 2 Feuer = Rakete' },
+        { name: 'UFO',         result: 'ufo',       resultCount: 1, ingredients: { rocket: 1, star: 1 },   desc: 'Rakete + Stern = UFO' },
+        { name: 'Alien',       result: 'alien',     resultCount: 1, ingredients: { ufo: 1, egg: 1 },       desc: 'UFO + Ei = Alien' },
+        { name: 'Roboter',     result: 'robot',     resultCount: 1, ingredients: { metal: 3, lightning: 1 },desc: '3 Metall + Blitz = Roboter' },
+        { name: 'Musik',       result: 'music',     resultCount: 1, ingredients: { wood: 1, metal: 1, wind: 1 }, desc: 'Holz + Metall + Wind = Musik' },
+        { name: 'Herz',        result: 'heart',     resultCount: 1, ingredients: { fire: 1, water: 1, flower: 1 }, desc: 'Feuer + Wasser + Blume = Herz' },
     ];
 
     let craftingGrid = Array(9).fill(null); // 3x3 = 9 Slots
+
+    // Entdeckte Rezepte — Spieler sieht nur was er schon gefunden hat
+    let discoveredRecipes = new Set(JSON.parse(localStorage.getItem('insel-discovered-recipes') || '[]'));
+
+    function saveDiscoveredRecipes() {
+        localStorage.setItem('insel-discovered-recipes', JSON.stringify([...discoveredRecipes]));
+    }
 
     function getCraftingIngredients() {
         const counts = {};
@@ -1034,13 +1104,20 @@
         // Remove items from crafting grid
         craftingGrid = Array(9).fill(null);
 
-        // Add result to inventory + unlock in palette
+        // Add result to inventory + unlock in palette + discover recipe
         addToInventory(recipe.result, recipe.resultCount);
         unlockMaterial(recipe.result);
+        const isNew = !discoveredRecipes.has(recipe.name);
+        discoveredRecipes.add(recipe.name);
+        saveDiscoveredRecipes();
         soundCraft();
 
         const info = MATERIALS[recipe.result];
-        showToast(`⚒️ ${info.emoji} ${recipe.resultCount}x ${info.label} hergestellt!`);
+        if (isNew) {
+            showToast(`🔮 Neues Rezept entdeckt: ${info.emoji} ${recipe.desc}!`);
+        } else {
+            showToast(`⚒️ ${info.emoji} ${recipe.resultCount}x ${info.label} hergestellt!`);
+        }
         trackEvent('craft', { recipe: recipe.name, result: recipe.result });
         updateCraftingDisplay();
     }
@@ -1112,13 +1189,18 @@
             }).join('') || '<p class="inv-empty">Inventar leer!</p>';
         }
 
-        // Update recipe book
+        // Update recipe book — nur entdeckte Rezepte zeigen
         const recipeBook = document.getElementById('recipe-book');
         if (recipeBook) {
-            recipeBook.innerHTML = CRAFTING_RECIPES.map(r => {
-                const info = MATERIALS[r.result];
-                return `<div class="recipe-entry">${info.emoji} ${r.desc}</div>`;
-            }).join('');
+            const discovered = CRAFTING_RECIPES.filter(r => discoveredRecipes.has(r.name));
+            if (discovered.length === 0) {
+                recipeBook.innerHTML = '<p class="craft-discover-hint">Mische die Elemente und finde heraus was entsteht!</p>';
+            } else {
+                recipeBook.innerHTML = discovered.map(r => {
+                    const info = MATERIALS[r.result];
+                    return `<div class="recipe-entry">${info.emoji} ${r.desc}</div>`;
+                }).join('') + `<p class="craft-discover-hint">${discovered.length}/${CRAFTING_RECIPES.length} entdeckt</p>`;
+            }
         }
     }
 
@@ -1126,17 +1208,6 @@
     let grid = [];
     let currentMaterial = 'metal';
     let currentTool = 'build';
-
-    // NPC-Discovery: Tippe einen Block im Build-Modus an → öffnet Chat mit passendem NPC
-    const MATERIAL_NPC = {
-        boat: 'krabs', fish: 'krabs', water: 'krabs',
-        door: 'spongebob', roof: 'spongebob', lamp: 'spongebob',
-        flower: 'maus', plant: 'maus', fountain: 'maus',
-        fence: 'neinhorn', mushroom: 'neinhorn',
-        tree: 'elefant', stone: 'elefant', path: 'elefant',
-        bridge: 'tommy', sand: 'tommy',
-        wood: 'bernd', fire: 'bernd',
-    };
 
     // Die 5 Elemente (五行 Wu Xing) — immer in der Palette sichtbar
     const BASE_MATERIALS = ['metal', 'wood', 'fire', 'water', 'earth'];
@@ -1157,14 +1228,35 @@
         if (BASE_MATERIALS.includes(mat) || unlockedMaterials.has(mat)) return;
         unlockedMaterials.add(mat);
         saveUnlocked();
-        // Button in Palette sichtbar machen
-        const btn = document.querySelector(`.material-btn[data-material="${mat}"]`);
+        const info = MATERIALS[mat];
+        if (!info) return;
+        // Button in Palette sichtbar machen oder dynamisch erzeugen
+        let btn = document.querySelector(`.material-btn[data-material="${mat}"]`);
         if (btn) {
             btn.classList.remove('craft-locked');
             btn.classList.add('craft-unlocked');
+        } else {
+            // Dynamisch neuen Palette-Button erzeugen
+            const palette = document.getElementById('palette');
+            if (palette) {
+                btn = document.createElement('button');
+                btn.className = 'material-btn craft-unlocked';
+                btn.dataset.material = mat;
+                btn.title = info.label;
+                btn.innerHTML = `<span class="mat-emoji">${info.emoji}</span><span class="mat-label">${info.label}</span>`;
+                palette.appendChild(btn);
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.material-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentMaterial = mat;
+                    soundBuild(mat);
+                    currentTool = 'build';
+                    document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelector('[data-tool="build"]').classList.add('active');
+                });
+            }
         }
-        const info = MATERIALS[mat];
-        if (info) showToast(`✨ Neues Artefakt: ${info.emoji} ${info.label}!`);
+        showToast(`✨ Neues Artefakt: ${info.emoji} ${info.label}!`);
     }
 
     function updatePaletteVisibility() {
@@ -1221,6 +1313,9 @@
     const introOverlay = document.getElementById('intro-overlay');
     const startButton = document.getElementById('start-button');
     const statsContent = document.getElementById('stats-content');
+    const projectNameInput = document.getElementById('project-name');
+    const loadDialog = document.getElementById('load-dialog');
+    const savedProjectsList = document.getElementById('saved-projects-list');
     const toast = document.getElementById('toast');
 
     // --- Canvas Größe ---
@@ -1465,16 +1560,6 @@
     let undoPushedThisStroke = false;
 
     function applyTool(r, c) {
-        // Im Build-Modus: Tippe existierenden Block an → öffne Chat mit zugehörigem NPC
-        if (currentTool === 'build' && grid[r][c] !== null) {
-            const material = grid[r][c];
-            const npcId = MATERIAL_NPC[material];
-            if (npcId && window.openChat) {
-                window.openChat(npcId);
-                return;
-            }
-        }
-
         if (currentTool === 'build') {
             if (grid[r][c] !== currentMaterial) {
                 if (!undoPushedThisStroke) { pushUndo(); undoPushedThisStroke = true; }
@@ -1622,6 +1707,146 @@
         statsContent.innerHTML = html;
     }
 
+    // --- Speichern ---
+    function saveProject() {
+        const name = projectNameInput.value.trim() || 'Mein Bauwerk';
+        const projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+
+        projects[name] = {
+            grid: grid,
+            date: new Date().toLocaleDateString('de-DE'),
+            treeGrowth: treeGrowth,
+            inventory: inventory,
+            unlocked: [...unlockedMaterials],
+            discovered: [...discoveredRecipes],
+        };
+
+        localStorage.setItem('insel-projekte', JSON.stringify(projects));
+        saveInventory();
+        saveUnlocked();
+        showToast(`💾 "${name}" gespeichert!`);
+    }
+
+    // --- Auto-Save: alle 30s still im Hintergrund ---
+    const AUTOSAVE_KEY = '~autosave~';
+    let lastSaveHash = '';
+    function autoSave() {
+        if (!grid || !grid.length) return;
+        const hasContent = grid.some(row => row.some(cell => cell !== null));
+        if (!hasContent) return;
+        // Nur speichern wenn sich was geändert hat
+        const hash = JSON.stringify(grid);
+        if (hash === lastSaveHash) return;
+        lastSaveHash = hash;
+        const projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+        projects[AUTOSAVE_KEY] = {
+            grid: grid,
+            date: new Date().toLocaleDateString('de-DE'),
+            auto: true,
+            treeGrowth: treeGrowth,
+            inventory: inventory,
+            unlocked: [...unlockedMaterials],
+            discovered: [...discoveredRecipes],
+        };
+        localStorage.setItem('insel-projekte', JSON.stringify(projects));
+        // Subtiler Indikator: Save-Button blinkt kurz
+        const saveBtn = document.getElementById('save-btn');
+        if (saveBtn) {
+            saveBtn.style.transition = 'opacity 0.3s';
+            saveBtn.style.opacity = '0.5';
+            setTimeout(() => { saveBtn.style.opacity = '1'; }, 600);
+        }
+    }
+    setInterval(autoSave, 30000);
+    window.addEventListener('beforeunload', autoSave);
+
+    // --- Laden-Dialog ---
+    function showLoadDialog() {
+        const projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+        const names = Object.keys(projects);
+
+        if (names.length === 0) {
+            savedProjectsList.innerHTML = '<p class="no-projects">Keine Projekte gespeichert!</p>';
+        } else {
+            savedProjectsList.innerHTML = names.map(name => {
+                const proj = projects[name];
+                const displayName = name === AUTOSAVE_KEY ? '🔄 Letzte Session (Auto)' : escapeHtml(name);
+                return `
+                    <div class="saved-project-item" data-name="${escapeHtml(name)}">
+                        <div>
+                            <div class="saved-project-name">${displayName}</div>
+                            <div class="saved-project-date">${proj.date}</div>
+                        </div>
+                        <button class="saved-project-delete" data-delete="${escapeHtml(name)}" title="Löschen">🗑️</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        loadDialog.classList.remove('hidden');
+    }
+
+    function isValidGrid(g) {
+        return Array.isArray(g) && g.length === ROWS && g[0]?.length === COLS;
+    }
+
+    function loadProject(name) {
+        const projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+        if (projects[name]) {
+            const saved = projects[name].grid;
+            if (isValidGrid(saved)) {
+                grid = saved;
+            } else {
+                initGrid(); // Fallback bei kaputtem Grid
+            }
+            treeGrowth = projects[name].treeGrowth || {};
+            inventory = projects[name].inventory || {};
+            if (projects[name].unlocked) {
+                unlockedMaterials = new Set(projects[name].unlocked);
+                saveUnlocked();
+            } else {
+                unlockedMaterials = new Set();
+            }
+            if (projects[name].discovered) {
+                discoveredRecipes = new Set(projects[name].discovered);
+                saveDiscoveredRecipes();
+            }
+            window.grid = grid;
+            migrateUnlocked();
+            projectNameInput.value = name === AUTOSAVE_KEY ? '' : name;
+            updateStats();
+            updateInventoryDisplay();
+            updatePaletteVisibility();
+            draw();
+            loadDialog.classList.add('hidden');
+            showToast(`📂 "${name}" geladen!`);
+        }
+    }
+
+    function deleteProject(name) {
+        const projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+        delete projects[name];
+        localStorage.setItem('insel-projekte', JSON.stringify(projects));
+        showLoadDialog(); // Dialog aktualisieren
+        showToast(`🗑️ "${name}" gelöscht!`);
+    }
+
+    function newProject() {
+        initGrid();
+        treeGrowth = {};
+        inventory = {};
+        unlockedMaterials = new Set();
+        discoveredRecipes = new Set();
+        saveInventory();
+        saveUnlocked();
+        saveDiscoveredRecipes();
+        projectNameInput.value = '';
+        updateStats();
+        updateInventoryDisplay();
+        updatePaletteVisibility();
+        draw();
+        showToast('🆕 Neue Insel!');
+    }
 
     // --- Toast-Queue (Weber: "Ein Toast nach dem anderen. Ordnung muss sein.") ---
     const toastQueue = [];
@@ -1757,64 +1982,6 @@
         });
     });
 
-    // === LABEL-RÄTSEL (A/B-Test als Feature) ===
-    // 80%: Labels komplett weg — Emojis sprechen für sich
-    // 20%: Labels im falschen Feld + Sprachmix — Zuordnungsrätsel
-    (function shuffleLabels() {
-        const btns = [...document.querySelectorAll('.material-btn')];
-        const labels = btns.map(b => b.querySelector('.mat-label')).filter(Boolean);
-        if (!labels.length) return;
-
-        const isRiddleMode = Math.random() < 0.2;
-
-        if (!isRiddleMode) {
-            // 80%: Labels weg
-            labels.forEach(l => l.remove());
-        } else {
-            // 20%: Labels shufflen + in zufällige Sprachen übersetzen
-            const TRANSLATIONS = {
-                wood:     ['Bois', 'Madera', 'Legno', '木', 'Drevo', 'Puu', 'Ahşap'],
-                stone:    ['Pierre', 'Piedra', 'Pietra', '石', 'Kamen', 'Kivi', 'Taş'],
-                glass:    ['Verre', 'Vidrio', 'Vetro', '硝子', 'Steklo', 'Lasi', 'Cam'],
-                plant:    ['Plante', 'Planta', 'Pianta', '草', 'Rastenie', 'Kasvi', 'Bitki'],
-                tree:     ['Arbre', 'Árbol', 'Albero', '木', 'Derevo', 'Puu', 'Ağaç'],
-                flower:   ['Fleur', 'Flor', 'Fiore', '花', 'Tsvetok', 'Kukka', 'Çiçek'],
-                door:     ['Porte', 'Puerta', 'Porta', '扉', 'Dver', 'Ovi', 'Kapı'],
-                roof:     ['Toit', 'Techo', 'Tetto', '屋根', 'Krysha', 'Katto', 'Çatı'],
-                lamp:     ['Lampe', 'Lámpara', 'Lampada', 'ランプ', 'Lampa', 'Lamppu', 'Lamba'],
-                sand:     ['Sable', 'Arena', 'Sabbia', '砂', 'Pesok', 'Hiekka', 'Kum'],
-                water:    ['Eau', 'Agua', 'Acqua', '水', 'Voda', 'Vesi', 'Su'],
-                path:     ['Chemin', 'Camino', 'Sentiero', '道', 'Tropinka', 'Polku', 'Yol'],
-                fence:    ['Clôture', 'Valla', 'Recinzione', '柵', 'Zabor', 'Aita', 'Çit'],
-                boat:     ['Bateau', 'Barco', 'Barca', '船', 'Lodka', 'Vene', 'Tekne'],
-                fish:     ['Poisson', 'Pez', 'Pesce', '魚', 'Ryba', 'Kala', 'Balık'],
-                fountain: ['Fontaine', 'Fuente', 'Fontana', '噴水', 'Fontan', 'Suihkulähde', 'Çeşme'],
-                flag:     ['Drapeau', 'Bandera', 'Bandiera', '旗', 'Flag', 'Lippu', 'Bayrak'],
-                bridge:   ['Pont', 'Puente', 'Ponte', '橋', 'Most', 'Silta', 'Köprü'],
-                cactus:   ['Cactus', 'Cacto', 'Cactus', 'サボテン', 'Kaktus', 'Kaktus', 'Kaktüs'],
-                mushroom: ['Champignon', 'Hongo', 'Fungo', 'キノコ', 'Grib', 'Sieni', 'Mantar'],
-            };
-
-            // Labels einsammeln, shufflen, in fremder Sprache ins nächste Feld
-            const labelTexts = btns.map(b => {
-                const matId = b.dataset.material;
-                const pool = TRANSLATIONS[matId];
-                if (!pool) return b.querySelector('.mat-label')?.textContent || '';
-                return pool[Math.floor(Math.random() * pool.length)];
-            });
-
-            // Verschiebe jedes Label um 1-3 Positionen
-            const shifted = [...labelTexts];
-            const shift = 1 + Math.floor(Math.random() * 2);
-            for (let i = 0; i < shifted.length; i++) {
-                const target = (i + shift) % shifted.length;
-                labels[target].textContent = labelTexts[i];
-                labels[target].style.opacity = '0.6';
-                labels[target].style.fontStyle = 'italic';
-            }
-        }
-    })();
-
     // Canvas Maus-Events
     canvas.addEventListener('mousedown', (e) => {
         isMouseDown = true;
@@ -1867,99 +2034,73 @@
         hoverCell = null;
     });
 
+    // Aktions-Buttons
+    document.getElementById('save-btn').addEventListener('click', saveProject);
+    document.getElementById('load-btn').addEventListener('click', showLoadDialog);
+    document.getElementById('new-btn').addEventListener('click', () => {
+        if (confirm('Wirklich eine neue Insel anfangen? Nicht gespeicherte Änderungen gehen verloren!')) {
+            newProject();
+        }
+    });
 
     // --- Postkarte von Java (Godin: "Ein Share-Moment fehlt") ---
-    // Postkarten-Texte: Wie ein stolzer 8-Jähriger der eine magische Insel entdeckt hat
-    // Die Insel verschwindet wenn man wegschaut — nur die Postkarte bleibt
-    const POSTCARD_LINES = [
-        'Ich war auf einer Insel die es eigentlich nicht gibt.',
-        'Die Insel ist weg. Aber ich war dort.',
-        'Niemand glaubt mir. Aber ich habe Beweise.',
-        'Wenn man wegschaut, verschwindet sie. Ich habe schnell fotografiert.',
-        'Schatzinsel: nur sichtbar wenn man daran glaubt.',
-        'Ich hab alles selbst gebaut. Dann war es weg.',
-        'Vielleicht träum ich. Aber die Postkarte ist echt.',
-    ];
-
-    const POSTCARD_SENDERS = [
-        'Dein Entdecker 🗺️',
-        'Der einzige Zeuge 🏴‍☠️',
-        'Schnipsel, Architekt 🏗️',
-        'Ich war hier. Ich schwör\'s. 🌴',
-    ];
-
     const postcardBtn = document.getElementById('postcard-btn');
     if (postcardBtn) {
         postcardBtn.addEventListener('click', () => {
             const stats = getGridStats();
-            const discoveries = discoveredEggs.length;
+            const name = projectNameInput.value.trim() || 'Meine Insel';
 
-            // Zufällige Postkarten-Botschaft
-            const line = POSTCARD_LINES[Math.floor(Math.random() * POSTCARD_LINES.length)];
-            const sender = POSTCARD_SENDERS[Math.floor(Math.random() * POSTCARD_SENDERS.length)];
-
-            // Temporäres Canvas für Postkarte — extra Platz für den Brief unten
-            const BANNER_H = 120;
+            // Temporäres Canvas für Postkarte
             const pc = document.createElement('canvas');
             const pcCtx = pc.getContext('2d');
             pc.width = canvas.width;
-            pc.height = canvas.height + BANNER_H;
+            pc.height = canvas.height + 80;
 
-            // Insel einkopieren
+            // Insel kopieren
             pcCtx.drawImage(canvas, 0, 0);
 
-            // Pergament-Banner: warmes Beige statt hartem Schwarz
-            const bannerGrad = pcCtx.createLinearGradient(0, canvas.height, 0, pc.height);
-            bannerGrad.addColorStop(0, 'rgba(62, 39, 12, 0.92)');
-            bannerGrad.addColorStop(1, 'rgba(30, 15, 5, 0.97)');
-            pcCtx.fillStyle = bannerGrad;
-            pcCtx.fillRect(0, canvas.height, pc.width, BANNER_H);
+            // Postkarten-Banner unten
+            pcCtx.fillStyle = 'rgba(0, 0, 0, 0.75)';
+            pcCtx.fillRect(0, canvas.height, pc.width, 80);
 
-            // Dekorative Linie
-            pcCtx.strokeStyle = 'rgba(241, 196, 15, 0.4)';
-            pcCtx.lineWidth = 1;
-            pcCtx.beginPath();
-            pcCtx.moveTo(20, canvas.height + 8);
-            pcCtx.lineTo(pc.width - 20, canvas.height + 8);
-            pcCtx.stroke();
-
-            // Haupttext: die magische Botschaft
             pcCtx.fillStyle = '#F9E79F';
-            pcCtx.font = 'bold 15px "Comic Neue", "Comic Sans MS", cursive';
+            pcCtx.font = 'bold 18px Fredoka, sans-serif';
             pcCtx.textAlign = 'center';
-            pcCtx.fillText(`"${line}"`, pc.width / 2, canvas.height + 34);
+            pcCtx.fillText(`📸 Grüße von der Insel Java!`, pc.width / 2, canvas.height + 28);
 
-            // Absender
-            pcCtx.fillStyle = 'rgba(255,255,255,0.75)';
-            pcCtx.font = '12px "Comic Neue", "Comic Sans MS", cursive';
-            pcCtx.fillText(`— ${sender}`, pc.width / 2, canvas.height + 56);
-
-            // Entdeckungs-Zeile: klein, dezent, Fakten
-            pcCtx.fillStyle = 'rgba(255,255,255,0.45)';
-            pcCtx.font = '11px "Fredoka", sans-serif';
+            pcCtx.fillStyle = '#FFFFFF';
+            pcCtx.font = '14px Comic Neue, sans-serif';
+            const discoveries = discoveredEggs.length;
             pcCtx.fillText(
-                `🏗️ ${stats.total} Blöcke · 🎨 ${stats.uniqueMats} Arten · 🔍 ${discoveries} entdeckt · 🏆 ${unlockedAchievements.length} Erfolge`,
-                pc.width / 2, canvas.height + 78
+                `🏗️ ${stats.total} Blöcke · 🎨 ${stats.uniqueMats} Materialien · 🔍 ${discoveries} Bewohner entdeckt · 🏆 ${unlockedAchievements.length} Erfolge`,
+                pc.width / 2, canvas.height + 52
             );
 
-            // Signatur
-            pcCtx.fillStyle = 'rgba(241, 196, 15, 0.35)';
-            pcCtx.font = '10px "Fredoka", sans-serif';
-            pcCtx.fillText('✦ Schatzinsel — sie verschwindet wenn du wegschaust ✦', pc.width / 2, canvas.height + 106);
+            pcCtx.font = '11px Comic Neue, sans-serif';
+            pcCtx.fillStyle = '#AAA';
+            pcCtx.fillText('Außer Text nix gehext. 🏝️', pc.width / 2, canvas.height + 72);
 
-            // Download — Dateiname mit Zeitstempel (die Insel hat keine Namen mehr)
-            const ts = new Date().toISOString().slice(0, 10);
+            // Download
             const link = document.createElement('a');
-            link.download = `schatzinsel-${ts}.png`;
+            link.download = `postkarte-von-java-${name.replace(/\s+/g, '-')}.png`;
             link.href = pc.toDataURL('image/png');
             link.click();
 
-            showToast('📸 Postkarte von der Schatzinsel! Die einzige Erinnerung.');
+            showToast('📸 Postkarte gespeichert! Zeig sie deinen Freunden!');
             trackEvent('postcard', { blocks: stats.total, discoveries });
         });
     }
 
+    // Lade-Dialog Events
+    document.getElementById('close-load-dialog').addEventListener('click', () => {
+        loadDialog.classList.add('hidden');
+    });
+
     document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !loadDialog.classList.contains('hidden')) {
+            loadDialog.classList.add('hidden');
+            return;
+        }
         // Nicht triggern wenn Input/Textarea fokussiert
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
@@ -1979,6 +2120,23 @@
         }
     });
 
+    savedProjectsList.addEventListener('click', (e) => {
+        const deleteBtn = e.target.closest('.saved-project-delete');
+        if (deleteBtn) {
+            e.stopPropagation();
+            const name = deleteBtn.dataset.delete;
+            if (confirm(`"${name}" wirklich löschen?`)) {
+                deleteProject(name);
+            }
+            return;
+        }
+
+        const item = e.target.closest('.saved-project-item');
+        if (item) {
+            loadProject(item.dataset.name);
+        }
+    });
+
     // Tastatur-Shortcuts
     document.addEventListener('keydown', (e) => {
         if (e.target.tagName === 'INPUT') return;
@@ -1995,7 +2153,7 @@
             case 's':
                 if (e.ctrlKey || e.metaKey) {
                     e.preventDefault();
-                    // Save gelöscht — jede Session ist ephemär
+                    saveProject();
                 }
                 break;
         }
@@ -2228,7 +2386,6 @@
 
     window.toggleCodeView = function () {
         codeViewActive = !codeViewActive;
-        document.body.classList.toggle('code-view-active', codeViewActive);
         showToast(codeViewActive ? '👨‍💻 Code-Ansicht AN — so sieht ein Programmierer die Insel!' : '🎨 Normal-Ansicht');
         if (codeViewActive) {
             recordMilestone('firstCodeView');
@@ -2369,7 +2526,24 @@
     loadInventory();
     loadUnlocked();
 
-    // Jede Session beginnt frisch — die Insel verschwindet wenn man wegschaut
+    // Auto-Save wiederherstellen wenn vorhanden
+    const savedProjects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+    if (savedProjects[AUTOSAVE_KEY] && isValidGrid(savedProjects[AUTOSAVE_KEY].grid)) {
+        grid = savedProjects[AUTOSAVE_KEY].grid;
+        treeGrowth = savedProjects[AUTOSAVE_KEY].treeGrowth || {};
+        inventory = savedProjects[AUTOSAVE_KEY].inventory || inventory;
+        if (savedProjects[AUTOSAVE_KEY].unlocked) {
+            unlockedMaterials = new Set(savedProjects[AUTOSAVE_KEY].unlocked);
+        } else {
+            unlockedMaterials = new Set();
+        }
+        if (savedProjects[AUTOSAVE_KEY].discovered) {
+            discoveredRecipes = new Set(savedProjects[AUTOSAVE_KEY].discovered);
+        }
+        window.grid = grid;
+        migrateUnlocked();
+        showToast('🔄 Letzte Insel wiederhergestellt');
+    }
 
     draw();
     updateAchievementDisplay();

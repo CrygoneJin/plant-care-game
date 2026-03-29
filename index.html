@@ -36,20 +36,26 @@
 
         <!-- Toolbar -->
         <div id="toolbar" role="toolbar" aria-label="Werkzeuge und Aktionen">
-            <div class="toolbar-section">
-                <span class="toolbar-label">Werkzeuge:</span>
-                <button class="tool-btn active" data-tool="build" title="Bauen (B)">🖌️ Bauen</button>
-                <button class="tool-btn" data-tool="harvest" title="Ernten (E) — Materialien einsammeln">⛏️ Ernten</button>
-                <button class="tool-btn" data-tool="fill" title="Füllen (F)">🪣 Füllen</button>
+            <div class="toolbar-group" id="tools-group">
+                <button class="tool-btn active" data-tool="build" title="Bauen (B)">🖌️</button>
+                <button class="tool-btn" data-tool="harvest" title="Aufnehmen (E)">⛏️</button>
+                <button class="tool-btn" data-tool="fill" title="Füllen (F)">🪣</button>
             </div>
-            <div class="toolbar-section">
+            <div class="toolbar-group" id="view-group">
                 <button class="tool-btn" id="weather-btn" title="Wetter ändern">☀️</button>
                 <button class="tool-btn" id="theme-btn" title="Theme wechseln">🎨</button>
-                <button class="tool-btn" id="code-view-btn" title="Abstraktions-Aufzug: Tauche tiefer in den Computer! ▼ = tiefer, ▲ = höher">&lt;/&gt;</button>
+                <button class="tool-btn" id="code-view-btn" title="Code-Ansicht">&lt;/&gt;</button>
             </div>
-            <div class="toolbar-section">
-                <button class="action-btn" id="postcard-btn" title="Postkarte schreiben — dein Abenteuer auf Schatzinsel">📸 Postkarte</button>
-                <button class="action-btn" id="testdata-btn" title="Testdaten kopieren" style="display:none">📊 Daten</button>
+            <div class="toolbar-group" id="project-group">
+                <input type="text" id="project-name" placeholder="Mein Bauwerk" maxlength="30">
+                <button class="tool-btn" id="save-btn" title="Speichern">💾</button>
+                <button class="tool-btn" id="load-btn" title="Laden">📂</button>
+                <button class="tool-btn" id="new-btn" title="Neu">🆕</button>
+                <button class="tool-btn" id="postcard-btn" title="Postkarte">📸</button>
+                <button class="tool-btn" id="testdata-btn" title="Testdaten" style="display:none">📊</button>
+            </div>
+            <div class="toolbar-group" id="craft-group">
+                <button class="tool-btn craft-open-btn" id="craft-btn" title="Werkbank">⚒️</button>
             </div>
         </div>
 
@@ -185,12 +191,21 @@
                 <div id="inventory-content">
                     <p class="inv-empty">Noch nichts gesammelt!</p>
                 </div>
-                <button class="action-btn craft-open-btn" id="craft-btn" title="Werkbank öffnen">⚒️ Werkbank</button>
+                <button class="tool-btn craft-open-btn" id="craft-btn-sidebar" title="Werkbank">⚒️</button>
 
                 <h2 class="stats-section-title">🏆 Erfolge</h2>
                 <div id="achievement-list"></div>
             </div>
 
+        </div>
+
+        <!-- Lade-Dialog -->
+        <div id="load-dialog" class="dialog-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="load-dialog-title">
+            <div class="dialog-content">
+                <h2 id="load-dialog-title">📂 Projekt laden</h2>
+                <div id="saved-projects-list"></div>
+                <button class="action-btn" id="close-load-dialog">❌ Schließen</button>
+            </div>
         </div>
 
         <!-- Crafting Dialog -->
@@ -201,7 +216,7 @@
                     <div class="crafting-left">
                         <h3>Dein Inventar</h3>
                         <div id="craft-inventory" class="craft-inventory"></div>
-                        <p class="craft-hint">Klicke ein Material, dann klicke ein Feld in der Werkbank.</p>
+                        <p class="craft-hint">Leg Materialien rein und probier aus!</p>
                     </div>
                     <div class="crafting-center">
                         <div class="crafting-grid">
@@ -221,8 +236,10 @@
                         </div>
                     </div>
                     <div class="crafting-right">
-                        <h3>📖 Rezepte</h3>
-                        <div id="recipe-book" class="recipe-book"></div>
+                        <h3>🔮 Was passiert?</h3>
+                        <div id="recipe-book" class="recipe-book">
+                            <p class="craft-discover-hint">Mische die Elemente und finde heraus was entsteht!</p>
+                        </div>
                     </div>
                 </div>
                 <div class="crafting-actions">
@@ -237,9 +254,18 @@
         <div id="toast" class="hidden"></div>
 
         <!-- NPC Chat -->
+        <div id="chat-bubble" title="Mit Inselbewohnern reden" role="button" aria-label="Chat mit Inselbewohnern öffnen" tabindex="0">💬</div>
         <div id="chat-panel" class="hidden">
             <div id="chat-header">
-                <div id="chat-character-name"></div>
+                <select id="chat-character">
+                    <option value="spongebob">🧽 SpongeBob</option>
+                    <option value="krabs">🦀 Mr. Krabs</option>
+                    <option value="elefant">🐘 Blauer Elefant</option>
+                    <option value="tommy">🦀 Tommy Krab</option>
+                    <option value="neinhorn">🦄 Neinhorn</option>
+                    <option value="maus">🐭 Maus & Ente</option>
+                    <option value="bernd">🍞 Bernd (Support)</option>
+                </select>
                 <button id="chat-settings-btn" title="API-Key">⚙️</button>
                 <button id="chat-close-btn" title="Schließen">✕</button>
             </div>

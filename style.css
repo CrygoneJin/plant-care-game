@@ -285,23 +285,28 @@ header h1 {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.toolbar-section {
+.toolbar-group {
     display: flex;
     align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
+    gap: 4px;
+    padding: 2px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.08);
 }
 
-.toolbar-label {
-    color: white;
-    font-weight: bold;
-    font-size: 14px;
+.toolbar-group + .toolbar-group {
+    margin-left: 8px;
 }
 
-.tool-btn, .action-btn {
+.tool-btn {
     font-family: var(--font-body);
-    font-size: 18px;
-    padding: 10px 16px;
+    font-size: 22px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: 2px solid transparent;
     border-radius: 10px;
     cursor: pointer;
@@ -311,19 +316,47 @@ header h1 {
     font-weight: bold;
 }
 
-.tool-btn:hover, .action-btn:hover {
-    transform: scale(1.05);
+.tool-btn:hover {
+    transform: scale(1.08);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.tool-btn:active, .action-btn:active {
-    transform: scale(0.95);
+.tool-btn:active {
+    transform: scale(0.92);
 }
 
 .tool-btn.active {
     border-color: var(--text);
     background: var(--accent-light);
     box-shadow: 0 0 0 2px var(--accent);
+}
+
+/* Action-Buttons haben gleiche Größe wie Tool-Buttons */
+.action-btn {
+    font-family: var(--font-body);
+    font-size: 22px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+    background: var(--btn-bg);
+    color: var(--text);
+    font-weight: bold;
+}
+
+.action-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.action-btn:active {
+    transform: scale(0.92);
 }
 
 #project-name {
@@ -722,58 +755,40 @@ header h1 {
         display: none;
     }
 
+    /* Stats: auf Mobile versteckt — Canvas ist King */
+    #stats {
+        display: none;
+    }
+
+    /* Header: minimal */
+    header {
+        padding: 4px 8px;
+    }
+
+    header h1 {
+        font-size: 14px;
+    }
+
+    /* Palette: kompakter */
     .material-btn {
-        flex-direction: column;
-        min-height: 52px;
-        min-width: 52px;
-        padding: 6px 8px;
-        gap: 2px;
-        flex-shrink: 0;
+        min-height: 44px;
+        min-width: 44px;
+        padding: 4px;
     }
 
     .mat-emoji {
-        font-size: 28px;
+        font-size: 24px;
     }
 
-    .mat-name {
-        font-size: 10px;
-    }
-
-    .mat-label {
-        font-size: 11px;
-    }
-
-    /* Canvas: volle Breite */
+    /* Canvas: maximale Fläche */
     #canvas-wrapper {
         min-height: 0;
-        padding: 4px;
+        padding: 2px;
     }
 
     #game-canvas {
         width: 100% !important;
         height: auto !important;
-    }
-
-    /* Stats: horizontal unter dem Canvas */
-    #stats {
-        width: 100%;
-        padding: 8px;
-    }
-
-    #stats h2 {
-        font-size: 14px;
-        margin-bottom: 6px;
-    }
-
-    #stats-content {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 4px;
-    }
-
-    #stats-content p {
-        font-size: 12px;
-        margin-bottom: 0;
     }
 
     /* Toast: oben statt unten, blockiert nicht das Baufeld */
