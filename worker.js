@@ -111,10 +111,13 @@ async function logAsync(body, meta, env) {
     }
 }
 
-async function logAirtable(message, meta, env) {
+async function logAirtable(body, meta, env) {
     if (!env.AIRTABLE_TOKEN || !env.AIRTABLE_BASE_ID) return;
 
-    const table = encodeURIComponent(env.AIRTABLE_TABLE_NAME || 'Chat Logs');
+    const table = encodeURIComponent(env.AIRTABLE_TABLE_NAME || 'Feynman Sessions');
+    const lastMessage = (body.messages || []).at(-1)?.content || '';
+    const f = body._feynman || {};
+
     await fetch(`https://api.airtable.com/v0/${env.AIRTABLE_BASE_ID}/${table}`, {
         method: 'POST',
         headers: {
@@ -123,10 +126,16 @@ async function logAirtable(message, meta, env) {
         },
         body: JSON.stringify({
             fields: {
-                Message:   message,
-                IP:        meta.ip,
-                Country:   meta.country,
-                Timestamp: meta.ts,
+                Timestamp:       meta.ts,
+                Country:         meta.country,
+                Message:         lastMessage,
+                CharacterID:     f.characterId     || 'unknown',
+                SessionDuration: f.sessionDuration || 0,
+                BlocksPlaced:    f.blocksPlaced    || 0,
+                QuestsCompleted: f.questsCompleted || 0,
+                ChatUsed:        f.chatUsed        === true,
+                EngagementScore: f.engagementScore || 0,
+                UniqueMaterials: f.uniqueMaterials || 0,
             },
         }),
     });
