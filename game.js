@@ -2799,6 +2799,25 @@
     const craftCloseBtn = document.getElementById('close-crafting-dialog');
     if (craftCloseBtn) craftCloseBtn.addEventListener('click', closeCraftingDialog);
 
+    // Close-X-Button oben rechts einfügen (mobile)
+    const craftingContent = document.querySelector('#crafting-dialog .dialog-content');
+    if (craftingContent && !craftingContent.querySelector('.dialog-close-x')) {
+        const closeX = document.createElement('button');
+        closeX.className = 'dialog-close-x';
+        closeX.innerHTML = '✕';
+        closeX.setAttribute('aria-label', 'Schließen');
+        closeX.addEventListener('click', closeCraftingDialog);
+        craftingContent.prepend(closeX);
+    }
+
+    // Overlay-Backdrop-Click schließt Dialog
+    const craftingOverlay = document.getElementById('crafting-dialog');
+    if (craftingOverlay) {
+        craftingOverlay.addEventListener('click', (e) => {
+            if (e.target === craftingOverlay) closeCraftingDialog();
+        });
+    }
+
     const craftDoBtn = document.getElementById('do-craft-btn');
     if (craftDoBtn) craftDoBtn.addEventListener('click', doCraft);
 

@@ -628,6 +628,7 @@ header h1 {
     max-height: 70vh;
     overflow-y: auto;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    position: relative;
 }
 
 .dialog-content h2 {
@@ -1478,11 +1479,44 @@ body.code-view-active #chat-settings-btn {
     margin-top: 8px;
 }
 
+/* Mobile close button (X) oben rechts im Dialog */
+.dialog-close-x {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: rgba(0,0,0,0.08);
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    line-height: 1;
+}
+
 /* Mobile: Crafting vertikal stapeln */
 @media (max-width: 767px) {
+    .dialog-close-x {
+        display: flex;
+    }
+
+    .crafting-content {
+        max-height: 85vh;
+        padding: 16px 12px;
+        display: flex;
+        flex-direction: column;
+    }
+
     .crafting-layout {
         flex-direction: column;
         align-items: center;
+        overflow-y: auto;
+        flex: 1;
+        min-height: 0;
     }
 
     .crafting-left,
@@ -1506,6 +1540,14 @@ body.code-view-active #chat-settings-btn {
     .craft-slot {
         width: 48px;
         height: 48px;
+    }
+
+    .crafting-actions {
+        position: sticky;
+        bottom: 0;
+        background: white;
+        padding: 8px 0 4px;
+        flex-shrink: 0;
     }
 }
 
@@ -1548,11 +1590,11 @@ body.code-view-active #chat-settings-btn {
         max-height: 100%;
     }
 
-    /* Stats: jetzt sichtbar unten, kompakt */
+    /* Stats: jetzt sichtbar unten, kompakt — so klein wie möglich */
     #stats {
         width: 100%;
-        max-height: 200px;
-        padding: 10px;
+        max-height: 100px;
+        padding: 6px 10px;
         overflow-y: auto;
         display: block;
         box-shadow: none;
