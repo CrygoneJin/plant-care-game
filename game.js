@@ -3416,7 +3416,7 @@
     // NPCs im Abenteuer-Modus: feste Positionen auf der Karte
     const adventureNPCs = [
         { id: 'elder',    emoji: '🧓', name: 'Der Älteste',     r: 8,  c: 12,
-          lines: ['Willkommen auf der Insel, Oskar!', 'Hier gibt es viele Geheimnisse...', 'Schau dich um. Die Insel spricht zu denen die zuhören.'] },
+          lines: ['dynamic:Willkommen auf der Insel, {name}!', 'Hier gibt es viele Geheimnisse...', 'Schau dich um. Die Insel spricht zu denen die zuhören.'] },
         { id: 'fox',      emoji: '🦊', name: 'Roter Fuchs',     r: 20, c: 30,
           lines: ['*schnüffelt* Du riechst nach Abenteuer!', 'Im Wald verstecken sich Dinge die man nur findet wenn man nicht sucht.', 'Folge den Pilzen. Aber nicht allen.'] },
         { id: 'crab',     emoji: '🦀', name: 'Krabbe Karl',     r: 5,  c: 50,
@@ -3435,7 +3435,11 @@
             const dist = Math.abs(npc.r - oskar.r) + Math.abs(npc.c - oskar.c);
             if (dist <= 2) {
                 // Zufällige Zeile
-                const line = npc.lines[Math.floor(Math.random() * npc.lines.length)];
+                let line = npc.lines[Math.floor(Math.random() * npc.lines.length)];
+                // Dynamische Platzhalter ersetzen
+                if (line.startsWith('dynamic:')) {
+                    line = line.replace('dynamic:', '').replace('{name}', oskar.name);
+                }
                 showToast(`${npc.emoji} ${npc.name}: "${line}"`);
                 trackEvent('adventure_npc_talk', { npc: npc.id });
                 return;
@@ -3636,31 +3640,151 @@
         localStorage.setItem('insel-game-mode', mode);
 
         if (mode === 'adventure') {
-            COLS = ADV_COLS;
-            ROWS = ADV_ROWS;
-            CELL_SIZE = calcCellSize();
-            resizeCanvas();
-            generateAdventureWorld();
-            updateCamera();
-            // UI umschalten: Bau-UI ausblenden
-            document.getElementById('palette')?.classList.add('adventure-hidden');
-            document.querySelector('.toolbar')?.classList.add('adventure-hidden');
-            document.getElementById('stats')?.classList.add('adventure-hidden');
-            showToast('🏝️ Abenteuer-Modus! WASD zum Laufen, Leertaste zum Reden.');
-            requestAnimationFrame(drawAdventure);
+            // Erstes Mal? → Onboarding (Emoji + Name)
+            const savedHero = localStorage.getItem('insel-hero');
+            if (!savedHero) {
+                showHeroOnboarding(() => startAdventureMode());
+            } else {
+                const hero = JSON.parse(savedHero);
+                oskar.emoji = hero.emoji;
+                oskar.name = hero.name;
+                startAdventureMode();
+            }
         } else {
             COLS = BUILD_COLS;
             ROWS = BUILD_ROWS;
             CELL_SIZE = calcCellSize();
             resizeCanvas();
             initGrid();
-            // UI zurück
             document.getElementById('palette')?.classList.remove('adventure-hidden');
             document.querySelector('.toolbar')?.classList.remove('adventure-hidden');
             document.getElementById('stats')?.classList.remove('adventure-hidden');
             showToast('🖌️ Bau-Modus!');
         }
     };
+
+    function startAdventureMode() {
+        COLS = ADV_COLS;
+        ROWS = ADV_ROWS;
+        CELL_SIZE = calcCellSize();
+        resizeCanvas();
+        generateAdventureWorld();
+        updateCamera();
+        document.getElementById('palette')?.classList.add('adventure-hidden');
+        document.querySelector('.toolbar')?.classList.add('adventure-hidden');
+        document.getElementById('stats')?.classList.add('adventure-hidden');
+        showToast(`🏝️ ${oskar.name} erwacht auf der Insel... WASD zum Laufen, Leertaste zum Reden.`);
+        requestAnimationFrame(drawAdventure);
+    }
+
+    // --- Hero Onboarding: Emoji wählen + zufälliger Name ---
+    const HERO_EMOJIS = [
+        '🧒', '👦', '👧', '🧒🏽', '👦🏻', '👧🏾',
+        '🦊', '🐱', '🐶', '🐸', '🐼', '🐯', '🦁', '🐰',
+        '🧙', '🧝', '🧚', '🦸', '🥷', '🏴‍☠️',
+        '🌟', '🔥', '💎', '🍄', '🌊', '🌸',
+        '🤖', '👾', '👻', '🐉',
+    ];
+
+    // Zufälliger Heldenname basierend auf Insel-Kontext
+    const NAME_PARTS_A = [
+        'Wellen', 'Sturm', 'Sand', 'Korallen', 'Muschel', 'Licht',
+        'Stern', 'Mond', 'Sonnen', 'Wind', 'Blitz', 'Donner',
+        'Flammen', 'Nebel', 'Schatten', 'Regen', 'Wolken', 'Fels',
+        'Palm', 'Dschungel', 'Küsten', 'Strand', 'Insel', 'Ozean',
+    ];
+    const NAME_PARTS_B = [
+        'wanderer', 'sucher', 'finder', 'springer', 'läufer',
+        'flüsterer', 'rufer', 'sammler', 'hüter', 'wächter',
+        'reiter', 'jäger', 'tänzer', 'träumer', 'segler',
+        'forscher', 'entdecker', 'kundschafter', 'geist', 'herz',
+    ];
+
+    function generateHeroName() {
+        const a = NAME_PARTS_A[Math.floor(Math.random() * NAME_PARTS_A.length)];
+        const b = NAME_PARTS_B[Math.floor(Math.random() * NAME_PARTS_B.length)];
+        return a + b;
+    }
+
+    function showHeroOnboarding(callback) {
+        // Overlay erstellen
+        const overlay = document.createElement('div');
+        overlay.id = 'hero-onboarding';
+        overlay.style.cssText = `
+            position: fixed; inset: 0; z-index: 10000;
+            background: rgba(0,0,0,0.85); display: flex;
+            align-items: center; justify-content: center;
+            font-family: 'Fredoka', sans-serif;
+        `;
+
+        let selectedEmoji = '🧒';
+        let heroName = generateHeroName();
+
+        overlay.innerHTML = `
+            <div style="background: #1a2a3a; border-radius: 20px; padding: 30px;
+                        max-width: 400px; width: 90%; text-align: center; color: white;">
+                <h2 style="font-size: 24px; margin-bottom: 8px;">🏝️ Wer bist du?</h2>
+                <p style="color: #aaa; font-size: 14px; margin-bottom: 20px;">Wähle dein Gesicht für das Abenteuer</p>
+
+                <div id="emoji-grid" style="display: flex; flex-wrap: wrap; gap: 6px;
+                     justify-content: center; margin-bottom: 20px; max-height: 200px; overflow-y: auto;">
+                    ${HERO_EMOJIS.map(e => `
+                        <button class="emoji-pick${e === selectedEmoji ? ' selected' : ''}"
+                                data-emoji="${e}"
+                                style="font-size: 28px; padding: 8px; border: 3px solid ${e === selectedEmoji ? '#FFD700' : 'transparent'};
+                                       border-radius: 12px; background: rgba(255,255,255,0.1); cursor: pointer;
+                                       min-width: 48px; min-height: 48px;">
+                            ${e}
+                        </button>
+                    `).join('')}
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <p style="color: #aaa; font-size: 12px; margin-bottom: 6px;">Dein Heldenname</p>
+                    <div style="display: flex; gap: 8px; align-items: center; justify-content: center;">
+                        <span id="hero-name-display" style="font-size: 22px; font-weight: bold; color: #FFD700;">
+                            ${heroName}
+                        </span>
+                        <button id="reroll-name" style="font-size: 18px; background: none; border: none;
+                                cursor: pointer; padding: 4px;" title="Neuer Name">🎲</button>
+                    </div>
+                </div>
+
+                <button id="hero-go" style="font-size: 20px; padding: 12px 40px; border: none;
+                        border-radius: 12px; background: #27AE60; color: white; cursor: pointer;
+                        font-family: inherit; font-weight: bold;">
+                    Los geht's! 🏝️
+                </button>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        // Emoji-Auswahl
+        overlay.querySelectorAll('.emoji-pick').forEach(btn => {
+            btn.addEventListener('click', () => {
+                selectedEmoji = btn.dataset.emoji;
+                overlay.querySelectorAll('.emoji-pick').forEach(b => {
+                    b.style.borderColor = b.dataset.emoji === selectedEmoji ? '#FFD700' : 'transparent';
+                });
+            });
+        });
+
+        // Name neu würfeln
+        overlay.querySelector('#reroll-name').addEventListener('click', () => {
+            heroName = generateHeroName();
+            overlay.querySelector('#hero-name-display').textContent = heroName;
+        });
+
+        // Los geht's
+        overlay.querySelector('#hero-go').addEventListener('click', () => {
+            oskar.emoji = selectedEmoji;
+            oskar.name = heroName;
+            localStorage.setItem('insel-hero', JSON.stringify({ emoji: selectedEmoji, name: heroName }));
+            overlay.remove();
+            callback();
+        });
+    }
 
     // --- Testdaten: Export + anonymer Ping ---
     // Einfachste Persistenz: Clipboard + optional Google Sheet Webhook
