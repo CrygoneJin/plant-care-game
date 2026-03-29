@@ -600,13 +600,23 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
             // Proxy: Worker braucht keinen Auth-Header, LiteLLM lokal schon
             headers = { 'Content-Type': 'application/json' };
             if (CFG.proxyKey) headers['Authorization'] = `Bearer ${CFG.proxyKey}`;
+            const metrics = typeof window.getMetrics === 'function' ? window.getMetrics() : {};
             body = JSON.stringify({
                 model: model,
                 max_tokens: 150,
                 messages: [
                     { role: 'system', content: systemPrompt },
                     ...chatHistory
-                ]
+                ],
+                _feynman: {
+                    characterId:     charId,
+                    sessionDuration: metrics.sessionDuration || 0,
+                    blocksPlaced:    metrics.blocksPlaced    || 0,
+                    questsCompleted: metrics.questsCompleted || 0,
+                    chatUsed:        true,
+                    engagementScore: metrics.engagement      || 0,
+                    uniqueMaterials: metrics.uniqueMaterials || 0,
+                }
             });
         } else if (provider.format === 'anthropic') {
             // Anthropic Messages API
