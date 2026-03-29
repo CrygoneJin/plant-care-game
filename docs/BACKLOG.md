@@ -105,6 +105,84 @@
 
 ---
 
+## 🌍 Schöpfungsgeschichten — Konzepte für Insel-Genesis
+
+Idee: Die leere Insel (nur Wasser) wird in einer Sequenz erschaffen. Verschiedene Schöpfungs-Mythen als A/B-Varianten. Alle kindgerecht, alle mit demselben Gameplay-Unterbau.
+
+### Variante A — Bibel (monotheistisch)
+> "Am Anfang war das Wort. Und das Wort war bei Gott. Und die Erde war wüst und leer."
+
+- Tag 1: Licht (Tageszeit-System schaltet sich ein)
+- Tag 2: Himmel und Wasser (Ozean erscheint, Hintergrund wird blau)
+- Tag 3: Erde (erste Inselkacheln tauchen auf, Pflanzen erscheinen)
+- Tag 4: Sonne, Mond, Sterne (Wetter-System, Day/Night-Cycle)
+- Tag 5: Fische und Vögel (Fisch-Material freigeschaltet)
+- Tag 6: Tiere und der Mensch / Schnipsel kommt auf die Insel
+- Tag 7: Ruhetag — Postkarte wird freigeschaltet, Insel "rastet"
+
+### Variante B — Griechische Mythologie
+> "Am Anfang war das Chaos — formlos, unendlich, dunkel."
+
+- Gaia (Erde) steigt aus dem Chaos: Insel erscheint
+- Kronos (Zeit): Day/Night-Cycle schaltet sich ein
+- Poseidon: Ozean erscheint drumherum, Boote werden freigeschaltet
+- Hephaistos (Feuer + Metall): Erste Handwerksmaterialien
+- Demeter (Ernte): Pflanzen, Bäume, Harvest-System
+- Prometheus gibt Feuer → Code-Zauber schaltet sich ein (Worte werden Dinge)
+- "Du bist der neue Architekt. Die Götter haben gebaut. Jetzt du."
+
+### Variante C — Maori (Ozeanisch)
+> "Te Kore — die Leere. Te Pō — die Nacht. Te Ao — das Licht."
+
+- Ranginui (Himmel) und Papatūānuku (Erde) werden getrennt → Licht entsteht
+- Tāne (Wälder): Bäume wachsen, Wald-Materialien freigeschaltet
+- Tangaroa (Ozean): Wasser erscheint, Fische kommen
+- Rongo (Pflanzen): Garten-Materialien
+- "Die Insel singt. Baue damit sie bleibt."
+
+### Variante D — Nordisch
+> "Im Anfang war Ginnungagap — die gähnende Leere."
+
+- Aus Eis und Feuer entsteht Yggdrasil (Baum der Welt): erster Baum erscheint
+- Odin, Vili, Ve formen die Welt: Insel wächst
+- Dwarfs (Zwerge) schmieden: Metall-Crafting freigeschaltet
+- Thor: Wetter-System, Blitz bei Regen
+- Loki: Easter Eggs, versteckte Dinge auf der Insel
+- "Ragnarök kommt irgendwann — die Insel verschwindet. Heute nicht."
+
+### Variante E — Tao / Wu Xing (bereits im Spiel)
+> "Das Tao gebar das Eine. Das Eine gebar das Zwei. Das Zwei gebar das Drei. Das Drei gebar die zehntausend Dinge."
+
+- Bereits umgesetzt als 五行 (Metall, Holz, Feuer, Wasser, Erde)
+- Könnte als "Origin Story" verpackt werden statt nur als Materialien
+
+### Nächste Schritte (wenn bereit)
+- A/B Test: Bibel vs. Griechisch (welche kommt bei Kindern besser an?)
+- Feynman definiert Messpunkt: "Wie lange bis erstes freies Bauen nach Tutorial?"
+- Ogilvy formuliert die Texte (kindgerecht, maximal 1 Satz pro Schritt)
+- Rams entscheidet: 7 Level Tutorial oder 3? (Kinder verlieren nach 3 Klicks Geduld)
+
+---
+
+## 🔧 Offene Punkte aus Session 2026-03-29
+
+| # | Item | Prio | Owner |
+|---|------|------|-------|
+| 27 | **Cloudflare Worker CORS fixen** — User muss worker.js im Dashboard deployen | P0 | User |
+| 28 | **Chat-Fenster nicht überlappend** — als Sidebar oder unten, kein Overlay über Canvas | P1 | Designer |
+| 29 | **NPC-Emoji eindeutig** — Tommy=🦞 ✅, alle anderen prüfen, kein Doppler | P1 | Artist |
+| 30 | **Tonhöhe zu Elementen** — Feuer=höher, Erde=tiefer, Wasser=fließend | P1 | Scientist |
+| 31 | **Bauen/Ernten/Füllen Icons** — universelle Symbole statt Text-Labels | P1 | Designer |
+| 32 | **Code-Ebenen per Touch** — Rechts/Links-Swipe statt Rechtsklick | P1 | Engineer |
+| 33 | **Header-Title "Schatzinsel"** — aktuell "Schnipsels Insel-Architekt" | P2 | Designer |
+| 34 | **NPCs antworten in User-Sprache** — Eingabe Englisch → Antwort Englisch | P2 | Scientist |
+| 35 | **Eigene NPCs craften** — Custom-Charakter aus Materialien bauen | P3 | alle |
+| 36 | **Wigald Boning & Willy Astor** — noch kein Symbol, kein Slot, kein Konzept | P3 | Artist |
+| 37 | **Schöpfungsgeschichte als Tutorial** — 7 Level, Insel beginnt als reines Wasser | P2 | Leader |
+| 38 | **A/B Test Mythologie** — Bibel vs. Griechisch vs. Maori vs. Nordisch | P2 | Scientist |
+
+---
+
 ## Priorisierungs-Regel
 
 **Einstein entscheidet.** Bei Gleichstand: Mandela-Bedingung gewinnt (Zugänglichkeit vor Features). Feynman misst ob es sich gelohnt hat.
