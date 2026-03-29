@@ -1,4 +1,4 @@
-name: Syntax-Check & Deploy
+name: Check & Deploy
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -17,48 +17,75 @@ concurrency:
 
 jobs:
   check:
-    name: Syntax-Check
+    name: Check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: JavaScript Syntax-Check
+      - name: JS Syntax-Check
         run: |
-          echo "=== Syntax-Check ==="
-          ERRORS=0
+          FAIL=0
           for f in *.js; do
-            if ! node -c "$f" 2>/dev/null; then
-              echo "KAPUTT: $f"
-              node -c "$f"
-              ERRORS=$((ERRORS + 1))
-            else
-              echo "OK: $f"
+            [ "$f" = "worker.js" ] && continue  # Cloudflare Worker — eigener Runtime
+            if ! node -c "$f" 2>&1; then
+              FAIL=1
             fi
           done
-          if [ $ERRORS -gt 0 ]; then
-            echo ""
-            echo "=== $ERRORS Datei(en) mit Syntax-Fehlern! ==="
-            echo "Deploy gestoppt. Fix die Fehler und push nochmal."
-            exit 1
-          fi
-          echo ""
-          echo "=== Alle JS-Dateien sauber ==="
+          exit $FAIL
 
-      - name: HTML-Check
+      - name: Smoke-Test — Seite lädt ohne Fehler
         run: |
-          for f in *.html; do
-            if ! python3 -c "
-          import html.parser, sys
-          p = html.parser.HTMLParser()
-          p.feed(open('$f').read())
-          print('OK: $f')
-          " 2>/dev/null; then
-              echo "WARNUNG: $f hat HTML-Probleme (nicht-blockierend)"
-            fi
-          done
+          npm i -g puppeteer@latest 2>/dev/null || true
+          npx --yes puppeteer browsers install chrome 2>/dev/null || true
+          node --input-type=module <<'SMOKE'
+          import puppeteer from 'puppeteer';
+          import { readFileSync } from 'fs';
+          import { resolve } from 'path';
+          import { pathToFileURL } from 'url';
+
+          const errors = [];
+          const browser = await puppeteer.launch({
+            headless: 'new',
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+          });
+          const page = await browser.newPage();
+
+          page.on('pageerror', err => {
+            // config.js ist optional — der onerror-Handler im HTML fängt das ab
+            if (!err.message.includes('config.js')) {
+              errors.push(err.message);
+            }
+          });
+          page.on('console', msg => {
+            if (msg.type() === 'error' && !msg.text().includes('config.js')) {
+              errors.push('console.error: ' + msg.text());
+            }
+          });
+
+          const url = pathToFileURL(resolve('index.html')).href;
+          await page.goto(url, { waitUntil: 'load', timeout: 15000 });
+
+          // Warte kurz damit alle DOMContentLoaded-Handler laufen
+          await new Promise(r => setTimeout(r, 2000));
+
+          // Prüfe ob Canvas existiert und game.js geladen hat
+          const canvasExists = await page.$('#game-canvas');
+          if (!canvasExists) errors.push('Canvas #game-canvas nicht gefunden');
+
+          await browser.close();
+
+          if (errors.length > 0) {
+            console.error('=== SMOKE-TEST FEHLGESCHLAGEN ===');
+            errors.forEach(e => console.error('  ✗', e));
+            process.exit(1);
+          }
+          console.log('=== Smoke-Test bestanden — Seite lädt sauber ===');
+          SMOKE
 
   deploy:
-    name: GitHub Pages Deploy
+    name: Deploy
     needs: check
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
@@ -67,13 +94,29 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Version-Stamp
+      - name: Version berechnen und stempeln
+        id: version
         run: |
-          VERSION=$(git describe --tags --always 2>/dev/null || echo "v0.$(git rev-list --count HEAD).$(git rev-parse --short HEAD)")
+          # SemVer aus Tags oder Fallback
+          if git describe --tags --match 'v*' HEAD 2>/dev/null; then
+            VERSION=$(git describe --tags --match 'v*' HEAD)
+          else
+            # Kein Tag: v0.COMMIT_COUNT.SHORT_SHA
+            COUNT=$(git rev-list --count HEAD)
+            SHA=$(git rev-parse --short HEAD)
+            VERSION="v0.${COUNT}.${SHA}"
+          fi
           DATE=$(date -u +%Y-%m-%d)
-          echo "Version: $VERSION ($DATE)"
-          sed -i "s|<!--VERSION-->.*<!--/VERSION-->|<!--VERSION-->${VERSION} (${DATE})<!--/VERSION-->|g" index.html || true
+          STAMP="${VERSION} (${DATE})"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "stamp=${STAMP}" >> "$GITHUB_OUTPUT"
+          echo "Version: ${STAMP}"
+
+          # Stempel in index.html einsetzen
+          sed -i "s|<!--VERSION-->.*<!--/VERSION-->|<!--VERSION-->${STAMP}<!--/VERSION-->|g" index.html
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
