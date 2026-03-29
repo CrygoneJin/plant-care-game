@@ -322,6 +322,53 @@ Zwei Schichten, ein Spiel. Pixar-Prinzip.
 
 ---
 
+## Session 2026-03-29 (Review-Sprint)
+
+### Review Board Findings (alle 15 Personas + 5 Beiräte)
+
+**Status: 🟡 Kurskorrektur nötig**
+
+| # | Schwere | Finding |
+|---|---------|---------|
+| 1 | 🔴 | Adventure-Modus hat kein Ziel — Oscar läuft planlos |
+| 2 | 🔴 | `playAmbientNote()` crasht im Build-Modus (referenziert oskar im falschen Modus) |
+| 3 | 🟡 | game.js Monolith (4308 Zeilen) — Split überfällig |
+| 4 | 🟡 | 3 unabhängige Tonsysteme dissonant → **GEFIXT** (alle auf A-Moll unifiziert) |
+| 5 | 🟡 | Doppelte Emojis in Palette (🌱 Holz = 🌱 Setzling) |
+| 6 | 🟡 | SPRINT.md fehlt, Produkt-Doku veraltet |
+| 7 | 🟢 | Abstraktions-Aufzug entfernen (~500 Zeilen, null Nutzen für Oscar) |
+| 8 | 🟢 | Sound Mute-Button fehlt (Mama-Proof) |
+
+### Erfolge
+| Datum | Was |
+|-------|-----|
+| 2026-03-29 | /review Skill: Full Review Board mit 15 Personas + 5 Beiräten |
+| 2026-03-29 | Musik-Modi getrennt: Papa-Piano im Bau, Oscars Vivaldi+Hardstyle im Abenteuer |
+| 2026-03-29 | Oscar-Ambient: Vivaldi-Arpeggios (Am/Em/Dm) + 8% Hardstyle-Drops |
+| 2026-03-29 | Mama-Seed Speicherung im Onboarding gefixt |
+| 2026-03-29 | Sound-Harmonisierung: alle Tonsysteme auf A-Moll (Äolisch/Ionisch/Dorisch statt Kirchentonarten) |
+| 2026-03-29 | Element-Töne: pythagoräisch → gleichstufig (keine Schwebungen mehr mit Ambient) |
+| 2026-03-29 | Craft-Sound: A-Dur → A-Moll Dreiklang |
+| 2026-03-29 | vapi.ai Pipeline bereit (aus anderem Projekt, wartet auf Integration) |
+
+### Learnings
+- **Tommy Krapweis hatte recht**: "Euer Org-Chart hat mehr Charaktere als euer Spiel" — stimmt immer noch
+- **Habermas-Punkt**: Oscar hat EINMAL gesprochen und das Projekt umgeworfen. Seitdem wird über ihn entschieden, nicht mit ihm.
+- **Drei Tonsysteme sind eins zu viel**: Pentatonik + Kirchentonarten + A-Moll = Dissonanz. Lösung: alles A-Moll.
+- **Mandela-Warnung**: Papa baut, statt mit Oscar zu spielen. Nächste Session: Oscar spielt, Papa schaut zu.
+- **Die EINE Sache**: Oscar braucht ein Quest. "Finde den Schatz." Nicht 20. Eines.
+
+### Nächste Session
+- **P0**: Adventure-Quest ("Finde den Schatz") — ein Ziel für Oscar
+- **P0**: `playAmbientNote()` Build-Modus Crash fixen
+- **P1**: game.js Split (core/sound/adventure/craft)
+- **P1**: Doppelte Emojis in Palette fixen
+- **P1**: SPRINT.md anlegen
+- vapi.ai Voice-Integration (Pipeline steht bereit)
+- Play-Test mit Oscar (beobachten, nicht coden)
+
+---
+
 ## Offene Fragen
 
 - [ ] Wie misst man ob die 80/20-Ratio der Padawans stimmt?
