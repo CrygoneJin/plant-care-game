@@ -41,7 +41,7 @@
         wood:     { emoji: '🟩', label: 'Holz',     color: '#2E7D32', border: '#1B5E20' },
         fire:     { emoji: '🟥', label: 'Feuer',    color: '#D32F2F', border: '#B71C1C' },
         water:    { emoji: '🟦', label: 'Wasser',   color: '#1976D2', border: '#0D47A1' },
-        earth:    { emoji: '🟫', label: 'Erde',     color: '#8B6914', border: '#6B4F0A' },
+        earth:    { emoji: '🟨', label: 'Erde',     color: '#F5C800', border: '#C8A300' },
         // === ABGELEITETE MATERIALIEN ===
         stone:    { emoji: '🧱', label: 'Stein',    color: '#95A5A6', border: '#7F8C8D' },
         glass:    { emoji: '🪟', label: 'Glas',     color: '#AED6F1', border: '#85C1E9' },
