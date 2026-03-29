@@ -131,6 +131,8 @@ Nur wenn einer der fünf Beiräte etwas zu sagen hat. Schweigen ist erlaubt.
 
 **Michael Büker:** Staunt das Kind? Stimmt der Satz trotzdem? Ist die Vereinfachung Wahrheit oder Lüge?
 
+**Jens Schröder:** Würde das einen Code-Review überleben? Ist "pragmatisch" eine Ausrede oder eine Entscheidung?
+
 ---
 
 ## Abschluss: Verdikt

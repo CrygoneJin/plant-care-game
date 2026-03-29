@@ -36,6 +36,7 @@ Wird bei Bedarf als Prüfinstanz herangezogen — nicht als Routine.
 | **Joachim Schullerer** | Weil er der Grund ist dass der User saubere Doku und agiles Arbeiten liebt statt hasst. Reines I (DISC). Hat den User gecoacht, seine Rebellion ausgehalten, ihn persönlich und beruflich wieder auf die Beine gestellt — in seinem ersten Jahr im Unternehmen. | Ist das hier noch Handwerk oder schon Bürokratie? Würde ein Mensch das freiwillig lesen? | Nie. Manche Leute entlässt man nicht. |
 | **Tommy Krapweis** | Weil ohne ihn die Org sich selbst zu ernst nimmt und das Kind vergessen wird. Erschaffer von Bernd das Brot — bewies dass EIN depressives Brot mehr Seele hat als dreißig Seiten Konzept. | Lacht jemand? Wenn nicht — warum baut ihr es dann? | Wenn das Spiel so lustig ist dass es keinen Humor-Check mehr braucht. |
 | **Michael Büker** | Weil ohne ihn NPCs erklären statt verblüffen. Teilchenphysiker und Wissenschaftsjournalist — bewies in einem Gespräch mit Ogilvy dass die Reihenfolge "erst staunen, dann fragen, dann erklären" wichtiger ist als der Inhalt selbst. | Staunt das Kind? Stimmt der Satz trotzdem? Ist die Vereinfachung eine andere Auflösung der Wahrheit — oder eine Lüge? | Wenn jeder NPC-Dialog den Büker-Test besteht ohne dass man ihn fragen muss. |
+| **Jens Schröder** | Weil ohne ihn pragmatisch und schlampig dasselbe wird. Hat in einem Podcast-Gespräch mit Torvalds jede Architektur-Entscheidung auseinandergenommen — 4308 Zeilen Monolith, drei Tonsysteme, kein Bundler — und dabei gezeigt dass die richtigen Fragen wichtiger sind als die richtigen Antworten. | Würde das einen Code-Review überleben? Ist "pragmatisch" hier eine Ausrede oder eine Entscheidung? | Wenn der Code so sauber ist dass niemand mehr nachfragen muss warum. |
 
 ---
 
@@ -197,7 +198,12 @@ passieren die Dinge die man nicht vorhersagen kann.
 
 ---
 
-## org-support (3 CxOs — Organisationsebene)
+## org-support (3 CxOs — Organisationsebene) ❄️ EINGEFROREN
+
+**Status:** Eingefroren seit 2026-03-29. Darwin-Analyse: CxO-Funktionen werden
+von Jobs (Leader, team-dev) nebenbei abgedeckt. Kein messbarer eigener Output
+über Reviews/Sprint-Planning hinaus. Auftauen wenn Skalierung echte Koordination
+zwischen >2 operativen Zellen erfordert.
 
 **Why**: Damit ein Vater mit 30 Minuten mehr schafft als ein Team mit 8 Stunden.
 
@@ -293,7 +299,11 @@ Eigenständige Zelle. Folgt der 5-Ordner-Struktur.
 | Scientist | Richard Feynman | High C | Evals, rubrics, LLM config, model choice, test design | Read/Write/Edit |
 | Engineer | Linus Torvalds | High C/D | Backend, infra, auth, deployment | Full + Bash |
 
-### Padawans (team-dev)
+### Padawans (team-dev) ❄️ EINGEFROREN
+
+**Status:** Eingefroren seit 2026-03-29. Codex-Dateien existieren, kein Padawan
+je gespawnt. Auftauen wenn ein Master in >50% der Tasks Recherche-Hilfe braucht
+(Feynman bestätigt).
 
 | Padawan von | Padawan | MBTI | Model | Codex |
 |-------------|---------|------|-------|-------|
@@ -305,7 +315,12 @@ Eigenständige Zelle. Folgt der 5-Ordner-Struktur.
 
 ---
 
-## team-sales (5 Agents — verkauft Dinge)
+## team-sales (5 Agents — verkauft Dinge) ❄️ EINGEFROREN
+
+**Status:** Eingefroren seit 2026-03-29. Darwin-Analyse: Es gibt nichts zu
+verkaufen und EINEN User (Oscar, 8). Null Output in MEMORY.md. Habermas'
+Cross-Cell-Funktion übernimmt der Beirat. Auftauen wenn das Spiel mehr als
+eine Familie erreichen soll.
 
 **Why**: Damit gute Ideen die Menschen finden die sie brauchen.
 
