@@ -396,17 +396,47 @@ header h1 {
 }
 
 .material-btn.craft-locked {
-    display: none;
+    display: flex;
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.material-btn.craft-locked .mat-label {
+    color: #999;
 }
 
 .material-btn.craft-unlocked {
     display: flex;
+    opacity: 1;
     animation: unlockPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 @keyframes unlockPop {
     0% { transform: scale(0); opacity: 0; }
     100% { transform: scale(1); opacity: 1; }
+}
+
+/* Wu Xing — 5 Grundelemente mit traditionellen Farben */
+.material-btn[data-material="wood"]  { background: #2E8B22; color: #fff; }
+.material-btn[data-material="fire"]  { background: #CC2222; color: #fff; }
+.material-btn[data-material="earth"] { background: #F5C800; color: #222; }
+.material-btn[data-material="metal"] { background: #D0D0D0; color: #222; border-color: #aaa; }
+.material-btn[data-material="water"] { background: #1A1A1A; color: #fff; }
+
+.material-btn[data-material="wood"] .mat-label,
+.material-btn[data-material="fire"] .mat-label  { color: #fff; }
+.material-btn[data-material="earth"] .mat-label { color: #222; }
+.material-btn[data-material="metal"] .mat-label { color: #222; }
+.material-btn[data-material="water"] .mat-label { color: #fff; }
+
+.material-btn[data-material="wood"].active,
+.material-btn[data-material="fire"].active,
+.material-btn[data-material="earth"].active,
+.material-btn[data-material="metal"].active,
+.material-btn[data-material="water"].active {
+    box-shadow: 0 0 0 3px #fff, 0 0 0 5px #333;
+    border-color: transparent;
+    filter: brightness(1.15);
 }
 
 .mat-emoji {
