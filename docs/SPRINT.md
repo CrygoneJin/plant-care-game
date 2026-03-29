@@ -1,10 +1,9 @@
-# Sprint 1 — "Oskar versteht sofort"
+# Sprint 2 — "Oskar entdeckt"
 
-**Sprint Goal:** Oskar kann die Insel im Browser öffnen, versteht sofort was zu tun ist, und Feynman kann messen ob es funktioniert.
+**Sprint Goal:** Oskar entdeckt neue Materialien durch Crafting und sieht seinen Fortschritt wachsen.
 
 **Start:** 2026-03-29
 **Ende:** 2026-04-12
-**Velocity:** Erste Messung
 
 ---
 
@@ -12,19 +11,17 @@
 
 | # | Item | Owner | Status |
 |---|------|-------|--------|
-| S1-1 | Palette auf 5+3 reduzieren (Wu Xing + erste Crafting-Ergebnisse) | Designer (Rams) | ✅ Done (PR#22) |
-| S1-2 | Achievements verstecken — nur entdeckte zeigen, Rest "?" | Engineer (Torvalds) | ✅ Done (PR#21) |
-| S1-3 | sessionDuration fixen — window.getMetrics() erweitern | Engineer (Torvalds) | ✅ Done (PR#21) |
-| S1-4 | Starter-Insel — 3 Sand, 1 Baum, NPC sagt "Hier fehlt noch was" | Artist (Ogilvy) + Engineer | ✅ Done (PR#24) |
-| S1-5 | Tote Texte ersetzen — kindgerechte Sidebar-Texte | Artist (Ogilvy) | ✅ Done (PR#20) |
-| S1-6 | Feynman First Hypothesis — chatUsed vs. blocksPlaced Auswertung | Scientist (Feynman) | ✅ Done (PR#23+#25) |
+| S2-1 | Discovery-Counter — "🔬 5 / 50+ entdeckt" oben sichtbar | Engineer (Torvalds) | 🔲 To do |
+| S2-2 | Crafting-Fanfare — neues Material = Popup + Sound + "Du bist ein Alchemist!" | Artist (Ogilvy) + Engineer | 🔲 To do |
+| S2-3 | game.js aufbrechen — MATERIALS, QUESTS, ACHIEVEMENTS, SOUND als eigene Dateien | Engineer (Torvalds) | 🔲 To do |
+| S2-4 | GitHub Actions Deploy-Workflow — .github/workflows/deploy.yml | Engineer (Torvalds) | 🔲 To do |
+| S2-5 | Feynman H2 — uniqueMaterials vs. blocksPlaced als Engagement-Indikator | Scientist (Feynman) | 🔲 To do |
 
 ---
 
 ## Dependencies
 
-- S1-4 braucht S1-1 (Palette muss reduziert sein bevor Starter-Insel Sinn ergibt)
-- S1-6 braucht S1-3 (sessionDuration muss funktionieren)
+- S2-5 braucht S2-1 (Discovery-Counter muss zählen bevor Feynman messen kann)
 
 ## Definition of Done
 
@@ -36,32 +33,24 @@
 
 ## Standup Log
 
-### 2026-03-29 (Sprint Planning)
-- Sprint geplant. 6 Items committed.
-- Jobs dispatcht: Rams (S1-1), Torvalds (S1-2 + S1-3), Ogilvy (S1-5) parallel
-- S1-4 und S1-6 warten auf Dependencies
+### 2026-03-29 (Sprint 2 Planning)
+- Sprint geplant. 5 Items committed.
+- Jobs dispatcht: Torvalds (S2-1, S2-3, S2-4), Ogilvy (S2-2 Texte) parallel
+- S2-5 wartet auf S2-1
 
 ---
 
-## Feynman Messpunkte (Sprint 1)
+## Feynman Messpunkte (Sprint 2)
 
-### Hypothese H1
-> Kinder mit chatUsed=true platzieren mehr Blöcke als Kinder mit chatUsed=false.
+### Hypothese H2
+> Kinder mit uniqueMaterials > 5 haben höheren engagementScore als Kinder mit blocksPlaced > 50 aber uniqueMaterials ≤ 5.
 
-**Metriken:** blocksPlaced, chatUsed (aus n8n Data Table "Feynman Sessions")
+**Metriken:** uniqueMaterials, blocksPlaced, engagementScore (aus n8n Data Table)
 **Minimum N:** 20 Sessions
-**Falsifizierbar:** Wenn blocksPlaced-Median bei chatUsed=true ≤ chatUsed=false → Hypothese verworfen
+**Falsifizierbar:** Wenn engagementScore-Median bei der Discovery-Gruppe ≤ Builder-Gruppe → verworfen
 **Datenquelle:** n8n Dashboard → Data Tables → Feynman Sessions
 
-### Verifizierte Datenflüsse
-- [x] chat.js sendet _feynman.chatUsed = true ✅ (PR#25 — wiederhergestellt)
-- [x] chat.js sendet _feynman.blocksPlaced aus getMetrics() ✅ (PR#25)
-- [x] chat.js sendet _feynman.sessionDuration aus getMetrics() ✅ (PR#21 + PR#25)
-- [ ] worker.js leitet _feynman an logAsync weiter ✅ (logAirtable liest f.chatUsed, f.blocksPlaced, f.sessionDuration korrekt)
-- [ ] n8n Workflow schreibt in Data Table ✅/❌ (nicht code-verifizierbar, abhängig von n8n-Konfiguration)
-
-### Befund
-`game.js` hat `window.getMetrics()` mit `blocksPlaced` und `sessionDuration` (Zeilen 2364/2370). ✅
-`worker.js` verarbeitet `_feynman` korrekt in `logAirtable` (Zeilen 123–144). ✅
-`chat.js` baut den `_feynman`-Block **nicht** — weder in `fillAiCommentBuffer` noch im Haupt-Chat-Request.
-**Blockiert:** S1-6 braucht zuerst einen Fix in chat.js (Task: `_feynman` in Proxy-Request einbauen).
+### Verifizierte Datenflüsse (Sprint 2)
+- [ ] getMetrics() gibt uniqueMaterials zurück ✅
+- [ ] _feynman.uniqueMaterials wird an Proxy gesendet ✅
+- [ ] Discovery-Counter zählt korrekt ❌ (S2-1 noch nicht implementiert — zählt aktuell Materialien im Grid, nicht freigeschaltete)
