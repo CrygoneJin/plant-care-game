@@ -118,7 +118,7 @@ Idee: Die leere Insel (nur Wasser) wird in einer Sequenz erschaffen. Verschieden
 - Tag 4: Sonne, Mond, Sterne (Wetter-System, Day/Night-Cycle)
 - Tag 5: Fische und Vögel (Fisch-Material freigeschaltet)
 - Tag 6: Tiere und der Mensch / Schnipsel kommt auf die Insel
-- Tag 7: Ruhetag — Postkarte wird freigeschaltet, Insel "rastet"
+- Tag 7: Ruhetag (Sonntag) — **Postkarte wird freigeschaltet**. Insel "rastet". Eigenmotivation: Kinder schließen das Tutorial ab, weil die Postkarte wartet — nicht weil sie müssen. Bernd ist für alle Fragen da, kein Hilfetext im Tutorial selbst.
 
 ### Variante B — Griechische Mythologie
 > "Am Anfang war das Chaos — formlos, unendlich, dunkel."
@@ -180,6 +180,7 @@ Idee: Die leere Insel (nur Wasser) wird in einer Sequenz erschaffen. Verschieden
 | 36 | **Wigald Boning & Willy Astor** — noch kein Symbol, kein Slot, kein Konzept | P3 | Artist |
 | 37 | **Schöpfungsgeschichte als Tutorial** — 7 Level, Insel beginnt als reines Wasser | P2 | Leader |
 | 38 | **A/B Test Mythologie** — Bibel vs. Griechisch vs. Maori vs. Nordisch | P2 | Scientist |
+| 39 | **Tutorial-Gating: Postkarte erst in Schritt 7 (Sonntag)** — Motivation, Tutorium ohne Hilfetext abzuschließen | P2 | Engineer |
 
 ---
 
