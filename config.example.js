@@ -15,11 +15,22 @@
 //     apiKey: 'sk-...',
 // };
 
-// === VARIANTE 3: Nerd-Mode (Hirn-Transplantation) ===
-// Pro Charakter ein anderes Modell. Persönlichkeit bleibt.
+// === VARIANTE 3: Lokaler LiteLLM-Proxy ===
+// LiteLLM läuft auf localhost:4000. Routet alle Modelle.
+// Braucht: litellm --config ~/.claude/litellm-config.yaml --port 4000
 //
 // window.INSEL_CONFIG = {
-//     proxy: 'https://dein-worker.workers.dev',
+//     proxy: 'http://localhost:4000',
+//     proxyKey: 'sk-proxy',
+// };
+
+// === VARIANTE 4: Nerd-Mode (Hirn-Transplantation) ===
+// Pro Charakter ein anderes Modell. Persönlichkeit bleibt.
+// Geht mit Worker, LiteLLM oder direktem Key.
+//
+// window.INSEL_CONFIG = {
+//     proxy: 'http://localhost:4000',
+//     proxyKey: 'sk-proxy',
 //     models: {
 //         bernd:     'gpt-4o',
 //         neinhorn:  'claude-opus-4-5',

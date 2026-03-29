@@ -1,0 +1,8 @@
+[     290ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://ogads-pa.clients6.google.com/$rpc/google.internal.onegoogle.asyncdata.v1.AsyncDataService/GetAsyncData:0
+[    7182ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://schatzinsel.app/favicon.ico:0
+[    7390ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://csp.secureserver.net/eventbus/web?clientid=b18ef4f046435b64a469b32c3c1c20a3:0
+[    7390ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://csp.secureserver.net/eventbus/web?clientid=8da2217409854bee82e12dc4ca0b39fb:0
+[    7399ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://csp.secureserver.net/eventbus/web?clientid=8da2217409854bee82e12dc4ca0b39fb:0
+[    7399ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://csp.secureserver.net/eventbus/web?clientid=b18ef4f046435b64a469b32c3c1c20a3:0
+[   13645ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://csp.secureserver.net/eventbus/web?clientid=8da2217409854bee82e12dc4ca0b39fb:0
+[   13654ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://csp.secureserver.net/eventbus/web?clientid=8da2217409854bee82e12dc4ca0b39fb:0
