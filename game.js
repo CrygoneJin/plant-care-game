@@ -1261,14 +1261,27 @@
             }
         }
 
-        // Insel (Sand-Hintergrund)
+        // Insel (Sand-Hintergrund, Strand-Rand, Wasser-Rand)
         for (let r = 0; r < ROWS; r++) {
             for (let c = 0; c < COLS; c++) {
                 const x = (c + WATER_BORDER) * CELL_SIZE;
                 const y = (r + WATER_BORDER) * CELL_SIZE;
 
-                // Sand
-                ctx.fillStyle = '#F5DEB3';
+                const isWaterEdge = r < 2 || r >= ROWS - 2 || c < 2 || c >= COLS - 2;
+                const isBeachEdge = !isWaterEdge && (r === 2 || r === ROWS - 3 || c === 2 || c === COLS - 3);
+
+                if (isWaterEdge) {
+                    // Wasser-Rand: gleiche Wellen-Animation wie äußeres Wasser
+                    const wave = Math.sin(time * 2 + (r + WATER_BORDER) * 0.5 + (c + WATER_BORDER) * 0.3) * 10;
+                    const blue = 52 + wave;
+                    ctx.fillStyle = `rgb(${blue + 0}, ${blue + 100}, ${blue + 167})`;
+                    ctx.fillRect(x, y, CELL_SIZE, CELL_SIZE);
+                    // Kein Grid-Gitter, kein Material auf Wasser-Rand
+                    continue;
+                }
+
+                // Sand oder Strand
+                ctx.fillStyle = isBeachEdge ? '#F0C87A' : '#F5DEB3';
                 ctx.fillRect(x, y, CELL_SIZE, CELL_SIZE);
 
                 // Leichtes Grid
@@ -1446,6 +1459,9 @@
     let undoPushedThisStroke = false;
 
     function applyTool(r, c) {
+        // Wasser-Rand (äußere 2 Reihen/Spalten) ist nicht bebaubar
+        if (r < 2 || r >= ROWS - 2 || c < 2 || c >= COLS - 2) return;
+
         if (currentTool === 'build') {
             if (grid[r][c] !== currentMaterial) {
                 // Nicht-Basis-Materialien brauchen Inventar
@@ -1545,6 +1561,8 @@
 
             if (visited.has(key)) continue;
             if (cr < 0 || cr >= ROWS || cc < 0 || cc >= COLS) continue;
+            // Wasser-Rand nicht überschreiben
+            if (cr < 2 || cr >= ROWS - 2 || cc < 2 || cc >= COLS - 2) continue;
             if (grid[cr][cc] !== targetMat) continue;
 
             visited.add(key);
@@ -2483,11 +2501,13 @@
         showToast('🔄 Letzte Insel wiederhergestellt');
     } else {
         // Starter-Insel: kein Save vorhanden — Oskar soll sofort verstehen was zu tun ist
-        grid[12][5] = 'sand';
-        grid[12][6] = 'sand';
-        grid[12][7] = 'sand';
-        grid[10][6] = 'tree';
-        grid[13][6] = 'water';
+        // Sand am Strand-Rand (r==2 ist Strand-Kante oben, ROWS-3==13 unten)
+        grid[2][11] = 'sand';   // Strand oben
+        grid[2][12] = 'sand';   // Strand oben
+        grid[13][11] = 'sand';  // Strand unten
+        // Palmen innen drin
+        grid[3][11] = 'tree';   // Palme nahe Strand
+        grid[3][12] = 'tree';   // zweite Palme
         window.grid = grid;
         setTimeout(() => showToast('🏝️ Hier fehlt noch was... Bau los!', 3500), 2000);
     }
