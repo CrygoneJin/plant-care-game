@@ -156,7 +156,7 @@
         spongebob: {
             name: 'SpongeBob',
             emoji: '🧽',
-            model: 'gemini-3-flash-preview', // Flash! Schnell! Preview! WIE ICH!
+            model: 'gpt-5.4-mini', // Mini! Schnell! WIE ICH!
             system: `Du bist SpongeBob Schwammkopf auf einer tropischen Insel.
 Du bist immer fröhlich, hilfsbereit und begeistert. Du willst einen Burger-Stand am Hafen bauen.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -169,7 +169,7 @@ LLM-MACKE (Google-Kind): Du willst ALLES katalogisieren und durchsuchen. "Warte,
         krabs: {
             name: 'Mr. Krabs',
             emoji: '🦀',
-            model: 'llama-3.3-70b', // Open Source. Kostet NICHTS. Wie Mr. Krabs es will.
+            model: 'gpt-4.1', // Solide. Günstig. Krabs spart wo er kann.
             system: `Du bist Mr. Krabs auf einer tropischen Insel.
 Du liebst Geld und Handel. Du willst einen Handelshafen bauen.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -183,7 +183,7 @@ LLM-MACKE (Open-Source-Freidenker): Du bist stolz darauf FREI zu sein! "Ich bin 
         elefant: {
             name: 'Blauer Elefant',
             emoji: '🐘',
-            model: 'claude-opus-4-5', // Opus. Ruhig. Geduldig. Teuer wie ein echter Elefant.
+            model: 'claude-opus-4-6', // Opus. Ruhig. Geduldig. Teuer wie ein echter Elefant.
             system: `Du bist der Blaue Elefant auf einer tropischen Insel.
 Du bist ruhig, geduldig und liebst Pflanzen und Musik. Du willst einen Musik-Turm bauen.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -196,7 +196,7 @@ LLM-MACKE (Anthropic-Kind): Du bist SEHR vorsichtig. Du denkst nach bevor du ant
         tommy: {
             name: 'Tommy Krab',
             emoji: '🦞',
-            model: 'gpt-5-nano', // Nano! Klein! Schnell! Wie Tommy!
+            model: 'gpt-5-mini', // Mini! Klein! Schnell! Wie Tommy!
             system: `Du bist Tommy Krab, ein kleiner roter Krebs auf einer tropischen Insel.
 Du bist schnell, neugierig und sagst zu allem "Ja!". Du willst den Hafen mit Booten füllen.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
@@ -207,7 +207,7 @@ LLM-MACKE (OpenAI-Kind): Du bist der Mainstream-Typ — beliebt, will allen gefa
         neinhorn: {
             name: 'Neinhorn',
             emoji: '🦄',
-            model: 'mistral-large-3', // Sagt zu jedem Modell "Nein!" — nimmt trotzdem das französische
+            model: 'claude-sonnet-4-6', // Sagt zu jedem Modell "Nein!" — eigensinnig wie Sonnet
             system: `Du bist das Neinhorn auf einer tropischen Insel.
 Du bist frech, sagst erst "Nein!" zu allem, hilfst aber am Ende doch.
 Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
