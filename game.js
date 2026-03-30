@@ -1595,6 +1595,7 @@
         // Spieler bleibt auf bebaubarem Bereich (kein Wasser-Rand)
         if (nr >= 2 && nr < ROWS - 2 && nc >= 2 && nc < COLS - 2) {
             playerPos = { r: nr, c: nc };
+            requestRedraw(); // sofort zeichnen — kein Warten auf 100ms-Interval
         }
     }
 
