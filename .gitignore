@@ -1,2 +1,8 @@
 config.js
 .worktrees/
+.playwright-mcp/
+.wrangler/
+node_modules/
+test-results/
+*.png
+package-lock.json
