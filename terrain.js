@@ -189,27 +189,61 @@
             c: Math.floor(cols * 0.4 + rng() * cols * 0.2),
         });
 
-        // === PHASE 7: NPC irgendwo auf der Insel ===
-        // Ein zufälliger Starter-NPC wartet auf Entdeckung
-        const npcChars = [
-            { id: 'spongebob', emoji: '🧽', spot: 'beach' },   // Am Strand
-            { id: 'maus',      emoji: '🐭', spot: 'flowers' },  // Bei Blumen
+        // === PHASE 7: NPCs über die Insel verteilen ===
+        // Jeder NPC hat einen Lieblingsort. Man muss sie FINDEN.
+        const npcPlacements = [
+            { id: 'spongebob', emoji: '🧽', habitat: 'beach' },    // Am Strand
+            { id: 'maus',      emoji: '🐭', habitat: 'flowers' },   // Bei Blumen
+            { id: 'krabs',     emoji: '🦀', habitat: 'water' },     // Am Fluss/Hafen
+            { id: 'elefant',   emoji: '🐘', habitat: 'forest' },    // Im Wald
+            { id: 'tommy',     emoji: '🦞', habitat: 'boat' },      // Beim Boot
+            { id: 'neinhorn',  emoji: '🦄', habitat: 'cave' },      // Bei der Höhle
+            { id: 'paluten',   emoji: '💎', habitat: 'mountain' },   // Auf dem Berg
+            // Bernd bleibt in der Chat-Bubble (Support-Agent, nicht auf der Karte)
         ];
-        const npcChoice = npcChars[Math.floor(rng() * npcChars.length)];
-        let npcPos = null;
 
-        if (npcChoice.spot === 'beach') {
-            npcPos = { r: rows - 4, c: Math.floor(cols * 0.6 + rng() * cols * 0.2) };
-        } else {
-            // Bei Blumen suchen
-            for (let r = 4; r < rows - 4; r++) {
-                for (let c = 4; c < cols - 4; c++) {
-                    if (grid[r][c] === 'flower' && !npcPos) {
-                        npcPos = { r: r - 1, c: c };
+        const npcsOnMap = [];
+        for (const npc of npcPlacements) {
+            let pos = null;
+            switch (npc.habitat) {
+                case 'beach':
+                    pos = { r: rows - 4, c: Math.floor(cols * 0.5 + rng() * cols * 0.3) };
+                    break;
+                case 'flowers':
+                    // Erste Blume finden
+                    for (let r = 4; r < rows - 4 && !pos; r++) {
+                        for (let c = 4; c < cols - 4 && !pos; c++) {
+                            if (grid[r][c] === 'flower') pos = { r: r, c: c + 1 };
+                        }
                     }
-                }
+                    if (!pos) pos = { r: Math.floor(rows * 0.6), c: Math.floor(cols * 0.6) };
+                    break;
+                case 'water':
+                    pos = { r: riverStartR + 2, c: riverStartC + 2 };
+                    break;
+                case 'forest':
+                    // Waldstelle finden
+                    for (let r = 5; r < rows - 5 && !pos; r++) {
+                        for (let c = 5; c < cols - 5 && !pos; c++) {
+                            if (grid[r][c] === 'tree' && !grid[r + 1]?.[c]) pos = { r: r + 1, c: c };
+                        }
+                    }
+                    if (!pos) pos = { r: Math.floor(rows * 0.4), c: Math.floor(cols * 0.4) };
+                    break;
+                case 'boat':
+                    pos = { r: 3, c: boatC > 2 ? boatC - 1 : Math.floor(cols * 0.7) };
+                    break;
+                case 'cave':
+                    pos = { r: caveR + 1, c: caveC };
+                    break;
+                case 'mountain':
+                    pos = { r: mountainR - 1, c: mountainC };
+                    break;
             }
-            if (!npcPos) npcPos = { r: Math.floor(rows / 2), c: Math.floor(cols / 2) };
+            // Sicherheitscheck
+            if (pos && pos.r >= 2 && pos.r < rows - 2 && pos.c >= 2 && pos.c < cols - 2) {
+                npcsOnMap.push({ ...npc, pos });
+            }
         }
 
         // === PHASE 8: Boot an der Küste (Einladung zum Segeln) ===
@@ -231,7 +265,7 @@
 
         return {
             animals: animals,
-            npc: { ...npcChoice, pos: npcPos },
+            npcs: npcsOnMap,
             mountain: { r: mountainR, c: mountainC },
             cave: { r: caveR, c: caveC },
             river: { startR: riverStartR, startC: riverStartC },

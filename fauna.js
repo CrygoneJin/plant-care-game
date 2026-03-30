@@ -6,7 +6,7 @@
     'use strict';
 
     let animals = [];
-    let npcOnMap = null;
+    let npcsOnMap = [];
     let animationFrame = 0;
 
     // Bewegungsmuster pro Tierart
@@ -17,14 +17,14 @@
         butterfly: { speed: 1500, range: 4, emoji: '🦋', staysNear: 'flowers' },
     };
 
-    function init(animalList, npc) {
+    function init(animalList, npcs) {
         animals = (animalList || []).map(a => ({
             ...a,
             homeR: a.r,
             homeC: a.c,
-            lastMove: Date.now() + Math.random() * 2000, // Versetzt starten
+            lastMove: Date.now() + Math.random() * 2000,
         }));
-        npcOnMap = npc || null;
+        npcsOnMap = (npcs || []).map(n => ({ ...n, _chatOpened: false }));
     }
 
     // Tiere bewegen sich in der Nähe ihres Startpunkts
@@ -85,35 +85,45 @@
             ctx.restore();
         }
 
-        // NPC auf der Karte zeichnen (entdeckbar!)
-        if (npcOnMap?.pos) {
-            const px = (npcOnMap.pos.c + waterBorder) * cellSize + cellSize / 2;
-            const py = (npcOnMap.pos.r + waterBorder) * cellSize + cellSize / 2;
+        // NPCs auf der Karte zeichnen — nur freigeschaltete! (Pokémon-Style)
+        const playerP = window.playerPos?.();
+        const unlockedChars = JSON.parse(localStorage.getItem('insel-unlocked') || '["spongebob","maus","bernd"]');
+
+        for (const npc of npcsOnMap) {
+            // Nur freigeschaltete NPCs sind sichtbar (Bernd ist nie auf der Karte)
+            if (npc.id === 'bernd') continue;
+            if (!unlockedChars.includes(npc.id)) continue;
+            if (!npc.pos) continue;
+            const px = (npc.pos.c + waterBorder) * cellSize + cellSize / 2;
+            const py = (npc.pos.r + waterBorder) * cellSize + cellSize / 2;
 
             ctx.save();
             ctx.font = `${cellSize * 0.7}px serif`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(npcOnMap.emoji, px, py);
+
+            // NPCs wippen leicht (lebendig)
+            const wobble = Math.sin(Date.now() / 800 + npc.pos.r * 3) * 2;
+            ctx.fillText(npc.emoji, px, py + wobble);
 
             // Sprechblase wenn Spieler nah genug
-            const playerP = window.playerPos?.();
             if (playerP) {
-                const dist = Math.abs(playerP.r - npcOnMap.pos.r) + Math.abs(playerP.c - npcOnMap.pos.c);
+                const dist = Math.abs(playerP.r - npc.pos.r) + Math.abs(playerP.c - npc.pos.c);
                 if (dist <= 3) {
-                    // Kleine Sprechblase
                     const fontSize = Math.max(8, cellSize * 0.22);
                     ctx.font = `${fontSize}px sans-serif`;
                     ctx.fillStyle = 'rgba(0,0,0,0.6)';
-                    ctx.fillRect(px - 30, py - cellSize * 0.8, 60, fontSize + 6);
+                    const label = `💬 ${npc.emoji}`;
+                    ctx.fillRect(px - 24, py - cellSize * 0.85, 48, fontSize + 6);
                     ctx.fillStyle = 'white';
-                    ctx.fillText('💬 Sprich!', px, py - cellSize * 0.6);
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(label, px, py - cellSize * 0.65);
 
-                    // Bei Berührung: Chat öffnen
-                    if (dist <= 1 && !npcOnMap._chatOpened) {
-                        npcOnMap._chatOpened = true;
-                        if (window.openChat) window.openChat(npcOnMap.id);
-                        setTimeout(() => { npcOnMap._chatOpened = false; }, 5000);
+                    // Bei Berührung (1 Feld): Chat öffnen mit diesem NPC
+                    if (dist <= 1 && !npc._chatOpened) {
+                        npc._chatOpened = true;
+                        if (window.openChat) window.openChat(npc.id);
+                        setTimeout(() => { npc._chatOpened = false; }, 5000);
                     }
                 }
             }
@@ -129,7 +139,7 @@
         init: init,
         draw: draw,
         get animals() { return animals; },
-        get npc() { return npcOnMap; },
+        get npcs() { return npcsOnMap; },
         addAnimal: function (type, r, c) {
             const b = BEHAVIOR[type];
             if (!b) return;

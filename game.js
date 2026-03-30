@@ -1415,9 +1415,9 @@
         if (window.Terrain) {
             const name = localStorage.getItem('insel-player-name') || 'Schatzinsel';
             const result = window.Terrain.generate(grid, ROWS, COLS, name);
-            // Fauna initialisieren
+            // Fauna + NPCs initialisieren
             if (window.Fauna) {
-                window.Fauna.init(result.animals, result.npc);
+                window.Fauna.init(result.animals, result.npcs);
             }
         }
     }
