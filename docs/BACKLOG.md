@@ -197,11 +197,11 @@ Idee: Die leere Insel (nur Wasser) wird in einer Sequenz erschaffen. Verschieden
 | 47 | **Quests/Achievements zu schnell** — Schwierigkeitsgrad erhöhen, passen nicht zur leeren Insel | P1 | Scientist |
 | 48 | **NPCs nicht sichtbar** — Chat-Button/NPCs tauchen nicht auf bei schatzinsel.app | P0 | Engineer |
 | 49 | **Bernd Support-Chat fehlt** — Bernd als Hilfe-NPC nicht erreichbar | P0 | Engineer |
-| 50 | **Höhle = Abenteuer-Dungeon** — 10 emergente Ebenen, je tiefer desto fantastischer + unsichtbar technischer (Amélie-Prinzip). Oscar sieht Kristalle, Drachen, Sterne — aber Pilze wachsen in Binärmuster, Fackeln leuchten in Hex-Farben, der Drache bewacht CPU-Zyklen. **Ebene 9 = Mandelbrot Easter Egg** (zoombar, Wu-Xing-Farben, endlos). PR #13 als Basis. | P1 | alle |
+| 50 | **Höhle = Abenteuer-Dungeon** — 10 emergente Ebenen, je tiefer desto fantastischer + unsichtbar technischer (Amélie-Prinzip). Pilze in Binärmuster, Fackeln in Hex-Farben, Drache bewacht CPU-Zyklen. **Bürokraten-Ebene** (Jim Knopf Bonzen): Stempel-Crafting-Puzzle, Formulare in dreifacher Ausfertigung, Haiku-Genehmigungen — tragisch-komisch, nicht nur Satire (Weber: Regeln haben Gründe). **Ebene 9 = Mandelbrot** (zoombar, Wu-Xing-Farben, endlos). PR #13 als Basis. | P1 | alle |
 | 51 | **Wu Xing Philosophie im Craft-Prompt** — Holz=Expansion, Feuer=Aktion, Erde=Wandlung, Metall=Reife, Wasser=Ruhe | P1 | Scientist |
 | 52 | **Kung Fu Panda Wuxi** — Ästhetik-Inspiration für Wu Xing Elemente | P2 | Artist |
 | 53 | **Echtes Atlantik-Wetter** — Open-Meteo API (29°N, 31°W — halber Weg Martinique↔Bayonne), 🌊 im Meer wetterabhängig | P1 | Engineer |
-| 54 | **Wu Xing als Tutorial** — 5 Elemente = 5 Level Tutorial (wie Candy Crush/Tetris), danach Insel: Bauen ODER Abenteuer ODER beides | P1 | Leader + Designer |
+| 54 | **Lummerland → Schatzinsel** — Tutorial auf Lummerland (klein, 2 Berge, Emma, Jim). Zahlenreihe: 0/1 (Singularität, erster Klick) → 3 (E=mc², Energie wird Materie) → 5 (Wu Xing, Tutorial done) → 10.000 (Tao, Infinite Craft). Emma fährt durch den Tunnel → Schatzinsel. | P1 | Leader + Designer + Artist |
 | 55 | **Spielfigur auf der Insel** — Kind benennt selbst (max 8 Buchstaben), bewegbar mit Pfeiltasten (PC) oder Finger-Drag (Touch) | P1 | Engineer + Designer |
 | 56 | **Bibliothek von Alexandria** — Gebäude auf der Insel (Stein+Bretter+Wissen), Schriftrollen statt Bücher, jede Rolle = Wiki-Game-Challenge ("Von Wasser zu Drache in X Schritten"). Timbuktu als zweite Bibliothek — wer beide baut verbindet zwei Wissenswelten. Papyrus vor Gutenberg. Wikipedia von damals. | P2 | alle |
 
