@@ -19,14 +19,13 @@
     <!-- Intro-Overlay -->
     <div id="intro-overlay">
         <div class="intro-content">
-            <div class="intro-emoji">🏝️</div>
             <h1>🏝️ Schatzinsel</h1>
             <p class="intro-subtitle"><em>Bau deine Insel.</em></p>
-            <div id="player-name-group">
-                <label for="player-name-input" style="display:block; font-size:14px; margin-bottom:6px; opacity:0.8;">Wie heißt du auf der Insel?</label>
-                <input type="text" id="player-name-input" maxlength="8" placeholder="Oskar" autocomplete="off"
-                    style="width:140px; padding:8px 12px; border-radius:12px; border:2px solid rgba(255,255,255,0.5); background:rgba(255,255,255,0.2); color:white; font-size:18px; text-align:center; font-family:inherit; outline:none;">
-                <div id="avatar-picker" style="margin-top:12px; display:flex; gap:8px; justify-content:center;" aria-label="Wähle dein Insel-Emoji">
+            <button id="start-button">🏝️ Los!</button>
+            <div id="player-name-group" style="margin-top:16px;">
+                <input type="text" id="player-name-input" maxlength="8" placeholder="Dein Name (optional)" autocomplete="off"
+                    style="width:180px; padding:6px 10px; border-radius:12px; border:2px solid rgba(255,255,255,0.5); background:rgba(255,255,255,0.2); color:#2C3E50; font-size:15px; text-align:center; font-family:inherit; outline:none;">
+                <div id="avatar-picker" style="margin-top:8px; display:flex; gap:8px; justify-content:center;" aria-label="Wähle dein Insel-Emoji">
                     <button class="avatar-btn active" data-avatar="🧒" title="Kind" style="font-size:28px; background:none; border:2px solid rgba(255,255,255,0.6); border-radius:12px; padding:4px 8px; cursor:pointer;">🧒</button>
                     <button class="avatar-btn" data-avatar="👦" title="Junge" style="font-size:28px; background:none; border:2px solid transparent; border-radius:12px; padding:4px 8px; cursor:pointer;">👦</button>
                     <button class="avatar-btn" data-avatar="👧" title="Mädchen" style="font-size:28px; background:none; border:2px solid transparent; border-radius:12px; padding:4px 8px; cursor:pointer;">👧</button>
@@ -34,7 +33,6 @@
                     <button class="avatar-btn" data-avatar="🐢" title="Schildkröte" style="font-size:28px; background:none; border:2px solid transparent; border-radius:12px; padding:4px 8px; cursor:pointer;">🐢</button>
                 </div>
             </div>
-            <button id="start-button">🏝️ Los!</button>
         </div>
     </div>
 

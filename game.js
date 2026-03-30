@@ -2479,7 +2479,7 @@
                 playerName = typed;
                 localStorage.setItem('insel-player-name', playerName);
             } else if (!playerName) {
-                playerName = 'Oskar';
+                playerName = 'Spieler';
                 localStorage.setItem('insel-player-name', playerName);
             }
         }
@@ -2493,7 +2493,7 @@
         setTimeout(() => {
             introOverlay.style.display = 'none';
             startTutorialPulse();
-        }, 600);
+        }, 300);
         window.startSessionClock();
     }
 
