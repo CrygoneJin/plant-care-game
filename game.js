@@ -721,6 +721,10 @@
         inventory[material] = (inventory[material] || 0) + count;
         updateInventoryDisplay();
         saveInventory();
+        // Genesis-Stufen prüfen (Qi oder Yin/Yang neu im Inventar)
+        if (material === 'qi' || material === 'yin' || material === 'yang') {
+            updateGenesisVisibility();
+        }
     }
 
     function removeFromInventory(material, count) {
@@ -1234,6 +1238,61 @@
         });
     }
 
+    // === GENESIS-SICHTBARKEIT ===
+    // Yin/Yang erscheinen sobald Tao auf dem Grid liegt oder im Inventar.
+    // Qi erscheint sobald Qi im Inventar. Wu Xing erscheinen mit Qi.
+    let _genesisYinYangShown = false;
+    let _genesisQiShown = false;
+
+    function updateGenesisVisibility() {
+        // Tao irgendwo auf dem Grid?
+        let taoOnGrid = false;
+        for (let r = 0; r < grid.length; r++) {
+            for (let c = 0; c < grid[r].length; c++) {
+                if (grid[r][c] === 'tao') { taoOnGrid = true; break; }
+            }
+            if (taoOnGrid) break;
+        }
+        const hasYin  = (inventory['yin']  || 0) > 0;
+        const hasYang = (inventory['yang'] || 0) > 0;
+        const hasQi   = (inventory['qi']   || 0) > 0;
+
+        // Stufe 1: Yin + Yang
+        if (taoOnGrid || hasYin || hasYang || hasQi) {
+            const yinBtn  = document.querySelector('.material-btn[data-material="yin"]');
+            const yangBtn = document.querySelector('.material-btn[data-material="yang"]');
+            if (yinBtn)  yinBtn.style.display  = '';
+            if (yangBtn) yangBtn.style.display = '';
+            if (!_genesisYinYangShown && (yinBtn || yangBtn)) {
+                _genesisYinYangShown = true;
+                showToast('⚫⚪ Yin und Yang erscheinen…');
+            }
+        }
+
+        // Stufe 2: Qi + Wu Xing
+        if (hasQi) {
+            const qiBtn  = document.querySelector('.material-btn[data-material="qi"]');
+            const heading = document.getElementById('wuxing-heading');
+            const wuxing = ['metal', 'wood', 'fire', 'water', 'earth'];
+            if (qiBtn)  qiBtn.style.display  = '';
+            if (heading) heading.style.display = '';
+            wuxing.forEach(mat => {
+                const btn = document.querySelector(`.material-btn[data-material="${mat}"]`);
+                if (btn) btn.style.display = '';
+            });
+            if (!_genesisQiShown) {
+                _genesisQiShown = true;
+                showToast('五行 Die 5 Elemente erwachen!');
+                // Qi direkt selektierbar machen, falls metal noch aktiv
+                const metalBtn = document.querySelector('.material-btn[data-material="metal"]');
+                if (metalBtn && !document.querySelector('.material-btn.active')) {
+                    metalBtn.classList.add('active');
+                    currentMaterial = 'metal';
+                }
+            }
+        }
+    }
+
     // Save-Migration: alte Saves ohne unlocked → Grid + Inventar scannen
     function migrateUnlocked() {
         if (unlockedMaterials.size > 0) return; // Schon migriert
@@ -1684,6 +1743,7 @@
         // Teure Checks nur alle 200ms (nicht bei jedem Pixel beim Drag)
         requestStatsUpdate();
         requestRedraw();
+        updateGenesisVisibility();
     }
 
     let statsUpdatePending = false;
@@ -1909,6 +1969,7 @@
             updateStats();
             updateInventoryDisplay();
             updatePaletteVisibility();
+            updateGenesisVisibility();
             updateDiscoveryCounter();
             requestRedraw();
             loadDialog.classList.add('hidden');
@@ -1934,9 +1995,12 @@
         saveUnlocked();
         saveDiscoveredRecipes();
         projectNameInput.value = '';
+        _genesisYinYangShown = false;
+        _genesisQiShown = false;
         updateStats();
         updateInventoryDisplay();
         updatePaletteVisibility();
+        updateGenesisVisibility();
         updateDiscoveryCounter();
         requestRedraw();
         showToast('🆕 Neue Insel!');
@@ -2435,6 +2499,18 @@
         });
     }
 
+    // --- Mute-Button ---
+    const muteBtn = document.getElementById('mute-btn');
+    let muted = localStorage.getItem('insel-muted') === 'true';
+    if (muteBtn) {
+        muteBtn.textContent = muted ? '🔇' : '🔊';
+        muteBtn.addEventListener('click', () => {
+            muted = !muted;
+            localStorage.setItem('insel-muted', String(muted));
+            muteBtn.textContent = muted ? '🔇' : '🔊';
+        });
+    }
+
     // ============================================================
     // === ANALYTICS === (→ analytics.js bei Zellteilung)
     // ============================================================
@@ -2773,6 +2849,7 @@
     updateQuestDisplay();
     updateInventoryDisplay();
     updatePaletteVisibility();
+    updateGenesisVisibility();
     updateDiscoveryCounter();
 
     // --- Sidebar Tabs ---

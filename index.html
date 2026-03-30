@@ -50,6 +50,7 @@
                 <button class="tool-btn" id="weather-btn" title="Wetter ändern">☀️</button>
                 <button class="tool-btn" id="theme-btn" title="Theme wechseln">🎨</button>
                 <button class="tool-btn" id="code-view-btn" title="Code-Ansicht">&lt;/&gt;</button>
+                <button class="tool-btn" id="mute-btn" title="Ton an/aus">🔊</button>
             </div>
             <div class="toolbar-group" id="project-group">
                 <input type="text" id="project-name" placeholder="Mein Bauwerk" maxlength="30">
@@ -79,29 +80,29 @@
                 <button class="material-btn" data-material="tao" data-base="true" title="☯ Tao — Die Einheit vor der Teilung">
                     <span class="mat-emoji">☯️</span>
                 </button>
-                <button class="material-btn" data-material="yin" data-base="true" title="⚫ Yin — Dunkelheit, Ruhe, Empfangen">
+                <button class="material-btn" data-material="yin" data-base="true" title="⚫ Yin — Dunkelheit, Ruhe, Empfangen" style="display:none">
                     <span class="mat-emoji">⚫</span>
                 </button>
-                <button class="material-btn" data-material="yang" data-base="true" title="⚪ Yang — Licht, Aktion, Geben">
+                <button class="material-btn" data-material="yang" data-base="true" title="⚪ Yang — Licht, Aktion, Geben" style="display:none">
                     <span class="mat-emoji">⚪</span>
                 </button>
-                <button class="material-btn" data-material="qi" data-base="true" title="✨ Qi — Lebensenergie, Gold des Wandels">
+                <button class="material-btn" data-material="qi" data-base="true" title="✨ Qi — Lebensenergie, Gold des Wandels" style="display:none">
                     <span class="mat-emoji">✨</span>
                 </button>
-                <h2>五行 Elemente</h2>
-                <button class="material-btn active" data-material="metal" data-base="true" title="金 Metall — Reife, Stille, Sinken">
+                <h2 id="wuxing-heading" style="display:none">五行 Elemente</h2>
+                <button class="material-btn" data-material="metal" data-base="true" title="金 Metall — Reife, Stille, Sinken" style="display:none">
                     <span class="mat-emoji"></span>
                 </button>
-                <button class="material-btn" data-material="wood" data-base="true" title="木 Holz — Aufbruch, Wachstum, Steigen">
+                <button class="material-btn" data-material="wood" data-base="true" title="木 Holz — Aufbruch, Wachstum, Steigen" style="display:none">
                     <span class="mat-emoji"></span>
                 </button>
-                <button class="material-btn" data-material="fire" data-base="true" title="火 Feuer — Aktion, Tanz, Verwandlung">
+                <button class="material-btn" data-material="fire" data-base="true" title="火 Feuer — Aktion, Tanz, Verwandlung" style="display:none">
                     <span class="mat-emoji"></span>
                 </button>
-                <button class="material-btn" data-material="water" data-base="true" title="水 Wasser — Ruhe, Tiefe, Betrachtung">
+                <button class="material-btn" data-material="water" data-base="true" title="水 Wasser — Ruhe, Tiefe, Betrachtung" style="display:none">
                     <span class="mat-emoji"></span>
                 </button>
-                <button class="material-btn" data-material="earth" data-base="true" title="土 Erde — Wandel, Frucht, Mitte">
+                <button class="material-btn" data-material="earth" data-base="true" title="土 Erde — Wandel, Frucht, Mitte" style="display:none">
                     <span class="mat-emoji"></span>
                 </button>
                 <!-- Artefakte: erscheinen erst durch Crafting -->

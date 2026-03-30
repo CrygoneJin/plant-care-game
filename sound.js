@@ -108,6 +108,7 @@
     };
 
     function soundBuild(material) {
+        if (localStorage.getItem('insel-muted') === 'true') return;
         if (!canPlaySound()) return;
         const tone = ELEMENT_TONES[material];
         if (tone === null) return; // Tao = Stille
@@ -143,6 +144,7 @@
     }
 
     function soundDemolish(getGridStats) {
+        if (localStorage.getItem('insel-muted') === 'true') return;
         if (!canPlaySound()) return;
         const stats = typeof getGridStats === 'function' ? getGridStats() : { percent: 50 };
         const fillPercent = stats.percent || 0;
@@ -154,6 +156,7 @@
     }
 
     function soundAchievement() {
+        if (localStorage.getItem('insel-muted') === 'true') return;
         // Zelda-Chest-artig: aufsteigende Fanfare mit Chorus
         playRichTone(523, 0.12, 'sine', 0.12);
         setTimeout(() => playRichTone(659, 0.12, 'sine', 0.12), 100);
@@ -161,6 +164,7 @@
     }
 
     function soundQuestComplete() {
+        if (localStorage.getItem('insel-muted') === 'true') return;
         // Mario-Level-Complete-artig: längere Fanfare
         const notes = [392, 523, 659, 784, 880];
         notes.forEach((f, i) => {
@@ -169,12 +173,14 @@
     }
 
     function soundChop() {
+        if (localStorage.getItem('insel-muted') === 'true') return;
         if (!canPlaySound()) return;
         playRichTone(180, 0.15, 'sawtooth', 0.1);
         setTimeout(() => playTone(120, 0.2, 'square', 0.08), 80);
     }
 
     function soundCraft() {
+        if (localStorage.getItem('insel-muted') === 'true') return;
         if (!canPlaySound()) return;
         playRichTone(440, 0.1, 'sine', 0.1);
         setTimeout(() => playRichTone(554, 0.1, 'sine', 0.1), 100);
