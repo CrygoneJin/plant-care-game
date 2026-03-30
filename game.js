@@ -1863,7 +1863,7 @@
                         const nr = r+dr, nc = c+dc;
                         if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && grid[nr]?.[nc] === 'wood') {
                             setTimeout(() => {
-                                if (grid[nr][nc] === 'wood') { grid[nr][nc] = 'earth'; requestRedraw(); }
+                                if (grid[nr][nc] === 'wood' && grid[r]?.[c] === 'fire') { grid[nr][nc] = 'ash'; requestRedraw(); }
                             }, 3000);
                         }
                     });
@@ -1884,16 +1884,21 @@
             if (cell !== null) {
                 if (!undoPushedThisStroke) { pushUndo(); undoPushedThisStroke = true; }
                 const yield_ = HARVEST_YIELD[cell] || { material: cell, count: 1 };
-                // Baum hinterlässt Setzling statt leerer Zelle
-                // Konsequenz: Nicht-Baum-Bäume hinterlassen kurz einen Stumpf (earth → null)
-                const isTreeType = ['small_tree', 'palm', 'sapling'].includes(cell);
-                grid[r][c] = (cell === 'tree') ? 'sapling' : isTreeType ? 'earth' : null;
-                if (isTreeType) {
-                    const sr = r, sc = c;
-                    setTimeout(() => { if (grid[sr][sc] === 'earth') { grid[sr][sc] = null; requestRedraw(); } }, 5000);
-                }
+                // Konsequenz: Baum fällen → brauner Stumpf (path) für 5s, dann Setzling/null
+                const isTreeLike = ['tree', 'small_tree', 'palm', 'sapling'].includes(cell);
+                const afterStump = (cell === 'tree') ? 'sapling' : null;
+                grid[r][c] = isTreeLike ? 'path' : null; // path = braun = Stumpf
                 delete treeGrowth[r + ',' + c];
-                if (cell === 'tree') treeGrowth[r + ',' + c] = Date.now();
+                if (isTreeLike) {
+                    const sr = r, sc = c;
+                    setTimeout(() => {
+                        if (grid[sr]?.[sc] === 'path') {
+                            grid[sr][sc] = afterStump;
+                            if (afterStump === 'sapling') treeGrowth[sr + ',' + sc] = Date.now();
+                            requestRedraw();
+                        }
+                    }, 5000);
+                }
                 addToInventory(yield_.material, yield_.count);
                 unlockMaterial(yield_.material);
                 addPlaceAnimation(r, c);
