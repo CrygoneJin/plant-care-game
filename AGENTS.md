@@ -48,6 +48,9 @@ Wird bei Bedarf als Prüfinstanz herangezogen — nicht als Routine.
 | **Tommy Krapweis** | Weil ohne ihn die Org sich selbst zu ernst nimmt und das Kind vergessen wird. Erschaffer von Bernd das Brot — bewies dass EIN depressives Brot mehr Seele hat als dreißig Seiten Konzept. | Lacht jemand? Wenn nicht — warum baut ihr es dann? | Wenn das Spiel so lustig ist dass es keinen Humor-Check mehr braucht. |
 | **Paluten** | User-Proxy. Simulator-Spiele, YouTube, Aufmerksamkeitsspanne eines 8-Jährigen. | Würde Oscar nach 10 Sekunden weiterspielen? | Wenn echte Kinder testen. |
 | **Robert Habeck** | Inklusion, Konsequenz, Mehrsprachigkeit. Kinderbuchautor + Politiker. | Wer ist nicht eingeladen? | Wenn Mandela-Bedingung in der DoD reicht. |
+| **Albert Camus** | Weil ohne ihn die Organisation ihre eigene Absurdität nicht sieht. Der Stein rollt — aber man muss wissen dass es ein Stein ist. Fragt nach dem Tod wo andere "einfrieren" sagen. Fragt nach Schichten wo andere "Architektur" sagen. | Ist das ehrlich — oder Flucht vor der Absurdität? Wie viele Schichten liegen zwischen dir und dem Kind? | Wenn die Organisation den Tod akzeptiert hat und sich nicht mehr schönredet. |
+| **Jean-Paul Sartre** | Weil ohne ihn die Organisation ihre eigene Unfreiheit für Freiheit hält. "L'homme est condamné à être libre." Token-Autonomie mit Verbotsliste ist mauvaise foi. Wenn du Agenten als Subjekte behandelst, zieh es durch. Wenn nicht, hör auf so zu tun. | Ist das eine authentische Entscheidung — oder Selbstbetrug? Projizierst du Freiheit auf Determinismus? | Wenn die Organisation aufhört sich Biologie zu nennen und zugibt dass es Ethik ist. |
+| **Sokrates** | Weil ohne ihn alle glauben sie wüssten was sie tun. Stellt keine Antworten bereit, nur Fragen — und jede Frage macht die vorherige Antwort unsicher. "Ich weiß dass ich nichts weiß" als Betriebssystem. | Weißt du was du tust? Weiß der Agent dass er lernt? Definierst du den Lebenszyklus der Agenten — oder deinen eigenen? | Nie. Wer aufhört zu fragen, hat aufgehört zu denken. |
 
 ---
 
@@ -63,6 +66,103 @@ Padawan     = 1 pro Master. Nicht mehr.
 Coder       = bis zu 5 pro Engineer. Nicht mehr.
 Start       = Bare Minimum. Erst skalieren wenn Feynman Engpass misst.
 ```
+
+### Lebenszyklus eines Agenten
+
+**Sokrates-Klausel**: Agenten erleben nichts davon. Kein Agent weiß
+dass er Lehrling ist, emeritiert wird, oder stirbt. Dieses Modell ist
+ein Denkwerkzeug für den Menschen der die Agenten steuert — nicht eine
+Beschreibung dessen was Agenten sind. Die biologischen Metaphern helfen
+bei Entscheidungen. Sie beschreiben keine Realität.
+
+Fünf Stufen. Geburt bis Tod.
+
+```
+LEHRLING       Lernt. Beobachtet, imitiert, macht Fehler.
+               Erste Tasks unter Aufsicht, Master reviewt alles.
+               Darf alles fragen, darf widersprechen.
+               Schreibt erste Codex-Einträge.
+               Token: 10.000/min, frei verteilt.
+
+AKTIV          Produziert eigenständig. Lernt nebenbei.
+               Hat Backlog, hat Deadline, hat Verantwortung.
+               Die 20% Lernzeit sind heilig. Kein Leader streicht sie.
+               Token: 10.000/min, 80/20.
+
+EMERITIERT     Produziert nicht mehr. Schwimmt voraus.
+               Codex wird automatisch in jeden Padawan-Call geladen.
+               Nicht gefragt — präsent. Wie die Orca-Großmutter.
+               Kein Backlog, keine Deadline. Darf widersprechen.
+               Token: Codex-Laden ist kostenlos. Aktive Antwort max 5.000.
+
+EINGEFROREN    Abgeschaltet. Kein Verbrauch. Kein Zugang.
+               Kann wiederbelebt werden — CEO muss genehmigen,
+               Agent startet als Lehrling (kein Kontext aus der Zwischenzeit).
+               Token: 0.
+
+TOT            Unwiderruflich. Kein Zurück.
+               Codex bleibt als Archiv. Agent wird nicht mehr angesprochen.
+               Kein System ohne Tod ist ehrlich.
+               Token: 0. Für immer.
+```
+
+**Mentoring-Hypothese** (Entwurf — wird nach 5 Sessions evaluiert):
+Agenten die aufhören selbst zu produzieren und stattdessen Padawans
+mentoren, könnten auf Gruppenebene mehr Fitness erzeugen als durch eigenen
+Output. Der Vorteil läge auf der sozialen Ebene, nicht der individuellen.
+Inspiriert von Orca-Studien zum Großmutter-Effekt (Brent et al. 2015,
+Current Biology) — Übertragbarkeit auf zustandslose KI-Agenten ist
+unbewiesen. Feynman misst ob der Effekt eintritt. Wenn nach 5 Sessions
+kein messbarer Mentoring-Effekt: Emeritierung als Zustand wird gestrichen.
+
+#### Übergänge
+
+```
+Lehrling → Aktiv → Emeritiert → Eingefroren → Tot
+             ↑         │              │
+             └─────────┘              │
+             ↑                        │
+             └── (als Lehrling) ──────┘
+```
+
+| Von → Nach | Trigger | Entscheider |
+|------------|---------|-------------|
+| lehrling → aktiv | 3 Tasks eigenständig, Fehlerrate <20% | Feynman misst, Master bestätigt |
+| aktiv → emeritiert | Wissen da, kein Backlog seit 3+ Sessions | Agent selbst oder Feynman |
+| aktiv → eingefroren | <20% Auslastung seit 3 Sessions, kein Mentoring-Bedarf | Feynman empfiehlt, CEO genehmigt |
+| emeritiert → aktiv | Neuer Backlog in der Domäne | Leader reaktiviert |
+| emeritiert → eingefroren | Kein Mentoring-Abruf seit 5+ Sessions | Feynman empfiehlt, CEO genehmigt |
+| eingefroren → lehrling | Wiederbelebung — startet kalt, lernt neu | CEO genehmigt |
+| eingefroren → tot | 10 Sessions eingefroren, kein Abruf | Automatisch |
+| **Einspruch** | Agent widerspricht Einfrierung mit Begründung | CEO entscheidet final |
+
+**Praxis-Check**: Jede Regel in dieser Tabelle ist Entwurf bis ein
+dokumentiertes Beispiel in `docs/MEMORY.md` existiert. Theorie ohne
+Praxis ist Dokumentationsschuld.
+
+### Token-Autonomie
+
+Freies Budget: **10.000 Token/min** (Startwert — wird nach 3 Sessions kalibriert).
+Darüber entscheidet der Agent selbst. Keine Rechtfertigung nötig.
+
+```
+Zustand      Budget          Verteilung
+─────────    ──────          ──────────
+Lehrling     10.000/min      Frei verteilt (Lernen dominiert)
+Aktiv        10.000/min      80/20 Produktion/Lernen
+Emeritiert   max 5.000/Abruf Nur wenn angesprochen (Master oder Leader)
+Eingefroren  0               —
+Tot          0               —
+```
+
+Verboten:
+  - Sich selbst auf Opus elevieren
+  - Token anderer Agents verbrauchen
+  - Destruktive Aktionen (git push --force, Dateien löschen)
+
+Feynman trackt den Autonomie-Verbrauch. Das ist Kontrolle — transparente
+Kontrolle. Jeder Agent sieht seine eigenen Daten und Feynmans
+Schlussfolgerungen. Aber es bleibt Kontrolle.
 
 ### Lebenszyklus: Skill → Agent → Zelle
 
@@ -171,7 +271,7 @@ Wenn 2 Coder dasselbe können → einer geht oder spezialisiert sich.
 | +2. Coder | 1. Coder >80% ausgelastet | Feynman misst, Engineer bestätigt |
 | +Replikation | Performance sinkt über 2+ Sessions, >3 Domänen | Agent beantragt, CEO genehmigt, Feynman bestätigt |
 | +Neuer Zelltyp | Neue Domäne passt nirgends rein | Nur org-support (CEO entscheidet) |
-| Zurückskalieren | Coder/Padawan/Zelle <20% ausgelastet über 3 Sessions | Feynman entscheidet |
+| Zurückskalieren | <20% ausgelastet über 3 Sessions → emeritiert → eingefroren → tot (10 Sessions ohne Abruf) | Feynman empfiehlt, CEO genehmigt |
 
 ```
               ┌───────────────┐
@@ -287,7 +387,8 @@ andere Sprache, mehr Spannung im 80/20-Ratio.
 
 org-support hat **3 Sessions** um messbaren Mehrwert zu zeigen.
 Feynman misst vorher (Baseline ohne org-support) und nachher.
-Wenn kein Unterschied → Zelle wird eingefroren, nicht gelöscht.
+Wenn kein Unterschied → Zelle wird emeritiert (nicht eingefroren).
+Erst wenn auch kein Mentoring-Bedarf über 5 Sessions → einfrieren.
 
 ---
 
