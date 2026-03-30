@@ -81,9 +81,20 @@
     let buildNoteDir = 1;
 
     // === 五音 (Wǔ Yīn) — Die 5 Töne der chinesischen Pentatonik ===
-    // Jedes Element hat seinen Ton: 宫商角徵羽 (Gōng Shāng Jué Zhǐ Yǔ)
-    // Pythagoräische Stimmung aus reinen Quinten: C D E G A
+    // === GENESIS-Töne: Stille → Tiefe → Höhe → Akkord → Pentatonik ===
+    const C2 = 65.41;  // Tiefes C
+    const C5 = 523.25; // Hohes C
     const ELEMENT_TONES = {
+        // 道 Tao = Stille. Kein Ton. Lindgren: "Manchmal ist Stille der schönste Moment."
+        tao:    null,
+        // ⚫ Yin = tief, dunkel, empfangend
+        yin:    { freq: C2,         wave: 'sine',     dur: 0.5,  vol: 0.12 },
+        // ⚪ Yang = hoch, hell, gebend
+        yang:   { freq: C5,         wave: 'sine',     dur: 0.3,  vol: 0.08 },
+        // ✨ Qi = Yin+Yang Akkord (wird in soundBuild als Doppelton gespielt)
+        qi:     { freq: C2,         wave: 'sine',     dur: 0.4,  vol: 0.10, chord: C5 },
+        // === 五音 Wu Yin — Pentatonik: 宫商角徵羽 (Gōng Shāng Jué Zhǐ Yǔ) ===
+        // Pythagoräische Stimmung aus reinen Quinten: C D E G A
         // 土 Erde = 宫 Gōng (C) — Grundton, Fundament, Mitte
         earth:  { freq: C4,         wave: 'triangle', dur: 0.14, vol: 0.10 },
         // 金 Metall = 商 Shāng (D) — klar, schneidend, rein
@@ -99,10 +110,15 @@
     function soundBuild(material) {
         if (!canPlaySound()) return;
         const tone = ELEMENT_TONES[material];
+        if (tone === null) return; // Tao = Stille
         if (tone) {
             // Element-Ton + leichte Variation
             const freq = tone.freq * (1 + (Math.random() - 0.5) * 0.02);
             playRichTone(freq, tone.dur + Math.random() * 0.04, tone.wave, tone.vol);
+            // Qi-Akkord: zweiter Ton dazu
+            if (tone.chord) {
+                playRichTone(tone.chord * (1 + (Math.random() - 0.5) * 0.02), tone.dur, tone.wave, tone.vol * 0.7);
+            }
             return;
         }
         // Nicht-Basis-Materialien: melodische Skala wie bisher
