@@ -1841,19 +1841,32 @@
                 if (currentMaterial === 'sapling') {
                     treeGrowth[r + ',' + c] = Date.now();
                 }
-                // Brunnen zieht nach 10 Sekunden Blumen an
-                if (currentMaterial === 'fountain') {
+                // Konsequenz: Wasser/Brunnen zieht nach 10s Blumen an (1-2 Stück)
+                if (currentMaterial === 'fountain' || currentMaterial === 'water') {
                     setTimeout(() => {
-                        for (let dr = -2; dr <= 2; dr++) {
-                            for (let dc = -2; dc <= 2; dc++) {
-                                const nr = r + dr, nc = c + dc;
-                                if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && !grid[nr][nc] && Math.random() < 0.3) {
-                                    grid[nr][nc] = 'flower';
-                                }
-                            }
+                        const neighbors = [[-1,0],[1,0],[0,-1],[0,1],[-1,-1],[-1,1],[1,-1],[1,1]];
+                        const empty = neighbors.map(([dr,dc]) => [r+dr, c+dc])
+                            .filter(([nr,nc]) => nr >= 2 && nr < ROWS-2 && nc >= 2 && nc < COLS-2 && !grid[nr][nc]);
+                        const count = Math.min(1 + Math.floor(Math.random() * 2), empty.length);
+                        for (let i = 0; i < count; i++) {
+                            const idx = Math.floor(Math.random() * empty.length);
+                            const [fr, fc] = empty.splice(idx, 1)[0];
+                            grid[fr][fc] = Math.random() < 0.5 ? 'flower' : 'plant';
                         }
-                        requestRedraw();
+                        if (count > 0) requestRedraw();
                     }, 10000);
+                }
+                // Konsequenz: Feuer neben Holz → Holz verbrennt nach 3s
+                if (currentMaterial === 'fire') {
+                    const adj = [[-1,0],[1,0],[0,-1],[0,1]];
+                    adj.forEach(([dr,dc]) => {
+                        const nr = r+dr, nc = c+dc;
+                        if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && grid[nr]?.[nc] === 'wood') {
+                            setTimeout(() => {
+                                if (grid[nr][nc] === 'wood' && grid[r]?.[c] === 'fire') { grid[nr][nc] = 'ash'; requestRedraw(); }
+                            }, 3000);
+                        }
+                    });
                 }
                 addPlaceAnimation(r, c);
                 if (!sessionClock.firstBlock) {
@@ -1871,10 +1884,21 @@
             if (cell !== null) {
                 if (!undoPushedThisStroke) { pushUndo(); undoPushedThisStroke = true; }
                 const yield_ = HARVEST_YIELD[cell] || { material: cell, count: 1 };
-                // Baum hinterlässt Setzling statt leerer Zelle
-                grid[r][c] = (cell === 'tree') ? 'sapling' : null;
+                // Konsequenz: Baum fällen → brauner Stumpf (path) für 5s, dann Setzling/null
+                const isTreeLike = ['tree', 'small_tree', 'palm', 'sapling'].includes(cell);
+                const afterStump = (cell === 'tree') ? 'sapling' : null;
+                grid[r][c] = isTreeLike ? 'path' : null; // path = braun = Stumpf
                 delete treeGrowth[r + ',' + c];
-                if (cell === 'tree') treeGrowth[r + ',' + c] = Date.now();
+                if (isTreeLike) {
+                    const sr = r, sc = c;
+                    setTimeout(() => {
+                        if (grid[sr]?.[sc] === 'path') {
+                            grid[sr][sc] = afterStump;
+                            if (afterStump === 'sapling') treeGrowth[sr + ',' + sc] = Date.now();
+                            requestRedraw();
+                        }
+                    }, 5000);
+                }
                 addToInventory(yield_.material, yield_.count);
                 unlockMaterial(yield_.material);
                 addPlaceAnimation(r, c);
