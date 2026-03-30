@@ -1,9 +1,9 @@
-# Sprint 10 — "Sound und Seele"
+# Sprint 12 — "Papa, warum kann ich mich nicht bewegen?"
 
-**Sprint Goal:** Jeder Block macht ein Geräusch. Die Insel klingt.
+**Sprint Goal:** Oscar kann spielen ohne Papa zu fragen. Figur bewegt sich. Tutorial erklärt sich selbst. Sound sofort.
 
 **Start:** 2026-03-30
-**Ende:** 2026-03-30 (Speed-Sprint)
+**Ende:** 2026-03-30
 
 ---
 
@@ -11,14 +11,13 @@
 
 | # | Item | Owner | Status |
 |---|------|-------|--------|
-| S10-1 | **Haikus am Strand** (#60) — 5 Haikus als Tooltips auf den Wu-Xing-Elementen | Artist | 🔲 To do |
-| S10-2 | **Palette-Buttons als Farbkästen** — Basis-Elemente mit satter Hintergrundfarbe statt leerem Emoji | Designer | 🔲 To do |
-| S10-3 | **Playwright Tests grün** — smoke.spec.js ausführen, Fehler fixen | Engineer | 🔲 To do |
+| S12-1 | **Spielfigur-Bewegung fixen** (#66) — Pfeiltasten reagieren sofort, kein Lag | Engineer | 🔲 To do |
+| S12-2 | **Tutorial-Hinweis** (#68) — Visueller Hinweis "Lege ☯️ auf die Insel" ohne Text-Wall | Designer | 🔲 To do |
+| S12-3 | **Sound beim Palette-Klick** (#70) — KLONK sofort beim Auswählen, nicht erst beim Platzieren | Engineer | 🔲 To do |
 
 ---
 
 ## Standup Log
 
-### 2026-03-30 (Sprint 10 Planning)
-- Sprint 9 done (Konsequenz, Unsinn-Rezepte, Playwright).
-- Sprint 10: Seele + Polish.
+### 2026-03-30 (Sprint 12 Planning)
+- Oscar hat getestet. Drei P0-Bugs. Alles andere ist egal bis Oscar spielen kann.
