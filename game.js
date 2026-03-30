@@ -1590,6 +1590,9 @@
             }
         }
 
+        // Blueprint-Overlay zeichnen (Ghost-Preview)
+        drawBlueprintOverlay();
+
         // Spielfigur zeichnen
         if (playerName) {
             const px = (playerPos.c + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
@@ -1835,6 +1838,7 @@
                 if (!undoPushedThisStroke) { pushUndo(); undoPushedThisStroke = true; }
                 grid[r][c] = currentMaterial;
                 checkAutomerge(r, c);
+                checkBlueprintMatch(r, c);
                 const hint = document.getElementById('genesis-hint');
                 if (hint) hint.style.display = 'none';
                 // Setzling platzieren startet Baumwachstum
@@ -2199,6 +2203,175 @@
                 checkAutomerge(mr, mc);
             }
         }, 500);
+    }
+
+    // ============================================================
+    // === BLUEPRINTS — 4×4 Bauplan-Erkennung ===
+    // ============================================================
+    let activeBlueprint = null; // { id, startR, startC } — aktuell angezeigter Bauplan-Overlay
+    let completedBlueprints = JSON.parse(localStorage.getItem('insel-blueprints-done') || '[]');
+
+    function checkBlueprintMatch(r, c) {
+        const BP = window.INSEL_BLUEPRINTS;
+        if (!BP) return;
+        const match = BP.findBlueprint(grid, r, c, ROWS, COLS);
+        if (!match) return;
+
+        const { blueprint, startR, startC } = match;
+
+        // Alle 4×4 Zellen zum Gebäude-Material verwandeln
+        for (let dr = 0; dr < 4; dr++) {
+            for (let dc = 0; dc < 4; dc++) {
+                const gr = startR + dr;
+                const gc = startC + dc;
+                const expected = blueprint.pattern[dr][dc];
+                if (expected !== null) {
+                    grid[gr][gc] = blueprint.id;
+                }
+            }
+        }
+
+        // Tracking
+        if (!completedBlueprints.includes(blueprint.id)) {
+            completedBlueprints.push(blueprint.id);
+            localStorage.setItem('insel-blueprints-done', JSON.stringify(completedBlueprints));
+        }
+
+        unlockMaterial(blueprint.id);
+        soundCraft();
+        requestRedraw();
+
+        // Animation: Funken auf allen Zellen
+        const wrapper = document.getElementById('canvas-wrapper');
+        if (wrapper) {
+            for (let dr = 0; dr < 4; dr++) {
+                for (let dc = 0; dc < 4; dc++) {
+                    if (blueprint.pattern[dr][dc] === null) continue;
+                    const spark = document.createElement('div');
+                    spark.className = 'merge-spark blueprint-spark';
+                    const cellSize = canvas.offsetWidth / (COLS + WATER_BORDER * 2);
+                    spark.style.left = ((startC + dc + WATER_BORDER) * cellSize + cellSize / 2 - 20) + 'px';
+                    spark.style.top = ((startR + dr + WATER_BORDER) * cellSize + cellSize / 2 - 20) + 'px';
+                    wrapper.appendChild(spark);
+                    setTimeout(() => spark.remove(), 1200);
+                }
+            }
+        }
+
+        showToast(`🏗️ Bauplan erkannt: ${blueprint.emoji} ${blueprint.name}! ${blueprint.desc}`, 5000);
+        updateBlueprintDisplay();
+    }
+
+    // Bauplan-Overlay auf Canvas zeichnen (Ghost-Preview)
+    function drawBlueprintOverlay() {
+        const BP = window.INSEL_BLUEPRINTS;
+        if (!BP || !activeBlueprint) return;
+
+        const bp = BP.BLUEPRINTS.find(b => b.id === activeBlueprint.id);
+        if (!bp) return;
+
+        const overlay = BP.getOverlay(grid, activeBlueprint.startR, activeBlueprint.startC, ROWS, COLS, bp.pattern);
+
+        for (const cell of overlay) {
+            const x = (cell.c + WATER_BORDER) * CELL_SIZE;
+            const y = (cell.r + WATER_BORDER) * CELL_SIZE;
+
+            if (cell.status === 'placed') {
+                // Grün: Material ist korrekt platziert
+                ctx.fillStyle = 'rgba(39, 174, 96, 0.3)';
+            } else if (cell.status === 'wrong') {
+                // Rot: Falsches Material
+                ctx.fillStyle = 'rgba(231, 76, 60, 0.3)';
+            } else {
+                // Blau-transparent: Material fehlt noch
+                ctx.fillStyle = 'rgba(52, 152, 219, 0.25)';
+            }
+            ctx.fillRect(x, y, CELL_SIZE, CELL_SIZE);
+
+            // Ghost-Emoji für fehlende Materialien
+            if (cell.status === 'missing' && cell.material !== '*') {
+                const mat = MATERIALS[cell.material];
+                if (mat) {
+                    ctx.globalAlpha = 0.4;
+                    ctx.font = `${CELL_SIZE * 0.45}px serif`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillStyle = '#fff';
+                    ctx.fillText(mat.emoji, x + CELL_SIZE / 2, y + CELL_SIZE / 2 + 1);
+                    ctx.globalAlpha = 1;
+                }
+            }
+
+            // Rand
+            ctx.strokeStyle = cell.status === 'placed' ? 'rgba(39,174,96,0.6)' :
+                              cell.status === 'wrong' ? 'rgba(231,76,60,0.6)' :
+                              'rgba(52,152,219,0.5)';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([4, 4]);
+            ctx.strokeRect(x + 1, y + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+            ctx.setLineDash([]);
+        }
+    }
+
+    function setActiveBlueprint(blueprintId, startR, startC) {
+        if (blueprintId === null) {
+            activeBlueprint = null;
+        } else {
+            activeBlueprint = { id: blueprintId, startR, startC };
+        }
+        requestRedraw();
+    }
+
+    function updateBlueprintDisplay() {
+        const BP = window.INSEL_BLUEPRINTS;
+        const panel = document.getElementById('blueprint-list');
+        if (!panel || !BP) return;
+
+        panel.innerHTML = BP.BLUEPRINTS.map(bp => {
+            const done = completedBlueprints.includes(bp.id);
+            return `<div class="blueprint-item ${done ? 'blueprint-done' : ''}" data-blueprint="${bp.id}">
+                <div class="blueprint-header">
+                    <span class="blueprint-emoji">${bp.emoji}</span>
+                    <strong>${bp.name}</strong>
+                    ${done ? '<span class="blueprint-check">✅</span>' : ''}
+                </div>
+                <small>${bp.desc}</small>
+                <div class="blueprint-grid-preview" data-blueprint="${bp.id}"></div>
+            </div>`;
+        }).join('');
+
+        // Mini-Previews rendern
+        panel.querySelectorAll('.blueprint-grid-preview').forEach(preview => {
+            const bp = BP.BLUEPRINTS.find(b => b.id === preview.dataset.blueprint);
+            if (!bp) return;
+            let html = '<div class="bp-mini-grid">';
+            for (let r = 0; r < 4; r++) {
+                for (let c = 0; c < 4; c++) {
+                    const mat = bp.pattern[r][c];
+                    const info = mat ? MATERIALS[mat] : null;
+                    html += `<span class="bp-cell ${mat ? '' : 'bp-empty'}">${info ? info.emoji : ''}</span>`;
+                }
+            }
+            html += '</div>';
+            preview.innerHTML = html;
+        });
+    }
+
+    // Bauplan-Overlay toggle wenn Spieler auf Bauplan in Sidebar klickt
+    function handleBlueprintClick(blueprintId) {
+        const BP = window.INSEL_BLUEPRINTS;
+        if (!BP) return;
+
+        if (activeBlueprint && activeBlueprint.id === blueprintId) {
+            // Toggle off
+            setActiveBlueprint(null);
+            return;
+        }
+
+        // Platziere Overlay in der Mitte des Spielfelds (oder bei Spieler)
+        const startR = Math.max(2, Math.min(ROWS - 6, (playerPos?.r || Math.floor(ROWS / 2)) - 2));
+        const startC = Math.max(2, Math.min(COLS - 6, (playerPos?.c || Math.floor(COLS / 2)) - 2));
+        setActiveBlueprint(blueprintId, startR, startC);
     }
 
     // ============================================================
@@ -3405,6 +3578,15 @@
             if (craftDialog && !craftDialog.classList.contains('hidden')) {
                 closeCraftingDialog();
             }
+        }
+    });
+
+    // --- Blueprint Sidebar Events ---
+    updateBlueprintDisplay();
+    document.getElementById('blueprint-list')?.addEventListener('click', (e) => {
+        const item = e.target.closest('.blueprint-item');
+        if (item) {
+            handleBlueprintClick(item.dataset.blueprint);
         }
     });
 

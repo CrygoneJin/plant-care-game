@@ -103,6 +103,14 @@ window.INSEL_MATERIALS = {
     catgold:  { emoji: '✨', label: 'Katzengold', color: '#FFD700', border: '#DAA520' },
     pancake:  { emoji: '🥞', label: 'Eierkuchen', color: '#F5DEB3', border: '#DCC89E' },
     aircastle:{ emoji: '🏰', label: 'Luftschloss', color: '#D6EAF8', border: '#AED6F1' },
+    // === GEBÄUDE (4×4 Bauplan-Ergebnisse) ===
+    hut:      { emoji: '🛖', label: 'Hütte',       color: '#A0522D', border: '#8B4513' },
+    tower:    { emoji: '🗼', label: 'Turm',         color: '#C0C0C0', border: '#A0A0A0' },
+    well:     { emoji: '⛲', label: 'Brunnenhaus',   color: '#7FB3D8', border: '#5499C7' },
+    garden:   { emoji: '🏡', label: 'Garten',       color: '#52BE80', border: '#27AE60' },
+    forge:    { emoji: '⚒️', label: 'Schmiede',     color: '#E74C3C', border: '#C0392B' },
+    dock:     { emoji: '⚓', label: 'Hafen',         color: '#5DADE2', border: '#2E86C1' },
+    castle:   { emoji: '🏰', label: 'Burg',         color: '#95A5A6', border: '#7F8C8D' },
     // === BIBLIOTHEK VON ALEXANDRIA ===
     library:  { emoji: '🏛️', label: 'Bibliothek', color: '#F5E6CA', border: '#D4C5A9' },
     scroll:   { emoji: '📜', label: 'Schriftrolle', color: '#FDEBD0', border: '#FAD7A0' },

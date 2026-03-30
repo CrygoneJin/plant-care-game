@@ -1041,6 +1041,92 @@ header h1 {
     opacity: 0.3;
 }
 
+/* === BLUEPRINTS — 4×4 Baupläne === */
+.blueprint-hint {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    padding: 4px 8px 8px;
+    margin: 0;
+}
+
+.blueprint-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    border: 2px solid transparent;
+}
+
+.blueprint-item:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: scale(1.02);
+}
+
+.blueprint-item.blueprint-active {
+    border-color: rgba(52, 152, 219, 0.8);
+    background: rgba(52, 152, 219, 0.15);
+}
+
+.blueprint-item.blueprint-done {
+    border-color: rgba(39, 174, 96, 0.4);
+}
+
+.blueprint-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.blueprint-emoji {
+    font-size: 20px;
+}
+
+.blueprint-check {
+    margin-left: auto;
+    font-size: 14px;
+}
+
+.blueprint-item small {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 11px;
+    display: block;
+    margin-bottom: 6px;
+}
+
+/* 4×4 Mini-Grid Preview */
+.bp-mini-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    max-width: 120px;
+    margin: 4px auto 0;
+}
+
+.bp-cell {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 3px;
+    min-height: 24px;
+}
+
+.bp-cell.bp-empty {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+/* Blueprint Spark Animation (reuses merge-spark base) */
+.blueprint-spark {
+    animation-duration: 1.2s !important;
+    background: radial-gradient(circle, #F39C12, #E67E22, transparent) !important;
+}
+
 /* === TOKEN DISPLAY === */
 #token-budget-display {
     display: none;
