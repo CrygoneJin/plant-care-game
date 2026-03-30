@@ -68,6 +68,20 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 
 ---
 
+## Sprint 7 Session — 2026-03-30
+
+| Item | Was | Ergebnis |
+|------|-----|---------|
+| S7-1 | Insel-Identität | Grid-Linien nur noch auf belegten Zellen (kein Spreadsheet-Look); Sand-Textur mit deterministischem Rauschen; 8 Starter-Palmen/Sand für organischeren Ersteindruck |
+| S7-2 | Spielfigur 🧒 | playerName-Input im Intro (Erst-Besuch), Arrow-Keys auf Desktop, Touch-Drag (Spieler-Zelle berühren + ziehen), AutoSave/Restore für playerPos |
+| S7-3 | Chat-Bubble sichtbar | #chat-bubble CSS (position:fixed, FAB 56px, Gradient) — war nur für Mobile definiert, Desktop sah nichts |
+
+**Fehler dieser Session**: `git fetch origin` nicht als erstes ausgeführt → Sprint 6 doppelt implementiert. Lektion steht bereits in SPRINT.md Retro-Notiz, aber Agent hat sie nicht gelesen. Ablauf-Fix: fetch → SPRINT.md lesen → dann implementieren.
+
+**Für Oscar**: Pfeil-Tasten bewegen jetzt ein Kind-Emoji 🧒 mit seinem Namen über die Insel. Der Chat-Button (💬) ist jetzt auf Desktop sichtbar. Die Insel sieht mehr nach Insel aus (kein Karo-Muster auf leerem Sand).
+
+---
+
 ## Reservierte Stimmen
 
 Personas die noch keine KI der Welt glaubwürdig abbilden kann.

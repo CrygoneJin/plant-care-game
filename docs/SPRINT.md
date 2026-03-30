@@ -58,9 +58,9 @@
 
 | # | Item | Owner | Status |
 |---|------|-------|--------|
-| S7-1 | **Insel-Identität** (#40) — Wasser-Rand sichtbar, Strand-Gradient, Canvas fühlt sich an wie Insel nicht wie Spreadsheet | Designer + Engineer | 🔲 To do |
-| S7-2 | **Spielfigur** (#55) — Kind benennt selbst (max 8 Buchst.), bewegt sich mit Pfeiltasten (PC) oder Finger-Drag (Touch) | Engineer + Designer | 🔲 To do |
-| S7-3 | **NPCs sichtbar** (#48+#49) — NPC-Chat-Buttons tauchen nicht auf bei schatzinsel.app, Bernd fehlt | Engineer | 🔲 To do |
+| S7-1 | **Insel-Identität** (#40) — Wasser-Rand sichtbar, Strand-Gradient, Canvas fühlt sich an wie Insel nicht wie Spreadsheet | Designer + Engineer | ✅ Done |
+| S7-2 | **Spielfigur** (#55) — Kind benennt selbst (max 8 Buchst.), bewegt sich mit Pfeiltasten (PC) oder Finger-Drag (Touch) | Engineer + Designer | ✅ Done |
+| S7-3 | **NPCs sichtbar** (#48+#49) — NPC-Chat-Buttons tauchen nicht auf bei schatzinsel.app, Bernd fehlt | Engineer | ✅ Done |
 
 ---
 
@@ -70,3 +70,9 @@
 - Sprint 6 Review done, PR #38 offen.
 - Sprint 7: "Oscar steht auf der Insel." Drei Items, alle sichtbar für ein 8-jähriges Kind.
 - S7-1 zuerst (visuell, kein State). S7-2 danach (Feature, braucht Canvas-Arbeit). S7-3 parallel prüfen.
+
+### 2026-03-30 (Sprint 7 Review — alle Items Done)
+- S7-1: Grid-Linien auf leeren Zellen entfernt (kein Spreadsheet mehr), Sand-Rauschen, 8 Starter-Palmen.
+- S7-2: 🧒 Spielfigur mit Name-Eingabe im Intro, Arrow-Keys, Touch-Drag, AutoSave-Integration.
+- S7-3: #chat-bubble CSS hinzugefügt (position:fixed, FAB) — war nur mobile-only, Desktop sah gar nichts.
+- Oscar sieht: Sein Name über einem Emoji auf der Insel. Pfeiltasten bewegen es. Chat-Button sichtbar.
