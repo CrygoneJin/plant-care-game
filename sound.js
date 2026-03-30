@@ -32,7 +32,7 @@
     }
 
     function playTone(freq, duration, type, vol) {
-        if (muted) return;
+        if (isMuted()) return;
         try {
             const ctx = ensureAudio();
             const osc = ctx.createOscillator();
@@ -72,7 +72,7 @@
 
     // Reicherer Sound: 2 Oszillatoren + leichtes Detune = Chorus-Effekt
     function playRichTone(freq, duration, type, vol) {
-        if (muted) return;
+        if (isMuted()) return;
         try {
             const ctx = ensureAudio();
             const t = ctx.currentTime;
@@ -169,7 +169,7 @@
     }
 
     function soundBuild(material) {
-        if (localStorage.getItem('insel-muted') === 'true') return;
+        if (isMuted()) return;
         if (!canPlaySound()) return;
         // Erster Sound der Session = KLONK (Paluten: "muss in 30 Sek auffallen")
         if (!firstSoundPlayed) {
@@ -216,7 +216,7 @@
     }
 
     function soundDemolish(getGridStats) {
-        if (localStorage.getItem('insel-muted') === 'true') return;
+        if (isMuted()) return;
         if (!canPlaySound()) return;
         const stats = typeof getGridStats === 'function' ? getGridStats() : { percent: 50 };
         const fillPercent = stats.percent || 0;
@@ -228,7 +228,7 @@
     }
 
     function soundAchievement() {
-        if (localStorage.getItem('insel-muted') === 'true') return;
+        if (isMuted()) return;
         // Zelda-Chest-artig: aufsteigende Fanfare mit Chorus
         playRichTone(523, 0.12, 'sine', 0.12);
         setTimeout(() => playRichTone(659, 0.12, 'sine', 0.12), 100);
@@ -236,7 +236,7 @@
     }
 
     function soundQuestComplete() {
-        if (localStorage.getItem('insel-muted') === 'true') return;
+        if (isMuted()) return;
         // Mario-Level-Complete-artig: längere Fanfare
         const notes = [392, 523, 659, 784, 880];
         notes.forEach((f, i) => {
@@ -245,14 +245,14 @@
     }
 
     function soundChop() {
-        if (localStorage.getItem('insel-muted') === 'true') return;
+        if (isMuted()) return;
         if (!canPlaySound()) return;
         playRichTone(180, 0.15, 'sawtooth', 0.1);
         setTimeout(() => playTone(120, 0.2, 'square', 0.08), 80);
     }
 
     function soundCraft() {
-        if (localStorage.getItem('insel-muted') === 'true') return;
+        if (isMuted()) return;
         if (!canPlaySound()) return;
         playRichTone(440, 0.1, 'sine', 0.1);
         setTimeout(() => playRichTone(554, 0.1, 'sine', 0.1), 100);
@@ -273,7 +273,7 @@
         qi:     165,
     };
     function soundSelect(material) {
-        if (localStorage.getItem('insel-muted') === 'true') return;
+        if (isMuted()) return;
         const freq = KLONK_FREQS[material] || 140;
         if (freq === null) return;
         try {
@@ -306,7 +306,7 @@
 
     // Allererster Block: tiefer Punch-Akkord — Minecraft-Moment
     function soundFirstBlock() {
-        if (localStorage.getItem('insel-muted') === 'true') return;
+        if (isMuted()) return;
         try {
             const ctx = ensureAudio();
             const t = ctx.currentTime;
