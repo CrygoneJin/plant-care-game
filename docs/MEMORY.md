@@ -64,6 +64,8 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 
 **Für Oscar**: 12 neue Quests warten — Einhorn-Schrein, Drachen-Nester, Ritter-Festung, Raumfahrt-Zentrum. Der Sprint ist fertig.
 
+**2026-03-30 Nachtrag**: Smoke Tests aus Sandbox nicht möglich — `x-deny-reason: host_not_allowed` kommt vom Sandbox-Proxy, nicht von Produktion. Kein Issue nötig.
+
 ---
 
 ## Reservierte Stimmen
