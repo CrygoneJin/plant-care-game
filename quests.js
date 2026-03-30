@@ -53,4 +53,11 @@ window.INSEL_QUEST_TEMPLATES = [
     { npc: 'paluten', title: 'Thumbnail-Turm', desc: 'DIESER TURM hat alles verändert! (NICHT CLICKBAIT!) Er muss SO hoch sein dass man ihn vom Festland sieht!', needs: { stone: 10, glass: 6, flag: 2, lamp: 6 }, reward: '💎💎💎💎💎' },
     { npc: 'paluten', title: 'Diamant-Mine', desc: 'LEUTE wir graben NACH UNTEN! Jeder weiß: auf Y-Level 12 sind die DIAMANTEN! Alter das wird episch!', needs: { stone: 12, lamp: 8, path: 6, crystal: 2 }, reward: '💎💎💎💎💎💎' },
     { npc: 'paluten', title: 'Enderman-Falle', desc: 'NICHT BEWEGEN! Der Enderman ist... HINTER DIR! Wir brauchen eine FALLE! Mit Wasser! Die hassen Wasser!', needs: { water: 8, fence: 8, lamp: 4, glass: 4 }, reward: '💎💎💎💎💎💎💎' },
+    // === LUKAS (Jim Knopf / Lummerland) ===
+    { npc: 'lukas', title: 'Gleise für Emma', desc: 'Also, mein Junge... Emma braucht Gleise! Ohne Gleise fährt keine Lok. Das ist Physik!', needs: { metal: 4, path: 6, wood: 2 }, reward: '🚂⚡' },
+    { npc: 'lukas', title: 'Der Bahnhof', desc: 'Lummerland hatte den kleinsten Bahnhof der Welt. Dieser hier wird GRÖSSER! Emma würde sich freuen.', needs: { stone: 6, roof: 2, door: 1, lamp: 2, path: 3 }, reward: '🚂🚂' },
+    { npc: 'lukas', title: 'Zwei Berge', desc: 'Eine Insel mit ZWEI Bergen! Wir brauchen einen zweiten Berg. König Alfons hat das so bestimmt.', needs: { stone: 10, earth: 6 }, reward: '🏔️🏔️' },
+    { npc: 'lukas', title: 'Der Tunnel', desc: 'Mit viel Tunnel und viel Gleisen! Jim und ich sind mal durch einen Tunnel gefahren wo es GANZ dunkel war. Das war aufregend!', needs: { stone: 8, lamp: 4, path: 4, door: 2 }, reward: '🚂🚂🚂' },
+    { npc: 'lukas', title: 'Emmas Kohlelager', desc: 'Emma braucht Kohle! VIEL Kohle! Ohne Kohle kein Dampf, ohne Dampf keine Lok, ohne Lok kein Lukas. Logik!', needs: { stone: 6, earth: 4, fire: 3, metal: 2 }, reward: '🚂🚂🚂🚂' },
+    { npc: 'lukas', title: 'Brief an König Alfons', desc: 'König Alfons den Viertel-vor-Zwölften muss ich schreiben! Er will wissen ob die Insel groß genug ist. Bau was Beeindruckendes!', needs: { flag: 4, crown: 1, fence: 6, flower: 4, lamp: 4 }, reward: '🚂👑🚂' },
 ];

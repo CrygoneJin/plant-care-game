@@ -3617,6 +3617,88 @@
     trackSession();
     trackEvent('session_start', { theme: currentTheme });
 
+    // === HAU DEN LUKAS — Minispiel ===
+    // Kraftbalken oszilliert, Timing-Klick bestimmt Stärke.
+    // "Eine Insel mit zwei Bergen und dem tiefen weiten Meer..."
+    let hauDenLukasActive = false;
+    const HDL_LEVELS = [
+        { min: 0,  label: '😴 Schwach', reward: null },
+        { min: 20, label: '💪 Ordentlich!', reward: { mat: 'stone', count: 2, msg: '🪨 2x Stein!' } },
+        { min: 50, label: '🔥 STARK!', reward: { mat: 'metal', count: 2, msg: '⬜ 2x Metall!' } },
+        { min: 75, label: '⭐ MEGA!', reward: { mat: 'diamond', count: 1, msg: '💎 Diamant!!' } },
+        { min: 90, label: '🏆 LUMMERLAND!', reward: { mat: 'crown', count: 1, msg: '👑 KRONE! König Alfons wäre stolz!' } },
+    ];
+
+    function startHauDenLukas() {
+        if (hauDenLukasActive) return;
+        hauDenLukasActive = true;
+
+        // Overlay erstellen
+        const overlay = document.createElement('div');
+        overlay.id = 'hdl-overlay';
+        overlay.innerHTML = `
+            <div class="hdl-game">
+                <h2>🔨 HAU DEN LUKAS!</h2>
+                <p style="font-size:12px;color:#888;">"König Alfons hat das erfunden. Zu meinen Ehren!" — Lukas</p>
+                <div class="hdl-tower">
+                    <div class="hdl-marker" id="hdl-marker"></div>
+                    <div class="hdl-scale">
+                        <span>🏆</span><span>⭐</span><span>🔥</span><span>💪</span><span>😴</span>
+                    </div>
+                </div>
+                <div class="hdl-result" id="hdl-result"></div>
+                <button class="hdl-hammer" id="hdl-hammer">🔨 HAUEN!</button>
+                <button class="hdl-close" id="hdl-close">Zurück</button>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+
+        // Kraftbalken oszilliert
+        let power = 0;
+        let direction = 1;
+        let speed = 2;
+        let animId = null;
+
+        function animate() {
+            power += direction * speed;
+            if (power >= 100) { power = 100; direction = -1; speed = Math.min(4, speed + 0.1); }
+            if (power <= 0) { power = 0; direction = 1; }
+            const marker = document.getElementById('hdl-marker');
+            if (marker) marker.style.bottom = power + '%';
+            animId = requestAnimationFrame(animate);
+        }
+        animId = requestAnimationFrame(animate);
+
+        // Hauen!
+        document.getElementById('hdl-hammer').addEventListener('click', () => {
+            cancelAnimationFrame(animId);
+            const level = [...HDL_LEVELS].reverse().find(l => power >= l.min) || HDL_LEVELS[0];
+            const result = document.getElementById('hdl-result');
+            if (result) result.innerHTML = `<span style="font-size:24px">${level.label}</span><br>Kraft: ${Math.round(power)}%`;
+
+            if (level.reward) {
+                addToInventory(level.reward.mat, level.reward.count);
+                unlockMaterial(level.reward.mat);
+                showToast(`🔨 ${level.label} ${level.reward.msg}`, 3000);
+                soundCraft();
+            } else {
+                showToast('🔨 Mehr Dampf, mein Junge! Emma hätte stärker gehauen!');
+            }
+
+            const hammer = document.getElementById('hdl-hammer');
+            if (hammer) { hammer.textContent = '🔨 Nochmal!'; hammer.onclick = () => { overlay.remove(); startHauDenLukas(); }; }
+        });
+
+        document.getElementById('hdl-close').addEventListener('click', () => {
+            cancelAnimationFrame(animId);
+            overlay.remove();
+            hauDenLukasActive = false;
+        });
+    }
+
+    // Lukas-NPC löst Hau-den-Lukas aus wenn man ihn berührt
+    window.startHauDenLukas = startHauDenLukas;
+
     // Grid für Chat-Integration exportieren
     window.grid = grid;
 

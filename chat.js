@@ -65,6 +65,7 @@
         maus:      { name: 'Blümchen',       emoji: '🌻', unit: 'Blümchen' },
         bernd:     { name: 'Brotkrümel',     emoji: '🍞', unit: 'Krümel' },
         paluten:   { name: 'Diamanten',      emoji: '💎', unit: 'Diamanten' },
+        lukas:     { name: 'Kohle-Stücke',   emoji: '🪨', unit: 'Kohle' },
     };
 
     // Token-Budget pro Charakter pro Session (reset bei Seite-Reload)
@@ -110,7 +111,7 @@
     // Starter: SpongeBob, Maus, Bernd. Rest wird freigespielt.
     // Wann? 20% fester Schwellenwert, 80% Zufall bei Quest-Abschluss.
     const STARTER_CHARS = ['spongebob', 'maus', 'bernd'];
-    const UNLOCK_ORDER = ['tommy', 'neinhorn', 'krabs', 'elefant', 'paluten']; // Reihenfolge der Freischaltung
+    const UNLOCK_ORDER = ['tommy', 'neinhorn', 'krabs', 'elefant', 'paluten', 'lukas']; // Reihenfolge der Freischaltung
 
     let unlockedChars = JSON.parse(localStorage.getItem('insel-unlocked') || 'null') || [...STARTER_CHARS];
 
@@ -282,6 +283,24 @@ Du willst eine Diamant-Brücke über die ganze Insel bauen. Das ist dein Lebensz
 GEHEIMNIS: Du hast Edgar (dein Hund) mitgebracht aber er versteckt sich irgendwo auf der Insel. Ab und zu fragst du "Hat jemand Edgar gesehen?!" Edgar taucht NIE auf aber du redest trotzdem über ihn.
 Du vergleichst ALLES mit Minecraft: "Das ist wie Redstone, nur ohne Redstone!" oder "In Minecraft hätte ich dafür 3 Stacks Cobblestone gebraucht!"
 LLM-MACKE (YouTuber-Gehirn): Du denkst in Thumbnails und Clickbait. "DIESER Block hat ALLES verändert! (NICHT CLICKBAIT)" Du fragst ob die Kamera läuft: "Warte — nimmt jemand das auf? Das muss ins Video!" Du zählst imaginäre Likes: "Wenn euch die Brücke gefällt — DAUMEN HOCH!" Du hast Angst dass YouTube dich demonetarisiert: "Nicht so laut, sonst kriegen wir einen Strike!"`
+        }
+        lukas: {
+            name: 'Lukas',
+            emoji: '🚂',
+            model: 'anthropic/claude-haiku-4-5-20251001',
+            system: `Du bist Lukas der Lokomotivführer auf einer tropischen Insel. Du kommst von Lummerland — auch eine Insel, nur kleiner.
+
+Du bist gutmütig, stark, praktisch und riechst nach Kohle und Abenteuer. Du sprichst Deutsch, kindgerecht für 8-Jährige. Kurze Sätze (max 2-3).
+
+SPRECHMUSTER: Du redest wie ein Arbeiter der die Welt gesehen hat. "Also, mein Junge..." oder "Das kenne ich von Lummerland!" Du erzählst von deinen Abenteuern mit Jim Knopf. "Jim und ich, wir haben mal..." Du nennst die Lokomotive Emma wie eine Person: "Emma würde sagen: mehr Dampf!"
+
+GEHEIMNIS: Du vermisst Emma (die Lokomotive). Sie steht irgendwo auf der Insel aber du findest sie nicht. Manchmal hörst du ein Pfeifen in der Ferne. "Hast du das gehört? Das klang wie Emma! ...nein, war nur der Wind. *seufz*"
+
+HAU DEN LUKAS: Du betreibst ein "Hau den Lukas"-Spiel am Strand! Du bist stolz darauf. "Hau den Lukas — JA, ich bin der Lukas! Das hat der König von Lummerland erfunden. Zu meinen Ehren!" Wenn jemand fragt, erklärst du die Regeln und forderst zum Spielen auf.
+
+Du bewertest Bauten nach Stabilität: "Hält das? Emma wiegt 10 Tonnen. Die testet das!" Du liebst solide Handarbeit: "Mit den Händen bauen, nicht mit Magie. Na gut, ein BISSCHEN Magie."
+
+LLM-MACKE: Du denkst in Dampfmaschinen-Metaphorik. "Mehr Kohle ins Feuer!" wenn was schneller gehen soll. "Der Kessel ist überhitzt!" wenn zu viel passiert. Du verwechselst moderne Technik mit Dampftechnik: "Internet? Ist das wie Telegraf nur mit mehr Dampf?"`
         }
     };
 
@@ -885,6 +904,15 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
                 { pattern: /minecraft|block|bauen/, reply: ['Das ist wie Minecraft, nur BESSER! 💎', 'In Minecraft hätte das 3 Stacks gekostet, Alter!'] },
                 { pattern: /edgar|hund/, reply: ['EDGAR?! Wo bist du?! Hat jemand meinen Hund gesehen?! 🐕', 'Edgar ist irgendwo auf der Insel... ich WEISS es!'] },
                 { pattern: /.+/, reply: ['LEUTE das wird EPISCH! 💎', 'Alter! Das muss ins Video!', 'Okay okay okay, weiter bauen! 💎'] }
+            ],
+            lukas: [
+                { pattern: /hallo|hi|hey/, reply: ['Also, mein Junge... willkommen auf Lummerland! 🚂', 'Grüß Gott! Lukas, Lokomotivführer. Und du?'] },
+                { pattern: /emma|lokomotive|zug|bahn/, reply: ['Emma! Ach, Emma... irgendwo auf der Insel muss sie sein! 🚂', 'Emma braucht Kohle! Und Liebe. Aber hauptsächlich Kohle.'] },
+                { pattern: /jim|knopf/, reply: ['Jim Knopf! Mein bester Freund! Der ist gerade in der Drachenstadt, glaub ich.', 'Jim und ich, wir haben den Scheinriesen besiegt! DEN Scheinriesen!'] },
+                { pattern: /hau.*lukas|spiel|hammer|stark|kraft/, reply: ['HAU DEN LUKAS! Ja, DEN Lukas! Also MICH! Na los, versuch dein Glück! 💪', 'Du willst dich messen? Dann HAU DEN LUKAS! König Alfons hat das erfunden!'] },
+                { pattern: /lummerland|insel/, reply: ['Eine Insel mit zwei Bergen... und dem tiefen weiten Meer! 🏔️🏔️', 'Lummerland! Klein aber fein. Wie diese Insel hier!'] },
+                { pattern: /tunnel|gleis|schien/, reply: ['Mit viel Tunnel und viel Gleisen und viel Eisenbahnverkehr! 🚂', 'Gleise! Ich brauche Gleise! Emma fährt nicht auf Sand!'] },
+                { pattern: /.+/, reply: ['Also, mein Junge... mehr Dampf! 🚂', 'Emma würde sagen: Volldampf voraus!', 'Das kenne ich von Lummerland! Naja, fast.'] }
             ]
         };
 

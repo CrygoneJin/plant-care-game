@@ -231,6 +231,7 @@
             { id: 'tommy',     emoji: '🦞', habitat: 'boat' },      // Beim Boot
             { id: 'neinhorn',  emoji: '🦄', habitat: 'cave' },      // Bei der Höhle
             { id: 'paluten',   emoji: '💎', habitat: 'mountain' },   // Auf dem Berg
+            { id: 'lukas',     emoji: '🚂', habitat: 'path' },       // Am Weg (Schienen!)
             // Bernd bleibt in der Chat-Bubble (Support-Agent, nicht auf der Karte)
         ];
 
@@ -270,6 +271,10 @@
                     break;
                 case 'mountain':
                     pos = { r: mountainR - 1, c: mountainC };
+                    break;
+                case 'path':
+                    // Am Weg — Lukas steht bei seinen "Schienen"
+                    pos = { r: Math.floor(rows * 0.65), c: Math.floor(cols * 0.5) };
                     break;
             }
             // Sicherheitscheck

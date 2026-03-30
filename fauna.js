@@ -311,16 +311,21 @@
                     const fontSize = Math.max(8, cellSize * 0.22);
                     ctx.font = `${fontSize}px sans-serif`;
                     ctx.fillStyle = 'rgba(0,0,0,0.6)';
-                    const label = `💬 ${npc.emoji}`;
+                    const label = npc.id === 'lukas' ? `🔨 ${npc.emoji}` : `💬 ${npc.emoji}`;
                     ctx.fillRect(px - 24, py - cellSize * 0.85, 48, fontSize + 6);
                     ctx.fillStyle = 'white';
                     ctx.textBaseline = 'middle';
                     ctx.fillText(label, px, py - cellSize * 0.65);
 
-                    // Bei Berührung (1 Feld): Chat öffnen mit diesem NPC
+                    // Bei Berührung (1 Feld): Interaktion mit NPC
                     if (dist <= 1 && !npc._chatOpened) {
                         npc._chatOpened = true;
-                        if (window.openChat) window.openChat(npc.id);
+                        if (npc.id === 'lukas' && window.startHauDenLukas) {
+                            // Lukas: Hau den Lukas statt Chat!
+                            window.startHauDenLukas();
+                        } else if (window.openChat) {
+                            window.openChat(npc.id);
+                        }
                         setTimeout(() => { npc._chatOpened = false; }, 5000);
                     }
                 }

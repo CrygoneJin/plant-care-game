@@ -1623,6 +1623,98 @@ body.code-view-active #chat-settings-btn {
     }
 }
 
+/* === HAU DEN LUKAS — Minispiel === */
+#hdl-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hdl-game {
+    background: linear-gradient(135deg, #2C3E50, #1A252F);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    color: white;
+    max-width: 300px;
+    width: 90%;
+}
+
+.hdl-game h2 {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+}
+
+.hdl-tower {
+    position: relative;
+    width: 60px;
+    height: 250px;
+    margin: 16px auto;
+    background: linear-gradient(to top, #27AE60, #F1C40F, #E74C3C);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.hdl-marker {
+    position: absolute;
+    left: -4px; right: -4px;
+    height: 8px;
+    background: white;
+    border-radius: 4px;
+    bottom: 0;
+    transition: none;
+    box-shadow: 0 0 8px white;
+}
+
+.hdl-scale {
+    position: absolute;
+    top: 0; bottom: 0; right: -28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 16px;
+}
+
+.hdl-result {
+    min-height: 50px;
+    margin: 12px 0;
+    font-size: 16px;
+}
+
+.hdl-hammer {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    font-size: 20px;
+    background: linear-gradient(135deg, #E67E22, #D35400);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-bottom: 8px;
+    transition: transform 0.1s;
+}
+
+.hdl-hammer:active {
+    transform: scale(0.95);
+}
+
+.hdl-close {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    background: rgba(255,255,255,0.1);
+    color: #aaa;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
 /* === iPhone Portrait (Hochkant) — max-width 768px === */
 @media (orientation: portrait) and (max-width: 768px) {
     /* Hauptlayout: von horizontal zu vertikal */
