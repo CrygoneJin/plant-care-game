@@ -21,6 +21,9 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 
 | Datum | Was | Warum gut |
 |-------|-----|-----------|
+| 2026-03-29 | Sprint 6 alle 3 Items in einer Session done | S6-1 (Discovery-Counter), S6-2 (+20 Quests, alle neuen Materialien abgedeckt), S6-3 (Tooltips) |
+| 2026-03-29 | updateDiscoveryCounter() Pattern | Funktion war da, aber nicht beim Start aufgerufen — Symptom: falscher Startwert. Fix: eine Zeile. |
+| 2026-03-29 | mat-label → title Migration | 25 Buttons in HTML bereinigt, keine versteckten Spans mehr, Tooltips funktionieren auf Desktop |
 | 2026-03-27 | Insel-Architekt v1 läuft | Pure HTML/CSS/JS, kein Framework, öffnet sich im Browser — fertig |
 | 2026-03-27 | Responsive für 3 Geräte | iPhone SE, MacBook 2013, 4K — ein CSS, keine Frameworks |
 | 2026-03-27 | 14 Skills + 5 Agents in einem Tag | Persona, Anti-Cringe, Recap, Collect, Meeting, Triage, Backlog, etc. |
@@ -46,6 +49,36 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 - Claude CLI `--print -p` für nicht-interaktive Jobs
 - GitHub API für Repo-Discovery statt manueller Listen
 - launchd statt cron auf macOS — nativer, zuverlässiger
+
+---
+
+## Sprint 6 Session — 2026-03-29
+
+| Item | Was | Ergebnis |
+|------|-----|---------|
+| S6-1 | Entdeckungszähler dynamisch | `updateDiscoveryCounter()` in game.js — zählt unlockedMaterials.size + BASE_MATERIALS.length |
+| S6-2 | Quests erweitert | 12 neue Templates (Drachen/Einhorn/Roboter/Phönix/Raumfahrt/Geister) — 32 Quests gesamt |
+| S6-3 | Label-Cleanup | mat-label Spans weg, title-Attribute auf Palette-Buttons, CSS-Toten-Code (.mat-label, .recent-label, .craft-hint-label) gelöscht |
+
+**Lerning**: Commits mit misleadendem Titel prüfen — "Entdeckungszähler dynamisch" war S6-1, aber SPRINT.md zeigte es noch als 🔲. Beim nächsten Sprint: SPRINT.md im selben Commit als ✅ updaten.
+
+**Für Oscar**: 12 neue Quests warten — Einhorn-Schrein, Drachen-Nester, Ritter-Festung, Raumfahrt-Zentrum. Der Sprint ist fertig.
+
+**2026-03-30 Nachtrag**: Smoke Tests aus Sandbox nicht möglich — `x-deny-reason: host_not_allowed` kommt vom Sandbox-Proxy, nicht von Produktion. Kein Issue nötig.
+
+---
+
+## Sprint 7 Session — 2026-03-30
+
+| Item | Was | Ergebnis |
+|------|-----|---------|
+| S7-1 | Insel-Identität | Grid-Linien nur noch auf belegten Zellen (kein Spreadsheet-Look); Sand-Textur mit deterministischem Rauschen; 8 Starter-Palmen/Sand für organischeren Ersteindruck |
+| S7-2 | Spielfigur 🧒 | playerName-Input im Intro (Erst-Besuch), Arrow-Keys auf Desktop, Touch-Drag (Spieler-Zelle berühren + ziehen), AutoSave/Restore für playerPos |
+| S7-3 | Chat-Bubble sichtbar | #chat-bubble CSS (position:fixed, FAB 56px, Gradient) — war nur für Mobile definiert, Desktop sah nichts |
+
+**Fehler dieser Session**: `git fetch origin` nicht als erstes ausgeführt → Sprint 6 doppelt implementiert. Lektion steht bereits in SPRINT.md Retro-Notiz, aber Agent hat sie nicht gelesen. Ablauf-Fix: fetch → SPRINT.md lesen → dann implementieren.
+
+**Für Oscar**: Pfeil-Tasten bewegen jetzt ein Kind-Emoji 🧒 mit seinem Namen über die Insel. Der Chat-Button (💬) ist jetzt auf Desktop sichtbar. Die Insel sieht mehr nach Insel aus (kein Karo-Muster auf leerem Sand).
 
 ---
 
@@ -383,6 +416,28 @@ Zwei Schichten, ein Spiel. Pixar-Prinzip.
 - `window.getMetrics()` um `sessionDuration` erweitern (liegt aktuell nur in `getFeynmanStats()`)
 - Ersten echten Test-Chat machen und Feynman Sessions Tabelle in n8n prüfen
 - Cloudflare Worker umbenennen falls gewünscht (Dashboard, nicht CLI)
+
+---
+
+## Session 2026-03-30 (Autonomer Sprint-Agent)
+
+### Fehler
+| Datum | Was | Lektion |
+|-------|-----|---------|
+| 2026-03-30 | Agent hat Sprint 6 nochmal implementiert obwohl remote bereits fertig | Immer `git fetch origin` + `git log origin/feat/*` BEVOR Code angefasst wird. Remote-State lesen, nicht nur local. |
+| 2026-03-30 | Smoke Test 403 durch Sandbox-Proxy | Sandbox kann externe URLs nicht erreichen. Smoke Tests für schatzinsel.app nur auf echtem Gerät möglich. |
+
+### Erfolge
+| Datum | Was |
+|-------|-----|
+| 2026-03-30 | Sprint 6 vollständig: 39 Quests (war 20), Entdeckungszähler dynamisch, alle Tooltips |
+| 2026-03-30 | PR #38 offen: feat/sprint-6 → main |
+| 2026-03-30 | Sprint 7 geplant: Insel-Identität + Spielfigur + NPCs sichtbar |
+
+### Learnings
+- **Remote-First**: Vor jedem Commit `git fetch origin` — sonst baut man Duplikate.
+- **Autonomer Agent erkennt Sprint-State**: Ceremony-Logik aus SPRINT.md funktioniert ohne Briefing.
+- **39 Quests decken alle 68 Materialien ab**: Crafting-Loop ist geschlossen. Jetzt braucht das Spiel eine sichtbare Spielfigur damit Oscar "sich selbst auf der Insel sieht".
 
 ---
 
