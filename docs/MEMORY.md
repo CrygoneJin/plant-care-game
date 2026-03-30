@@ -514,6 +514,27 @@ KINDERSICHERHEIT-Block von 40 auf 2 Zeilen. Persönlichkeit stärker UND billige
 
 ---
 
+## Session 2026-03-30 — Sprint 18 (Autonomer Agent)
+
+### Fehler
+| Datum | Was | Lektion |
+|-------|-----|---------|
+| 2026-03-30 | Local main war 87 Commits hinter origin/main wegen divergiertem Verlauf | Nach `git fetch` sofort `git reset --hard origin/main` wenn main divergiert ist. Remote ist Wahrheit. |
+| 2026-03-30 | Sprint 18 Item S18-3 ("Schatzinsel") war bereits implementiert | Vor Item-Auswahl checken: `grep -i "schatzinsel" index.html`. Triviale Aufgaben im Code verifizieren, nicht aus Backlog-Text ableiten. |
+
+### Erfolge
+| Datum | Was |
+|-------|-----|
+| 2026-03-30 | Sprint 18 done: Tonhöhe (Erde=C3 tief, Feuer=G5 hoch, Wasser=Glide A4→A3), Genesis-Badge (道→⚫⚪→五行→✨→万+), Schatzinsel-Name bereits da |
+
+### Learnings
+- **Wu Yin Physik**: Erde gehört tiefer (C3 = 130 Hz), Feuer höher (G5 = 784 Hz). Der Klang folgt der Philosophie — Kinder spüren das ohne es zu wissen.
+- **Glide-Ton für Wasser**: `frequency.exponentialRampToValueAtTime` von A4→A3 = 0.3s Abstieg. Klingt wie fließendes Wasser. Drei Zeilen Code.
+- **Genesis-Badge ist ein Spiegel**: Das Kind sieht 道 am Anfang. Dann ⚫⚪. Dann 五行. Progression ohne Text. Feynman: "Wenn's kein Label braucht, ist's gut genug."
+- **Für Oscar**: Feuer geht HOCH. Erde geht TIEF. Wasser fließt. Die Insel klingt jetzt wie sie aussieht.
+
+---
+
 ## Regeln für neue Einträge
 
 1. **Fehler**: Nur wenn es ein echtes Problem verursacht hat (nicht theoretisch)

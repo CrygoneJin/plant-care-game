@@ -1,4 +1,32 @@
-# Sprint 17 — "Oscar's Töne"
+# Sprint 18 — "Stimme der Elemente"
+
+**Sprint Goal:** Jedes Element klingt wie es sich anfühlt. Tiefer, höher, fließend. Oscar hört den Unterschied.
+
+**Start:** 2026-03-30
+**Ende:** 2026-03-30
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner | Status |
+|---|------|-------|--------|
+| S18-1 | **Tonhöhe zu Elementen** (#30) — Feuer=höher (G5), Erde=tiefer (C3), Wasser=fließend (Glide A4→A3). sound.js | Scientist (Coder 1) | ✅ Done |
+| S18-2 | **Genesis-Stufen sichtbar** (#69) — Badge im Header: 道→⚫⚪→五行→✨→万+. game.js | Engineer (Coder 2) | ✅ Done |
+| S18-3 | **Insel-Name "Schatzinsel"** (#33) — `<title>` + `<h1>` — war bereits implementiert. | Designer (Coder 3) | ✅ Done |
+
+---
+
+## Standup Log
+
+### 2026-03-30 (Sprint 18 Planning — nach Sprint 17 Review/Retro)
+- Sprint 17 alles Done: Replay-Song, Wasser-Wachstum, Avatar-Wahl.
+- Sprint 18 Fokus: Klang als Physik (Wu Xing), Fortschritt sichtbar, Insel hat ihren Namen.
+- 3 Dateien, 3 Coder, kein Merge-Konflikt.
+
+---
+
+## Sprint 17 — "Oscar's Töne" ✅ DONE
 
 **Sprint Goal:** Das Bauwerk singt. Die Insel lebt. Oscar hört was er gebaut hat.
 

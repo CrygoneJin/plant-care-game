@@ -428,6 +428,19 @@ header h1 {
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
+#genesis-badge {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 700;
+    color: rgba(255, 215, 0, 0.95);
+    padding: 4px 6px;
+    white-space: nowrap;
+    cursor: default;
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+    transition: all 0.3s ease;
+}
+
 #discovery-counter {
     font-family: var(--font-body);
     font-size: 13px;

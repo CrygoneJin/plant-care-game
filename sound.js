@@ -40,6 +40,28 @@
         } catch (e) { /* Audio nicht verfügbar — kein Problem */ }
     }
 
+    // Glide-Ton: Frequenz fließt von startFreq zu endFreq (für Wasser)
+    function playGlideTone(startFreq, endFreq, duration, type, vol) {
+        try {
+            const ctx = ensureAudio();
+            const t = ctx.currentTime;
+            for (let detune of [0, 7]) {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = type || 'sine';
+                osc.frequency.setValueAtTime(startFreq, t);
+                osc.frequency.exponentialRampToValueAtTime(endFreq, t + duration);
+                osc.detune.value = detune;
+                gain.gain.setValueAtTime((vol || 0.1) * 0.6, t);
+                gain.gain.exponentialRampToValueAtTime(0.001, t + duration);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(t);
+                osc.stop(t + duration);
+            }
+        } catch (e) {}
+    }
+
     // Reicherer Sound: 2 Oszillatoren + leichtes Detune = Chorus-Effekt
     function playRichTone(freq, duration, type, vol) {
         try {
@@ -82,8 +104,9 @@
 
     // === 五音 (Wǔ Yīn) — Die 5 Töne der chinesischen Pentatonik ===
     // === GENESIS-Töne: Stille → Tiefe → Höhe → Akkord → Pentatonik ===
-    const C2 = 65.41;  // Tiefes C
-    const C5 = 523.25; // Hohes C
+    const C2 = 65.41;   // Tiefes C
+    const C3 = 130.81;  // Tiefes Mittleres C
+    const C5 = 523.25;  // Hohes C
     const ELEMENT_TONES = {
         // 道 Tao = Stille. Kein Ton. Lindgren: "Manchmal ist Stille der schönste Moment."
         tao:    null,
@@ -94,17 +117,17 @@
         // ✨ Qi = Yin+Yang Akkord (wird in soundBuild als Doppelton gespielt)
         qi:     { freq: C2,         wave: 'sine',     dur: 0.4,  vol: 0.10, chord: C5 },
         // === 五音 Wu Yin — Pentatonik: 宫商角徵羽 (Gōng Shāng Jué Zhǐ Yǔ) ===
-        // Pythagoräische Stimmung aus reinen Quinten: C D E G A
-        // 土 Erde = 宫 Gōng (C) — Grundton, Fundament, Mitte
-        earth:  { freq: C4,         wave: 'triangle', dur: 0.14, vol: 0.10 },
-        // 金 Metall = 商 Shāng (D) — klar, schneidend, rein
-        metal:  { freq: C4 * 9/8,   wave: 'square',   dur: 0.10, vol: 0.07 },
-        // 木 Holz = 角 Jué (E) — warm, organisch, wachsend
-        wood:   { freq: C4 * 81/64, wave: 'triangle', dur: 0.14, vol: 0.08 },
-        // 火 Feuer = 徵 Zhǐ (G) — hell, energisch, aufsteigend
-        fire:   { freq: C4 * 3/2,   wave: 'sawtooth', dur: 0.06, vol: 0.06 },
-        // 水 Wasser = 羽 Yǔ (A) — fließend, weich, tief
-        water:  { freq: C4 * 27/16, wave: 'sine',     dur: 0.18, vol: 0.08 },
+        // Pythagoräische Stimmung — Sprint 18: Erde tiefer, Feuer höher, Wasser fließend
+        // 土 Erde = 宫 Gōng — tief, geerdet, Fundament (eine Oktave tiefer als vorher)
+        earth:  { freq: C3,         wave: 'triangle', dur: 0.20, vol: 0.12 },
+        // 金 Metall = 商 Shāng — klar, glockenartig (Quinte über Erde)
+        metal:  { freq: C3 * 3/2,   wave: 'square',   dur: 0.10, vol: 0.08 },
+        // 木 Holz = 角 Jué — warm, wachsend (C4, Frühling)
+        wood:   { freq: C4,         wave: 'triangle', dur: 0.14, vol: 0.09 },
+        // 火 Feuer = 徵 Zhǐ — höchster Ton, aufsteigend, heiß (G5 = C4 * 3)
+        fire:   { freq: C4 * 3,     wave: 'sawtooth', dur: 0.06, vol: 0.06 },
+        // 水 Wasser = 羽 Yǔ — fließend (glide: A4→A3, absteigende Energie)
+        water:  { freq: C4 * 27/16, wave: 'sine',     dur: 0.30, vol: 0.09, glide: C3 * 27/16 },
     };
 
     // Erster Sound = KLONK. Laut. Befriedigend. Minecraft-Niveau.
@@ -148,9 +171,14 @@
         const tone = ELEMENT_TONES[material];
         if (tone === null) return; // Tao = Stille
         if (tone) {
-            // Element-Ton + leichte Variation
-            const freq = tone.freq * (1 + (Math.random() - 0.5) * 0.02);
-            playRichTone(freq, tone.dur + Math.random() * 0.04, tone.wave, tone.vol);
+            if (tone.glide) {
+                // Fließend: Frequenz gleitet von freq zu glide (Wasser)
+                playGlideTone(tone.freq, tone.glide, tone.dur, tone.wave, tone.vol);
+            } else {
+                // Element-Ton + leichte Variation
+                const freq = tone.freq * (1 + (Math.random() - 0.5) * 0.02);
+                playRichTone(freq, tone.dur + Math.random() * 0.04, tone.wave, tone.vol);
+            }
             // Qi-Akkord: zweiter Ton dazu
             if (tone.chord) {
                 playRichTone(tone.chord * (1 + (Math.random() - 0.5) * 0.02), tone.dur, tone.wave, tone.vol * 0.7);
@@ -225,11 +253,11 @@
     // KLONK — lautes befriedigendes Geräusch beim Auswählen eines Materials.
     // Minecraft-Niveau: tief, körperlich, sofort. Kein Throttle — jeder Klick klingt.
     const KLONK_FREQS = {
-        earth:  130,
-        metal:  195,
-        wood:   110,
-        fire:   220,
-        water:  155,
+        earth:  65,   // C2 — tief, geerdet (Sprint 18: tiefer)
+        metal:  196,  // G3 — klar, glockenartig
+        wood:   147,  // D3 — warm, organisch
+        fire:   440,  // A4 — hoch, heiß (Sprint 18: höher)
+        water:  110,  // A2 — ruhig, fließend (Sprint 18: tiefer)
         tao:    null,
         yin:    80,
         yang:   330,

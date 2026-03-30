@@ -1324,6 +1324,7 @@
                 }
             }
         }
+        updateGenesisBadge();
     }
 
     // Save-Migration: alte Saves ohne unlocked → Grid + Inventar scannen
@@ -2536,6 +2537,29 @@
         const total = Object.keys(MATERIALS).length;
         const discovered = unlockedMaterials.size + BASE_MATERIALS.length;
         el.textContent = `🔬 ${discovered} / ${total} entdeckt`;
+        updateGenesisBadge();
+    }
+
+    // Genesis-Stufen Fortschrittsanzeige (#69)
+    // 道→⚫⚪→五行→✨→万+ zeigt Oscar wo er in der Schöpfung steht
+    function updateGenesisBadge() {
+        const badge = document.getElementById('genesis-badge');
+        if (!badge) return;
+        const crafted = unlockedMaterials.size; // alles außer BASE_MATERIALS
+        let label, tip;
+        if (!_genesisYinYangShown) {
+            label = '道'; tip = 'Genesis: Tao — Der Anfang aller Dinge';
+        } else if (!_genesisQiShown) {
+            label = '⚫⚪'; tip = 'Genesis: Yin & Yang — Zwei Kräfte erwachen';
+        } else if (crafted < 5) {
+            label = '五行'; tip = 'Genesis: Die 5 Elemente — Die Welt entfaltet sich';
+        } else if (crafted < 20) {
+            label = `✨${crafted}`; tip = `Genesis: ${crafted} Dinge erschaffen`;
+        } else {
+            label = '万+'; tip = `Genesis: 万物 — 10.000 Dinge (${crafted} entdeckt)`;
+        }
+        badge.textContent = label;
+        badge.title = tip;
     }
 
     function selectMaterial(mat) {
