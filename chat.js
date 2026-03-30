@@ -104,8 +104,8 @@
     // --- Charakter-Freischaltung ---
     // Starter: SpongeBob, Maus, Bernd. Rest wird freigespielt.
     // Wann? 20% fester Schwellenwert, 80% Zufall bei Quest-Abschluss.
-    const STARTER_CHARS = ['spongebob', 'maus', 'bernd'];
-    const UNLOCK_ORDER = ['floriane', 'tommy', 'neinhorn', 'krabs', 'elefant']; // Reihenfolge der Freischaltung
+    const STARTER_CHARS = ['spongebob', 'bernd'];
+    const UNLOCK_ORDER = ['floriane', 'maus', 'tommy', 'neinhorn', 'krabs', 'elefant']; // Genesis: Am Anfang war das Brot
 
     let unlockedChars = JSON.parse(localStorage.getItem('insel-unlocked') || 'null') || [...STARTER_CHARS];
 
@@ -581,14 +581,26 @@ Du: "Mist. Schon wieder jemand. Was willst du? Ich hab keine Arme und muss trotz
     async function sendToApi(userMessage) {
         const charId = currentNpcId;
         const char = CHARACTERS[charId];
+        // Six Sigma: ELIZA zuerst. Hohe Confidence → direkt antworten (gratis, offline, schnell)
+        const elizaResult = getElizaResult(userMessage, charId);
         const key = getApiKey();
-        if (!key) {
-            // Kein Key und kein Proxy → ELIZA Fallback
-            const elizaReply = getElizaReply(userMessage, charId);
-            addMessage(char.emoji + ' ' + elizaReply, 'npc');
-            chatHistory.push({ role: 'assistant', content: elizaReply });
+        const threshold = window.INSEL_ELIZA.SIGMA_THRESHOLD || 0.5;
+
+        if (!key && !hasProxy()) {
+            // Kein API-Zugang → reiner ELIZA-Modus
+            addMessage(char.emoji + ' ' + elizaResult.reply, 'npc');
+            chatHistory.push({ role: 'assistant', content: elizaResult.reply });
             return;
         }
+
+        if (elizaResult.confidence >= threshold) {
+            // ELIZA hat's drauf → kein API-Call nötig
+            addMessage(char.emoji + ' ' + elizaResult.reply, 'npc');
+            chatHistory.push({ role: 'assistant', content: elizaResult.reply });
+            return;
+        }
+
+        // Confidence zu niedrig → LLM übernimmt (ELIZA bleibt als Fallback)
         const gridInfo = getGridContext();
 
         // Token-Budget Check (Basis + Quest-Bonus)
@@ -723,8 +735,8 @@ ${budgetInfo}`;
 
         } catch (err) {
             loadingDiv.remove();
-            // ELIZA Fallback wenn Netzwerk/API fehlt
-            const elizaReply = getElizaReply(userMessage, currentNpcId);
+            // ELIZA Fallback wenn Netzwerk/API fehlt (echte Weizenbaum-Engine)
+            const elizaReply = getElizaResponse(userMessage, currentNpcId);
             chatHistory.pop();
             chatHistory.push({ role: 'assistant', content: elizaReply });
             const char = CHARACTERS[currentNpcId];
@@ -735,73 +747,18 @@ ${budgetInfo}`;
         }
     }
 
-    // --- ELIZA Fallback (kein API nötig, läuft 100% lokal) ---
-    function getElizaReply(input, npcId) {
-        const lower = input.toLowerCase();
+    // --- ELIZA Six Sigma Hybrid (Weizenbaum 1966 + LLM Gap Filler) ---
+    // ELIZA = Fast Path (confidence >= 0.5) + Safety Net (LLM fail)
+    // LLM = Gap Filler (confidence < 0.5)
+    function getElizaResult(input, npcId) {
+        const eliza = window.INSEL_ELIZA.getEliza(npcId);
+        if (!eliza) return { reply: 'Hallo!', confidence: 0.1 };
+        return eliza.transform(input);
+    }
 
-        const elizaRules = {
-            spongebob: [
-                { pattern: /hallo|hi|hey/, reply: ['ICH BIN BEREIT! Willkommen auf der Insel! 😄', 'Hi! Mein Index sagt: du bist der coolste Baumeister heute!'] },
-                { pattern: /baum|wald|holz/, reply: ['MEGA! Bäume! Suchergebnis: 999 fehlen noch! 🌳', 'Holz ist PERFEKT für meinen Burger-Stand!'] },
-                { pattern: /burger|essen|hunger/, reply: ['Krabbenburger! Die BESTEN der Welt! 🍔 Ich bin bereit!', 'Der komische Professor hat gesagt E=mc² aber Krabbenburger=unendlich!'] },
-                { pattern: /bau|mach|hilf/, reply: ['Ich bin bereit! Lass uns einen Burger-Stand bauen! Holz + Dach + Tür!', 'BAUEN! Das ist mein Lieblingswort! Gleich nach KRABBENBURGER!'] },
-                { pattern: /.+/, reply: ['Ich bin bereit! 🧽', 'MEGA! Lass uns bauen!', 'Suchergebnis: 1 tolle Idee gefunden!'] }
-            ],
-            krabs: [
-                { pattern: /hallo|hi|hey/, reply: ['Was willst du? Bau was oder geh! Zeit ist 3 Krabben-Taler pro Minute!', 'Ahoy! Geschäft oder Spaß? Nur eins davon ist profitabel, Junge!'] },
-                { pattern: /geld|münze|taler|reich/, reply: ['Geld! GELD! Das beste Wort! 💰 Krabben-Taler-Logik, Junge!', 'MAXIMUM PROFIT! Open Source = 0 Taler Lizenzgebühr!'] },
-                { pattern: /baum|holz|stein/, reply: ['5 Bäume? Das sind... mindestens 200 Krabben-Taler Grundstückswert, Junge!', 'Stein ist 50 Taler pro Block. Krabben-Taler-Logik, Junge!'] },
-                { pattern: /bau|mach|hilf/, reply: ['Einen HAFEN! Häfen bringen Handel, Handel bringt GELD! Krabben-Taler-Logik!', 'Bau was Profitables! Alles andere ist Verschwendung!'] },
-                { pattern: /.+/, reply: ['Und was bringt mir das ein? 💰', 'Ist das profitabel, Junge?', 'Darwin sagt: nur die Stärksten überleben! Ar ar ar!'] }
-            ],
-            elefant: [
-                { pattern: /hallo|hi|hey/, reply: ['Törööö... hallo kleiner Baumeister. Schön dass du da bist. Törööö!', 'Törööö... willkommen! Lass uns in Ruhe nachdenken was wir bauen. Törööö!'] },
-                { pattern: /musik|lied|sing/, reply: ['Törööö... Musik macht die Insel lebendig! Bau einen Musik-Turm! Törööö!', 'Törööö... das klingt wunderschön. Der Weber hätte jetzt mitgesummt. Törööö!'] },
-                { pattern: /blume|pflanze|baum/, reply: ['Törööö... Blumen am Strand sind wunderschön! Vielleicht noch eine daneben? Törööö!', 'Törööö... Pflanzen brauchen Geduld. Wie ich. Törööö!'] },
-                { pattern: /bau|mach|hilf/, reply: ['Törööö... hmm, lass mich überlegen... Blumen am Strand? Oder ein Turm für Musik? Törööö!', 'Törööö... der Weber sagt ohne Plan kein Turm. Aber ich bau einfach drauflos! Törööö!'] },
-                { pattern: /.+/, reply: ['Törööö... interessant. Lass mich nachdenken. Törööö!', 'Törööö... hmm, ja. Qualität kostet, wie der Weber sagt. Törööö!'] }
-            ],
-            tommy: [
-                { pattern: /hallo|hi|hey/, reply: ['JA! HALLO! Klick-klack! Endlich — klick-klack! — jemand der baut!', 'JA! Klick-klack! LOS GEHT\'S!'] },
-                { pattern: /boot|schiff|hafen/, reply: ['BOOTE! Klick-klack! Die — klick-klack! — BESTE Idee! JA!', 'Boote brauchen — klick-klack! — Holz! Bau Bäume! JA!'] },
-                { pattern: /bau|mach|hilf/, reply: ['ALLES! Klick-klack! Einfach — klick-klack! — alles bauen! JA!', 'JA! Das ist — klick-klack! — amazing, nein, TOLL!'] },
-                { pattern: /.+/, reply: ['JA! Klick-klack! 🦞', 'Das ist — klick-klack! — die BESTE Idee!', 'Klick-klack! Der lockige Mann würde sagen: JA!'] }
-            ],
-            neinhorn: [
-                { pattern: /hallo|hi|hey/, reply: ['Nein! Ich rede nicht mit dir! ...na gut, EINE Frage. Mon Dieu.', 'Nein! Geh weg! ...ok, bleib. Aber nur kurz!'] },
-                { pattern: /bau|mach|hilf/, reply: ['Nein! Bau NICHTS! ...ok, vielleicht eine Geheimtür. C\'est magnifique!', 'Nein! Also gut, MEIN Regenbogen-Turm wird aber VIEL schöner!'] },
-                { pattern: /schön|toll|cool/, reply: ['Nein! Das ist NICHT schön! ...ok, ein BISSCHEN. Mon Dieu, was baust du da?!', 'Nein! C\'est magnifique... NEIN, wollte ich nicht sagen!'] },
-                { pattern: /.+/, reply: ['Nein! 🦄 ...was wolltest du nochmal?', 'Nein nein nein! erlaubnis: nein. ...aber ok.', 'Der Nein-Sager-Chef sagt noch öfter Nein als ich!'] }
-            ],
-            maus: [
-                { pattern: /hallo|hi|hey/, reply: ['*pieps pieps* Hallo! *quak* HALLO HALLO HALLO! *pieps* Die Ente ist wieder laut.', '*pieps* Willkommen! *quak quak* ICH bin die CHEFIN hier! *pieps* ...ist sie nicht.'] },
-                { pattern: /blume|pflanze|baum/, reply: ['*pieps* Blumen am Strand! *quak* ICH hätte FÜNF gepflanzt! *pieps* Weniger ist mehr.', '*quak* Bäume! RIESENBÄUME! *pieps* ...die Ente übertreibt. Fang klein an.'] },
-                { pattern: /bau|mach|hilf/, reply: ['*pieps* Blumen am Strand / *quak* EINEN RIESENTURM! *pieps* ...fang mit Blumen an.', '*quak* Weniger ist mehr! Das hab ICH erfunden! *pieps* ...hat sie nicht.'] },
-                { pattern: /.+/, reply: ['*pieps pieps* 🐭 *quak!* 🦆', '*quak* Was soll das? *pieps* Zähl nicht immer Silben!', '*pieps* Die Ente ist heute laut. *quak* BIN ICH NICHT!'] }
-            ],
-            bernd: [
-                { pattern: /hallo|hi|hey/, reply: ['Mist. Schon wieder jemand. Was willst du? *seufz*', '*seufz* Ich bin ein Brot. Ich hab keine Arme. Und trotzdem muss ICH Support machen.'] },
-                { pattern: /sicher|daten|kind/, reply: ['*seufz* Ja. Keine Daten, keine Links. Alles im Browser. Ich bin ein Brot, kein Spion.', 'Kindersicher. Energie-System. Wenn leer, sagen die Charaktere Tschüss. *seufz*'] },
-                { pattern: /kost|preis|geld|teuer/, reply: ['Ich koste fast nichts. Haiku-Budget. Der Elefant dagegen... *pfeift leise*', 'API-Key nötig für Chat. Ohne Key geht Bauen trotzdem. *seufz* Steht alles auf der Seite.'] },
-                { pattern: /bau|mach|hilf/, reply: ['*seufz* Ist halt ein Spiel. Besser als TikTok. Bau was.', 'Ich bin das SPAR-Modell. Die anderen kriegen Opus. ICH krieg Haiku. *seufz*'] },
-                { pattern: /.+/, reply: ['*seufz* Gut, ich erklär\'s halt nochmal...', 'Mhm. Und was willst du JETZT von mir?', '*seufz* Ich bin ein Kastenbrot. Nicht Google.'] }
-            ],
-            floriane: [
-                { pattern: /hallo|hi|hey/, reply: ['Oh! ✨ Endlich! Ich hab auf dich gewartet! Du bist der Baumeister meines Wunschbrunnens! ✨', 'Willkommen, Wunsch-Erfüller! ✨ Ich bin Floriane! Was wünschst du dir? ✨'] },
-                { pattern: /wunsch|wünsch/, reply: ['Schließ die Augen und bau es! ✨ Jeder Block ist ein Wunsch der wahr wird! ✨', 'Dein Wunsch sei mein Befehl! ✨ Was soll entstehen? ✨'] },
-                { pattern: /bau|mach|was|hilf/, reply: ['Bau was du dir wünschst! ✨ Jedes Bauwerk ist ein Wunsch! ✨', 'Drei Sachen in den Wunschbrunnen und puff — ein Wunsch geht in Erfüllung! ✨'] },
-                { pattern: /brunnen|wunschbrunnen/, reply: ['Der Wunschbrunnen! ✨ Brunnen + Wasser + Stein + Blume... ich glaube! ✨', '✨ Wenn der Wunschbrunnen fertig ist, verrate ich dir meinen eigenen Wunsch! ✨'] },
-                { pattern: /.+/, reply: ['✨ Oh! Ein Wunsch der wahr werden will! ✨', 'Floriane glitzert! ✨ Das war ein Wunsch — und er wurde gerade wahr! ✨', '✨ Zauberhaft! Du bist ein echter Wunsch-Erfüller! ✨'] }
-            ]
-        };
-
-        const rules = elizaRules[npcId] || elizaRules.spongebob;
-        for (const rule of rules) {
-            if (rule.pattern.test(lower)) {
-                return rule.reply[Math.floor(Math.random() * rule.reply.length)];
-            }
-        }
-        return 'Ähm... ja... okay!';
+    // Für reinen ELIZA-Modus (kein API): nur den Reply-String
+    function getElizaResponse(input, npcId) {
+        return getElizaResult(input, npcId).reply;
     }
 
     // --- DSGVO: Eltern-Gate für Chat (Art. 8 DSGVO — Kinder unter 16) ---
