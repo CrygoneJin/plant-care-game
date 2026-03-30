@@ -1321,6 +1321,10 @@
     // Freigeschaltete Materialien (durch Ernten oder Crafting)
     let unlockedMaterials = new Set();
 
+    // === SPIELFIGUR ===
+    let playerName = localStorage.getItem('insel-player-name') || '';
+    let playerPos = { r: 8, c: 12 }; // Mitte der Insel
+
     function saveUnlocked() {
         localStorage.setItem('insel-unlocked-materials', JSON.stringify([...unlockedMaterials]));
     }
@@ -1429,6 +1433,12 @@
     const ctx = canvas.getContext('2d');
     const introOverlay = document.getElementById('intro-overlay');
     const startButton = document.getElementById('start-button');
+
+    // Name-Gruppe im Intro nur bei Erst-Besuch zeigen
+    const nameGroup = document.getElementById('player-name-group');
+    if (nameGroup && playerName) {
+        nameGroup.style.display = 'none';
+    }
     const statsContent = document.getElementById('stats-content');
     const projectNameInput = document.getElementById('project-name');
     const loadDialog = document.getElementById('load-dialog');
@@ -1510,18 +1520,20 @@
                     continue;
                 }
 
-                // Sand oder Strand
-                ctx.fillStyle = isBeachEdge ? '#F0C87A' : '#F5DEB3';
+                // Sand oder Strand (Strand etwas dunkler)
+                const sandVariation = ((r * 7 + c * 13) % 5) * 2; // deterministisches Rauschen
+                const sandBase = isBeachEdge ? [220, 185, 100] : [245, 222, 179];
+                ctx.fillStyle = `rgb(${sandBase[0] - sandVariation}, ${sandBase[1] - sandVariation}, ${sandBase[2] - sandVariation})`;
                 ctx.fillRect(x, y, CELL_SIZE, CELL_SIZE);
 
-                // Leichtes Grid
-                ctx.strokeStyle = 'rgba(0, 0, 0, 0.08)';
-                ctx.lineWidth = 1;
-                ctx.strokeRect(x, y, CELL_SIZE, CELL_SIZE);
-
-                // Material zeichnen
+                // Material zeichnen (Grid-Linie nur auf belegten Zellen — kein Spreadsheet-Look)
                 if (grid[r][c]) {
                     const mat = MATERIALS[grid[r][c]];
+                    // Subtile Zellgrenze
+                    ctx.strokeStyle = 'rgba(0, 0, 0, 0.12)';
+                    ctx.lineWidth = 1;
+                    ctx.strokeRect(x, y, CELL_SIZE, CELL_SIZE);
+
                     ctx.fillStyle = mat.color;
                     ctx.fillRect(x + 1, y + 1, CELL_SIZE - 2, CELL_SIZE - 2);
 
@@ -1609,6 +1621,45 @@
         // Code-View Overlay (zeigt Quellcode statt Emojis)
         drawCodeOverlay();
 
+        // Spielfigur zuletzt zeichnen (immer sichtbar über allem)
+        drawPlayer();
+
+    }
+
+    // === SPIELFIGUR — Zeichnen + Bewegen ===
+    function drawPlayer() {
+        if (!playerName) return;
+        const px = (playerPos.c + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
+        const py = (playerPos.r + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
+
+        ctx.save();
+        // Figur-Emoji
+        ctx.font = `${CELL_SIZE * 0.7}px serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('🧒', px, py);
+
+        // Name-Label
+        const fontSize = Math.max(9, CELL_SIZE * 0.27);
+        ctx.font = `bold ${fontSize}px sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.strokeStyle = 'rgba(0, 0, 0, 0.7)';
+        ctx.lineWidth = 3;
+        ctx.strokeText(playerName, px, py - CELL_SIZE * 0.35);
+        ctx.fillStyle = 'white';
+        ctx.fillText(playerName, px, py - CELL_SIZE * 0.35);
+        ctx.restore();
+    }
+
+    function movePlayer(dr, dc) {
+        if (!playerName) return;
+        const nr = playerPos.r + dr;
+        const nc = playerPos.c + dc;
+        // Spieler bleibt auf bebaubarem Bereich (kein Wasser-Rand)
+        if (nr >= 2 && nr < ROWS - 2 && nc >= 2 && nc < COLS - 2) {
+            playerPos = { r: nr, c: nc };
+        }
     }
 
     // --- Animationen ---
@@ -1893,6 +1944,7 @@
             inventory: inventory,
             unlocked: [...unlockedMaterials],
             discovered: [...discoveredRecipes],
+            playerPos: playerPos,
         };
         localStorage.setItem('insel-projekte', JSON.stringify(projects));
         // Subtiler Indikator: Save-Button blinkt kurz
@@ -2097,11 +2149,31 @@
 
     // Intro — Session-Uhr starten
     function startGame() {
+        // Spielernamen aus dem Intro-Eingabefeld übernehmen
+        const nameInput = document.getElementById('player-name-input');
+        if (nameInput) {
+            const typed = nameInput.value.trim().slice(0, 8);
+            if (typed) {
+                playerName = typed;
+                localStorage.setItem('insel-player-name', playerName);
+            } else if (!playerName) {
+                playerName = 'Oskar';
+                localStorage.setItem('insel-player-name', playerName);
+            }
+        }
         introOverlay.classList.add('hiding');
         setTimeout(() => {
             introOverlay.style.display = 'none';
         }, 600);
         window.startSessionClock();
+    }
+
+    // Name-Input: Enter-Taste = Spiel starten
+    const playerNameInput = document.getElementById('player-name-input');
+    if (playerNameInput) {
+        playerNameInput.addEventListener('keydown', e => {
+            if (e.key === 'Enter') startGame();
+        });
     }
 
     startButton.addEventListener('click', startGame);
@@ -2233,21 +2305,35 @@
     });
 
     // Touch-Events für Tablet
+    let isDraggingPlayer = false;
+
     canvas.addEventListener('touchstart', (e) => {
         e.preventDefault();
         undoPushedThisStroke = false;
         const touch = e.touches[0];
         const cell = getGridCell(touch);
-        if (cell) {
-            isMouseDown = true;
-            applyTool(cell.r, cell.c);
+        if (!cell) return;
+        // Spielfigur-Drag: Berühre die Spieler-Zelle → Figur ziehen
+        if (playerName && cell.r === playerPos.r && cell.c === playerPos.c) {
+            isDraggingPlayer = true;
+            return;
         }
+        isMouseDown = true;
+        applyTool(cell.r, cell.c);
     });
 
     canvas.addEventListener('touchmove', (e) => {
         e.preventDefault();
         const touch = e.touches[0];
-        hoverCell = getGridCell(touch);
+        const cell = getGridCell(touch);
+        if (isDraggingPlayer && cell) {
+            // Spieler auf neue Position ziehen (kein Wasser-Rand)
+            if (cell.r >= 2 && cell.r < ROWS - 2 && cell.c >= 2 && cell.c < COLS - 2) {
+                playerPos = { r: cell.r, c: cell.c };
+            }
+            return;
+        }
+        hoverCell = cell;
         if (isMouseDown && hoverCell && currentTool !== 'fill') {
             applyTool(hoverCell.r, hoverCell.c);
         }
@@ -2255,6 +2341,7 @@
 
     canvas.addEventListener('touchend', () => {
         isMouseDown = false;
+        isDraggingPlayer = false;
         hoverCell = null;
     });
 
@@ -2350,6 +2437,11 @@
             case 'b': case 'B': selectTool('build'); break;
             case 'e': case 'E': selectTool('harvest'); break;
             case 'f': case 'F': selectTool('fill'); break;
+            // Spielfigur-Steuerung
+            case 'ArrowUp':    e.preventDefault(); movePlayer(-1, 0); break;
+            case 'ArrowDown':  e.preventDefault(); movePlayer(1, 0); break;
+            case 'ArrowLeft':  e.preventDefault(); movePlayer(0, -1); break;
+            case 'ArrowRight': e.preventDefault(); movePlayer(0, 1); break;
         }
     });
 
@@ -2753,20 +2845,24 @@
         if (savedProjects[AUTOSAVE_KEY].discovered) {
             discoveredRecipes = new Set(savedProjects[AUTOSAVE_KEY].discovered);
         }
+        if (savedProjects[AUTOSAVE_KEY].playerPos) {
+            playerPos = savedProjects[AUTOSAVE_KEY].playerPos;
+        }
         window.grid = grid;
         migrateUnlocked();
         showToast('🔄 Letzte Insel wiederhergestellt');
     } else {
-        // Starter-Insel: kein Save vorhanden — Oskar soll sofort verstehen was zu tun ist
-        // Sand am Strand-Rand (r==2 ist Strand-Kante oben, ROWS-3==13 unten)
-        grid[2][11] = 'sand';   // Strand oben
-        grid[2][12] = 'sand';   // Strand oben
-        grid[13][11] = 'sand';  // Strand unten
-        // Palmen innen drin
-        grid[3][11] = 'tree';   // Palme nahe Strand
-        grid[3][12] = 'tree';   // zweite Palme
+        // Starter-Insel: kein Save — Oskar soll sofort eine echte Insel sehen
+        grid[2][11] = 'sand';   grid[2][12] = 'sand';   // Strand oben
+        grid[13][11] = 'sand';  grid[13][12] = 'sand';  // Strand unten
+        grid[2][6]  = 'sand';   grid[13][6]  = 'sand';  // Strand seitlich
+        grid[2][17] = 'sand';   grid[13][17] = 'sand';
+        grid[3][11] = 'tree';   grid[3][12]  = 'tree';  // Palmen oben
+        grid[12][11]= 'tree';   grid[12][12] = 'tree';  // Palmen unten
+        grid[3][6]  = 'tree';   grid[12][6]  = 'tree';  // Palmen links
+        grid[3][17] = 'tree';   grid[12][17] = 'tree';  // Palmen rechts
         window.grid = grid;
-        setTimeout(() => showToast('🏝️ Hier fehlt noch was... Bau los!', 3500), 2000);
+        setTimeout(() => showToast('🏝️ Deine Insel wartet... Bau los!', 3500), 2000);
     }
 
     // 15fps gameLoop — ~75% CPU-Reduktion gegenüber 60fps
