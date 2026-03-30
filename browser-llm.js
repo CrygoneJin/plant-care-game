@@ -1,6 +1,11 @@
 // === BROWSER-LLM — Lokale KI direkt im Browser ===
 // WebGPU (GPU/NPU) → WASM (CPU) Fallback
 // Kein API-Key, kein Server, kein Tracking. Alles lokal.
+//
+// PROGRESSIVE LOADING:
+// Phase 1: ELIZA antwortet sofort (0 Sekunden)
+// Phase 2: WebLLM lädt im Hintergrund (Spieler merkt nichts)
+// Phase 3: Nahtloser Übergang — Antworten werden "schlauer"
 
 (function () {
     'use strict';
@@ -63,6 +68,11 @@
     let loadPromise = null;
     let onProgressCallback = null;
 
+    // --- Progressive Loading State ---
+    let backgroundLoadStarted = false;
+    let backgroundLoadDelay = 30000; // 30s nach Spielstart — Spieler ist beschäftigt
+    let sessionStartTime = Date.now();
+
     // --- WebLLM laden (CDN, kein Build-Tool nötig) ---
     function getWebLLM() {
         return window.webllm;
@@ -117,6 +127,42 @@
         return loadPromise;
     }
 
+    // --- Progressive Background Loading ---
+    // Startet automatisch nach 30s Spielzeit, leise im Hintergrund.
+    // Spieler chattet mit ELIZA. Sobald Engine fertig → nahtloser Übergang.
+    function startBackgroundLoad() {
+        if (backgroundLoadStarted) return;
+        if (engineReady) return;
+        backgroundLoadStarted = true;
+
+        // Warte auf WebLLM CDN (async module)
+        const waitForWebLLM = setInterval(() => {
+            if (window.webllm) {
+                clearInterval(waitForWebLLM);
+                // Leise laden — kein UI-Feedback, kein Spinner
+                loadEngine(null).catch(() => {
+                    // Fehlgeschlagen — kein Problem, ELIZA läuft weiter
+                    backgroundLoadStarted = false;
+                });
+            }
+        }, 2000);
+
+        // Aufgeben nach 60s Warten auf CDN
+        setTimeout(() => clearInterval(waitForWebLLM), 60000);
+    }
+
+    // Auto-Start: Nach 30s Spielzeit oder beim ersten Chat-Öffnen
+    function scheduleBackgroundLoad() {
+        const elapsed = Date.now() - sessionStartTime;
+        const remaining = Math.max(0, backgroundLoadDelay - elapsed);
+        setTimeout(startBackgroundLoad, remaining);
+    }
+
+    // Sofort starten wenn Browser-Provider aktiv ist
+    if (localStorage.getItem('insel-use-browser-llm') === 'true') {
+        scheduleBackgroundLoad();
+    }
+
     // --- Chat Completion (OpenAI-kompatibles Interface) ---
     async function chatCompletion(messages, options = {}) {
         if (!engineReady || !engine) {
@@ -156,9 +202,13 @@
         // Chat-Nachricht senden (selbes Format wie OpenAI API)
         chat: chatCompletion,
 
+        // Progressive Loading starten (von außen aufrufbar)
+        warmup: startBackgroundLoad,
+
         // Status abfragen
         get capabilities() { return { ...capabilities }; },
         get ready() { return engineReady; },
+        get loading() { return capabilities.loading; },
         get modelInfo() { return MODELS[capabilities.backend] || null; },
 
         // Engine entladen (Speicher freigeben)

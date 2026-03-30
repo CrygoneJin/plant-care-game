@@ -732,14 +732,10 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
     }
 
     // --- Browser-LLM (100% lokal, kein API-Key) ---
+    // Progressive Loading: ELIZA antwortet sofort, WebLLM übernimmt leise im Hintergrund
     async function sendToBrowserLLM(userMessage, charId) {
         const char = CHARACTERS[charId];
         const BLM = window.BrowserLLM;
-
-        if (!BLM) {
-            addMessage(`${char.emoji} Browser-KI nicht verfügbar. Lade die Seite neu.`, 'system');
-            return;
-        }
 
         // Token-Budget Check
         if (!tokenUsage[charId]) tokenUsage[charId] = 0;
@@ -753,24 +749,21 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
         chatHistory.push({ role: 'user', content: userMessage });
         if (chatHistory.length > 10) chatHistory = chatHistory.slice(-10);
 
-        // Engine laden falls nötig
-        if (!BLM.ready) {
-            const loadingDiv = addMessage(`${char.emoji} Lade KI-Gehirn... ⏳`, 'loading');
-            sendBtn.disabled = true;
-            try {
-                await BLM.load((report) => {
-                    loadingDiv.textContent = `${char.emoji} ${report.text} (${report.progress}%)`;
-                });
-                loadingDiv.remove();
-            } catch (err) {
-                loadingDiv.remove();
-                addMessage(`${char.emoji} KI konnte nicht geladen werden: ${err.message}`, 'system');
-                chatHistory.pop();
-                sendBtn.disabled = false;
-                return;
-            }
+        // === PROGRESSIVE LOADING ===
+        // Phase 1: Engine nicht bereit → ELIZA sofort, Hintergrund-Laden anstoßen
+        if (!BLM || !BLM.ready) {
+            // Hintergrund-Laden starten (falls noch nicht gestartet)
+            if (BLM && !BLM.loading) BLM.warmup();
+
+            // ELIZA antwortet sofort — Spieler merkt nichts
+            const elizaReply = getElizaReply(userMessage, charId);
+            chatHistory.push({ role: 'assistant', content: elizaReply });
+            addMessage(`${char.emoji} ${elizaReply}`, 'npc');
+            updateTokenDisplay(charId);
+            return;
         }
 
+        // Phase 2: Engine bereit → echtes LLM nutzen
         const loadingDiv = addMessage(`${char.emoji} denkt nach...`, 'loading');
         sendBtn.disabled = true;
 
@@ -804,7 +797,7 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
 
         } catch (err) {
             loadingDiv.remove();
-            // ELIZA Fallback
+            // LLM-Fehler → ELIZA Fallback
             const elizaReply = getElizaReply(userMessage, currentNpcId);
             chatHistory.pop();
             chatHistory.push({ role: 'assistant', content: elizaReply });
