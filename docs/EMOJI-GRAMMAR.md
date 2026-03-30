@@ -112,11 +112,33 @@ Chomskys Hierarchie ist eindimensional. Emojis können mehr.
 3. **Informationsdichte**: 6 Relationen statt 3 (bei gleicher Symbolzahl)
 4. **Universell**: Keine Leserichtung nötig (LTR/RTL-agnostisch)
 
+### 3x3 Grid-Struktur (nur Zauberkessel)
+
+```
+┌───────┬──────┬───────┐
+│ Mat A  │  ➕  │ Mat B │  Zutaten (Input)
+├───────┼──────┼───────┤
+│  ⬇️   │  🔮  │  ⬇️   │  Kessel (Transformation)
+├───────┼──────┼───────┤
+│  ✨   │Result│  ✨   │  Ergebnis (Output)
+└───────┴──────┴───────┘
+```
+
+9 Positionen, Zentrum (🔮) = Transformationskern.
+Nur im Zauberkessel — zu komplex für Bau-Kommentare (Miller: 5±2).
+
+Die drei Zeilen bilden eine **Narration**:
+1. Oben: Was reinkommt (Thesis)
+2. Mitte: Was passiert (Antithesis / Transformation)
+3. Unten: Was rauskommt (Synthesis)
+
+Hegelsche Dialektik in Emojis. Ohne Text. Für Achtjährige.
+
 ### Rendering
 
 30% der NPC-Kommentare erscheinen als 2x2 CSS-Grid mit subtilen
 Trennlinien. 70% bleiben linear. Die Mischung hält es frisch und
-lehrt beide Lesarten.
+lehrt beide Lesarten. Zauberkessel nutzt 3x3 für Rezept-Ergebnisse.
 
 ## Drei Schichten
 

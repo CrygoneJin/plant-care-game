@@ -810,6 +810,49 @@ header h1 {
     padding-top: 2px;
 }
 
+/* === 3x3 EMOJI-GRAMMATIK === Zauberkessel-Rezepte (Rosenfeld erweitert) */
+/* ┌─────┬─────┬─────┐
+   │  A  │  ➕ │  B  │  Zutaten
+   ├─────┼─────┼─────┤
+   │  ⬇️  │  🔮 │  ⬇️  │  Kessel
+   ├─────┼─────┼─────┤
+   │  ✨  │ RES │  ✨  │  Ergebnis
+   └─────┴─────┴─────┘ */
+.emoji-grid-3x3 {
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 4px;
+    font-size: 1.3em;
+    line-height: 1.2;
+    vertical-align: middle;
+}
+.eg3-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    min-height: 32px;
+}
+.eg3-op { opacity: 0.6; }
+.eg3-dim { opacity: 0.4; }
+.eg3-center {
+    animation: kessel-glow 1.5s ease-in-out infinite alternate;
+}
+.eg3-result {
+    font-size: 1.3em;
+    animation: result-pop 0.6s ease-out;
+}
+@keyframes kessel-glow {
+    from { filter: brightness(1); }
+    to { filter: brightness(1.4) drop-shadow(0 0 6px rgba(200, 150, 255, 0.5)); }
+}
+@keyframes result-pop {
+    0% { transform: scale(0.3); opacity: 0; }
+    60% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
 /* === ZAUBERKESSEL === Craft-Interface als magischer Kessel */
 #zauberkessel-overlay {
     position: fixed;

@@ -1055,6 +1055,23 @@
         }
     }
 
+    // 3x3 Emoji-Grammatik-Grid für Zauberkessel-Ergebnisse
+    // Rosenfeld-Erweiterung: 3x3 = 9 Positionen, 20 Relationen
+    // Zentrum (E) = Kern/Fokus. Alles dreht sich um E.
+    function buildKessel3x3(emojiA, emojiB, emojiResult) {
+        return `<div class="emoji-grid-3x3" aria-label="${emojiA} plus ${emojiB} ergibt ${emojiResult}">` +
+            `<span class="eg3-cell">${emojiA}</span>` +
+            `<span class="eg3-cell eg3-op">➕</span>` +
+            `<span class="eg3-cell">${emojiB}</span>` +
+            `<span class="eg3-cell eg3-dim">⬇️</span>` +
+            `<span class="eg3-cell eg3-center">🔮</span>` +
+            `<span class="eg3-cell eg3-dim">⬇️</span>` +
+            `<span class="eg3-cell eg3-dim">✨</span>` +
+            `<span class="eg3-cell eg3-result">${emojiResult}</span>` +
+            `<span class="eg3-cell eg3-dim">✨</span>` +
+            `</div>`;
+    }
+
     // ============================================================
     // === ZAUBERKESSEL === Magisches Craft-Interface (Emoji-Sprache)
     // ============================================================
@@ -1188,14 +1205,21 @@
 
             await quickCraft(a, b);
 
-            // Ergebnis-Anzeige: Emoji-Rezept-Phrase
+            // Ergebnis-Anzeige: 3x3 Emoji-Grammatik-Grid
+            // ┌───────┬──────┬───────┐
+            // │ Mat A  │  ➕  │ Mat B │  Zutaten-Zeile
+            // ├───────┼──────┼───────┤
+            // │  ⬇️   │  🔮  │  ⬇️   │  Kessel-Zeile
+            // ├───────┼──────┼───────┤
+            // │  ✨   │Result│  ✨   │  Ergebnis-Zeile
+            // └───────┴──────┴───────┘
             const pair = [a, b].sort().join('+');
             const cached = localStorage.getItem(`llm-craft:${pair}`);
+            let resultEmoji = '🤔';
+
             if (cached) {
-                const craft = JSON.parse(cached);
-                resultDiv.innerHTML = `<span class="emoji-phrase">${matAEmoji} ➕ ${matBEmoji} ➡️ ${craft.emoji || '✨'}</span>`;
+                resultEmoji = JSON.parse(cached).emoji || '✨';
             } else {
-                // Festes Rezept — suche Ergebnis
                 const recipe = (window.INSEL_CRAFTING_RECIPES || []).find(r => {
                     const keys = Object.keys(r.ingredients);
                     if (keys.length !== 2) return false;
@@ -1203,12 +1227,11 @@
                     return (k1 === a && k2 === b) || (k1 === b && k2 === a);
                 });
                 if (recipe) {
-                    const rInfo = MATERIALS[recipe.result];
-                    resultDiv.innerHTML = `<span class="emoji-phrase">${matAEmoji} ➕ ${matBEmoji} ➡️ ${rInfo?.emoji || '✨'}</span>`;
-                } else {
-                    resultDiv.textContent = '🤔❓';
+                    resultEmoji = MATERIALS[recipe.result]?.emoji || '✨';
                 }
             }
+
+            resultDiv.innerHTML = buildKessel3x3(matAEmoji, matBEmoji, resultEmoji);
 
             // Slots zurücksetzen nach kurzer Pause
             setTimeout(() => {
