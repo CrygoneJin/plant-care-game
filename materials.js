@@ -6,18 +6,13 @@ window.INSEL_MATERIALS = {
     masse:    { emoji: '⚫', label: 'Masse',    color: '#1C1C1C', border: '#0A0A0A' },
     energie:  { emoji: '✴️', label: 'Energie',   color: '#FFD700', border: '#DAA520' },
     licht:    { emoji: '💫', label: 'Lichtgeschwindigkeit', color: '#FFFACD', border: '#EEE8AA' },
-    // === ELEMENTARTEILCHEN (Stufe 0) ===
-    quark:    { emoji: '🔴', label: 'Quark',    color: '#C0392B', border: '#922B21' },
-    elektron: { emoji: '🔵', label: 'Elektron', color: '#2980B9', border: '#1F618D' },
-    photon:   { emoji: '🟡', label: 'Photon',   color: '#F4D03F', border: '#D4AC0D' },
-    neutrino: { emoji: '⚪', label: 'Neutrino', color: '#EAECEE', border: '#D5D8DC' },
-    gluon:    { emoji: '🟢', label: 'Gluon',    color: '#27AE60', border: '#1E8449' },
-    // === DIE 5 ELEMENTE (五行 Wu Xing) — aus Teilchen ===
-    metal:    { emoji: '⬜', label: 'Metall',   color: '#C0C0C0', border: '#A0A0A0' },
-    wood:     { emoji: '🟩', label: 'Holz',     color: '#2E7D32', border: '#1B5E20' },
-    fire:     { emoji: '🟥', label: 'Feuer',    color: '#D32F2F', border: '#B71C1C' },
-    water:    { emoji: '⬛', label: 'Wasser',   color: '#1A1A2E', border: '#0D0D1A' },
-    earth:    { emoji: '🟨', label: 'Erde',     color: '#F5C800', border: '#C8A300' },
+    // === DIE 5 ELEMENTE — Wu Xing 五行 = Elementarteilchen ===
+    // Zwei Seiten einer Medaille: anderer Name, gleiche Eigenschaften
+    metal:    { emoji: '⬜', label: 'Metall ∿ Elektron',  color: '#C0C0C0', border: '#A0A0A0' },
+    wood:     { emoji: '🟩', label: 'Holz ∿ Gluon',      color: '#2E7D32', border: '#1B5E20' },
+    fire:     { emoji: '🟥', label: 'Feuer ∿ Photon',     color: '#D32F2F', border: '#B71C1C' },
+    water:    { emoji: '⬛', label: 'Wasser ∿ Neutrino',  color: '#1A1A2E', border: '#0D0D1A' },
+    earth:    { emoji: '🟨', label: 'Erde ∿ Quark',       color: '#F5C800', border: '#C8A300' },
     // === ABGELEITETE MATERIALIEN ===
     stone:    { emoji: '🧱', label: 'Stein',    color: '#95A5A6', border: '#7F8C8D' },
     glass:    { emoji: '🪟', label: 'Glas',     color: '#AED6F1', border: '#85C1E9' },

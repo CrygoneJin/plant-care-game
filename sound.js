@@ -84,26 +84,20 @@
     // Jedes Element hat seinen Ton: 宫商角徵羽 (Gōng Shāng Jué Zhǐ Yǔ)
     // Pythagoräische Stimmung aus reinen Quinten: C D E G A
     const ELEMENT_TONES = {
-        // === URKNALL (Stufe -1) ===
-        masse:    { freq: C4 / 2,     wave: 'sine',     dur: 0.30, vol: 0.12 }, // Tief, schwer, fundamental
-        energie:  { freq: C4 * 2,     wave: 'sawtooth', dur: 0.04, vol: 0.08 }, // Hoch, kurz, Blitz
-        licht:    { freq: C4 * 3,     wave: 'sine',     dur: 0.02, vol: 0.06 }, // Ultraschnell, kaum hörbar
-        // === ELEMENTARTEILCHEN (Stufe 0) ===
-        quark:    { freq: C4 * 3/4,   wave: 'square',   dur: 0.08, vol: 0.07 }, // Kantig, schwer
-        elektron: { freq: C4 * 5/4,   wave: 'sine',     dur: 0.06, vol: 0.06 }, // Klar, leicht
-        photon:   { freq: C4 * 2,     wave: 'sine',     dur: 0.03, vol: 0.05 }, // Lichtschnell
-        neutrino: { freq: C4 * 7/4,   wave: 'sine',     dur: 0.25, vol: 0.03 }, // Kaum da, geisterhaft
-        gluon:    { freq: C4 * 9/8,   wave: 'triangle', dur: 0.12, vol: 0.07 }, // Klebrig, warm
-        // === 五音 (Wǔ Yīn) — Wu Xing ===
-        // 土 Erde = 宫 Gōng (C) — Grundton, Fundament, Mitte
+        // === URKNALL ===
+        masse:    { freq: C4 / 2,     wave: 'sine',     dur: 0.30, vol: 0.12 },
+        energie:  { freq: C4 * 2,     wave: 'sawtooth', dur: 0.04, vol: 0.08 },
+        licht:    { freq: C4 * 3,     wave: 'sine',     dur: 0.02, vol: 0.06 },
+        // === 五音 (Wǔ Yīn) — Wu Xing = Elementarteilchen ===
+        // 土 Erde/Quark = 宫 Gōng (C) — Grundton, Fundament, Mitte
         earth:  { freq: C4,         wave: 'triangle', dur: 0.14, vol: 0.10 },
-        // 金 Metall = 商 Shāng (D) — klar, schneidend, rein
+        // 金 Metall/Elektron = 商 Shāng (D) — klar, schneidend, rein
         metal:  { freq: C4 * 9/8,   wave: 'square',   dur: 0.10, vol: 0.07 },
-        // 木 Holz = 角 Jué (E) — warm, organisch, wachsend
+        // 木 Holz/Gluon = 角 Jué (E) — warm, organisch, wachsend
         wood:   { freq: C4 * 81/64, wave: 'triangle', dur: 0.14, vol: 0.08 },
-        // 火 Feuer = 徵 Zhǐ (G) — hell, energisch, aufsteigend
+        // 火 Feuer/Photon = 徵 Zhǐ (G) — hell, energisch, aufsteigend
         fire:   { freq: C4 * 3/2,   wave: 'sawtooth', dur: 0.06, vol: 0.06 },
-        // 水 Wasser = 羽 Yǔ (A) — fließend, weich, tief
+        // 水 Wasser/Neutrino = 羽 Yǔ (A) — fließend, weich, tief
         water:  { freq: C4 * 27/16, wave: 'sine',     dur: 0.18, vol: 0.08 },
     };
 

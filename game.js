@@ -1219,8 +1219,8 @@
     // Urknall: Masse, Energie, Lichtgeschwindigkeit — E=mc²
     const BASE_MATERIALS = ['masse', 'energie', 'licht'];
 
-    // Starter-Set: Urknall-Trio + erste Teilchen — von Anfang an sichtbar
-    const STARTER_MATERIALS = [...BASE_MATERIALS, 'quark', 'elektron', 'photon', 'neutrino', 'gluon'];
+    // Starter-Set: Urknall-Trio + Wu Xing (die man daraus craftet)
+    const STARTER_MATERIALS = [...BASE_MATERIALS, 'metal', 'wood', 'fire', 'water', 'earth'];
 
     // Freigeschaltete Materialien (durch Ernten oder Crafting)
     let unlockedMaterials = new Set();
