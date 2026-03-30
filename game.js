@@ -2807,8 +2807,8 @@
         const cmd = command.toLowerCase().trim();
         let result = null;
 
-        // "baue X [material]" — platziert X Blöcke zufällig
-        const baueMatch = cmd.match(/^baue?\s+(\d+)\s+(.+)/);
+        // "baue/zaubere X [material]" — platziert X Blöcke zufällig
+        const baueMatch = cmd.match(/^(?:baue?|zauber[en]?|hexe?|erschaffe?)\s+(\d+)\s+(.+)/);
         if (baueMatch) {
             const count = Math.min(parseInt(baueMatch[1]), 20); // Max 20 auf einmal
             const matName = baueMatch[2].trim();
@@ -2835,8 +2835,8 @@
             }
         }
 
-        // "mach regen/sonne/regenbogen"
-        if (cmd.match(/^mach\s+(regen|sonne|regenbogen)/)) {
+        // "mach/zaubere regen/sonne/regenbogen"
+        if (cmd.match(/^(?:mach|zauber[en]?|hexe?)\s+(regen|sonne|regenbogen)/)) {
             const w = cmd.includes('regen') && !cmd.includes('regenbogen') ? 'rain'
                     : cmd.includes('regenbogen') ? 'rainbow' : 'sun';
             weather = w;
@@ -3008,11 +3008,42 @@
     // Testdaten-Button nur zeigen wenn ?test in URL oder localStorage
     if (window.location.search.includes('test') || localStorage.getItem('insel-testmode')) {
         if (testdataBtn) testdataBtn.style.display = '';
+        if (bugBtn) bugBtn.style.display = '';
         localStorage.setItem('insel-testmode', '1');
     }
 
     // Aktivieren per Konsole: localStorage.setItem('insel-testmode', '1'); location.reload()
     // Webhook setzen: localStorage.setItem('insel-webhook', 'https://...')
+
+    // --- Bug-Reporter: window.reportBug('text') oder 🐛-Button ---
+    const BUGS_URL = (window.INSEL_CONFIG?.proxy || 'https://schatzinsel.hoffmeyer-zlotnik.workers.dev') + '/bugs';
+
+    window.reportBug = function(msg) {
+        if (!msg || !msg.trim()) { showToast('🐛 Bitte beschreibe den Bug!'); return; }
+        const bug = {
+            msg: msg.trim(),
+            page: window.location.href,
+            screen: `${window.innerWidth}x${window.innerHeight}`,
+            reporter: localStorage.getItem('insel-spielername') || 'Anonym',
+        };
+        fetch(BUGS_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(bug),
+        }).then(r => r.json()).then(d => {
+            if (d.ok) showToast('🐛 Bug gemeldet! Danke!');
+            else showToast('🐛 Fehler beim Melden.');
+        }).catch(() => showToast('🐛 Kein Netz — Bug nicht gemeldet.'));
+    };
+
+    // 🐛 Button (nur im Testmodus sichtbar)
+    const bugBtn = document.getElementById('bug-btn');
+    if (bugBtn) {
+        bugBtn.addEventListener('click', () => {
+            const msg = prompt('🐛 Was ist kaputt?');
+            if (msg) window.reportBug(msg);
+        });
+    }
 
     // --- Block-Tracking ---
 

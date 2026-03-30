@@ -34,6 +34,9 @@ export default {
         if (pathname === '/discoveries') {
             return handleDiscoveries(env);
         }
+        if (pathname === '/bugs') {
+            return handleBugs(request, env);
+        }
 
         // Nur POST
         if (request.method !== 'POST') {
@@ -249,6 +252,47 @@ async function handleDiscoveries(env) {
     });
 }
 
+// --- Bugs Endpoint ---
+
+async function handleBugs(request, env) {
+    if (!env.CRAFT_KV) return json({ error: 'KV nicht konfiguriert' }, 500);
+
+    // POST = Bug melden, GET = Bugs lesen
+    if (request.method === 'POST') {
+        let body;
+        try {
+            body = await request.json();
+        } catch (e) {
+            return json({ error: 'Ungültiger Request-Body' }, 400);
+        }
+
+        const bug = {
+            msg:       (body.msg || '').slice(0, 500),
+            page:      (body.page || '').slice(0, 100),
+            ua:        (request.headers.get('user-agent') || '').slice(0, 200),
+            screen:    (body.screen || '').slice(0, 30),
+            reporter:  (body.reporter || 'Anonym').slice(0, 30),
+            created:   new Date().toISOString(),
+        };
+
+        const key = `bug:${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+        await env.CRAFT_KV.put(key, JSON.stringify(bug), { expirationTtl: 60 * 60 * 24 * 90 }); // 90 Tage
+
+        return json({ ok: true, id: key });
+    }
+
+    // GET = alle Bugs lesen
+    const list = await env.CRAFT_KV.list({ prefix: 'bug:' });
+    const bugs = [];
+    for (const key of list.keys) {
+        const val = await env.CRAFT_KV.get(key.name, 'json');
+        if (val) bugs.push({ id: key.name, ...val });
+    }
+    bugs.sort((a, b) => (b.created || '').localeCompare(a.created || ''));
+
+    return json({ total: bugs.length, bugs });
+}
+
 // --- Logging ---
 
 async function logAsync(body, meta, env) {
@@ -303,7 +347,7 @@ async function logAirtable(body, meta, env) {
 function corsHeaders() {
     return {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Max-Age': '86400',
     };
