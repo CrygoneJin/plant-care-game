@@ -28,7 +28,7 @@
         {
             materials: ['fire', 'wood', 'water'],
             result: 'metal',
-            msg: '⚪ Rot + Grün + Blau → Metall! (Starke Kernkraft)'
+            msg: '⚪ Rot + Grün + Blau → Metall! Alle Farben zusammen!'
         },
     ];
 

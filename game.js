@@ -358,73 +358,60 @@
     // Kinder entdecken sie beim Bauen — lernen die Namen spielerisch
     const CODE_EASTER_EGGS = {
         stone: [
-            '🪨 Du findest eine Inschrift im Stein: "C war hier. Erster!" Daneben hat jemand gekritzelt: "LÜGNER! — Fortran, seit 1957"',
-            '🪨 Autsch! Jemand ist hier gegen den Stein gelaufen. Daneben steht "C++" geritzt.',
-            '🪨 In den Stein ist geritzt: "10 PRINT HALLO 20 GOTO 10" — "Das ist BASIC!" ruft C. "Mit dem hab ich angefangen!" Fortran krächzt: "ICH war 15 Jahre vor dir da!"',
-            '🪨 BASIC sitzt auf dem Stein und zählt: "10... 20... 30..." — "Was machst du?" — "Ich bin die einfachste Sprache der Insel! Jeder fängt mit mir an!"',
-            '🪨 Am Stein lehnt eine alte Tafel: "Pythagoras war hier. 2500 Jahre vor euch ALLEN." C schweigt. Fortran schweigt. Sogar BASIC schweigt.',
-            '🪨 Pascal sitzt auf dem Stein und rechnet. "Blaise Pascal! 1642! MEIN Rechner war der ERSTE!" C murmelt: "Ja, aber konntest du Schleifen?" Pascal: "Ich konnte ADDIEREN. Das reicht."',
+            '🪨 Im Stein ist geritzt: "C war hier. Erster!" Daneben, viel kleiner: "War ich nicht. Fortran."',
+            '🪨 Jemand ist gegen den Stein gelaufen. Daneben steht "C++" geritzt.',
+            '🪨 BASIC sitzt auf dem Stein und zählt: "10, 20, 30..." Warum? "Jeder fängt mit mir an!"',
+            '🪨 Am Stein lehnt eine uralte Tafel: "Pythagoras war hier. 2500 Jahre vor euch." Alle schweigen.',
         ],
         tree: [
-            '🐍 Hinter dem Baum raschelt es! Eine freundliche Schlange: "Hallo, ich bin Python!"',
-            '🐍 Python die Schlange zwinkert dir zu: "Ich bin leicht zu verstehen, oder?"',
-            '🐍 Python gähnt: "Ich bin zwar laaangsam... aber ich verstehe jeden! Und jeder versteht mich!"',
-            '🐍 Python wickelt sich gemütlich um den Baum: "Die anderen rennen. Ich denke. Wer ist schlauer?"',
+            '🐍 Hinter dem Baum raschelt es! Eine Schlange zwinkert: "Hallo, ich bin Python!"',
+            '🐍 Python gähnt: "Ich bin zwar laaangsam, aber jeder versteht mich!"',
+            '🐍 Python wickelt sich um den Baum: "Die anderen rennen. Ich denke nach."',
         ],
         flower: [
-            '💎 Zwischen den Blumen glitzert etwas Rotes! Ein Edelstein: "Ruby"!',
-            '📿 Im Blumenbeet liegt eine Perlenkette! "PERL" steht auf dem Verschluss. Hübsch!',
-            '📿 "Meine PERLenkette!" ruft eine alte Schildkröte. "Die hab ich 1987 hier verloren!"',
+            '💎 Zwischen den Blumen glitzert ein roter Edelstein! "Ruby" steht drauf.',
+            '📿 Im Blumenbeet liegt eine Perlenkette. Auf dem Verschluss steht "PERL".',
         ],
         boat: [
-            '⚓ Am Boot hängt ein rostiger Anker. Jemand hat "Rust" draufgeritzt. "Ich war mal neu!"',
             '🦀 Unter dem Boot sitzt ein kleiner Krebs mit einem Zahnrad. "Ich bin Rust!"',
+            '⚓ Am Anker steht "Rust" geritzt. Der Krebs nickt stolz: "Ich roste NIE."',
         ],
         fence: [
-            '🐦 Ein schneller Vogel fliegt über den Zaun! "Ich bin Swift!" Zack, schon weg.',
-            '🧮 Am Zaun lehnt ein Mann mit Brille und zählt Latten: "1, 10, 11, 100..." — "Robert, das ist Binär!" — "Ich bin R! Ich zähle wie ich WILL!"',
-            '🧮 R zählt die Zaunpfähle in Tertiär: "1, 2, 10, 11, 12, 20..." Seine Frau ruft: "ROBERT! Hör auf zu zählen und hilf mir beim EINLOGGEN!"',
-            '🌍 Geo die Geologin klopft auf den Zaun: "Interessantes Gestein! Schicht 1, Schicht 2..." R seufzt: "Sie loggt sich ÜBERALL ein."',
+            '🐦 Ein Vogel schießt über den Zaun! "Ich bin Swift!" Zack, weg.',
+            '🧮 Am Zaun zählt jemand Latten: "1, 10, 11, 100..." Das ist kein Quatsch, das ist Binär!',
         ],
         fish: [
-            '🦈 Ein Fisch flüstert: "Psst! Pass auf Makro auf! Der große Hai macht alles RIESIG!"',
-            '🐟 Der Fisch schwimmt Kreise: "Ich bin eine Schleife! while(schwimmen) { schwimm(); }"',
+            '🦈 Ein Fisch flüstert: "Pass auf Makro auf! Der Hai macht alles RIESIG!"',
+            '🐟 Der Fisch schwimmt Kreise. Immer wieder. Das nennt man eine Schleife!',
         ],
         path: [
-            '🧮 R sitzt am Wegrand und zählt Wanderer in Quartär: "1, 2, 3, 10, 11..." Geo zieht ihn weiter: "Robert, komm, die Gesteinsschichten warten!"',
-            '🌍 Geo die Geologin kniet am Weg: "Sediment! Tertiär! QUARTÄR!" R daneben: "Ich hab 47 Kieselsteine gezählt. In Binär: 101111."',
+            '🧮 Am Wegrand zählt R Kieselsteine. In Binär. Niemand hat ihn darum gebeten.',
+            '🌍 Geo die Geologin kniet am Weg: "Schicht 1, Schicht 2!" R daneben: "47 Steine. In Binär: 101111."',
         ],
         bridge: [
-            '🎲 Unter der Brücke spielen zwei Krabben ein Brettspiel. "Das heißt Go!"',
-            '🌉 Auf der Brücke stehen zwei Figuren. Der Große sagt: "Ich baue die Brücke die du nicht sehen kannst." Der Kleine: "Und ICH baue die Brücke die du SEHEN kannst!" Beide lachen.',
-            '🌉 "Es gibt zwei Arten von Architekten", sagt C. "Die einen bauen Häuser. Die anderen bauen die Sprache, in der man Häuser beschreibt."',
+            '🎲 Unter der Brücke spielen zwei Krabben ein Brettspiel. Das heißt Go!',
+            '🌉 Auf der Brücke streiten sich zwei: "ICH baue die Brücke!" "Nee, ICH!" Am Ende braucht man beide.',
         ],
         water: [
-            '☕ Das Wasser dampft! "Auf der Insel Java wird viel Kaffee getrunken", murmelt C.',
-            '🦈 Im Wasser schwimmt ein Schatten! "MAKRO!" ruft C. "Der böse Hai! Er frisst alles und macht es RIESIG!"',
-            '🦈 Makro der Hai taucht auf: "ICH MACHE ALLES GRÖSSER!" Python zischt: "Genau deswegen mag dich keiner."',
-            '🦈 "Vorsicht vor Makro!" warnt Rust. "Er sieht klein aus, aber dann EXPLODIERT alles!"',
+            '☕ Das Wasser dampft! "Auf der Insel Java trinkt man viel Kaffee", murmelt C.',
+            '🦈 Makro der Hai taucht auf: "ICH MACHE ALLES GRÖSSER!" Python: "Deswegen mag dich keiner."',
+            '🦈 "Vorsicht vor Makro!" warnt Rust. "Sieht klein aus, wird dann RIESIG!"',
         ],
         mushroom: [
             '🍄 Unter dem Pilz sitzt eine kleine Elfe. "Ich spreche Elixir!"',
-            '🍄 Hinter dem Pilz sitzt ein wirres Wesen und murmelt: "++++++++[>++++<-]>+. Ich bin... äh... HIRNFITZ!" Keiner versteht ihn. Aber er lächelt.',
-            '🍄 Hirnfitz redet wieder: ">><< ..++--!!" Die anderen Inselbewohner nicken höflich. "Ja, Hirnfitz. Sehr gut."',
-            '🍄 "Was hat Hirnfitz gesagt?" fragt Python. "Ich glaube: Hallo." — "Dafür braucht er 100 Zeichen?!" — C',
+            '🍄 Hinter dem Pilz murmelt jemand: "+++++[>++<-]>!" Das ist Hirnfitz. Keiner versteht ihn.',
+            '🍄 "Was hat Hirnfitz gesagt?" fragt Python. C: "Hallo. Dafür braucht er 100 Zeichen."',
         ],
         lamp: [
             '💡 Die Lampe flackert. In der Birne steht winzig: "Powered by JavaScript".',
-            '💡 "Wusstest du: JavaScript wurde in 10 Tagen erfunden? Auf einer Insel!" — C++',
-            '💡 Unter der Lampe sitzt ein Typ und tippt. "Ich bin TypeScript! Ich lerne Drehbuch bei Tommy!" Tommy: "Klick-klack! Er schreibt alles DOPPELT auf!"',
-            '💡 TypeScript korrigiert JavaScript: "Du hast einen TYPO! Da fehlt ein Typ!" JavaScript: "Lass mich, ich funktioniere AUCH SO!" TypeScript: *seufz*',
-            '💡 Tommy zeigt TypeScript sein Drehbuch: "Szene 1: Boot. Szene 2: MEHR Boote!" TypeScript: "Das braucht ein Interface... Boot { segel: boolean; flaggen: number }"',
+            '💡 JavaScript wurde in 10 Tagen erfunden. Auf einer Insel! Passt ja.',
+            '💡 TypeScript korrigiert JavaScript: "Da fehlt ein Typ!" JavaScript: "Ich funktioniere AUCH SO!"',
         ],
         cactus: [
-            '🦜 Auf dem Kaktus sitzt ein alter Papagei: "Ich bin FORTRAN! Fort-ran ich, und kam nie zurück!"',
-            '🦜 Fortran der Papagei krächzt: "Was macht ein Baum im Internet? Er LOGGT sich ein!"',
-            '🦜 Fortran flattert auf: "Warum können Geister nicht lügen? Weil man durch sie DURCH-C-T!" *krächz*',
-            '🦜 "Was ist das Lieblings-Essen eines Programmierers? SPAM! Fort-ran ich zum Kühlschrank!" *krächz*',
-            '🦜 Fortran der Papagei: "Welche Sprache sprechen Fische? BUBB-L! Fort-ran der Witz!"',
-            '🦜 "Warum sitze ich auf dem Kaktus? Weil der STACK übergelaufen ist!" *krächz-krächz*',
+            '🦜 Auf dem Kaktus sitzt ein Papagei: "Ich bin FORTRAN! Fort ran ich, nie zurück!"',
+            '🦜 Fortran krächzt: "Was macht ein Baum im Internet? Er LOGGT sich ein!"',
+            '🦜 "Warum können Geister nicht lügen? Man DURCH-C-T sie!" Fortran lacht allein.',
+            '🦜 "Warum sitze ich auf dem Kaktus? Der STACK ist übergelaufen!"',
         ],
     };
 
@@ -2133,7 +2120,7 @@
 
                 logGenesis({ type: 'decay', from: 'tao', results: ['yin', 'yang'], cells: [[r,c],[yr,yc]] });
 
-                showToast('☯️ → ⚫⚪ Symmetriebrechung! Tao teilt sich.');
+                showToast('☯️ → ⚫⚪ ZAUBER! Aus Eins wird Zwei!');
                 soundCraft();
                 addPlaceAnimation(r, c);
                 addPlaceAnimation(yr, yc);
@@ -2216,7 +2203,7 @@
                     step.innerHTML = `
                         <span class="genesis-time">+${elapsed}s</span>
                         <span class="genesis-icon">☯️ → ⚫⚪</span>
-                        <span class="genesis-text">Symmetriebrechung — Tao teilt sich in Yin und Yang</span>
+                        <span class="genesis-text">Aus Eins wird Zwei! Hell und Dunkel.</span>
                     `;
                 } else if (event.type === 'merge') {
                     const emoji = MATERIALS[event.result]?.emoji || '?';
