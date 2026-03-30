@@ -96,8 +96,95 @@
         water:  { freq: C4 * 27/16, wave: 'sine',     dur: 0.18, vol: 0.08 },
     };
 
+    // === GENRE-SEQUENZEN — Vivaldi für die Insel ===
+    // Jedes Genre bekommt eine eigene Tonfolge (3-5 Noten)
+    const D4 = C4 * 9/8, E4 = C4 * 81/64, F4 = C4 * 4/3, G4 = C4 * 3/2;
+    const A4 = C4 * 27/16, Bb4 = C4 * 16/9, B4 = C4 * 243/128;
+    const C5 = C4 * 2, D5 = D4 * 2, E5 = E4 * 2, G5 = G4 * 2;
+
+    const GENRE_SEQUENCES = {
+        // Krabs-Kollektion (Unterwasser)
+        krabbenpunk: {
+            notes: [E4, E4, G4, A4, G4],
+            wave: 'square', dur: 0.06, gap: 70, vol: 0.08
+        },
+        muschelwave: {
+            notes: [C4, E4, G4, E4, C5],
+            wave: 'sine', dur: 0.25, gap: 200, vol: 0.07
+        },
+        tiefseebass: {
+            notes: [C4/2, C4/2 * 3/2, C4/2, C4/2 * 4/3, C4/2],
+            wave: 'sine', dur: 0.30, gap: 250, vol: 0.12
+        },
+        korallenjazz: {
+            notes: [C4, Bb4/1.5, E4, G4, Bb4],
+            wave: 'triangle', dur: 0.18, gap: 160, vol: 0.07
+        },
+        perlentechno: {
+            notes: [C4, C4, C4, C4, C5],
+            wave: 'square', dur: 0.04, gap: 120, vol: 0.06
+        },
+        // 90er-Kollektion (Internet-Ära)
+        graphunk: {
+            notes: [G4, G4, A4, G4, E4],
+            wave: 'sawtooth', dur: 0.10, gap: 130, vol: 0.06
+        },
+        modemcore: {
+            notes: [E5, C4, E5, C4, G5],
+            wave: 'sawtooth', dur: 0.04, gap: 50, vol: 0.07
+        },
+        einwahltrance: {
+            notes: [C4, E4, G4, C5, E5],
+            wave: 'sine', dur: 0.20, gap: 180, vol: 0.07
+        },
+        pixelpop: {
+            notes: [C5, E5, G5, E5, C5],
+            wave: 'square', dur: 0.08, gap: 100, vol: 0.06
+        },
+        chatroomchill: {
+            notes: [E4, G4, A4, G4, E4],
+            wave: 'sine', dur: 0.22, gap: 220, vol: 0.06
+        },
+        // Ogilvy-Kollektion (Insel)
+        palmenhouse: {
+            notes: [C4, C4, G4, C4, G4],
+            wave: 'triangle', dur: 0.08, gap: 140, vol: 0.08
+        },
+        vulkanmetal: {
+            notes: [C4/2, C4/2, C4 * 16/15, C4/2, C4/2 * 3/2],
+            wave: 'sawtooth', dur: 0.12, gap: 90, vol: 0.09
+        },
+        drachendub: {
+            notes: [C4/2, G4/2, C4/2, G4/2, C4],
+            wave: 'sine', dur: 0.28, gap: 280, vol: 0.10
+        },
+        blitzhop: {
+            notes: [G4, G4, E4, C4, G4],
+            wave: 'square', dur: 0.05, gap: 80, vol: 0.07
+        },
+        phoenixfolk: {
+            notes: [C4, D4, E4, G4, C5],
+            wave: 'triangle', dur: 0.16, gap: 170, vol: 0.08
+        },
+    };
+
+    function playGenreSequence(seq) {
+        seq.notes.forEach((freq, i) => {
+            setTimeout(() => {
+                const f = freq * (1 + (Math.random() - 0.5) * 0.01);
+                playRichTone(f, seq.dur, seq.wave, seq.vol);
+            }, i * seq.gap);
+        });
+    }
+
     function soundBuild(material) {
         if (!canPlaySound()) return;
+        // Genre-Sequenz?
+        const seq = GENRE_SEQUENCES[material];
+        if (seq) {
+            playGenreSequence(seq);
+            return;
+        }
         const tone = ELEMENT_TONES[material];
         if (tone) {
             // Element-Ton + leichte Variation
