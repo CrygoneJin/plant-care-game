@@ -267,6 +267,7 @@
 
                 <label style="font-size: 13px; font-weight: bold; display: block; margin-bottom: 4px;">Welche KI soll sprechen?</label>
                 <select id="api-provider" style="width: 100%; padding: 8px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; margin-bottom: 4px;">
+                    <option value="browser">🧠 Browser-KI (lokal, kein Key)</option>
                     <option value="langdock">Langdock (EU, DSGVO)</option>
                     <option value="anthropic">Anthropic (Claude direkt)</option>
                     <option value="openai">OpenAI (GPT)</option>
@@ -300,6 +301,12 @@
 
     </div>
 
+    <script type="module">
+        // WebLLM CDN laden — nutzt WebGPU (GPU/NPU) oder WASM (CPU) Fallback
+        import * as webllm from 'https://esm.run/@mlc-ai/web-llm';
+        window.webllm = webllm;
+    </script>
+    <script src="browser-llm.js"></script>
     <script src="materials.js"></script>
     <script src="achievements.js"></script>
     <script src="quests.js"></script>

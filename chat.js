@@ -44,6 +44,12 @@
             model: 'claude-haiku-4-5-20251001',
             format: 'openai',
             authHeader: (key) => ({ 'Authorization': `Bearer ${key}` })
+        },
+        browser: {
+            url: '__local__',
+            model: 'SmolLM2',
+            format: 'browser',
+            authHeader: () => ({})
         }
     };
 
@@ -349,8 +355,25 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
     async function fillAiCommentBuffer(material, npcId, gridStats) {
         if (aiCommentFilling) return;
         if (AI_COMMENT_BUFFER.length >= AI_COMMENT_BUFFER_MAX) return;
-        // Kein API-Zugang → kein Fill
+        // Kein API-Zugang → kein Fill (Browser-LLM nutzt eigenen Pfad)
         const key = getApiKey();
+        if (getProvider() === 'browser') {
+            // Browser-LLM: Kommentare lokal generieren
+            if (window.BrowserLLM?.ready) {
+                aiCommentFilling = true;
+                try {
+                    const prompt = buildCommentPrompt(material, npcId, gridStats);
+                    const data = await window.BrowserLLM.chat(
+                        [{ role: 'user', content: prompt }],
+                        { max_tokens: 30 }
+                    );
+                    const text = data.choices?.[0]?.message?.content?.trim() || '';
+                    if (text && text.length < 100) AI_COMMENT_BUFFER.push(text);
+                } catch (_) {}
+                aiCommentFilling = false;
+            }
+            return;
+        }
         if (!key && !hasProxy()) return;
 
         aiCommentFilling = true;
@@ -415,11 +438,14 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
     }
 
     function getApiKey() {
+        if (getProvider() === 'browser') return '__browser__'; // Kein Key nötig
         if (hasProxy()) return CFG.proxyKey || '__proxy__';
         return localStorage.getItem('langdock-api-key') || CFG.apiKey || '';
     }
 
     function getProvider() {
+        // Browser-LLM hat Vorrang wenn explizit aktiviert
+        if (localStorage.getItem('insel-use-browser-llm') === 'true') return 'browser';
         if (hasProxy()) return 'requesty'; // Proxy routet intern
         return localStorage.getItem('api-provider') || CFG.provider || 'requesty';
     }
@@ -520,6 +546,13 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
     async function sendToApi(userMessage) {
         const charId = currentNpcId;
         const char = CHARACTERS[charId];
+
+        // Browser-LLM: Lokal, kein API-Key nötig
+        const providerId = getProvider();
+        if (providerId === 'browser') {
+            return sendToBrowserLLM(userMessage, charId);
+        }
+
         const key = getApiKey();
         if (!key) {
             // Kein Key und kein Proxy → ELIZA Fallback
@@ -691,6 +724,90 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
             chatHistory.pop();
             chatHistory.push({ role: 'assistant', content: elizaReply });
             const char = CHARACTERS[currentNpcId];
+            addMessage(`${char.emoji} ${elizaReply}`, 'npc');
+        } finally {
+            sendBtn.disabled = false;
+            input.focus();
+        }
+    }
+
+    // --- Browser-LLM (100% lokal, kein API-Key) ---
+    async function sendToBrowserLLM(userMessage, charId) {
+        const char = CHARACTERS[charId];
+        const BLM = window.BrowserLLM;
+
+        if (!BLM) {
+            addMessage(`${char.emoji} Browser-KI nicht verfügbar. Lade die Seite neu.`, 'system');
+            return;
+        }
+
+        // Token-Budget Check
+        if (!tokenUsage[charId]) tokenUsage[charId] = 0;
+        const charBudget = TOKEN_BUDGET_PER_CHARACTER + (tokenBonuses[charId] || 0);
+        if (tokenUsage[charId] >= charBudget) {
+            const currency = CHAR_CURRENCY[charId] || { emoji: '⚡', unit: 'Energie' };
+            addMessage(`${char.emoji} ${char.name} hat keine ${currency.unit} mehr! Schließ eine Quest ab! ${currency.emoji}`, 'system');
+            return;
+        }
+
+        chatHistory.push({ role: 'user', content: userMessage });
+        if (chatHistory.length > 10) chatHistory = chatHistory.slice(-10);
+
+        // Engine laden falls nötig
+        if (!BLM.ready) {
+            const loadingDiv = addMessage(`${char.emoji} Lade KI-Gehirn... ⏳`, 'loading');
+            sendBtn.disabled = true;
+            try {
+                await BLM.load((report) => {
+                    loadingDiv.textContent = `${char.emoji} ${report.text} (${report.progress}%)`;
+                });
+                loadingDiv.remove();
+            } catch (err) {
+                loadingDiv.remove();
+                addMessage(`${char.emoji} KI konnte nicht geladen werden: ${err.message}`, 'system');
+                chatHistory.pop();
+                sendBtn.disabled = false;
+                return;
+            }
+        }
+
+        const loadingDiv = addMessage(`${char.emoji} denkt nach...`, 'loading');
+        sendBtn.disabled = true;
+
+        const gridInfo = getGridContext();
+        const questInfo = charId === 'bernd' ? '' : getQuestContext(charId);
+        const totalBudget = TOKEN_BUDGET_PER_CHARACTER + (tokenBonuses[charId] || 0);
+        const energyPercent = Math.round(((totalBudget - tokenUsage[charId]) / totalBudget) * 100);
+        const budgetInfo = `Dein Energie-Level: ${energyPercent}%. ${energyPercent < 30 ? 'Du wirst bald müde — halte dich kurz!' : ''}`;
+
+        // System-Prompt (gekürzt für kleines Modell)
+        const systemPrompt = charId === 'bernd'
+            ? `${char.system}\nInsel-Status: ${gridInfo}\n${budgetInfo}\nDeutsch. Max 3 Sätze.`
+            : `${char.system}\nKINDERSICHER: Nur kindgerechte Inhalte. Keine Links, keine persönlichen Daten.\nInsel: ${gridInfo}${questInfo}\n${budgetInfo}\nDeutsch. Max 2-3 kurze Sätze.`;
+
+        try {
+            const data = await BLM.chat([
+                { role: 'system', content: systemPrompt },
+                ...chatHistory,
+            ], { max_tokens: 150 });
+
+            loadingDiv.remove();
+            const reply = data.choices[0]?.message?.content || '...';
+
+            if (data.usage) {
+                tokenUsage[charId] += data.usage.completion_tokens || 0;
+            }
+
+            chatHistory.push({ role: 'assistant', content: reply });
+            addMessage(`${char.emoji} ${reply}`, 'npc');
+            updateTokenDisplay(charId);
+
+        } catch (err) {
+            loadingDiv.remove();
+            // ELIZA Fallback
+            const elizaReply = getElizaReply(userMessage, currentNpcId);
+            chatHistory.pop();
+            chatHistory.push({ role: 'assistant', content: elizaReply });
             addMessage(`${char.emoji} ${elizaReply}`, 'npc');
         } finally {
             sendBtn.disabled = false;
@@ -935,6 +1052,7 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
     }
 
     const PROVIDER_HINTS = {
+        browser: '🧠 100% lokal im Browser — kein Key, kein Server, kein Tracking. Erster Start lädt ~200 MB Modell (wird gecacht).',
         requesty: 'Multi-Provider Router. Key: requesty.ai → Dashboard. Unterstützt alle Modelle.',
         langdock: 'DSGVO-konform, Daten bleiben in der EU. Key: app.langdock.com → API Keys',
         anthropic: 'Claude direkt von Anthropic. Key: console.anthropic.com → API Keys',
@@ -949,7 +1067,18 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
     }
 
     function updateUrlRowVisibility() {
-        apiUrlRow.style.display = providerSelect.value === 'custom' ? 'block' : 'none';
+        const isBrowser = providerSelect.value === 'browser';
+        const isCustom = providerSelect.value === 'custom';
+        apiUrlRow.style.display = isCustom ? 'block' : 'none';
+        // Key-Feld verstecken wenn Browser-LLM gewählt
+        apiKeyInput.closest('div').previousElementSibling.style.display = isBrowser ? 'none' : '';
+        apiKeyInput.closest('div').style.display = isBrowser ? 'none' : '';
+        // Browser-LLM Status anzeigen
+        if (isBrowser && window.BrowserLLM) {
+            apiStatus.textContent = window.BrowserLLM.getStatusText();
+            apiStatus.style.background = '#e3f2fd';
+            apiStatus.style.color = '#1565c0';
+        }
     }
 
     settingsBtn.addEventListener('click', () => {
@@ -978,6 +1107,25 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
     });
 
     apiKeySave.addEventListener('click', () => {
+        const selectedProvider = providerSelect.value;
+
+        if (selectedProvider === 'browser') {
+            // Browser-LLM: kein Key nötig, Proxy deaktivieren
+            localStorage.setItem('api-provider', 'browser');
+            // Proxy-Umgehung: Browser-LLM braucht keinen Proxy
+            localStorage.setItem('insel-use-browser-llm', 'true');
+            apiKeyDialog.classList.add('hidden');
+            addMessage('🧠 Browser-KI aktiviert — alles läuft lokal! Kein Server, kein Key.', 'system');
+            // Capabilities prüfen
+            if (window.BrowserLLM) {
+                window.BrowserLLM.detect().then(() => {
+                    const status = window.BrowserLLM.getStatusText();
+                    addMessage(status, 'system');
+                });
+            }
+            return;
+        }
+
         const key = apiKeyInput.value.trim();
         if (!key) {
             apiStatus.textContent = '❌ Bitte Key eingeben';
@@ -986,9 +1134,10 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
             apiKeyInput.focus();
             return;
         }
+        localStorage.removeItem('insel-use-browser-llm');
         setApiKey(key);
         setApiUrl(apiUrlInput.value.trim());
-        localStorage.setItem('api-provider', providerSelect.value);
+        localStorage.setItem('api-provider', selectedProvider);
         apiKeyDialog.classList.add('hidden');
         const pName = providerSelect.options[providerSelect.selectedIndex].text;
         addMessage(`${pName} konfiguriert — Key gespeichert! 🔒`, 'system');
