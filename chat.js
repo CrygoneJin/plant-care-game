@@ -104,8 +104,8 @@
     // --- Charakter-Freischaltung ---
     // Starter: SpongeBob, Maus, Bernd. Rest wird freigespielt.
     // Wann? 20% fester Schwellenwert, 80% Zufall bei Quest-Abschluss.
-    const STARTER_CHARS = ['spongebob', 'maus', 'bernd'];
-    const UNLOCK_ORDER = ['floriane', 'tommy', 'neinhorn', 'krabs', 'elefant']; // Reihenfolge der Freischaltung
+    const STARTER_CHARS = ['spongebob', 'bernd'];
+    const UNLOCK_ORDER = ['floriane', 'maus', 'tommy', 'neinhorn', 'krabs', 'elefant']; // Genesis: Am Anfang war das Brot
 
     let unlockedChars = JSON.parse(localStorage.getItem('insel-unlocked') || 'null') || [...STARTER_CHARS];
 
@@ -581,14 +581,26 @@ Du: "Mist. Schon wieder jemand. Was willst du? Ich hab keine Arme und muss trotz
     async function sendToApi(userMessage) {
         const charId = currentNpcId;
         const char = CHARACTERS[charId];
+        // Six Sigma: ELIZA zuerst. Hohe Confidence → direkt antworten (gratis, offline, schnell)
+        const elizaResult = getElizaResult(userMessage, charId);
         const key = getApiKey();
-        if (!key) {
-            // Kein Key und kein Proxy → ELIZA Fallback (echte Weizenbaum-Engine)
-            const elizaReply = getElizaResponse(userMessage, charId);
-            addMessage(char.emoji + ' ' + elizaReply, 'npc');
-            chatHistory.push({ role: 'assistant', content: elizaReply });
+        const threshold = window.INSEL_ELIZA.SIGMA_THRESHOLD || 0.5;
+
+        if (!key && !hasProxy()) {
+            // Kein API-Zugang → reiner ELIZA-Modus
+            addMessage(char.emoji + ' ' + elizaResult.reply, 'npc');
+            chatHistory.push({ role: 'assistant', content: elizaResult.reply });
             return;
         }
+
+        if (elizaResult.confidence >= threshold) {
+            // ELIZA hat's drauf → kein API-Call nötig
+            addMessage(char.emoji + ' ' + elizaResult.reply, 'npc');
+            chatHistory.push({ role: 'assistant', content: elizaResult.reply });
+            return;
+        }
+
+        // Confidence zu niedrig → LLM übernimmt (ELIZA bleibt als Fallback)
         const gridInfo = getGridContext();
 
         // Token-Budget Check (Basis + Quest-Bonus)
@@ -735,22 +747,18 @@ ${budgetInfo}`;
         }
     }
 
-    // --- ELIZA Fallback (Weizenbaum 1966, echte Engine) ---
-    // Pro NPC eine ELIZA-Instanz mit eigenem Script (aus eliza-scripts.js)
-    const elizaInstances = {};
-
-    function getElizaInstance(npcId) {
-        if (!elizaInstances[npcId]) {
-            const scripts = window.ELIZA_SCRIPTS || {};
-            const script = scripts[npcId] || scripts.spongebob || { initial: 'Hallo!', finale: 'Tschüss!', quit: [], keywords: [{ word: 'xnone', rank: 0, rules: [{ decomp: '*', reassembly: ['Erzähl mir mehr.', 'Hmm, interessant.'] }] }] };
-            elizaInstances[npcId] = window.INSEL_ELIZA.create(script);
-        }
-        return elizaInstances[npcId];
+    // --- ELIZA Six Sigma Hybrid (Weizenbaum 1966 + LLM Gap Filler) ---
+    // ELIZA = Fast Path (confidence >= 0.5) + Safety Net (LLM fail)
+    // LLM = Gap Filler (confidence < 0.5)
+    function getElizaResult(input, npcId) {
+        const eliza = window.INSEL_ELIZA.getEliza(npcId);
+        if (!eliza) return { reply: 'Hallo!', confidence: 0.1 };
+        return eliza.transform(input);
     }
 
+    // Für reinen ELIZA-Modus (kein API): nur den Reply-String
     function getElizaResponse(input, npcId) {
-        const eliza = getElizaInstance(npcId);
-        return eliza.transform(input);
+        return getElizaResult(input, npcId).reply;
     }
 
     // --- DSGVO: Eltern-Gate für Chat (Art. 8 DSGVO — Kinder unter 16) ---

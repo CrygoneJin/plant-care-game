@@ -90,12 +90,12 @@
     var result = " " + text + " ";
     for (var i = 0; i < keys.length; i++) {
       var key = keys[i];
-      // Wortgrenzen-sichere Ersetzung
+      // Wortgrenzen-sichere Ersetzung (Safari-kompatibel, kein Lookbehind)
       var pattern = new RegExp(
-        "(?<=\\s)" + escapeRegex(key) + "(?=\\s)",
+        "(\\s)" + escapeRegex(key) + "(?=\\s)",
         "gi"
       );
-      result = result.replace(pattern, map[key]);
+      result = result.replace(pattern, "$1" + map[key]);
     }
     return result.trim();
   }
@@ -248,10 +248,13 @@
 
     /**
      * Hauptfunktion: Transformiert User-Input in ELIZA-Antwort.
+     * Gibt { reply, confidence } zurück.
+     * confidence: 0.9 = starker Keyword-Match, 0.5 = schwach, 0.2 = Fallback
+     * Six Sigma: confidence < 0.5 → an LLM weiterleiten
      */
     function transform(input) {
       if (!input || typeof input !== "string") {
-        return script.initial || "";
+        return { reply: script.initial || "", confidence: 0.1 };
       }
 
       // Normalisierung: Kleinschreibung, Satzzeichen entfernen, trimmen
@@ -265,7 +268,7 @@
       if (script.quit && script.quit.length > 0) {
         for (var q = 0; q < script.quit.length; q++) {
           if (cleaned === script.quit[q]) {
-            return script.finale || "";
+            return { reply: script.finale || "", confidence: 1.0 };
           }
         }
       }
@@ -282,24 +285,27 @@
         var wordPattern = new RegExp("\\b" + escapeRegex(kw.word) + "\\b", "i");
         if (kw.word === "xnone" || wordPattern.test(processed)) {
           var response = matchKeyword(kw, processed, false);
-          if (response) return response;
+          if (response) {
+            var conf = kw.word === "xnone" ? 0.3 : (kw.rank || 0) >= 5 ? 0.9 : (kw.rank || 0) >= 3 ? 0.7 : 0.5;
+            return { reply: response, confidence: conf };
+          }
         }
       }
 
       // Kein Keyword hat gematcht — Memory versuchen
       if (memory.length > 0) {
-        return memory.shift();
+        return { reply: memory.shift(), confidence: 0.4 };
       }
 
       // Absoluter Fallback: xnone-Keyword suchen
       var xnone = findKeyword("xnone");
       if (xnone) {
         var fallback = matchKeyword(xnone, processed, false);
-        if (fallback) return fallback;
+        if (fallback) return { reply: fallback, confidence: 0.2 };
       }
 
-      // Letzter Notfall (sollte nie passieren wenn Script korrekt ist)
-      return "Erzähl mir mehr.";
+      // Letzter Notfall
+      return { reply: "Erzähl mir mehr.", confidence: 0.1 };
     }
 
     /**
@@ -316,8 +322,33 @@
     };
   }
 
+  // ── Script-Registry + Factory ─────────────────────────────────
+  var SCRIPTS = {};
+  var instances = {};
+
+  function register(id, script) {
+    SCRIPTS[id] = script;
+    delete instances[id];
+  }
+
+  function getEliza(id) {
+    if (!instances[id]) {
+      if (!SCRIPTS[id]) return null;
+      instances[id] = createEliza(SCRIPTS[id]);
+    }
+    return instances[id];
+  }
+
+  // Six Sigma Threshold: confidence unter diesem Wert → LLM
+  var SIGMA_THRESHOLD = 0.5;
+
   // ── Export ────────────────────────────────────────────────────
   window.INSEL_ELIZA = {
-    create: createEliza
+    create: createEliza,
+    register: register,
+    getEliza: getEliza,
+    reflect: reflect,
+    SCRIPTS: SCRIPTS,
+    SIGMA_THRESHOLD: SIGMA_THRESHOLD,
   };
 })();
