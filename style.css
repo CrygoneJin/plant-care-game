@@ -768,6 +768,48 @@ header h1 {
     user-select: none;
 }
 
+/* === 2D EMOJI-GRAMMATIK === 2x2 Positionsgrammatik (Rosenfeld 1979) */
+/* ┌───┬───┐
+   │ A │ B │  Subjekt | Aktion
+   ├───┼───┤
+   │ C │ D │  Objekt  | Zustand
+   └───┴───┘ */
+.emoji-grid-2d {
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2px 8px;
+    font-size: 1.3em;
+    cursor: default;
+    user-select: none;
+    vertical-align: middle;
+    line-height: 1.3;
+}
+.emoji-grid-2d .eg-a { grid-area: 1 / 1; text-align: right; }
+.emoji-grid-2d .eg-b { grid-area: 1 / 2; text-align: left; }
+.emoji-grid-2d .eg-c { grid-area: 2 / 1; text-align: right; }
+.emoji-grid-2d .eg-d { grid-area: 2 / 2; text-align: left; }
+
+/* Subtile Trennlinien für die Grid-Struktur */
+.emoji-grid-2d .eg-a,
+.emoji-grid-2d .eg-b {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 2px;
+}
+.emoji-grid-2d .eg-a,
+.emoji-grid-2d .eg-c {
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    padding-right: 6px;
+}
+.emoji-grid-2d .eg-b,
+.emoji-grid-2d .eg-d {
+    padding-left: 6px;
+}
+.emoji-grid-2d .eg-c,
+.emoji-grid-2d .eg-d {
+    padding-top: 2px;
+}
+
 /* === ZAUBERKESSEL === Craft-Interface als magischer Kessel */
 #zauberkessel-overlay {
     position: fixed;

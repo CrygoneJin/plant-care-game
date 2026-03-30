@@ -70,6 +70,54 @@ Neinhorn negiert immer erst, dann korrigiert:
 🦄 🙅🏠 ...❤️   = "NEIN! ...ok, ist toll."
 ```
 
+## 2D Positionsgrammatik (Rosenfeld 1979)
+
+Chomskys Hierarchie ist eindimensional. Emojis können mehr.
+
+### 2x2 Grid-Struktur
+
+```
+┌──────────┬──────────┐
+│ A Subjekt│ B Aktion │
+├──────────┼──────────┤
+│ C Objekt │ D Zustand│
+└──────────┴──────────┘
+```
+
+6 Relationen in 4 Positionen:
+- Horizontal: A→B (Subjekt handelt), C→D (Objekt hat Zustand)
+- Vertikal: A↓C (Subjekt wirkt auf Objekt), B↓D (Aktion erzeugt Zustand)
+- Diagonal: A↘D (Subjekt erreicht Zustand), B↙C (Aktion trifft Objekt)
+
+### Beispiele
+
+```
+🧽 🔨       SpongeBob | baut
+🏠 ❤️       Haus      | toll
+
+🦄 🙅       Neinhorn  | NEIN
+🏠 ...❤️    Haus      | ...doch toll
+
+🙅 🙅       NEIN      | NEIN
+🦄 🏠❤️    Neinhorn  | Haus...ok toll
+
+🐘 👁️       Elefant   | schaut
+🌳 ✨       Baum      | magisch
+```
+
+### Warum 2D > 1D für Kinder
+
+1. **Piaget**: Konkret-operationale Phase (7-11) = räumliches Denken
+2. **Gestalt**: 2x2 wird als ein Bild wahrgenommen, nicht als 4 Symbole
+3. **Informationsdichte**: 6 Relationen statt 3 (bei gleicher Symbolzahl)
+4. **Universell**: Keine Leserichtung nötig (LTR/RTL-agnostisch)
+
+### Rendering
+
+30% der NPC-Kommentare erscheinen als 2x2 CSS-Grid mit subtilen
+Trennlinien. 70% bleiben linear. Die Mischung hält es frisch und
+lehrt beide Lesarten.
+
 ## Drei Schichten
 
 ### Schicht 1: Emoji-Phrasen (clientseitig, kostenlos)

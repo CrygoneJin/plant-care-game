@@ -466,37 +466,74 @@
         no: '🙅', transform: '➡️', plus: '➕', repeat: '🔄', star: '⭐',
     };
 
-    // Emoji-Phrasen-Templates (max 5 Emojis pro Phrase = Miller's Law)
-    // Jedes Template gibt [emojiPhrase, deutscherTooltip] zurück
-    const EMOJI_TEMPLATES = [
-        // VERB+OBJ Muster: "Baue X!"
+    // === 1D EMOJI-PHRASEN (linear, max 5 Emojis = Miller's Law) ===
+    // Jedes Template gibt [emojiPhrase, deutscherTooltip, is2D] zurück
+    const EMOJI_TEMPLATES_1D = [
         (npc, matEmoji, matLabel) => [
             `${npc.emoji} 🔨${matEmoji} ${pick(npc.react)}`,
             `${npcName(npc)} baut ${matLabel}!`
         ],
-        // OBJ+ZUSTAND Muster: "X ist toll!"
         (npc, matEmoji, matLabel) => [
             `${npc.emoji} ${matEmoji}${pick(npc.react)}`,
             `${npcName(npc)} findet ${matLabel} toll!`
         ],
-        // Aufmerksamkeit: "Schau, X!"
         (npc, matEmoji, matLabel) => [
             `${npc.emoji} 👁️${matEmoji} ${pick(npc.flavor)}`,
             `${npcName(npc)} sieht ${matLabel}!`
         ],
-        // Mehr davon: "Mehr X!"
         (npc, matEmoji, matLabel) => [
             `${npc.emoji} ${matEmoji}⬆️ ${pick(npc.react)}`,
             `${npcName(npc)} will mehr ${matLabel}!`
         ],
-        // Staunen: "Wow, X!"
         (npc, matEmoji, matLabel) => [
             `${npc.emoji} ${pick(npc.flavor)} ${matEmoji}❤️`,
             `${npcName(npc)} liebt ${matLabel}!`
         ],
     ];
 
-    // Neinhorn-Sonderregel: negiert erst, dann korrigiert
+    // === 2D EMOJI-GRAMMATIK (2x2 Grid = Positionsgrammatik) ===
+    // ┌─────────┬──────────┐
+    // │ Subjekt  │ Aktion   │  A=oben-links  B=oben-rechts
+    // ├─────────┼──────────┤
+    // │ Objekt   │ Zustand  │  C=unten-links D=unten-rechts
+    // └─────────┴──────────┘
+    // Rosenfeld (1979): 2D Array-Grammatiken. Räumliche Relationen
+    // tragen Bedeutung die lineare Sequenzen nicht ausdrücken können.
+    // Chomsky-Erweiterung: Positionsgrammatik statt Reihenfolge-Grammatik.
+    const EMOJI_TEMPLATES_2D = [
+        // Subjekt baut Objekt, findet's gut
+        (npc, matEmoji, matLabel) => [
+            `${npc.emoji} 🔨\n${matEmoji} ${pick(npc.react)}`,
+            `${npcName(npc)} baut ${matLabel}!`,
+            true
+        ],
+        // Subjekt schaut, Objekt leuchtet
+        (npc, matEmoji, matLabel) => [
+            `${npc.emoji} 👁️\n${matEmoji} ✨`,
+            `${npcName(npc)} entdeckt ${matLabel}!`,
+            true
+        ],
+        // Subjekt + Flavor, Objekt + Reaktion
+        (npc, matEmoji, matLabel) => [
+            `${npc.emoji} ${pick(npc.flavor)}\n${matEmoji} ${pick(npc.react)}`,
+            `${npcName(npc)} reagiert auf ${matLabel}!`,
+            true
+        ],
+        // Subjekt fragt, Objekt + Mehr
+        (npc, matEmoji, matLabel) => [
+            `${npc.emoji} ❓\n${matEmoji} ⬆️`,
+            `${npcName(npc)} fragt: Mehr ${matLabel}?`,
+            true
+        ],
+        // Subjekt zeigt Herz, Objekt + Stern
+        (npc, matEmoji, matLabel) => [
+            `${npc.emoji} ❤️\n${matEmoji} ⭐`,
+            `${npcName(npc)} liebt ${matLabel}! Sternmoment!`,
+            true
+        ],
+    ];
+
+    // Neinhorn-Sonderregel: negiert erst, dann korrigiert (1D + 2D)
     const NEINHORN_TEMPLATES = [
         (npc, matEmoji, matLabel) => [
             `${npc.emoji} 🙅${matEmoji} ...❤️`,
@@ -506,9 +543,17 @@
             `${npc.emoji} 🙅 ...${matEmoji}✨`,
             `Neinhorn sagt NEIN! ...aber ${matLabel} ist schon magisch.`
         ],
+        // 2D Neinhorn: Negation oben, Akzeptanz unten
         (npc, matEmoji, matLabel) => [
-            `${npc.emoji} 🙅🙅 ...👁️${matEmoji}❤️`,
-            `Neinhorn: NEIN NEIN! ...schaut hin... ok, ist schön.`
+            `${npc.emoji} 🙅\n${matEmoji} ...❤️`,
+            `Neinhorn: NEIN! ...aber ${matLabel} ist doch schön.`,
+            true
+        ],
+        // 2D Neinhorn: Doppel-Nein → heimliches Herz
+        (npc, matEmoji, matLabel) => [
+            `🙅 🙅\n${npc.emoji} ${matEmoji}❤️`,
+            `NEIN NEIN! ...Neinhorn schaut ${matLabel} an... ok, ist toll.`,
+            true
         ],
     ];
 
@@ -591,13 +636,32 @@
         }
 
         // Neinhorn-Sonderregel
-        const templates = (npc.style === 'nein') ? NEINHORN_TEMPLATES : EMOJI_TEMPLATES;
-        const [phrase, tooltip] = pick(templates)(npc, matEmoji, matLabel);
-        return emojiToast(phrase, tooltip);
+        if (npc.style === 'nein') {
+            const result = pick(NEINHORN_TEMPLATES)(npc, matEmoji, matLabel);
+            return emojiToast(result[0], result[1], result[2]);
+        }
+
+        // 30% 2D-Grid, 70% 1D-linear (Mischung hält es frisch)
+        if (Math.random() < 0.3) {
+            const result = pick(EMOJI_TEMPLATES_2D)(npc, matEmoji, matLabel);
+            return emojiToast(result[0], result[1], true);
+        }
+        const [phrase, tooltip] = pick(EMOJI_TEMPLATES_1D)(npc, matEmoji, matLabel);
+        return emojiToast(phrase, tooltip, false);
     }
 
     // Erzeugt HTML-String mit Emoji-Phrase + Tooltip für Accessibility
-    function emojiToast(phrase, tooltip) {
+    // 2D-Phrasen werden als 2x2 CSS-Grid gerendert
+    function emojiToast(phrase, tooltip, is2D) {
+        if (is2D && phrase.includes('\n')) {
+            const [top, bottom] = phrase.split('\n');
+            const [a, b] = top.split(' ').filter(Boolean);
+            const [c, d] = bottom.split(' ').filter(Boolean);
+            return `<span class="emoji-grid-2d" title="${tooltip}" aria-label="${tooltip}">` +
+                `<span class="eg-a">${a || ''}</span><span class="eg-b">${b || ''}</span>` +
+                `<span class="eg-c">${c || ''}</span><span class="eg-d">${d || ''}</span>` +
+                `</span>`;
+        }
         return `<span class="emoji-phrase" title="${tooltip}" aria-label="${tooltip}">${phrase}</span>`;
     }
 
@@ -2598,8 +2662,8 @@
         }
         toastBusy = true;
         const { message, duration } = toastQueue.shift();
-        // Emoji-Phrasen kommen als HTML (<span class="emoji-phrase">), alles andere als Text
-        if (typeof message === 'string' && message.includes('class="emoji-phrase"')) {
+        // Emoji-Phrasen kommen als HTML (<span class="emoji-phrase/grid-2d">), alles andere als Text
+        if (typeof message === 'string' && (message.includes('class="emoji-phrase"') || message.includes('class="emoji-grid-2d"'))) {
             toast.innerHTML = message;
         } else {
             toast.textContent = message;
