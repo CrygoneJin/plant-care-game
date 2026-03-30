@@ -549,8 +549,8 @@ Sprich Deutsch. Kurze Antworten. Maximal 3 Sätze. Sei hilfreich trotz Genervthe
         const char = CHARACTERS[charId];
         const key = getApiKey();
         if (!key) {
-            // Kein Key und kein Proxy → ELIZA Fallback
-            const elizaReply = getElizaReply(userMessage, charId);
+            // Kein Key und kein Proxy → ELIZA Fallback (echte Weizenbaum-Engine)
+            const elizaReply = getElizaResponse(userMessage, charId);
             addMessage(char.emoji + ' ' + elizaReply, 'npc');
             chatHistory.push({ role: 'assistant', content: elizaReply });
             return;
@@ -717,8 +717,8 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
 
         } catch (err) {
             loadingDiv.remove();
-            // ELIZA Fallback wenn Netzwerk/API fehlt
-            const elizaReply = getElizaReply(userMessage, currentNpcId);
+            // ELIZA Fallback wenn Netzwerk/API fehlt (echte Weizenbaum-Engine)
+            const elizaReply = getElizaResponse(userMessage, currentNpcId);
             chatHistory.pop();
             chatHistory.push({ role: 'assistant', content: elizaReply });
             const char = CHARACTERS[currentNpcId];
@@ -729,55 +729,22 @@ Wenn der Spieler "ja" oder "ok" zur Quest sagt, antworte begeistert und sag was 
         }
     }
 
-    // --- ELIZA Fallback (kein API nötig, läuft 100% lokal) ---
-    function getElizaReply(input, npcId) {
-        const lower = input.toLowerCase();
+    // --- ELIZA Fallback (Weizenbaum 1966, echte Engine) ---
+    // Pro NPC eine ELIZA-Instanz mit eigenem Script (aus eliza-scripts.js)
+    const elizaInstances = {};
 
-        const elizaRules = {
-            spongebob: [
-                { pattern: /hallo|hi|hey/, reply: ['Hallo! Bist du bereit zu BAUEN?! 😄', 'Hi! Lass uns etwas TOLLES machen!'] },
-                { pattern: /wasser|meer|ozean/, reply: ['Das Wasser ist mein Zuhause! 🌊', 'Ich liebe das Meer so sehr!'] },
-                { pattern: /essen|burger|krabbenburger/, reply: ['Die beste Krabbenburger überhaupt! 🍔', 'Mmm, Krabbenburger... träum...'] },
-                { pattern: /.+/, reply: ['Das klingt toll! 😄', 'Ich bin so glücklich! 🧽', 'Lass uns bauen!'] }
-            ],
-            krabs: [
-                { pattern: /hallo|hi|hey/, reply: ['Ahoy! Geschäft?', 'Willkommen! Kostet dich nix. Dieses Mal.'] },
-                { pattern: /geld|münze|taler|reich/, reply: ['Geld! Das beste Wort der Welt! 💰', 'Mit Geld kann ich alles haben!'] },
-                { pattern: /boot|schiff|hafen/, reply: ['Boote! Jedes Boot bringt mir Gewinn! 💰', 'Ein Boot = ein Taler! Baue mir welche!'] },
-                { pattern: /.+/, reply: ['Und was bringt mir das ein?', 'Ist das profitabel?', 'Ar ar ar ar!'] }
-            ],
-            neinhorn: [
-                { pattern: /.*/, reply: ['Nein! Aber... okay, vielleicht. 🦄', 'Nein! Warte... vielleicht doch ja?', 'Nein nein nein... gut. Lass machen.'] }
-            ],
-            elefant: [
-                { pattern: /musik|lied|singen/, reply: ['Musik macht das Leben lebendig! 🎵', 'Töröööö! Ein schönes Lied! 🐘'] },
-                { pattern: /hallo|hi/, reply: ['Guten Tag! Schön dich zu treffen.', 'Hallo zusammen! 🐘'] },
-                { pattern: /.+/, reply: ['Bedacht gesprochen... interessant.', 'Hmm, lässt mich überlegen...', 'Töröö! Das gefällt mir!'] }
-            ],
-            tommy: [
-                { pattern: /.*/, reply: ['Klick-klack! JA! 🦞', 'Das ist — klick-klack! — die BESTE Idee!', 'Schnell, schnell, klick-klack!'] }
-            ],
-            maus: [
-                { pattern: /hallo|hi/, reply: ['*pieps* Hallo! 🐭', 'Hiii! *quietsch*'] },
-                { pattern: /.+/, reply: ['*pieps pieps*', 'Ente sagt ja! 🦆', '*süßes Quietschen*'] }
-            ],
-            bernd: [
-                { pattern: /.*/, reply: ['Mhm... und was willst du von mir?', 'Gib mir einen Kaffee und ich überleg es.', 'Okay, aber schnell. Ich hab noch was zu backen.'] }
-            ],
-            floriane: [
-                { pattern: /wünsch|wish|will|hätte gern|bitte|könnte|sollte|wär.*cool|fehlt|brauch/, reply: ['✨ Simsalabim! Das schreibe ich in mein Wunschbuch! ✨', '✨ Hokuspokus! Notiert! Die Insel-Magie arbeitet dran! ✨', '✨ Oh, was ein schöner Wunsch! Feenstaub drauf! ✨'] },
-                { pattern: /hallo|hi|hey/, reply: ['✨ Willkommen! Ich bin Fee Floriane! Du hast drei Wünsche! ✨', '✨ Hallo! Hast du einen Wunsch für die Insel? ✨'] },
-                { pattern: /.*/, reply: ['✨ Hast du einen Wunsch? Du kannst dir was für die Insel wünschen! ✨', '✨ Sag mir deinen Wunsch! Hokuspokus! ✨'] }
-            ]
-        };
-
-        const rules = elizaRules[npcId] || elizaRules.spongebob;
-        for (const rule of rules) {
-            if (rule.pattern.test(lower)) {
-                return rule.reply[Math.floor(Math.random() * rule.reply.length)];
-            }
+    function getElizaInstance(npcId) {
+        if (!elizaInstances[npcId]) {
+            const scripts = window.ELIZA_SCRIPTS || {};
+            const script = scripts[npcId] || scripts.spongebob || { initial: 'Hallo!', finale: 'Tschüss!', quit: [], keywords: [{ word: 'xnone', rank: 0, rules: [{ decomp: '*', reassembly: ['Erzähl mir mehr.', 'Hmm, interessant.'] }] }] };
+            elizaInstances[npcId] = window.INSEL_ELIZA.create(script);
         }
-        return 'Ähm... ja... okay!';
+        return elizaInstances[npcId];
+    }
+
+    function getElizaResponse(input, npcId) {
+        const eliza = getElizaInstance(npcId);
+        return eliza.transform(input);
     }
 
     // --- Fee Floriane: Wunsch-System (3 pro Tag, localStorage) ---
