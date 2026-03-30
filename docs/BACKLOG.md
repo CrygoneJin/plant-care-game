@@ -197,13 +197,13 @@ Idee: Die leere Insel (nur Wasser) wird in einer Sequenz erschaffen. Verschieden
 | 47 | **Quests/Achievements zu schnell** — Schwierigkeitsgrad erhöhen, passen nicht zur leeren Insel | P1 | Scientist |
 | 48 | **NPCs nicht sichtbar** — Chat-Button/NPCs tauchen nicht auf bei schatzinsel.app | P0 | Engineer |
 | 49 | **Bernd Support-Chat fehlt** — Bernd als Hilfe-NPC nicht erreichbar | P0 | Engineer |
-| 50 | **Höhle fehlt** — kein Höhlen-Feature obwohl erwartet | P2 | Designer + Engineer |
+| 50 | **Höhle = Abenteuer-Dungeon** — 10 emergente Ebenen, je tiefer desto fantastischer + unsichtbar technischer (Amélie-Prinzip). Oscar sieht Kristalle, Drachen, Sterne — aber Pilze wachsen in Binärmuster, Fackeln leuchten in Hex-Farben, der Drache bewacht CPU-Zyklen. **Ebene 9 = Mandelbrot Easter Egg** (zoombar, Wu-Xing-Farben, endlos). PR #13 als Basis. | P1 | alle |
 | 51 | **Wu Xing Philosophie im Craft-Prompt** — Holz=Expansion, Feuer=Aktion, Erde=Wandlung, Metall=Reife, Wasser=Ruhe | P1 | Scientist |
 | 52 | **Kung Fu Panda Wuxi** — Ästhetik-Inspiration für Wu Xing Elemente | P2 | Artist |
 | 53 | **Echtes Atlantik-Wetter** — Open-Meteo API (29°N, 31°W — halber Weg Martinique↔Bayonne), 🌊 im Meer wetterabhängig | P1 | Engineer |
 | 54 | **Wu Xing als Tutorial** — 5 Elemente = 5 Level Tutorial (wie Candy Crush/Tetris), danach Insel: Bauen ODER Abenteuer ODER beides | P1 | Leader + Designer |
 | 55 | **Spielfigur auf der Insel** — Kind benennt selbst (max 8 Buchstaben), bewegbar mit Pfeiltasten (PC) oder Finger-Drag (Touch) | P1 | Engineer + Designer |
-| 56 | **Wiki-Game für Crafting** — "Von Wasser zu Drache in X Schritten" — Crafting-Pfad-Challenge, freigeschaltet als Quest-Belohnung in der Bibliothek | P2 | Scientist + Engineer |
+| 56 | **Bibliothek von Alexandria** — Gebäude auf der Insel (Stein+Bretter+Wissen), Schriftrollen statt Bücher, jede Rolle = Wiki-Game-Challenge ("Von Wasser zu Drache in X Schritten"). Timbuktu als zweite Bibliothek — wer beide baut verbindet zwei Wissenswelten. Papyrus vor Gutenberg. Wikipedia von damals. | P2 | alle |
 
 ---
 
