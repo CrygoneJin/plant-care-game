@@ -31,16 +31,48 @@ Was treibt ihn auseinander? Und was hält ihn zusammen?
 | **console.error** | 2 | Minimal |
 | **var statt let** | 3 Dateien | Altlast, harmlos |
 
+### Funktions-Metriken (Deep Analysis)
+
+| Datei | Funktionen | Ø Zeilen/Fn | Längste Funktion |
+|-------|-----------|-------------|------------------|
+| game.js | 131 | 24,5 | checkQuestCompletion() ~60 Zeilen |
+| chat.js | 38 | 28,8 | fillAiCommentBuffer() ~45 Zeilen |
+| sound.js | 20 | 17,9 | — |
+| eliza.js | 18 | 19,7 | — |
+| **Gesamt** | **207** | **24,5** | — |
+
 ### Kopplungs-Metriken
 
 | Metrik | Wert | Risiko |
 |--------|------|--------|
-| **window.\* Exports** | 41 | 🔴 Hoch — Globaler Namespace-Druck |
-| **localStorage Zugriffe** | 81 Read/Write | 🟡 Viel, aber funktional |
-| **localStorage Keys** | ~20 verschiedene Prefixe | 🟡 Wächst mit Features |
+| **window.\* Exports** | 35 echte + 6 Browser-APIs | 🔴 Hoch — Globaler Namespace-Druck |
+| **localStorage Keys** | 23 verschiedene | 🟡 Wächst mit Features |
+| **localStorage Zugriffe** | ~48 verstreut über 8 Dateien | 🟡 Kein zentraler Layer |
 | **JSON.parse/stringify** | 63× | 🔴 Kein Schema, keine Validierung |
-| **setInterval/setTimeout** | 43 | 🟡 Alle dokumentiert |
-| **addEventListener** | ~40+ | 🟢 Einmal bei Init, kein Leak |
+| **setInterval/setTimeout** | 43 (30 davon in game.js) | 🟡 Alle dokumentiert |
+| **addEventListener** | 45 | 🟡 Einmal bei Init |
+| **removeEventListener** | **1** | 🔴 Kritisch — 45:1 Ratio |
+| **try/catch** | 7 für 6 API-Endpoints | 🔴 Unhandled Promise Rejections |
+| **ARIA Attribute** | 9 | 🟡 Basis da, aria-live fehlt |
+
+### Code-Duplikation
+
+| Pattern | Vorkommen | Datei |
+|---------|-----------|-------|
+| `localStorage.getItem('insel-muted') === 'true'` | **9×** | sound.js |
+| Mobile-Breakpoint `768` hardcoded | **4×** | game.js + CSS |
+| Token-Budget `2000` hardcoded | **4×** | game.js |
+| Achievement-Popup-Animation | **2×** | game.js |
+
+### Magic Numbers (Top-Kandidaten für Konstanten)
+
+| Wert | Bedeutung | Stellen |
+|------|-----------|---------|
+| 768 | Mobile Breakpoint | 4 |
+| 2000 | Token-Budget pro NPC | 4 |
+| 1.5 / 1.2 | Aspect-Ratio-Schwellen | 2 |
+| 60 | Sound-Throttle (Samples/s) | 1 |
+| 80 | Regentropfen-Array | 1 |
 
 ### Laufzeit-Metriken
 
@@ -52,6 +84,9 @@ Was treibt ihn auseinander? Und was hält ihn zusammen?
 | **Rate Limit** | 60 LLM-Calls/Stunde | Schützt Budget |
 | **Auto-Save** | alle 30s | Gut |
 | **localStorage Limit** | 5MB, Kollaps bei ~500 LLM-Crafts | Power-User-Risiko |
+| **CSS Custom Properties** | 13 (5 Themes) | 🟢 90% der Farben variabilisiert |
+| **Hardcoded Colors** | ~5 | 🟢 Nur Dialog-Backdrops |
+| **Dead Code** | 0 gefunden | 🟢 Alles lebt |
 
 ### Feynman-Urteil
 
