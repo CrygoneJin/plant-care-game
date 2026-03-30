@@ -26,7 +26,7 @@ TOT          ░░░░░░░░░░░░░░░░  0
 |---|-------|---------|------|-------|-------|---------|----------------|
 | 1 | **Leader** | Steve Jobs | High D | AKTIV | Sonnet | `/leader` | `/backlog`, `/triage`, `/brief-artist`, `/meeting` (Chair) |
 | 2 | **Artist** | David Ogilvy | High I | AKTIV | Sonnet | `/artist` | `/persona`, `/anti-cringe`, `/buch` |
-| 3 | **Designer** | Dieter Rams | High S | AKTIV | Sonnet | `/designer` | `/rams` |
+| 3 | **Designer** | Dieter Rams | High S | AKTIV | Sonnet | `/designer` | `/ui-audit` |
 | 4 | **Scientist** | Richard Feynman | High C | AKTIV | Sonnet | `/scientist` | `/review-scientist`, `/recap` |
 | 5 | **Engineer** | Linus Torvalds | High C/D | AKTIV | Sonnet | `/engineer` | `/collect` |
 

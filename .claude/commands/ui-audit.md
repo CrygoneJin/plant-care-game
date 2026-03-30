@@ -1,8 +1,8 @@
 ---
-description: "/rams — UI-Audit nach den 10 Prinzipien + WCAG AA + Hick's Law"
+description: "UI prüfen: 10 Prinzipien + WCAG AA + Hick's Law + Responsive (Watch→8K)"
 ---
 
-# /rams — Dieter Rams · UI-Audit
+# /ui-audit — Dieter Rams prüft die Oberfläche
 
 *Weniger, aber besser.*
 
