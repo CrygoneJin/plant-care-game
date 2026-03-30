@@ -6,7 +6,7 @@ window.INSEL_MATERIALS = {
     metal:    { emoji: '⬜', label: 'Metall',   color: '#C0C0C0', border: '#A0A0A0' },
     wood:     { emoji: '🟩', label: 'Holz',     color: '#2E7D32', border: '#1B5E20' },
     fire:     { emoji: '🟥', label: 'Feuer',    color: '#D32F2F', border: '#B71C1C' },
-    water:    { emoji: '⬛', label: 'Wasser',   color: '#1A1A2E', border: '#0D0D1A' },
+    water:    { emoji: '🟦', label: 'Wasser',   color: '#0D1B4A', border: '#060E2A' },
     earth:    { emoji: '🟨', label: 'Erde',     color: '#F5C800', border: '#C8A300' },
     // === ABGELEITETE MATERIALIEN ===
     stone:    { emoji: '🧱', label: 'Stein',    color: '#95A5A6', border: '#7F8C8D' },
