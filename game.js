@@ -1216,11 +1216,11 @@
     let currentMaterial = 'metal';
     let currentTool = 'build';
 
-    // Die 5 Elemente (五行 Wu Xing) — immer in der Palette sichtbar
-    const BASE_MATERIALS = ['metal', 'wood', 'fire', 'water', 'earth'];
+    // Urknall: Masse, Energie, Lichtgeschwindigkeit — E=mc²
+    const BASE_MATERIALS = ['masse', 'energie', 'licht'];
 
-    // Starter-Set: 5 Wu-Xing + erste 3 Crafting-Ergebnisse — von Anfang an sichtbar
-    const STARTER_MATERIALS = [...BASE_MATERIALS, 'stone', 'sand', 'glass'];
+    // Starter-Set: Urknall-Trio + erste Teilchen — von Anfang an sichtbar
+    const STARTER_MATERIALS = [...BASE_MATERIALS, 'quark', 'elektron', 'photon', 'neutrino', 'gluon'];
 
     // Freigeschaltete Materialien (durch Ernten oder Crafting)
     let unlockedMaterials = new Set();

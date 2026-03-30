@@ -2,6 +2,18 @@
 // Exportiert als window.INSEL_CRAFTING_RECIPES (Vanilla JS, kein Build-Tool)
 
 window.INSEL_CRAFTING_RECIPES = [
+    // Stufe -1: E=mc² → Elementarteilchen
+    { name: 'Quark',     result: 'quark',     resultCount: 2, ingredients: { masse: 2, energie: 1 },   desc: '2 Masse + Energie = 2 Quarks — schwer, fundamental!' },
+    { name: 'Photon',    result: 'photon',    resultCount: 2, ingredients: { energie: 2, licht: 1 },   desc: '2 Energie + Licht = 2 Photonen — reine Energie!' },
+    { name: 'Elektron',  result: 'elektron',  resultCount: 2, ingredients: { masse: 1, energie: 2 },   desc: 'Masse + 2 Energie = 2 Elektronen — leicht und geladen!' },
+    { name: 'Gluon',     result: 'gluon',     resultCount: 2, ingredients: { masse: 2, licht: 1 },     desc: '2 Masse + Licht = 2 Gluonen — der Kleber!' },
+    { name: 'Neutrino',  result: 'neutrino',  resultCount: 2, ingredients: { energie: 1, licht: 2 },   desc: 'Energie + 2 Licht = 2 Neutrinos — Geister!' },
+    // Stufe 0: Teilchen → Wu Xing (五行)
+    { name: 'Erde',      result: 'earth',     resultCount: 2, ingredients: { quark: 2, gluon: 1 },     desc: '2 Quarks + Gluon = 2 Erde — gebundene Materie!' },
+    { name: 'Metall',    result: 'metal',     resultCount: 2, ingredients: { quark: 1, elektron: 2 },  desc: 'Quark + 2 Elektronen = 2 Metall — Leitung!' },
+    { name: 'Feuer',     result: 'fire',      resultCount: 2, ingredients: { photon: 2, elektron: 1 }, desc: '2 Photonen + Elektron = 2 Feuer — Licht wird heiß!' },
+    { name: 'Wasser',    result: 'water',     resultCount: 2, ingredients: { neutrino: 1, elektron: 1 }, desc: 'Neutrino + Elektron = 2 Wasser — fließend, kaum da!' },
+    { name: 'Holz',      result: 'wood',      resultCount: 2, ingredients: { gluon: 1, photon: 1 },    desc: 'Gluon + Photon = 2 Holz — Bindung + Licht = Wachstum!' },
     // Stufe 1: Aus den 5 Elementen (五行)
     { name: 'Stein',    result: 'stone',      resultCount: 2, ingredients: { earth: 2, fire: 1 },  desc: '2 Erde + Feuer = 2 Stein' },
     { name: 'Sand',     result: 'sand',       resultCount: 2, ingredients: { earth: 1, water: 1 }, desc: 'Erde + Wasser = 2 Sand' },
