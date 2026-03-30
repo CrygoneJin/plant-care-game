@@ -24,6 +24,8 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 | 2026-03-29 | Sprint 6 alle 3 Items in einer Session done | S6-1 (Discovery-Counter), S6-2 (+20 Quests, alle neuen Materialien abgedeckt), S6-3 (Tooltips) |
 | 2026-03-29 | updateDiscoveryCounter() Pattern | Funktion war da, aber nicht beim Start aufgerufen — Symptom: falscher Startwert. Fix: eine Zeile. |
 | 2026-03-29 | mat-label → title Migration | 25 Buttons in HTML bereinigt, keine versteckten Spans mehr, Tooltips funktionieren auf Desktop |
+| 2026-03-30 | Koop-Modus (D&D-inspiriert) | Zwei Spieler auf einer Insel — Couch-Koop (WASD+Pfeiltasten) und WebRTC P2P (zwei Geräte). Kein Server nötig. |
+| 2026-03-30 | Offline-PWA + Progressive Loading | Service Worker + Manifest = App installierbar + offline. ELIZA sofort, WebLLM schleicht nach 30s rein. |
 | 2026-03-30 | Browser-LLM Integration | NPCs können jetzt lokal im Browser denken — WebGPU/WASM, kein API-Key nötig. SmolLM2 als Modell. |
 | 2026-03-27 | Insel-Architekt v1 läuft | Pure HTML/CSS/JS, kein Framework, öffnet sich im Browser — fertig |
 | 2026-03-27 | Responsive für 3 Geräte | iPhone SE, MacBook 2013, 4K — ein CSS, keine Frameworks |
