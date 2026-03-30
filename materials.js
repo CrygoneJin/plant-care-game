@@ -73,4 +73,10 @@ window.INSEL_MATERIALS = {
     tornado:  { emoji: '🌪️', label: 'Tornado', color: '#AEB6BF', border: '#85929E' },
     wave:     { emoji: '🌊', label: 'Tsunami',  color: '#2980B9', border: '#1F618D' },
     phoenix:  { emoji: '🔥', label: 'Phönix',   color: '#F39C12', border: '#E67E22' },
+    // === UNSINN (Lindgren-approved) ===
+    worm:     { emoji: '🪱', label: 'Regenwurm', color: '#CD853F', border: '#A0522D' },
+    flyfish:  { emoji: '🐟', label: 'Flugfisch', color: '#87CEEB', border: '#5DADE2' },
+    catgold:  { emoji: '✨', label: 'Katzengold', color: '#FFD700', border: '#DAA520' },
+    pancake:  { emoji: '🥞', label: 'Eierkuchen', color: '#F5DEB3', border: '#DCC89E' },
+    aircastle:{ emoji: '🏰', label: 'Luftschloss', color: '#D6EAF8', border: '#AED6F1' },
 };

@@ -68,4 +68,10 @@ window.INSEL_CRAFTING_RECIPES = [
     { name: 'Roboter',     result: 'robot',     resultCount: 1, ingredients: { metal: 3, lightning: 1 },desc: '3 Metall + Blitz = Roboter' },
     { name: 'Musik',       result: 'music',     resultCount: 1, ingredients: { wood: 1, metal: 1, wind: 1 }, desc: 'Holz + Metall + Wind = Musik' },
     { name: 'Herz',        result: 'heart',     resultCount: 1, ingredients: { fire: 1, water: 1, flower: 1 }, desc: 'Feuer + Wasser + Blume = Herz' },
+    // === UNSINN (Lindgren: "Kinder sind nicht logisch. Sie sind besser als das.") ===
+    { name: 'Regenwurm',   result: 'worm',      resultCount: 3, ingredients: { earth: 1, rain: 1 },       desc: 'Erde + Regen = 3 Regenwürmer' },
+    { name: 'Flugfisch',   result: 'flyfish',   resultCount: 1, ingredients: { fish: 1, cloud: 1 },       desc: 'Fisch + Wolke = Flugfisch (klar!)' },
+    { name: 'Katzengold',  result: 'catgold',   resultCount: 1, ingredients: { sand: 1, sun: 1, poop: 1 },desc: 'Sand + Sonne + 💩 = Katzengold' },
+    { name: 'Eierkuchen',  result: 'pancake',   resultCount: 2, ingredients: { egg: 1, fire: 1, earth: 1 }, desc: 'Ei + Feuer + Erde = 2 Eierkuchen (Pippi würde 3 backen)' },
+    { name: 'Luftschloss', result: 'aircastle', resultCount: 1, ingredients: { cloud: 2, crown: 1 },      desc: '2 Wolken + Krone = Luftschloss (natürlich!)' },
 ];
