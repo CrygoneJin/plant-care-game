@@ -1581,3 +1581,16 @@ body.code-view-active #chat-settings-btn {
         font-size: 12px;
     }
 }
+
+.genesis-hint {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    animation: pulse 2s ease-in-out infinite;
+    margin: 4px 0;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}

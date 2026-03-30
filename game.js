@@ -1694,6 +1694,8 @@
                 }
                 if (!undoPushedThisStroke) { pushUndo(); undoPushedThisStroke = true; }
                 grid[r][c] = currentMaterial;
+                const hint = document.getElementById('genesis-hint');
+                if (hint) hint.style.display = 'none';
                 // Setzling platzieren startet Baumwachstum
                 if (currentMaterial === 'sapling') {
                     treeGrowth[r + ',' + c] = Date.now();
