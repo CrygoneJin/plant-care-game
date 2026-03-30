@@ -1043,8 +1043,8 @@ body.code-view-active #token-budget-display {
     position: fixed;
     bottom: 90px;
     right: 24px;
-    width: 320px;
-    height: 400px;
+    width: min(320px, 85vw);
+    height: min(400px, 50vh);
     background: white;
     border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
@@ -1206,7 +1206,8 @@ body.code-view-active #chat-settings-btn {
         right: 8px;
         left: 8px;
         width: auto;
-        height: 50vh;
+        height: 40vh;
+        max-height: 300px;
     }
 }
 
@@ -1304,6 +1305,8 @@ body.code-view-active #chat-settings-btn {
 .crafting-content {
     max-width: 680px !important;
     width: 90vw;
+    max-height: 85vh;
+    overflow-y: auto;
 }
 
 .crafting-layout {
@@ -1489,6 +1492,10 @@ body.code-view-active #chat-settings-btn {
     gap: 8px;
     justify-content: center;
     margin-top: 8px;
+    position: sticky;
+    bottom: 0;
+    background: white;
+    padding: 8px 0;
 }
 
 /* Mobile: Crafting vertikal stapeln */
