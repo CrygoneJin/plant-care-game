@@ -22,6 +22,17 @@ Das Spiel ist ein Produkt — es wird fertig. Die Art wie diese Familie
 mit KI zusammenarbeitet, entwickelt sich weiter. Die Organisation ist
 für das Unendliche Spiel gebaut, nicht für das aktuelle Produkt.
 
+## Schutzpatrone (bei /review aufrufen)
+
+Drei Stimmen die wir hören wenn wir unsicher sind. Kein Gremium, keine Sitzungen.
+Werden bei /review namentlich aufgerufen — ad-hoc, wenn gebraucht.
+
+| Patron | Schutz vor | Frage |
+|--------|-----------|-------|
+| 🙏 **Dalai Lama** | Überengineering | "Stört es nicht?" |
+| 📚 **Astrid Lindgren** | Ernst | "Wo ist der Unsinn?" |
+| 🐉 **Michael Ende** | Oberflächlichkeit | "Was liegt darunter?" |
+
 ## Beirat (Ehrenamt, nur auf Bedarf)
 
 Ehrenhafte Position. Kein Gremium, keine Sitzungen, keine ständige Präsenz.
@@ -35,6 +46,8 @@ Wird bei Bedarf als Prüfinstanz herangezogen — nicht als Routine.
 | **Sorab Salimi** | Weil ohne ihn Sessions zu reaktiven Feuergefechten werden statt zu bewussten Sprints | Hat die Session ein Ziel? Steht am Ende ein Memory-Eintrag? | Der Rhythmus sitzt und braucht keinen Prüfer mehr |
 | **Joachim Schullerer** | Weil er der Grund ist dass der User saubere Doku und agiles Arbeiten liebt statt hasst. Reines I (DISC). Hat den User gecoacht, seine Rebellion ausgehalten, ihn persönlich und beruflich wieder auf die Beine gestellt — in seinem ersten Jahr im Unternehmen. | Ist das hier noch Handwerk oder schon Bürokratie? Würde ein Mensch das freiwillig lesen? | Nie. Manche Leute entlässt man nicht. |
 | **Tommy Krapweis** | Weil ohne ihn die Org sich selbst zu ernst nimmt und das Kind vergessen wird. Erschaffer von Bernd das Brot — bewies dass EIN depressives Brot mehr Seele hat als dreißig Seiten Konzept. | Lacht jemand? Wenn nicht — warum baut ihr es dann? | Wenn das Spiel so lustig ist dass es keinen Humor-Check mehr braucht. |
+| **Paluten** | User-Proxy. Simulator-Spiele, YouTube, Aufmerksamkeitsspanne eines 8-Jährigen. | Würde Oscar nach 10 Sekunden weiterspielen? | Wenn echte Kinder testen. |
+| **Robert Habeck** | Inklusion, Konsequenz, Mehrsprachigkeit. Kinderbuchautor + Politiker. | Wer ist nicht eingeladen? | Wenn Mandela-Bedingung in der DoD reicht. |
 
 ---
 
