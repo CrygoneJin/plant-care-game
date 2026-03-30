@@ -29,6 +29,11 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 | 2026-03-30 | Koop-Modus (D&D-inspiriert) | Zwei Spieler auf einer Insel — Couch-Koop (WASD+Pfeiltasten) und WebRTC P2P (zwei Geräte). Kein Server nötig. |
 | 2026-03-30 | Offline-PWA + Progressive Loading | Service Worker + Manifest = App installierbar + offline. ELIZA sofort, WebLLM schleicht nach 30s rein. |
 | 2026-03-30 | Browser-LLM Integration | NPCs können jetzt lokal im Browser denken — WebGPU/WASM, kein API-Key nötig. SmolLM2 als Modell. |
+| 2026-03-30 | Pokémon-Style NPC-Entdeckung | NPCs auf der Insel finden statt Dropdown. Bernd als depressiver Anti-Clippy. Nur freigeschaltete sichtbar. |
+| 2026-03-30 | Tier-Interaktion | Streicheln (Zuneigung 0-5), Item-Drops (Federn, Muscheln), Fangen (Pokédex). 8 Tierarten. |
+| 2026-03-30 | Zauberkessel | Werkbank weg, Kessel rein. Items reinwerfen, umrühren. 80% Rezept, 20% Zufall/Peng!/LLM. Offline: Kessel improvisiert. |
+| 2026-03-30 | Tic-Tac-Zeh | Echtes TTT gegen den Kessel. Kahneman-KI (70% System 2, 30% System 1). Toe→Zeh→Juli Zeh, Toe++→C++. 5s Timer. |
+| 2026-03-30 | Lukas der Lokomotivführer | Lummerland IST die Startinsel! Hau-den-Lukas Minispiel (Timing-Kraftmesser). 6 Quests (Gleise, Berge, Tunnel). Jim Knopf. |
 | 2026-03-27 | Insel-Architekt v1 läuft | Pure HTML/CSS/JS, kein Framework, öffnet sich im Browser — fertig |
 | 2026-03-27 | Responsive für 3 Geräte | iPhone SE, MacBook 2013, 4K — ein CSS, keine Frameworks |
 | 2026-03-27 | 14 Skills + 5 Agents in einem Tag | Persona, Anti-Cringe, Recap, Collect, Meeting, Triage, Backlog, etc. |
