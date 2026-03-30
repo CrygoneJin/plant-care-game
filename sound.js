@@ -107,9 +107,44 @@
         water:  { freq: C4 * 27/16, wave: 'sine',     dur: 0.18, vol: 0.08 },
     };
 
+    // Erster Sound = KLONK. Laut. Befriedigend. Minecraft-Niveau.
+    let firstSoundPlayed = false;
+
+    function playKlonk() {
+        try {
+            const ctx = ensureAudio();
+            const t = ctx.currentTime;
+            // Tiefer Schlag
+            const osc1 = ctx.createOscillator();
+            const g1 = ctx.createGain();
+            osc1.type = 'square';
+            osc1.frequency.setValueAtTime(180, t);
+            osc1.frequency.exponentialRampToValueAtTime(60, t + 0.15);
+            g1.gain.setValueAtTime(0.35, t);
+            g1.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+            osc1.connect(g1); g1.connect(ctx.destination);
+            osc1.start(t); osc1.stop(t + 0.2);
+            // Heller Klick obendrauf
+            const osc2 = ctx.createOscillator();
+            const g2 = ctx.createGain();
+            osc2.type = 'triangle';
+            osc2.frequency.value = 800;
+            g2.gain.setValueAtTime(0.2, t);
+            g2.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
+            osc2.connect(g2); g2.connect(ctx.destination);
+            osc2.start(t); osc2.stop(t + 0.08);
+        } catch (e) {}
+    }
+
     function soundBuild(material) {
         if (localStorage.getItem('insel-muted') === 'true') return;
         if (!canPlaySound()) return;
+        // Erster Sound der Session = KLONK (Paluten: "muss in 30 Sek auffallen")
+        if (!firstSoundPlayed) {
+            firstSoundPlayed = true;
+            playKlonk();
+            return;
+        }
         const tone = ELEMENT_TONES[material];
         if (tone === null) return; // Tao = Stille
         if (tone) {
