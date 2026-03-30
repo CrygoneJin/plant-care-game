@@ -57,7 +57,6 @@
         tommy:     { name: 'Anker-Punkte',  emoji: '⚓', unit: 'Anker' },
         neinhorn:  { name: 'Nein-Sterne',   emoji: '🌈', unit: 'Nein' },
         maus:      { name: 'Blümchen',       emoji: '🌻', unit: 'Blümchen' },
-        floriane:  { name: 'Feenstaub',       emoji: '✨', unit: 'Staub' },
         bernd:     { name: 'Brotkrümel',     emoji: '🍞', unit: 'Krümel' },
         floriane:  { name: 'Wunsch-Sterne',  emoji: '⭐', unit: 'Sterne' },
     };
