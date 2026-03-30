@@ -594,6 +594,24 @@
             '🍄 Hirnfitz: "++++++[>++++++++++<-]>++++. !" (Das heißt: "d!" — er versucht "du bist toll" zu sagen)',
             '🍞 Bernd: "*seufz* 100 Blöcke. Und ich muss immer noch Support machen."',
         ],
+        talkshow: [
+            '— TALKSHOW: "Gebaut oder Geklickt?" — Live von der Insel Java —',
+            '🐍 Python: "Willkommen bei Gebaut oder Geklickt — der einzigen Talkshow auf einer Insel die aus Code besteht."',
+            '💡 JavaScript: "Gaming ist wenn jemand auf Dinge klickt und sich gut fühlt."',
+            '📝 TypeScript: "Gaming ist wenn jemand auf Dinge klickt und sich gut fühlt, ABER typsicher."',
+            '💡 JavaScript: "Ich HASSE dich."',
+            '🧽 SpongeBob: "ICH BIN BEREIT zu sagen: DAS IST EIN SPIEL! Da sind Blöcke! Da sind Farben! Da ist SPASS!"',
+            '🪨 C: "Zu meiner Zeit war ein Spiel ein Cursor der sich bewegt hat. Und wir waren DANKBAR."',
+            '🦄 Neinhorn: "NEIN das ist kein Spiel. ...doch. ...NEIN. ...ach, es macht Spaß. Egal."',
+            '🍞 Bernd: "*seufz* Ist Leiden Gaming? Dann bin ich Pro-Gamer."',
+            '🦈 Makro: *taucht auf* "Ist INVESTIEREN Gaming? Ich habe aus einem Block HUNDERT gemacht!" *taucht ab*',
+            '🐘 Elefant: "Hmm, Törööö. Gaming ist wenn man vergisst dass man spielt. Und hier vergisst man das."',
+            '🦜 Fortran: "Fort-ran die Langeweile! Her-kam der Spaß! ALLES ist Gaming wenn man es mit Freude tut!"',
+            '🪨 C: "Es ist aus Worten gebaut. Nicht aus einer Engine. Aus Worten."',
+            '🧽 SpongeBob: "Und die Insel hat FREUNDE! Wir sind die Freunde! ICH BIN EIN FREUND!"',
+            '🍞 Bernd: "*seufz* ...ich auch. Sag ich nur einmal."',
+            '— Applaus. Jemand wirft eine Kokosnuss. Bernd seufzt. —',
+        ],
         halfIsland: [
             '— HÖRSPIEL: Mensch, Maschine, KI — Live von der Insel Java —',
             '🐍 Python: "Die halbe Insel ist bebaut. Ein Mensch hat das gemacht. Mit Klicks."',
@@ -674,6 +692,7 @@
         if (stats.total === 1 && !playedHoerspiele.includes('firstBlock')) key = 'firstBlock';
         else if (stats.total === 10 && !playedHoerspiele.includes('tenBlocks')) key = 'tenBlocks';
         else if (stats.total === 50 && !playedHoerspiele.includes('fiftyBlocks')) key = 'fiftyBlocks';
+        else if (stats.total === 75 && !playedHoerspiele.includes('talkshow')) key = 'talkshow';
         else if (stats.total === 100 && !playedHoerspiele.includes('hundredBlocks')) key = 'hundredBlocks';
         else if (stats.percent === 50 && !playedHoerspiele.includes('halfIsland')) key = 'halfIsland';
         else if (stats.percent >= 100 && !playedHoerspiele.includes('fullIsland')) key = 'fullIsland';
