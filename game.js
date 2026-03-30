@@ -1190,9 +1190,7 @@
     // Freigeschaltete Materialien (durch Ernten oder Crafting)
     let unlockedMaterials = new Set();
 
-    // === SPIELFIGUR ===
-    let playerName = localStorage.getItem('insel-player-name') || '';
-    let playerPos = { r: 8, c: 12 }; // Mitte der Insel
+    // === SPIELFIGUR (deklariert in Zeile ~1357, nach Animationen) ===
 
     function saveUnlocked() {
         localStorage.setItem('insel-unlocked-materials', JSON.stringify([...unlockedMaterials]));
@@ -1347,10 +1345,17 @@
         tree:       { material: 'wood', count: 3 },
         small_tree: { material: 'wood', count: 2 },
         sapling:    { material: 'wood', count: 1 },
+        palm:       { material: 'wood', count: 2 },
     };
     let isMouseDown = false;
     let hoverCell = null;
     let animations = [];
+
+    // --- Spielfigur ---
+    let playerName = localStorage.getItem('insel-player-name') || '';
+    let playerPos  = JSON.parse(localStorage.getItem('insel-player-pos') || 'null')
+                     || { r: Math.floor(ROWS / 2), c: Math.floor(COLS / 2) };
+    let playerDragging = false;
 
     // --- DOM-Elemente ---
     const canvas = document.getElementById('game-canvas');
@@ -1434,6 +1439,18 @@
                 grid[r][c] = null;
             }
         }
+        // 8 Starter-Bäume am Rand verteilt (Insel fühlt sich bewachsen an)
+        const starterTrees = [
+            { r: 1,        c: 2        },
+            { r: 1,        c: COLS - 3 },
+            { r: ROWS - 2, c: 2        },
+            { r: ROWS - 2, c: COLS - 3 },
+            { r: Math.floor(ROWS / 2) - 1, c: 1        },
+            { r: Math.floor(ROWS / 2) + 1, c: COLS - 2 },
+            { r: 2,        c: Math.floor(COLS / 2) - 2 },
+            { r: ROWS - 3, c: Math.floor(COLS / 2) + 2 },
+        ];
+        starterTrees.forEach(({ r, c }) => { grid[r][c] = 'palm'; });
         window.grid = grid; // Chat-Integration aktuell halten
     }
 
@@ -1520,6 +1537,31 @@
                     ctx.fillText(mat.emoji, x + CELL_SIZE / 2, y + CELL_SIZE / 2 + 1);
                 }
             }
+        }
+
+        // Spielfigur zeichnen
+        if (playerName) {
+            const px = (playerPos.c + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
+            const py = (playerPos.r + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
+            // Schatten
+            ctx.globalAlpha = 0.25;
+            ctx.fillStyle = '#000';
+            ctx.beginPath();
+            ctx.ellipse(px, py + CELL_SIZE * 0.35, CELL_SIZE * 0.25, CELL_SIZE * 0.1, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalAlpha = 1;
+            // Figur
+            ctx.font = `${CELL_SIZE * 0.65}px serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🧒', px, py);
+            // Name
+            ctx.font = `bold ${Math.max(10, CELL_SIZE * 0.3)}px sans-serif`;
+            ctx.fillStyle = '#fff';
+            ctx.strokeStyle = 'rgba(0,0,0,0.7)';
+            ctx.lineWidth = 3;
+            ctx.strokeText(playerName, px, py - CELL_SIZE * 0.52);
+            ctx.fillText(playerName, px, py - CELL_SIZE * 0.52);
         }
 
         // Hover-Vorschau
@@ -2041,6 +2083,8 @@
         inventory = {};
         unlockedMaterials = new Set();
         discoveredRecipes = new Set();
+        playerPos = { r: Math.floor(ROWS / 2), c: Math.floor(COLS / 2) };
+        localStorage.setItem('insel-player-pos', JSON.stringify(playerPos));
         saveInventory();
         saveUnlocked();
         saveDiscoveredRecipes();
@@ -2520,8 +2564,6 @@
     });
 
     // Touch-Events für Tablet
-    let isDraggingPlayer = false;
-
     canvas.addEventListener('touchstart', (e) => {
         e.preventDefault();
         undoPushedThisStroke = false;
@@ -2530,7 +2572,7 @@
         if (!cell) return;
         // Spielfigur-Drag: Berühre die Spieler-Zelle → Figur ziehen
         if (playerName && cell.r === playerPos.r && cell.c === playerPos.c) {
-            isDraggingPlayer = true;
+            playerDragging = true;
             return;
         }
         isMouseDown = true;
@@ -2541,10 +2583,11 @@
         e.preventDefault();
         const touch = e.touches[0];
         const cell = getGridCell(touch);
-        if (isDraggingPlayer && cell) {
+        if (playerDragging && cell) {
             // Spieler auf neue Position ziehen (kein Wasser-Rand)
             if (cell.r >= 2 && cell.r < ROWS - 2 && cell.c >= 2 && cell.c < COLS - 2) {
                 playerPos = { r: cell.r, c: cell.c };
+                localStorage.setItem('insel-player-pos', JSON.stringify(playerPos));
                 requestRedraw();
             }
             return;
@@ -2558,7 +2601,7 @@
 
     canvas.addEventListener('touchend', () => {
         isMouseDown = false;
-        isDraggingPlayer = false;
+        playerDragging = false;
         hoverCell = null;
     });
 
