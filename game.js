@@ -1280,6 +1280,34 @@
     const savedProjectsList = document.getElementById('saved-projects-list');
     const toast = document.getElementById('toast');
 
+    // --- Echtes Atlantik-Wetter via Open-Meteo (29°N, 31°W) ---
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=29&longitude=-31&current=temperature_2m,rain,cloud_cover,wind_speed_10m')
+        .then(r => r.json())
+        .then(data => {
+            const c = data.current;
+            const cloud = c.cloud_cover || 0;
+            const rain = c.rain || 0;
+            const wind = c.wind_speed_10m || 0;
+
+            // Map to game weather
+            if (rain > 0.5) {
+                if (typeof window.triggerWeather === 'function') window.triggerWeather('rain');
+            } else if (cloud > 70) {
+                // overcast - darken background slightly
+                document.querySelector('#canvas-wrapper').style.filter = 'brightness(0.85)';
+            }
+            // Show weather info in stats
+            const statsContent = document.getElementById('stats-content');
+            if (statsContent) {
+                const icon = rain > 0.5 ? '🌧️' : cloud > 70 ? '⛅' : wind > 40 ? '💨' : '☀️';
+                const tempEl = document.createElement('p');
+                tempEl.innerHTML = `${icon} ${Math.round(c.temperature_2m)}°C auf der Insel`;
+                tempEl.style.cssText = 'font-size:11px; opacity:0.7; text-align:center;';
+                statsContent.parentElement.insertBefore(tempEl, statsContent);
+            }
+        })
+        .catch(() => {}); // Wetter ist optional, fail silently
+
     // --- Canvas Größe ---
     const totalCols = COLS + WATER_BORDER * 2;
     const totalRows = ROWS + WATER_BORDER * 2;
