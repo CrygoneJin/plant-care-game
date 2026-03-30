@@ -201,6 +201,12 @@ Idee: Die leere Insel (nur Wasser) wird in einer Sequenz erschaffen. Verschieden
 | 51 | **Wu Xing Philosophie im Craft-Prompt** — Holz=Expansion, Feuer=Aktion, Erde=Wandlung, Metall=Reife, Wasser=Ruhe | P1 | Scientist |
 | 52 | **Kung Fu Panda Wuxi** — Ästhetik-Inspiration für Wu Xing Elemente | P2 | Artist |
 | 53 | **Echtes Atlantik-Wetter** — Open-Meteo API (29°N, 31°W — halber Weg Martinique↔Bayonne), 🌊 im Meer wetterabhängig | P1 | Engineer |
+| 57 | **Stille-Momente** (Ende) — Leere Meerpassagen zwischen Inseln. Kein UI, kein Toast. Nur Wellen und Wind. Oscar denkt nach. | P1 | Designer |
+| 58 | **Unsinn-Rezepte** (Lindgren) — Feuer+Pfannkuchen=?, Drache+Kuchen=?, unlogisch aber wunderbar | P2 | Artist |
+| 59 | **10-Sekunden-Erster-Moment** (Paluten) — Erster Block in 10 Sek, nicht 30. Intro kürzen. | P0 | Designer |
+| 60 | **Haikus am Strand** (Krapweis) — Jede Insel-Station: 5-7-5 Schild am Strand statt Tutorial-Text | P2 | Artist |
+| 61 | **Konsequenz** (Habeck) — Baum fällen = Baum weg. Brunnen bauen = Blumen wachsen. Welt reagiert. | P1 | Engineer |
+| 62 | **Mehrsprachige NPCs** (Habeck) — Lummerland = alle willkommen. NPCs antworten in Oscars Sprache oder der Sprache der Insel. | P2 | Scientist |
 | 54 | **Jim Knopfs Welt als offene Inselkarte** — Lummerland (Tutorial) → Meer → Mandala/Ping → Wüste (Turtur) → Drachenstadt → Kummerland → Schatzinsel. Nicht linear, Oscar wählt. Boot craften = nächste Insel. **Goldener Pfad**: Abendsonne malt Lichtstreifen aufs Meer Richtung nächste Insel — kein UI, nur Licht. **Wachsende Verantwortung**: Lummerland=für sich, Mandala=?, Wüste=Hilfe annehmen (Turtur=Scheinriese: aus der Nähe anders als von weitem), Drachenstadt=?, Schatzinsel=für alle. Jede Station muss an Michael Ende rückgekoppelt werden — wir interpretieren nicht, wir lesen. | P1 | alle |
 | 55 | **Spielfigur auf der Insel** — Kind benennt selbst (max 8 Buchstaben), bewegbar mit Pfeiltasten (PC) oder Finger-Drag (Touch) | P1 | Engineer + Designer |
 | 56 | **Bibliothek von Alexandria** — Gebäude auf der Insel (Stein+Bretter+Wissen), Schriftrollen statt Bücher, jede Rolle = Wiki-Game-Challenge ("Von Wasser zu Drache in X Schritten"). Timbuktu als zweite Bibliothek — wer beide baut verbindet zwei Wissenswelten. Papyrus vor Gutenberg. Wikipedia von damals. | P2 | alle |
