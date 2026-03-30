@@ -76,4 +76,8 @@ window.INSEL_CRAFTING_RECIPES = [
     { name: 'Nokia 3210', result: 'nokia',     resultCount: 1, ingredients: { knochenhandy: 1, glass: 1 },  desc: 'Knochenhandy + Glas = Nokia 3210 — unkaputtbar!' },
     { name: 'Snake',       result: 'snake',     resultCount: 1, ingredients: { nokia: 1, plant: 1 },        desc: 'Nokia + Pflanze = Snake — frisst alles!' },
     { name: 'Tetris',      result: 'tetris',    resultCount: 1, ingredients: { nokia: 1, stone: 1 },        desc: 'Nokia + Stein = Tetris — Blöcke stapeln!' },
+    // === HÖHLEN (Oscar Edition — wunderschön!) ===
+    { name: 'Höhle',       result: 'cave',       resultCount: 1, ingredients: { mountain: 1, water: 1 },    desc: 'Berg + Wasser = Höhle — das Wasser gräbt seit Ewigkeiten!' },
+    { name: 'Tropfstein',  result: 'stalactite', resultCount: 2, ingredients: { cave: 1, water: 1 },        desc: 'Höhle + Wasser = 2 Tropfsteine — Geduld in Stein!' },
+    { name: 'Edelstein',   result: 'gem',        resultCount: 1, ingredients: { stalactite: 1, fire: 1 },   desc: 'Tropfstein + Feuer = Edelstein — wunderschön!' },
 ];

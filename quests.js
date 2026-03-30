@@ -27,4 +27,7 @@ window.INSEL_QUEST_TEMPLATES = [
     // Runde 4: Internet-Nostalgie (90er)
     { npc: 'krabs', title: 'Internetcafé', desc: 'Bin ich schon drin?! WOW! Ich BIN drin! Das Bobele sagt: JEDE Minute online kostet 3 Krabben-Taler! DAS ist ein Geschäftsmodell!', needs: { modem: 2, aol: 1, lamp: 3, door: 1 }, reward: '💿💿💿' },
     { npc: 'spongebob', title: 'Uh-Oh-Station', desc: 'Suchergebnis: 0 Freunde online! Das muss sich ändern! ICQ installieren! SOFORT! *Uh-Oh!*', needs: { icq: 2, modem: 1, flower: 3 }, reward: '🌻🌻🌻' },
+    // Runde 5: Höhlen (Oscar Edition)
+    { npc: 'neinhorn', title: 'Oscars Höhle', desc: 'NEIN keine Höhle! ...ok EINE. Aber mit Tropfsteinen! Und Edelsteinen! Oscar sagt die müssen WUNDERSCHÖN sein!', needs: { cave: 2, stalactite: 4, gem: 2, lamp: 3 }, reward: '💠💠💠' },
+    { npc: 'elefant', title: 'Tropfstein-Konzert', desc: 'Törööö... stell dir vor: jeder Tropfstein klingt anders wenn man dranklopft... Törööö!', needs: { cave: 1, stalactite: 6, music: 1 }, reward: '🎵🎵🎵🎵🎵' },
 ];

@@ -81,4 +81,8 @@ window.INSEL_MATERIALS = {
     nokia:    { emoji: '📱', label: 'Nokia 3210', color: '#2C3E50', border: '#1A252F' },
     snake:    { emoji: '🐍', label: 'Snake',    color: '#27AE60', border: '#1E8449' },
     tetris:   { emoji: '🎮', label: 'Tetris',   color: '#8E44AD', border: '#6C3483' },
+    // === HÖHLEN (Oscar Edition) ===
+    cave:     { emoji: '🕳️', label: 'Höhle',    color: '#34495E', border: '#1C2833' },
+    stalactite: { emoji: '🪨', label: 'Tropfstein', color: '#717D7E', border: '#566573' },
+    gem:      { emoji: '💠', label: 'Edelstein', color: '#5DADE2', border: '#2E86C1' },
 };
