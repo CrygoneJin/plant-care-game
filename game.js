@@ -3162,8 +3162,25 @@
     // Grid für Chat-Integration exportieren
     window.grid = grid;
 
-    // Koop-Exports: Spieler 2 kann bauen/ernten
+    // Exports: Gamepad + Koop brauchen Zugriff
     window.requestRedraw = requestRedraw;
+    window.movePlayer = movePlayer;
+    window.playerPos = function () { return { r: playerPos.r, c: playerPos.c }; };
+
+    // Material durchschalten (für Gamepad SELECT-Button)
+    window.cycleMaterial = function () {
+        const btns = Array.from(document.querySelectorAll('.material-btn:not(.craft-locked)'))
+            .filter(b => b.style.display !== 'none');
+        if (btns.length === 0) return;
+        const idx = btns.findIndex(b => b.dataset.material === currentMaterial);
+        const next = btns[(idx + 1) % btns.length];
+        if (next) {
+            next.click();
+            const info = MATERIALS[next.dataset.material];
+            if (info && window.showToast) window.showToast(`${info.emoji} ${info.label}`);
+        }
+    };
+
     window.applyToolAt = function (r, c, tool, material) {
         const savedTool = currentTool;
         const savedMat = currentMaterial;

@@ -2,7 +2,7 @@
 // Cache-First: Alles lokal, Netz nur zum Updaten.
 // Kuba-tauglich: Einmal laden, für immer spielen.
 
-const CACHE_NAME = 'schatzinsel-v1';
+const CACHE_NAME = 'schatzinsel-v2';
 const CORE_ASSETS = [
     './',
     './index.html',
@@ -19,6 +19,8 @@ const CORE_ASSETS = [
     './worker.js',
     './browser-llm.js',
     './coop.js',
+    './gamepad.js',
+    './color-era.js',
 ];
 
 // Install: Core-Assets cachen

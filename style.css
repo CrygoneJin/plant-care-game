@@ -1739,3 +1739,190 @@ body.code-view-active #chat-settings-btn {
         transform: translateX(0);
     }
 }
+
+/* ============================================ */
+/* === VIRTUAL GAMEPAD — Zelda Touch Controls === */
+/* ============================================ */
+
+#virtual-gamepad {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 160px;
+    z-index: 1000;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+}
+
+#virtual-gamepad.visible {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 12px 16px;
+}
+
+/* D-Pad */
+.gamepad-dpad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: auto;
+    gap: 2px;
+}
+
+.dpad-middle {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.dpad-btn {
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 6px;
+    background: rgba(30, 30, 30, 0.7);
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.05s;
+}
+
+.dpad-btn.pressed {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.dpad-center {
+    width: 48px;
+    height: 48px;
+    background: rgba(30, 30, 30, 0.5);
+    border-radius: 4px;
+}
+
+/* A/B Buttons */
+.gamepad-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    pointer-events: auto;
+    margin-bottom: 16px;
+}
+
+.action-btn-gp {
+    width: 56px;
+    height: 56px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    background: rgba(30, 30, 30, 0.7);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 20px;
+    font-weight: bold;
+    font-family: var(--font-heading), monospace;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.05s;
+}
+
+.btn-a {
+    background: rgba(139, 172, 15, 0.8);
+    margin-bottom: 20px;
+}
+
+.btn-b {
+    background: rgba(180, 60, 60, 0.7);
+}
+
+.action-btn-gp.pressed {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0.92);
+}
+
+/* Select/Start */
+.gamepad-select {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 16px;
+    pointer-events: auto;
+}
+
+.select-btn {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 12px;
+    background: rgba(60, 60, 60, 0.6);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.select-btn.pressed {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Toolbar im Gameboy-Modus kompakter */
+.gameboy-compact {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 4px !important;
+    padding: 4px 8px !important;
+}
+
+.gameboy-compact .tool-btn {
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 16px;
+}
+
+/* Canvas-Bereich nach oben schieben wenn Gamepad aktiv */
+[data-gameboy="true"] #canvas-wrapper {
+    margin-bottom: 160px;
+}
+
+/* ============================================ */
+/* === FARBRAUM-EVOLUTION — Grau → SW → RGB === */
+/* ============================================ */
+
+/* Level 0: Grau (Bleistift-Skizze) */
+[data-color-era="gray"] #game-canvas {
+    filter: grayscale(100%) brightness(1.1) contrast(0.8);
+}
+
+/* Level 1: Schwarz-Weiß (frühes Gameboy) */
+[data-color-era="bw"] #game-canvas {
+    filter: grayscale(100%) contrast(1.4);
+}
+
+/* Level 2: 4 Grüntöne (Original Gameboy DMG) */
+[data-color-era="dmg"] #game-canvas {
+    filter: grayscale(100%) sepia(50%) hue-rotate(50deg) saturate(0.6) contrast(1.2);
+}
+
+/* Level 3: Begrenzte Palette (Gameboy Color) */
+[data-color-era="gbc"] #game-canvas {
+    filter: saturate(0.5) contrast(1.1);
+}
+
+/* Level 4: Volle Farbe (freigeschaltet!) */
+[data-color-era="full"] #game-canvas {
+    filter: none;
+}
+
+/* Übergang zwischen Eras sanft */
+#game-canvas {
+    transition: filter 2s ease-in-out;
+}
