@@ -80,4 +80,23 @@ window.INSEL_CRAFTING_RECIPES = [
     { name: 'Höhle',       result: 'cave',       resultCount: 1, ingredients: { mountain: 1, water: 1 },    desc: 'Berg + Wasser = Höhle — das Wasser gräbt seit Ewigkeiten!' },
     { name: 'Tropfstein',  result: 'stalactite', resultCount: 2, ingredients: { cave: 1, water: 1 },        desc: 'Höhle + Wasser = 2 Tropfsteine — Geduld in Stein!' },
     { name: 'Edelstein',   result: 'gem',        resultCount: 1, ingredients: { stalactite: 1, fire: 1 },   desc: 'Tropfstein + Feuer = Edelstein — wunderschön!' },
+    // === MUSIK-GENRES (verhackstückt) ===
+    // Krabs-Kollektion (Unterwasser)
+    { name: 'Krabbenpunk',   result: 'krabbenpunk',   resultCount: 1, ingredients: { fish: 1, fire: 1 },      desc: 'Fisch + Feuer = Krabbenpunk — Anarchie unter Wasser!' },
+    { name: 'Muschelwave',   result: 'muschelwave',   resultCount: 1, ingredients: { sand: 1, music: 1 },     desc: 'Sand + Musik = Muschelwave — Synthie aus der Tiefe!' },
+    { name: 'Tiefseebass',   result: 'tiefseebass',   resultCount: 1, ingredients: { water: 2, music: 1 },    desc: '2 Wasser + Musik = Tiefseebass — schwere Beats unter Druck!' },
+    { name: 'Korallenjazz',  result: 'korallenjazz',  resultCount: 1, ingredients: { flower: 1, fish: 1 },    desc: 'Blume + Fisch = Korallenjazz — Impro die langsam wächst!' },
+    { name: 'Perlentechno',  result: 'perlentechno',  resultCount: 1, ingredients: { diamond: 1, music: 1 },  desc: 'Diamant + Musik = Perlentechno — repetitiv, wertvoll, endlos!' },
+    // 90er-Kollektion (Internet-Ära)
+    { name: 'Graphunk',      result: 'graphunk',      resultCount: 1, ingredients: { music: 1, wood: 1 },     desc: 'Musik + Holz = Graphunk — Grammophon trifft Groove!' },
+    { name: 'Modemcore',     result: 'modemcore',     resultCount: 1, ingredients: { modem: 1, fire: 1 },     desc: 'Modem + Feuer = Modemcore — 56k-Kreischen als Drop!' },
+    { name: 'Einwahltrance', result: 'einwahltrance', resultCount: 1, ingredients: { modem: 1, crystal: 1 },  desc: 'Modem + Kristall = Einwahltrance — hypnotische Verbindung!' },
+    { name: 'Pixelpop',      result: 'pixelpop',      resultCount: 1, ingredients: { tetris: 1, flower: 1 },  desc: 'Tetris + Blume = Pixelpop — 8-Bit Ohrwürmer!' },
+    { name: 'Chatroomchill', result: 'chatroomchill', resultCount: 1, ingredients: { icq: 1, cloud: 1 },      desc: 'ICQ + Wolke = Chatroomchill — Lo-Fi Beats zum Tippen!' },
+    // Ogilvy-Kollektion (Insel)
+    { name: 'Palmenhouse',   result: 'palmenhouse',   resultCount: 1, ingredients: { tree: 1, fire: 1 },      desc: 'Baum + Feuer = Palmenhouse — tropical aber mit Druck!' },
+    { name: 'Vulkanmetal',   result: 'vulkanmetal',   resultCount: 1, ingredients: { volcano: 1, metal: 1 },  desc: 'Vulkan + Metall = Vulkanmetal — Eruption in Moll!' },
+    { name: 'Drachendub',    result: 'drachendub',    resultCount: 1, ingredients: { dragon: 1, music: 1 },   desc: 'Drache + Musik = Drachendub — Bässe die Feuer spucken!' },
+    { name: 'Blitzhop',      result: 'blitzhop',      resultCount: 1, ingredients: { lightning: 1, music: 1 },desc: 'Blitz + Musik = Blitzhop — schnell, hart, elektrisierend!' },
+    { name: 'Phönixfolk',    result: 'phoenixfolk',   resultCount: 1, ingredients: { phoenix: 1, wood: 1 },   desc: 'Phönix + Holz = Phönixfolk — stirbt, kommt zurück, klingt besser!' },
 ];
