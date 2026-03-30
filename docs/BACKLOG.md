@@ -201,7 +201,7 @@ Idee: Die leere Insel (nur Wasser) wird in einer Sequenz erschaffen. Verschieden
 | 51 | **Wu Xing Philosophie im Craft-Prompt** — Holz=Expansion, Feuer=Aktion, Erde=Wandlung, Metall=Reife, Wasser=Ruhe | P1 | Scientist |
 | 52 | **Kung Fu Panda Wuxi** — Ästhetik-Inspiration für Wu Xing Elemente | P2 | Artist |
 | 53 | **Echtes Atlantik-Wetter** — Open-Meteo API (29°N, 31°W — halber Weg Martinique↔Bayonne), 🌊 im Meer wetterabhängig | P1 | Engineer |
-| 54 | **Lummerland → Schatzinsel** — Tutorial auf Lummerland (klein, 2 Berge, Emma, Jim). Zahlenreihe: 0/1 (Singularität, erster Klick) → 3 (E=mc², Energie wird Materie) → 5 (Wu Xing, Tutorial done) → 10.000 (Tao, Infinite Craft). Emma fährt durch den Tunnel → Schatzinsel. | P1 | Leader + Designer + Artist |
+| 54 | **Jim Knopfs Welt als offene Inselkarte** — Lummerland (Tutorial) → Meer → Mandala/Ping → Wüste (Turtur, Modelleisenbahn craften!) → Drachenstadt → Kummerland → Schatzinsel. Nicht linear, nicht gescriptet. Oscar wählt wohin. Jede Station: eigene Materialien, NPCs, Rezepte. Boot craften = nächste Insel erreichbar. Zahlenreihe: 0/1→3→5→10.000. | P1 | alle |
 | 55 | **Spielfigur auf der Insel** — Kind benennt selbst (max 8 Buchstaben), bewegbar mit Pfeiltasten (PC) oder Finger-Drag (Touch) | P1 | Engineer + Designer |
 | 56 | **Bibliothek von Alexandria** — Gebäude auf der Insel (Stein+Bretter+Wissen), Schriftrollen statt Bücher, jede Rolle = Wiki-Game-Challenge ("Von Wasser zu Drache in X Schritten"). Timbuktu als zweite Bibliothek — wer beide baut verbindet zwei Wissenswelten. Papyrus vor Gutenberg. Wikipedia von damals. | P2 | alle |
 
