@@ -1569,6 +1569,10 @@
 
         // Spielfigur zuletzt zeichnen (immer sichtbar über allem)
         drawPlayer();
+        // Koop: Spieler 2 zeichnen
+        if (window.Coop?.active) {
+            window.Coop.draw(ctx, CELL_SIZE, WATER_BORDER);
+        }
 
     }
 
@@ -1913,6 +1917,7 @@
             unlocked: [...unlockedMaterials],
             discovered: [...discoveredRecipes],
             playerPos: playerPos,
+            coop: window.Coop?.getState?.() || null,
         };
         localStorage.setItem('insel-projekte', JSON.stringify(projects));
         // Subtiler Indikator: Save-Button blinkt kurz
@@ -2607,6 +2612,10 @@
             return;
         }
 
+        // Koop: WASD + Space für Spieler 2 abfangen
+        if (window.Coop?.active && window.Coop.handleKey(e)) return;
+        if (window.Coop?.active && window.Coop.handleMaterialKey(e)) return;
+
         switch (e.key) {
             case '1': selectMaterial('metal'); break;
             case '2': selectMaterial('wood'); break;
@@ -2616,7 +2625,7 @@
             case 'b': case 'B': selectTool('build'); break;
             case 'e': case 'E': selectTool('harvest'); break;
             case 'f': case 'F': selectTool('fill'); break;
-            // Spielfigur-Steuerung
+            // Spielfigur-Steuerung (Spieler 1: Pfeiltasten)
             case 'ArrowUp':    e.preventDefault(); movePlayer(-1, 0); break;
             case 'ArrowDown':  e.preventDefault(); movePlayer(1, 0); break;
             case 'ArrowLeft':  e.preventDefault(); movePlayer(0, -1); break;
@@ -3152,5 +3161,17 @@
 
     // Grid für Chat-Integration exportieren
     window.grid = grid;
+
+    // Koop-Exports: Spieler 2 kann bauen/ernten
+    window.requestRedraw = requestRedraw;
+    window.applyToolAt = function (r, c, tool, material) {
+        const savedTool = currentTool;
+        const savedMat = currentMaterial;
+        currentTool = tool || currentTool;
+        if (material) currentMaterial = material;
+        applyTool(r, c);
+        currentTool = savedTool;
+        currentMaterial = savedMat;
+    };
 
 })();

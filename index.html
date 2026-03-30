@@ -70,6 +70,9 @@
             <div class="toolbar-group" id="genesis-group" style="display:none">
                 <button class="tool-btn" id="genesis-replay-btn" title="Genesis-Replay: Urknall in Zeitlupe">🔄</button>
             </div>
+            <div class="toolbar-group" id="coop-group">
+                <button class="tool-btn" id="coop-btn" title="Koop-Modus: Zusammen bauen!">🎮</button>
+            </div>
             <div class="toolbar-group" id="discovery-group">
                 <span id="discovery-counter" title="Entdeckte Materialien">🔬 0 / 68 entdeckt</span>
             </div>
@@ -232,6 +235,56 @@
             </div>
         </div>
 
+        <!-- Koop-Dialog -->
+        <div id="coop-dialog" class="dialog-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="coop-dialog-title">
+            <div class="dialog-content" style="max-width: 420px;">
+                <h2 id="coop-dialog-title">🎮 Zusammen bauen!</h2>
+                <p style="font-size: 13px; color: #555; margin-bottom: 12px;">
+                    Zwei Spieler, eine Insel. Wie bei D&D — nur mit Blöcken statt Drachen.
+                </p>
+
+                <div id="coop-local-section">
+                    <h3 style="font-size: 14px; margin-bottom: 8px;">🛋️ Selbes Gerät (Couch-Koop)</h3>
+                    <label style="font-size: 13px; display: block; margin-bottom: 4px;">Name Spieler 2:</label>
+                    <input type="text" id="coop-p2-name" maxlength="8" placeholder="Papa" autocomplete="off"
+                        style="width: 140px; padding: 8px 12px; border-radius: 8px; border: 2px solid #ddd; font-size: 16px; margin-bottom: 8px;">
+                    <p style="font-size: 11px; color: #888; margin: 0 0 8px 0;">
+                        Spieler 1: Pfeiltasten + Klick &nbsp;|&nbsp; Spieler 2: WASD + Leertaste<br>
+                        Q = Werkzeug wechseln &nbsp;|&nbsp; Shift+1-5 = Material wählen
+                    </p>
+                    <button class="action-btn" id="coop-start-local">🎮 Los — Zusammen bauen!</button>
+                </div>
+
+                <hr style="margin: 16px 0; border: none; border-top: 1px solid #ddd;">
+
+                <div id="coop-net-section">
+                    <h3 style="font-size: 14px; margin-bottom: 8px;">🌐 Zwei Geräte (P2P)</h3>
+                    <p style="font-size: 11px; color: #888; margin-bottom: 8px;">
+                        Kein Server nötig — direkt verbunden über lokales Netz oder Internet.
+                    </p>
+                    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                        <button class="action-btn" id="coop-host-btn">📡 Spiel erstellen</button>
+                        <button class="action-btn" id="coop-join-btn">🔗 Beitreten</button>
+                    </div>
+                    <div id="coop-net-status" style="display: none;">
+                        <textarea id="coop-code" rows="3" readonly
+                            style="width: 100%; font-size: 11px; font-family: monospace; border: 2px solid #ddd; border-radius: 8px; padding: 8px; resize: none; box-sizing: border-box;"></textarea>
+                        <p id="coop-net-hint" style="font-size: 11px; color: #888;"></p>
+                        <input type="text" id="coop-answer-input" placeholder="Code vom anderen Spieler..."
+                            style="width: 100%; padding: 8px; border: 2px solid #ddd; border-radius: 8px; font-size: 12px; font-family: monospace; margin-top: 4px; display: none; box-sizing: border-box;">
+                        <button class="action-btn" id="coop-connect-btn" style="display: none; margin-top: 4px;">🔗 Verbinden</button>
+                    </div>
+                </div>
+
+                <hr style="margin: 16px 0; border: none; border-top: 1px solid #ddd;">
+
+                <div style="display: flex; gap: 8px; justify-content: center;">
+                    <button class="action-btn" id="coop-stop-btn" style="display: none;">⏹️ Koop beenden</button>
+                    <button class="action-btn" id="coop-close-btn">❌ Schließen</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Toast-Nachricht -->
         <div id="toast" class="hidden"></div>
 
@@ -319,8 +372,106 @@
     <script src="screensaver.js"></script>
     <script src="sound.js"></script>
     <script src="game.js"></script>
+    <script src="coop.js"></script>
     <script src="config.js"></script>
     <script src="chat.js"></script>
+    <script>
+    // --- Koop-Dialog Logik ---
+    (function () {
+        const coopBtn = document.getElementById('coop-btn');
+        const coopDialog = document.getElementById('coop-dialog');
+        const coopClose = document.getElementById('coop-close-btn');
+        const coopStop = document.getElementById('coop-stop-btn');
+        const coopStartLocal = document.getElementById('coop-start-local');
+        const coopP2Name = document.getElementById('coop-p2-name');
+        const coopHostBtn = document.getElementById('coop-host-btn');
+        const coopJoinBtn = document.getElementById('coop-join-btn');
+        const coopCode = document.getElementById('coop-code');
+        const coopNetStatus = document.getElementById('coop-net-status');
+        const coopNetHint = document.getElementById('coop-net-hint');
+        const coopAnswerInput = document.getElementById('coop-answer-input');
+        const coopConnectBtn = document.getElementById('coop-connect-btn');
+
+        if (!coopBtn || !coopDialog) return;
+
+        coopBtn.addEventListener('click', () => {
+            coopDialog.classList.remove('hidden');
+            coopStop.style.display = window.Coop?.active ? '' : 'none';
+        });
+        coopClose.addEventListener('click', () => coopDialog.classList.add('hidden'));
+
+        // Lokaler Koop
+        coopStartLocal.addEventListener('click', () => {
+            const name = coopP2Name.value.trim() || 'Papa';
+            window.Coop.start(name);
+            coopDialog.classList.add('hidden');
+            coopBtn.classList.add('active');
+        });
+
+        // Koop beenden
+        coopStop.addEventListener('click', () => {
+            window.Coop.stop();
+            coopBtn.classList.remove('active');
+            coopDialog.classList.add('hidden');
+        });
+
+        // Netzwerk: Host
+        coopHostBtn.addEventListener('click', async () => {
+            coopNetStatus.style.display = '';
+            coopNetHint.textContent = 'Erstelle Verbindung...';
+            try {
+                const offer = await window.Coop.host();
+                coopCode.value = offer;
+                coopNetHint.textContent = 'Kopiere diesen Code und schick ihn an den anderen Spieler:';
+                coopAnswerInput.style.display = '';
+                coopAnswerInput.placeholder = 'Antwort-Code hier einfügen...';
+                coopConnectBtn.style.display = '';
+                coopConnectBtn.onclick = async () => {
+                    const answer = coopAnswerInput.value.trim();
+                    if (answer) {
+                        await window.Coop.acceptAnswer(answer);
+                        coopDialog.classList.add('hidden');
+                        coopBtn.classList.add('active');
+                    }
+                };
+            } catch (err) {
+                coopNetHint.textContent = 'Fehler: ' + err.message;
+            }
+        });
+
+        // Netzwerk: Join
+        coopJoinBtn.addEventListener('click', () => {
+            coopNetStatus.style.display = '';
+            coopCode.value = '';
+            coopCode.readOnly = false;
+            coopCode.placeholder = 'Host-Code hier einfügen...';
+            coopNetHint.textContent = 'Füge den Code vom Host ein:';
+            coopConnectBtn.style.display = '';
+            coopConnectBtn.onclick = async () => {
+                const offer = coopCode.value.trim();
+                if (!offer) return;
+                try {
+                    coopNetHint.textContent = 'Verbinde...';
+                    const answer = await window.Coop.join(offer);
+                    coopCode.value = answer;
+                    coopCode.readOnly = true;
+                    coopNetHint.textContent = 'Schick diesen Antwort-Code zurück an den Host:';
+                    coopConnectBtn.style.display = 'none';
+                    coopBtn.classList.add('active');
+                } catch (err) {
+                    coopNetHint.textContent = 'Fehler: ' + err.message;
+                }
+            };
+        });
+
+        // Escape schließt Dialog
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !coopDialog.classList.contains('hidden')) {
+                coopDialog.classList.add('hidden');
+            }
+        });
+    })();
+    </script>
     <script>
         // Service Worker: App offline-fähig machen
         if ('serviceWorker' in navigator) {

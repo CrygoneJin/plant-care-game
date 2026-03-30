@@ -18,6 +18,7 @@ const CORE_ASSETS = [
     './sound.js',
     './worker.js',
     './browser-llm.js',
+    './coop.js',
 ];
 
 // Install: Core-Assets cachen
