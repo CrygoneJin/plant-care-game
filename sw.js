@@ -21,6 +21,7 @@ const CORE_ASSETS = [
     './coop.js',
     './gamepad.js',
     './color-era.js',
+    './gyro.js',
 ];
 
 // Install: Core-Assets cachen

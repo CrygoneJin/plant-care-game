@@ -1587,7 +1587,12 @@
         ctx.font = `${CELL_SIZE * 0.7}px serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText('🧒', px, py);
+        // Auf Wasser/Boot: Emoji wechselt
+        const cell = grid[playerPos.r]?.[playerPos.c];
+        const onBoat = cell === 'boat';
+        const inWater = isSwimming || cell === 'water' || cell === 'fish';
+        const emoji = onBoat ? '⛵' : inWater ? '🏊' : '🧒';
+        ctx.fillText(emoji, px, py);
 
         // Name-Label
         const fontSize = Math.max(9, CELL_SIZE * 0.27);
@@ -1602,14 +1607,82 @@
         ctx.restore();
     }
 
+    // --- Schwimmen wie Valheim: Wasser ohne Boot = Gefahr ---
+    let swimStamina = 100;
+    let isSwimming = false;
+    let swimWarned = false;
+
     function movePlayer(dr, dc) {
         if (!playerName) return;
         const nr = playerPos.r + dr;
         const nc = playerPos.c + dc;
-        // Spieler bleibt auf bebaubarem Bereich (kein Wasser-Rand)
-        if (nr >= 2 && nr < ROWS - 2 && nc >= 2 && nc < COLS - 2) {
-            playerPos = { r: nr, c: nc };
-            requestRedraw(); // sofort zeichnen — kein Warten auf 100ms-Interval
+
+        const currentCell = grid[playerPos.r]?.[playerPos.c];
+        const onBoat = currentCell === 'boat';
+        const isSailing = onBoat || (window.Gyro?.sailing);
+
+        if (isSailing) {
+            // Segeln auf Boot: ganzes Grid, kein Stamina-Verlust
+            if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS) {
+                playerPos = { r: nr, c: nc };
+                isSwimming = false;
+                swimStamina = Math.min(100, swimStamina + 5); // Auf Boot erholt man sich
+                requestRedraw();
+            }
+        } else if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS) {
+            const targetCell = grid[nr]?.[nc];
+            const targetIsWater = targetCell === 'water' || targetCell === 'fish' ||
+                (nr < 2 || nr >= ROWS - 2 || nc < 2 || nc >= COLS - 2);
+
+            if (targetIsWater) {
+                // Ins Wasser ohne Boot → Schwimmen! Stamina sinkt.
+                if (swimStamina <= 0) {
+                    // Platsch! Zurückgespült — kein Tod, nur nasse Taschen
+                    playerPos = { r: 8, c: 12 }; // Zurück zur Mitte
+                    isSwimming = false;
+                    swimStamina = 100;
+                    // Verliere 1 zufälliges Item
+                    const items = Object.keys(inventory);
+                    if (items.length > 0) {
+                        const lost = items[Math.floor(Math.random() * items.length)];
+                        const count = Math.min(2, inventory[lost]);
+                        inventory[lost] -= count;
+                        if (inventory[lost] <= 0) delete inventory[lost];
+                        updateInventoryDisplay();
+                        const info = MATERIALS[lost];
+                        showToast(`🌊 Platsch! ${count}x ${info?.emoji || ''} ${info?.label || lost} im Meer verloren!`);
+                    } else {
+                        showToast('🌊 Gerade noch geschafft! Nimm ein Boot nächstes Mal!');
+                    }
+                    requestRedraw();
+                    return;
+                }
+
+                // Schwimmen erlaubt aber Stamina sinkt
+                swimStamina -= 15;
+                isSwimming = true;
+                playerPos = { r: nr, c: nc };
+
+                if (swimStamina <= 30 && !swimWarned) {
+                    swimWarned = true;
+                    showToast('🏊 Puh! Zurück ans Land oder du verlierst Items!');
+                }
+                if (swimStamina <= 0) {
+                    showToast('😰 Kraft alle! Zurück zur Insel...');
+                }
+                requestRedraw();
+            } else {
+                // Land: normal bewegen, Stamina erholt sich
+                if (nr >= 2 && nr < ROWS - 2 && nc >= 2 && nc < COLS - 2) {
+                    playerPos = { r: nr, c: nc };
+                    if (isSwimming) {
+                        isSwimming = false;
+                        swimWarned = false;
+                    }
+                    swimStamina = Math.min(100, swimStamina + 10);
+                    requestRedraw();
+                }
+            }
         }
     }
 
