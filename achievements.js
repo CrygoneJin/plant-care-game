@@ -1,18 +1,30 @@
-// === ACHIEVEMENTS — Achievement-Definitionen ===
+// === ACHIEVEMENTS — Meilensteine die sich verdient anfühlen ===
 // Exportiert als window.INSEL_ACHIEVEMENTS (Vanilla JS, kein Build-Tool)
-// Achtung: check-Funktionen referenzieren Stats-Objekt aus game.js
+//
+// Design-Prinzip (Molyneux/RCT):
+//   - Wenige Achievements, jedes ein echter Meilenstein
+//   - Gebunden an Spieler-Aktionen, nicht Generator-Blöcke
+//   - stats.playerPlaced = nur vom Spieler gesetzte Blöcke
+//   - Blueprints, Quests, Rezepte = echte Leistungen
 
 window.INSEL_ACHIEVEMENTS = {
-    firstBlock:    { emoji: '⭐', title: 'Erster Block!', desc: 'Platziere deinen ersten Block', check: (s) => s.total >= 1 },
-    builder10:     { emoji: '🏗️', title: 'Kleiner Baumeister', desc: '10 Blöcke gebaut', check: (s) => s.total >= 10 },
-    builder50:     { emoji: '🏘️', title: 'Siedlungsbauer', desc: '50 Blöcke gebaut', check: (s) => s.total >= 50 },
-    builder100:    { emoji: '🏙️', title: 'Stadtplaner', desc: '100 Blöcke gebaut', check: (s) => s.total >= 100 },
-    halfIsland:    { emoji: '🌍', title: 'Halbe Insel!', desc: '50% der Insel bebaut', check: (s) => s.percent >= 50 },
-    fullIsland:    { emoji: '🌟', title: 'Insel-Meister!', desc: '100% der Insel bebaut', check: (s) => s.percent >= 100 },
-    allMaterials:  { emoji: '🎨', title: 'Materialkenner', desc: 'Alle Original-Materialien benutzt', check: (s) => s.uniqueMats >= 12 },
-    gardenLover:   { emoji: '🌺', title: 'Gärtner', desc: '10 Pflanzen, Bäume oder Blumen', check: (s) => (s.counts.plant || 0) + (s.counts.tree || 0) + (s.counts.flower || 0) >= 10 },
-    waterWorld:    { emoji: '🏊', title: 'Wasserwelt', desc: '15 Wasserblöcke', check: (s) => (s.counts.water || 0) >= 15 },
-    architect:     { emoji: '👷', title: 'Architekt', desc: 'Haus gebaut (Holz+Tür+Dach+Glas)', check: (s) => (s.counts.wood || 0) >= 4 && (s.counts.door || 0) >= 1 && (s.counts.roof || 0) >= 2 && (s.counts.glass || 0) >= 1 },
-    fisherman:     { emoji: '🎣', title: 'Fischer', desc: '5 Fische im Wasser', check: (s) => (s.counts.fish || 0) >= 5 },
-    explorer:      { emoji: '🧭', title: 'Entdecker', desc: '15 verschiedene Materialien benutzt', check: (s) => s.uniqueMats >= 15 },
+    // --- Erste Schritte ---
+    firstBuild:     { emoji: '🔨', title: 'Grundstein!', desc: 'Deinen allerersten Block selbst gebaut!', check: (s) => s.playerPlaced >= 1 },
+    homeBuilder:    { emoji: '🛖', title: 'Eigene Hütte!', desc: 'Einen Bauplan fertig gebaut — dein erstes Gebäude!', check: (s) => s.blueprintsDone >= 1 },
+
+    // --- Crafting & Entdecken ---
+    firstRecipe:    { emoji: '⚗️', title: 'Erster Mix!', desc: 'Dein erstes Crafting-Rezept entdeckt!', check: (s) => s.recipesFound >= 1 },
+    alchemist:      { emoji: '🧪', title: 'Alchemist!', desc: '10 verschiedene Rezepte entdeckt — du kennst die Geheimnisse!', check: (s) => s.recipesFound >= 10 },
+    masterCrafter:  { emoji: '🔮', title: 'Meister-Mixer!', desc: '25 Rezepte! Die Insel hat keine Geheimnisse mehr vor dir!', check: (s) => s.recipesFound >= 25 },
+
+    // --- Quests ---
+    questHelper:    { emoji: '📜', title: 'Guter Freund!', desc: 'Deine erste Quest für einen Insel-Bewohner geschafft!', check: (s) => s.questsDone >= 1 },
+    questHero:      { emoji: '🦸', title: 'Insel-Held!', desc: '5 Quests erledigt — alle Bewohner lieben dich!', check: (s) => s.questsDone >= 5 },
+    questLegend:    { emoji: '👑', title: 'Legende!', desc: '10 Quests geschafft — Schnipsel ist stolz auf dich!', check: (s) => s.questsDone >= 10 },
+
+    // --- Bauen ---
+    fleissig:       { emoji: '🏗️', title: 'Fleißige Hände!', desc: '50 Blöcke selbst gebaut — das sieht man!', check: (s) => s.playerPlaced >= 50 },
+    architect:      { emoji: '🏛️', title: 'Architekt!', desc: '3 verschiedene Gebäude per Bauplan gebaut!', check: (s) => s.blueprintsDone >= 3 },
+    stadtplaner:    { emoji: '🏙️', title: 'Stadtplaner!', desc: '200 Blöcke selbst platziert — eine richtige Stadt!', check: (s) => s.playerPlaced >= 200 },
+    burgherr:       { emoji: '🏰', title: 'Burgherr!', desc: 'Alle 8 Baupläne gebaut — die Insel ist komplett!', check: (s) => s.blueprintsDone >= 8 },
 };
