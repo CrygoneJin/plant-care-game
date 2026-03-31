@@ -3687,9 +3687,14 @@
     const THEMES = ['tropical', 'night', 'candy', 'ocean', 'retro'];
     const THEME_NAMES = ['🏝️ Tropeninsel', '🌙 Nachtmodus', '🍭 Candy Pop', '🌊 Ozean', '🕹️ Retro'];
     let currentTheme = localStorage.getItem('insel-theme') || 'tropical';
+    const userChoseTheme = localStorage.getItem('insel-theme-manual') === '1';
 
-    function applyTheme(theme) {
+    function applyTheme(theme, manual = false) {
         document.documentElement.setAttribute('data-theme', theme);
+        if (manual) {
+            document.documentElement.setAttribute('data-theme-manual', '');
+            localStorage.setItem('insel-theme-manual', '1');
+        }
         currentTheme = theme;
         localStorage.setItem('insel-theme', theme);
         requestRedraw();
@@ -3697,11 +3702,22 @@
         trackEvent('theme_change', { theme });
     }
 
+    // Apple HIG #8: Dark Mode — respect OS preference when user hasn't chosen manually
+    if (!userChoseTheme && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        applyTheme('night');
+    }
+
+    // Live-Switch: OS wechselt zwischen Light/Dark → Theme folgt (nur wenn nicht manuell)
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (localStorage.getItem('insel-theme-manual') === '1') return;
+        applyTheme(e.matches ? 'night' : 'tropical');
+    });
+
     const themeBtn = document.getElementById('theme-btn');
     if (themeBtn) {
         themeBtn.addEventListener('click', () => {
             const idx = (THEMES.indexOf(currentTheme) + 1) % THEMES.length;
-            applyTheme(THEMES[idx]);
+            applyTheme(THEMES[idx], true);
             showToast(`${THEME_NAMES[idx]} aktiviert!`);
         });
     }
