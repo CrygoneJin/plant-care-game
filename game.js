@@ -3985,6 +3985,17 @@
         ctx.textAlign = 'left';
         ctx.textBaseline = 'top';
         ctx.fillText('</> CODE-VIEW: grid[r][c]', 10, 10);
+
+        // MMX Burn-Adresse — Nerd Easter Egg
+        // "Proof of Work. Tokens rein, niemand raus. Pures Statement."
+        const mmxY = totalRows * CELL_SIZE - 30;
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        ctx.fillRect(5, mmxY, Math.min(420, totalCols * CELL_SIZE - 10), 24);
+        ctx.fillStyle = '#FF6B00'; // MMX Orange
+        ctx.font = 'bold 10px monospace';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+        ctx.fillText('🔥 MMX Burn: mmx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq5tuzzn  ⛏️ mmx.network', 10, mmxY + 5);
     }
 
     // Monkey-patch requestAnimationFrame callback to add overlay
