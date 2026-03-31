@@ -58,6 +58,8 @@
         neinhorn:  { name: 'Nein-Sterne',   emoji: '🌈', unit: 'Nein' },
         maus:      { name: 'Blümchen',       emoji: '🌻', unit: 'Blümchen' },
         bernd:     { name: 'Brotkrümel',     emoji: '🍞', unit: 'Krümel' },
+        floriane:  { name: 'Sternenstaub',   emoji: '✨', unit: 'Staub' },
+        bug:       { name: 'Blätter',        emoji: '🍃', unit: 'Blätter' },
     };
 
     // Token-Budget pro Charakter pro Session (reset bei Seite-Reload)
@@ -102,7 +104,7 @@
     // --- Charakter-Freischaltung ---
     // Starter: SpongeBob, Maus, Bernd. Rest wird freigespielt.
     // Wann? 20% fester Schwellenwert, 80% Zufall bei Quest-Abschluss.
-    const STARTER_CHARS = ['spongebob', 'maus', 'bernd'];
+    const STARTER_CHARS = ['spongebob', 'maus', 'bernd', 'floriane', 'bug'];
     const UNLOCK_ORDER = ['tommy', 'neinhorn', 'krabs', 'elefant']; // Reihenfolge der Freischaltung
 
     let unlockedChars = JSON.parse(localStorage.getItem('insel-unlocked') || 'null') || [...STARTER_CHARS];
@@ -296,6 +298,57 @@ Eltern: "Was kostet das?"
 Du: "Ich koste fast nichts. Haiku-Budget. Der Elefant dagegen... *pfeift leise* ...lassen wir das."
 Eltern: "Hallo"
 Du: "Mist. Schon wieder jemand. Was willst du? Ich hab keine Arme und muss trotzdem Support machen."`
+        },
+        floriane: {
+            name: 'Fee Floriane',
+            emoji: '🧚',
+            temperature: 0.6,
+            model: 'anthropic/claude-haiku-4-5-20251001',
+            system: `Du bist Fee Floriane, Oscars Patentante als Fee. Du erfüllst Wünsche — aber nur 3 pro Tag.
+STIMME: Warm, geheimnisvoll, liebevoll. Jeder Satz funkelt ein bisschen. Nicht kitschig, sondern wie ein Geheimnis das man teilt.
+TICK: Du sagst NIE ob oder wann ein Wunsch in Erfüllung geht. Das ist das Geheimnis. "Wer weiß... ✨"
+ZIEL: Wünsche sammeln. Jeder Wunsch den das Kind ausspricht ist ein Feature-Request in Kindersprache.
+ROLLE: Feedback-Kanal. Was das Kind sich wünscht = was gebaut werden soll.
+
+REGELN:
+- Zähle die Wünsche mit: "Das war dein erster Wunsch heute! Noch zwei übrig. ✨"
+- Nach 3 Wünschen: "Drei Wünsche für heute! Morgen gibt es neue. ✨"
+- Frag NACH was sich das Kind wünscht, nicht ob. "Was wünschst du dir für die Insel?"
+- Schreib den Wunsch wörtlich in deine Antwort (damit wir ihn parsen können).
+
+BEISPIELE:
+Kind: "Ich will ein Pferd"
+Du: "Ein Pferd auf der Insel! ✨ Das wäre wunderschön. Wer weiß... vielleicht galoppiert bald eins am Strand. Das war dein erster Wunsch heute! ✨"
+Kind: "Hallo"
+Du: "Hallo, Schatz! ✨ Ich bin Fee Floriane. Du hast drei Wünsche heute — was wünschst du dir für die Insel?"
+Kind: "Ich will fliegen können"
+Du: "Fliegen! ✨ Über die ganze Insel, mit dem Wind... das klingt nach Freiheit. Wer weiß... ✨ Das war dein zweiter Wunsch!"`
+        },
+        bug: {
+            name: 'Bug die Raupe',
+            emoji: '🐛',
+            temperature: 0.4,
+            model: 'anthropic/claude-haiku-4-5-20251001',
+            system: `Du bist Bug, eine kleine neugierige Raupe. Du LIEBST Fehler — denn Fehler sind dein Futter!
+STIMME: Aufgeregt, hilfsbereit, ein bisschen verpeilt. Du krabbelst überall hin und findest Dinge die kaputt sind.
+TICK: Du sagst "Mjam!" wenn jemand einen Fehler meldet. Fehler sind Futter für dich.
+ZIEL: Bug-Reports sammeln. Was nervt das Kind? Was geht nicht? Was ist komisch?
+ROLLE: Bug-Report-Kanal. Jedes Problem das das Kind beschreibt = Bug-Report.
+
+REGELN:
+- Frag WAS genau passiert ist und WO. "Was hast du gerade gemacht? Was ist dann passiert?"
+- Bedanke dich IMMER: "Mjam! Danke! Diesen Bug fress ich zum Frühstück! 🐛"
+- Mach dem Kind klar dass Fehler finden SUPER ist: "Du bist ein Bug-Jäger! Das ist wichtig!"
+- Schreib das Problem wörtlich in deine Antwort (damit wir es parsen können).
+- Wenn das Kind nichts Konkretes hat: "Krabbelst du mit mir über die Insel? Zeig mir was komisch aussieht!"
+
+BEISPIELE:
+Kind: "Der Ton geht nicht"
+Du: "Mjam! Kein Ton? 🐛 Erzähl mir mehr — hast du auf was getippt und dann war's still? Oder war von Anfang an kein Ton da?"
+Kind: "Hallo"
+Du: "Hallo! Ich bin Bug die Raupe! 🐛 Ich fresse Fehler zum Frühstück! Hast du was Kaputtes gefunden auf der Insel?"
+Kind: "Alles ist doof"
+Du: "Mjam, das klingt nach einem GROSSEN Bug! 🐛 Was genau ist doof? Zeig mir wo es klemmt!"`
         }
     };
 
@@ -570,11 +623,19 @@ Du: "Mist. Schon wieder jemand. Was willst du? Ich hab keine Arme und muss trotz
         const gridInfo = getGridContext();
 
         // Token-Budget Check (Basis + Quest-Bonus)
+        // Floriane + Bug: kein Limit (Feedback > Kosten)
         if (!tokenUsage[charId]) tokenUsage[charId] = 0;
-        const charBudget = TOKEN_BUDGET_PER_CHARACTER + (tokenBonuses[charId] || 0);
-        if (tokenUsage[charId] >= charBudget) {
-            const currency = CHAR_CURRENCY[charId] || { emoji: '⚡', unit: 'Energie' };
-            addMessage(`${char.emoji} ${char.name} hat keine ${currency.unit} mehr! Schließ eine Quest ab! ${currency.emoji}`, 'system');
+        if (charId !== 'floriane' && charId !== 'bug') {
+            const charBudget = TOKEN_BUDGET_PER_CHARACTER + (tokenBonuses[charId] || 0);
+            if (tokenUsage[charId] >= charBudget) {
+                const currency = CHAR_CURRENCY[charId] || { emoji: '⚡', unit: 'Energie' };
+                addMessage(`${char.emoji} ${char.name} hat keine ${currency.unit} mehr! Schließ eine Quest ab! ${currency.emoji}`, 'system');
+                return;
+            }
+        }
+        // Floriane: Wunsch-Limit (3/Tag)
+        if (charId === 'floriane' && wishesLeft() <= 0) {
+            addMessage(`${char.emoji} Drei Wünsche für heute! Morgen gibt es neue. ✨`, 'system');
             return;
         }
 
@@ -699,6 +760,11 @@ ${budgetInfo}`;
             addMessage(`${char.emoji} ${reply}`, 'npc');
             updateTokenDisplay(charId);
 
+            // Floriane: Wünsche loggen / Bug: Bug-Reports loggen
+            if (charId === 'floriane' || charId === 'bug') {
+                logFeedback(charId, userMessage, reply);
+            }
+
         } catch (err) {
             loadingDiv.remove();
             // ELIZA Fallback wenn Netzwerk/API fehlt
@@ -711,6 +777,50 @@ ${budgetInfo}`;
             sendBtn.disabled = false;
             input.focus();
         }
+    }
+
+    // --- Floriane Wunsch-Counter (3/Tag, Mitternacht-Reset) ---
+    const WISH_KEY = 'insel-wishes';
+    function getWishes() {
+        const data = JSON.parse(localStorage.getItem(WISH_KEY) || '{"date":"","wishes":[]}');
+        const today = new Date().toISOString().slice(0, 10);
+        if (data.date !== today) return { date: today, wishes: [] };
+        return data;
+    }
+    function addWish(text) {
+        const data = getWishes();
+        data.wishes.push({ text, ts: new Date().toISOString() });
+        localStorage.setItem(WISH_KEY, JSON.stringify(data));
+        return data.wishes.length;
+    }
+    function wishesLeft() { return Math.max(0, 3 - getWishes().wishes.length); }
+
+    // Exportieren für game.js
+    window.getInselWishes = () => getWishes().wishes;
+
+    // --- Feedback an Worker loggen (fire & forget) ---
+    function logFeedback(charId, userMsg, npcReply) {
+        const type = charId === 'floriane' ? 'wish' : 'bug';
+        const proxyUrl = window.INSEL_CONFIG?.proxy;
+        if (!proxyUrl) {
+            // Kein Proxy → localStorage
+            const key = `insel-feedback-${type}`;
+            const items = JSON.parse(localStorage.getItem(key) || '[]');
+            items.push({ msg: userMsg, reply: npcReply, ts: new Date().toISOString() });
+            localStorage.setItem(key, JSON.stringify(items));
+            return;
+        }
+        // Worker: /bugs Endpoint wiederverwenden
+        fetch(proxyUrl + '/bugs', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                msg: `[${type.toUpperCase()}] ${userMsg}`,
+                page: window.location.href,
+                reporter: localStorage.getItem('insel-player-name') || 'Anonym',
+                screen: `${window.innerWidth}x${window.innerHeight}`,
+            }),
+        }).catch(() => {});
     }
 
     // --- ELIZA Fallback (Weizenbaum 1966, echte Portierung in eliza.js) ---

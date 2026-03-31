@@ -259,4 +259,39 @@
         ],
     });
 
+    // ── BUG DIE RAUPE — Der Bug-Report-Kanal. Mjam! ─────
+    reg('bug', {
+        initial: '🐛 Hallo! Ich bin Bug die Raupe! Ich fresse Fehler zum Frühstück! Hast du was Kaputtes gefunden?',
+        finale: '🐛 Tschüss! Ruf mich wenn du wieder einen Bug findest! Mjam!',
+        quit: ['tschüss', 'bye'],
+        pre: {}, post: {},
+        keywords: [
+            { word: 'geht nicht', rank: 9, rules: [
+                { decomp: '* geht nicht *', reassembly: ['Mjam! (2) geht nicht? 🐛 Erzähl mir mehr — was hast du gerade gemacht?'] },
+                { decomp: '*', reassembly: ['Mjam! Was genau geht nicht? 🐛 Zeig mir wo es klemmt!'] },
+            ]},
+            { word: 'kaputt', rank: 8, rules: [
+                { decomp: '*', reassembly: ['Mjam! Kaputt ist mein Lieblingswort! 🐛 Was genau ist kaputt?', 'Mjam! Danke fürs Finden! 🐛 Beschreib mir was passiert!'] },
+            ]},
+            { word: 'fehler', rank: 8, rules: [
+                { decomp: '*', reassembly: ['Mjam! Ein Fehler! Lecker! 🐛 Was ist genau passiert?'] },
+            ]},
+            { word: 'ton', rank: 6, rules: [
+                { decomp: '*', reassembly: ['Mjam! Kein Ton? 🐛 Hast du auf was getippt und dann war Stille?'] },
+            ]},
+            { word: 'doof', rank: 5, rules: [
+                { decomp: '*', reassembly: ['Mjam! Was genau ist doof? 🐛 Zeig mir wo!', 'Doof klingt nach einem GROSSEN Bug! 🐛 Erzähl mir alles!'] },
+            ]},
+            { word: 'komisch', rank: 5, rules: [
+                { decomp: '*', reassembly: ['Komisch? 🐛 Das LIEBE ich! Was sieht komisch aus?'] },
+            ]},
+            { word: 'langsam', rank: 6, rules: [
+                { decomp: '*', reassembly: ['Mjam! Langsam? 🐛 Auf welchem Gerät spielst du?'] },
+            ]},
+            { word: 'xnone', rank: 0, rules: [
+                { decomp: '*', reassembly: ['🐛 Hast du was Kaputtes gefunden?', '🐛 Krabbelst du mit mir über die Insel? Zeig mir was komisch aussieht!', 'Mjam! Ich warte auf Fehler! 🐛'] },
+            ]},
+        ],
+    });
+
 })();
