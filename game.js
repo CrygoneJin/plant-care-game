@@ -658,10 +658,18 @@
             '🚀 Musk: "I offered Mephisto a mass-produced Seelen-Laterne at 60% lower cost. He blocked me on the Schwarzmarkt."',
             '📚 Precht: "Genau hier das Paradox. Der Schwarzmarkt ist ehrlicher als der offizielle. Weil er zugibt dass alles seinen Preis hat. Im Grunde Faust."',
             '😈 Mephisto: *aus dem Publikum* "Hehehehe... Endlich jemand der es versteht."',
-            '🎙️ Lanz: "Wir sind leider am Ende unserer Zeit."',
-            '🏛️ Merz: "Ich war noch gar nicht—"',
-            '🎙️ Lanz: "Nächste Woche: Mephisto selbst. Er bringt Schatten-Kristalle mit."',
-            '— Applaus. Trump tweetet. Musk kauft den Applaus. Merz macht eine Pressemitteilung. Precht zitiert Schopenhauer. —',
+            '🎙️ Lanz: "Wir haben noch zwei Überraschungsgäste zugeschaltet."',
+            '🇫🇷 Sartre: "L\'île n\'existe pas en soi. Elle existe pour soi. Chaque bloc est un choix — et chaque choix est une condamnation à la liberté."',
+            '📚 Precht: "Herr Sartre sagt: die Insel existiert nicht an sich. Jeder Block ist eine Entscheidung. Und jede Entscheidung verurteilt uns zur Freiheit."',
+            '🇮🇹 Machiavelli: "La questione non è chi costruisce l\'isola più bella. La questione è: chi la controlla? Il principe saggio costruisce mura — non per proteggere, ma per definire chi è dentro e chi è fuori."',
+            '🏛️ Merz: "DAS ist es was ich die ganze Zeit sage!"',
+            '🇮🇹 Machiavelli: "Silenzio. Ich war noch nicht fertig. Il vero potere non sta nelle mura. Sta nel mercato. Chi controlla il Schwarzmarkt, controlla l\'isola."',
+            '😈 Mephisto: *steht auf* "Hehehehe... Niccolò, mein alter Freund. Wir sollten reden."',
+            '🇫🇷 Sartre: "L\'enfer, c\'est les autres. Mais le Schwarzmarkt... c\'est la liberté."',
+            '🎙️ Lanz: "Wir sind DEFINITIV am Ende unserer Zeit."',
+            '🏛️ Merz: "Ich war IMMER NOCH nicht—"',
+            '🎙️ Lanz: "Nächste Woche: Mephisto und Machiavelli. Live vom Schwarzmarkt."',
+            '— Applaus. Trump tweetet. Musk kauft den Applaus. Sartre raucht. Machiavelli lächelt. —',
         ],
     };
 
@@ -679,21 +687,79 @@
 
     let hoerspielSpeaking = false;
 
-    // TTS Hörspiele — Web Speech API (Backlog #87)
+    // TTS Hörspiele — Cloud TTS via Worker /tts (OpenAI tts-1 über Requesty)
+    // Fallback: Web Speech API wenn Worker nicht erreichbar
     // Stoppt bei: Mute, Canvas-Klick, oder INSEL_SOUND.isMuted()
     let hoerspielAborted = false;
+    let hoerspielAudio = null;
 
     function stopHoerspiel() {
         if (!hoerspielSpeaking) return;
         hoerspielAborted = true;
+        if (hoerspielAudio) { hoerspielAudio.pause(); hoerspielAudio = null; }
         if (window.speechSynthesis) window.speechSynthesis.cancel();
         hoerspielSpeaking = false;
         INSEL_SOUND.setMasterVolume(1.0);
         showToast('🎭 Hörspiel gestoppt');
     }
 
+    // Stimme + Sprache aus Zeile extrahieren
+    function detectVoice(line) {
+        if (line.includes('Lanz:')) return { voice: 'lanz', lang: 'de' };
+        if (line.includes('Precht:')) return { voice: 'precht', lang: 'de' };
+        if (line.includes('Merz:')) return { voice: 'merz', lang: 'de' };
+        if (line.includes('Trump:')) return { voice: 'trump', lang: 'en' };
+        if (line.includes('Musk:')) return { voice: 'musk', lang: 'en' };
+        if (line.includes('Mephisto:')) return { voice: 'mephisto', lang: 'de' };
+        if (line.includes('Sartre:')) return { voice: 'fable', lang: 'fr' };
+        if (line.includes('Machiavelli:')) return { voice: 'onyx', lang: 'it' };
+        if (line.includes('SpongeBob:')) return { voice: 'default', lang: 'de' };
+        if (line.includes('Python:')) return { voice: 'default', lang: 'de' };
+        if (line.includes('JavaScript:')) return { voice: 'shimmer', lang: 'de' };
+        if (line.includes('TypeScript:')) return { voice: 'echo', lang: 'de' };
+        if (line.includes('Bernd:')) return { voice: 'echo', lang: 'de' };
+        if (line.includes('Elefant:')) return { voice: 'nova', lang: 'de' };
+        if (line.includes('Neinhorn:')) return { voice: 'shimmer', lang: 'de' };
+        return { voice: 'default', lang: 'de' };
+    }
+
+    // Cloud TTS: Text → MP3 via Worker
+    function speakCloudTTS(text, voiceInfo) {
+        const proxy = (window.INSEL_CONFIG && window.INSEL_CONFIG.proxy) || 'https://schatzinsel.hoffmeyer-zlotnik.workers.dev';
+        return fetch(proxy + '/tts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: text, voice: voiceInfo.voice, lang: voiceInfo.lang, speed: 1.0 }),
+        }).then(function (r) {
+            if (!r.ok) throw new Error('TTS ' + r.status);
+            return r.blob();
+        }).then(function (blob) {
+            return new Promise(function (resolve, reject) {
+                var url = URL.createObjectURL(blob);
+                var audio = new Audio(url);
+                hoerspielAudio = audio;
+                audio.onended = function () { URL.revokeObjectURL(url); hoerspielAudio = null; resolve(); };
+                audio.onerror = function () { URL.revokeObjectURL(url); hoerspielAudio = null; reject(); };
+                audio.play().catch(reject);
+            });
+        });
+    }
+
+    // Fallback: Web Speech API
+    function speakBrowserTTS(text, lang) {
+        return new Promise(function (resolve) {
+            if (!window.speechSynthesis) { resolve(); return; }
+            var utter = new SpeechSynthesisUtterance(text);
+            utter.lang = (lang === 'en') ? 'en-US' : (lang === 'fr') ? 'fr-FR' : (lang === 'it') ? 'it-IT' : 'de-DE';
+            utter.rate = 0.95;
+            utter.onend = function () { resolve(); };
+            utter.onerror = function () { resolve(); };
+            window.speechSynthesis.speak(utter);
+        });
+    }
+
     function speakLines(lines, onDone) {
-        if (!window.speechSynthesis || INSEL_SOUND.isMuted()) {
+        if (INSEL_SOUND.isMuted()) {
             if (onDone) onDone();
             return;
         }
@@ -713,15 +779,17 @@
             const text = stripForTTS(lines[index]);
             showToast(lines[index], 4000);
             if (index === 0) soundAchievement();
+            const voice = detectVoice(lines[index]);
             index++;
 
             if (!text || INSEL_SOUND.isMuted()) { setTimeout(speakNext, 500); return; }
 
-            const utter = new SpeechSynthesisUtterance(text);
-            utter.lang = 'de-DE';
-            utter.rate = 0.95;
-            utter.onend = () => setTimeout(speakNext, 600);
-            utter.onerror = () => setTimeout(speakNext, 600);
+            // Cloud TTS mit Fallback auf Browser
+            speakCloudTTS(text, voice).catch(function () {
+                return speakBrowserTTS(text, voice.lang);
+            }).then(function () {
+                setTimeout(speakNext, 400);
+            });
             window.speechSynthesis.speak(utter);
         }
         speakNext();
