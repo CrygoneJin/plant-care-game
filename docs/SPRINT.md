@@ -51,6 +51,60 @@
 
 ---
 
+## Sprint Retrospective — 2026-03-31 (Nacht)
+
+### Was lief gut?
+
+- **8 Items in einer Nacht-Session.** Kein anderer Sprint hat so viel geliefert.
+- **Mephisto als würdiger Abschluss.** 10. NPC, letzter Unlock — die Charakterliste ist jetzt vollständig.
+- **Voice-Integration ohne Regressions.** Gemini Live API + 5 Stimmen, kein vorhandener Code gebrochen.
+- **Lummerland in einer Stunde.** Handgebaute Insel für Oscar. Er kennt Jim Knopf.
+- **Backlog-Audit:** 8 Phantom-Opens erkannt und bereinigt — Backlog dichter als je zuvor.
+
+### Was lief schlecht?
+
+- **Smoke Test weiterhin geblockt.** Proxy-Sandbox im Claude Code Web verhindert curl gegen externe Domains. Bekanntes Problem, keine Lösung in Sicht ohne CI/CD.
+- **User Actions U1 + U2 offen.** MMX Wallet + Voice-Test hängen am User. Kein technisches Problem, nur fehlende Rückmeldung.
+- **Gemini Voice braucht API Key im Worker.** U3 ist Done (User hat Key gesetzt), aber U2 (testen) steht noch aus. Kein Feedback ob es läuft.
+
+### Was verbessern wir?
+
+1. **#86 CI/CD Pipeline** als nächsten Tech-Sprint — Smoke Test in GitHub Actions, nicht sessionabhängig.
+2. **User Actions explizit nachfragen** wenn nach 2 Sprints kein Status — U1/U2 sind seit Sprint 22 offen.
+3. **Vor jedem Sprint Planning:** Offene User Actions auf "Erledigt oder Eingefroren?" prüfen.
+
+---
+
+# Sprint 23 — "Oscar hört"
+
+**Sprint Goal:** NPCs sprechen. QR-Code für Eltern. Code sauber.
+
+**Start:** 2026-03-31
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S23-1 | **TTS Hörspiele** (#87) — Phantom-Open: bereits in game.js:656-720 implementiert (speakLines, stopHoerspiel, 7 Szenen). Backlog bereinigt. | Engineer | ✅ Done (Phantom-Open erkannt) |
+| S23-2 | **QR-Code auf Postkarte** (#7) — qr.js: reiner QR-Generator (Version 2, EC-L, ~260 Zeilen). Postkarte zeigt scanbare URL https://schatzinsel.app rechts unten. | Engineer | ✅ Done |
+| S23-3 | **game.js Zellteilung** (#11) — Grid-Logik + Stories extrahieren. Ziel: game.js unter 3000 Zeilen. | Engineer | 🔲 Offen |
+
+---
+
+## Standup Log
+
+### 2026-03-31 (Sprint 23 Planning)
+
+**Kontext (Commits seit Sprint 22):** Kein neuer Commit seit Nacht-Session.
+
+**Sprint-Fokus:** S23-1 (TTS Hörspiele) als erstes Item dieser Session.
+
+**Blocker:** Keine.
+
+---
+
 # Sprint 21 — "Oscar zieht"
 
 **Sprint Goal:** Drag & Drop auf dem Canvas — Oscar zieht Materialien direkt, kein Klicken mehr.

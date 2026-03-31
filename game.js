@@ -3457,31 +3457,44 @@
             const pc = document.createElement('canvas');
             const pcCtx = pc.getContext('2d');
             pc.width = canvas.width;
-            pc.height = canvas.height + 80;
+            const BANNER_H = 90; // 10px mehr für QR-Code-Platz
+            pc.height = canvas.height + BANNER_H;
 
             // Insel kopieren
             pcCtx.drawImage(canvas, 0, 0);
 
             // Postkarten-Banner unten
             pcCtx.fillStyle = 'rgba(0, 0, 0, 0.75)';
-            pcCtx.fillRect(0, canvas.height, pc.width, 80);
+            pcCtx.fillRect(0, canvas.height, pc.width, BANNER_H);
 
+            // QR-Code rechts im Banner (schatzinsel.app, scanbar für Eltern)
+            const QR_SIZE = 82; // Pixel inkl. Quiet-Zone
+            const qrX = pc.width - QR_SIZE - 6;
+            const qrY = canvas.height + 4;
+            if (window.QRCode) window.QRCode.draw(pcCtx, 'https://schatzinsel.app', qrX, qrY, QR_SIZE);
+
+            // Text links/mittig neben QR-Code
+            const textWidth = pc.width - QR_SIZE - 12;
             pcCtx.fillStyle = '#F9E79F';
-            pcCtx.font = 'bold 18px Fredoka, sans-serif';
+            pcCtx.font = 'bold 17px Fredoka, sans-serif';
             pcCtx.textAlign = 'center';
-            pcCtx.fillText(`📸 Grüße von der Insel Java!`, pc.width / 2, canvas.height + 28);
+            pcCtx.fillText(`📸 Grüße von der Insel Java!`, textWidth / 2, canvas.height + 26);
 
             pcCtx.fillStyle = '#FFFFFF';
-            pcCtx.font = '14px Comic Neue, sans-serif';
+            pcCtx.font = '12px Comic Neue, sans-serif';
             const discoveries = discoveredEggs.length;
             pcCtx.fillText(
-                `🏗️ ${stats.total} Blöcke · 🎨 ${stats.uniqueMats} Materialien · 🔍 ${discoveries} Bewohner entdeckt · 🏆 ${unlockedAchievements.length} Erfolge`,
-                pc.width / 2, canvas.height + 52
+                `🏗️ ${stats.total} Blöcke · 🎨 ${stats.uniqueMats} Materialien · 🔍 ${discoveries} entdeckt`,
+                textWidth / 2, canvas.height + 47
+            );
+            pcCtx.fillText(
+                `🏆 ${unlockedAchievements.length} Erfolge`,
+                textWidth / 2, canvas.height + 63
             );
 
-            pcCtx.font = '11px Comic Neue, sans-serif';
+            pcCtx.font = '10px Comic Neue, sans-serif';
             pcCtx.fillStyle = '#AAA';
-            pcCtx.fillText('Außer Text nix gehext. 🏝️', pc.width / 2, canvas.height + 72);
+            pcCtx.fillText('Außer Text nix gehext. 🏝️', textWidth / 2, canvas.height + 80);
 
             // Download
             const link = document.createElement('a');
