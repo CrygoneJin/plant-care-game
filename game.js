@@ -139,7 +139,11 @@
             counts,
             total,
             percent: Math.round((total / (ROWS * COLS)) * 100),
-            uniqueMats: Object.keys(counts).length
+            uniqueMats: Object.keys(counts).length,
+            playerPlaced: playerBlocksPlaced,
+            questsDone: typeof completedQuests !== 'undefined' ? completedQuests.length : 0,
+            blueprintsDone: typeof completedBlueprints !== 'undefined' ? completedBlueprints.length : 0,
+            recipesFound: typeof discoveredRecipes !== 'undefined' ? discoveredRecipes.size : 0,
         };
     }
 
@@ -1586,6 +1590,7 @@
     let playerPos  = JSON.parse(localStorage.getItem('insel-player-pos') || 'null')
                      || { r: Math.floor(ROWS / 2), c: Math.floor(COLS / 2) };
     let playerDragging = false;
+    let playerBlocksPlaced = parseInt(localStorage.getItem('insel-blocks-placed') || '0');
 
     // --- DOM-Elemente ---
     const canvas = document.getElementById('game-canvas');
@@ -2115,6 +2120,8 @@
                         }
                     });
                 }
+                playerBlocksPlaced++;
+                localStorage.setItem('insel-blocks-placed', playerBlocksPlaced);
                 addPlaceAnimation(r, c);
                 if (!sessionClock.firstBlock) {
                     soundFirstBlock();
