@@ -1063,6 +1063,8 @@
         unlockMaterial(matId);
         soundCraft();
         showCraftResult(result.emoji, result.name, 1);
+        // #64: Elektronen-Blitz — kurze Lichtfunken beim Craften (Amélie: kein Label, kein UI)
+        spawnCraftSparks();
 
         flashInventoryTab();
         if (result.fromCache === false && isNew) {
@@ -2274,6 +2276,27 @@
         }, 500);
     }
 
+    // #64: Elektronen = Crafting-Blitz — Lichtfunken beim LLM-Craft
+    // Kein UI, kein Label. Amélie. Ladungsaustausch sichtbar machen.
+    function spawnCraftSparks() {
+        const wrapper = document.getElementById('canvas-wrapper');
+        const craftDialog = document.getElementById('craft-dialog');
+        const target = craftDialog || wrapper;
+        if (!target) return;
+        const rect = target.getBoundingClientRect();
+        for (let i = 0; i < 8; i++) {
+            setTimeout(() => {
+                const spark = document.createElement('div');
+                spark.className = 'merge-spark craft-spark';
+                spark.style.left = (Math.random() * rect.width - 20) + 'px';
+                spark.style.top  = (Math.random() * rect.height - 20) + 'px';
+                target.style.position = 'relative';
+                target.appendChild(spark);
+                setTimeout(() => spark.remove(), 800);
+            }, i * 80);
+        }
+    }
+
     // ============================================================
     // === GENESIS-LOG + SPONTANER TAO-ZERFALL ===
     // ============================================================
@@ -2843,6 +2866,71 @@
             showToast('📸 Postkarte gespeichert! Zeig sie deinen Freunden!');
             trackEvent('postcard', { blocks: stats.total, discoveries });
         });
+    }
+
+    // --- #22: Projekt-Sharing via URL (Base64-encoded Grid) ---
+    function encodeGridToURL() {
+        const cells = [];
+        const matKeys = Object.keys(MATERIALS);
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                if (grid[r][c]) {
+                    const idx = matKeys.indexOf(grid[r][c]);
+                    cells.push([r, c, idx >= 0 ? idx : grid[r][c]]);
+                }
+            }
+        }
+        const payload = { v: 1, m: matKeys, g: cells };
+        return btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+    }
+
+    function decodeGridFromURL(encoded) {
+        try {
+            const payload = JSON.parse(decodeURIComponent(escape(atob(encoded))));
+            if (!payload.v || !payload.g) return false;
+            initGrid();
+            for (const [r, c, mat] of payload.g) {
+                if (r >= 0 && r < ROWS && c >= 0 && c < COLS) {
+                    const material = typeof mat === 'number' ? payload.m[mat] : mat;
+                    if (material && MATERIALS[material]) grid[r][c] = material;
+                }
+            }
+            requestRedraw();
+            requestStatsUpdate();
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    // Share-Button
+    const shareBtn = document.getElementById('share-btn');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', () => {
+            const encoded = encodeGridToURL();
+            const url = `${location.origin}${location.pathname}?insel=${encoded}`;
+            navigator.clipboard.writeText(url)
+                .then(() => showToast('🔗 Link kopiert! Schick ihn deinen Freunden!', 3000))
+                .catch(() => {
+                    // Fallback: URL anzeigen
+                    prompt('Link kopieren:', url);
+                });
+            trackEvent('share', { blocks: getGridStats().total });
+        });
+    }
+
+    // URL-Sharing: beim Start ?insel= Parameter prüfen und Grid laden
+    const sharedGrid = new URLSearchParams(location.search).get('insel');
+    if (sharedGrid) {
+        const ok = decodeGridFromURL(sharedGrid);
+        if (ok && introOverlay) {
+            introOverlay.style.display = 'none';
+            if (window.startSessionClock) window.startSessionClock();
+            startTutorialPulse();
+            showToast('🏝️ Geteilte Insel geladen!', 3000);
+            // URL sauber halten — Parameter entfernen
+            history.replaceState({}, '', location.pathname);
+        }
     }
 
     // Lade-Dialog Events

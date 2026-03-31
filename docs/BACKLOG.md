@@ -45,7 +45,7 @@
 | 19 | **Game of Life Screensaver** — Conway-Regeln auf dem Grid wenn idle. Zellen leben, sterben, wachsen. Touch = Reset auf statische Insel. Perfekt für Auto-Display, Wartezimmer, Ladestation. | Engineer | 🔲 Offen |
 | 20 | **Multiplayer** — Inseln besuchen, gemeinsam bauen | Engineer | 🔲 Offen |
 | 21 | **Leaderboard** — Meiste Blöcke, meiste Entdeckungen, kreativstes Bauwerk | Engineer | 🔲 Offen |
-| 22 | **Projekt-Sharing** — URL die eine Insel teilt (Base64-encoded Grid) | Engineer | 🔲 Offen |
+| 22 | **Projekt-Sharing** — URL die eine Insel teilt (Base64-encoded Grid) | Engineer | ✅ Done (🔗-Button, btoa/atob, ?insel= URL-Parameter) |
 | 23 | **Programmier-Tutorial** — NPCs bringen echtes JavaScript bei | Scientist + Engineer | 🔲 Offen |
 | 24 | **AR-Modus** — Insel auf dem Tisch via WebXR | Engineer | 🔲 Offen |
 | 25 | **Hörspiel-Aufnahmen** — Professionelle Sprecher für die Hörspiele | Artist | 🔲 Offen |
@@ -208,7 +208,7 @@ Idee: Die leere Insel (nur Wasser) wird in einer Sequenz erschaffen. Verschieden
 | 61 | **Konsequenz** (Habeck) — Baum fällen = Baum weg. Brunnen bauen = Blumen wachsen. Welt reagiert. | ✅ Done (Baum→Stumpf→Setzling bereits da; Brunnen→Blumen: updateWorldConsequences()) | Engineer |
 | 62 | **Mehrsprachige NPCs** (Habeck) — Lummerland = alle willkommen. NPCs antworten in Oscars Sprache oder der Sprache der Insel. | P2 | Scientist |
 | 63 | **Erster Block = lautes KLONK** (Paluten) — Bau-Sound muss in 30 Sek auffallen. Lautstärke hoch, befriedigend, Minecraft-Niveau. Pentatonik ist schön aber zu subtil für den ersten Moment. | P1 | Engineer + Scientist |
-| 64 | **Elektronen = Crafting-Blitz** — unsichtbares Feature: beim Craften blitzen kurze Lichtfunken zwischen den Materialien (Ladungsaustausch). Kein UI, kein Label. Amélie. | P2 | Engineer |
+| 64 | **Elektronen = Crafting-Blitz** — unsichtbares Feature: beim Craften blitzen kurze Lichtfunken zwischen den Materialien (Ladungsaustausch). Kein UI, kein Label. Amélie. | ✅ Done (spawnCraftSparks() — 8 Funken, 80ms versetzt) | Engineer |
 | 65 | **Neutrino-Spieler** — Analytics: Kinder die spielen ohne zu craften, die nur bauen/schauen. Eigene Metrik. "Sie sind da, verändern nichts, und das ist auch ok." (Lesch) | P2 | Scientist |
 | 66 | **Spielfigur-Bewegung laggt** — Pfeiltasten haben großen Zeitversatz, manchmal keine Reaktion. "Papa, warum kann ich mich nicht bewegen?" (Oscar) | P0 | Engineer |
 | 67 | **Automerge wie 2048** — RGB nebeneinander → Metall entsteht automatisch (starke Kernkraft). Schwarz neben Weiß → Qi/Energie (Strahlung). Wie 2048 auf dem Tesla-Bildschirm. Oscar liebt es. | ✅ Done (automerge.js mit MERGE_RULES + TRIPLET_RULES) | Engineer + Scientist |
