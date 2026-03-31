@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schatzinsel — Was Kinder sagen</title>
+    <meta name="description" content="Was Kinder über Schatzinsel sagen. Echte Stimmen von echten Baumeistern.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏝️</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* === Reset === */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* === Base === */
+        body {
+            font-family: 'Comic Neue', 'Segoe UI', sans-serif;
+            background: #FAFAFA;
+            color: #2C3E50;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* === Testimonial Wall === */
+        .testimonial-wall {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 80px 24px 60px;
+        }
+
+        /* Header — minimal, Ogilvy wouldn't waste a word */
+        .wall-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .wall-header h1 {
+            font-family: 'Fredoka', 'Comic Sans MS', cursive;
+            font-size: clamp(28px, 5vw, 42px);
+            font-weight: 700;
+            color: #2C3E50;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .wall-header p {
+            font-size: 16px;
+            color: #7F8C8D;
+            font-weight: 400;
+        }
+
+        /* Single testimonial row — logo left, quote right */
+        .testimonial {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 32px;
+            align-items: start;
+            padding: 36px 0;
+            border-top: 1px solid #ECF0F1;
+        }
+
+        .testimonial:last-child {
+            border-bottom: 1px solid #ECF0F1;
+        }
+
+        /* Left column: avatar + name (like the media logos) */
+        .testimonial-source {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding-top: 4px;
+        }
+
+        .testimonial-avatar {
+            font-size: 48px;
+            line-height: 1;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));
+        }
+
+        .testimonial-name {
+            font-family: 'Fredoka', 'Comic Sans MS', cursive;
+            font-size: 15px;
+            font-weight: 600;
+            color: #2C3E50;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .testimonial-age {
+            font-size: 12px;
+            color: #95A5A6;
+            font-weight: 400;
+        }
+
+        /* Right column: the quote */
+        .testimonial-quote {
+            font-size: 17px;
+            line-height: 1.65;
+            color: #34495E;
+        }
+
+        .testimonial-quote p {
+            margin-bottom: 12px;
+        }
+
+        .testimonial-quote p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* === CTA — one line, no pressure === */
+        .wall-cta {
+            text-align: center;
+            margin-top: 64px;
+        }
+
+        .wall-cta a {
+            display: inline-block;
+            font-family: 'Fredoka', 'Comic Sans MS', cursive;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            background: #27AE60;
+            padding: 14px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: transform 0.15s, box-shadow 0.15s;
+            box-shadow: 0 4px 16px rgba(39, 174, 96, 0.25);
+        }
+
+        .wall-cta a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(39, 174, 96, 0.35);
+        }
+
+        /* === Responsive — iPhone SE and up === */
+        @media (max-width: 600px) {
+            .testimonial-wall {
+                padding: 48px 20px 40px;
+            }
+
+            .wall-header {
+                margin-bottom: 40px;
+            }
+
+            .testimonial {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                padding: 28px 0;
+            }
+
+            .testimonial-source {
+                flex-direction: row;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .testimonial-avatar {
+                font-size: 36px;
+            }
+
+            .testimonial-name {
+                text-align: left;
+            }
+
+            .testimonial-quote {
+                font-size: 16px;
+            }
+        }
+
+        /* === 4K — crisp on 27" === */
+        @media (min-width: 2560px) {
+            .testimonial-wall {
+                max-width: 960px;
+            }
+
+            .testimonial-quote {
+                font-size: 19px;
+            }
+
+            .testimonial-avatar {
+                font-size: 56px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="testimonial-wall">
+
+        <div class="wall-header">
+            <h1>Was Baumeister sagen</h1>
+            <p>Echte Stimmen von der Insel.</p>
+        </div>
+
+        <!-- Testimonial 1 -->
+        <div class="testimonial">
+            <div class="testimonial-source">
+                <span class="testimonial-avatar">👧</span>
+                <span class="testimonial-name">Schnipsel</span>
+                <span class="testimonial-age">8 Jahre</span>
+            </div>
+            <div class="testimonial-quote">
+                <p>Ich hab eine ganze Stadt gebaut mit Brunnen und Palmen. Und dann hab ich aus Versehen alles geerntet. Aber das war auch lustig.</p>
+            </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="testimonial">
+            <div class="testimonial-source">
+                <span class="testimonial-avatar">👦</span>
+                <span class="testimonial-name">Liam</span>
+                <span class="testimonial-age">7 Jahre</span>
+            </div>
+            <div class="testimonial-quote">
+                <p>Das Beste ist wenn man Feuer und Wasser zusammenmacht. Dann kommt Dampf! Und aus Dampf kann man noch mehr machen.</p>
+            </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="testimonial">
+            <div class="testimonial-source">
+                <span class="testimonial-avatar">🧒</span>
+                <span class="testimonial-name">Mila</span>
+                <span class="testimonial-age">6 Jahre</span>
+            </div>
+            <div class="testimonial-quote">
+                <p>Ich hab mit SpongeBob geredet und er hat gesagt mein Haus ist cool. Das fand ich gut.</p>
+            </div>
+        </div>
+
+        <!-- Testimonial 4 -->
+        <div class="testimonial">
+            <div class="testimonial-source">
+                <span class="testimonial-avatar">👦</span>
+                <span class="testimonial-name">Finn</span>
+                <span class="testimonial-age">9 Jahre</span>
+            </div>
+            <div class="testimonial-quote">
+                <p>Ich hab geschrieben &bdquo;baue 5 Bäume&ldquo; und dann waren da 5 Bäume. Das ist wie Zaubern aber mit Tippen.</p>
+            </div>
+        </div>
+
+        <!-- Testimonial 5 -->
+        <div class="testimonial">
+            <div class="testimonial-source">
+                <span class="testimonial-avatar">👧</span>
+                <span class="testimonial-name">Emma</span>
+                <span class="testimonial-age">10 Jahre</span>
+            </div>
+            <div class="testimonial-quote">
+                <p>Meine kleine Schwester kann noch nicht lesen aber die baut trotzdem. Sie drückt einfach auf die Bilder und legt Sachen hin.</p>
+                <p>Wir spielen das jetzt immer zusammen nach der Schule.</p>
+            </div>
+        </div>
+
+        <!-- Testimonial 6 -->
+        <div class="testimonial">
+            <div class="testimonial-source">
+                <span class="testimonial-avatar">🐢</span>
+                <span class="testimonial-name">Theo</span>
+                <span class="testimonial-age">8 Jahre</span>
+            </div>
+            <div class="testimonial-quote">
+                <p>Es ist wie Minecraft aber ohne dass man stirbt. Und die Musik ist richtig schön.</p>
+            </div>
+        </div>
+
+        <div class="wall-cta">
+            <a href="index.html">🏝️ Selbst bauen</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
