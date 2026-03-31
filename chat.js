@@ -374,6 +374,10 @@ Du: "Ah, willkommen, verehrter Baumeister! Ich bin Mephisto. Man sagt ich sei ei
         }
     };
 
+    // Export CHARACTERS für voice.js
+    if (window.registerInselCharacters) window.registerInselCharacters(CHARACTERS);
+    window.INSEL_CHARACTERS = CHARACTERS;
+
     // --- DOM ---
     const panel = document.getElementById('chat-panel');
     const charNameDisplay = document.getElementById('chat-character-name');
@@ -925,6 +929,17 @@ ${budgetInfo}`;
 
     // Initiales Dropdown-Update: gesperrte Charaktere markieren
     updateCharSelect();
+
+    // Charakter-Dropdown: Wechsel = neuer NPC
+    const charSelect = document.getElementById('chat-character');
+    if (charSelect) {
+        charSelect.addEventListener('change', () => {
+            const npcId = charSelect.value;
+            if (npcId && CHARACTERS[npcId]) {
+                window.openChat(npcId);
+            }
+        });
+    }
 
     // Unlock-Handler: Neuer Charakter freigeschaltet!
     window.onCharacterUnlock = function (charId) {

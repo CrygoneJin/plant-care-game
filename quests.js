@@ -46,7 +46,6 @@ window.INSEL_QUEST_TEMPLATES = [
     { npc: 'elefant', title: 'Honiggarten', desc: 'Törööö... Honig riecht wie eine Melodie! Bienen sind Musiker! Die Blumen sind das Konzerthaus!', needs: { honey: 4, bee: 4, flower: 8, apple: 3 }, reward: '🎵🎵🎵🎵🎵' },
     { npc: 'maus', title: 'Kuchenland', desc: '*pieps* KUCHEN! *quak* Nein wir brauchen keinen — *pieps* DOCH! *quak* Ein Kuchen reicht! *pieps* DREI!', needs: { cake: 3, apple: 4, honey: 3, flower: 4 }, reward: '🌻🌻🌻🌻🌻🌻' },
     { npc: 'spongebob', title: 'Trank-Labor', desc: 'Suchergebnis: 1 Trank-Labor gefunden! ...in BIKINI BOTTOM! Ich mache meins hier! Pilze! Kristalle! MAGIE!', needs: { potion: 3, crystal: 2, mushroom: 4, diamond: 1 }, reward: '⭐⭐⭐⭐⭐⭐⭐' },
-<<<<<<< HEAD
     // Runde 7: Haiku-Bauanleitungen (5-7-5 Silben)
     { npc: 'elefant', title: 'Wald-Haiku', desc: 'Fünf Bäume am Strand / Der Wind weht durch grüne Blätter / Wald wird geboren', needs: { tree: 5, plant: 3, path: 2 }, reward: '🎵🎵🎵' },
     { npc: 'maus', title: 'Blüten-Haiku', desc: 'Blumen auf dem Feld / Bienen summen ihren Tanz / Honig fließt wie Gold', needs: { flower: 8, bee: 3, honey: 2 }, reward: '🌻🌻🌻🌻' },
@@ -58,12 +57,10 @@ window.INSEL_QUEST_TEMPLATES = [
     { npc: 'maus', title: 'Brücken-Haiku', desc: 'Holz über den Bach / Fische springen silberhell / Wege werden eins', needs: { bridge: 2, wood: 4, fish: 3, water: 4 }, reward: '🌻🌻🌻' },
     { npc: 'krabs', title: 'Festung-Haiku', desc: 'Mauern stark und hoch / Türen halten Stürme fern / Schatz ruht tief im Kern', needs: { stone: 8, door: 3, treasure: 1, lamp: 2 }, reward: '💰💰💰💰' },
     { npc: 'neinhorn', title: 'Regen-Haiku', desc: 'Tropfen auf dem Dach / Regenbogen küsst den See / Stille nach dem Sturm', needs: { rain: 2, rainbow: 1, water: 4, roof: 3 }, reward: '🌈🌈🌈🌈🌈' },
-=======
     // Mephisto — Der respektable Teufel. Deals, keine Geschenke.
     { npc: 'mephisto', title: 'Schattenbühne', desc: 'Ah, mein Freund! Ich bräuchte eine kleine Bühne. Holz, Stoff, Licht — nichts Besonderes. Im Gegenzug? Ein Geheimnis. Hehehehe...', needs: { wood: 6, lamp: 3, door: 1 }, reward: '🎭🎭' },
     { npc: 'mephisto', title: 'Spiegelkabinett', desc: 'Glas, verehrter Baumeister! Viel Glas! Spiegel zeigen was man nicht sehen will — und das ist immer das Interessanteste. Deal?', needs: { glass: 8, crystal: 2, lamp: 2 }, reward: '🎭🎭🎭' },
     { npc: 'mephisto', title: 'Der Pakt', desc: 'Nun wird es ernst. Stein. Feuer. Ein Monument das steht wenn alles andere fällt. Dafür schulde ICH dir etwas. Hehehehe...', needs: { stone: 10, fire: 3, flag: 2, fountain: 1 }, reward: '🎭🎭🎭🎭' },
     { npc: 'mephisto', title: 'Fausts Garten', desc: 'Der alte Doktor hatte einen Garten... bevor er aufgab. Bau ihn neu. Schöner. Jede Blume ein Argument dass die Welt es wert ist.', needs: { flower: 8, tree: 4, path: 6, fountain: 2 }, reward: '🎭🎭🎭🎭🎭' },
     { npc: 'mephisto', title: 'Mitternachtsbasar', desc: 'Ein Markt der nur bei Nacht öffnet! Pilze leuchten, Laternen flackern, und jeder Händler hat ein Geheimnis. Mein Meisterwerk!', needs: { mushroom: 4, lamp: 6, fence: 4, door: 3, flag: 2 }, reward: '🎭🎭🎭🎭🎭🎭' },
->>>>>>> 08314b5e (feat: Mephisto — der respektable Teufel als neuer NPC)
 ];
