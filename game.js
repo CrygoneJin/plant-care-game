@@ -751,18 +751,33 @@
 
     let hoerspielSpeaking = false;
 
+    // TTS Hörspiele — Web Speech API (Backlog #87)
+    // Stoppt bei: Mute, Canvas-Klick, oder INSEL_SOUND.isMuted()
+    let hoerspielAborted = false;
+
+    function stopHoerspiel() {
+        if (!hoerspielSpeaking) return;
+        hoerspielAborted = true;
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
+        hoerspielSpeaking = false;
+        INSEL_SOUND.setMasterVolume(1.0);
+        showToast('🎭 Hörspiel gestoppt');
+    }
+
     function speakLines(lines, onDone) {
-        if (!window.speechSynthesis) {
+        if (!window.speechSynthesis || INSEL_SOUND.isMuted()) {
             if (onDone) onDone();
             return;
         }
         hoerspielSpeaking = true;
+        hoerspielAborted = false;
         INSEL_SOUND.setMasterVolume(0.15); // Bau-Töne leiser während Hörspiel
 
         let index = 0;
         function speakNext() {
-            if (index >= lines.length) {
+            if (hoerspielAborted || index >= lines.length) {
                 hoerspielSpeaking = false;
+                hoerspielAborted = false;
                 INSEL_SOUND.setMasterVolume(1.0);
                 if (onDone) onDone();
                 return;
@@ -3357,6 +3372,8 @@
     // Canvas Maus-Events
     canvas.addEventListener('mousedown', (e) => {
         resetIdleTimer();
+        // TTS Hörspiel stoppen bei Canvas-Interaktion (Backlog #87)
+        if (hoerspielSpeaking) stopHoerspiel();
         isMouseDown = true;
         undoPushedThisStroke = false;
         const cell = getGridCell(e);
@@ -3723,14 +3740,20 @@
         });
     }
 
-    // --- Mute-Button ---
+    // --- Mute-Button (stoppt auch TTS Hörspiele, Backlog #87) ---
     const muteBtn = document.getElementById('mute-btn');
     if (muteBtn) {
         muteBtn.addEventListener('click', () => {
             const nowMuted = !INSEL_SOUND.isMuted();
             INSEL_SOUND.setMuted(nowMuted);
             muteBtn.textContent = nowMuted ? '🔇' : '🔊';
-            showToast(nowMuted ? 'Ton aus' : 'Ton an');
+            // TTS sofort stoppen wenn gemutet
+            if (nowMuted && window.speechSynthesis) {
+                window.speechSynthesis.cancel();
+                hoerspielSpeaking = false;
+                INSEL_SOUND.setMasterVolume(1.0);
+            }
+            showToast(nowMuted ? 'Ton aus (+ Hörspiele)' : 'Ton an');
         });
     }
 
