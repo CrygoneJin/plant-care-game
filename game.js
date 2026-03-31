@@ -1102,7 +1102,7 @@
     function showCraftResult(emoji, name, count) {
         const preview = document.getElementById('craft-result');
         if (!preview) return;
-        preview.innerHTML = `<span class="craft-emoji">${emoji}</span><span class="craft-result-name">${count > 1 ? count + 'x ' : ''}${name}</span>`;
+        preview.innerHTML = `<span class="craft-emoji">${emoji}</span><span class="craft-result-name">${count > 1 ? count + 'x ' : ''}${escapeHtml(name)}</span>`;
         preview.title = name;
         preview.classList.add('craft-success');
         setTimeout(() => preview.classList.remove('craft-success'), 800);
