@@ -225,6 +225,7 @@ Idee: Die leere Insel (nur Wasser) wird in einer Sequenz erschaffen. Verschieden
 | 54 | **Jim Knopfs Welt als offene Inselkarte** — Lummerland (Tutorial) → Meer → Mandala/Ping → Wüste (Turtur) → Drachenstadt → Kummerland → Schatzinsel. Nicht linear, Oscar wählt. Boot craften = nächste Insel. **Goldener Pfad**: Abendsonne malt Lichtstreifen aufs Meer Richtung nächste Insel — kein UI, nur Licht. **Wachsende Verantwortung**: Lummerland=für sich, Mandala=?, Wüste=Hilfe annehmen (Turtur=Scheinriese: aus der Nähe anders als von weitem), Drachenstadt=?, Schatzinsel=für alle. Jede Station muss an Michael Ende rückgekoppelt werden — wir interpretieren nicht, wir lesen. | P1 | alle |
 | 55 | **Spielfigur auf der Insel** — Kind benennt selbst (max 8 Buchstaben), bewegbar mit Pfeiltasten (PC) oder Finger-Drag (Touch) | P1 | Engineer + Designer |
 | 56 | **Bibliothek von Alexandria** — Gebäude auf der Insel (Stein+Bretter+Wissen), Schriftrollen statt Bücher, jede Rolle = Wiki-Game-Challenge ("Von Wasser zu Drache in X Schritten"). Timbuktu als zweite Bibliothek — wer beide baut verbindet zwei Wissenswelten. Papyrus vor Gutenberg. Wikipedia von damals. | P2 | alle |
+| 78 | **Tesla-Nutzertest auswerten** — 1h Video von Oscar im Tesla (Auto-Touchscreen). Datei >1GB, muss kleiner formatiert werden (komprimieren/schneiden), dann hier rein. Da ist Gold drin — tonnenweise. Echte Nutzerdaten, echte Reaktionen, echter 8-Jähriger. | P0 | Scientist + Leader |
 
 ---
 
