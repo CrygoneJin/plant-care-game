@@ -1667,19 +1667,70 @@
                 grid[r][c] = null;
             }
         }
-        // 8 Starter-Bäume am Rand verteilt (Insel fühlt sich bewachsen an)
-        const starterTrees = [
-            { r: 1,        c: 2        },
-            { r: 1,        c: COLS - 3 },
-            { r: ROWS - 2, c: 2        },
-            { r: ROWS - 2, c: COLS - 3 },
-            { r: Math.floor(ROWS / 2) - 1, c: 1        },
-            { r: Math.floor(ROWS / 2) + 1, c: COLS - 2 },
-            { r: 2,        c: Math.floor(COLS / 2) - 2 },
-            { r: ROWS - 3, c: Math.floor(COLS / 2) + 2 },
-        ];
-        starterTrees.forEach(({ r, c }) => { grid[r][c] = 'palm'; });
-        window.grid = grid; // Chat-Integration aktuell halten
+        window.grid = grid;
+    }
+
+    // Zufalls-Insel generieren: Strand, Palmen, Blumen, Steine
+    function generateStarterIsland() {
+        // Pseudo-random mit Seed damit jeder Start anders ist
+        let seed = Date.now();
+        function rng() { seed = (seed * 16807 + 0) % 2147483647; return seed / 2147483647; }
+
+        const cx = COLS / 2, cy = ROWS / 2;
+        const rx = COLS * 0.38, ry = ROWS * 0.38;
+
+        // Strandrand (1-2 Zellen Sand um die Insel)
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                const dx = (c - cx) / rx, dy = (r - cy) / ry;
+                const dist = dx * dx + dy * dy;
+                // Wellige Kante via einfache Noise-Näherung
+                const wobble = 0.15 * Math.sin(r * 1.7 + c * 0.9) + 0.1 * Math.cos(c * 2.3 - r * 0.7);
+                if (dist < (0.7 + wobble) && dist >= (0.55 + wobble)) {
+                    grid[r][c] = 'sand';
+                }
+            }
+        }
+
+        // Palmen am Strand verteilen
+        const palmCount = Math.max(6, Math.floor((ROWS + COLS) * 0.3));
+        let palmsPlaced = 0;
+        for (let attempt = 0; attempt < 200 && palmsPlaced < palmCount; attempt++) {
+            const r = Math.floor(rng() * ROWS);
+            const c = Math.floor(rng() * COLS);
+            if (grid[r][c] === 'sand') {
+                grid[r][c] = 'palm';
+                palmsPlaced++;
+            }
+        }
+
+        // Bäume im Insel-Inneren
+        const treeCount = Math.max(4, Math.floor((ROWS + COLS) * 0.2));
+        let treesPlaced = 0;
+        for (let attempt = 0; attempt < 200 && treesPlaced < treeCount; attempt++) {
+            const r = Math.floor(rng() * ROWS);
+            const c = Math.floor(rng() * COLS);
+            const dx = (c - cx) / rx, dy = (r - cy) / ry;
+            if (dx * dx + dy * dy < 0.4 && !grid[r][c]) {
+                grid[r][c] = rng() < 0.5 ? 'tree' : 'small_tree';
+                treesPlaced++;
+            }
+        }
+
+        // Ein paar Blumen und Pflanzen
+        const floraCount = Math.max(3, Math.floor((ROWS + COLS) * 0.15));
+        let floraPlaced = 0;
+        for (let attempt = 0; attempt < 200 && floraPlaced < floraCount; attempt++) {
+            const r = Math.floor(rng() * ROWS);
+            const c = Math.floor(rng() * COLS);
+            const dx = (c - cx) / rx, dy = (r - cy) / ry;
+            if (dx * dx + dy * dy < 0.45 && !grid[r][c]) {
+                grid[r][c] = rng() < 0.6 ? 'flower' : 'plant';
+                floraPlaced++;
+            }
+        }
+
+        window.grid = grid;
     }
 
     // --- Zeichnen ---
@@ -3832,16 +3883,8 @@
         migrateUnlocked();
         showToast('🔄 Letzte Insel wiederhergestellt');
     } else {
-        // Starter-Insel: kein Save — Oskar soll sofort eine echte Insel sehen
-        grid[2][11] = 'sand';   grid[2][12] = 'sand';   // Strand oben
-        grid[13][11] = 'sand';  grid[13][12] = 'sand';  // Strand unten
-        grid[2][6]  = 'sand';   grid[13][6]  = 'sand';  // Strand seitlich
-        grid[2][17] = 'sand';   grid[13][17] = 'sand';
-        grid[3][11] = 'tree';   grid[3][12]  = 'tree';  // Palmen oben
-        grid[12][11]= 'tree';   grid[12][12] = 'tree';  // Palmen unten
-        grid[3][6]  = 'tree';   grid[12][6]  = 'tree';  // Palmen links
-        grid[3][17] = 'tree';   grid[12][17] = 'tree';  // Palmen rechts
-        window.grid = grid;
+        // Starter-Insel: Zufalls-Insel generieren damit es sofort nach Abenteuer aussieht
+        generateStarterIsland();
         setTimeout(() => showToast('🏝️ Deine Insel wartet... Bau los!', 3500), 2000);
     }
 
