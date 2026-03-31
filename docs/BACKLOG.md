@@ -52,6 +52,14 @@
 | 24 | **AR-Modus** — Insel auf dem Tisch via WebXR | Engineer | ❄️ Eingefroren |
 | 25 | **Hörspiel-Aufnahmen** — Professionelle Sprecher für die Hörspiele | Artist | ❄️ Eingefroren |
 | 26 | **ZKM-Ausstellung** — "Mensch, Maschine, KI" als Installation | Leader + alle | ❄️ Eingefroren |
+| 83 | **Urknall-Crafting** — Masse + Energie + Licht als Basis-Materialien, Wu Xing = Teilchen (ex-PR #41) | Scientist + Engineer | 🔲 Design-Entscheidung nötig |
+| 84 | **Höhlen + Edelsteine** — Berg+Wasser=Höhle, Höhle+Wasser=Tropfsteine, Tropfstein+Feuer=Edelstein (ex-PR #41) | Engineer | 🔲 Offen |
+| 85 | **Genre-Tonsequenzen** — 15 Musik-Genres mit eigenen 5-Noten-Sequenzen beim Platzieren (ex-PR #41) | Engineer + Artist | 🔲 Offen |
+| 86 | **CI/CD Pipeline** — deploy.yml + release.sh + Puppeteer Smoke-Test (ex-PR #13) | Engineer | 🔲 Cherry-pick |
+| 87 | **TTS Hörspiele** — Web Speech API für Hörspiel-Zeilen, Mute-Button (ex-PR #40) | Engineer | 🔲 Offen |
+| 88 | **Floriane die Wunschfee** — 3 Wünsche/Tag, Mitternacht-Reset, Feedback-Kanal (ex-PR #40) | Artist + Engineer | 🔲 Offen |
+| 89 | **Koop-Modus** — Papa+Kind auf einer Insel, Phase 1 lokal, Phase 2 WebRTC (ex-PR #45, braucht Spielfigur) | Engineer | 🔲 Offen |
+| 90 | **Browser-LLM** — SmolLM2 lokal im Browser, Progressive Loading ELIZA→LLM (ex-PR #45, Qualitätstest nötig) | Scientist + Engineer | 🔲 Feynman muss testen |
 
 ---
 
