@@ -23,6 +23,7 @@
     "quests.js",
     "recipes.js",
     "healthcheck.js",
+    "nature.js",
     "game.js",
     "chat.js",
     "automerge.js",

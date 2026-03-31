@@ -65,6 +65,16 @@ interface GridStats {
     questsDone: number;
     blueprintsDone: number;
     recipesFound: number;
+    materialsFound: number;
+    wuXingUsed: number;
+    recipesUsed: number;
+    florianeWishes: number;
+    bugsReported: number;
+    npcsSpokenTo: number;
+    npcCount: number;
+    darkModeUsed: boolean;
+    idleMinutes: number;
+    sessionPlaced: number;
 }
 
 // --- Quests ---
@@ -167,6 +177,22 @@ interface InselScreensaver {
     stop(): void;
 }
 
+// --- NATURE ---
+interface NatureCallbacks {
+    addPlaceAnimation(r: number, c: number): void;
+    unlockMaterial(mat: string): void;
+    updateStats(): void;
+    showToast(msg: string, duration?: number): void;
+    requestRedraw(): void;
+}
+
+interface InselNature {
+    treeGrowth: Record<string, number>;
+    updateTreeGrowth(grid: Grid, ROWS: number, COLS: number, MATERIALS: MaterialMap, callbacks: NatureCallbacks): void;
+    updateWorldConsequences(grid: Grid, ROWS: number, COLS: number, MATERIALS: MaterialMap, callbacks: NatureCallbacks): void;
+    start(grid: Grid, ROWS: number, COLS: number, MATERIALS: MaterialMap, callbacks: NatureCallbacks): void;
+}
+
 // --- ELIZA ---
 interface ElizaInstance {
     transform(input: string): string;
@@ -255,6 +281,7 @@ interface Window {
     INSEL_AUTOMERGE: InselAutomerge;
     INSEL_HEALTHCHECK: InselHealthcheck;
     INSEL_SCREENSAVER: InselScreensaver;
+    INSEL_NATURE: InselNature;
     INSEL_ELIZA: InselEliza;
     INSEL_SCROLLS: Scroll[];
     INSEL_CONFIG: InselConfig;

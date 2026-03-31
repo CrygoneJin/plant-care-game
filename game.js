@@ -840,80 +840,8 @@
         showToast(comment, 2000);
     }
 
-    // ============================================================
-    // === BAUM-WACHSTUM === Setzling → kleiner Baum → großer Baum
-    // ============================================================
-    const TREE_GROWTH_TIME_1 = 30000; // Setzling → kleiner Baum: 30s
-    const TREE_GROWTH_TIME_2 = 60000; // Kleiner Baum → großer Baum: 60s
-    let treeGrowth = {}; // { "r,c": timestamp }
-
-    function updateTreeGrowth() {
-        const now = Date.now();
-        let changed = false;
-        for (const key of Object.keys(treeGrowth)) {
-            const [r, c] = key.split(',').map(Number);
-            if (r >= ROWS || c >= COLS || r < 0 || c < 0) {
-                delete treeGrowth[key];
-                continue;
-            }
-            const planted = treeGrowth[key];
-            const age = now - planted;
-            const cell = grid[r]?.[c];
-
-            // Wu Xing: Wasser nährt Holz — Setzling neben Wasser wächst 2× schneller
-            const hasWaterNeighbor = [[r-1,c],[r+1,c],[r,c-1],[r,c+1]]
-                .some(([nr, nc]) => nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && grid[nr]?.[nc] === 'water');
-            const growTime1 = hasWaterNeighbor ? TREE_GROWTH_TIME_1 / 2 : TREE_GROWTH_TIME_1;
-
-            if (cell === 'sapling' && age >= growTime1) {
-                grid[r][c] = 'small_tree';
-                addPlaceAnimation(r, c);
-                changed = true;
-            } else if (cell === 'small_tree' && age >= growTime1 + TREE_GROWTH_TIME_2) {
-                grid[r][c] = 'tree';
-                delete treeGrowth[key];
-                addPlaceAnimation(r, c);
-                unlockMaterial('tree');
-                changed = true;
-            } else if (cell !== 'sapling' && cell !== 'small_tree') {
-                delete treeGrowth[key];
-            }
-        }
-        if (changed) updateStats();
-    }
-
-    // Alle 5s prüfen
-    setInterval(updateTreeGrowth, 5000);
-
-    // #61: Konsequenz — Welt reagiert auf Aktionen
-    // Brunnen neben leerem Sand → Blume wächst (15% Chance/Tick pro Nachbar-Zelle)
-    function updateWorldConsequences() {
-        let changed = false;
-        const FLOWER_CHANCE = 0.15; // 15% Chance dass eine leere Zelle neben einem Brunnen Blume wird
-        const BEACH_EDGE = 2; // Strand-Rand nicht bepflanzen
-        for (let r = BEACH_EDGE + 1; r < ROWS - BEACH_EDGE - 1; r++) {
-            for (let c = BEACH_EDGE + 1; c < COLS - BEACH_EDGE - 1; c++) {
-                if (grid[r][c] !== null) continue; // Nur auf leerem Sand
-                const neighbors = [[r-1,c],[r+1,c],[r,c-1],[r,c+1]];
-                const hasFountain = neighbors.some(([nr, nc]) =>
-                    nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && grid[nr]?.[nc] === 'fountain'
-                );
-                if (hasFountain && Math.random() < FLOWER_CHANCE) {
-                    grid[r][c] = 'flower';
-                    addPlaceAnimation(r, c);
-                    unlockMaterial('flower');
-                    changed = true;
-                }
-            }
-        }
-        if (changed) {
-            updateStats();
-            showToast('🌺 Brunnen-Magie! Blumen wachsen...');
-        }
-    }
-
-    // Konsequenz-Check alle 8s (versetzt zum Tree-Growth-Check)
-    setInterval(updateWorldConsequences, 8000);
+    // === BAUM-WACHSTUM + WELT-KONSEQUENZEN → nature.js ===
+    const treeGrowth = window.INSEL_NATURE.treeGrowth;
 
     // #19: Evolution-Screensaver — drei Terrain-Zonen, Kreaturen verabschieden sich
     const CONWAY_WATER   = ['🐟','🐠','🐡','🦑','🪼','🐙','🦐','🐬','🐳'];
@@ -2825,7 +2753,9 @@
             } else {
                 initGrid(); // Fallback bei kaputtem Grid
             }
-            treeGrowth = projects[name].treeGrowth || {};
+            // treeGrowth ist shared reference → clear + assign
+            Object.keys(treeGrowth).forEach(function(k) { delete treeGrowth[k]; });
+            Object.assign(treeGrowth, projects[name].treeGrowth || {});
             inventory = projects[name].inventory || {};
             if (projects[name].unlocked) {
                 unlockedMaterials = new Set(projects[name].unlocked);
@@ -2861,7 +2791,7 @@
 
     function newProject() {
         initGrid();
-        treeGrowth = {};
+        Object.keys(treeGrowth).forEach(function(k) { delete treeGrowth[k]; });
         inventory = {};
         unlockedMaterials = new Set();
         discoveredRecipes = new Set();
@@ -4265,7 +4195,9 @@
         } else {
             grid = savedGrid;
         }
-        treeGrowth = savedProjects[AUTOSAVE_KEY].treeGrowth || {};
+        // treeGrowth ist shared reference → clear + assign
+        Object.keys(treeGrowth).forEach(function(k) { delete treeGrowth[k]; });
+        Object.assign(treeGrowth, savedProjects[AUTOSAVE_KEY].treeGrowth || {});
         inventory = savedProjects[AUTOSAVE_KEY].inventory || inventory;
         if (savedProjects[AUTOSAVE_KEY].unlocked) {
             unlockedMaterials = new Set(savedProjects[AUTOSAVE_KEY].unlocked);
@@ -4418,5 +4350,14 @@
 
     // Grid für Chat-Integration exportieren
     window.grid = grid;
+
+    // Nature-Modul starten (Baumwachstum + Welt-Konsequenzen)
+    window.INSEL_NATURE.start(grid, ROWS, COLS, MATERIALS, {
+        addPlaceAnimation: addPlaceAnimation,
+        unlockMaterial: unlockMaterial,
+        updateStats: updateStats,
+        showToast: showToast,
+        requestRedraw: requestRedraw
+    });
 
 })();
