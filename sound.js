@@ -441,6 +441,80 @@
         } catch (e) { /* Audio nicht verfügbar */ }
     }
 
+    // === GENRE-TONSEQUENZEN (Backlog #85) ===
+    // 15 Musik-Genres mit eigenen 5-Noten-Sequenzen beim Block-Platzieren.
+    // Jedes Genre hat: Tonfolge, Wellenform, Tempo, Lautstärke.
+    // Wird zufällig gewechselt alle ~40 Blöcke oder manuell per setGenre().
+    const GENRES = {
+        // Klassik — Mozart-artig, aufsteigend, Dreiklang
+        klassik:    { notes: [261.63, 329.63, 392.00, 523.25, 659.25], wave: 'sine',     dur: 0.18, vol: 0.08 },
+        // Jazz — Blue Notes, Swing-Feeling
+        jazz:       { notes: [220.00, 261.63, 311.13, 370.00, 440.00], wave: 'triangle', dur: 0.14, vol: 0.07 },
+        // Blues — Moll-Pentatonik, klagend
+        blues:      { notes: [196.00, 233.08, 261.63, 293.66, 349.23], wave: 'sawtooth', dur: 0.16, vol: 0.06 },
+        // Rock — Power Chords, hart
+        rock:       { notes: [146.83, 196.00, 220.00, 293.66, 392.00], wave: 'square',   dur: 0.08, vol: 0.09 },
+        // Elektro — Synth-Arpeggios, hoch
+        elektro:    { notes: [440.00, 523.25, 659.25, 783.99, 1046.50], wave: 'sawtooth', dur: 0.06, vol: 0.06 },
+        // Reggae — Offbeat, warm, relaxed
+        reggae:     { notes: [174.61, 220.00, 261.63, 329.63, 349.23], wave: 'triangle', dur: 0.20, vol: 0.07 },
+        // Country — Dur-Pentatonik, fröhlich
+        country:    { notes: [261.63, 293.66, 329.63, 392.00, 440.00], wave: 'triangle', dur: 0.12, vol: 0.08 },
+        // Funk — Slap-Bass-artig, groovy
+        funk:       { notes: [98.00, 130.81, 146.83, 196.00, 261.63], wave: 'square',   dur: 0.08, vol: 0.09 },
+        // Walzer — 3/4-Takt-Feeling, elegant
+        walzer:     { notes: [261.63, 329.63, 392.00, 329.63, 261.63], wave: 'sine',     dur: 0.22, vol: 0.07 },
+        // Lullaby — Schlaflied, sanft, langsam
+        schlaflied: { notes: [261.63, 293.66, 261.63, 196.00, 174.61], wave: 'sine',     dur: 0.28, vol: 0.05 },
+        // Marsch — Militärisch, rhythmisch
+        marsch:     { notes: [261.63, 261.63, 329.63, 392.00, 523.25], wave: 'square',   dur: 0.10, vol: 0.08 },
+        // Samba — Brasilianisch, feurig
+        samba:      { notes: [293.66, 349.23, 440.00, 523.25, 587.33], wave: 'triangle', dur: 0.08, vol: 0.08 },
+        // Ambient — Schwebend, Drone-artig
+        ambient:    { notes: [130.81, 164.81, 196.00, 220.00, 261.63], wave: 'sine',     dur: 0.35, vol: 0.04 },
+        // Piraten — Yo-ho-ho, abenteuerlich
+        piraten:    { notes: [196.00, 246.94, 293.66, 349.23, 392.00], wave: 'sawtooth', dur: 0.12, vol: 0.08 },
+        // Zirkus — Verrückt, hüpfend
+        zirkus:     { notes: [329.63, 440.00, 329.63, 523.25, 392.00], wave: 'square',   dur: 0.09, vol: 0.07 },
+    };
+
+    const GENRE_NAMES = Object.keys(GENRES);
+    let currentGenre = GENRE_NAMES[Math.floor(Math.random() * GENRE_NAMES.length)];
+    let genreNoteIndex = 0;
+    let genreBlockCounter = 0;
+
+    function setGenre(name) {
+        if (GENRES[name]) {
+            currentGenre = name;
+            genreNoteIndex = 0;
+        }
+    }
+
+    function getGenre() { return currentGenre; }
+    function getGenreNames() { return GENRE_NAMES.slice(); }
+
+    // Spielt die nächste Note der aktuellen Genre-Sequenz
+    function soundGenreNote() {
+        if (isMuted()) return;
+        if (!canPlaySound()) return;
+
+        // Genre-Wechsel alle ~40 Blöcke
+        genreBlockCounter++;
+        if (genreBlockCounter > 35 + Math.floor(Math.random() * 15)) {
+            genreBlockCounter = 0;
+            currentGenre = GENRE_NAMES[Math.floor(Math.random() * GENRE_NAMES.length)];
+            genreNoteIndex = 0;
+        }
+
+        const genre = GENRES[currentGenre];
+        const freq = genre.notes[genreNoteIndex % genre.notes.length];
+        genreNoteIndex = (genreNoteIndex + 1) % genre.notes.length;
+
+        // Leichte Variation für organischeres Gefühl
+        const varFreq = freq * (1 + (Math.random() - 0.5) * 0.015);
+        playRichTone(varFreq, genre.dur + Math.random() * 0.03, genre.wave, genre.vol);
+    }
+
     window.INSEL_SOUND = {
         soundBuild,
         soundDemolish,
@@ -456,6 +530,11 @@
         getMasterVolume,
         setMuted,
         isMuted,
+        // Genre-Tonsequenzen (Backlog #85)
+        soundGenreNote,
+        setGenre,
+        getGenre,
+        getGenreNames,
         // Low-level für Erweiterungen
         playTone,
         playRichTone,
