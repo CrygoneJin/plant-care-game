@@ -1,3 +1,4 @@
+// @ts-nocheck — schrittweise typen, siehe types.d.ts
 // === SCHNIPSELS INSEL-ARCHITEKT ===
 
 (function () {

@@ -43,6 +43,7 @@
     }
 
     // Check and execute merges after a block is placed at (r,c)
+    /** @param {Grid} grid @param {number} r @param {number} c @param {number} rows @param {number} cols @returns {MergeResult | null} */
     function checkMerge(grid, r, c, rows, cols) {
         const cell = grid[r][c];
         if (!cell) return null;

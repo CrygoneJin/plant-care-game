@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "allowJs": true,
+    "noEmit": true,
+    "strict": false,
+    "strictNullChecks": false,
+    "strictFunctionTypes": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "moduleDetection": "auto",
+    "skipLibCheck": true
+  },
+  "include": [
+    "types.d.ts",
+    "insel.js",
+    "materials.js",
+    "storage.js",
+    "sound.js",
+    "achievements.js",
+    "quests.js",
+    "recipes.js",
+    "healthcheck.js",
+    "game.js",
+    "chat.js",
+    "automerge.js",
+    "blueprints.js",
+    "screensaver.js"
+  ],
+  "exclude": [
+    "sw.js",
+    "worker.js",
+    "node_modules"
+  ]
+}

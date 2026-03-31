@@ -168,6 +168,7 @@
 
     // Ghost-Overlay: Zeigt für einen Bauplan an, welche Zellen noch fehlen
     // Gibt Array von { r, c, material, status: 'placed'|'missing'|'wrong' } zurück
+    /** @param {Grid} grid @param {number} startR @param {number} startC @param {number} rows @param {number} cols @param {PatternCell[][]} pattern @returns {OverlayCell[]} */
     function getOverlay(grid, startR, startC, rows, cols, pattern) {
         const cells = [];
         for (let r = 0; r < 4; r++) {
@@ -178,7 +179,7 @@
 
                 if (expected === null) continue; // Leere Zellen überspringen
 
-                let status = 'missing';
+                let status = /** @type {'placed' | 'missing' | 'wrong'} */ ('missing');
                 if (gr >= 0 && gr < rows && gc >= 0 && gc < cols) {
                     const actual = grid[gr][gc];
                     if (expected === '*') {

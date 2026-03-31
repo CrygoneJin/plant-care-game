@@ -1,3 +1,4 @@
+// @ts-nocheck — schrittweise typen, siehe types.d.ts
 // === INSEL-CHAT — NPCs reden mit dem Spieler ===
 
 (function () {
