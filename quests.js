@@ -46,4 +46,18 @@ window.INSEL_QUEST_TEMPLATES = [
     { npc: 'elefant', title: 'Honiggarten', desc: 'Törööö... Honig riecht wie eine Melodie! Bienen sind Musiker! Die Blumen sind das Konzerthaus!', needs: { honey: 4, bee: 4, flower: 8, apple: 3 }, reward: '🎵🎵🎵🎵🎵' },
     { npc: 'maus', title: 'Kuchenland', desc: '*pieps* KUCHEN! *quak* Nein wir brauchen keinen — *pieps* DOCH! *quak* Ein Kuchen reicht! *pieps* DREI!', needs: { cake: 3, apple: 4, honey: 3, flower: 4 }, reward: '🌻🌻🌻🌻🌻🌻' },
     { npc: 'spongebob', title: 'Trank-Labor', desc: 'Suchergebnis: 1 Trank-Labor gefunden! ...in BIKINI BOTTOM! Ich mache meins hier! Pilze! Kristalle! MAGIE!', needs: { potion: 3, crystal: 2, mushroom: 4, diamond: 1 }, reward: '⭐⭐⭐⭐⭐⭐⭐' },
+    // === HAIKU-BAUANLEITUNGEN (Backlog #14 — Krapweis-Idee: 5-7-5 Silben) ===
+    // Jede Beschreibung ist ein Haiku. Japanische Ästhetik trifft Insel-Architektur.
+    { npc: 'elefant', title: '俳句 Mondgarten', desc: 'Mond scheint auf den Stein —\nBlumen wachsen in der Nacht —\nStille singt ein Lied.', needs: { moon: 1, stone: 4, flower: 6 }, reward: '🎵🌙' },
+    { npc: 'maus', title: '俳句 Regenweg', desc: 'Regen fällt auf Sand —\nWege werden Spiegelgrund —\nEnte quakt vor Glück.', needs: { rain: 1, path: 6, sand: 3 }, reward: '🌻🌧️' },
+    { npc: 'neinhorn', title: '俳句 Eispalast', desc: 'Eis und Schnee und Glas —\nein Palast aus kaltem Licht —\nNEIN ich frier hier nicht.', needs: { ice: 3, snow: 2, glass: 4 }, reward: '🌈❄️' },
+    { npc: 'spongebob', title: '俳句 Feuerturm', desc: 'Flammen steigen hoch —\nLampen tanzen auf dem Stein —\ndie Nacht wird zum Tag.', needs: { fire: 3, lamp: 4, stone: 6 }, reward: '⭐🔥' },
+    { npc: 'krabs', title: '俳句 Goldhafen', desc: 'Boote tragen Gold —\nMetall glänzt im Morgenrot —\nProfit, süß wie Honig.', needs: { boat: 3, metal: 4, honey: 1 }, reward: '💰⛵' },
+    { npc: 'tommy', title: '俳句 Brückenland', desc: 'Brücke über Blau —\nWasser trägt die Holzbalken —\nklick-klack sagt der Fuß.', needs: { bridge: 2, water: 6, planks: 4 }, reward: '⚓🌉' },
+    { npc: 'elefant', title: '俳句 Blütenregen', desc: 'Wolken weinen Blü- —\nten die als Regen fallen —\nTörööö flüstert er.', needs: { cloud: 2, flower: 8, rain: 1 }, reward: '🎵🌸' },
+    { npc: 'maus', title: '俳句 Pilzwald', desc: 'Pilze im Moos-grün —\nBäume stehen Kopf im Teich —\nder Wald atmet tief.', needs: { mushroom: 4, tree: 5, water: 3 }, reward: '🌻🍄' },
+    { npc: 'neinhorn', title: '俳句 Sternennacht', desc: 'Sterne fallen leis —\nich sag NEIN zu Dunkelheit —\nund dann wird es hell.', needs: { star: 3, moon: 1, lamp: 3 }, reward: '🌈⭐' },
+    { npc: 'krabs', title: '俳句 Kristallmine', desc: 'Tief im Stein ein Glanz —\nDiamanten warten still —\nPure Rendite, Junge!', needs: { diamond: 2, stone: 6, lamp: 2 }, reward: '💰💎' },
+    { npc: 'spongebob', title: '俳句 Wolkenhaus', desc: 'Hoch in Wolken bau —\nGlas und Licht und nichts sonst mehr —\ndas Haus schwebt und lacht.', needs: { cloud: 3, glass: 4, lamp: 2 }, reward: '⭐☁️' },
+    { npc: 'tommy', title: '俳句 Fischerdorf', desc: 'Netze im Wind wehn —\nFische springen silberhell —\nklick-klack singt das Meer.', needs: { fish: 4, boat: 2, fence: 4 }, reward: '⚓🐟' },
 ];
