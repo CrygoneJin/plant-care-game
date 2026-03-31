@@ -5,6 +5,8 @@
 (function() {
     'use strict';
 
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     let idleTimer = null;
     let animationInterval = null;
     let savedGrid = null;
@@ -18,6 +20,7 @@
     }
 
     function startScreensaver() {
+        if (prefersReducedMotion) return;
         const grid = window.grid;
         if (!grid || !grid.length) return;
 

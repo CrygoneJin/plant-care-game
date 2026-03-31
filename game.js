@@ -3,6 +3,9 @@
 (function () {
     'use strict';
 
+    // --- Accessibility: reduced-motion ---
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     // --- Konfiguration ---
     // Responsive grid dimensions
     const ASPECT = window.innerWidth / window.innerHeight;
@@ -918,7 +921,7 @@
     }
 
     function startConway() {
-        if (conwayInterval) return;
+        if (conwayInterval || prefersReducedMotion) return;
         conwayFading = false;
         conwayOverlay = Array.from({ length: ROWS }, () => Array(COLS).fill(''));
         for (let r = 0; r < ROWS; r++)
@@ -1849,9 +1852,13 @@
                 const isIsland = r >= WATER_BORDER && r < WATER_BORDER + ROWS &&
                                  c >= WATER_BORDER && c < WATER_BORDER + COLS;
                 if (!isIsland) {
-                    const wave = Math.sin(time * 2 + r * 0.5 + c * 0.3) * 10;
-                    const blue = 52 + wave;
-                    ctx.fillStyle = `rgb(${blue + 0}, ${blue + 100}, ${blue + 167})`;
+                    if (prefersReducedMotion) {
+                        ctx.fillStyle = '#3498DB';
+                    } else {
+                        const wave = Math.sin(time * 2 + r * 0.5 + c * 0.3) * 10;
+                        const blue = 52 + wave;
+                        ctx.fillStyle = `rgb(${blue + 0}, ${blue + 100}, ${blue + 167})`;
+                    }
                     ctx.fillRect(c * CELL_SIZE, r * CELL_SIZE, CELL_SIZE, CELL_SIZE);
                 }
             }
@@ -1868,9 +1875,13 @@
 
                 if (isWaterEdge) {
                     // Wasser-Rand: gleiche Wellen-Animation wie äußeres Wasser
-                    const wave = Math.sin(time * 2 + (r + WATER_BORDER) * 0.5 + (c + WATER_BORDER) * 0.3) * 10;
-                    const blue = 52 + wave;
-                    ctx.fillStyle = `rgb(${blue + 0}, ${blue + 100}, ${blue + 167})`;
+                    if (prefersReducedMotion) {
+                        ctx.fillStyle = '#3498DB';
+                    } else {
+                        const wave = Math.sin(time * 2 + (r + WATER_BORDER) * 0.5 + (c + WATER_BORDER) * 0.3) * 10;
+                        const blue = 52 + wave;
+                        ctx.fillStyle = `rgb(${blue + 0}, ${blue + 100}, ${blue + 167})`;
+                    }
                     ctx.fillRect(x, y, CELL_SIZE, CELL_SIZE);
                     // Kein Grid-Gitter, kein Material auf Wasser-Rand
                     continue;
@@ -1892,12 +1903,16 @@
 
                     // Tao-Flackern: instabiles Atom vor dem Zerfall
                     if (grid[r][c] === 'tao') {
-                        const flicker = Math.sin(time * 8 + r * 3.7 + c * 2.3) * 0.15;
-                        const base = 128;
-                        const v = Math.round(base + flicker * 80);
-                        // Flackert zwischen leichtem Schwarz und leichtem Weiß
-                        const bw = Math.sin(time * 3 + r + c) > 0 ? v + 20 : v - 20;
-                        ctx.fillStyle = `rgb(${bw}, ${bw}, ${bw})`;
+                        if (prefersReducedMotion) {
+                            ctx.fillStyle = 'rgb(128, 128, 128)';
+                        } else {
+                            const flicker = Math.sin(time * 8 + r * 3.7 + c * 2.3) * 0.15;
+                            const base = 128;
+                            const v = Math.round(base + flicker * 80);
+                            // Flackert zwischen leichtem Schwarz und leichtem Weiß
+                            const bw = Math.sin(time * 3 + r + c) > 0 ? v + 20 : v - 20;
+                            ctx.fillStyle = `rgb(${bw}, ${bw}, ${bw})`;
+                        }
                     } else {
                         ctx.fillStyle = mat.color;
                     }
@@ -2691,16 +2706,18 @@
         requestRedraw();
 
         // Spark animation overlay
-        const wrapper = document.getElementById('canvas-wrapper');
-        if (wrapper) {
-            for (const [mr, mc] of merge.cells) {
-                const spark = document.createElement('div');
-                spark.className = 'merge-spark' + (merge.type === 'triplet' ? ' triplet' : '');
-                const cellSize = canvas.offsetWidth / (COLS + WATER_BORDER * 2);
-                spark.style.left = ((mc + WATER_BORDER) * cellSize + cellSize/2 - 20) + 'px';
-                spark.style.top = ((mr + WATER_BORDER) * cellSize + cellSize/2 - 20) + 'px';
-                wrapper.appendChild(spark);
-                setTimeout(() => spark.remove(), 1000);
+        if (!prefersReducedMotion) {
+            const wrapper = document.getElementById('canvas-wrapper');
+            if (wrapper) {
+                for (const [mr, mc] of merge.cells) {
+                    const spark = document.createElement('div');
+                    spark.className = 'merge-spark' + (merge.type === 'triplet' ? ' triplet' : '');
+                    const cellSize = canvas.offsetWidth / (COLS + WATER_BORDER * 2);
+                    spark.style.left = ((mc + WATER_BORDER) * cellSize + cellSize/2 - 20) + 'px';
+                    spark.style.top = ((mr + WATER_BORDER) * cellSize + cellSize/2 - 20) + 'px';
+                    wrapper.appendChild(spark);
+                    setTimeout(() => spark.remove(), 1000);
+                }
             }
         }
 
@@ -2715,6 +2732,7 @@
     // #64: Elektronen = Crafting-Blitz — Lichtfunken beim LLM-Craft
     // Kein UI, kein Label. Amélie. Ladungsaustausch sichtbar machen.
     function spawnCraftSparks() {
+        if (prefersReducedMotion) return;
         const wrapper = document.getElementById('canvas-wrapper');
         const craftDialog = document.getElementById('craft-dialog');
         const target = craftDialog || wrapper;
@@ -2770,18 +2788,20 @@
         requestRedraw();
 
         // Animation: Funken auf allen Zellen
-        const wrapper = document.getElementById('canvas-wrapper');
-        if (wrapper) {
-            for (let dr = 0; dr < 4; dr++) {
-                for (let dc = 0; dc < 4; dc++) {
-                    if (blueprint.pattern[dr][dc] === null) continue;
-                    const spark = document.createElement('div');
-                    spark.className = 'merge-spark blueprint-spark';
-                    const cellSize = canvas.offsetWidth / (COLS + WATER_BORDER * 2);
-                    spark.style.left = ((startC + dc + WATER_BORDER) * cellSize + cellSize / 2 - 20) + 'px';
-                    spark.style.top = ((startR + dr + WATER_BORDER) * cellSize + cellSize / 2 - 20) + 'px';
-                    wrapper.appendChild(spark);
-                    setTimeout(() => spark.remove(), 1200);
+        if (!prefersReducedMotion) {
+            const wrapper = document.getElementById('canvas-wrapper');
+            if (wrapper) {
+                for (let dr = 0; dr < 4; dr++) {
+                    for (let dc = 0; dc < 4; dc++) {
+                        if (blueprint.pattern[dr][dc] === null) continue;
+                        const spark = document.createElement('div');
+                        spark.className = 'merge-spark blueprint-spark';
+                        const cellSize = canvas.offsetWidth / (COLS + WATER_BORDER * 2);
+                        spark.style.left = ((startC + dc + WATER_BORDER) * cellSize + cellSize / 2 - 20) + 'px';
+                        spark.style.top = ((startR + dr + WATER_BORDER) * cellSize + cellSize / 2 - 20) + 'px';
+                        wrapper.appendChild(spark);
+                        setTimeout(() => spark.remove(), 1200);
+                    }
                 }
             }
         }
@@ -2966,16 +2986,18 @@
                 addPlaceAnimation(yr, yc);
 
                 // Spark-Animation
-                const wrapper = document.getElementById('canvas-wrapper');
-                if (wrapper) {
-                    const cellSize = canvas.offsetWidth / (COLS + WATER_BORDER * 2);
-                    for (const [sr, sc] of [[r,c],[yr,yc]]) {
-                        const spark = document.createElement('div');
-                        spark.className = 'merge-spark';
-                        spark.style.left = ((sc + WATER_BORDER) * cellSize + cellSize/2 - 20) + 'px';
-                        spark.style.top = ((sr + WATER_BORDER) * cellSize + cellSize/2 - 20) + 'px';
-                        wrapper.appendChild(spark);
-                        setTimeout(() => spark.remove(), 1000);
+                if (!prefersReducedMotion) {
+                    const wrapper = document.getElementById('canvas-wrapper');
+                    if (wrapper) {
+                        const cellSize = canvas.offsetWidth / (COLS + WATER_BORDER * 2);
+                        for (const [sr, sc] of [[r,c],[yr,yc]]) {
+                            const spark = document.createElement('div');
+                            spark.className = 'merge-spark';
+                            spark.style.left = ((sc + WATER_BORDER) * cellSize + cellSize/2 - 20) + 'px';
+                            spark.style.top = ((sr + WATER_BORDER) * cellSize + cellSize/2 - 20) + 'px';
+                            wrapper.appendChild(spark);
+                            setTimeout(() => spark.remove(), 1000);
+                        }
                     }
                 }
 
@@ -2992,7 +3014,7 @@
             }
         }
         // Tao auf dem Grid → muss flackern → dirty flag (200ms = 5 FPS, genug für Flicker)
-        if (hasTao && !_taoFlickerActive) {
+        if (hasTao && !_taoFlickerActive && !prefersReducedMotion) {
             _taoFlickerActive = true;
             _taoFlickerInterval = setInterval(requestRedraw, 200);
         } else if (!hasTao && _taoFlickerActive) {
