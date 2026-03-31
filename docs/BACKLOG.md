@@ -191,39 +191,39 @@ Idee: Die leere Insel (nur Wasser) wird in einer Sequenz erschaffen. Verschieden
 | 40 | **Insel-Identität zurückbringen** — Wasser-Rand sichtbar, Strand-Gradient, Palmen-Starter, Canvas fühlt sich an wie Insel nicht wie Spreadsheet | ✅ Done (WATER_BORDER, Strand-Gradient, 8 Palmen-Starter, Grid-Linien nur auf belegten Zellen) | Designer + Engineer |
 | 41 | **Sidebar Tabs** — nur eine Sektion sichtbar (Inventar/Quests/Erfolge als Tabs), nicht alles gestapelt | ✅ Done (.sidebar-tab System implementiert) | Designer |
 | 42 | **Werkbank als Canvas-Drag** — Drag Element-A auf Element-B statt 3×3 Modal (Infinite Craft Pattern) | P2 | Engineer |
-| 43 | **Save-System** — localStorage Grid-Persist, Oskar baut nicht nochmal | P0 | Engineer |
-| 45 | **Canvas 16:9 auf PC, iPad-Ratio auf iPad, iPhone-Ratio auf iPhone** — Grid-Dimensionen responsive | P1 | Engineer + Designer |
-| 46 | **Drag & Drop Crafting** — Materialien auf Canvas ziehen statt Klick (Oscars Wunsch) | P1 | Engineer |
+| 43 | **Save-System** — localStorage Grid-Persist, Oskar baut nicht nochmal | ✅ Done | Engineer |
+| 45 | **Canvas 16:9 auf PC, iPad-Ratio auf iPad, iPhone-Ratio auf iPhone** — Grid-Dimensionen responsive | ✅ Done (COLS/ROWS responsive nach Viewport) | Engineer + Designer |
+| 46 | **Drag & Drop Crafting** — Materialien auf Canvas ziehen statt Klick (Oscars Wunsch) | ✅ Done (Sprint 21) | Engineer |
 | 47 | **Quests/Achievements zu schnell** — Schwierigkeitsgrad erhöhen, passen nicht zur leeren Insel | ✅ Done (Baseline-Tracking ab Annahme, max 2 aktive Quests) | Scientist |
-| 48 | **NPCs nicht sichtbar** — Chat-Button/NPCs tauchen nicht auf bei schatzinsel.app | P0 | Engineer |
-| 49 | **Bernd Support-Chat fehlt** — Bernd als Hilfe-NPC nicht erreichbar | P0 | Engineer |
+| 48 | **NPCs nicht sichtbar** — Chat-Button/NPCs tauchen nicht auf bei schatzinsel.app | ✅ Done (chat-bubble immer sichtbar) | Engineer |
+| 49 | **Bernd Support-Chat fehlt** — Bernd als Hilfe-NPC nicht erreichbar | ✅ Done (Bernd im chat-character Select) | Engineer |
 | 50 | **Höhle = Dungeon-Framework** — 3 Akte (Goethe), aber Inhalt ist austauschbar. Mögliche Dungeons: **IT** (Bits→Kernel→Browser), **Kosmologie** (Quarks→Atome→Sterne), **Jim Knopf** (Bürokraten→Drachen→Kummerland), **bunte Mischung**. Jeder Dungeon hat: Akt 1 (Einstieg), Akt 2 (Transformation), Akt 3 (Mandelbrot/Endlos). Welcher Dungeon erscheint = emergent. PR #13 als Basis. | P1 | alle |
 | 51 | **Wu Xing Philosophie im Craft-Prompt** — Holz=Expansion, Feuer=Aktion, Erde=Wandlung, Metall=Reife, Wasser=Ruhe | ✅ Done (worker.js Craft-Prompt + Beispiele) | Scientist |
 | 52 | **Kung Fu Panda Wuxi** — Ästhetik-Inspiration für Wu Xing Elemente | P2 | Artist |
 | 53 | **Echtes Atlantik-Wetter** — Open-Meteo API (29°N, 31°W — halber Weg Martinique↔Bayonne), 🌊 im Meer wetterabhängig | ✅ Done (Open-Meteo fetch bei game.js:1434) | Engineer |
 | 57 | **Stille-Momente** (Ende) — Leere Meerpassagen zwischen Inseln. Kein UI, kein Toast. Nur Wellen und Wind. Oscar denkt nach. | P1 | Designer |
 | 58 | **Unsinn-Rezepte** (Lindgren) — Feuer+Pfannkuchen=?, Drache+Kuchen=?, unlogisch aber wunderbar | P2 | Artist |
-| 59 | **10-Sekunden-Erster-Moment** (Paluten) — Erster Block in 10 Sek, nicht 30. Intro kürzen. Tao-Glow-Puls hilft. | P0 | Designer |
+| 59 | **10-Sekunden-Erster-Moment** (Paluten) — Erster Block in 10 Sek, nicht 30. Intro kürzen. Tao-Glow-Puls hilft. | P0 | Designer | ✅ Done (9f8a0bf) |
 | 60 | **Haikus am Strand** (Krapweis) — Jede Insel-Station: 5-7-5 Schild am Strand statt Tutorial-Text | P2 | Artist |
-| 61 | **Konsequenz** (Habeck) — Baum fällen = Baum weg. Brunnen bauen = Blumen wachsen. Welt reagiert. | ✅ Done (Baum→Stumpf→Setzling bereits da; Brunnen→Blumen: updateWorldConsequences()) | Engineer |
+| 61 | **Konsequenz** (Habeck) — Baum fällen = Baum weg. Brunnen bauen = Blumen wachsen. Welt reagiert. | ✅ Done (Baum→Stumpf→Setzling; Brunnen→Blumen: updateWorldConsequences(); Wasser→Blumen, Feuer→Asche: e002de7) | Engineer |
 | 62 | **Mehrsprachige NPCs** (Habeck) — Lummerland = alle willkommen. NPCs antworten in Oscars Sprache oder der Sprache der Insel. | P2 | Scientist |
 | 63 | **Erster Block = lautes KLONK** (Paluten) — Bau-Sound muss in 30 Sek auffallen. Lautstärke hoch, befriedigend, Minecraft-Niveau. Pentatonik ist schön aber zu subtil für den ersten Moment. | P1 | Engineer + Scientist |
 | 64 | **Elektronen = Crafting-Blitz** — unsichtbares Feature: beim Craften blitzen kurze Lichtfunken zwischen den Materialien (Ladungsaustausch). Kein UI, kein Label. Amélie. | ✅ Done (spawnCraftSparks() — 8 Funken, 80ms versetzt) | Engineer |
 | 65 | **Neutrino-Spieler** — Analytics: Kinder die spielen ohne zu craften, die nur bauen/schauen. Eigene Metrik. "Sie sind da, verändern nichts, und das ist auch ok." (Lesch) | P2 | Scientist |
-| 66 | **Spielfigur-Bewegung laggt** — Pfeiltasten haben großen Zeitversatz, manchmal keine Reaktion. "Papa, warum kann ich mich nicht bewegen?" (Oscar) | P0 | Engineer |
+| 66 | **Spielfigur-Bewegung laggt** — Pfeiltasten haben großen Zeitversatz, manchmal keine Reaktion. "Papa, warum kann ich mich nicht bewegen?" (Oscar) | ✅ Done (Sprint 19) | Engineer |
 | 67 | **Automerge wie 2048** — RGB nebeneinander → Metall entsteht automatisch (starke Kernkraft). Schwarz neben Weiß → Qi/Energie (Strahlung). Wie 2048 auf dem Tesla-Bildschirm. Oscar liebt es. | ✅ Done (automerge.js mit MERGE_RULES + TRIPLET_RULES) | Engineer + Scientist |
-| 68 | **Tutorial sichtbar machen** — Tao-Button pulsiert golden bis zum ersten Klick. | P0 | Designer | ✅ Done |
+| 68 | **Tutorial sichtbar machen** — Tao-Button pulsiert golden bis zum ersten Klick. | ✅ Done | Designer |
 | 69 | **Entdeckte Elemente sichtbar** — Fortschritt der Genesis-Stufen anzeigen (0→1→3→5→10.000). Welche Stufe bin ich? | ✅ Done (updateGenesisBadge() bei game.js:2610, 道→⚫⚪→五行→✨→万+) | Designer |
 | 70 | **KLONK vor erstem Block** — Erster Sound = KLONK (laut, Minecraft-Niveau). Danach Pentatonik. | P0 | Engineer | ✅ Done |
 | 71 | **Palette = Instrument = Bauwerk** — Links spielen = rechts bauen. Gleichzeitig. Melodie UND Architektur in einem Flow. Denken und Tun verschränkt. Quantenverschränkung als Spielmechanik. Jede Reihe auf dem Canvas = eine Melodie-Spur. Replay = das Bauwerk als Song abspielen. | P1 | alle |
 | 72 | **Das Buch** — Chatverlauf als Kapitel. Struktur: Prolog (plant-care-game), Akt 1 Dark Ages (Free→Pro→Teams), Akt 2 Inflation (Max, 32MB-Nacht), Akt 3 Big Crunch ("Papa warum kann ich mich nicht bewegen?"), Epilog (Oscar baut weiter). Hubble-Korrektur: keine Sterne am Anfang. Kükens: Tokens leer = Supernova (Langdock→Requesty). Schröder: "Nächste Folge 5 Kinder testen." /buch Skill erstellt. | P2 | Artist + Leader |
 | 73 | **Suchregeln-Optimierung 8D-Vektorraum** — Aktuell 13 Regeln → 99.5% Abdeckung. Ziel: auf ~10 Regeln reduzieren (d + ⌈d/4⌉), Rest probabilistisch. Weniger Regeln = weniger Tokens an die KI = billiger + schneller. Feynman misst Abdeckungsgrad pro Regel, Torvalds implementiert den Cutover deterministisch→probabilistisch. | P2 | Scientist + Engineer |
 | 74 | **NPC-Persönlichkeiten differenzieren** — Few-Shot-Beispiele, STIMME/TICK/ZIEL, Temperature pro NPC. KINDERSICHERHEIT 40→2 Zeilen. | P1 | Artist + Scientist | ✅ Done |
-| 75 | **Wunschfee Floriane** — Oscar will eine Wunschfee. Neuer NPC: Floriane die Wunschfee. Kindgerecht, magisch, erfüllt kleine Wünsche auf der Insel. | P1 | Artist + Engineer |
+| 75 | **Wunschfee Floriane** — Oscar will eine Wunschfee. Neuer NPC: Floriane die Wunschfee. Kindgerecht, magisch, erfüllt kleine Wünsche auf der Insel. | P1 | Artist + Engineer | ✅ Done (Sprint 19) |
 | 76 | **Craft-Ergebnis visuell zeigen** — Emoji + Name + Bounce-Animation in Result-Box. | P1 | Designer + Engineer | ✅ Done |
 | 77 | **Rewind/Zeitreise** — Baugeschichte rückwärts abspielen wie Kassettenrekorder. Undo-History als Animation. | P2 | Engineer |
 | 54 | **Jim Knopfs Welt als offene Inselkarte** — Lummerland (Tutorial) → Meer → Mandala/Ping → Wüste (Turtur) → Drachenstadt → Kummerland → Schatzinsel. Nicht linear, Oscar wählt. Boot craften = nächste Insel. **Goldener Pfad**: Abendsonne malt Lichtstreifen aufs Meer Richtung nächste Insel — kein UI, nur Licht. **Wachsende Verantwortung**: Lummerland=für sich, Mandala=?, Wüste=Hilfe annehmen (Turtur=Scheinriese: aus der Nähe anders als von weitem), Drachenstadt=?, Schatzinsel=für alle. Jede Station muss an Michael Ende rückgekoppelt werden — wir interpretieren nicht, wir lesen. | P1 | alle |
-| 55 | **Spielfigur auf der Insel** — Kind benennt selbst (max 8 Buchstaben), bewegbar mit Pfeiltasten (PC) oder Finger-Drag (Touch) | P1 | Engineer + Designer |
+| 55 | **Spielfigur auf der Insel** — Kind benennt selbst (max 8 Buchstaben), bewegbar mit Pfeiltasten (PC) oder Finger-Drag (Touch) | P1 | Engineer + Designer | ✅ Done (Sprint 7) |
 | 56 | **Bibliothek von Alexandria** — Gebäude auf der Insel (Stein+Bretter+Wissen), Schriftrollen statt Bücher, jede Rolle = Wiki-Game-Challenge ("Von Wasser zu Drache in X Schritten"). Timbuktu als zweite Bibliothek — wer beide baut verbindet zwei Wissenswelten. Papyrus vor Gutenberg. Wikipedia von damals. | P2 | alle |
 
 ---

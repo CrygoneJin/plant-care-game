@@ -1,3 +1,40 @@
+# Sprint 21 — "Oscar zieht"
+
+**Sprint Goal:** Drag & Drop auf dem Canvas — Oscar zieht Materialien direkt, kein Klicken mehr.
+
+**Start:** 2026-03-30
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S21-1 | **Drag & Drop Crafting** — Materialien aus Palette auf Canvas ziehen. `draggable="true"` auf `.material-btn`, Canvas `dragover`/`drop` Handler. Oscar's Wunsch (#46, P1) | Engineer | ✅ Done |
+| S21-2 | **Code-Ebenen per Touch** — Left/Right Swipe auf Canvas wechselt Code-Layer statt Rechtsklick (#32, P1) | Engineer | 🔲 Offen |
+| S21-3 | **Quests/Achievements balancieren** — Schwierigkeitsgrad erhöhen, passen nicht zur leeren Insel (#47, P1) | Scientist | 🔲 Offen |
+
+---
+
+## Standup Log
+
+### 2026-03-30 (Sprint 21 Planning)
+
+**Kontext (Commits seit Sprint 20):**
+- `1b224ea` Sound Mute-Check 9× → 1× isMuted() (#50)
+- `8ef5289` Zentraler localStorage-Helper storage.js (#51)
+- `ee7b50a` INSEL Namespace mit Event-Bus und Modul-Registry (#52)
+- `48d8075` fix: Doppelte Floriane + CHAR_CURRENCY Duplikat (#53)
+- `9f8a0bf` 10-Sekunden-Erster-Moment — Intro beschleunigt (#54, Backlog #59)
+- `b1c34e7` Offline-Manifest + Service Worker PWA (#56, Backlog #8)
+- `e002de7` Konsequenz-System — Wasser→Blumen, Feuer→Asche (#57, Backlog #61)
+
+Diese Items werden im Backlog als Done markiert.
+
+**Sprint-Fokus:** S21-1 (Drag & Drop) implementiert in dieser Session.
+
+---
+
 # Sprint 20 — "Alle antreten"
 
 **Sprint Goal:** Organisation aufräumen, Code-Fundament stärken. Jeder Agent hat einen Job.

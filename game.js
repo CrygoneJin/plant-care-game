@@ -1322,7 +1322,13 @@
                 btn.dataset.material = mat;
                 btn.title = info.label;
                 btn.innerHTML = `<span class="mat-emoji">${info.emoji}</span>`;
+                btn.setAttribute('draggable', 'true');
                 palette.appendChild(btn);
+                btn.addEventListener('dragstart', e => {
+                    e.dataTransfer.setData('text/plain', mat);
+                    e.dataTransfer.effectAllowed = 'copy';
+                    selectMaterial(mat);
+                });
                 btn.addEventListener('click', () => {
                     document.querySelectorAll('.material-btn').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
@@ -2715,6 +2721,14 @@
 
     // Material-Buttons — Klick = Ton spielen (Palette als Klavier)
     document.querySelectorAll('.material-btn').forEach(btn => {
+        // Drag & Drop: Material aus Palette auf Canvas ziehen (Oscar's Wunsch)
+        btn.setAttribute('draggable', 'true');
+        btn.addEventListener('dragstart', e => {
+            e.dataTransfer.setData('text/plain', btn.dataset.material);
+            e.dataTransfer.effectAllowed = 'copy';
+            selectMaterial(btn.dataset.material);
+        });
+
         btn.addEventListener('click', () => {
             selectMaterial(btn.dataset.material);
         });
@@ -2809,6 +2823,20 @@
         isMouseDown = false;
         playerDragging = false;
         hoverCell = null;
+    });
+
+    // Drag & Drop: Material aus Palette auf Canvas ziehen
+    canvas.addEventListener('dragover', e => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'copy';
+    });
+    canvas.addEventListener('drop', e => {
+        e.preventDefault();
+        const mat = e.dataTransfer.getData('text/plain');
+        if (!mat || !MATERIALS[mat]) return;
+        selectMaterial(mat);
+        const cell = getGridCell(e);
+        if (cell) applyTool(cell.r, cell.c);
     });
 
     // Aktions-Buttons
