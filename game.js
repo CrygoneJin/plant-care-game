@@ -474,6 +474,11 @@
         tommy:     { emoji: '🦞', prefix: 'Tommy:', ticks: ['Klick-klack!', 'JA!', 'Noch ein Boot!'], style: 'chaos' },
         bernd:     { emoji: '🍞', prefix: 'Bernd:', ticks: ['*seufz*', 'Mist.', 'Toll.'], style: 'grumpy' },
         floriane:  { emoji: '🧚', prefix: 'Floriane:', ticks: ['✨', 'Oh!', 'Ein Wunsch!'], style: 'magic' },
+        // #13: Programmiersprachen-Bewohner
+        haskell:   { emoji: '🟣', prefix: 'Haskell:', ticks: ['Rein funktional!', 'Keine Seiteneffekte!', 'Typen lösen alles!'], style: 'careful' },
+        lua:       { emoji: '🌙', prefix: 'Lua:', ticks: ['Schnell und leicht!', 'Tables!', '-- Ein Kommentar genügt'], style: 'cute' },
+        sql:       { emoji: '🗃️', prefix: 'SQL:', ticks: ['SELECT * FROM Insel', 'JOIN!', 'NULL... ist auch ein Wert.'], style: 'grumpy' },
+        scratch:   { emoji: '🐱', prefix: 'Scratch:', ticks: ['Wenn grüne Flagge angeklickt...', '10 Schritte gehen!', 'Katze sagt: Miau!'], style: 'caps' },
     };
 
     const MAT_ADJECTIVES = {
@@ -812,6 +817,54 @@
 
     // Konsequenz-Check alle 8s (versetzt zum Tree-Growth-Check)
     setInterval(updateWorldConsequences, 8000);
+
+    // #19: Game of Life Screensaver — läuft auf leeren Zellen wenn Insel ruht
+    let conwayOverlay = null; // 2D Uint8Array, null = Screensaver inaktiv
+    let conwayInterval = null;
+    let lastInteraction = Date.now();
+    const CONWAY_IDLE_MS = 30000; // 30s ohne Interaktion → Screensaver startet
+
+    function startConway() {
+        if (conwayInterval) return;
+        const BEACH = 2;
+        conwayOverlay = Array.from({ length: ROWS }, () => new Uint8Array(COLS));
+        for (let r = BEACH; r < ROWS - BEACH; r++)
+            for (let c = BEACH; c < COLS - BEACH; c++)
+                if (grid[r][c] === null) conwayOverlay[r][c] = Math.random() < 0.2 ? 1 : 0;
+        conwayInterval = setInterval(() => {
+            const next = Array.from({ length: ROWS }, () => new Uint8Array(COLS));
+            const BEACH = 2;
+            for (let r = BEACH; r < ROWS - BEACH; r++) {
+                for (let c = BEACH; c < COLS - BEACH; c++) {
+                    if (grid[r][c] !== null) continue;
+                    let alive = 0;
+                    for (let dr = -1; dr <= 1; dr++)
+                        for (let dc = -1; dc <= 1; dc++)
+                            if ((dr || dc) && conwayOverlay[r + dr]?.[c + dc]) alive++;
+                    const cur = conwayOverlay[r][c];
+                    next[r][c] = cur ? (alive === 2 || alive === 3 ? 1 : 0) : (alive === 3 ? 1 : 0);
+                }
+            }
+            conwayOverlay = next;
+            requestRedraw();
+        }, 500);
+    }
+
+    function stopConway() {
+        clearInterval(conwayInterval);
+        conwayInterval = null;
+        conwayOverlay = null;
+        requestRedraw();
+    }
+
+    function resetIdleTimer() {
+        lastInteraction = Date.now();
+        if (conwayInterval) stopConway();
+    }
+
+    setInterval(() => {
+        if (!conwayInterval && Date.now() - lastInteraction > CONWAY_IDLE_MS) startConway();
+    }, 5000);
 
     // ============================================================
     // === INVENTAR ===
@@ -1667,6 +1720,22 @@
 
         // Blueprint-Overlay zeichnen (Ghost-Preview)
         drawBlueprintOverlay();
+
+        // Conway Screensaver Overlay
+        if (conwayOverlay) {
+            ctx.fillStyle = 'rgba(80, 200, 120, 0.55)';
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    if (conwayOverlay[r][c] && grid[r][c] === null) {
+                        const x = (c + WATER_BORDER) * CELL_SIZE;
+                        const y = (r + WATER_BORDER) * CELL_SIZE;
+                        ctx.beginPath();
+                        ctx.arc(x + CELL_SIZE / 2, y + CELL_SIZE / 2, CELL_SIZE * 0.3, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            }
+        }
 
         // Spielfigur zeichnen
         if (playerName) {
@@ -2949,6 +3018,7 @@
 
     // Canvas Maus-Events
     canvas.addEventListener('mousedown', (e) => {
+        resetIdleTimer();
         isMouseDown = true;
         undoPushedThisStroke = false;
         const cell = getGridCell(e);
@@ -2983,6 +3053,7 @@
     const SWIPE_MAX_Y = 40;
 
     canvas.addEventListener('touchstart', (e) => {
+        resetIdleTimer();
         e.preventDefault();
         undoPushedThisStroke = false;
         touchWasPainting = false;
@@ -3179,6 +3250,7 @@
     });
 
     document.addEventListener('keydown', (e) => {
+        resetIdleTimer();
         if (e.key === 'Escape' && !loadDialog.classList.contains('hidden')) {
             loadDialog.classList.add('hidden');
             return;
