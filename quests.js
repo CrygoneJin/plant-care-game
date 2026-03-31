@@ -46,4 +46,15 @@ window.INSEL_QUEST_TEMPLATES = [
     { npc: 'elefant', title: 'Honiggarten', desc: 'Törööö... Honig riecht wie eine Melodie! Bienen sind Musiker! Die Blumen sind das Konzerthaus!', needs: { honey: 4, bee: 4, flower: 8, apple: 3 }, reward: '🎵🎵🎵🎵🎵' },
     { npc: 'maus', title: 'Kuchenland', desc: '*pieps* KUCHEN! *quak* Nein wir brauchen keinen — *pieps* DOCH! *quak* Ein Kuchen reicht! *pieps* DREI!', needs: { cake: 3, apple: 4, honey: 3, flower: 4 }, reward: '🌻🌻🌻🌻🌻🌻' },
     { npc: 'spongebob', title: 'Trank-Labor', desc: 'Suchergebnis: 1 Trank-Labor gefunden! ...in BIKINI BOTTOM! Ich mache meins hier! Pilze! Kristalle! MAGIE!', needs: { potion: 3, crystal: 2, mushroom: 4, diamond: 1 }, reward: '⭐⭐⭐⭐⭐⭐⭐' },
+    // Runde 7: Haiku-Bauanleitungen (5-7-5 Silben)
+    { npc: 'elefant', title: 'Wald-Haiku', desc: 'Fünf Bäume am Strand / Der Wind weht durch grüne Blätter / Wald wird geboren', needs: { tree: 5, plant: 3, path: 2 }, reward: '🎵🎵🎵' },
+    { npc: 'maus', title: 'Blüten-Haiku', desc: 'Blumen auf dem Feld / Bienen summen ihren Tanz / Honig fließt wie Gold', needs: { flower: 8, bee: 3, honey: 2 }, reward: '🌻🌻🌻🌻' },
+    { npc: 'krabs', title: 'Hafen-Haiku', desc: 'Boote schaukeln sacht / Das Wasser trägt schwere Fracht / Handel blüht am Kai', needs: { boat: 3, water: 6, wood: 4 }, reward: '💰💰💰' },
+    { npc: 'neinhorn', title: 'Pilz-Haiku', desc: 'Pilze in der Nacht / Leuchten sanft im Mondenschein / Wald wird Zauberreich', needs: { mushroom: 5, lamp: 3, moon: 1 }, reward: '🌈🌈🌈🌈' },
+    { npc: 'tommy', title: 'Turm-Haiku', desc: 'Stein auf Stein getürmt / Glas fängt alle Sterne ein / Licht grüßt jedes Schiff', needs: { stone: 6, glass: 4, lamp: 3, star: 1 }, reward: '⚓⚓⚓⚓' },
+    { npc: 'spongebob', title: 'Garten-Haiku', desc: 'Sand wird bunter Grund / Zaun beschützt die zarten Triebe / Garten voller Glück', needs: { sand: 4, fence: 4, flower: 5, plant: 3 }, reward: '⭐⭐⭐⭐' },
+    { npc: 'elefant', title: 'Brunnen-Haiku', desc: 'Wasser singt im Stein / Kristall bricht das Sonnenlicht / Platz der Melodie', needs: { fountain: 2, crystal: 2, stone: 4, path: 4 }, reward: '🎵🎵🎵🎵' },
+    { npc: 'maus', title: 'Brücken-Haiku', desc: 'Holz über den Bach / Fische springen silberhell / Wege werden eins', needs: { bridge: 2, wood: 4, fish: 3, water: 4 }, reward: '🌻🌻🌻' },
+    { npc: 'krabs', title: 'Festung-Haiku', desc: 'Mauern stark und hoch / Türen halten Stürme fern / Schatz ruht tief im Kern', needs: { stone: 8, door: 3, treasure: 1, lamp: 2 }, reward: '💰💰💰💰' },
+    { npc: 'neinhorn', title: 'Regen-Haiku', desc: 'Tropfen auf dem Dach / Regenbogen küsst den See / Stille nach dem Sturm', needs: { rain: 2, rainbow: 1, water: 4, roof: 3 }, reward: '🌈🌈🌈🌈🌈' },
 ];
