@@ -65,16 +65,16 @@ interface GridStats {
     questsDone: number;
     blueprintsDone: number;
     recipesFound: number;
-    materialsFound: number;
-    wuXingUsed: number;
-    recipesUsed: number;
-    florianeWishes: number;
-    bugsReported: number;
-    npcsSpokenTo: number;
-    npcCount: number;
-    darkModeUsed: boolean;
-    idleMinutes: number;
-    sessionPlaced: number;
+    materialsFound?: number;
+    wuXingUsed?: number;
+    recipesUsed?: number;
+    florianeWishes?: number;
+    bugsReported?: number;
+    npcsSpokenTo?: number;
+    npcCount?: number;
+    darkModeUsed?: boolean;
+    idleMinutes?: number;
+    sessionPlaced?: number;
 }
 
 // --- Quests ---
@@ -199,6 +199,20 @@ interface ElizaInstance {
     reset(): void;
 }
 
+interface InselEffects {
+    updateDayNight(): void;
+    getDayNightOverlay(): string | null;
+    getDayTime(): number;
+    drawWeather(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement): void;
+    updateWeather(): void;
+    addPlaceAnimation(r: number, c: number): void;
+    drawAnimations(ctx: CanvasRenderingContext2D, CELL_SIZE: number, WATER_BORDER: number): void;
+    spawnCraftSparks(): void;
+    setWeather(w: string): void;
+    getWeather(): string;
+    resetWeatherTimer(): void;
+}
+
 interface InselEliza {
     create(script: ElizaScript): ElizaInstance;
     getEliza?(charId: string): ElizaInstance | null;
@@ -283,6 +297,7 @@ interface Window {
     INSEL_SCREENSAVER: InselScreensaver;
     INSEL_NATURE: InselNature;
     INSEL_ELIZA: InselEliza;
+    INSEL_EFFECTS: InselEffects;
     INSEL_SCROLLS: Scroll[];
     INSEL_CONFIG: InselConfig;
 
