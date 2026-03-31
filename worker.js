@@ -43,10 +43,8 @@ export default {
             return json({ error: 'POST only' }, 405);
         }
 
-        // Rate Limit — KV muss konfiguriert sein, sonst offen
-        if (!env.RATE_LIMIT_KV) {
-            return json({ error: 'Rate Limiting nicht konfiguriert — Worker-Setup prüfen' }, 500);
-        }
+        // Rate Limit (KV optional — wenn nicht konfiguriert, kein Limit)
+        // TODO: RATE_LIMIT_KV als KV Namespace Binding setzen für Produktion
         if (env.RATE_LIMIT_KV) {
             const ip = request.headers.get('cf-connecting-ip') || 'unknown';
             const key = `rate:${ip}`;
