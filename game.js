@@ -1599,12 +1599,9 @@
         nameGroup.style.display = 'none';
     }
 
-    // Wiederkehrende Spieler: Intro überspringen → direkt ins Spiel
-    if (localStorage.getItem('insel-projekte') && playerName && introOverlay) {
-        introOverlay.style.display = 'none';
-        if (window.startSessionClock) window.startSessionClock();
-        startTutorialPulse();
-    }
+    // Wiederkehrende Spieler: Intro wird NACH Canvas-Init ausgeblendet (siehe unten)
+    // Hier nur merken, damit kein Flash of unready content auf dem iPhone entsteht
+    const isReturningPlayer = !!(localStorage.getItem('insel-projekte') && playerName);
     const statsContent = document.getElementById('stats-content');
     const projectNameInput = document.getElementById('project-name');
     const loadDialog = document.getElementById('load-dialog');
@@ -3852,6 +3849,16 @@
     // var (nicht let) damit requestRedraw() via hoisting schon in resizeCanvas() nutzbar ist
     needsRedraw = true;
     setInterval(draw, 100);
+
+    // Wiederkehrende Spieler: Intro JETZT ausblenden — Canvas ist bereit
+    if (isReturningPlayer && introOverlay) {
+        // Ersten Frame zeichnen bevor Overlay weg ist
+        draw();
+        introOverlay.style.display = 'none';
+        if (window.startSessionClock) window.startSessionClock();
+        startTutorialPulse();
+    }
+
     updateAchievementDisplay();
     updateQuestDisplay();
     updateInventoryDisplay();
