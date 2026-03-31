@@ -1211,10 +1211,11 @@
     function showCraftResult(emoji, name, count) {
         const preview = document.getElementById('craft-result');
         if (!preview) return;
-        preview.innerHTML = `<span class="craft-emoji">${emoji}</span><span class="craft-result-name">${count > 1 ? count + 'x ' : ''}${escapeHtml(name)}</span>`;
+        preview.innerHTML = `<span class="craft-emoji">${emoji}</span><span class="craft-result-name">${count > 1 ? count + 'x ' : ''}${escapeHtml(name)}</span><span class="craft-done-label">✅ Fertig!</span>`;
         preview.title = name;
+        preview.classList.remove('has-recipe');
         preview.classList.add('craft-success');
-        setTimeout(() => preview.classList.remove('craft-success'), 800);
+        setTimeout(() => preview.classList.remove('craft-success'), 2000);
     }
 
     async function doCraft() {
@@ -1335,11 +1336,13 @@
         if (preview) {
             if (recipe) {
                 const info = MATERIALS[recipe.result];
-                preview.innerHTML = `<span class="craft-emoji">${info.emoji}</span><span class="craft-result-count">${recipe.resultCount > 1 ? recipe.resultCount + 'x' : ''}</span>`;
+                preview.innerHTML = `<span class="craft-emoji">${info.emoji}</span><span class="craft-result-count">${recipe.resultCount > 1 ? recipe.resultCount + 'x' : ''}</span><span class="craft-preview-label">⚒️ drücken!</span>`;
                 preview.title = recipe.name;
+                preview.classList.add('has-recipe');
             } else {
                 preview.innerHTML = '<span class="craft-question">?</span>';
                 preview.title = '';
+                preview.classList.remove('has-recipe');
             }
         }
 

@@ -1624,8 +1624,33 @@ body.code-view-active #chat-settings-btn {
     line-height: 1.1;
 }
 
+.craft-preview-label {
+    font-size: 9px;
+    font-weight: bold;
+    color: #E67E22;
+    animation: pulse-hint 1s ease infinite;
+}
+
+.craft-done-label {
+    font-size: 10px;
+    font-weight: bold;
+    color: #27AE60;
+}
+
+.craft-result-box.has-recipe {
+    border-color: #E67E22;
+    background: linear-gradient(135deg, #FEF9E7, #FDEBD0);
+}
+
 .craft-success {
+    border-color: #27AE60 !important;
+    background: linear-gradient(135deg, #EAFAF1, #D5F5E3) !important;
     animation: craft-bounce 0.5s ease;
+}
+
+@keyframes pulse-hint {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
 }
 
 @keyframes craft-bounce {
