@@ -637,6 +637,32 @@
             '🦈 Makro: *ganz leise aus dem Wasser* "...ich fand es auch schön."',
             '— Standing Ovation auf der Insel Java. Grüße ans ZKM Karlsruhe. —',
         ],
+        podcast_lanz: [
+            '— 🎙️ INSEL-TALK: "Wer baut die bessere Insel?" — Bei Lanz & Precht —',
+            '🎙️ Lanz: "Guten Abend. Heute bei mir: ein Kanzler, ein Ex-Präsident, ein Milliardär, und mein Freund Richard hat auch was zu sagen."',
+            '🎙️ Lanz: "Herr Merz, Sie haben eine Insel gebaut. Erzählen Sie."',
+            '🏛️ Merz: "Also, Markus—"',
+            '🎙️ Lanz: "Richard."',
+            '🏛️ Merz: "—Richard, ja. Also. Ich habe eine sehr ordentliche Insel gebaut. Steine. Gerade Wege. Ein Zaun. Man muss ja wissen wo die Grenze ist."',
+            '📚 Precht: "Aber Friedrich, ist die Grenze nicht genau das Problem? Heidegger würde sagen: der Zaun definiert nicht was drinnen ist, sondern was draußen bleibt."',
+            '🏛️ Merz: "Richard, ich habe einen Zaun gebaut, keinen Heidegger."',
+            '🇺🇸 Trump: "Can I say something? I built the best island. Everyone says so. Tremendous. Gold sand, gold trees, gold water—"',
+            '🎙️ Lanz: "Gold... Wasser?"',
+            '🇺🇸 Trump: "—the most beautiful golden water. And I built a wall. A beautiful wall. And the NPCs? They paid for it."',
+            '🚀 Musk: "Actually, islands are inefficient. I\'m building a platform. On Mars. Sand is a legacy material."',
+            '📚 Precht: "Herr Musk, Sie wollen den Sandkasten überspringen und direkt auf den Mars. Aber ist der Sandkasten nicht der Ort wo Kinder verhandeln lernen?"',
+            '🚀 Musk: "Sharing is a scaling problem. I\'ll open-source the island."',
+            '🏛️ Merz: "Also ich muss hier mal ganz klar sagen—"',
+            '🎙️ Lanz: "Moment. Herr Trump, Mephisto sagt er hat keinen Cent für die Mauer gesehen."',
+            '🇺🇸 Trump: "Mephisto is a fantastic guy. We had the best deal. I can\'t tell you what he gave me, but it was big. Very big."',
+            '🚀 Musk: "I offered Mephisto a mass-produced Seelen-Laterne at 60% lower cost. He blocked me on the Schwarzmarkt."',
+            '📚 Precht: "Genau hier das Paradox. Der Schwarzmarkt ist ehrlicher als der offizielle. Weil er zugibt dass alles seinen Preis hat. Im Grunde Faust."',
+            '😈 Mephisto: *aus dem Publikum* "Hehehehe... Endlich jemand der es versteht."',
+            '🎙️ Lanz: "Wir sind leider am Ende unserer Zeit."',
+            '🏛️ Merz: "Ich war noch gar nicht—"',
+            '🎙️ Lanz: "Nächste Woche: Mephisto selbst. Er bringt Schatten-Kristalle mit."',
+            '— Applaus. Trump tweetet. Musk kauft den Applaus. Merz macht eine Pressemitteilung. Precht zitiert Schopenhauer. —',
+        ],
     };
 
     let playedHoerspiele = JSON.parse(localStorage.getItem('insel-hoerspiele') || '[]');
@@ -710,6 +736,8 @@
         else if (stats.total === 100 && !playedHoerspiele.includes('hundredBlocks')) key = 'hundredBlocks';
         else if (stats.percent === 50 && !playedHoerspiele.includes('halfIsland')) key = 'halfIsland';
         else if (stats.percent >= 100 && !playedHoerspiele.includes('fullIsland')) key = 'fullIsland';
+        // Podcast-Easter-Egg: bei 25 Blöcken UND Mephisto freigeschaltet
+        if (!key && stats.total >= 25 && !playedHoerspiele.includes('podcast_lanz') && window.INSEL_CHARACTERS && window.INSEL_CHARACTERS.mephisto) key = 'podcast_lanz';
 
         if (!key) return;
 
