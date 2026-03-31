@@ -51,6 +51,39 @@
 
 ---
 
+## Sprint Retrospective — 2026-03-31 (Nacht, nach Review)
+
+### Was lief gut?
+
+- **Alle 8 Items Done.** Sprint Goal vollständig erreicht, keine Nachläufer.
+- **Mephisto funktioniert.** 10. NPC, Deal-Mechanik, Browning-Zitat — Persönlichkeit ohne Overengineering.
+- **Gemini Voice läuft.** 5 Stimmen (Charon/Puck/Kore/Aoede/Fenrir) live. Kein Vendor-Lock-In durch Worker-Abstraktion.
+- **KLONK auf Minecraft-Niveau.** 3 Oszillatoren, Sub-Bass. Oscar hört den Unterschied.
+- **Lummerland als Easter Egg.** `?lummerland` funktioniert. Kein Feature-Request, kein PR-Drama — einfach gebaut.
+
+### Was lief schlecht?
+
+- **8 Items in einem Sprint.** Dreifach über dem Maximum (3). Wird nicht wiederholt.
+- **Smoke Test weiterhin blockiert.** Sandbox-Proxy verhindert externe Curls. Bekannt. Nicht gelöst.
+- **#28 Chat-Sidebar verschoben.** Layout-Umbau ohne klare Spec. Verschiebt sich weiter wenn kein konkretes Design.
+- **Worker-Discovery-Endpoint leer.** Nicht klar ob Sandbox-Block oder echter Defekt — kein Test möglich.
+
+### Was verbessern wir?
+
+1. **Max 3 Items pro Sprint — hart.** Auch wenn es verlockend ist: 3 und gut. Overflow → nächster Sprint.
+2. **Smoke Test in GitHub Actions auslagern** — nicht sessionabhängig (BACKLOG #86).
+3. **Vor jedem Sprint: eine Oscar-sichtbare Änderung** — Klang, Optik, oder neuer Charakter. Motivation bleibt hoch.
+
+### Sprint 23 — Empfehlung (Planning nächste Session)
+
+| Kandidat | Prio | Warum jetzt |
+|----------|------|-------------|
+| **#85 Genre-Tonsequenzen** | P3 | Oscar hört Musik wenn er baut. Höchster Spaß-Impact pro LOC. |
+| **#15 Tutorial ohne Text** | P2 | Kinder die nicht lesen können (Oscars jüngere Geschwister). |
+| **#11 game.js weiter aufteilen** | P1 | In Arbeit. Grid/Effects/Stories noch drin. Schuldenlast sinken lassen. |
+
+---
+
 # Sprint 21 — "Oscar zieht"
 
 **Sprint Goal:** Drag & Drop auf dem Canvas — Oscar zieht Materialien direkt, kein Klicken mehr.

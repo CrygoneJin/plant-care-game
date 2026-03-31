@@ -598,6 +598,27 @@ KINDERSICHERHEIT-Block von 40 auf 2 Zeilen. Persönlichkeit stärker UND billige
 
 ---
 
+## Session 2026-03-31c — Sprint 22 Retrospective
+
+### Fehler
+| Datum | Was | Lektion |
+|-------|-----|---------|
+| 2026-03-31 | Sprint 22 hatte 8 Items — dreifach über Maximum | Max 3 Items pro Sprint. Hart. Kein "ja aber diesmal ist es anders". |
+
+### Erfolge
+| Datum | Was |
+|-------|-----|
+| 2026-03-31 | Mephisto NPC live: 10. Charakter, Deal-Mechanik, Browning-Zitat, Seelenglut-Währung |
+| 2026-03-31 | Gemini Voice Chat: 5 Stimmen, Worker-Abstraktion, kein Vendor-Lock-In |
+| 2026-03-31 | KLONK auf Minecraft-Niveau: 3-Layer Sub-Bass — Oscar hört den Unterschied |
+
+### Learnings
+- **8-Item-Sprints sind technisch möglich aber pädagogisch falsch.** Rhythmus (1 Sprint = 1 Stunde = 3 Items) ist nicht Bürokratie, sondern Fokus.
+- **Smoke Tests gehören in CI, nicht in den Agent.** Proxy-Sandbox macht externe Curls unzuverlässig. BACKLOG #86 löst das.
+- **Easter Eggs bauen sich schnell.** Lummerland: eine Stunde, maximale Freude. Verhältnis merken.
+
+---
+
 ## Regeln für neue Einträge
 
 1. **Fehler**: Nur wenn es ein echtes Problem verursacht hat (nicht theoretisch)
