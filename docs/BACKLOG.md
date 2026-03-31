@@ -60,6 +60,9 @@
 | 88 | **Floriane die Wunschfee** — 3 Wünsche/Tag, Mitternacht-Reset, Feedback-Kanal (ex-PR #40) | Artist + Engineer | 🔲 Offen |
 | 89 | **Koop-Modus** — Papa+Kind auf einer Insel, Phase 1 lokal, Phase 2 WebRTC (ex-PR #45, braucht Spielfigur) | Engineer | 🔲 Offen |
 | 90 | **Browser-LLM** — SmolLM2 lokal im Browser, Progressive Loading ELIZA→LLM (ex-PR #45, Qualitätstest nötig) | Scientist + Engineer | 🔲 Feynman muss testen |
+| 91 | **Lokales LLM auf Mac Mini** — Ollama/LM Studio als Test-Instanz. Feynman + Torvalds Spielwiese. Ogilvy + Chomsky vergleichen Qualität vs Haiku. | Engineer + Scientist | 🔲 Offen |
+| 92 | **Requesty Key rotieren** — Alter Key im Git-Verlauf. Neuen erstellen, alten revoken. | Engineer | 🔲 Human Input nötig |
+| 88 | ~~Floriane die Wunschfee~~ | | ✅ Done (dd9569e1) |
 
 ---
 
