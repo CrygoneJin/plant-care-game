@@ -567,6 +567,29 @@ KINDERSICHERHEIT-Block von 40 auf 2 Zeilen. Persönlichkeit stärker UND billige
 
 ---
 
+## Session 2026-03-31b — Delegation + Zellteilung + Beirat
+
+### Fehler
+| Datum | Was | Lektion |
+|-------|-----|---------|
+| 2026-03-31 | Analytics-Commit auf falschem Branch (feat/docs-setup statt feat/analytics-extraction) gelandet | Immer `git branch` prüfen bevor man committet. Agent hat im Hintergrund Branch gewechselt. |
+| 2026-03-31 | Cherry-Pick für atomare PRs erzeugt 3x Merge-Konflikte in AGENTS.md | Atomar von Anfang an. Ein Feature = ein Branch = ein PR. Cherry-Pick ist Notfall, nicht Workflow. |
+
+### Erfolge
+| Datum | Was |
+|-------|-----|
+| 2026-03-31 | 8 Beirats-Personas (Dirac, Newton, Jung, Freud, Schiller, Goethe, Lessing, Fichte) als atomare PRs (#94, #95, #96) |
+| 2026-03-31 | Appelo Delegation-Level-Audit + docs/DELEGATION.md — 20 Entscheidungsbereiche, 7 Level |
+| 2026-03-31 | analytics.js extrahiert (Zellteilung #11 Phase 1) — game.js -162 LOC |
+| 2026-03-31 | docs/PROJECT.md + DESIGN.md + DECISIONS.md aufgesetzt (#80) |
+
+### Learnings
+- **Delegation Level 7 = Vertrauen**: 74% der Entscheidungen brauchen den User nicht. Ethik/Kinderschutz und Vision sind Level 1 — das bleibt.
+- **Zellteilung game.js ist schwerer als gedacht**: Analytics war sauber isoliert (nur localStorage). Alles andere (Wetter, NPC, Player) hängt am Canvas-Context und Grid-State. Braucht Event-Bus-Pattern für die nächste Phase.
+- **Bismarck interviewt besser als HR**: "Können Sie sich kurz fassen?" ist die einzige Frage die zählt.
+
+---
+
 ## Regeln für neue Einträge
 
 1. **Fehler**: Nur wenn es ein echtes Problem verursacht hat (nicht theoretisch)

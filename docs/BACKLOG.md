@@ -24,7 +24,7 @@
 | 8 | **Offline-Manifest** — Service Worker für Spielen ohne Internet | Engineer | ✅ Done (sw.js + manifest.json) |
 | 9 | **Mehr Quests** — 11 Templates sind zu wenig, mindestens 20 | Artist + Leader | ✅ Done (45 Templates) |
 | 10 | **Favicon + Meta-Tags** — Torvalds: "10 Minuten, großer Unterschied" | Engineer | ✅ Done |
-| 11 | **Zellteilung game.js** — Sound, Quests, Effects, Stories, Analytics rausziehen | Engineer | 🔲 Offen (sound.js, quests.js, achievements.js, recipes.js, automerge.js ausgelagert; Grid-Logik noch drin) |
+| 11 | **Zellteilung game.js** — Sound, Quests, Effects, Stories, Analytics rausziehen | Engineer | 🔄 In Arbeit (analytics.js extrahiert PR #98; sound.js, quests.js, achievements.js, recipes.js, automerge.js bereits ausgelagert; Grid/Effects/Stories noch drin) |
 
 ## 🟢 P2 — Vor "100 User"-Phase
 
@@ -240,7 +240,7 @@ Idee: Die leere Insel (nur Wasser) wird in einer Sequenz erschaffen. Verschieden
 | 56 | **Bibliothek von Alexandria** — Gebäude auf der Insel (Stein+Bretter+Wissen), Schriftrollen statt Bücher, jede Rolle = Wiki-Game-Challenge ("Von Wasser zu Drache in X Schritten"). Timbuktu als zweite Bibliothek — wer beide baut verbindet zwei Wissenswelten. Papyrus vor Gutenberg. Wikipedia von damals. | P2 | alle |
 | 78 | **Tesla-Nutzertest auswerten** — 1h Video von Oscar im Tesla (Auto-Touchscreen). Datei >1GB, muss kleiner formatiert werden (komprimieren/schneiden), dann hier rein. Da ist Gold drin — tonnenweise. Echte Nutzerdaten, echte Reaktionen, echter 8-Jähriger. | P0 | Scientist + Leader |
 | 79 | **Hau-den-Lukas Mini-Game zurückbringen** — Existierte als eigenständige HTML-Seite (hau-den-lukas.html, 441 Zeilen). Pump-Check-Game. Bei Main→Branch-Migration nicht mitgenommen. Code lag auf Main, muss neu integriert oder als separates Mini-Game verlinkt werden. | P3 | Engineer |
-| 80 | **docs/PROJECT.md + DESIGN.md + DECISIONS.md neu aufsetzen** — Bei Branch-Migration verloren gegangen. Inhalte teilweise in ARCHITECTURE.md, aber eigenständige Dateien fehlen. CLAUDE.md referenziert sie beim Session-Start. | P1 | Leader |
+| 80 | **docs/PROJECT.md + DESIGN.md + DECISIONS.md neu aufsetzen** — Bei Branch-Migration verloren gegangen. Inhalte teilweise in ARCHITECTURE.md, aber eigenständige Dateien fehlen. CLAUDE.md referenziert sie beim Session-Start. | P1 | Leader | ✅ Done (PR #97) |
 
 ---
 
