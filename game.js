@@ -477,23 +477,37 @@
     };
 
     // NPCs im Kreis um die Inselmitte verteilen
-    function getNpcPositions() {
+    // Positionen werden nach Grid-Init berechnet (siehe unten)
+    let npcPositions = {};
+
+    function initNpcPositions() {
         const cx = Math.floor(COLS / 2);
         const cy = Math.floor(ROWS / 2);
         const rx = Math.floor(COLS * 0.3);
         const ry = Math.floor(ROWS * 0.3);
         const ids = Object.keys(NPC_DEFS);
-        const positions = {};
+        npcPositions = {};
         ids.forEach((id, i) => {
             const angle = (i / ids.length) * Math.PI * 2 - Math.PI / 2;
-            const r = Math.min(ROWS - 1, Math.max(0, cy + Math.round(Math.sin(angle) * ry)));
-            const c = Math.min(COLS - 1, Math.max(0, cx + Math.round(Math.cos(angle) * rx)));
-            positions[id] = { r, c };
+            let r = Math.min(ROWS - 3, Math.max(2, cy + Math.round(Math.sin(angle) * ry)));
+            let c = Math.min(COLS - 3, Math.max(2, cx + Math.round(Math.cos(angle) * rx)));
+            // Freie Zelle suchen falls besetzt
+            if (grid[r] && grid[r][c]) {
+                let found = false;
+                for (let d = 1; d <= 3 && !found; d++) {
+                    for (const [dr, dc] of [[0,d],[0,-d],[d,0],[-d,0],[d,d],[-d,-d]]) {
+                        const nr = r + dr, nc = c + dc;
+                        if (nr >= 2 && nr < ROWS - 2 && nc >= 2 && nc < COLS - 2 && grid[nr] && !grid[nr][nc]) {
+                            r = nr; c = nc; found = true; break;
+                        }
+                    }
+                }
+            }
+            // Zelle für NPC freihalten (vorhandenes Material entfernen)
+            if (grid[r] && grid[r][c]) grid[r][c] = null;
+            npcPositions[id] = { r, c };
         });
-        return positions;
     }
-
-    const npcPositions = getNpcPositions();
 
     function getNpcAt(r, c) {
         for (const [id, pos] of Object.entries(npcPositions)) {
@@ -1953,6 +1967,14 @@
             const ny = (pos.r + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
             // Leichtes Wippen
             const bob = Math.sin(time * 2 + pos.r + pos.c) * 2;
+            // Hintergrund-Kreis damit NPCs sichtbar sind
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+            ctx.beginPath();
+            ctx.arc(nx, ny + bob, CELL_SIZE * 0.45, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
             // Emoji
             ctx.font = `${CELL_SIZE * 0.6}px serif`;
             ctx.textAlign = 'center';
@@ -4020,6 +4042,9 @@
         generateStarterIsland();
         setTimeout(() => showToast('🏝️ Deine Insel wartet... Bau los!', 3500), 2000);
     }
+
+    // NPCs auf freie Zellen platzieren (nach Grid-Init + Auto-Save-Restore)
+    initNpcPositions();
 
     // Dirty-flag statt rAF-Loop — CPU 20%→<5%
     // var (nicht let) damit requestRedraw() via hoisting schon in resizeCanvas() nutzbar ist

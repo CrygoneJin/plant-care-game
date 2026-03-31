@@ -37,6 +37,8 @@
 | 16 | **Premium-Themes** — 3 weitere Themes als optionaler Kauf | Designer | 🔲 Offen |
 | 17 | **Eltern-Dashboard** — Bernd zeigt Spielstatistiken für Eltern | Engineer | 🔲 Offen |
 | 18 | **Musik on demand** — Loisach Marci Stil, Hardstyle kinderkompatibel | Artist + Engineer | 🔲 Offen |
+| 81 | **Inventar-Töne** — Jedes Inventar-Item hat einen eigenen Ton beim Auswählen (Oscar O-Ton: "Inventar sind Töne") | Engineer | 🔲 Offen |
+| 82 | **Bau-Trommel** — Blöcke platzieren macht Percussion-Sounds, verschiedene Materialien = verschiedene Drums (Oscar O-Ton: "Blöcke platzieren ist Trommel") | Engineer | 🔲 Offen |
 
 ## 🔵 P3 — Vision / Irgendwann
 
