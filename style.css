@@ -912,14 +912,21 @@ header h1 {
         height: auto !important;
     }
 
-    /* Toast: oben statt unten, blockiert nicht das Baufeld */
+    /* Toast: schmaler Banner am oberen Rand — über Header, nie über Buttons/Canvas */
     #toast {
-        font-size: 12px;
-        padding: 6px 12px;
+        font-size: 11px;
+        padding: 4px 12px;
         bottom: auto;
-        top: 50px;
-        max-width: 80vw;
-        opacity: 0.85;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-width: 100vw;
+        transform: none;
+        border-radius: 0;
+        text-align: center;
+        opacity: 0.9;
+        z-index: 1100;
     }
 
     /* Intro: kleiner auf Handy */
