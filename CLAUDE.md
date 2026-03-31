@@ -16,6 +16,15 @@ Wenn du stockst oder eine Pause brauchst: **sag es**. Lieber
 30-Minuten-Fenster zwischen Kindern und Garten. Jede stille Minute
 ist eine verlorene Minute.
 
+## Git-Workflow
+
+- **Commit + Push selbstständig** nach jeder abgeschlossenen Arbeit. Nicht fragen.
+- **PR erstellen nach jedem Feature.** Kein Feature ohne PR.
+- Commit-Messages auf Deutsch oder Denglisch, kurz und präzise.
+- Branch-Name kommt vom Task/Issue. Kein Push auf main ohne PR.
+
+---
+
 ## Kein Wirtschaftspsychologie-Kindergarten
 
 Verboten:
