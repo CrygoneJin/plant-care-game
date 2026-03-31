@@ -818,52 +818,104 @@
     // Konsequenz-Check alle 8s (versetzt zum Tree-Growth-Check)
     setInterval(updateWorldConsequences, 8000);
 
-    // #19: Game of Life Screensaver — läuft auf leeren Zellen wenn Insel ruht
-    let conwayOverlay = null; // 2D Uint8Array, null = Screensaver inaktiv
+    // #19: Evolution-Screensaver — drei Terrain-Zonen, Kreaturen verabschieden sich
+    const CONWAY_WATER   = ['🐟','🐠','🐡','🦑','🪼','🐙','🦐','🐬','🐳'];
+    const CONWAY_BEACH   = ['🦀','🐚','🐸','🦎','🦭','🦞','🐊'];
+    const CONWAY_LAND    = ['🦋','🐝','🐛','🐇','🦔','🐿️','🌸','🍄','🦜','🦊'];
+    const CONWAY_MIGRANT = ['🐋','🦅','🐦‍⬛','🦢']; // erscheinen überall, kurz
+
+    let conwayOverlay = null; // 2D String-Array ('' = leer, sonst Emoji)
     let conwayInterval = null;
+    let conwayFading = false;
     let lastInteraction = Date.now();
-    const CONWAY_IDLE_MS = 30000; // 30s ohne Interaktion → Screensaver startet
+    const CONWAY_IDLE_MS = 30000;
+
+    function conwayZone(r, c) {
+        if (r < 2 || r >= ROWS - 2 || c < 2 || c >= COLS - 2) return 'water';
+        if (r === 2 || r === ROWS - 3 || c === 2 || c === COLS - 3) return 'beach';
+        return 'land';
+    }
+
+    function conwayCreature(r, c) {
+        if (Math.random() < 0.04) return CONWAY_MIGRANT[Math.floor(Math.random() * CONWAY_MIGRANT.length)];
+        const zone = conwayZone(r, c);
+        const pool = zone === 'water' ? CONWAY_WATER : zone === 'beach' ? CONWAY_BEACH : CONWAY_LAND;
+        return pool[Math.floor(Math.random() * pool.length)];
+    }
 
     function startConway() {
         if (conwayInterval) return;
-        const BEACH = 2;
-        conwayOverlay = Array.from({ length: ROWS }, () => new Uint8Array(COLS));
-        for (let r = BEACH; r < ROWS - BEACH; r++)
-            for (let c = BEACH; c < COLS - BEACH; c++)
-                if (grid[r][c] === null) conwayOverlay[r][c] = Math.random() < 0.2 ? 1 : 0;
-        conwayInterval = setInterval(() => {
-            const next = Array.from({ length: ROWS }, () => new Uint8Array(COLS));
-            const BEACH = 2;
-            for (let r = BEACH; r < ROWS - BEACH; r++) {
-                for (let c = BEACH; c < COLS - BEACH; c++) {
-                    if (grid[r][c] !== null) continue;
-                    let alive = 0;
-                    for (let dr = -1; dr <= 1; dr++)
-                        for (let dc = -1; dc <= 1; dc++)
-                            if ((dr || dc) && conwayOverlay[r + dr]?.[c + dc]) alive++;
-                    const cur = conwayOverlay[r][c];
-                    next[r][c] = cur ? (alive === 2 || alive === 3 ? 1 : 0) : (alive === 3 ? 1 : 0);
+        conwayFading = false;
+        conwayOverlay = Array.from({ length: ROWS }, () => Array(COLS).fill(''));
+        for (let r = 0; r < ROWS; r++)
+            for (let c = 0; c < COLS; c++)
+                if (grid[r][c] === null && Math.random() < 0.18)
+                    conwayOverlay[r][c] = conwayCreature(r, c);
+        conwayInterval = setInterval(conwayStep, 650);
+    }
+
+    function conwayStep() {
+        if (!conwayOverlay || conwayFading) return;
+        const next = Array.from({ length: ROWS }, () => Array(COLS).fill(''));
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                if (grid[r][c] !== null) continue; // Materialien unberührt
+                let alive = 0;
+                for (let dr = -1; dr <= 1; dr++)
+                    for (let dc = -1; dc <= 1; dc++)
+                        if ((dr || dc) && conwayOverlay[r + dr]?.[c + dc]) alive++;
+                const cur = conwayOverlay[r][c] !== '';
+                // Migrants sterben öfter (Besuch, kein Zuhause)
+                const isMigrant = cur && CONWAY_MIGRANT.includes(conwayOverlay[r][c]);
+                if (cur) {
+                    next[r][c] = (alive >= 2 && alive <= 4 && !(isMigrant && Math.random() < 0.35))
+                        ? conwayOverlay[r][c] : '';
+                } else {
+                    // Geburt: 3 Nachbarn ODER seltene Spontangeburt (Migration)
+                    if (alive === 3 || (alive >= 1 && Math.random() < 0.008))
+                        next[r][c] = conwayCreature(r, c);
                 }
             }
-            conwayOverlay = next;
+        }
+        conwayOverlay = next;
+        requestRedraw();
+    }
+
+    function fadeConway() {
+        // Kreaturen verschwinden langsam wenn jemand zurückkommt
+        if (!conwayOverlay) return;
+        conwayFading = true;
+        clearInterval(conwayInterval);
+        conwayInterval = null;
+        const fade = setInterval(() => {
+            if (!conwayOverlay) { clearInterval(fade); return; }
+            let left = 0;
+            for (let r = 0; r < ROWS; r++)
+                for (let c = 0; c < COLS; c++)
+                    if (conwayOverlay[r][c] && Math.random() < 0.12) conwayOverlay[r][c] = '';
+            for (let r = 0; r < ROWS; r++)
+                for (let c = 0; c < COLS; c++)
+                    if (conwayOverlay[r][c]) left++;
             requestRedraw();
-        }, 500);
+            if (left === 0) { clearInterval(fade); conwayOverlay = null; conwayFading = false; requestRedraw(); }
+        }, 120);
     }
 
     function stopConway() {
         clearInterval(conwayInterval);
         conwayInterval = null;
         conwayOverlay = null;
+        conwayFading = false;
         requestRedraw();
     }
 
     function resetIdleTimer() {
         lastInteraction = Date.now();
-        if (conwayInterval) stopConway();
+        if (conwayOverlay) fadeConway(); // sanfter Abschied statt sofort weg
     }
 
     setInterval(() => {
-        if (!conwayInterval && Date.now() - lastInteraction > CONWAY_IDLE_MS) startConway();
+        if (!conwayInterval && !conwayFading && Date.now() - lastInteraction > CONWAY_IDLE_MS) startConway();
     }, 5000);
 
     // ============================================================
@@ -1721,18 +1773,17 @@
         // Blueprint-Overlay zeichnen (Ghost-Preview)
         drawBlueprintOverlay();
 
-        // Conway Screensaver Overlay
+        // Evolution Screensaver — Kreaturen als Emojis auf Terrain-Zonen
         if (conwayOverlay) {
-            ctx.fillStyle = 'rgba(80, 200, 120, 0.55)';
+            ctx.font = `${Math.round(CELL_SIZE * 0.62)}px serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
             for (let r = 0; r < ROWS; r++) {
                 for (let c = 0; c < COLS; c++) {
-                    if (conwayOverlay[r][c] && grid[r][c] === null) {
-                        const x = (c + WATER_BORDER) * CELL_SIZE;
-                        const y = (r + WATER_BORDER) * CELL_SIZE;
-                        ctx.beginPath();
-                        ctx.arc(x + CELL_SIZE / 2, y + CELL_SIZE / 2, CELL_SIZE * 0.3, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
+                    if (!conwayOverlay[r][c]) continue;
+                    const x = (c + WATER_BORDER) * CELL_SIZE;
+                    const y = (r + WATER_BORDER) * CELL_SIZE;
+                    ctx.fillText(conwayOverlay[r][c], x + CELL_SIZE / 2, y + CELL_SIZE / 2 + 1);
                 }
             }
         }
