@@ -2020,3 +2020,21 @@ body.code-view-active #chat-settings-btn {
         scroll-behavior: auto !important;
     }
 }
+
+/* === DARK MODE — Apple HIG #8: Respect prefers-color-scheme === */
+/* Falls der User kein Theme manuell gewählt hat, folgt das Spiel dem OS-Setting */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme-manual]) {
+        --bg: #1a1a2e;
+        --header-bg: linear-gradient(135deg, #16213e, #0f3460);
+        --toolbar-bg: linear-gradient(135deg, #533483, #3d1d72);
+        --palette-bg: linear-gradient(180deg, #1a1a2e, #16213e);
+        --stats-bg: linear-gradient(180deg, #0f3460, #1a1a2e);
+        --canvas-bg: #16213e;
+        --accent: #e94560;
+        --accent-light: #2d1f3d;
+        --text: #eee;
+        --text-light: #e0e0e0;
+        --btn-bg: #2d1f3d;
+    }
+}
