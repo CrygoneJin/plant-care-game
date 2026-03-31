@@ -1,21 +1,126 @@
-name: Deploy to Production
+name: Check & Deploy
 
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  deploy:
+  check:
+    name: Check
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      deployments: write
     steps:
       - uses: actions/checkout@v4
-
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy . --project-name=schatzinsel --branch=main
+          fetch-depth: 0
+
+      - name: JS Syntax-Check
+        run: |
+          FAIL=0
+          for f in *.js; do
+            [ "$f" = "worker.js" ] && continue  # Cloudflare Worker — eigener Runtime
+            if ! node -c "$f" 2>&1; then
+              FAIL=1
+            fi
+          done
+          exit $FAIL
+
+      - name: Smoke-Test — Seite lädt ohne Fehler
+        run: |
+          npm i -g puppeteer@latest 2>/dev/null || true
+          npx --yes puppeteer browsers install chrome 2>/dev/null || true
+          node --input-type=module <<'SMOKE'
+          import puppeteer from 'puppeteer';
+          import { readFileSync } from 'fs';
+          import { resolve } from 'path';
+          import { pathToFileURL } from 'url';
+
+          const errors = [];
+          const browser = await puppeteer.launch({
+            headless: 'new',
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+          });
+          const page = await browser.newPage();
+
+          page.on('pageerror', err => {
+            // config.js ist optional — der onerror-Handler im HTML fängt das ab
+            if (!err.message.includes('config.js')) {
+              errors.push(err.message);
+            }
+          });
+          page.on('console', msg => {
+            if (msg.type() === 'error' && !msg.text().includes('config.js')) {
+              errors.push('console.error: ' + msg.text());
+            }
+          });
+
+          const url = pathToFileURL(resolve('index.html')).href;
+          await page.goto(url, { waitUntil: 'load', timeout: 15000 });
+
+          // Warte kurz damit alle DOMContentLoaded-Handler laufen
+          await new Promise(r => setTimeout(r, 2000));
+
+          // Prüfe ob Canvas existiert und game.js geladen hat
+          const canvasExists = await page.$('#game-canvas');
+          if (!canvasExists) errors.push('Canvas #game-canvas nicht gefunden');
+
+          await browser.close();
+
+          if (errors.length > 0) {
+            console.error('=== SMOKE-TEST FEHLGESCHLAGEN ===');
+            errors.forEach(e => console.error('  ✗', e));
+            process.exit(1);
+          }
+          console.log('=== Smoke-Test bestanden — Seite lädt sauber ===');
+          SMOKE
+
+  deploy:
+    name: Deploy
+    needs: check
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Version berechnen und stempeln
+        id: version
+        run: |
+          # SemVer aus Tags oder Fallback
+          if git describe --tags --match 'v*' HEAD 2>/dev/null; then
+            VERSION=$(git describe --tags --match 'v*' HEAD)
+          else
+            # Kein Tag: v0.COMMIT_COUNT.SHORT_SHA
+            COUNT=$(git rev-list --count HEAD)
+            SHA=$(git rev-parse --short HEAD)
+            VERSION="v0.${COUNT}.${SHA}"
+          fi
+          DATE=$(date -u +%Y-%m-%d)
+          STAMP="${VERSION} (${DATE})"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "stamp=${STAMP}" >> "$GITHUB_OUTPUT"
+          echo "Version: ${STAMP}"
+
+          # Stempel in index.html einsetzen
+          sed -i "s|<!--VERSION-->.*<!--/VERSION-->|<!--VERSION-->${STAMP}<!--/VERSION-->|g" index.html
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4
