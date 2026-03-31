@@ -3986,17 +3986,52 @@
         ctx.textBaseline = 'top';
         ctx.fillText('</> CODE-VIEW: grid[r][c]', 10, 10);
 
-        // MMX Burn-Adresse — Nerd Easter Egg
+        // === MMX Burn Panel — Nerd Easter Egg ===
         // "Proof of Work. Tokens rein, niemand raus. Pures Statement."
-        const mmxY = totalRows * CELL_SIZE - 30;
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-        ctx.fillRect(5, mmxY, Math.min(420, totalCols * CELL_SIZE - 10), 24);
-        ctx.fillStyle = '#FF6B00'; // MMX Orange
+        const mmxAddr = window.INSEL_MMX_BURN || 'mmx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq5tuzzn';
+        const mmxBal = window._mmxBurnBalance || '?';
+        const panelH = 44;
+        const panelW = Math.min(460, totalCols * CELL_SIZE - 10);
+        const mmxY = totalRows * CELL_SIZE - panelH - 5;
+
+        // Panel-Hintergrund
+        ctx.fillStyle = 'rgba(15, 15, 15, 0.88)';
+        ctx.fillRect(5, mmxY, panelW, panelH);
+        ctx.strokeStyle = '#FF6B00';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(5, mmxY, panelW, panelH);
+
+        // Zeile 1: Burn-Adresse
+        ctx.fillStyle = '#FF6B00';
         ctx.font = 'bold 10px monospace';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'top';
-        ctx.fillText('🔥 MMX Burn: mmx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq5tuzzn  ⛏️ mmx.network', 10, mmxY + 5);
+        ctx.fillText('🔥 BURN ' + mmxAddr.slice(0, 12) + '...' + mmxAddr.slice(-6), 10, mmxY + 5);
+
+        // Zeile 2: Balance + Link
+        ctx.fillStyle = '#888';
+        ctx.font = '9px monospace';
+        ctx.fillText('Balance: ' + mmxBal + ' MMX  |  mmx.network  |  Proof of Work. Tokens rein, niemand raus.', 10, mmxY + 22);
     }
+
+    // MMX Burn-Balance alle 60s abfragen (öffentliche API, kein Auth nötig)
+    // Account-basiert, REST: /wapi/address?id=mmx1...
+    (function fetchMmxBalance() {
+        const addr = window.INSEL_MMX_BURN || 'mmx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq5tuzzn';
+        const apiUrl = 'https://api.mmxplorer.com/wapi/address?id=' + addr;
+        function poll() {
+            fetch(apiUrl).then(r => r.ok ? r.json() : null).then(data => {
+                if (data && data.balances) {
+                    const mmxBal = data.balances['MMX'] || data.balance || 0;
+                    window._mmxBurnBalance = (mmxBal / 10000).toFixed(4);
+                } else {
+                    window._mmxBurnBalance = '0.0000';
+                }
+            }).catch(() => { window._mmxBurnBalance = '—'; });
+        }
+        poll();
+        setInterval(poll, 60000);
+    })();
 
     // Monkey-patch requestAnimationFrame callback to add overlay
     const origRAF = window.requestAnimationFrame;
