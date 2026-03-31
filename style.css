@@ -1356,8 +1356,41 @@ body.code-view-active #chat-settings-btn {
         left: auto;
         width: 92vw;
         max-width: 340px;
-        height: calc(100vh - 48px);
+        height: calc(100dvh - 48px);
+        max-height: 70vh;
         border-radius: 16px 0 0 16px;
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    #chat-messages {
+        max-height: calc(70vh - 140px);
+    }
+
+    #chat-input-area {
+        position: sticky;
+        bottom: 0;
+        background: white;
+    }
+}
+
+/* Chat auf sehr kleinen Screens (iPhone SE portrait) */
+@media (max-width: 399px) {
+    #chat-panel {
+        width: 100vw;
+        max-width: none;
+        border-radius: 0;
+    }
+
+    .chat-msg {
+        font-size: 13px;
+    }
+
+    #chat-input {
+        font-size: 13px;
+    }
+
+    #chat-character {
+        font-size: 13px;
     }
 }
 
