@@ -159,8 +159,20 @@
         );
     }
 
+    const MAX_ACTIVE_QUESTS = 2; // #47: max 2 gleichzeitig — mehr = zu wenig Fokus
+
     function acceptQuest(quest) {
-        activeQuests.push({ ...quest, accepted: Date.now() });
+        if (activeQuests.length >= MAX_ACTIVE_QUESTS) {
+            showToast(`📜 Erst die laufenden ${MAX_ACTIVE_QUESTS} Quests abschließen!`);
+            return;
+        }
+        // #47: Baseline zum Annehme-Zeitpunkt speichern — verhindert Sofort-Abschluss
+        const baseline = {};
+        const currentStats = getGridStats();
+        for (const mat of Object.keys(quest.needs)) {
+            baseline[mat] = currentStats.counts[mat] || 0;
+        }
+        activeQuests.push({ ...quest, accepted: Date.now(), baseline });
         localStorage.setItem('insel-quests', JSON.stringify(activeQuests));
         showToast(`📜 Quest: ${quest.title}`);
         updateQuestDisplay();
@@ -170,9 +182,12 @@
         if (!stats) stats = getGridStats();
         let completed = [];
         activeQuests = activeQuests.filter(quest => {
-            const done = Object.entries(quest.needs).every(([mat, count]) =>
-                (stats.counts[mat] || 0) >= count
-            );
+            const baseline = quest.baseline || {};
+            const done = Object.entries(quest.needs).every(([mat, count]) => {
+                const base = baseline[mat] || 0;
+                const current = stats.counts[mat] || 0;
+                return (current - base) >= count;
+            });
             if (done) {
                 completed.push(quest);
                 completedQuests.push(quest.title);
@@ -227,8 +242,11 @@
         }
         const stats = getGridStats();
         questPanel.innerHTML = activeQuests.map(q => {
+            const baseline = q.baseline || {};
             const items = Object.entries(q.needs).map(([mat, need]) => {
-                const have = stats.counts[mat] || 0;
+                const base = baseline[mat] || 0;
+                const current = stats.counts[mat] || 0;
+                const have = Math.max(0, current - base); // nur was seit Quest-Annahme gebaut
                 const done = have >= need;
                 const m = MATERIALS[mat];
                 return `<span class="${done ? 'quest-done' : 'quest-todo'}">${m ? m.emoji : mat} ${have}/${need}</span>`;
@@ -453,7 +471,7 @@
         elefant:   { emoji: '🐘', prefix: 'Elefant:', ticks: ['Törööö!', 'Hmm, ich möchte sicherstellen...'], style: 'careful' },
         neinhorn:  { emoji: '🦄', prefix: 'Neinhorn:', ticks: ['NEIN!', '...ok,', 'Mon Dieu!'], style: 'nein' },
         krabs:     { emoji: '🦀', prefix: 'Krabs:', ticks: ['💰', 'Taler!', 'Geld!'], style: 'money' },
-        tommy:     { emoji: '🎬', prefix: 'Tommy:', ticks: ['Klick-klack!', 'JA!', 'CUT!'], style: 'chaos' },
+        tommy:     { emoji: '🦞', prefix: 'Tommy:', ticks: ['Klick-klack!', 'JA!', 'Noch ein Boot!'], style: 'chaos' },
         bernd:     { emoji: '🍞', prefix: 'Bernd:', ticks: ['*seufz*', 'Mist.', 'Toll.'], style: 'grumpy' },
         floriane:  { emoji: '🧚', prefix: 'Floriane:', ticks: ['✨', 'Oh!', 'Ein Wunsch!'], style: 'magic' },
     };
@@ -746,6 +764,36 @@
     // Alle 5s prüfen
     setInterval(updateTreeGrowth, 5000);
 
+    // #61: Konsequenz — Welt reagiert auf Aktionen
+    // Brunnen neben leerem Sand → Blume wächst (15% Chance/Tick pro Nachbar-Zelle)
+    function updateWorldConsequences() {
+        let changed = false;
+        const FLOWER_CHANCE = 0.15; // 15% Chance dass eine leere Zelle neben einem Brunnen Blume wird
+        const BEACH_EDGE = 2; // Strand-Rand nicht bepflanzen
+        for (let r = BEACH_EDGE + 1; r < ROWS - BEACH_EDGE - 1; r++) {
+            for (let c = BEACH_EDGE + 1; c < COLS - BEACH_EDGE - 1; c++) {
+                if (grid[r][c] !== null) continue; // Nur auf leerem Sand
+                const neighbors = [[r-1,c],[r+1,c],[r,c-1],[r,c+1]];
+                const hasFountain = neighbors.some(([nr, nc]) =>
+                    nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && grid[nr]?.[nc] === 'fountain'
+                );
+                if (hasFountain && Math.random() < FLOWER_CHANCE) {
+                    grid[r][c] = 'flower';
+                    addPlaceAnimation(r, c);
+                    unlockMaterial('flower');
+                    changed = true;
+                }
+            }
+        }
+        if (changed) {
+            updateStats();
+            showToast('🌺 Brunnen-Magie! Blumen wachsen...');
+        }
+    }
+
+    // Konsequenz-Check alle 8s (versetzt zum Tree-Growth-Check)
+    setInterval(updateWorldConsequences, 8000);
+
     // ============================================================
     // === INVENTAR ===
     // ============================================================
@@ -1015,6 +1063,8 @@
         unlockMaterial(matId);
         soundCraft();
         showCraftResult(result.emoji, result.name, 1);
+        // #64: Elektronen-Blitz — kurze Lichtfunken beim Craften (Amélie: kein Label, kein UI)
+        spawnCraftSparks();
 
         flashInventoryTab();
         if (result.fromCache === false && isNew) {
@@ -1947,7 +1997,8 @@
         if (!stats) stats = getGridStats();
         for (const quest of activeQuests) {
             if (!quest.needs[material]) continue;
-            const have = stats.counts[material] || 0;
+            const base = (quest.baseline || {})[material] || 0;
+            const have = Math.max(0, (stats.counts[material] || 0) - base);
             const need = quest.needs[material];
             if (have >= need) continue; // Schon erfüllt
             const percent = Math.round((have / need) * 100);
@@ -2229,6 +2280,27 @@
                 checkAutomerge(mr, mc);
             }
         }, 500);
+    }
+
+    // #64: Elektronen = Crafting-Blitz — Lichtfunken beim LLM-Craft
+    // Kein UI, kein Label. Amélie. Ladungsaustausch sichtbar machen.
+    function spawnCraftSparks() {
+        const wrapper = document.getElementById('canvas-wrapper');
+        const craftDialog = document.getElementById('craft-dialog');
+        const target = craftDialog || wrapper;
+        if (!target) return;
+        const rect = target.getBoundingClientRect();
+        for (let i = 0; i < 8; i++) {
+            setTimeout(() => {
+                const spark = document.createElement('div');
+                spark.className = 'merge-spark craft-spark';
+                spark.style.left = (Math.random() * rect.width - 20) + 'px';
+                spark.style.top  = (Math.random() * rect.height - 20) + 'px';
+                target.style.position = 'relative';
+                target.appendChild(spark);
+                setTimeout(() => spark.remove(), 800);
+            }, i * 80);
+        }
     }
 
     // ============================================================
@@ -2824,6 +2896,71 @@
         });
     }
 
+    // --- #22: Projekt-Sharing via URL (Base64-encoded Grid) ---
+    function encodeGridToURL() {
+        const cells = [];
+        const matKeys = Object.keys(MATERIALS);
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                if (grid[r][c]) {
+                    const idx = matKeys.indexOf(grid[r][c]);
+                    cells.push([r, c, idx >= 0 ? idx : grid[r][c]]);
+                }
+            }
+        }
+        const payload = { v: 1, m: matKeys, g: cells };
+        return btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+    }
+
+    function decodeGridFromURL(encoded) {
+        try {
+            const payload = JSON.parse(decodeURIComponent(escape(atob(encoded))));
+            if (!payload.v || !payload.g) return false;
+            initGrid();
+            for (const [r, c, mat] of payload.g) {
+                if (r >= 0 && r < ROWS && c >= 0 && c < COLS) {
+                    const material = typeof mat === 'number' ? payload.m[mat] : mat;
+                    if (material && MATERIALS[material]) grid[r][c] = material;
+                }
+            }
+            requestRedraw();
+            requestStatsUpdate();
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    // Share-Button
+    const shareBtn = document.getElementById('share-btn');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', () => {
+            const encoded = encodeGridToURL();
+            const url = `${location.origin}${location.pathname}?insel=${encoded}`;
+            navigator.clipboard.writeText(url)
+                .then(() => showToast('🔗 Link kopiert! Schick ihn deinen Freunden!', 3000))
+                .catch(() => {
+                    // Fallback: URL anzeigen
+                    prompt('Link kopieren:', url);
+                });
+            trackEvent('share', { blocks: getGridStats().total });
+        });
+    }
+
+    // URL-Sharing: beim Start ?insel= Parameter prüfen und Grid laden
+    const sharedGrid = new URLSearchParams(location.search).get('insel');
+    if (sharedGrid) {
+        const ok = decodeGridFromURL(sharedGrid);
+        if (ok && introOverlay) {
+            introOverlay.style.display = 'none';
+            if (window.startSessionClock) window.startSessionClock();
+            startTutorialPulse();
+            showToast('🏝️ Geteilte Insel geladen!', 3000);
+            // URL sauber halten — Parameter entfernen
+            history.replaceState({}, '', location.pathname);
+        }
+    }
+
     // Lade-Dialog Events
     document.getElementById('close-load-dialog').addEventListener('click', () => {
         loadDialog.classList.add('hidden');
@@ -3388,8 +3525,8 @@
     updateDiscoveryCounter();
 
     // Genesis-Replay Button
-    const replayBtn = document.getElementById('genesis-replay-btn');
-    if (replayBtn) replayBtn.addEventListener('click', playGenesisReplay);
+    const genesisReplayBtn = document.getElementById('genesis-replay-btn');
+    if (genesisReplayBtn) genesisReplayBtn.addEventListener('click', playGenesisReplay);
 
     // --- Sidebar Tabs ---
     document.querySelectorAll('.sidebar-tab').forEach(tab => {

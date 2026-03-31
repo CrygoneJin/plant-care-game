@@ -164,11 +164,14 @@ Regeln:
 - border: Etwas dunkler als color.
 - Kindgerecht. Kein Grusel, keine Gewalt, nichts Trauriges.
 - Kreativ aber logisch: Feuer+Wasser=Dampf, nicht Feuerwasser.
+- Wu Xing (五行): Holz=Wachstum/Expansion→grün, Feuer=Energie/Aktion→rot, Erde=Wandlung/Nährend→braun, Metall=Reife/Reinheit→silber, Wasser=Ruhe/Fließen→blau. Spiegle diese Energie im Ergebnis wenn eines der Elemente beteiligt ist.
 
 Beispiele:
 fire+water → {"emoji":"💨","name":"Dampf","color":"#D5D8DC","border":"#AEB6BF"}
 earth+fire → {"emoji":"🧱","name":"Stein","color":"#95A5A6","border":"#7F8C8D"}
-dragon+ice → {"emoji":"🐲","name":"Eisdrache","color":"#87CEEB","border":"#5DADE2"}`;
+dragon+ice → {"emoji":"🐲","name":"Eisdrache","color":"#87CEEB","border":"#5DADE2"}
+wood+water → {"emoji":"🌿","name":"Sprössling","color":"#27AE60","border":"#1E8449"}
+metal+fire → {"emoji":"⚗️","name":"Schmelze","color":"#E8DAEF","border":"#A569BD"}`;
 
     let result;
     try {

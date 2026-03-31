@@ -11,6 +11,7 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 
 | Datum | Was | Warum | Lektion |
 |-------|-----|-------|---------|
+| 2026-03-31 | `const replayBtn` doppelt deklariert → ganzes JS gecrasht → Intro-Screen blockiert | Zwei Sessions haben unabhängig denselben Variablennamen auf IIFE-top-level verwendet. Kein Lint, kein Check, niemand merkt es. | `node --check *.js` vor jedem Commit. Pre-commit Hook installiert. Ohne CI läuft alles durch. |
 | 2026-03-30 | SPRINT.md hatte Review-Einträge ohne Code ("Phantom-Done") | Vorherige Session hat Review vorausgeschrieben bevor Implementierung existierte | Review-Einträge erst schreiben wenn Code committed ist. Nie vorausschreiben. |
 | 2026-03-30 | Local main (b3e8a1a) vs origin/main (0f1a162) divergiert — 87 vs 57 Commits | force-push auf origin/main durch vorherige Session | `git fetch origin` IMMER vor allem anderen. Divergenz prüfen bevor man tippt. |
 | 2026-03-27 | Claude antwortet auf Englisch obwohl Config deutsch sagt | `language: en` in Config, aber User spricht Deutsch. Drei Versuche gebraucht. | Sprache IMMER in CLAUDE.md als erste Zeile setzen, nicht in Settings. |
@@ -25,6 +26,7 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 
 | Datum | Was | Warum gut |
 |-------|-----|-----------|
+| 2026-03-31 | Backlog-Audit: 8 Items bereits implementiert obwohl als offen markiert | node --check findet in 2s was kein Mensch im 3400-Zeilen-File sieht. BACKLOG.md regelmäßig gegen Code-Realität prüfen — nicht nur gegen SPRINT.md. |
 | 2026-03-30 | Sprint 21: Drag & Drop — Oscar zieht | Material-Buttons bekommen `draggable="true"` + `dragstart`. Canvas bekommt `dragover`/`drop`. Dynamisch erstellte Buttons (Craft-Unlocks) ebenfalls. `getGridCell(e)` funktioniert mit DragEvent weil `.clientX`/`.clientY` vorhanden. 3 Stellen in game.js: (1) forEach initial, (2) createElement unlock, (3) canvas-listener. |
 | 2026-03-30 | Sprint 20: Org-Umbau "Alle antreten" | 18 Agents inventarisiert, 3 CxOs aktiviert, 4 Docs gemergt, 5 Padawan-Codizes gefüllt, Skill-Zuordnung ohne Dopplungen. Hybrid-Session (BUILD+DOC) — geht nur beim Org-Umbau, nicht als Regel. |
 | 2026-03-30 | Code Metrics Review als Podcast-Format | 35 Stimmen, 4 Perspektiven (Feynman/Darwin/Linus/Taylor), Frauenquote 20%, dunkle Materie/Energie-Metapher. Review-Session produziert Dokument, keinen Code — wie es sein soll. |
