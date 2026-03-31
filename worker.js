@@ -9,10 +9,11 @@
 //    API_KEY             = sk-...      (Requesty Key von requesty.ai)
 //    LOGGING_MODE        = direct
 //    AIRTABLE_TOKEN      = pat...       (nur bei LOGGING_MODE=direct)
-//    AIRTABLE_BASE_ID    = app...       (nur bei LOGGING_MODE=direct)
+//    AIRTABLE_BASE_ID    = appWiMxA1w46Mi1jC
 //    AIRTABLE_TABLE_NAME = Feynman Sessions
-// 4. Deploy
-// 5. In config.js PROXY auf die Worker-URL setzen
+// 4. D1 Binding: METRICS_DB → schatzinsel-metrics (6374055b-88fc-4632-966d-ed7f2ddb3d1d)
+// 5. Deploy
+// 6. In config.js PROXY auf die Worker-URL setzen
 //
 // Free Tier: 100k Requests/Tag. Reicht für Demos.
 
@@ -36,6 +37,12 @@ export default {
         }
         if (pathname === '/bugs') {
             return handleBugs(request, env);
+        }
+        if (pathname === '/metrics') {
+            return handleMetrics(request, env);
+        }
+        if (pathname === '/metrics/ingest') {
+            return handleMetricsIngest(request, env);
         }
 
         // Nur POST
@@ -223,6 +230,13 @@ metal+fire → {"emoji":"⚗️","name":"Schmelze","color":"#E8DAEF","border":"#
         await env.CRAFT_KV.put(cacheKey, JSON.stringify(entry));
     }
 
+    // D1 Metrics (fire & forget)
+    if (env.METRICS_DB) {
+        env.METRICS_DB.prepare(
+            'INSERT INTO craft_events (input_a, input_b, result, source, cached) VALUES (?, ?, ?, ?, ?)'
+        ).bind(na, nb, entry.name, 'llm', 0).run().catch(() => {});
+    }
+
     return json({ ...entry, fromCache: false });
 }
 
@@ -300,6 +314,75 @@ async function handleBugs(request, env) {
     bugs.sort((a, b) => (b.created || '').localeCompare(a.created || ''));
 
     return json({ total: bugs.length, bugs });
+}
+
+// --- Metrics Endpoint ---
+
+async function handleMetrics(request, env) {
+    if (!env.METRICS_DB) return json({ error: 'D1 nicht konfiguriert' }, 500);
+
+    const url = new URL(request.url);
+    const table = url.searchParams.get('table') || 'sessions';
+    const limit = Math.min(parseInt(url.searchParams.get('limit') || '50'), 200);
+
+    const allowed = ['sessions', 'craft_events', 'agent_metrics', 'npc_chats'];
+    if (!allowed.includes(table)) return json({ error: 'Ungültige Tabelle' }, 400);
+
+    const rows = await env.METRICS_DB.prepare(
+        `SELECT * FROM ${table} ORDER BY ts DESC LIMIT ?`
+    ).bind(limit).all();
+
+    return json({ table, count: rows.results.length, rows: rows.results });
+}
+
+// --- Metrics Ingest Endpoint ---
+
+async function handleMetricsIngest(request, env) {
+    if (!env.METRICS_DB) return json({ error: 'D1 nicht konfiguriert' }, 500);
+    if (request.method !== 'POST') return json({ error: 'POST only' }, 405);
+
+    let body;
+    try { body = await request.json(); } catch (e) {
+        return json({ error: 'Ungültiger Request-Body' }, 400);
+    }
+
+    const { type } = body;
+
+    if (type === 'session') {
+        await env.METRICS_DB.prepare(
+            `INSERT INTO sessions (player_name, country, duration_s, blocks_placed, blocks_harvested,
+             quests_completed, crafts_total, crafts_llm, chat_messages, unique_materials, engagement_score)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+        ).bind(
+            body.player_name || 'Anonym', body.country || 'unknown',
+            body.duration_s || 0, body.blocks_placed || 0, body.blocks_harvested || 0,
+            body.quests_completed || 0, body.crafts_total || 0, body.crafts_llm || 0,
+            body.chat_messages || 0, body.unique_materials || 0, body.engagement_score || 0
+        ).run();
+        return json({ ok: true, type: 'session' });
+    }
+
+    if (type === 'craft') {
+        await env.METRICS_DB.prepare(
+            `INSERT INTO craft_events (input_a, input_b, result, source, cached)
+             VALUES (?, ?, ?, ?, ?)`
+        ).bind(body.a || '', body.b || '', body.result || '', body.source || 'recipe', body.cached ? 1 : 0).run();
+        return json({ ok: true, type: 'craft' });
+    }
+
+    if (type === 'npc_chat') {
+        await env.METRICS_DB.prepare(
+            `INSERT INTO npc_chats (npc_id, provider, tokens_prompt, tokens_completion, temperature, latency_ms)
+             VALUES (?, ?, ?, ?, ?, ?)`
+        ).bind(
+            body.npc_id || '', body.provider || 'api',
+            body.tokens_prompt || 0, body.tokens_completion || 0,
+            body.temperature || 0.7, body.latency_ms || 0
+        ).run();
+        return json({ ok: true, type: 'npc_chat' });
+    }
+
+    return json({ error: 'Unbekannter type. Erlaubt: session, craft, npc_chat' }, 400);
 }
 
 // --- Logging ---
