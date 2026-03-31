@@ -2784,10 +2784,19 @@
     });
 
     // Touch-Events für Tablet
+    // Swipe-Tracking für Code-Layer-Wechsel (S21-2)
+    let touchStartX = 0, touchStartY = 0, touchEndX = 0, touchEndY = 0;
+    let touchWasPainting = false;
+    const SWIPE_MIN_X = 80;
+    const SWIPE_MAX_Y = 40;
+
     canvas.addEventListener('touchstart', (e) => {
         e.preventDefault();
         undoPushedThisStroke = false;
+        touchWasPainting = false;
         const touch = e.touches[0];
+        touchStartX = touchEndX = touch.clientX;
+        touchStartY = touchEndY = touch.clientY;
         const cell = getGridCell(touch);
         if (!cell) return;
         // Spielfigur-Drag: Berühre die Spieler-Zelle → Figur ziehen
@@ -2796,12 +2805,15 @@
             return;
         }
         isMouseDown = true;
+        touchWasPainting = true;
         applyTool(cell.r, cell.c);
     });
 
     canvas.addEventListener('touchmove', (e) => {
         e.preventDefault();
         const touch = e.touches[0];
+        touchEndX = touch.clientX;
+        touchEndY = touch.clientY;
         const cell = getGridCell(touch);
         if (playerDragging && cell) {
             // Spieler auf neue Position ziehen (kein Wasser-Rand)
@@ -2820,6 +2832,14 @@
     });
 
     canvas.addEventListener('touchend', () => {
+        // Swipe → Code-Layer wechseln (nur wenn nicht gemalt und nicht Figur gezogen)
+        if (!touchWasPainting && !playerDragging) {
+            const dx = touchEndX - touchStartX;
+            const dy = Math.abs(touchEndY - touchStartY);
+            if (Math.abs(dx) >= SWIPE_MIN_X && dy < SWIPE_MAX_Y) {
+                window.toggleCodeView();
+            }
+        }
         isMouseDown = false;
         playerDragging = false;
         hoverCell = null;
