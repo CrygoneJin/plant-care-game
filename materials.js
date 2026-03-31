@@ -112,6 +112,10 @@ window.INSEL_MATERIALS = {
     forge:    { emoji: '⚒️', label: 'Schmiede',     color: '#E74C3C', border: '#C0392B' },
     dock:     { emoji: '⚓', label: 'Hafen',         color: '#5DADE2', border: '#2E86C1' },
     castle:   { emoji: '🏰', label: 'Burg',         color: '#95A5A6', border: '#7F8C8D' },
+    // === HÖHLEN & EDELSTEINE ===
+    cave:     { emoji: '🕳️', label: 'Höhle',       color: '#4A4A4A', border: '#2C2C2C' },
+    stalactite:{ emoji: '🪨', label: 'Tropfstein',  color: '#8B8589', border: '#696364' },
+    gem:      { emoji: '💎', label: 'Edelstein',    color: '#E040FB', border: '#AB00D9' },
     // === BIBLIOTHEK VON ALEXANDRIA ===
     library:  { emoji: '🏛️', label: 'Bibliothek', color: '#F5E6CA', border: '#D4C5A9' },
     scroll:   { emoji: '📜', label: 'Schriftrolle', color: '#FDEBD0', border: '#FAD7A0' },
