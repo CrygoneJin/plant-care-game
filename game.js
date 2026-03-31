@@ -3768,6 +3768,61 @@
         });
     }
 
+    // === REWIND / ZEITREISE (Backlog #77) ===
+    // Baugeschichte rückwärts abspielen wie Kassettenrekorder
+    const rewindBtn = document.getElementById('rewind-btn');
+    if (rewindBtn) {
+        rewindBtn.addEventListener('click', () => {
+            if (undoStack.length === 0) {
+                showToast('⏪ Keine Geschichte zum Zurückspulen!');
+                return;
+            }
+            rewindBtn.disabled = true;
+            rewindBtn.textContent = '⏳';
+
+            // Aktuellen Zustand merken für Forward am Ende
+            const currentGrid = JSON.stringify(grid);
+            const snapshots = undoStack.slice(); // Kopie
+            snapshots.push(currentGrid); // Aktuell als letzten Frame
+
+            // Rückwärts abspielen
+            let idx = snapshots.length - 1;
+            const STEP_MS = Math.max(80, Math.min(300, 5000 / snapshots.length));
+
+            function stepRewind() {
+                if (idx < 0) {
+                    // Vorwärts zurück zum Ist-Zustand
+                    let fwd = 0;
+                    function stepForward() {
+                        if (fwd >= snapshots.length) {
+                            rewindBtn.disabled = false;
+                            rewindBtn.textContent = '⏪';
+                            showToast('⏪ Zeitreise beendet!');
+                            return;
+                        }
+                        grid = JSON.parse(snapshots[fwd]);
+                        window.grid = grid;
+                        requestRedraw();
+                        if (!INSEL_SOUND.isMuted()) INSEL_SOUND.soundBuild('qi');
+                        fwd++;
+                        setTimeout(stepForward, STEP_MS / 2);
+                    }
+                    setTimeout(stepForward, 400);
+                    return;
+                }
+                grid = JSON.parse(snapshots[idx]);
+                window.grid = grid;
+                requestRedraw();
+                if (!INSEL_SOUND.isMuted()) INSEL_SOUND.soundDemolish(() => ({ percent: (idx / snapshots.length) * 100 }));
+                idx--;
+                setTimeout(stepRewind, STEP_MS);
+            }
+
+            showToast('⏪ Zeitreise...');
+            stepRewind();
+        });
+    }
+
     // Kurzes Highlight auf einer Canvas-Zelle (weißer Flash)
     function replayHighlight(r, c) {
         const x = (c + WATER_BORDER) * CELL_SIZE;
