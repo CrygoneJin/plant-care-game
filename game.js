@@ -38,8 +38,9 @@
                 Math.floor(availH / totalRows)
             ));
         }
-        // Desktop: verfügbare Höhe abzüglich Header+Toolbar (~100px), mit Seitenleisten (~300px)
-        const availW = window.innerWidth - 320;
+        // Desktop: verfügbare Höhe abzüglich Header+Toolbar (~100px), mit Seitenleisten (~300px) + Chat-Panel (320px)
+        const chatW = document.body.classList.contains('chat-open') ? 320 : 0;
+        const availW = window.innerWidth - 320 - chatW;
         const availH = window.innerHeight - 110;
         return Math.max(20, Math.min(
             Math.floor(availW / totalCols),
@@ -828,13 +829,18 @@
         requestRedraw();
     }
 
+    const AMBIENT_IDLE_MS = 10000; // Stille-Momente nach 10s Idle (#57)
+
     function resetIdleTimer() {
         lastInteraction = Date.now();
         if (conwayOverlay) fadeConway(); // sanfter Abschied statt sofort weg
+        if (window.INSEL_SOUND) window.INSEL_SOUND.stopAmbient();
     }
 
     setInterval(() => {
-        if (!conwayInterval && !conwayFading && Date.now() - lastInteraction > CONWAY_IDLE_MS) startConway();
+        const idle = Date.now() - lastInteraction;
+        if (!conwayInterval && !conwayFading && idle > CONWAY_IDLE_MS) startConway();
+        if (idle > AMBIENT_IDLE_MS && window.INSEL_SOUND) window.INSEL_SOUND.playAmbient();
     }, 5000);
 
     // ============================================================
@@ -3483,11 +3489,38 @@
             pcCtx.fillStyle = '#AAA';
             pcCtx.fillText('Außer Text nix gehext. 🏝️', pc.width / 2, canvas.height + 72);
 
-            // Download
-            const link = document.createElement('a');
-            link.download = `postkarte-von-java-${name.replace(/\s+/g, '-')}.png`;
-            link.href = pc.toDataURL('image/png');
-            link.click();
+            // QR-Code auf Postkarte (#7)
+            function renderPostcard() {
+                const link = document.createElement('a');
+                link.download = `postkarte-von-java-${name.replace(/\s+/g, '-')}.png`;
+                link.href = pc.toDataURL('image/png');
+                link.click();
+            }
+
+            if (window.QRCode) {
+                try {
+                    const qrSize = 64;
+                    const qrMargin = 8;
+                    const qrContainer = document.createElement('div');
+                    new window.QRCode(qrContainer, {
+                        text: 'https://schatzinsel.app/',
+                        width: qrSize, height: qrSize,
+                        colorDark: '#000000', colorLight: '#ffffff',
+                        correctLevel: window.QRCode.CorrectLevel.M
+                    });
+                    const qrCanvas = qrContainer.querySelector('canvas');
+                    if (qrCanvas) {
+                        // Weißer Hintergrund hinter QR
+                        const qrX = pc.width - qrSize - qrMargin;
+                        const qrY = canvas.height + (80 - qrSize) / 2;
+                        pcCtx.fillStyle = '#FFFFFF';
+                        pcCtx.fillRect(qrX - 2, qrY - 2, qrSize + 4, qrSize + 4);
+                        pcCtx.drawImage(qrCanvas, qrX, qrY, qrSize, qrSize);
+                    }
+                } catch (_) { /* QR nicht verfügbar — kein Problem */ }
+            }
+
+            renderPostcard();
 
             showToast('📸 Postkarte gespeichert! Zeig sie deinen Freunden!');
             trackEvent('postcard', { blocks: stats.total, discoveries });

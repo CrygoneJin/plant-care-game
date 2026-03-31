@@ -20,7 +20,7 @@
 | # | Item | Owner | Status |
 |---|------|-------|--------|
 | 6 | **NPC-Stimmen schärfen** — Ogilvy: Jeder NPC braucht typographisches Tick | Artist | ✅ Done (Elefant/Krabs/Tommy) |
-| 7 | **QR-Code auf Postkarte** — Godin/Welch: Scannen → direkt zum Spiel | Engineer | 🔲 Offen |
+| 7 | **QR-Code auf Postkarte** — Godin/Welch: Scannen → direkt zum Spiel | Engineer | ✅ Done (Sprint 23) |
 | 8 | **Offline-Manifest** — Service Worker für Spielen ohne Internet | Engineer | ✅ Done (sw.js + manifest.json) |
 | 9 | **Mehr Quests** — 11 Templates sind zu wenig, mindestens 20 | Artist + Leader | ✅ Done (45 Templates) |
 | 10 | **Favicon + Meta-Tags** — Torvalds: "10 Minuten, großer Unterschied" | Engineer | ✅ Done |
@@ -191,7 +191,7 @@ Idee: Die leere Insel (nur Wasser) wird in einer Sequenz erschaffen. Verschieden
 | # | Item | Prio | Owner |
 |---|------|------|-------|
 | 27 | **Cloudflare Worker CORS fixen** — User muss worker.js im Dashboard deployen | P0 | User |
-| 28 | **Chat-Fenster nicht überlappend** — als Sidebar oder unten, kein Overlay über Canvas | P1 | Designer |
+| 28 | **Chat-Fenster nicht überlappend** — als Sidebar oder unten, kein Overlay über Canvas | P1 | Designer | ✅ Done (Sprint 23) |
 | 29 | **NPC-Emoji eindeutig** — Tommy=🦞 ✅, alle anderen prüfen, kein Doppler | ✅ Done (tommy: 🎬→🦞, kein Doppler) | Artist |
 | 30 | **Tonhöhe zu Elementen** — Feuer=höher, Erde=tiefer, Wasser=fließend | ✅ Done (ELEMENT_TONES: earth=C3, fire=G5, water=glide A4→A3) | Scientist |
 | 31 | **Bauen/Ernten/Füllen Icons** — universelle Symbole statt Text-Labels | ✅ Done (🖌️⛏️🪣 Emojis, Text nur in title/Tooltip) | Designer |
@@ -216,7 +216,7 @@ Idee: Die leere Insel (nur Wasser) wird in einer Sequenz erschaffen. Verschieden
 | 51 | **Wu Xing Philosophie im Craft-Prompt** — Holz=Expansion, Feuer=Aktion, Erde=Wandlung, Metall=Reife, Wasser=Ruhe | ✅ Done (worker.js Craft-Prompt + Beispiele) | Scientist |
 | 52 | **Kung Fu Panda Wuxi** — Ästhetik-Inspiration für Wu Xing Elemente | P2 | Artist |
 | 53 | **Echtes Atlantik-Wetter** — Open-Meteo API (29°N, 31°W — halber Weg Martinique↔Bayonne), 🌊 im Meer wetterabhängig | ✅ Done (Open-Meteo fetch bei game.js:1434) | Engineer |
-| 57 | **Stille-Momente** (Ende) — Leere Meerpassagen zwischen Inseln. Kein UI, kein Toast. Nur Wellen und Wind. Oscar denkt nach. | P1 | Designer |
+| 57 | **Stille-Momente** (Ende) — Wellen-Ambient nach 10s Idle. Kein UI, kein Toast. Nur Meer. | P1 | Designer | ✅ Done (Sprint 23) |
 | 58 | **Unsinn-Rezepte** (Lindgren) — Feuer+Pfannkuchen=?, Drache+Kuchen=?, unlogisch aber wunderbar | ✅ Done (7 Unsinn-Rezepte in recipes.js: Feuerkuchen, Drachentorte, Geisterschiff, Mondkäse, Schneedrache, Wurmloch, Bienenstich) | Artist |
 | 59 | **10-Sekunden-Erster-Moment** (Paluten) — Erster Block in 10 Sek, nicht 30. Intro kürzen. Tao-Glow-Puls hilft. | P0 | Designer | ✅ Done (9f8a0bf) |
 | 60 | **Haikus am Strand** (Krapweis) — Jede Insel-Station: 5-7-5 Schild am Strand statt Tutorial-Text | P2 | Artist |
