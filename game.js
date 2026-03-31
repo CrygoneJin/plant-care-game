@@ -1272,6 +1272,27 @@
         preview.classList.remove('has-recipe');
         preview.classList.add('craft-success');
         setTimeout(() => preview.classList.remove('craft-success'), 2000);
+        // Fly-Animation: Emoji fliegt von Result-Box zum Inventar-Tab
+        flyToInventory(preview, emoji);
+    }
+
+    function flyToInventory(fromEl, emoji) {
+        const target = document.querySelector('.sidebar-tab[data-tab="inventory"]');
+        if (!fromEl || !target) return;
+        const fromRect = fromEl.getBoundingClientRect();
+        const toRect = target.getBoundingClientRect();
+        const flyer = document.createElement('div');
+        flyer.className = 'craft-flyer';
+        flyer.textContent = emoji;
+        flyer.style.left = (fromRect.left + fromRect.width / 2) + 'px';
+        flyer.style.top = (fromRect.top + fromRect.height / 2) + 'px';
+        document.body.appendChild(flyer);
+        // Ziel berechnen
+        const dx = (toRect.left + toRect.width / 2) - (fromRect.left + fromRect.width / 2);
+        const dy = (toRect.top + toRect.height / 2) - (fromRect.top + fromRect.height / 2);
+        flyer.style.setProperty('--fly-dx', dx + 'px');
+        flyer.style.setProperty('--fly-dy', dy + 'px');
+        flyer.addEventListener('animationend', () => flyer.remove());
     }
 
     async function doCraft() {

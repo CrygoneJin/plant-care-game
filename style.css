@@ -1661,6 +1661,21 @@ body.code-view-active #chat-settings-btn {
     100% { transform: scale(1); }
 }
 
+.craft-flyer {
+    position: fixed;
+    font-size: 32px;
+    z-index: 2000;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    animation: craft-fly 0.6s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes craft-fly {
+    0%   { opacity: 1; transform: translate(-50%, -50%) scale(1.5); }
+    50%  { opacity: 1; transform: translate(calc(-50% + var(--fly-dx) * 0.5), calc(-50% + var(--fly-dy) * 0.5 - 30px)) scale(1.2); }
+    100% { opacity: 0; transform: translate(calc(-50% + var(--fly-dx)), calc(-50% + var(--fly-dy))) scale(0.5); }
+}
+
 .crafting-right {
     flex: 1;
     min-width: 140px;
