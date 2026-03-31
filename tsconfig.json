@@ -24,6 +24,7 @@
     "recipes.js",
     "healthcheck.js",
     "nature.js",
+    "effects.js",
     "game.js",
     "chat.js",
     "automerge.js",

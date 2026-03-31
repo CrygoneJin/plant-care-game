@@ -272,114 +272,8 @@
         getCompleted: () => completedQuests
     };
 
-    // ============================================================
-    // === WEATHER + DAY/NIGHT === (→ effects.js bei Zellteilung)
-    // ============================================================
-    let dayTime = 0; // 0-1
-
-    function updateDayNight() {
-        const hour = new Date().getHours();
-        const minute = new Date().getMinutes();
-        const decimal = hour + minute / 60;
-        // 6:00 = Morgen (0), 12:00 = Mittag (0.5), 18:00 = Abend (0.7), 22:00 = Nacht (0.9)
-        if (decimal >= 6 && decimal < 12) {
-            dayTime = (decimal - 6) / 12; // 0 → 0.5
-        } else if (decimal >= 12 && decimal < 20) {
-            dayTime = 0.5 + (decimal - 12) / 16; // 0.5 → 1.0
-        } else {
-            dayTime = 0.9 + Math.min(0.1, (decimal >= 20 ? decimal - 20 : decimal + 4) / 40);
-        }
-    }
-
-    function getDayNightOverlay() {
-        // 0-0.3: Morgen (warm), 0.3-0.7: Tag (hell), 0.7-1: Nacht (blau)
-        if (dayTime < 0.3) {
-            const t = dayTime / 0.3;
-            return `rgba(255, 200, 100, ${0.15 * (1 - t)})`;
-        } else if (dayTime > 0.7) {
-            const t = (dayTime - 0.7) / 0.3;
-            return `rgba(20, 20, 80, ${0.3 * t})`;
-        }
-        return null;
-    }
-
-    // --- Wetter-System ---
-    let weather = 'sun'; // 'sun', 'rain', 'rainbow'
-    let raindrops = [];
-    let weatherTimer = 0;
-    const WEATHER_CHANGE_INTERVAL = 60000; // Alle 60 Sekunden prüfen
-
-    function initRaindrops() {
-        raindrops = [];
-        for (let i = 0; i < 80; i++) {
-            raindrops.push({
-                x: Math.random() * 1000,
-                y: Math.random() * 800,
-                speed: 3 + Math.random() * 4,
-                length: 6 + Math.random() * 10,
-            });
-        }
-    }
-
-    function drawWeather() {
-        if (weather === 'rain') {
-            ctx.strokeStyle = 'rgba(100, 150, 255, 0.4)';
-            ctx.lineWidth = 1;
-            for (const drop of raindrops) {
-                drop.y += drop.speed;
-                drop.x += drop.speed * 0.2;
-                if (drop.y > canvas.height) {
-                    drop.y = -drop.length;
-                    drop.x = Math.random() * canvas.width;
-                }
-                ctx.beginPath();
-                ctx.moveTo(drop.x, drop.y);
-                ctx.lineTo(drop.x + drop.speed * 0.3, drop.y + drop.length);
-                ctx.stroke();
-            }
-            // Dunkles Overlay für Regen
-            ctx.fillStyle = 'rgba(30, 40, 60, 0.15)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-        } else if (weather === 'sun') {
-            // Sonnenstrahlen aus der Ecke
-            const time = Date.now() / 2000;
-            const rayAlpha = 0.05 + Math.sin(time) * 0.02;
-            ctx.fillStyle = `rgba(255, 240, 150, ${rayAlpha})`;
-            for (let i = 0; i < 5; i++) {
-                const angle = -0.3 + i * 0.15 + Math.sin(time + i) * 0.05;
-                ctx.save();
-                ctx.translate(0, 0);
-                ctx.rotate(angle);
-                ctx.fillRect(0, -5, canvas.width * 1.5, 10 + i * 3);
-                ctx.restore();
-            }
-        }
-
-        // Regenbogen als Hintergrund-Effekt (nicht auf Canvas)
-        const rainbowBg = document.getElementById('rainbow-bg');
-        if (rainbowBg) {
-            if (weather === 'rainbow') {
-                rainbowBg.classList.add('rainbow-visible');
-                rainbowBg.classList.remove('rainbow-hidden');
-            } else {
-                rainbowBg.classList.remove('rainbow-visible');
-                rainbowBg.classList.add('rainbow-hidden');
-            }
-        }
-    }
-
-    function updateWeather() {
-        weatherTimer += 16; // ~60fps
-        if (weatherTimer > WEATHER_CHANGE_INTERVAL) {
-            weatherTimer = 0;
-            const roll = Math.random();
-            if (roll < 0.5) weather = 'sun';
-            else if (roll < 0.85) weather = 'rain';
-            else weather = 'rainbow'; // 15% Chance auf Regenbogen!
-        }
-    }
-
-    initRaindrops();
+    // === WEATHER + DAY/NIGHT + ANIMATIONS → effects.js (Zellteilung #11) ===
+    const EFFECTS = window.INSEL_EFFECTS;
 
     // ============================================================
     // === EASTER EGGS + HÖRSPIELE === (→ stories.js bei Zellteilung)
@@ -1214,7 +1108,7 @@
         soundCraft();
         showCraftResult(result.emoji, result.name, 1);
         // #64: Elektronen-Blitz — kurze Lichtfunken beim Craften (Amélie: kein Label, kein UI)
-        spawnCraftSparks();
+        EFFECTS.spawnCraftSparks();
 
         flashInventoryTab();
         if (result.fromCache === false && isNew) {
@@ -1629,7 +1523,7 @@
     };
     let isMouseDown = false;
     let hoverCell = null;
-    let animations = [];
+    // animations[] → effects.js
 
     // --- Spielfigur ---
     let playerName = localStorage.getItem('insel-player-name') || '';
@@ -2208,21 +2102,22 @@
         }
 
         // Animationen zeichnen
-        drawAnimations();
+        EFFECTS.drawAnimations(ctx, CELL_SIZE, WATER_BORDER);
 
         // Day/Night Overlay
-        updateDayNight();
-        const overlay = getDayNightOverlay();
+        EFFECTS.updateDayNight();
+        const overlay = EFFECTS.getDayNightOverlay();
         if (overlay) {
             ctx.fillStyle = overlay;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
         // Wetter
-        updateWeather();
-        drawWeather();
+        EFFECTS.updateWeather();
+        EFFECTS.drawWeather(ctx, canvas);
 
         // Sterne bei Nacht
+        const dayTime = EFFECTS.getDayTime();
         if (dayTime > 0.8) {
             const starAlpha = (dayTime - 0.8) / 0.2;
             ctx.fillStyle = `rgba(255, 255, 200, ${starAlpha * 0.8})`;
@@ -2352,45 +2247,7 @@
         }
     }
 
-    // --- Animationen ---
-    function addPlaceAnimation(r, c) {
-        animations.push({
-            r: r,
-            c: c,
-            startTime: Date.now(),
-            duration: 300,
-        });
-    }
-
-    function drawAnimations() {
-        const now = Date.now();
-        animations = animations.filter(anim => {
-            const elapsed = now - anim.startTime;
-            if (elapsed > anim.duration) return false;
-
-            const progress = elapsed / anim.duration;
-            const scale = progress < 0.5
-                ? 0.5 + progress * 1.4
-                : 1.2 - (progress - 0.5) * 0.4;
-
-            const x = (anim.c + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
-            const y = (anim.r + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
-
-            ctx.save();
-            ctx.translate(x, y);
-            ctx.scale(scale, scale);
-            ctx.globalAlpha = 1 - progress * 0.5;
-
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-            ctx.beginPath();
-            ctx.arc(0, 0, CELL_SIZE / 2, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.restore();
-
-            return true;
-        });
-    }
+    // addPlaceAnimation + drawAnimations → effects.js
 
     // --- Maus → Grid-Koordinaten ---
     function getGridCell(e) {
@@ -2496,7 +2353,7 @@
                 }
                 playerBlocksPlaced++;
                 localStorage.setItem('insel-blocks-placed', playerBlocksPlaced);
-                addPlaceAnimation(r, c);
+                EFFECTS.addPlaceAnimation(r, c);
                 if (!window.INSEL_ANALYTICS.getSessionClock().firstBlock) {
                     soundFirstBlock();
                 } else {
@@ -2529,7 +2386,7 @@
                 }
                 addToInventory(yield_.material, yield_.count);
                 unlockMaterial(yield_.material);
-                addPlaceAnimation(r, c);
+                EFFECTS.addPlaceAnimation(r, c);
                 soundChop();
                 const info = MATERIALS[yield_.material];
                 if (info) showToast(`⛏️ ${yield_.count}x ${info.emoji} ${info.label} geerntet! → Im 🎒 Inventar`, 3000);
@@ -2604,7 +2461,7 @@
 
             visited.add(key);
             grid[cr][cc] = fillMat;
-            addPlaceAnimation(cr, cc);
+            EFFECTS.addPlaceAnimation(cr, cc);
 
             stack.push({ r: cr - 1, c: cc });
             stack.push({ r: cr + 1, c: cc });
@@ -2858,27 +2715,7 @@
         }, 500);
     }
 
-    // #64: Elektronen = Crafting-Blitz — Lichtfunken beim LLM-Craft
-    // Kein UI, kein Label. Amélie. Ladungsaustausch sichtbar machen.
-    function spawnCraftSparks() {
-        if (prefersReducedMotion) return;
-        const wrapper = document.getElementById('canvas-wrapper');
-        const craftDialog = document.getElementById('craft-dialog');
-        const target = craftDialog || wrapper;
-        if (!target) return;
-        const rect = target.getBoundingClientRect();
-        for (let i = 0; i < 8; i++) {
-            setTimeout(() => {
-                const spark = document.createElement('div');
-                spark.className = 'merge-spark craft-spark';
-                spark.style.left = (Math.random() * rect.width - 20) + 'px';
-                spark.style.top  = (Math.random() * rect.height - 20) + 'px';
-                target.style.position = 'relative';
-                target.appendChild(spark);
-                setTimeout(() => spark.remove(), 800);
-            }, i * 80);
-        }
-    }
+    // spawnCraftSparks → effects.js
 
     // ============================================================
     // === BLUEPRINTS — 4×4 Bauplan-Erkennung ===
@@ -3111,8 +2948,8 @@
 
                 showToast('☯️ → ⚫⚪ ZAUBER! Aus Eins wird Zwei!');
                 soundCraft();
-                addPlaceAnimation(r, c);
-                addPlaceAnimation(yr, yc);
+                EFFECTS.addPlaceAnimation(r, c);
+                EFFECTS.addPlaceAnimation(yr, yc);
 
                 // Spark-Animation
                 if (!prefersReducedMotion) {
@@ -3865,9 +3702,9 @@
     const WEATHER_EMOJIS = ['☀️', '🌧️', '🌈'];
     if (weatherBtn) {
         weatherBtn.addEventListener('click', () => {
-            const idx = (WEATHER_TYPES.indexOf(weather) + 1) % WEATHER_TYPES.length;
-            weather = WEATHER_TYPES[idx];
-            weatherTimer = 0; // Reset auto-change
+            const idx = (WEATHER_TYPES.indexOf(EFFECTS.getWeather()) + 1) % WEATHER_TYPES.length;
+            EFFECTS.setWeather(WEATHER_TYPES[idx]);
+            EFFECTS.resetWeatherTimer();
             weatherBtn.textContent = WEATHER_EMOJIS[idx];
             showToast(`Wetter: ${WEATHER_EMOJIS[idx]}`);
         });
@@ -4049,7 +3886,7 @@
                     const c = Math.floor(Math.random() * COLS);
                     if (!grid[r][c]) {
                         grid[r][c] = matKey[0];
-                        addPlaceAnimation(r, c);
+                        EFFECTS.addPlaceAnimation(r, c);
                         placed++;
                     }
                 }
@@ -4065,8 +3902,8 @@
         if (cmd.match(/^(?:mach|zauber[en]?|hexe?)\s+(regen|sonne|regenbogen)/)) {
             const w = cmd.includes('regen') && !cmd.includes('regenbogen') ? 'rain'
                     : cmd.includes('regenbogen') ? 'rainbow' : 'sun';
-            weather = w;
-            weatherTimer = 0;
+            EFFECTS.setWeather(w);
+            EFFECTS.resetWeatherTimer();
             const weatherBtn = document.getElementById('weather-btn');
             if (weatherBtn) weatherBtn.textContent = w === 'rain' ? '🌧️' : w === 'rainbow' ? '🌈' : '☀️';
             result = { type: 'weather', weather: w };
@@ -4087,7 +3924,7 @@
                 const c = Math.floor(Math.random() * COLS);
                 if (!grid[r][c]) {
                     grid[r][c] = partyMats[Math.floor(Math.random() * partyMats.length)];
-                    addPlaceAnimation(r, c);
+                    EFFECTS.addPlaceAnimation(r, c);
                 }
             }
             soundAchievement();
