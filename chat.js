@@ -374,6 +374,10 @@ Du: "Ah, willkommen, verehrter Baumeister! Ich bin Mephisto. Man sagt ich sei ei
         }
     };
 
+    // Export CHARACTERS für voice.js
+    if (window.registerInselCharacters) window.registerInselCharacters(CHARACTERS);
+    window.INSEL_CHARACTERS = CHARACTERS;
+
     // --- DOM ---
     const panel = document.getElementById('chat-panel');
     const charNameDisplay = document.getElementById('chat-character-name');
