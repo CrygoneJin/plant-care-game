@@ -1006,15 +1006,17 @@ Du: "Mist. Schon wieder jemand. Was willst du? Ich hab keine Arme und muss trotz
     const apiKeyToggle = document.getElementById('api-key-toggle');
 
     function updateApiStatus() {
-        const hasKey = !!getApiKey();
-        const pId = getProvider();
-        const pName = providerSelect.options[providerSelect.selectedIndex]?.text || pId;
-        if (hasKey) {
+        const userKey = localStorage.getItem('langdock-api-key');
+        const usingProxy = hasProxy() && !userKey;
+        const pName = providerSelect.options[providerSelect.selectedIndex]?.text || getProvider();
+        if (usingProxy) {
+            apiStatus.textContent = '✅ Proxy aktiv — Chat funktioniert ohne Key';
+            apiStatus.style.background = '#e8f5e9';
+            apiStatus.style.color = '#2e7d32';
+        } else if (userKey) {
             apiStatus.textContent = `✅ ${pName} — Key gespeichert`;
             apiStatus.style.background = '#e8f5e9';
             apiStatus.style.color = '#2e7d32';
-            settingsBtn.textContent = '⚙️';
-            settingsBtn.style.position = 'relative';
         } else {
             apiStatus.textContent = '⚠️ Kein API-Key — Chat braucht einen Key';
             apiStatus.style.background = '#fff3e0';
@@ -1023,7 +1025,7 @@ Du: "Mist. Schon wieder jemand. Was willst du? Ich hab keine Arme und muss trotz
     }
 
     const PROVIDER_HINTS = {
-        requesty: 'Multi-Provider Router. Key: requesty.ai → Dashboard. Unterstützt alle Modelle.',
+        requesty: 'Standard-Proxy aktiv — kein eigener Key nötig. Oder: requesty.ai → Dashboard für eigenen Key.',
         langdock: 'DSGVO-konform, Daten bleiben in der EU. Key: app.langdock.com → API Keys',
         anthropic: 'Claude direkt von Anthropic. Key: console.anthropic.com → API Keys',
         openai: 'GPT-Modelle von OpenAI. Key: platform.openai.com → API Keys',
@@ -1041,11 +1043,14 @@ Du: "Mist. Schon wieder jemand. Was willst du? Ich hab keine Arme und muss trotz
     }
 
     settingsBtn.addEventListener('click', () => {
-        apiKeyInput.value = getApiKey();
-        apiUrlInput.value = getApiUrl();
-        providerSelect.value = getProvider();
+        // Proxy-Modus: Key-Feld leer zeigen (Proxy braucht keinen User-Key)
+        const usingProxy = hasProxy() && !localStorage.getItem('langdock-api-key');
+        apiKeyInput.value = usingProxy ? '' : (localStorage.getItem('langdock-api-key') || '');
+        apiUrlInput.value = usingProxy ? '' : (localStorage.getItem('langdock-api-url') || '');
+        providerSelect.value = localStorage.getItem('api-provider') || 'requesty';
         apiKeyInput.type = 'password';
         apiKeyToggle.textContent = '👁';
+        apiKeyInput.placeholder = usingProxy ? 'Nicht nötig — Proxy aktiv' : 'sk-...';
         updateApiStatus();
         updateUrlRowVisibility();
         updateProviderHint();
@@ -1067,6 +1072,17 @@ Du: "Mist. Schon wieder jemand. Was willst du? Ich hab keine Arme und muss trotz
 
     apiKeySave.addEventListener('click', () => {
         const key = apiKeyInput.value.trim();
+        const usingProxy = hasProxy();
+        // Proxy aktiv und kein Key eingegeben → einfach schließen (Proxy reicht)
+        if (!key && usingProxy) {
+            // User-Key löschen falls vorher gesetzt, zurück auf Proxy
+            localStorage.removeItem('langdock-api-key');
+            localStorage.removeItem('langdock-api-url');
+            localStorage.removeItem('api-provider');
+            apiKeyDialog.classList.add('hidden');
+            addMessage('Proxy-Modus aktiv — kein Key nötig! 🔒', 'system');
+            return;
+        }
         if (!key) {
             apiStatus.textContent = '❌ Bitte Key eingeben';
             apiStatus.style.background = '#fce4ec';
@@ -1075,7 +1091,8 @@ Du: "Mist. Schon wieder jemand. Was willst du? Ich hab keine Arme und muss trotz
             return;
         }
         setApiKey(key);
-        setApiUrl(apiUrlInput.value.trim());
+        const url = apiUrlInput.value.trim();
+        if (url) setApiUrl(url);
         localStorage.setItem('api-provider', providerSelect.value);
         apiKeyDialog.classList.add('hidden');
         const pName = providerSelect.options[providerSelect.selectedIndex].text;
