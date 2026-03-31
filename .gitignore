@@ -6,3 +6,6 @@ node_modules/
 test-results/
 *.png
 package-lock.json
+docs/TOMMY-ERZAEHLT.md
+docs/TOMMY-FUER-OSCAR.md
+docs/MEMO-MEETING.md

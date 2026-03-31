@@ -29,7 +29,9 @@ Python redet.
 
 ## Erfahrungen
 
-*Noch leer. Wächst mit jeder Session.*
+- 2026-03-30: Worker mit Rate Limiting + CORS + Validation in 364 Zeilen. Wenig Code der alles abdeckt > viel Code mit Lücken.
+- 2026-03-30: healthcheck.js (138 Zeilen) als DNA-Reparatur. Heilt localStorage, aber nicht die 41 Globals. Nächstes Ziel: INSEL-Namespace.
+- 2026-03-30: 9× `localStorage.getItem('insel-muted')` in sound.js. Copy-Paste ist kein Engineering. Refactoring-Kandidat #1.
 
 ## Feynman-Notiz
 

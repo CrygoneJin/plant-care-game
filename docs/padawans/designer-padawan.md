@@ -28,7 +28,9 @@ Er ist Rams' Messinstrument. Rams sagt "Weniger ist mehr." Hick sagt
 
 ## Erfahrungen
 
-*Noch leer. Wächst mit jeder Session.*
+- 2026-03-30: 3 Geräte (4K, MacBook 2013, iPhone SE) responsive mit einem CSS. Aspect-Ratio-Grid statt Breakpoints war der Schlüssel.
+- 2026-03-30: Sidebar-Tabs statt Overlay-Dialoge. Weniger Klicks = weniger Hick-Alarm. Gutes Pattern für kleine Viewports.
+- 2026-03-30: 48px Touch-Targets konsequent eingehalten. Bruder (Chaos-Tester) hat keinen Button verfehlt.
 
 ## Feynman-Notiz
 

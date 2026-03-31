@@ -25,7 +25,9 @@ machen das Produkt am Ende besser.
 
 ## Erfahrungen
 
-*Noch leer. Wächst mit jeder Session.*
+- 2026-03-30: 19 Sprints geplant und getracked. Velocity von 3 Items/Sprint ist sustainable. Mehr → Phantom-Done-Risiko.
+- 2026-03-30: Cherry-Pick-Marathon (4 Sprints auf main) war chaotisch. Lesson: Kleine Merges > große Cherry-Picks.
+- 2026-03-30: Roster erstellt. 18 Agents, 8 davon eingefroren. Man braucht nicht jeden sofort.
 
 ## Feynman-Notiz
 

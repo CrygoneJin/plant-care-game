@@ -1,5 +1,11 @@
 # Story-Bibel -- Inselbaumeister
 
+## Pitch
+
+Ein kindgerechter Architekt-Simulator als Browser-Spiel. Schnipsel strandet auf einer
+tropischen Insel und baut mit verschiedenen Materialien seine eigene Inselstadt auf.
+Inspiriert von Simulator-Spielen, wie sie Paluten auf YouTube spielt.
+
 ## Konzept in einem Satz
 
 Tim strandet auf einer tropischen Insel, findet Freunde aus dem Wasser und
@@ -160,6 +166,14 @@ hat keine Grenze.
 - Keine Bewertungen ("Das könnte besser sein")
 - Kein Englisch (alles auf Deutsch)
 - Keine langen Texte (Schnipsel will bauen, nicht lesen)
+
+## Design-Prinzipien
+
+- Kindgerecht: große Buttons (min. 48px), bunte Farben
+- Tropisches Insel-Thema: Sand, Meer, Palmen
+- Emojis als Material-Icons
+- Deutsche Beschriftung
+- Intuitiv ohne Anleitung bedienbar
 
 ---
 

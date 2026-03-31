@@ -10,12 +10,41 @@
 | Traumberuf         | Architekt                     |
 | Lieblings-YouTuber | Paluten (Simulator-Spiele)    |
 
-- Möchte Architekt werden
-- Liebt Pflanzen, Holz, Bauen und Basteln
-- Schaut Paluten auf YouTube (Simulator-Spiele)
-- Braucht große Buttons, einfache Bedienung, deutsche Sprache
+### Interessen (nach Begeisterung sortiert)
 
-Siehe `docs/SCHNIPSEL.md` für das vollständige Profil.
+1. **Bauen & Konstruieren** -- Häuser, Türme, alles was man zusammensetzen kann
+2. **Pflanzen** -- findet Bäume, Blumen und Gärten faszinierend
+3. **Holz** -- das Lieblings-Baumaterial, weil es "echt" ist
+4. **Basteln & Werken** -- mit den Händen etwas erschaffen
+5. **Simulator-Spiele** -- wie Paluten sie spielt: lustig, bunt, ein bisschen chaotisch
+
+### Lieblings-Figuren
+
+- **SpongeBob Schwammkopf** -- kennt alle Folgen
+- **Die Sendung mit dem Elefanten** -- der blaue Elefant, die Maus, die Ente
+- **Das Neinhorn** -- das freche Einhorn aus dem Kinderbuch
+- **Loisach Marci** -- mag die Musik
+
+### Wie Schnipsel spielt
+
+- **Entdecker-Typ**: will sofort loslegen, nicht lange Anleitungen lesen
+- **Kreativ**: baut lieber frei als nach Vorgabe
+- **Stolz auf Ergebnisse**: will sehen, was er geschafft hat (Statistiken, Fortschritt)
+- **Kurze Aufmerksamkeitsspanne**: Feedback muss sofort kommen
+- **Mag Humor**: findet es lustig, wenn Figuren freche Sprüche sagen
+
+### Zitate (O-Ton Schnipsel)
+
+> "Architekt ist einfach ein cooler Beruf."
+> "Du sagst immer warum warum warum -- ich will einfach bauen!"
+
+### Design-Implikationen
+
+- Große Klickflächen (min. 48px), Emojis statt Text wo möglich
+- Deutsche Labels, kurze Wörter, kein Tippen nötig zum Spielen
+- Touch-Support, kein Login, kein Account, keine Werbung
+- **Nicht belehren, nicht ausfragen, feiern statt bewerten**
+- **Paluten-Ton**: Ein bisschen lustig, ein bisschen übertrieben, nie langweilig
 
 ---
 

@@ -81,6 +81,8 @@
     function soundQuestComplete()    { if (_snd.soundQuestComplete) _snd.soundQuestComplete(); }
     function soundChop()             { if (_snd.soundChop)        _snd.soundChop(); }
     function soundCraft()            { if (_snd.soundCraft)       _snd.soundCraft(); }
+    function soundSelect(material)   { if (_snd.soundSelect)      _snd.soundSelect(material); }
+    function soundFirstBlock()       { if (_snd.soundFirstBlock)  _snd.soundFirstBlock(); }
 
     // ============================================================
     // === ACHIEVEMENTS === (aus achievements.js)
@@ -137,7 +139,11 @@
             counts,
             total,
             percent: Math.round((total / (ROWS * COLS)) * 100),
-            uniqueMats: Object.keys(counts).length
+            uniqueMats: Object.keys(counts).length,
+            playerPlaced: playerBlocksPlaced,
+            questsDone: typeof completedQuests !== 'undefined' ? completedQuests.length : 0,
+            blueprintsDone: typeof completedBlueprints !== 'undefined' ? completedBlueprints.length : 0,
+            recipesFound: typeof discoveredRecipes !== 'undefined' ? discoveredRecipes.size : 0,
         };
     }
 
@@ -157,8 +163,20 @@
         );
     }
 
+    const MAX_ACTIVE_QUESTS = 2; // #47: max 2 gleichzeitig — mehr = zu wenig Fokus
+
     function acceptQuest(quest) {
-        activeQuests.push({ ...quest, accepted: Date.now() });
+        if (activeQuests.length >= MAX_ACTIVE_QUESTS) {
+            showToast(`📜 Erst die laufenden ${MAX_ACTIVE_QUESTS} Quests abschließen!`);
+            return;
+        }
+        // #47: Baseline zum Annehme-Zeitpunkt speichern — verhindert Sofort-Abschluss
+        const baseline = {};
+        const currentStats = getGridStats();
+        for (const mat of Object.keys(quest.needs)) {
+            baseline[mat] = currentStats.counts[mat] || 0;
+        }
+        activeQuests.push({ ...quest, accepted: Date.now(), baseline });
         localStorage.setItem('insel-quests', JSON.stringify(activeQuests));
         showToast(`📜 Quest: ${quest.title}`);
         updateQuestDisplay();
@@ -168,9 +186,12 @@
         if (!stats) stats = getGridStats();
         let completed = [];
         activeQuests = activeQuests.filter(quest => {
-            const done = Object.entries(quest.needs).every(([mat, count]) =>
-                (stats.counts[mat] || 0) >= count
-            );
+            const baseline = quest.baseline || {};
+            const done = Object.entries(quest.needs).every(([mat, count]) => {
+                const base = baseline[mat] || 0;
+                const current = stats.counts[mat] || 0;
+                return (current - base) >= count;
+            });
             if (done) {
                 completed.push(quest);
                 completedQuests.push(quest.title);
@@ -225,8 +246,11 @@
         }
         const stats = getGridStats();
         questPanel.innerHTML = activeQuests.map(q => {
+            const baseline = q.baseline || {};
             const items = Object.entries(q.needs).map(([mat, need]) => {
-                const have = stats.counts[mat] || 0;
+                const base = baseline[mat] || 0;
+                const current = stats.counts[mat] || 0;
+                const have = Math.max(0, current - base); // nur was seit Quest-Annahme gebaut
                 const done = have >= need;
                 const m = MATERIALS[mat];
                 return `<span class="${done ? 'quest-done' : 'quest-todo'}">${m ? m.emoji : mat} ${have}/${need}</span>`;
@@ -441,6 +465,76 @@
         trackEvent('easter_egg', { material, egg: egg.slice(0, 30) });
     }
 
+    // --- NPC-Positionen auf der Insel ---
+    // Questgeber die auf dem Grid stehen und anklickbar sind
+    const NPC_DEFS = {
+        spongebob: { emoji: '🧽', name: 'SpongeBob' },
+        maus:      { emoji: '🐭', name: 'Maus' },
+        elefant:   { emoji: '🐘', name: 'Elefant' },
+        neinhorn:  { emoji: '🦄', name: 'NEINhorn' },
+        krabs:     { emoji: '🦀', name: 'Mr. Krabs' },
+        tommy:     { emoji: '🦞', name: 'Tommy' },
+    };
+
+    // NPCs im Kreis um die Inselmitte verteilen
+    // Positionen werden nach Grid-Init berechnet (siehe unten)
+    let npcPositions = {};
+
+    function initNpcPositions() {
+        const cx = Math.floor(COLS / 2);
+        const cy = Math.floor(ROWS / 2);
+        const rx = Math.floor(COLS * 0.3);
+        const ry = Math.floor(ROWS * 0.3);
+        const ids = Object.keys(NPC_DEFS);
+        npcPositions = {};
+        ids.forEach((id, i) => {
+            const angle = (i / ids.length) * Math.PI * 2 - Math.PI / 2;
+            let r = Math.min(ROWS - 3, Math.max(2, cy + Math.round(Math.sin(angle) * ry)));
+            let c = Math.min(COLS - 3, Math.max(2, cx + Math.round(Math.cos(angle) * rx)));
+            // Freie Zelle suchen falls besetzt
+            if (grid[r] && grid[r][c]) {
+                let found = false;
+                for (let d = 1; d <= 3 && !found; d++) {
+                    for (const [dr, dc] of [[0,d],[0,-d],[d,0],[-d,0],[d,d],[-d,-d]]) {
+                        const nr = r + dr, nc = c + dc;
+                        if (nr >= 2 && nr < ROWS - 2 && nc >= 2 && nc < COLS - 2 && grid[nr] && !grid[nr][nc]) {
+                            r = nr; c = nc; found = true; break;
+                        }
+                    }
+                }
+            }
+            // Zelle für NPC freihalten (vorhandenes Material entfernen)
+            if (grid[r] && grid[r][c]) grid[r][c] = null;
+            npcPositions[id] = { r, c };
+        });
+    }
+
+    function getNpcAt(r, c) {
+        for (const [id, pos] of Object.entries(npcPositions)) {
+            if (pos.r === r && pos.c === c) return id;
+        }
+        return null;
+    }
+
+    function showNpcQuestDialog(npcId) {
+        const npc = NPC_DEFS[npcId];
+        if (!npc) return;
+        const quest = window.questSystem.getAvailable(npcId);
+        const active = window.questSystem.getActive().find(q => q.npc === npcId);
+        if (active) {
+            showToast(`${npc.emoji} ${npc.name}: Ich warte noch auf "${active.title}"!`, 3000);
+        } else if (quest) {
+            showToast(`${npc.emoji} ${quest.desc}`, 5000);
+            window.questSystem.accept(quest);
+        } else {
+            const voice = NPC_VOICES[npcId];
+            if (voice) {
+                const tick = voice.ticks[Math.floor(Math.random() * voice.ticks.length)];
+                showToast(`${npc.emoji} ${voice.prefix} ${tick}`, 2000);
+            }
+        }
+    }
+
     // --- NPC-Kommentare beim Bauen ---
     // === GENERATIVE NPC-KOMMENTARE ===
     // Baustein-System: Satzteile werden live gemischt = unendliche Kombinationen
@@ -451,8 +545,14 @@
         elefant:   { emoji: '🐘', prefix: 'Elefant:', ticks: ['Törööö!', 'Hmm, ich möchte sicherstellen...'], style: 'careful' },
         neinhorn:  { emoji: '🦄', prefix: 'Neinhorn:', ticks: ['NEIN!', '...ok,', 'Mon Dieu!'], style: 'nein' },
         krabs:     { emoji: '🦀', prefix: 'Krabs:', ticks: ['💰', 'Taler!', 'Geld!'], style: 'money' },
-        tommy:     { emoji: '🎬', prefix: 'Tommy:', ticks: ['Klick-klack!', 'JA!', 'CUT!'], style: 'chaos' },
+        tommy:     { emoji: '🦞', prefix: 'Tommy:', ticks: ['Klick-klack!', 'JA!', 'Noch ein Boot!'], style: 'chaos' },
         bernd:     { emoji: '🍞', prefix: 'Bernd:', ticks: ['*seufz*', 'Mist.', 'Toll.'], style: 'grumpy' },
+        floriane:  { emoji: '🧚', prefix: 'Floriane:', ticks: ['✨', 'Oh!', 'Ein Wunsch!'], style: 'magic' },
+        // #13: Programmiersprachen-Bewohner
+        haskell:   { emoji: '🟣', prefix: 'Haskell:', ticks: ['Rein funktional!', 'Keine Seiteneffekte!', 'Typen lösen alles!'], style: 'careful' },
+        lua:       { emoji: '🌙', prefix: 'Lua:', ticks: ['Schnell und leicht!', 'Tables!', '-- Ein Kommentar genügt'], style: 'cute' },
+        sql:       { emoji: '🗃️', prefix: 'SQL:', ticks: ['SELECT * FROM Insel', 'JOIN!', 'NULL... ist auch ein Wert.'], style: 'grumpy' },
+        scratch:   { emoji: '🐱', prefix: 'Scratch:', ticks: ['Wenn grüne Flagge angeklickt...', '10 Schritte gehen!', 'Katze sagt: Miau!'], style: 'caps' },
     };
 
     const MAT_ADJECTIVES = {
@@ -591,6 +691,24 @@
             '🍄 Hirnfitz: "++++++[>++++++++++<-]>++++. !" (Das heißt: "d!" — er versucht "du bist toll" zu sagen)',
             '🍞 Bernd: "*seufz* 100 Blöcke. Und ich muss immer noch Support machen."',
         ],
+        talkshow: [
+            '— TALKSHOW: "Gebaut oder Geklickt?" — Live von der Insel Java —',
+            '🐍 Python: "Willkommen bei Gebaut oder Geklickt — der einzigen Talkshow auf einer Insel die aus Code besteht."',
+            '💡 JavaScript: "Gaming ist wenn jemand auf Dinge klickt und sich gut fühlt."',
+            '📝 TypeScript: "Gaming ist wenn jemand auf Dinge klickt und sich gut fühlt, ABER typsicher."',
+            '💡 JavaScript: "Ich HASSE dich."',
+            '🧽 SpongeBob: "ICH BIN BEREIT zu sagen: DAS IST EIN SPIEL! Da sind Blöcke! Da sind Farben! Da ist SPASS!"',
+            '🪨 C: "Zu meiner Zeit war ein Spiel ein Cursor der sich bewegt hat. Und wir waren DANKBAR."',
+            '🦄 Neinhorn: "NEIN das ist kein Spiel. ...doch. ...NEIN. ...ach, es macht Spaß. Egal."',
+            '🍞 Bernd: "*seufz* Ist Leiden Gaming? Dann bin ich Pro-Gamer."',
+            '🦈 Makro: *taucht auf* "Ist INVESTIEREN Gaming? Ich habe aus einem Block HUNDERT gemacht!" *taucht ab*',
+            '🐘 Elefant: "Hmm, Törööö. Gaming ist wenn man vergisst dass man spielt. Und hier vergisst man das."',
+            '🦜 Fortran: "Fort-ran die Langeweile! Her-kam der Spaß! ALLES ist Gaming wenn man es mit Freude tut!"',
+            '🪨 C: "Es ist aus Worten gebaut. Nicht aus einer Engine. Aus Worten."',
+            '🧽 SpongeBob: "Und die Insel hat FREUNDE! Wir sind die Freunde! ICH BIN EIN FREUND!"',
+            '🍞 Bernd: "*seufz* ...ich auch. Sag ich nur einmal."',
+            '— Applaus. Jemand wirft eine Kokosnuss. Bernd seufzt. —',
+        ],
         halfIsland: [
             '— HÖRSPIEL: Mensch, Maschine, KI — Live von der Insel Java —',
             '🐍 Python: "Die halbe Insel ist bebaut. Ein Mensch hat das gemacht. Mit Klicks."',
@@ -621,11 +739,57 @@
 
     let playedHoerspiele = JSON.parse(localStorage.getItem('insel-hoerspiele') || '[]');
 
+    // TTS: Emoji und Markup aus Text strippen für Sprachausgabe
+    function stripForTTS(text) {
+        return text
+            .replace(/[\u{1F000}-\u{1FFFF}]|[\u{2600}-\u{27BF}]|[\u{FE00}-\u{FEFF}]|[\u{1F900}-\u{1F9FF}]/gu, '')
+            .replace(/<[^>]+>/g, '')
+            .replace(/—/g, '–')
+            .replace(/\s+/g, ' ')
+            .trim();
+    }
+
+    let hoerspielSpeaking = false;
+
+    function speakLines(lines, onDone) {
+        if (!window.speechSynthesis) {
+            if (onDone) onDone();
+            return;
+        }
+        hoerspielSpeaking = true;
+        INSEL_SOUND.setMasterVolume(0.15); // Bau-Töne leiser während Hörspiel
+
+        let index = 0;
+        function speakNext() {
+            if (index >= lines.length) {
+                hoerspielSpeaking = false;
+                INSEL_SOUND.setMasterVolume(1.0);
+                if (onDone) onDone();
+                return;
+            }
+            const text = stripForTTS(lines[index]);
+            showToast(lines[index], 4000);
+            if (index === 0) soundAchievement();
+            index++;
+
+            if (!text) { setTimeout(speakNext, 500); return; }
+
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang = 'de-DE';
+            utter.rate = 0.95;
+            utter.onend = () => setTimeout(speakNext, 600);
+            utter.onerror = () => setTimeout(speakNext, 600);
+            window.speechSynthesis.speak(utter);
+        }
+        speakNext();
+    }
+
     function maybeHoerspiel(stats) {
         let key = null;
         if (stats.total === 1 && !playedHoerspiele.includes('firstBlock')) key = 'firstBlock';
         else if (stats.total === 10 && !playedHoerspiele.includes('tenBlocks')) key = 'tenBlocks';
         else if (stats.total === 50 && !playedHoerspiele.includes('fiftyBlocks')) key = 'fiftyBlocks';
+        else if (stats.total === 75 && !playedHoerspiele.includes('talkshow')) key = 'talkshow';
         else if (stats.total === 100 && !playedHoerspiele.includes('hundredBlocks')) key = 'hundredBlocks';
         else if (stats.percent === 50 && !playedHoerspiele.includes('halfIsland')) key = 'halfIsland';
         else if (stats.percent >= 100 && !playedHoerspiele.includes('fullIsland')) key = 'fullIsland';
@@ -636,12 +800,7 @@
         localStorage.setItem('insel-hoerspiele', JSON.stringify(playedHoerspiele));
 
         const lines = HOERSPIELE[key];
-        lines.forEach((line, i) => {
-            setTimeout(() => {
-                showToast(line, 4000);
-                if (i === 0) soundAchievement();
-            }, i * 4500);
-        });
+        speakLines(lines);
         trackEvent('hoerspiel', { scene: key, blocks: stats.total });
     }
 
@@ -678,11 +837,16 @@
             const age = now - planted;
             const cell = grid[r]?.[c];
 
-            if (cell === 'sapling' && age >= TREE_GROWTH_TIME_1) {
+            // Wu Xing: Wasser nährt Holz — Setzling neben Wasser wächst 2× schneller
+            const hasWaterNeighbor = [[r-1,c],[r+1,c],[r,c-1],[r,c+1]]
+                .some(([nr, nc]) => nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && grid[nr]?.[nc] === 'water');
+            const growTime1 = hasWaterNeighbor ? TREE_GROWTH_TIME_1 / 2 : TREE_GROWTH_TIME_1;
+
+            if (cell === 'sapling' && age >= growTime1) {
                 grid[r][c] = 'small_tree';
                 addPlaceAnimation(r, c);
                 changed = true;
-            } else if (cell === 'small_tree' && age >= TREE_GROWTH_TIME_1 + TREE_GROWTH_TIME_2) {
+            } else if (cell === 'small_tree' && age >= growTime1 + TREE_GROWTH_TIME_2) {
                 grid[r][c] = 'tree';
                 delete treeGrowth[key];
                 addPlaceAnimation(r, c);
@@ -697,6 +861,136 @@
 
     // Alle 5s prüfen
     setInterval(updateTreeGrowth, 5000);
+
+    // #61: Konsequenz — Welt reagiert auf Aktionen
+    // Brunnen neben leerem Sand → Blume wächst (15% Chance/Tick pro Nachbar-Zelle)
+    function updateWorldConsequences() {
+        let changed = false;
+        const FLOWER_CHANCE = 0.15; // 15% Chance dass eine leere Zelle neben einem Brunnen Blume wird
+        const BEACH_EDGE = 2; // Strand-Rand nicht bepflanzen
+        for (let r = BEACH_EDGE + 1; r < ROWS - BEACH_EDGE - 1; r++) {
+            for (let c = BEACH_EDGE + 1; c < COLS - BEACH_EDGE - 1; c++) {
+                if (grid[r][c] !== null) continue; // Nur auf leerem Sand
+                const neighbors = [[r-1,c],[r+1,c],[r,c-1],[r,c+1]];
+                const hasFountain = neighbors.some(([nr, nc]) =>
+                    nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && grid[nr]?.[nc] === 'fountain'
+                );
+                if (hasFountain && Math.random() < FLOWER_CHANCE) {
+                    grid[r][c] = 'flower';
+                    addPlaceAnimation(r, c);
+                    unlockMaterial('flower');
+                    changed = true;
+                }
+            }
+        }
+        if (changed) {
+            updateStats();
+            showToast('🌺 Brunnen-Magie! Blumen wachsen...');
+        }
+    }
+
+    // Konsequenz-Check alle 8s (versetzt zum Tree-Growth-Check)
+    setInterval(updateWorldConsequences, 8000);
+
+    // #19: Evolution-Screensaver — drei Terrain-Zonen, Kreaturen verabschieden sich
+    const CONWAY_WATER   = ['🐟','🐠','🐡','🦑','🪼','🐙','🦐','🐬','🐳'];
+    const CONWAY_BEACH   = ['🦀','🐚','🐸','🦎','🦭','🦞','🐊'];
+    const CONWAY_LAND    = ['🦋','🐝','🐛','🐇','🦔','🐿️','🌸','🍄','🦜','🦊'];
+    const CONWAY_MIGRANT = ['🐋','🦅','🐦‍⬛','🦢']; // erscheinen überall, kurz
+
+    let conwayOverlay = null; // 2D String-Array ('' = leer, sonst Emoji)
+    let conwayInterval = null;
+    let conwayFading = false;
+    let lastInteraction = Date.now();
+    const CONWAY_IDLE_MS = 30000;
+
+    function conwayZone(r, c) {
+        if (r < 2 || r >= ROWS - 2 || c < 2 || c >= COLS - 2) return 'water';
+        if (r === 2 || r === ROWS - 3 || c === 2 || c === COLS - 3) return 'beach';
+        return 'land';
+    }
+
+    function conwayCreature(r, c) {
+        if (Math.random() < 0.04) return CONWAY_MIGRANT[Math.floor(Math.random() * CONWAY_MIGRANT.length)];
+        const zone = conwayZone(r, c);
+        const pool = zone === 'water' ? CONWAY_WATER : zone === 'beach' ? CONWAY_BEACH : CONWAY_LAND;
+        return pool[Math.floor(Math.random() * pool.length)];
+    }
+
+    function startConway() {
+        if (conwayInterval) return;
+        conwayFading = false;
+        conwayOverlay = Array.from({ length: ROWS }, () => Array(COLS).fill(''));
+        for (let r = 0; r < ROWS; r++)
+            for (let c = 0; c < COLS; c++)
+                if (grid[r][c] === null && Math.random() < 0.18)
+                    conwayOverlay[r][c] = conwayCreature(r, c);
+        conwayInterval = setInterval(conwayStep, 650);
+    }
+
+    function conwayStep() {
+        if (!conwayOverlay || conwayFading) return;
+        const next = Array.from({ length: ROWS }, () => Array(COLS).fill(''));
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                if (grid[r][c] !== null) continue; // Materialien unberührt
+                let alive = 0;
+                for (let dr = -1; dr <= 1; dr++)
+                    for (let dc = -1; dc <= 1; dc++)
+                        if ((dr || dc) && conwayOverlay[r + dr]?.[c + dc]) alive++;
+                const cur = conwayOverlay[r][c] !== '';
+                // Migrants sterben öfter (Besuch, kein Zuhause)
+                const isMigrant = cur && CONWAY_MIGRANT.includes(conwayOverlay[r][c]);
+                if (cur) {
+                    next[r][c] = (alive >= 2 && alive <= 4 && !(isMigrant && Math.random() < 0.35))
+                        ? conwayOverlay[r][c] : '';
+                } else {
+                    // Geburt: 3 Nachbarn ODER seltene Spontangeburt (Migration)
+                    if (alive === 3 || (alive >= 1 && Math.random() < 0.008))
+                        next[r][c] = conwayCreature(r, c);
+                }
+            }
+        }
+        conwayOverlay = next;
+        requestRedraw();
+    }
+
+    function fadeConway() {
+        // Kreaturen verschwinden langsam wenn jemand zurückkommt
+        if (!conwayOverlay) return;
+        conwayFading = true;
+        clearInterval(conwayInterval);
+        conwayInterval = null;
+        const fade = setInterval(() => {
+            if (!conwayOverlay) { clearInterval(fade); return; }
+            let left = 0;
+            for (let r = 0; r < ROWS; r++)
+                for (let c = 0; c < COLS; c++)
+                    if (conwayOverlay[r][c] && Math.random() < 0.12) conwayOverlay[r][c] = '';
+            for (let r = 0; r < ROWS; r++)
+                for (let c = 0; c < COLS; c++)
+                    if (conwayOverlay[r][c]) left++;
+            requestRedraw();
+            if (left === 0) { clearInterval(fade); conwayOverlay = null; conwayFading = false; requestRedraw(); }
+        }, 120);
+    }
+
+    function stopConway() {
+        clearInterval(conwayInterval);
+        conwayInterval = null;
+        conwayOverlay = null;
+        conwayFading = false;
+        requestRedraw();
+    }
+
+    function resetIdleTimer() {
+        lastInteraction = Date.now();
+        if (conwayOverlay) fadeConway(); // sanfter Abschied statt sofort weg
+    }
+
+    setInterval(() => {
+        if (!conwayInterval && !conwayFading && Date.now() - lastInteraction > CONWAY_IDLE_MS) startConway();
+    }, 5000);
 
     // ============================================================
     // === INVENTAR ===
@@ -967,6 +1261,8 @@
         unlockMaterial(matId);
         soundCraft();
         showCraftResult(result.emoji, result.name, 1);
+        // #64: Elektronen-Blitz — kurze Lichtfunken beim Craften (Amélie: kein Label, kein UI)
+        spawnCraftSparks();
 
         flashInventoryTab();
         if (result.fromCache === false && isNew) {
@@ -985,10 +1281,32 @@
     function showCraftResult(emoji, name, count) {
         const preview = document.getElementById('craft-result');
         if (!preview) return;
-        preview.innerHTML = `<span class="craft-emoji">${emoji}</span><span class="craft-result-name">${count > 1 ? count + 'x ' : ''}${name}</span>`;
+        preview.innerHTML = `<span class="craft-emoji">${emoji}</span><span class="craft-result-name">${count > 1 ? count + 'x ' : ''}${escapeHtml(name)}</span><span class="craft-done-label">✅ Fertig!</span>`;
         preview.title = name;
+        preview.classList.remove('has-recipe');
         preview.classList.add('craft-success');
-        setTimeout(() => preview.classList.remove('craft-success'), 800);
+        setTimeout(() => preview.classList.remove('craft-success'), 2000);
+        // Fly-Animation: Emoji fliegt von Result-Box zum Inventar-Tab
+        flyToInventory(preview, emoji);
+    }
+
+    function flyToInventory(fromEl, emoji) {
+        const target = document.querySelector('.sidebar-tab[data-tab="inventory"]');
+        if (!fromEl || !target) return;
+        const fromRect = fromEl.getBoundingClientRect();
+        const toRect = target.getBoundingClientRect();
+        const flyer = document.createElement('div');
+        flyer.className = 'craft-flyer';
+        flyer.textContent = emoji;
+        flyer.style.left = (fromRect.left + fromRect.width / 2) + 'px';
+        flyer.style.top = (fromRect.top + fromRect.height / 2) + 'px';
+        document.body.appendChild(flyer);
+        // Ziel berechnen
+        const dx = (toRect.left + toRect.width / 2) - (fromRect.left + fromRect.width / 2);
+        const dy = (toRect.top + toRect.height / 2) - (fromRect.top + fromRect.height / 2);
+        flyer.style.setProperty('--fly-dx', dx + 'px');
+        flyer.style.setProperty('--fly-dy', dy + 'px');
+        flyer.addEventListener('animationend', () => flyer.remove());
     }
 
     async function doCraft() {
@@ -1109,11 +1427,13 @@
         if (preview) {
             if (recipe) {
                 const info = MATERIALS[recipe.result];
-                preview.innerHTML = `<span class="craft-emoji">${info.emoji}</span><span class="craft-result-count">${recipe.resultCount > 1 ? recipe.resultCount + 'x' : ''}</span>`;
+                preview.innerHTML = `<span class="craft-emoji">${info.emoji}</span><span class="craft-result-count">${recipe.resultCount > 1 ? recipe.resultCount + 'x' : ''}</span><span class="craft-preview-label">⚒️ drücken!</span>`;
                 preview.title = recipe.name;
+                preview.classList.add('has-recipe');
             } else {
                 preview.innerHTML = '<span class="craft-question">?</span>';
                 preview.title = '';
+                preview.classList.remove('has-recipe');
             }
         }
 
@@ -1190,7 +1510,8 @@
     // Freigeschaltete Materialien (durch Ernten oder Crafting)
     let unlockedMaterials = new Set();
 
-    // === SPIELFIGUR (deklariert in Zeile ~1357, nach Animationen) ===
+    // === SPIELFIGUR (Variablen weiter unten deklariert) ===
+    let playerEmoji = localStorage.getItem('insel-player-emoji') || '🧒';
 
     function saveUnlocked() {
         localStorage.setItem('insel-unlocked-materials', JSON.stringify([...unlockedMaterials]));
@@ -1223,7 +1544,13 @@
                 btn.dataset.material = mat;
                 btn.title = info.label;
                 btn.innerHTML = `<span class="mat-emoji">${info.emoji}</span>`;
+                btn.setAttribute('draggable', 'true');
                 palette.appendChild(btn);
+                btn.addEventListener('dragstart', e => {
+                    e.dataTransfer.setData('text/plain', mat);
+                    e.dataTransfer.effectAllowed = 'copy';
+                    selectMaterial(mat);
+                });
                 btn.addEventListener('click', () => {
                     document.querySelectorAll('.material-btn').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
@@ -1314,6 +1641,7 @@
                 }
             }
         }
+        updateGenesisBadge();
     }
 
     // Save-Migration: alte Saves ohne unlocked → Grid + Inventar scannen
@@ -1356,6 +1684,7 @@
     let playerPos  = JSON.parse(localStorage.getItem('insel-player-pos') || 'null')
                      || { r: Math.floor(ROWS / 2), c: Math.floor(COLS / 2) };
     let playerDragging = false;
+    let playerBlocksPlaced = parseInt(localStorage.getItem('insel-blocks-placed') || '0');
 
     // --- DOM-Elemente ---
     const canvas = document.getElementById('game-canvas');
@@ -1369,11 +1698,9 @@
         nameGroup.style.display = 'none';
     }
 
-    // Wiederkehrende Spieler: Intro überspringen → direkt ins Spiel
-    if (localStorage.getItem('insel-projekte') && playerName && introOverlay) {
-        introOverlay.style.display = 'none';
-        if (window.startSessionClock) window.startSessionClock();
-    }
+    // Wiederkehrende Spieler: Intro wird NACH Canvas-Init ausgeblendet (siehe unten)
+    // Hier nur merken, damit kein Flash of unready content auf dem iPhone entsteht
+    const isReturningPlayer = !!(localStorage.getItem('insel-projekte') && playerName);
     const statsContent = document.getElementById('stats-content');
     const projectNameInput = document.getElementById('project-name');
     const loadDialog = document.getElementById('load-dialog');
@@ -1439,19 +1766,70 @@
                 grid[r][c] = null;
             }
         }
-        // 8 Starter-Bäume am Rand verteilt (Insel fühlt sich bewachsen an)
-        const starterTrees = [
-            { r: 1,        c: 2        },
-            { r: 1,        c: COLS - 3 },
-            { r: ROWS - 2, c: 2        },
-            { r: ROWS - 2, c: COLS - 3 },
-            { r: Math.floor(ROWS / 2) - 1, c: 1        },
-            { r: Math.floor(ROWS / 2) + 1, c: COLS - 2 },
-            { r: 2,        c: Math.floor(COLS / 2) - 2 },
-            { r: ROWS - 3, c: Math.floor(COLS / 2) + 2 },
-        ];
-        starterTrees.forEach(({ r, c }) => { grid[r][c] = 'palm'; });
-        window.grid = grid; // Chat-Integration aktuell halten
+        window.grid = grid;
+    }
+
+    // Zufalls-Insel generieren: Strand, Palmen, Blumen, Steine
+    function generateStarterIsland() {
+        // Pseudo-random mit Seed damit jeder Start anders ist
+        let seed = Date.now();
+        function rng() { seed = (seed * 16807 + 0) % 2147483647; return seed / 2147483647; }
+
+        const cx = COLS / 2, cy = ROWS / 2;
+        const rx = COLS * 0.38, ry = ROWS * 0.38;
+
+        // Strandrand (1-2 Zellen Sand um die Insel)
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                const dx = (c - cx) / rx, dy = (r - cy) / ry;
+                const dist = dx * dx + dy * dy;
+                // Wellige Kante via einfache Noise-Näherung
+                const wobble = 0.15 * Math.sin(r * 1.7 + c * 0.9) + 0.1 * Math.cos(c * 2.3 - r * 0.7);
+                if (dist < (0.7 + wobble) && dist >= (0.55 + wobble)) {
+                    grid[r][c] = 'sand';
+                }
+            }
+        }
+
+        // Palmen am Strand verteilen
+        const palmCount = Math.max(6, Math.floor((ROWS + COLS) * 0.3));
+        let palmsPlaced = 0;
+        for (let attempt = 0; attempt < 200 && palmsPlaced < palmCount; attempt++) {
+            const r = Math.floor(rng() * ROWS);
+            const c = Math.floor(rng() * COLS);
+            if (grid[r][c] === 'sand') {
+                grid[r][c] = 'palm';
+                palmsPlaced++;
+            }
+        }
+
+        // Bäume im Insel-Inneren
+        const treeCount = Math.max(4, Math.floor((ROWS + COLS) * 0.2));
+        let treesPlaced = 0;
+        for (let attempt = 0; attempt < 200 && treesPlaced < treeCount; attempt++) {
+            const r = Math.floor(rng() * ROWS);
+            const c = Math.floor(rng() * COLS);
+            const dx = (c - cx) / rx, dy = (r - cy) / ry;
+            if (dx * dx + dy * dy < 0.4 && !grid[r][c]) {
+                grid[r][c] = rng() < 0.5 ? 'tree' : 'small_tree';
+                treesPlaced++;
+            }
+        }
+
+        // Ein paar Blumen und Pflanzen
+        const floraCount = Math.max(3, Math.floor((ROWS + COLS) * 0.15));
+        let floraPlaced = 0;
+        for (let attempt = 0; attempt < 200 && floraPlaced < floraCount; attempt++) {
+            const r = Math.floor(rng() * ROWS);
+            const c = Math.floor(rng() * COLS);
+            const dx = (c - cx) / rx, dy = (r - cy) / ry;
+            if (dx * dx + dy * dy < 0.45 && !grid[r][c]) {
+                grid[r][c] = rng() < 0.6 ? 'flower' : 'plant';
+                floraPlaced++;
+            }
+        }
+
+        window.grid = grid;
     }
 
     // --- Zeichnen ---
@@ -1539,6 +1917,24 @@
             }
         }
 
+        // Blueprint-Overlay zeichnen (Ghost-Preview)
+        drawBlueprintOverlay();
+
+        // Evolution Screensaver — Kreaturen als Emojis auf Terrain-Zonen
+        if (conwayOverlay) {
+            ctx.font = `${Math.round(CELL_SIZE * 0.62)}px serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    if (!conwayOverlay[r][c]) continue;
+                    const x = (c + WATER_BORDER) * CELL_SIZE;
+                    const y = (r + WATER_BORDER) * CELL_SIZE;
+                    ctx.fillText(conwayOverlay[r][c], x + CELL_SIZE / 2, y + CELL_SIZE / 2 + 1);
+                }
+            }
+        }
+
         // Spielfigur zeichnen
         if (playerName) {
             const px = (playerPos.c + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
@@ -1562,6 +1958,74 @@
             ctx.lineWidth = 3;
             ctx.strokeText(playerName, px, py - CELL_SIZE * 0.52);
             ctx.fillText(playerName, px, py - CELL_SIZE * 0.52);
+        }
+
+        // NPCs zeichnen
+        for (const [id, pos] of Object.entries(npcPositions)) {
+            const npc = NPC_DEFS[id];
+            const nx = (pos.c + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
+            const ny = (pos.r + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
+            // Leichtes Wippen
+            const bob = Math.sin(time * 2 + pos.r + pos.c) * 2;
+            // Hintergrund-Kreis damit NPCs sichtbar sind
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+            ctx.beginPath();
+            ctx.arc(nx, ny + bob, CELL_SIZE * 0.45, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            // Emoji
+            ctx.font = `${CELL_SIZE * 0.6}px serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(npc.emoji, nx, ny + bob);
+            // Name
+            ctx.font = `bold ${Math.max(8, CELL_SIZE * 0.25)}px sans-serif`;
+            ctx.fillStyle = '#fff';
+            ctx.strokeStyle = 'rgba(0,0,0,0.7)';
+            ctx.lineWidth = 2;
+            ctx.strokeText(npc.name, nx, ny - CELL_SIZE * 0.45);
+            ctx.fillText(npc.name, nx, ny - CELL_SIZE * 0.45);
+            // Quest-Indikator
+            const hasQuest = window.questSystem?.getAvailable(id);
+            const hasActive = window.questSystem?.getActive().find(q => q.npc === id);
+            if (hasQuest) {
+                ctx.font = `bold ${CELL_SIZE * 0.35}px sans-serif`;
+                ctx.fillStyle = '#F1C40F';
+                ctx.strokeStyle = '#000';
+                ctx.lineWidth = 2;
+                ctx.strokeText('❗', nx + CELL_SIZE * 0.3, ny - CELL_SIZE * 0.3);
+                ctx.fillText('❗', nx + CELL_SIZE * 0.3, ny - CELL_SIZE * 0.3);
+            } else if (hasActive) {
+                ctx.font = `bold ${CELL_SIZE * 0.35}px sans-serif`;
+                ctx.fillStyle = '#3498DB';
+                ctx.strokeStyle = '#000';
+                ctx.lineWidth = 2;
+                ctx.strokeText('❓', nx + CELL_SIZE * 0.3, ny - CELL_SIZE * 0.3);
+                ctx.fillText('❓', nx + CELL_SIZE * 0.3, ny - CELL_SIZE * 0.3);
+            }
+        }
+
+        // Sammelbare Items zeichnen
+        for (const ci of collectibles) {
+            const cx = (ci.c + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
+            const cy = (ci.r + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
+            // Schwebendes Glitzern
+            const float = Math.sin(time * 3 + ci.r * 2 + ci.c) * 3;
+            const glow = 0.6 + Math.sin(time * 4 + ci.c) * 0.2;
+            // Leuchtkreis
+            ctx.globalAlpha = glow * 0.4;
+            ctx.fillStyle = '#FFD700';
+            ctx.beginPath();
+            ctx.arc(cx, cy + float, CELL_SIZE * 0.4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalAlpha = 1;
+            // Emoji
+            ctx.font = `${CELL_SIZE * 0.5}px serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(ci.emoji, cx, cy + float);
         }
 
         // Hover-Vorschau
@@ -1650,7 +2114,7 @@
         ctx.font = `${CELL_SIZE * 0.7}px serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText('🧒', px, py);
+        ctx.fillText(playerEmoji, px, py);
 
         // Name-Label
         const fontSize = Math.max(9, CELL_SIZE * 0.27);
@@ -1672,7 +2136,77 @@
         // Spieler bleibt auf bebaubarem Bereich (kein Wasser-Rand)
         if (nr >= 2 && nr < ROWS - 2 && nc >= 2 && nc < COLS - 2) {
             playerPos = { r: nr, c: nc };
-            requestRedraw(); // sofort zeichnen — kein Warten auf 100ms-Interval
+            localStorage.setItem('insel-player-pos', JSON.stringify(playerPos));
+            needsRedraw = true;
+            draw(); // sofort zeichnen — nicht auf 100ms-Interval warten (#66)
+            checkPlayerProximity();
+        }
+    }
+
+    // --- Spieler-Abenteuer: Entdecken durch Laufen ---
+
+    // Sammelbare Items auf der Insel
+    let collectibles = JSON.parse(localStorage.getItem('insel-collectibles') || '[]');
+    let lastNpcGreet = {}; // NPC-ID → timestamp, damit nicht jede Sekunde gegrüßt wird
+
+    function spawnCollectibles() {
+        if (collectibles.length >= 5) return; // max 5 gleichzeitig
+        const types = [
+            { emoji: '💎', name: 'Diamant', material: 'diamond' },
+            { emoji: '🔑', name: 'Schlüssel', material: 'key' },
+            { emoji: '🍎', name: 'Apfel', material: 'apple' },
+            { emoji: '🥚', name: 'Ei', material: 'egg' },
+            { emoji: '🍯', name: 'Honig', material: 'honey' },
+            { emoji: '🌸', name: 'Blume', material: 'flower' },
+            { emoji: '🍄', name: 'Pilz', material: 'mushroom' },
+            { emoji: '🔮', name: 'Kristall', material: 'crystal' },
+            { emoji: '⭐', name: 'Stern', material: 'star' },
+        ];
+        // Zufällige freie Zelle finden
+        for (let attempt = 0; attempt < 50; attempt++) {
+            const r = 2 + Math.floor(Math.random() * (ROWS - 4));
+            const c = 2 + Math.floor(Math.random() * (COLS - 4));
+            if (grid[r][c]) continue; // nur auf leeren Zellen
+            if (getNpcAt(r, c)) continue;
+            if (r === playerPos.r && c === playerPos.c) continue;
+            if (collectibles.some(ci => ci.r === r && ci.c === c)) continue;
+            const type = types[Math.floor(Math.random() * types.length)];
+            collectibles.push({ ...type, r, c });
+            localStorage.setItem('insel-collectibles', JSON.stringify(collectibles));
+            requestRedraw();
+            return;
+        }
+    }
+
+    function checkPlayerProximity() {
+        // Sammelbare Items einsammeln (Spieler steht drauf)
+        const collected = collectibles.filter(ci => ci.r === playerPos.r && ci.c === playerPos.c);
+        if (collected.length > 0) {
+            collected.forEach(ci => {
+                addToInventory(ci.material, 1);
+                unlockMaterial(ci.material);
+                showToast(`${ci.emoji} ${ci.name} gefunden!`, 2000);
+                soundCraft();
+            });
+            collectibles = collectibles.filter(ci => ci.r !== playerPos.r || ci.c !== playerPos.c);
+            localStorage.setItem('insel-collectibles', JSON.stringify(collectibles));
+            updateInventoryDisplay();
+            requestRedraw();
+            // Neues Item spawnen (verzögert)
+            setTimeout(spawnCollectibles, 3000 + Math.random() * 5000);
+        }
+
+        // NPCs in der Nähe (2 Felder) begrüßen + Quest anbieten
+        const now = Date.now();
+        for (const [id, pos] of Object.entries(npcPositions)) {
+            const dist = Math.abs(pos.r - playerPos.r) + Math.abs(pos.c - playerPos.c);
+            if (dist <= 2) {
+                // Nur alle 15s pro NPC
+                if (lastNpcGreet[id] && now - lastNpcGreet[id] < 15000) continue;
+                lastNpcGreet[id] = now;
+                showNpcQuestDialog(id);
+                break; // nur ein NPC pro Schritt
+            }
         }
     }
 
@@ -1756,6 +2290,8 @@
     function applyTool(r, c) {
         // Wasser-Rand (äußere 2 Reihen/Spalten) ist nicht bebaubar
         if (r < 2 || r >= ROWS - 2 || c < 2 || c >= COLS - 2) return;
+        // NPCs nicht überbauen
+        if (getNpcAt(r, c)) return;
 
         if (currentTool === 'build') {
             // Hinweis: Klick auf Baum/Pflanze im Bau-Modus → Ernte-Tipp (max 1x pro 30s)
@@ -1782,28 +2318,48 @@
                 if (!undoPushedThisStroke) { pushUndo(); undoPushedThisStroke = true; }
                 grid[r][c] = currentMaterial;
                 checkAutomerge(r, c);
+                checkBlueprintMatch(r, c);
                 const hint = document.getElementById('genesis-hint');
                 if (hint) hint.style.display = 'none';
                 // Setzling platzieren startet Baumwachstum
                 if (currentMaterial === 'sapling') {
                     treeGrowth[r + ',' + c] = Date.now();
                 }
-                // Brunnen zieht nach 10 Sekunden Blumen an
-                if (currentMaterial === 'fountain') {
+                // Konsequenz: Wasser/Brunnen zieht nach 10s Blumen an (1-2 Stück)
+                if (currentMaterial === 'fountain' || currentMaterial === 'water') {
                     setTimeout(() => {
-                        for (let dr = -2; dr <= 2; dr++) {
-                            for (let dc = -2; dc <= 2; dc++) {
-                                const nr = r + dr, nc = c + dc;
-                                if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && !grid[nr][nc] && Math.random() < 0.3) {
-                                    grid[nr][nc] = 'flower';
-                                }
-                            }
+                        const neighbors = [[-1,0],[1,0],[0,-1],[0,1],[-1,-1],[-1,1],[1,-1],[1,1]];
+                        const empty = neighbors.map(([dr,dc]) => [r+dr, c+dc])
+                            .filter(([nr,nc]) => nr >= 2 && nr < ROWS-2 && nc >= 2 && nc < COLS-2 && !grid[nr][nc]);
+                        const count = Math.min(1 + Math.floor(Math.random() * 2), empty.length);
+                        for (let i = 0; i < count; i++) {
+                            const idx = Math.floor(Math.random() * empty.length);
+                            const [fr, fc] = empty.splice(idx, 1)[0];
+                            grid[fr][fc] = Math.random() < 0.5 ? 'flower' : 'plant';
                         }
-                        requestRedraw();
+                        if (count > 0) requestRedraw();
                     }, 10000);
                 }
+                // Konsequenz: Feuer neben Holz → Holz verbrennt nach 3s
+                if (currentMaterial === 'fire') {
+                    const adj = [[-1,0],[1,0],[0,-1],[0,1]];
+                    adj.forEach(([dr,dc]) => {
+                        const nr = r+dr, nc = c+dc;
+                        if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && grid[nr]?.[nc] === 'wood') {
+                            setTimeout(() => {
+                                if (grid[nr][nc] === 'wood' && grid[r]?.[c] === 'fire') { grid[nr][nc] = 'ash'; requestRedraw(); }
+                            }, 3000);
+                        }
+                    });
+                }
+                playerBlocksPlaced++;
+                localStorage.setItem('insel-blocks-placed', playerBlocksPlaced);
                 addPlaceAnimation(r, c);
-                soundBuild(currentMaterial);
+                if (!sessionClock.firstBlock) {
+                    soundFirstBlock();
+                } else {
+                    soundBuild(currentMaterial);
+                }
                 trackMaterialUsage(currentMaterial);
                 maybeNpcComment(currentMaterial);
                 maybeCodeEasterEgg(currentMaterial);
@@ -1814,10 +2370,21 @@
             if (cell !== null) {
                 if (!undoPushedThisStroke) { pushUndo(); undoPushedThisStroke = true; }
                 const yield_ = HARVEST_YIELD[cell] || { material: cell, count: 1 };
-                // Baum hinterlässt Setzling statt leerer Zelle
-                grid[r][c] = (cell === 'tree') ? 'sapling' : null;
+                // Konsequenz: Baum fällen → brauner Stumpf (path) für 5s, dann Setzling/null
+                const isTreeLike = ['tree', 'small_tree', 'palm', 'sapling'].includes(cell);
+                const afterStump = (cell === 'tree') ? 'sapling' : null;
+                grid[r][c] = isTreeLike ? 'path' : null; // path = braun = Stumpf
                 delete treeGrowth[r + ',' + c];
-                if (cell === 'tree') treeGrowth[r + ',' + c] = Date.now();
+                if (isTreeLike) {
+                    const sr = r, sc = c;
+                    setTimeout(() => {
+                        if (grid[sr]?.[sc] === 'path') {
+                            grid[sr][sc] = afterStump;
+                            if (afterStump === 'sapling') treeGrowth[sr + ',' + sc] = Date.now();
+                            requestRedraw();
+                        }
+                    }, 5000);
+                }
                 addToInventory(yield_.material, yield_.count);
                 unlockMaterial(yield_.material);
                 addPlaceAnimation(r, c);
@@ -1860,7 +2427,8 @@
         if (!stats) stats = getGridStats();
         for (const quest of activeQuests) {
             if (!quest.needs[material]) continue;
-            const have = stats.counts[material] || 0;
+            const base = (quest.baseline || {})[material] || 0;
+            const have = Math.max(0, (stats.counts[material] || 0) - base);
             const need = quest.needs[material];
             if (have >= need) continue; // Schon erfüllt
             const percent = Math.round((have / need) * 100);
@@ -2144,6 +2712,196 @@
         }, 500);
     }
 
+    // #64: Elektronen = Crafting-Blitz — Lichtfunken beim LLM-Craft
+    // Kein UI, kein Label. Amélie. Ladungsaustausch sichtbar machen.
+    function spawnCraftSparks() {
+        const wrapper = document.getElementById('canvas-wrapper');
+        const craftDialog = document.getElementById('craft-dialog');
+        const target = craftDialog || wrapper;
+        if (!target) return;
+        const rect = target.getBoundingClientRect();
+        for (let i = 0; i < 8; i++) {
+            setTimeout(() => {
+                const spark = document.createElement('div');
+                spark.className = 'merge-spark craft-spark';
+                spark.style.left = (Math.random() * rect.width - 20) + 'px';
+                spark.style.top  = (Math.random() * rect.height - 20) + 'px';
+                target.style.position = 'relative';
+                target.appendChild(spark);
+                setTimeout(() => spark.remove(), 800);
+            }, i * 80);
+        }
+    }
+
+    // ============================================================
+    // === BLUEPRINTS — 4×4 Bauplan-Erkennung ===
+    // ============================================================
+    let activeBlueprint = null; // { id, startR, startC } — aktuell angezeigter Bauplan-Overlay
+    let completedBlueprints = JSON.parse(localStorage.getItem('insel-blueprints-done') || '[]');
+
+    function checkBlueprintMatch(r, c) {
+        const BP = window.INSEL_BLUEPRINTS;
+        if (!BP) return;
+        const match = BP.findBlueprint(grid, r, c, ROWS, COLS);
+        if (!match) return;
+
+        const { blueprint, startR, startC } = match;
+
+        // Alle 4×4 Zellen zum Gebäude-Material verwandeln
+        for (let dr = 0; dr < 4; dr++) {
+            for (let dc = 0; dc < 4; dc++) {
+                const gr = startR + dr;
+                const gc = startC + dc;
+                const expected = blueprint.pattern[dr][dc];
+                if (expected !== null) {
+                    grid[gr][gc] = blueprint.id;
+                }
+            }
+        }
+
+        // Tracking
+        if (!completedBlueprints.includes(blueprint.id)) {
+            completedBlueprints.push(blueprint.id);
+            localStorage.setItem('insel-blueprints-done', JSON.stringify(completedBlueprints));
+        }
+
+        unlockMaterial(blueprint.id);
+        soundCraft();
+        requestRedraw();
+
+        // Animation: Funken auf allen Zellen
+        const wrapper = document.getElementById('canvas-wrapper');
+        if (wrapper) {
+            for (let dr = 0; dr < 4; dr++) {
+                for (let dc = 0; dc < 4; dc++) {
+                    if (blueprint.pattern[dr][dc] === null) continue;
+                    const spark = document.createElement('div');
+                    spark.className = 'merge-spark blueprint-spark';
+                    const cellSize = canvas.offsetWidth / (COLS + WATER_BORDER * 2);
+                    spark.style.left = ((startC + dc + WATER_BORDER) * cellSize + cellSize / 2 - 20) + 'px';
+                    spark.style.top = ((startR + dr + WATER_BORDER) * cellSize + cellSize / 2 - 20) + 'px';
+                    wrapper.appendChild(spark);
+                    setTimeout(() => spark.remove(), 1200);
+                }
+            }
+        }
+
+        showToast(`🏗️ Bauplan erkannt: ${blueprint.emoji} ${blueprint.name}! ${blueprint.desc}`, 5000);
+        updateBlueprintDisplay();
+    }
+
+    // Bauplan-Overlay auf Canvas zeichnen (Ghost-Preview)
+    function drawBlueprintOverlay() {
+        const BP = window.INSEL_BLUEPRINTS;
+        if (!BP || !activeBlueprint) return;
+
+        const bp = BP.BLUEPRINTS.find(b => b.id === activeBlueprint.id);
+        if (!bp) return;
+
+        const overlay = BP.getOverlay(grid, activeBlueprint.startR, activeBlueprint.startC, ROWS, COLS, bp.pattern);
+
+        for (const cell of overlay) {
+            const x = (cell.c + WATER_BORDER) * CELL_SIZE;
+            const y = (cell.r + WATER_BORDER) * CELL_SIZE;
+
+            if (cell.status === 'placed') {
+                // Grün: Material ist korrekt platziert
+                ctx.fillStyle = 'rgba(39, 174, 96, 0.3)';
+            } else if (cell.status === 'wrong') {
+                // Rot: Falsches Material
+                ctx.fillStyle = 'rgba(231, 76, 60, 0.3)';
+            } else {
+                // Blau-transparent: Material fehlt noch
+                ctx.fillStyle = 'rgba(52, 152, 219, 0.25)';
+            }
+            ctx.fillRect(x, y, CELL_SIZE, CELL_SIZE);
+
+            // Ghost-Emoji für fehlende Materialien
+            if (cell.status === 'missing' && cell.material !== '*') {
+                const mat = MATERIALS[cell.material];
+                if (mat) {
+                    ctx.globalAlpha = 0.4;
+                    ctx.font = `${CELL_SIZE * 0.45}px serif`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillStyle = '#fff';
+                    ctx.fillText(mat.emoji, x + CELL_SIZE / 2, y + CELL_SIZE / 2 + 1);
+                    ctx.globalAlpha = 1;
+                }
+            }
+
+            // Rand
+            ctx.strokeStyle = cell.status === 'placed' ? 'rgba(39,174,96,0.6)' :
+                              cell.status === 'wrong' ? 'rgba(231,76,60,0.6)' :
+                              'rgba(52,152,219,0.5)';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([4, 4]);
+            ctx.strokeRect(x + 1, y + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+            ctx.setLineDash([]);
+        }
+    }
+
+    function setActiveBlueprint(blueprintId, startR, startC) {
+        if (blueprintId === null) {
+            activeBlueprint = null;
+        } else {
+            activeBlueprint = { id: blueprintId, startR, startC };
+        }
+        requestRedraw();
+    }
+
+    function updateBlueprintDisplay() {
+        const BP = window.INSEL_BLUEPRINTS;
+        const panel = document.getElementById('blueprint-list');
+        if (!panel || !BP) return;
+
+        panel.innerHTML = BP.BLUEPRINTS.map(bp => {
+            const done = completedBlueprints.includes(bp.id);
+            return `<div class="blueprint-item ${done ? 'blueprint-done' : ''}" data-blueprint="${bp.id}">
+                <div class="blueprint-header">
+                    <span class="blueprint-emoji">${bp.emoji}</span>
+                    <strong>${bp.name}</strong>
+                    ${done ? '<span class="blueprint-check">✅</span>' : ''}
+                </div>
+                <small>${bp.desc}</small>
+                <div class="blueprint-grid-preview" data-blueprint="${bp.id}"></div>
+            </div>`;
+        }).join('');
+
+        // Mini-Previews rendern
+        panel.querySelectorAll('.blueprint-grid-preview').forEach(preview => {
+            const bp = BP.BLUEPRINTS.find(b => b.id === preview.dataset.blueprint);
+            if (!bp) return;
+            let html = '<div class="bp-mini-grid">';
+            for (let r = 0; r < 4; r++) {
+                for (let c = 0; c < 4; c++) {
+                    const mat = bp.pattern[r][c];
+                    const info = mat ? MATERIALS[mat] : null;
+                    html += `<span class="bp-cell ${mat ? '' : 'bp-empty'}">${info ? info.emoji : ''}</span>`;
+                }
+            }
+            html += '</div>';
+            preview.innerHTML = html;
+        });
+    }
+
+    // Bauplan-Overlay toggle wenn Spieler auf Bauplan in Sidebar klickt
+    function handleBlueprintClick(blueprintId) {
+        const BP = window.INSEL_BLUEPRINTS;
+        if (!BP) return;
+
+        if (activeBlueprint && activeBlueprint.id === blueprintId) {
+            // Toggle off
+            setActiveBlueprint(null);
+            return;
+        }
+
+        // Platziere Overlay in der Mitte des Spielfelds (oder bei Spieler)
+        const startR = Math.max(2, Math.min(ROWS - 6, (playerPos?.r || Math.floor(ROWS / 2)) - 2));
+        const startC = Math.max(2, Math.min(COLS - 6, (playerPos?.c || Math.floor(COLS / 2)) - 2));
+        setActiveBlueprint(blueprintId, startR, startC);
+    }
+
     // ============================================================
     // === GENESIS-LOG + SPONTANER TAO-ZERFALL ===
     // ============================================================
@@ -2360,7 +3118,18 @@
             sessionClock[key] = Date.now();
             const elapsed = Math.round((sessionClock[key] - sessionClock.start) / 1000);
             trackEvent('milestone', { key, seconds: elapsed });
+            if (key === 'firstBlock') stopTutorialPulse();
         }
+    }
+
+    function startTutorialPulse() {
+        const canvas = document.getElementById('game-canvas');
+        if (canvas) canvas.classList.add('tutorial-pulse');
+    }
+
+    function stopTutorialPulse() {
+        const canvas = document.getElementById('game-canvas');
+        if (canvas) canvas.classList.remove('tutorial-pulse');
     }
 
     // Exportieren für chat.js
@@ -2411,16 +3180,35 @@
                 playerName = typed;
                 localStorage.setItem('insel-player-name', playerName);
             } else if (!playerName) {
-                playerName = 'Oskar';
+                playerName = 'Spieler';
                 localStorage.setItem('insel-player-name', playerName);
             }
+        }
+        // Gewähltes Avatar-Emoji übernehmen
+        const activeAvatar = document.querySelector('.avatar-btn.active');
+        if (activeAvatar) {
+            playerEmoji = activeAvatar.dataset.avatar;
+            localStorage.setItem('insel-player-emoji', playerEmoji);
         }
         introOverlay.classList.add('hiding');
         setTimeout(() => {
             introOverlay.style.display = 'none';
-        }, 600);
+            startTutorialPulse();
+        }, 300);
         window.startSessionClock();
     }
+
+    // Avatar-Picker: Klick = auswählen
+    document.querySelectorAll('.avatar-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.avatar-btn').forEach(b => {
+                b.style.borderColor = 'transparent';
+                b.classList.remove('active');
+            });
+            btn.style.borderColor = 'rgba(255,255,255,0.9)';
+            btn.classList.add('active');
+        });
+    });
 
     // Name-Input: Enter-Taste = Spiel starten
     const playerNameInput = document.getElementById('player-name-input');
@@ -2491,6 +3279,29 @@
         const total = Object.keys(MATERIALS).length;
         const discovered = unlockedMaterials.size + BASE_MATERIALS.length;
         el.textContent = `🔬 ${discovered} / ${total} entdeckt`;
+        updateGenesisBadge();
+    }
+
+    // Genesis-Stufen Fortschrittsanzeige (#69)
+    // 道→⚫⚪→五行→✨→万+ zeigt Oscar wo er in der Schöpfung steht
+    function updateGenesisBadge() {
+        const badge = document.getElementById('genesis-badge');
+        if (!badge) return;
+        const crafted = unlockedMaterials.size; // alles außer BASE_MATERIALS
+        let label, tip;
+        if (!_genesisYinYangShown) {
+            label = '道'; tip = 'Genesis: Tao — Der Anfang aller Dinge';
+        } else if (!_genesisQiShown) {
+            label = '⚫⚪'; tip = 'Genesis: Yin & Yang — Zwei Kräfte erwachen';
+        } else if (crafted < 5) {
+            label = '五行'; tip = 'Genesis: Die 5 Elemente — Die Welt entfaltet sich';
+        } else if (crafted < 20) {
+            label = `✨${crafted}`; tip = `Genesis: ${crafted} Dinge erschaffen`;
+        } else {
+            label = '万+'; tip = `Genesis: 万物 — 10.000 Dinge (${crafted} entdeckt)`;
+        }
+        badge.textContent = label;
+        badge.title = tip;
     }
 
     function selectMaterial(mat) {
@@ -2501,7 +3312,7 @@
         const taoBtn = document.querySelector('.material-btn[data-material="tao"]');
         if (taoBtn) taoBtn.classList.add('tao-clicked');
         currentMaterial = mat;
-        soundBuild(currentMaterial);
+        soundSelect(currentMaterial);
         currentTool = 'build';
         document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
         document.querySelector('[data-tool="build"]').classList.add('active');
@@ -2509,6 +3320,14 @@
 
     // Material-Buttons — Klick = Ton spielen (Palette als Klavier)
     document.querySelectorAll('.material-btn').forEach(btn => {
+        // Drag & Drop: Material aus Palette auf Canvas ziehen (Oscar's Wunsch)
+        btn.setAttribute('draggable', 'true');
+        btn.addEventListener('dragstart', e => {
+            e.dataTransfer.setData('text/plain', btn.dataset.material);
+            e.dataTransfer.effectAllowed = 'copy';
+            selectMaterial(btn.dataset.material);
+        });
+
         btn.addEventListener('click', () => {
             selectMaterial(btn.dataset.material);
         });
@@ -2537,10 +3356,13 @@
 
     // Canvas Maus-Events
     canvas.addEventListener('mousedown', (e) => {
+        resetIdleTimer();
         isMouseDown = true;
         undoPushedThisStroke = false;
         const cell = getGridCell(e);
         if (cell) {
+            const npcId = getNpcAt(cell.r, cell.c);
+            if (npcId) { showNpcQuestDialog(npcId); isMouseDown = false; return; }
             applyTool(cell.r, cell.c);
         }
     });
@@ -2564,24 +3386,40 @@
     });
 
     // Touch-Events für Tablet
+    // Swipe-Tracking für Code-Layer-Wechsel (S21-2)
+    let touchStartX = 0, touchStartY = 0, touchEndX = 0, touchEndY = 0;
+    let touchWasPainting = false;
+    const SWIPE_MIN_X = 80;
+    const SWIPE_MAX_Y = 40;
+
     canvas.addEventListener('touchstart', (e) => {
+        resetIdleTimer();
         e.preventDefault();
         undoPushedThisStroke = false;
+        touchWasPainting = false;
         const touch = e.touches[0];
+        touchStartX = touchEndX = touch.clientX;
+        touchStartY = touchEndY = touch.clientY;
         const cell = getGridCell(touch);
         if (!cell) return;
+        // NPC antippen → Quest-Dialog
+        const npcId = getNpcAt(cell.r, cell.c);
+        if (npcId) { showNpcQuestDialog(npcId); return; }
         // Spielfigur-Drag: Berühre die Spieler-Zelle → Figur ziehen
         if (playerName && cell.r === playerPos.r && cell.c === playerPos.c) {
             playerDragging = true;
             return;
         }
         isMouseDown = true;
+        touchWasPainting = true;
         applyTool(cell.r, cell.c);
     });
 
     canvas.addEventListener('touchmove', (e) => {
         e.preventDefault();
         const touch = e.touches[0];
+        touchEndX = touch.clientX;
+        touchEndY = touch.clientY;
         const cell = getGridCell(touch);
         if (playerDragging && cell) {
             // Spieler auf neue Position ziehen (kein Wasser-Rand)
@@ -2589,6 +3427,7 @@
                 playerPos = { r: cell.r, c: cell.c };
                 localStorage.setItem('insel-player-pos', JSON.stringify(playerPos));
                 requestRedraw();
+                checkPlayerProximity();
             }
             return;
         }
@@ -2600,9 +3439,31 @@
     });
 
     canvas.addEventListener('touchend', () => {
+        // Swipe → Code-Layer wechseln (nur wenn nicht gemalt und nicht Figur gezogen)
+        if (!touchWasPainting && !playerDragging) {
+            const dx = touchEndX - touchStartX;
+            const dy = Math.abs(touchEndY - touchStartY);
+            if (Math.abs(dx) >= SWIPE_MIN_X && dy < SWIPE_MAX_Y) {
+                window.toggleCodeView();
+            }
+        }
         isMouseDown = false;
         playerDragging = false;
         hoverCell = null;
+    });
+
+    // Drag & Drop: Material aus Palette auf Canvas ziehen
+    canvas.addEventListener('dragover', e => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'copy';
+    });
+    canvas.addEventListener('drop', e => {
+        e.preventDefault();
+        const mat = e.dataTransfer.getData('text/plain');
+        if (!mat || !MATERIALS[mat]) return;
+        selectMaterial(mat);
+        const cell = getGridCell(e);
+        if (cell) applyTool(cell.r, cell.c);
     });
 
     // Aktions-Buttons
@@ -2662,12 +3523,78 @@
         });
     }
 
+    // --- #22: Projekt-Sharing via URL (Base64-encoded Grid) ---
+    function encodeGridToURL() {
+        const cells = [];
+        const matKeys = Object.keys(MATERIALS);
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                if (grid[r][c]) {
+                    const idx = matKeys.indexOf(grid[r][c]);
+                    cells.push([r, c, idx >= 0 ? idx : grid[r][c]]);
+                }
+            }
+        }
+        const payload = { v: 1, m: matKeys, g: cells };
+        return btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+    }
+
+    function decodeGridFromURL(encoded) {
+        try {
+            const payload = JSON.parse(decodeURIComponent(escape(atob(encoded))));
+            if (!payload.v || !payload.g) return false;
+            initGrid();
+            for (const [r, c, mat] of payload.g) {
+                if (r >= 0 && r < ROWS && c >= 0 && c < COLS) {
+                    const material = typeof mat === 'number' ? payload.m[mat] : mat;
+                    if (material && MATERIALS[material]) grid[r][c] = material;
+                }
+            }
+            requestRedraw();
+            requestStatsUpdate();
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    // Share-Button
+    const shareBtn = document.getElementById('share-btn');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', () => {
+            const encoded = encodeGridToURL();
+            const url = `${location.origin}${location.pathname}?insel=${encoded}`;
+            navigator.clipboard.writeText(url)
+                .then(() => showToast('🔗 Link kopiert! Schick ihn deinen Freunden!', 3000))
+                .catch(() => {
+                    // Fallback: URL anzeigen
+                    prompt('Link kopieren:', url);
+                });
+            trackEvent('share', { blocks: getGridStats().total });
+        });
+    }
+
+    // URL-Sharing: beim Start ?insel= Parameter prüfen und Grid laden
+    const sharedGrid = new URLSearchParams(location.search).get('insel');
+    if (sharedGrid) {
+        const ok = decodeGridFromURL(sharedGrid);
+        if (ok && introOverlay) {
+            introOverlay.style.display = 'none';
+            if (window.startSessionClock) window.startSessionClock();
+            startTutorialPulse();
+            showToast('🏝️ Geteilte Insel geladen!', 3000);
+            // URL sauber halten — Parameter entfernen
+            history.replaceState({}, '', location.pathname);
+        }
+    }
+
     // Lade-Dialog Events
     document.getElementById('close-load-dialog').addEventListener('click', () => {
         loadDialog.classList.add('hidden');
     });
 
     document.addEventListener('keydown', (e) => {
+        resetIdleTimer();
         if (e.key === 'Escape' && !loadDialog.classList.contains('hidden')) {
             loadDialog.classList.add('hidden');
             return;
@@ -2798,14 +3725,59 @@
 
     // --- Mute-Button ---
     const muteBtn = document.getElementById('mute-btn');
-    let muted = localStorage.getItem('insel-muted') === 'true';
     if (muteBtn) {
-        muteBtn.textContent = muted ? '🔇' : '🔊';
         muteBtn.addEventListener('click', () => {
-            muted = !muted;
-            localStorage.setItem('insel-muted', String(muted));
-            muteBtn.textContent = muted ? '🔇' : '🔊';
+            const nowMuted = !INSEL_SOUND.isMuted();
+            INSEL_SOUND.setMuted(nowMuted);
+            muteBtn.textContent = nowMuted ? '🔇' : '🔊';
+            showToast(nowMuted ? 'Ton aus' : 'Ton an');
         });
+    }
+
+    // === REPLAY-SONG — Bauwerk als Melodie abspielen ===
+    const replayBtn = document.getElementById('replay-btn');
+    if (replayBtn) {
+        replayBtn.addEventListener('click', () => {
+            // Alle belegten Zellen von oben-links nach unten-rechts sammeln
+            const cells = [];
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    if (grid[r][c]) cells.push({ r, c, mat: grid[r][c] });
+                }
+            }
+            if (cells.length === 0) {
+                showToast('🎵 Nichts zu spielen — bau erst etwas!');
+                return;
+            }
+            replayBtn.disabled = true;
+            replayBtn.textContent = '⏳';
+            const STEP_MS = Math.max(40, Math.min(200, 4000 / cells.length));
+            cells.forEach(({ r, c, mat }, i) => {
+                setTimeout(() => {
+                    soundBuild(mat);
+                    // Kurzes visuelles Highlight: Zelle blinkt
+                    replayHighlight(r, c);
+                    if (i === cells.length - 1) {
+                        setTimeout(() => {
+                            replayBtn.disabled = false;
+                            replayBtn.textContent = '🎵';
+                        }, 400);
+                    }
+                }, i * STEP_MS);
+            });
+        });
+    }
+
+    // Kurzes Highlight auf einer Canvas-Zelle (weißer Flash)
+    function replayHighlight(r, c) {
+        const x = (c + WATER_BORDER) * CELL_SIZE;
+        const y = (r + WATER_BORDER) * CELL_SIZE;
+        ctx.save();
+        ctx.globalAlpha = 0.5;
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(x + 1, y + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+        ctx.restore();
+        setTimeout(() => requestRedraw(), 80);
     }
 
     // ============================================================
@@ -3156,23 +4128,35 @@
         migrateUnlocked();
         showToast('🔄 Letzte Insel wiederhergestellt');
     } else {
-        // Starter-Insel: kein Save — Oskar soll sofort eine echte Insel sehen
-        grid[2][11] = 'sand';   grid[2][12] = 'sand';   // Strand oben
-        grid[13][11] = 'sand';  grid[13][12] = 'sand';  // Strand unten
-        grid[2][6]  = 'sand';   grid[13][6]  = 'sand';  // Strand seitlich
-        grid[2][17] = 'sand';   grid[13][17] = 'sand';
-        grid[3][11] = 'tree';   grid[3][12]  = 'tree';  // Palmen oben
-        grid[12][11]= 'tree';   grid[12][12] = 'tree';  // Palmen unten
-        grid[3][6]  = 'tree';   grid[12][6]  = 'tree';  // Palmen links
-        grid[3][17] = 'tree';   grid[12][17] = 'tree';  // Palmen rechts
-        window.grid = grid;
+        // Starter-Insel: Zufalls-Insel generieren damit es sofort nach Abenteuer aussieht
+        generateStarterIsland();
         setTimeout(() => showToast('🏝️ Deine Insel wartet... Bau los!', 3500), 2000);
+    }
+
+    // NPCs auf freie Zellen platzieren (nach Grid-Init + Auto-Save-Restore)
+    initNpcPositions();
+
+    // Sammelbare Items spawnen (Schätze, Materialien zum Einsammeln)
+    if (collectibles.length === 0) {
+        for (let i = 0; i < 3; i++) spawnCollectibles();
     }
 
     // Dirty-flag statt rAF-Loop — CPU 20%→<5%
     // var (nicht let) damit requestRedraw() via hoisting schon in resizeCanvas() nutzbar ist
     needsRedraw = true;
     setInterval(draw, 100);
+    // Collectibles + NPCs animieren (Glitzern/Wippen)
+    setInterval(() => { if (collectibles.length > 0) requestRedraw(); }, 200);
+
+    // Wiederkehrende Spieler: Intro JETZT ausblenden — Canvas ist bereit
+    if (isReturningPlayer && introOverlay) {
+        // Ersten Frame zeichnen bevor Overlay weg ist
+        draw();
+        introOverlay.style.display = 'none';
+        if (window.startSessionClock) window.startSessionClock();
+        startTutorialPulse();
+    }
+
     updateAchievementDisplay();
     updateQuestDisplay();
     updateInventoryDisplay();
@@ -3181,8 +4165,8 @@
     updateDiscoveryCounter();
 
     // Genesis-Replay Button
-    const replayBtn = document.getElementById('genesis-replay-btn');
-    if (replayBtn) replayBtn.addEventListener('click', playGenesisReplay);
+    const genesisReplayBtn = document.getElementById('genesis-replay-btn');
+    if (genesisReplayBtn) genesisReplayBtn.addEventListener('click', playGenesisReplay);
 
     // --- Sidebar Tabs ---
     document.querySelectorAll('.sidebar-tab').forEach(tab => {
@@ -3250,6 +4234,15 @@
             if (craftDialog && !craftDialog.classList.contains('hidden')) {
                 closeCraftingDialog();
             }
+        }
+    });
+
+    // --- Blueprint Sidebar Events ---
+    updateBlueprintDisplay();
+    document.getElementById('blueprint-list')?.addEventListener('click', (e) => {
+        const item = e.target.closest('.blueprint-item');
+        if (item) {
+            handleBlueprintClick(item.dataset.blueprint);
         }
     });
 

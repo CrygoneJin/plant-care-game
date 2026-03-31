@@ -28,7 +28,9 @@ klingt, sagt Hemingway: "Ein Kind versteht das nicht."
 
 ## Erfahrungen
 
-*Noch leer. Wächst mit jeder Session.*
+- 2026-03-30: Bernd das Brot als Eltern-Support-NPC war die Copy-Entscheidung mit dem größten Impact. Humor > Belehrung.
+- 2026-03-30: "Palette als Piano" — wenn Design-Metaphern in Copy übergehen, entsteht etwas Neues. Nicht Ogilvy, nicht Rams.
+- 2026-03-30: 18 Programmiersprachen-NPCs: Sprache + Charakter + Running-Gag = Persönlichkeit. Die Formel funktioniert.
 
 ## Feynman-Notiz
 

@@ -7,8 +7,12 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 
 ## Fehler (damit wir sie nicht wiederholen)
 
+| 2026-03-30 | Backlog-Drift: 14 Items waren in Code done aber Backlog zeigte 🔲 | Keine Session-übergreifende Backlog-Pflege | Am Ende jeder Session: Backlog-Zeilen updaten, bevor MEMORY geschrieben wird |
+
 | Datum | Was | Warum | Lektion |
 |-------|-----|-------|---------|
+| 2026-03-31 | `const replayBtn` doppelt deklariert → ganzes JS gecrasht → Intro-Screen blockiert | Zwei Sessions haben unabhängig denselben Variablennamen auf IIFE-top-level verwendet. Kein Lint, kein Check, niemand merkt es. | `node --check *.js` vor jedem Commit. Pre-commit Hook installiert. Ohne CI läuft alles durch. |
+| 2026-03-31 | iPhone-Flicker: Insel blitzt kurz auf dann verschwindet | Intro-Overlay wurde bei Zeile ~1604 sofort ausgeblendet, Canvas erst ~2200 Zeilen später initialisiert. Race Condition nur auf langsamem iPhone sichtbar. | UI-Overlay erst entfernen NACHDEM der darunterliegende Content gerendert ist. Reihenfolge: init → draw() → overlay.hide(). |
 | 2026-03-30 | SPRINT.md hatte Review-Einträge ohne Code ("Phantom-Done") | Vorherige Session hat Review vorausgeschrieben bevor Implementierung existierte | Review-Einträge erst schreiben wenn Code committed ist. Nie vorausschreiben. |
 | 2026-03-30 | Local main (b3e8a1a) vs origin/main (0f1a162) divergiert — 87 vs 57 Commits | force-push auf origin/main durch vorherige Session | `git fetch origin` IMMER vor allem anderen. Divergenz prüfen bevor man tippt. |
 | 2026-03-27 | Claude antwortet auf Englisch obwohl Config deutsch sagt | `language: en` in Config, aber User spricht Deutsch. Drei Versuche gebraucht. | Sprache IMMER in CLAUDE.md als erste Zeile setzen, nicht in Settings. |
@@ -23,6 +27,16 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 
 | Datum | Was | Warum gut |
 |-------|-----|-----------|
+| 2026-03-31 | Zufalls-Insel-Generator + kindgerechte Achievements + Toast-Fix | Starter-Insel war leer (8 Sand, 8 Bäume fix). Jetzt prozedural: Strand-Oval mit Wobble, Palmen, Bäume, Blumen — skaliert auf jedes Grid. Achievements klingen jetzt nach Abenteuer statt Baubehörde. Toast: `pointer-events: none` — eine Zeile CSS, Problem gelöst. |
+| 2026-03-31 | Sprint 21 Review abgeschlossen — alle 3 Items Done | Sprint Goal erreicht: Drag & Drop, Swipe-Layer, Quest-Balancing. Sprint Review in SPRINT.md geschrieben. Nächste Ceremony: Retrospektive. |
+| 2026-03-31 | Sprint 21 abgeschlossen: S21-2 Code-Layer per Swipe | touchWasPainting-Flag verhindert versehentlichen Layer-Wechsel beim Malen. Swipe-Threshold 80px horizontal / 40px vertikal. S21-3 war Phantom-Open (BACKLOG bereits ✅). |
+| 2026-03-31 | Security-Review: LLM-Output → innerHTML ohne escapeHtml() — klassische XSS-Lücke | Fix: escapeHtml(name) an der richtigen Stelle. Funktion existierte schon — nur nicht überall eingesetzt. Lesson: escapeHtml() an ALLEN innerHTML-Stellen die externe Daten (LLM, User-Input, API) zeigen. |
+| 2026-03-31 | /bugs GET-Endpoint: Kindernamen + User-Agent öffentlich lesbar ohne Auth | DSGVO-Frage bevor Mama sie stellt. Fix: BUGS_SECRET als Env-Variable, ?key= Query-Param. Jeder nicht-öffentliche Lese-Endpoint braucht Authentifizierung. |
+| 2026-03-31 | Rate-Limit-KV als hard-fail deployed → würde prod brechen | KV optional zu verpflichtend gemacht ohne zu prüfen ob prod KV hat. Lesson: Breaking Changes immer gegen prod-Config prüfen. Reverted zu optional + TODO-Kommentar. |
+| 2026-03-31 | Backlog-Audit: 8 Items bereits implementiert obwohl als offen markiert | node --check findet in 2s was kein Mensch im 3400-Zeilen-File sieht. BACKLOG.md regelmäßig gegen Code-Realität prüfen — nicht nur gegen SPRINT.md. |
+| 2026-03-30 | Sprint 21: Drag & Drop — Oscar zieht | Material-Buttons bekommen `draggable="true"` + `dragstart`. Canvas bekommt `dragover`/`drop`. Dynamisch erstellte Buttons (Craft-Unlocks) ebenfalls. `getGridCell(e)` funktioniert mit DragEvent weil `.clientX`/`.clientY` vorhanden. 3 Stellen in game.js: (1) forEach initial, (2) createElement unlock, (3) canvas-listener. |
+| 2026-03-30 | Sprint 20: Org-Umbau "Alle antreten" | 18 Agents inventarisiert, 3 CxOs aktiviert, 4 Docs gemergt, 5 Padawan-Codizes gefüllt, Skill-Zuordnung ohne Dopplungen. Hybrid-Session (BUILD+DOC) — geht nur beim Org-Umbau, nicht als Regel. |
+| 2026-03-30 | Code Metrics Review als Podcast-Format | 35 Stimmen, 4 Perspektiven (Feynman/Darwin/Linus/Taylor), Frauenquote 20%, dunkle Materie/Energie-Metapher. Review-Session produziert Dokument, keinen Code — wie es sein soll. |
 | 2026-03-30 | Sprint 7: Spielfigur 🧒 live | Name-Input → Canvas-Rendering → Arrow-Keys → Touch-Drag — alles ohne Framework, 120 Zeilen |
 | 2026-03-30 | Sand-Rauschen deterministisch | (r*31 + c*17) % 12 — kein Flackern, kein Random(), kein Zustand |
 | 2026-03-30 | Phantom-Done erkannt und korrigiert | Agent hat Code-Realität gegen SPRINT.md geprüft und Diskrepanz aufgelöst |
@@ -70,6 +84,23 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 **Für Oscar**: 12 neue Quests warten — Einhorn-Schrein, Drachen-Nester, Ritter-Festung, Raumfahrt-Zentrum. Der Sprint ist fertig.
 
 **2026-03-30 Nachtrag**: Smoke Tests aus Sandbox nicht möglich — `x-deny-reason: host_not_allowed` kommt vom Sandbox-Proxy, nicht von Produktion. Kein Issue nötig.
+
+---
+
+## Sprint 19 Session — 2026-03-30
+
+| Item | Was | Ergebnis |
+|------|-----|---------|
+| Cherry-picks | Sprints 15-18 auf main gebracht | 4 Cherry-picks, 4 Konflikte gelöst (SPRINT.md, style.css Chat-Sidebar, game.js playerPos-Deklaration) |
+| S19-1 | Spielfigur-Lag fix | `movePlayer()` ruft `draw()` direkt auf + `localStorage.setItem(playerPos)` — kein 100ms-Warten mehr (#66) |
+| S19-2 | Wunschfee Floriane 🧚 | Neue NPC: CHARACTERS in chat.js, NPC_VOICES in game.js, ELIZA-Regeln, UNLOCK_ORDER[0], CHAR_CURRENCY (#75) |
+| Bugfix | Doppelte playerName-Deklaration | Cherry-pick Sprint 17 hatte `let playerName` + `let playerPos` vor der eigentlichen Deklaration — Duplikat entfernt |
+
+**Fehler**: Smoke Tests aus Sandbox nicht möglich (`x-deny-reason: host_not_allowed`). Kein Issue — Proxy-Problem, nicht App.
+
+**Fehler**: Sprints 15-18 lagen auf ungemergten Branches. Root cause: Jeder Agent-Run startet frisch und sieht nur main. Fix für nächste Sessions: cherry-picks oder PRs zeitnah mergen, nie auf Branch liegen lassen.
+
+**Für Oscar**: Pfeiltasten reagieren jetzt sofort (kein 100ms-Ruckeln mehr). Und Floriane die Wunschfee 🧚 ist auf der Insel — als erste freizuspielende NPC!
 
 ---
 
@@ -511,6 +542,27 @@ KINDERSICHERHEIT-Block von 40 auf 2 Zeilen. Persönlichkeit stärker UND billige
 - **Automerge als Physik-Engine**: Nicht Regeln, sondern Naturgesetze. "Die Insel organisiert sich selbst." Das Spielgefühl ist anders.
 - **Emergenz > Prescriptivism**: Wenn Yin+Yang von selbst zu Qi werden, muss Oscar nichts erklären. Er sieht es passieren.
 - **Game of Life als Screensaver**: 2 Minuten Inaktivität = das Grid lebt. Kein UI, kein Toast. Oscar dreht sich um und die Insel hat sich verändert. Perfekt.
+
+---
+
+## Session 2026-03-30 — Sprint 18 (Autonomer Agent)
+
+### Fehler
+| Datum | Was | Lektion |
+|-------|-----|---------|
+| 2026-03-30 | Local main war 87 Commits hinter origin/main wegen divergiertem Verlauf | Nach `git fetch` sofort `git reset --hard origin/main` wenn main divergiert ist. Remote ist Wahrheit. |
+| 2026-03-30 | Sprint 18 Item S18-3 ("Schatzinsel") war bereits implementiert | Vor Item-Auswahl checken: `grep -i "schatzinsel" index.html`. Triviale Aufgaben im Code verifizieren, nicht aus Backlog-Text ableiten. |
+
+### Erfolge
+| Datum | Was |
+|-------|-----|
+| 2026-03-30 | Sprint 18 done: Tonhöhe (Erde=C3 tief, Feuer=G5 hoch, Wasser=Glide A4→A3), Genesis-Badge (道→⚫⚪→五行→✨→万+), Schatzinsel-Name bereits da |
+
+### Learnings
+- **Wu Yin Physik**: Erde gehört tiefer (C3 = 130 Hz), Feuer höher (G5 = 784 Hz). Der Klang folgt der Philosophie — Kinder spüren das ohne es zu wissen.
+- **Glide-Ton für Wasser**: `frequency.exponentialRampToValueAtTime` von A4→A3 = 0.3s Abstieg. Klingt wie fließendes Wasser. Drei Zeilen Code.
+- **Genesis-Badge ist ein Spiegel**: Das Kind sieht 道 am Anfang. Dann ⚫⚪. Dann 五行. Progression ohne Text. Feynman: "Wenn's kein Label braucht, ist's gut genug."
+- **Für Oscar**: Feuer geht HOCH. Erde geht TIEF. Wasser fließt. Die Insel klingt jetzt wie sie aussieht.
 
 ---
 
