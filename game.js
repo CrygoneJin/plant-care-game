@@ -1662,17 +1662,21 @@
         let seed = Date.now();
         function rng() { seed = (seed * 16807 + 0) % 2147483647; return seed / 2147483647; }
 
+        // Bebaubarer Bereich: innerhalb des Wasser-Rands (2 Zellen pro Seite)
+        const WE = 2; // isWaterEdge threshold
+        const innerRows = ROWS - WE * 2;
+        const innerCols = COLS - WE * 2;
         const cx = COLS / 2, cy = ROWS / 2;
-        const rx = COLS * 0.38, ry = ROWS * 0.38;
+        // Ellipse passt in den bebaubaren Bereich
+        const rx = innerCols * 0.48, ry = innerRows * 0.48;
 
-        // Strandrand (1-2 Zellen Sand um die Insel)
-        for (let r = 0; r < ROWS; r++) {
-            for (let c = 0; c < COLS; c++) {
+        // Strandrand (Sand-Ring am Rand der bebaubaren Fläche)
+        for (let r = WE; r < ROWS - WE; r++) {
+            for (let c = WE; c < COLS - WE; c++) {
                 const dx = (c - cx) / rx, dy = (r - cy) / ry;
                 const dist = dx * dx + dy * dy;
-                // Wellige Kante via einfache Noise-Näherung
                 const wobble = 0.15 * Math.sin(r * 1.7 + c * 0.9) + 0.1 * Math.cos(c * 2.3 - r * 0.7);
-                if (dist < (0.7 + wobble) && dist >= (0.55 + wobble)) {
+                if (dist < (0.7 + wobble) && dist >= (0.5 + wobble)) {
                     grid[r][c] = 'sand';
                 }
             }
