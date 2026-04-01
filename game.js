@@ -4539,7 +4539,12 @@
         // Pulse nur wenn noch kein Block platziert wurde (leere Insel)
         const hasBlocks = grid.some(row => row && row.some(cell => cell !== null));
         if (!hasBlocks) startTutorialPulse();
+        else stopTutorialPulse();
     }
+
+    // Safety: Pulse entfernen falls durch alten Cache-Code gesetzt
+    const blocksExist = grid.some(row => row && row.some(cell => cell !== null));
+    if (blocksExist) stopTutorialPulse();
 
     updateAchievementDisplay();
     updateQuestDisplay();
