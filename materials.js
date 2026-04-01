@@ -98,12 +98,8 @@ window.INSEL_MATERIALS = {
     wave:     { emoji: '🌊', label: 'Tsunami',  color: '#2980B9', border: '#1F618D' },
     phoenix:  { emoji: '🔥', label: 'Phönix',   color: '#F39C12', border: '#E67E22' },
     ash:      { emoji: '🪨', label: 'Asche',    color: '#808080', border: '#606060' },
-    // === INVESTITION (Hans-Werner Sinn — Opportunitätskosten) ===
-    seed:     { emoji: '🌰', label: 'Saat',     color: '#8B6914', border: '#6B4F0A' },
-    sprout:   { emoji: '🌱', label: 'Keim',     color: '#7DCEA0', border: '#52BE80' },
-    fruit:    { emoji: '🍎', label: 'Frucht',   color: '#E74C3C', border: '#C0392B' },
-    ore:      { emoji: '⛏️', label: 'Erz',      color: '#B87333', border: '#8B5A2B' },
-    ingot:    { emoji: '🪙', label: 'Barren',   color: '#FFD700', border: '#DAA520' },
+    // === HANDEL (Mr. Krabs — Muschelwährung) ===
+    shell:    { emoji: '🐚', label: 'Muschel',  color: '#FADADD', border: '#E8B4B8' },
     // === UNSINN (Lindgren-approved) ===
     worm:     { emoji: '🪱', label: 'Regenwurm', color: '#CD853F', border: '#A0522D' },
     flyfish:  { emoji: '🐟', label: 'Flugfisch', color: '#87CEEB', border: '#5DADE2' },

@@ -1,0 +1,10 @@
+{
+  "name": "schatzinsel-telegram-mcp",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Telegram MCP Server für Schatzinsel — Nachrichten + Schatzkarte-Stats",
+  "main": "index.js",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  }
+}

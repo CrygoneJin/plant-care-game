@@ -79,13 +79,8 @@ window.INSEL_CRAFTING_RECIPES = [
     { name: 'Krone',       result: 'crown',     resultCount: 1, ingredients: { metal: 1, diamond: 1 }, desc: 'Metall + Diamant = Krone' },
     { name: 'Schlüssel',   result: 'key',       resultCount: 1, ingredients: { metal: 1, fire: 1 },    desc: 'Metall + Feuer = Schlüssel' },
     { name: 'Schatz',      result: 'treasure',  resultCount: 1, ingredients: { key: 1, earth: 2 },     desc: 'Schlüssel + 2 Erde = Schatz' },
-    // === INVESTITION (Hans-Werner Sinn — Opportunitätskosten) ===
-    // Saat: Erde + Pflanze → Saat. Pflanze auf Erde, warte, ernte mehr.
-    { name: 'Saat',        result: 'seed',   resultCount: 2, ingredients: { earth: 1, plant: 1 },    desc: 'Erde + Pflanze = 2 Saat (pflanze sie und warte!)' },
-    // Erz: Erde + Metall + Feuer → Erz (schneller als Wachstum, aber teurer)
-    { name: 'Erz',         result: 'ore',    resultCount: 1, ingredients: { earth: 1, metal: 1, fire: 1 }, desc: 'Erde + Metall + Feuer = Erz' },
-    // Barren: Erz + Feuer → Barren (hochwertig)
-    { name: 'Barren',      result: 'ingot',  resultCount: 1, ingredients: { ore: 2, fire: 1 },      desc: '2 Erz + Feuer = Barren (pures Gold!)' },
+    // === HANDEL (Mr. Krabs — Muschelwährung) ===
+    { name: 'Muschel',     result: 'shell',  resultCount: 2, ingredients: { sand: 2, water: 1 },  desc: '2 Sand + Wasser = 2 Muscheln (Strandgut!)' },
     // === ABSURD (💩🚀👻👽🤖) ===
     { name: 'Geist',       result: 'ghost',     resultCount: 1, ingredients: { cloud: 1, moon: 1 },    desc: 'Wolke + Mond = Geist' },
     { name: 'Skelett',     result: 'skull',     resultCount: 1, ingredients: { stone: 2, lightning: 1 },desc: '2 Stein + Blitz = Skelett' },

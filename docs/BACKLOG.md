@@ -20,7 +20,7 @@
 | # | Item | Owner | Status |
 |---|------|-------|--------|
 | 6 | **NPC-Stimmen schärfen** — Ogilvy: Jeder NPC braucht typographisches Tick | Artist | ✅ Done (Elefant/Krabs/Tommy) |
-| 7 | **QR-Code auf Postkarte** — Godin/Welch: Scannen → direkt zum Spiel | Engineer | 🔲 Offen |
+| 7 | **QR-Code auf Postkarte** — Godin/Welch: Scannen → direkt zum Spiel | Engineer | ✅ Done (Sprint 23, qr.js) |
 | 8 | **Offline-Manifest** — Service Worker für Spielen ohne Internet | Engineer | ✅ Done (sw.js + manifest.json) |
 | 9 | **Mehr Quests** — 11 Templates sind zu wenig, mindestens 20 | Artist + Leader | ✅ Done (45 Templates) |
 | 10 | **Favicon + Meta-Tags** — Torvalds: "10 Minuten, großer Unterschied" | Engineer | ✅ Done |
@@ -56,14 +56,15 @@
 | 84 | **Höhlen + Edelsteine** — Berg+Wasser=Höhle, Höhle+Wasser=Tropfsteine, Tropfstein+Feuer=Edelstein | Engineer | ✅ Done (recipes.js:99-101) |
 | 85 | **Genre-Tonsequenzen** — 15 Musik-Genres mit eigenen 5-Noten-Sequenzen beim Platzieren (ex-PR #41) | Engineer + Artist | 🔲 Offen |
 | 86 | **CI/CD Pipeline** — deploy.yml + release.sh + Puppeteer Smoke-Test (ex-PR #13) | Engineer | 🔲 Cherry-pick |
-| 87 | **TTS Hörspiele** — Web Speech API für Hörspiel-Zeilen, Mute-Button (ex-PR #40) | Engineer | 🔲 Offen |
+| 87 | **TTS Hörspiele** — Web Speech API für Hörspiel-Zeilen, Mute-Button (ex-PR #40) | Engineer | ✅ Done (game.js:656-720, speakLines + stopHoerspiel) |
 | 88 | **Floriane die Wunschfee** — 3 Wünsche/Tag, Mitternacht-Reset, Feedback-Kanal (ex-PR #40) | Artist + Engineer | 🔲 Offen |
 | 89 | **Koop-Modus** — Papa+Kind auf einer Insel, Phase 1 lokal, Phase 2 WebRTC (ex-PR #45, braucht Spielfigur) | Engineer | 🔲 Offen |
 | 90 | **Browser-LLM** — SmolLM2 lokal im Browser, Progressive Loading ELIZA→LLM (ex-PR #45, Qualitätstest nötig) | Scientist + Engineer | 🔲 Feynman muss testen |
 | 91 | **Lokales LLM auf Mac Mini** — Ollama/LM Studio als Test-Instanz. Feynman + Torvalds Spielwiese. Ogilvy + Chomsky vergleichen Qualität vs Haiku. | Engineer + Scientist | 🔲 Offen |
 | 92 | **Requesty Key rotieren** — Alter Key im Git-Verlauf. Neuen erstellen, alten revoken. | Engineer | 🔲 Human Input nötig |
-| 93 | **MMX Token-Ökonomie** — In-Game-Handel basiert auf mmx.network Tokens. Spielwährung = Metapher für echte MMX-Tokens. Kinder sehen Krabbenburger, Nerds sehen MMX. | P2 | Engineer + Scientist | 🔲 Design-Entscheidung nötig |
-| 94 | **Crypto Dust Donations** — Code View (`</>`) zeigt MMX-Wallet-Adresse für Micro-Donations. Easter Egg auf Nerd-Ebene. Kein Kind sieht es, kein Kind braucht es. | P2 | Engineer | 🔲 Human Input nötig (Wallet-Adresse) |
+| 93 | **MMX Token-Ökonomie** — In-Game-Handel basiert auf mmx.network Tokens. Spielwährung = Metapher für echte MMX-Tokens. Kinder sehen Krabbenburger, Nerds sehen MMX. | P2 | Engineer + Scientist | 🔄 In Arbeit (marketplace.js, Worker-Endpoints) |
+| 94 | **Crypto Dust Donations** — Code View (`</>`) zeigt MMX+XCH-Burn-Adressen. Hawking-Strahlung-Philosophie. | P2 | Engineer | ✅ Done (Burn-Panel + Balance-Polling) |
+| 95 | **Schwarzmarkt P2P** — Rare Items (LLM-Unikate) anonym tauschen via MMX/XCH. Mephisto Deals. DSGVO: nur pseudonyme Blockchain-Adressen. Kindertauglich: Seelenglut als In-Game-Alternative. | P1 | Engineer | 🔄 In Arbeit (marketplace.js + Worker D1) |
 | 88 | ~~Floriane die Wunschfee~~ | | ✅ Done (dd9569e1) |
 
 ---

@@ -27,8 +27,9 @@ jobs:
       - name: JS Syntax-Check
         run: |
           FAIL=0
+          SKIP="worker.js gemini-voice-worker.js playwright.config.js"
           for f in *.js; do
-            [ "$f" = "worker.js" ] && continue  # Cloudflare Worker — eigener Runtime
+            echo "$SKIP" | grep -qw "$f" && continue  # Cloudflare Worker / Dev-Config
             if ! node -c "$f" 2>&1; then
               FAIL=1
             fi
@@ -37,8 +38,8 @@ jobs:
 
       - name: Smoke-Test — Seite lädt ohne Fehler
         run: |
-          npm i -g puppeteer@latest 2>/dev/null || true
-          npx --yes puppeteer browsers install chrome 2>/dev/null || true
+          npm install puppeteer --no-save
+          npx puppeteer browsers install chrome
           node --input-type=module <<'SMOKE'
           import puppeteer from 'puppeteer';
           import { readFileSync } from 'fs';

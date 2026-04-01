@@ -11,7 +11,8 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 
 | Datum | Was | Warum | Lektion |
 |-------|-----|-------|---------|
-| 2026-04-01 | Robinson-Ökonomie: 3 PRs (#109 #110 #111) in einer Session | Kreative Frage (Sinn/Krabs/Trotzki) → 3 atomare Features auf bestehenden Patterns (nature.js, quest system, NPC dialog) | Bestehende Patterns erweitern > neue Systeme bauen. treeGrowth → seedGrowth war 5 Zeilen statt neuem Timer. |
+| 2026-03-31 | Doppelte eliza.js Script-Tags in index.html nach PR-Merge | Merge von effects.js/nature.js Extraktion (#11) hat eliza.js/eliza-scripts.js dupliziert. Smoke-Test fängt console.error → Deployment failed. | Immer `grep -c '<script' index.html` prüfen nach Merge. Duplikate = potentieller Runtime-Crash. |
+| 2026-03-31 | analytics.js schrieb nichts nach D1 — nur Google Sheets Webhook | `pingWebhook()` nutzte nur localStorage-URL (`insel-webhook`), nicht den Worker `/metrics/ingest`. D1-Tabellen blieben leer. | Frontend muss aktiv an den Worker senden. "Endpoint existiert" ≠ "Endpoint wird genutzt". |
 | 2026-03-31 | Charakter-Dropdown hatte kein change-Event — NPC-Wechsel funktionierte nicht | Dropdown existierte im HTML, aber kein JS-Listener registriert. Alle NPCs redeten wie SpongeBob. | Jedes UI-Element das Zustand ändert braucht einen Event-Listener. Ohne Listener ist es Dekoration. |
 | 2026-03-31 | Grid-Dimension-Mismatch: Save von Desktop crasht auf Mobile | Auto-Save überschreibt Grid blind — 32×18 Grid auf 18×28 Viewport = undefined rows = Crash. | Beim Restore Grid-Dimensionen prüfen und Inhalte transferieren statt blind überschreiben. |
 | 2026-03-31 | Tutorial-Pulse blinkte endlos für wiederkehrende Spieler | `startTutorialPulse()` wurde für alle aufgerufen, `stopTutorialPulse()` nur bei firstBlock-Milestone der aktuellen Session. | Pulse nur starten wenn noch kein Block platziert wurde. |
@@ -32,7 +33,8 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 
 | Datum | Was | Warum gut |
 |-------|-----|-----------|
-| 2026-04-01 | 3 Wirtschaftssysteme in 30 Min: Zeitinvestition, Muschelhandel, Gemeinschaftsquests | Drei orthogonale Mechaniken statt monolithischem Economy-System. Jedes Feature < 130 LOC. Alle auf existierenden Patterns gebaut (nature.js growth, HARVEST_YIELD, quest completion). Hans-Werner Sinn, Mr. Krabs und Trotzki als Designleitplanken — absurd aber funktional. |
+| 2026-03-31 | QR-Code-Generator in reinem Vanilla JS (qr.js, ~260 Zeilen) | Kein npm, kein CDN, kein Build-Schritt. QR Version 2 EC-L: GF(256) Reed-Solomon + Finder/Alignment-Platzierung + BCH Format-Info + 8-Masken-Auswahl per Penalty-Score. Postkarte trägt jetzt scanbare schatzinsel.app-URL. Eltern können direkt zum Spiel. |
+| 2026-03-31 | Backlog-Audit Sprint 23: #87 TTS Hörspiele war Phantom-Open | TTS war komplett in game.js:656-720 (speakLines, stopHoerspiel, 7 Szenen, Mute-Integration). Vor jedem Sprint-Planning: Items gegen Code-Realität prüfen, nicht nur gegen letzte Session-Erinnerung. |
 | 2026-03-31 | JSDoc + checkJs: Typsicherheit ohne Build-Schritt | TypeScript evaluiert → Overkill für 8K LOC Vanilla JS ohne Bundler. Stattdessen: `tsconfig.json` mit `checkJs`, `types.d.ts` (230 Zeilen), `npm run typecheck` = 0 Errors. Zero-Build-Architektur bleibt erhalten. game.js + chat.js mit @ts-nocheck — schrittweise bei Backlog #11 (Code-Splitting). |
 | 2026-03-31 | schatzinsel.app live — DNS + GitHub Pages funktioniert | P0 erledigt. Google Sheet Webhook obsolet (Airtable + D1 Worker reicht). |
 | 2026-03-31 | Mephisto NPC — "The devil is most devilish when respectable" | Neuer Unlock-NPC: charmanter Händler, Goethe-Referenz, 5 Quests, Deal-Mechanik. 10. Charakter im Spiel. |

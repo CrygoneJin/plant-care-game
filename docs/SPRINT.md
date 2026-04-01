@@ -1,3 +1,46 @@
+# Sprint 24 — "Oscar baut Musik"
+
+**Sprint Goal:** Jeder Block klingt nach Genre. Kinder die nicht lesen können, spielen trotzdem. Technische Schuld sinkt.
+
+**Start:** 2026-04-01
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S24-1 | **Genre-Tonsequenzen aktivieren** (#85) — `soundGenreNote()` in `soundBuild` einhängen. Genre-Toast bei Wechsel. Oscar hört Musik während er baut. | Engineer | ✅ Done |
+| S24-2 | **Tutorial ohne Text** (#15) — Erste 3 Schritte: Icons + Pfeil-Animationen statt Erklärtext. Kinder die nicht lesen können, finden den ersten Block in 10 Sek. | Designer + Engineer | 🔲 Offen |
+| S24-3 | **game.js aufteilen: Grid + Effects** (#11) — Grid-Rendering und Partikel-Effekte rausziehen. Ziel: game.js unter 3500 LOC. | Engineer | 🔲 Offen |
+
+---
+
+## Standup Log
+
+### 2026-04-01 (Sprint 24 Planning)
+
+**Kontext:**
+- Sprint 23 "Oscar hört das Meer" (PR #106): Chat-Sidebar, Stille-Momente, QR-Code — offen, nicht gemergt
+- Retro S22-Empfehlung: #85 Genre-Töne, #15 Tutorial ohne Text, #11 game.js aufteilen
+- S24-1 bereits implementiert: `soundGenreNote()` in `soundBuild` eingehängt, Genre-Toast bei Wechsel
+
+---
+
+# Sprint 23 — "Oscar hört das Meer" (PR #106, offen)
+
+**Sprint Goal:** Chat als Sidebar, Stille-Momente wenn idle, QR-Code auf Postkarte.
+
+**Start:** 2026-03-31
+
+| # | Item | Status |
+|---|------|--------|
+| S23-1 | Chat-Sidebar (#28) | ✅ Done |
+| S23-2 | Stille-Momente (#57) | ✅ Done |
+| S23-3 | QR-Code auf Postkarte (#7) | ✅ Done |
+
+---
+
 # Sprint 22 — "The devil is most devilish when respectable"
 
 **Sprint Goal:** Mephisto NPC + Gemini Voice + Insel-Upgrade + Bugfixes. Nacht-Session.
@@ -51,6 +94,59 @@
 
 ---
 
+<<<<<<< HEAD
+## Sprint Retrospective — 2026-03-31 (Nacht)
+
+### Was lief gut?
+
+- **8 Items in einer Nacht-Session.** Kein anderer Sprint hat so viel geliefert.
+- **Mephisto als würdiger Abschluss.** 10. NPC, letzter Unlock — die Charakterliste ist jetzt vollständig.
+- **Voice-Integration ohne Regressions.** Gemini Live API + 5 Stimmen, kein vorhandener Code gebrochen.
+- **Lummerland in einer Stunde.** Handgebaute Insel für Oscar. Er kennt Jim Knopf.
+- **Backlog-Audit:** 8 Phantom-Opens erkannt und bereinigt — Backlog dichter als je zuvor.
+
+### Was lief schlecht?
+
+- **Smoke Test weiterhin geblockt.** Proxy-Sandbox im Claude Code Web verhindert curl gegen externe Domains. Bekanntes Problem, keine Lösung in Sicht ohne CI/CD.
+- **User Actions U1 + U2 offen.** MMX Wallet + Voice-Test hängen am User. Kein technisches Problem, nur fehlende Rückmeldung.
+- **Gemini Voice braucht API Key im Worker.** U3 ist Done (User hat Key gesetzt), aber U2 (testen) steht noch aus. Kein Feedback ob es läuft.
+
+### Was verbessern wir?
+
+1. **#86 CI/CD Pipeline** als nächsten Tech-Sprint — Smoke Test in GitHub Actions, nicht sessionabhängig.
+2. **User Actions explizit nachfragen** wenn nach 2 Sprints kein Status — U1/U2 sind seit Sprint 22 offen.
+3. **Vor jedem Sprint Planning:** Offene User Actions auf "Erledigt oder Eingefroren?" prüfen.
+
+---
+
+# Sprint 23 — "Oscar hört"
+
+**Sprint Goal:** NPCs sprechen. QR-Code für Eltern. Code sauber.
+
+**Start:** 2026-03-31
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S23-1 | **TTS Hörspiele** (#87) — Phantom-Open: bereits in game.js:656-720 implementiert (speakLines, stopHoerspiel, 7 Szenen). Backlog bereinigt. | Engineer | ✅ Done (Phantom-Open erkannt) |
+| S23-2 | **QR-Code auf Postkarte** (#7) — qr.js: reiner QR-Generator (Version 2, EC-L, ~260 Zeilen). Postkarte zeigt scanbare URL https://schatzinsel.app rechts unten. | Engineer | ✅ Done |
+| S23-3 | **game.js Zellteilung** (#11) — Grid-Logik + Stories extrahieren. Ziel: game.js unter 3000 Zeilen. | Engineer | 🔲 Offen |
+
+---
+
+## Standup Log
+
+### 2026-03-31 (Sprint 23 Planning)
+
+**Kontext (Commits seit Sprint 22):** Kein neuer Commit seit Nacht-Session.
+
+**Sprint-Fokus:** S23-1 (TTS Hörspiele) als erstes Item dieser Session.
+
+**Blocker:** Keine.
+=======
 ## Sprint Retrospective — 2026-03-31 (Nacht, nach Review)
 
 ### Was lief gut?
@@ -81,6 +177,7 @@
 | **#85 Genre-Tonsequenzen** | P3 | Oscar hört Musik wenn er baut. Höchster Spaß-Impact pro LOC. |
 | **#15 Tutorial ohne Text** | P2 | Kinder die nicht lesen können (Oscars jüngere Geschwister). |
 | **#11 game.js weiter aufteilen** | P1 | In Arbeit. Grid/Effects/Stories noch drin. Schuldenlast sinken lassen. |
+>>>>>>> origin/main
 
 ---
 
