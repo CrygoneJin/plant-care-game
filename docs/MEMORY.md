@@ -34,6 +34,7 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 
 | Datum | Was | Warum gut |
 |-------|-----|-----------|
+| 2026-04-01 | Gute-Nacht-Geschichten von Tommy Krab — Oscar will Geschichten statt Gameplay | Produktsignal: Narrative > Gameplay. bedtime.js nutzt gleiche LLM-Infrastruktur wie chat.js. Kapitel basieren auf Insel-Fortschritt, gespeichert in localStorage. Tommy wird ruhiger zum Vorlesen. |
 | 2026-04-01 | Sprint 24 Retro — max 3 Items, game.js teilweise aufgeteilt, Tutorial ohne Text live | Sprint 25 Empfehlung: easter-eggs.js, Dungeon-Framework, Palette als Instrument |
 | 2026-04-01 | Sprint 24 — Genre-Tonsequenzen + stories.js + Tutorial ohne Text | 15 Genres in sound.js mit genreMode-Toggle funktionieren. stories.js-Extraktion ist safe (nur Daten, kein State). Tutorial-Onboarding mit CSS-Animationen + Tap-to-skip ist minimal aber wirksam. |
 | 2026-03-31 | Sprint 23 — Chat-Sidebar + Stille-Momente + QR-Code | body.chat-open Klasse + resize-Event = Canvas schrumpft sauber wenn Chat auf geht. Wellen-Ambient via Web Audio BufferSource + LFO für Wellenbewegung. QRCode via cdnjs, gezeichnet auf Postkarten-Canvas. Alle 3 Items in einer Session. || 2026-03-31 | QR-Code-Generator in reinem Vanilla JS (qr.js, ~260 Zeilen) | Kein npm, kein CDN, kein Build-Schritt. QR Version 2 EC-L: GF(256) Reed-Solomon + Finder/Alignment-Platzierung + BCH Format-Info + 8-Masken-Auswahl per Penalty-Score. Postkarte trägt jetzt scanbare schatzinsel.app-URL. Eltern können direkt zum Spiel. |

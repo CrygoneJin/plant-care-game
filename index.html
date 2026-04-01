@@ -93,6 +93,7 @@
                 <button class="tool-btn" id="code-view-btn" title="Code-Ansicht">&lt;/&gt;</button>
                 <button class="tool-btn" id="replay-btn" title="Bauwerk als Song abspielen">🎵</button>
                 <button class="tool-btn" id="rewind-btn" title="Zeitreise: Baugeschichte rückwärts">⏪</button>
+                <button class="tool-btn" id="bedtime-btn" title="Gute-Nacht-Geschichte von Tommy Krab">📖</button>
             </div>
             <div class="toolbar-group" id="project-group">
                 <input type="text" id="project-name" placeholder="Mein Bauwerk" maxlength="30">
@@ -358,6 +359,28 @@
 
     </div>
 
+    <!-- Gute-Nacht-Geschichte Overlay -->
+    <div id="bedtime-overlay" class="hidden" role="dialog" aria-modal="true" aria-label="Gute-Nacht-Geschichte">
+        <div class="bedtime-container">
+            <div class="bedtime-header">
+                <span class="bedtime-tommy">🦞</span>
+                <h2>Gute-Nacht-Geschichte</h2>
+                <button id="bedtime-close-btn" class="bedtime-ctrl-btn" title="Schließen" aria-label="Geschichte schließen">✕</button>
+            </div>
+            <h3 id="bedtime-chapter-title" class="bedtime-chapter-title">Noch keine Geschichte</h3>
+            <div id="bedtime-loading" class="bedtime-loading" style="display:none;">
+                <span class="bedtime-loading-emoji">🦞</span>
+                <p>Tommy denkt nach... klick-klack...</p>
+            </div>
+            <div id="bedtime-story" class="bedtime-story"></div>
+            <div class="bedtime-nav">
+                <button id="bedtime-prev-btn" class="bedtime-nav-btn" style="display:none;" title="Vorheriges Kapitel">⬅️ Zurück</button>
+                <button id="bedtime-new-btn" class="bedtime-nav-btn bedtime-new" title="Neues Kapitel erzählen">📖 Neues Kapitel</button>
+                <button id="bedtime-next-btn" class="bedtime-nav-btn" style="display:none;" title="Nächstes Kapitel">Weiter ➡️</button>
+            </div>
+        </div>
+    </div>
+
     <script src="qr.js"></script>
     <script src="insel.js"></script>
     <script src="storage.js"></script>
@@ -380,6 +403,7 @@
     <script src="game.js"></script>
     <script src="config.js"></script>
     <script src="chat.js"></script>
+    <script src="bedtime.js"></script>
     <script src="voice.js"></script>
     <script>
     if ('serviceWorker' in navigator) {

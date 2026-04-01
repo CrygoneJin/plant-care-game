@@ -2082,3 +2082,165 @@ body.code-view-active #chat-settings-btn {
 #chat-input:focus:not(:focus-visible) {
     outline: none;
 }
+
+/* === BEDTIME — Gute-Nacht-Geschichte Overlay === */
+#bedtime-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9500;
+    background: linear-gradient(180deg, #0d1b2a 0%, #1b2838 40%, #2c3e50 100%);
+    overflow-y: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 24px 16px;
+}
+#bedtime-overlay.hidden { display: none; }
+
+.bedtime-container {
+    max-width: 680px;
+    width: 100%;
+    padding: 32px 24px;
+}
+
+.bedtime-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+.bedtime-header h2 {
+    flex: 1;
+    font-family: var(--font-heading);
+    font-size: 28px;
+    color: #f0c040;
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+.bedtime-tommy {
+    font-size: 42px;
+    animation: bedtimeFloat 3s ease-in-out infinite;
+}
+@keyframes bedtimeFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.bedtime-ctrl-btn {
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: #ccc;
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.bedtime-ctrl-btn:hover { background: rgba(255,255,255,0.2); }
+
+.bedtime-chapter-title {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    color: #8899aa;
+    margin: 0 0 24px 0;
+    font-weight: 400;
+}
+
+.bedtime-story {
+    font-family: var(--font-body);
+    font-size: 20px;
+    line-height: 1.8;
+    color: #e0e8f0;
+    letter-spacing: 0.02em;
+}
+.bedtime-story p {
+    margin: 0 0 20px 0;
+}
+.bedtime-story p:last-child {
+    margin-bottom: 0;
+}
+
+.bedtime-empty {
+    color: #8899aa;
+    font-style: italic;
+    text-align: center;
+    padding: 40px 0;
+}
+
+.bedtime-error {
+    color: #e74c3c;
+    background: rgba(231, 76, 60, 0.1);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+}
+
+/* Loading */
+.bedtime-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 60px 0;
+}
+.bedtime-loading-emoji {
+    font-size: 64px;
+    animation: bedtimeRock 1.5s ease-in-out infinite;
+}
+@keyframes bedtimeRock {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+.bedtime-loading p {
+    font-family: var(--font-body);
+    font-size: 18px;
+    color: #8899aa;
+    margin: 0;
+}
+
+/* Navigation */
+.bedtime-nav {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+}
+.bedtime-nav-btn {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    padding: 10px 20px;
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.05);
+    color: #c0c8d0;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.bedtime-nav-btn:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.3);
+    color: white;
+}
+.bedtime-nav-btn.bedtime-new {
+    background: linear-gradient(135deg, rgba(240,192,64,0.2), rgba(240,192,64,0.1));
+    border-color: rgba(240,192,64,0.4);
+    color: #f0c040;
+}
+.bedtime-nav-btn.bedtime-new:hover {
+    background: linear-gradient(135deg, rgba(240,192,64,0.3), rgba(240,192,64,0.15));
+    border-color: rgba(240,192,64,0.6);
+}
+.bedtime-nav-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .bedtime-container { padding: 20px 16px; }
+    .bedtime-header h2 { font-size: 22px; }
+    .bedtime-tommy { font-size: 32px; }
+    .bedtime-story { font-size: 18px; line-height: 1.7; }
+}
