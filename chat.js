@@ -4,6 +4,23 @@
 (function () {
     'use strict';
 
+    // --- Flüster-Modus (Offline/Fallback) ---
+    let whisperMode = false;
+
+    function enterWhisperMode() {
+        if (whisperMode) return;
+        whisperMode = true;
+        document.body.classList.add('offline-whisper');
+        showToast('\uD83C\uDF27\uFE0F Die Insel fl\u00fcstert nur noch...');
+    }
+
+    function leaveWhisperMode() {
+        if (!whisperMode) return;
+        whisperMode = false;
+        document.body.classList.remove('offline-whisper');
+        showToast('\u2600\uFE0F Die Insel ist zur\u00fcck!');
+    }
+
     // --- Provider-Config ---
     const PROVIDERS = {
         requesty: {
@@ -810,19 +827,22 @@ ${budgetInfo}`;
             loadingDiv.remove();
 
             if (!response.ok) {
-                const err = await response.json().catch(() => ({}));
-                if (response.status === 401) {
-                    addMessage('API-Key ungültig. Bitte neu eingeben (⚙️)', 'system');
-                } else if (response.status === 404 || (err.error?.message || '').includes('model')) {
-                    addMessage(`Modell "${model}" nicht verfügbar bei ${providerId}. Versuch einen anderen Anbieter (⚙️)`, 'system');
-                } else {
-                    addMessage(`Fehler ${response.status}: ${err.error?.message || response.statusText}`, 'system');
-                }
+                // Flüster-Modus: ELIZA statt Fehlermeldung
+                enterWhisperMode();
+                const elizaReply = getElizaReply(userMessage, charId);
                 chatHistory.pop();
+                chatHistory.push({ role: 'assistant', content: elizaReply });
+                addMessage(`${char.emoji} ${elizaReply}`, 'npc');
+                loadingDiv.remove();
+                sendBtn.disabled = false;
+                input.focus();
                 return;
             }
 
             const data = await response.json();
+
+            // LLM hat geantwortet — Flüster-Modus verlassen
+            leaveWhisperMode();
 
             // Response-Format: Anthropic vs OpenAI
             const reply = provider.format === 'anthropic'
@@ -845,7 +865,8 @@ ${budgetInfo}`;
 
         } catch (err) {
             loadingDiv.remove();
-            // ELIZA Fallback wenn Netzwerk/API fehlt
+            // Flüster-Modus: ELIZA Fallback wenn Netzwerk/API fehlt
+            enterWhisperMode();
             const elizaReply = getElizaReply(userMessage, currentNpcId);
             chatHistory.pop();
             chatHistory.push({ role: 'assistant', content: elizaReply });
