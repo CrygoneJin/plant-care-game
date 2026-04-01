@@ -244,6 +244,8 @@
                         showToast(`🎉 Quest geschafft: ${q.title} ${q.reward}`);
                         soundQuestComplete();
                     }
+                    // Memory: Quest-Abschluss für den NPC vermerken
+                    if (q.npc) recordNpcQuestDone(q.npc, q.title);
                     // Hirn-Transplantation: Neuen Charakter freischalten?
                     if (window.tryCharacterUnlock) {
                         const unlocked = window.tryCharacterUnlock();
