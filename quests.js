@@ -84,4 +84,11 @@ window.INSEL_QUEST_TEMPLATES = [
     { npc: 'neinhorn', title: 'Pilzwald', desc: 'NEIN keine Pilze! ...doch. Riesige Pilze. Die LEUCHTEN. Im Dunkeln. Das ist gruselig-gemütlich!', needs: { mushroom: 6, lamp: 4, tree: 3, fence: 2 }, reward: '🌈🌈🌈' },
     { npc: 'maus', title: 'Bibliothek', desc: '*pieps* Bücher! *quak* Die Ente kann nicht lesen! *pieps* Dann LERNT sie es! *quak* ...ok EINE Seite!', needs: { wood: 6, glass: 3, lamp: 4, door: 1 }, reward: '🌻🌻🌻' },
     { npc: 'maus', title: 'Honig-Bäckerei', desc: '*pieps* Honig PLUS Mehl GLEICH Kuchen! *quak* Das ist Mathe! *pieps* Das ist BACKEN! *quak* Beides!', needs: { honey: 3, bee: 2, fire: 2, wood: 4, apple: 3 }, reward: '🌻🌻🌻🌻' },
+    // === INSELRAT — Gemeinschaftsquests (Trotzki: Kooperation statt Konkurrenz) ===
+    // community: true → bei Abschluss bekommen ALLE NPCs Token-Bonus, nicht nur der Questgeber
+    { npc: 'spongebob', title: 'Insel-Versammlung', desc: 'SUCHERGEBNIS: Kein Versammlungsort! Wir brauchen einen Platz wo ALLE hinkommen! SOFORT! Für ALLE!', needs: { path: 8, lamp: 4, fountain: 1, fence: 4 }, reward: '🤝🤝🤝', community: true },
+    { npc: 'elefant', title: 'Gemeinschaftsgarten', desc: 'Törööö! Ein Garten für ALLE! Nicht meiner, nicht deiner — UNSERER! Jeder pflanzt, jeder erntet!', needs: { flower: 6, plant: 4, tree: 4, fountain: 1, path: 4 }, reward: '🤝🤝🤝🤝', community: true },
+    { npc: 'maus', title: 'Insel-Küche', desc: '*pieps* Alle kochen! *quak* Alle essen! *pieps* NIEMAND bleibt hungrig! *quak* Das ist SOLIDARITÄT! *pieps* Das ist ESSEN!', needs: { fire: 3, wood: 6, water: 4, apple: 2, honey: 2 }, reward: '🤝🤝🤝🤝', community: true },
+    { npc: 'neinhorn', title: 'Gemeinsames Dach', desc: 'NEIN ich brauch kein Dach! ...ok aber wenn ALLE eins brauchen, dann bau ich MIT. FÜR ALLE. Weil ich will.', needs: { roof: 6, wood: 8, door: 3, glass: 4 }, reward: '🤝🤝🤝🤝🤝', community: true },
+    { npc: 'tommy', title: 'Rettungsstation', desc: 'Klick-klack! ALLE brauchen Hilfe! Der lockige Mann sagt — klick-klack! — zusammen sind wir STÄRKER!', needs: { stone: 6, boat: 2, lamp: 4, flag: 2, bridge: 1 }, reward: '🤝🤝🤝🤝', community: true },
 ];
