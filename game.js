@@ -4406,6 +4406,52 @@
         });
     }
 
+    // --- save.js Context registrieren ---
+    if (window.INSEL_SAVE) {
+        window.INSEL_SAVE.registerContext({
+            ROWS: ROWS,
+            COLS: COLS,
+            getGrid: function() { return grid; },
+            setGrid: function(g) { grid = g; },
+            getTreeGrowth: function() { return treeGrowth; },
+            setTreeGrowth: function(tg) {
+                Object.keys(treeGrowth).forEach(function(k) { delete treeGrowth[k]; });
+                Object.assign(treeGrowth, tg);
+            },
+            getInventory: function() { return inventory; },
+            setInventory: function(inv) { inventory = inv; },
+            getUnlockedMaterials: function() { return unlockedMaterials; },
+            setUnlockedMaterials: function(s) { unlockedMaterials = s; },
+            getDiscoveredRecipes: function() { return discoveredRecipes; },
+            setDiscoveredRecipes: function(s) { discoveredRecipes = s; },
+            getPlayerPos: function() { return playerPos; },
+            resetPlayerPos: function() {
+                playerPos = { r: Math.floor(ROWS / 2), c: Math.floor(COLS / 2) };
+                localStorage.setItem('insel-player-pos', JSON.stringify(playerPos));
+            },
+            getMaterials: function() { return MATERIALS; },
+            getProjectName: function() { return projectNameInput ? projectNameInput.value.trim() : ''; },
+            setProjectName: function(n) { if (projectNameInput) projectNameInput.value = n; },
+            initGrid: initGrid,
+            saveInventory: saveInventory,
+            saveUnlocked: saveUnlocked,
+            saveDiscoveredRecipes: saveDiscoveredRecipes,
+            setWindowGrid: function() { window.grid = grid; },
+            migrateUnlocked: migrateUnlocked,
+            updateStats: updateStats,
+            updateInventoryDisplay: updateInventoryDisplay,
+            updatePaletteVisibility: updatePaletteVisibility,
+            updateGenesisVisibility: updateGenesisVisibility,
+            updateDiscoveryCounter: updateDiscoveryCounter,
+            requestRedraw: requestRedraw,
+            requestStatsUpdate: requestStatsUpdate,
+            resetGenesisFlags: function() {
+                _genesisYinYangShown = false;
+                _genesisQiShown = false;
+            },
+        });
+    }
+
     // === START ===
     initGrid();
 

@@ -283,6 +283,73 @@ interface InselConfig {
     [key: string]: unknown;
 }
 
+
+// --- TTS ---
+interface VoiceInfo {
+    voice: string;
+    lang: string;
+}
+
+interface InselTTS {
+    readonly hoerspielSpeaking: boolean;
+    stripForTTS(text: string): string;
+    stopHoerspiel(): void;
+    detectVoice(line: string): VoiceInfo;
+    speakCloudTTS(text: string, voiceInfo: VoiceInfo): Promise<void>;
+    speakBrowserTTS(text: string, lang: string): Promise<void>;
+    speakLines(lines: string[], onDone?: () => void): void;
+    maybeHoerspiel(stats: GridStats): void;
+}
+
+// --- Save Context ---
+interface InselSaveContext {
+    ROWS: number;
+    COLS: number;
+    getGrid(): Grid;
+    setGrid(g: Grid): void;
+    getTreeGrowth(): Record<string, number>;
+    setTreeGrowth(tg: Record<string, number>): void;
+    getInventory(): Record<string, number>;
+    setInventory(inv: Record<string, number>): void;
+    getUnlockedMaterials(): Set<string>;
+    setUnlockedMaterials(s: Set<string>): void;
+    getDiscoveredRecipes(): Set<string>;
+    setDiscoveredRecipes(s: Set<string>): void;
+    getPlayerPos(): { r: number; c: number } | null;
+    resetPlayerPos(): void;
+    getMaterials(): MaterialMap;
+    getProjectName(): string;
+    setProjectName(n: string): void;
+    initGrid(): void;
+    saveInventory(): void;
+    saveUnlocked(): void;
+    saveDiscoveredRecipes(): void;
+    setWindowGrid(): void;
+    migrateUnlocked(): void;
+    updateStats(): void;
+    updateInventoryDisplay(): void;
+    updatePaletteVisibility(): void;
+    updateGenesisVisibility(): void;
+    updateDiscoveryCounter(): void;
+    requestRedraw(): void;
+    requestStatsUpdate(): void;
+    resetGenesisFlags(): void;
+}
+
+interface InselSave {
+    AUTOSAVE_KEY: string;
+    registerContext(ctx: InselSaveContext): void;
+    isValidGrid(g: unknown): boolean;
+    saveProject(): void;
+    autoSave(): void;
+    showLoadDialog(): void;
+    loadProject(name: string): void;
+    deleteProject(name: string): void;
+    newProject(): void;
+    encodeGridToURL(): string;
+    decodeGridFromURL(encoded: string): boolean;
+}
+
 // --- Window Extensions ---
 interface Window {
     INSEL: InselNamespace;
@@ -302,6 +369,16 @@ interface Window {
     INSEL_SCROLLS: Scroll[];
     INSEL_CONFIG: InselConfig;
 
+    INSEL_TTS: InselTTS;
+    INSEL_SAVE: InselSave;
+    INSEL_STORIES: Record<string, string[]>;
+    INSEL_CHARACTERS: Record<string, unknown>;
+    INSEL_BUS: InselNamespace;
+    INSEL_DIMS: { ROWS: number; COLS: number };
+    startSessionClock?(): void;
+    soundAchievement?(): void;
+    resetIdleTimer?(): void;
+
     // Cross-module functions
     grid: Grid;
     showToast(msg: string, duration?: number): void;
@@ -320,4 +397,23 @@ interface Window {
     codeZauber: unknown;
     isCodeViewActive(): boolean;
     webkitAudioContext: typeof AudioContext;
+    // Flat TTS exports (tts.js)
+    stripForTTS(text: string): string;
+    stopHoerspiel(): void;
+    detectVoice(line: string): VoiceInfo;
+    speakCloudTTS(text: string, voiceInfo: VoiceInfo): Promise<void>;
+    speakBrowserTTS(text: string, lang: string): Promise<void>;
+    speakLines(lines: string[], onDone?: () => void): void;
+    maybeHoerspiel(stats: GridStats): void;
+
+    // Flat Save exports (save.js)
+    autoSave(): void;
+    showLoadDialog(): void;
+    isValidGrid(g: unknown): boolean;
+    loadProject(name: string): void;
+    deleteProject(name: string): void;
+    newProject(): void;
+    encodeGridToURL(): string;
+    decodeGridFromURL(encoded: string): boolean;
+
 }

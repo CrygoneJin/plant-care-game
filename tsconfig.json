@@ -18,6 +18,8 @@
     "insel.js",
     "materials.js",
     "storage.js",
+    "tts.js",
+    "save.js",
     "sound.js",
     "achievements.js",
     "quests.js",
