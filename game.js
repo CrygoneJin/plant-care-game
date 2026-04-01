@@ -437,12 +437,26 @@
     function showNpcQuestDialog(npcId) {
         const npc = NPC_DEFS[npcId];
         if (!npc) return;
+        // Memory: Besuch registrieren
+        touchNpcMemory(npcId);
         const quest = window.questSystem.getAvailable(npcId);
         const active = window.questSystem.getActive().find(q => q.npc === npcId);
         if (active) {
             showToast(`${npc.emoji} ${npc.name}: Ich warte noch auf "${active.title}"!`, 3000);
         } else if (quest) {
-            showToast(`${npc.emoji} ${quest.desc}`, 5000);
+            // Memory: beim Annehmen eines neuen Quests Gedächtnis-Kommentar zeigen
+            const voice = NPC_VOICES[npcId];
+            if (voice) {
+                const memComment = getNpcMemoryComment(voice, npcId);
+                if (memComment) {
+                    showToast(memComment, 3000);
+                    setTimeout(() => showToast(`${npc.emoji} ${quest.desc}`, 5000), 3200);
+                } else {
+                    showToast(`${npc.emoji} ${quest.desc}`, 5000);
+                }
+            } else {
+                showToast(`${npc.emoji} ${quest.desc}`, 5000);
+            }
             window.questSystem.accept(quest);
         } else if (npcId === 'krabs') {
             // Krabs: Kein Quest? Dann HANDEL! 🦀💰
@@ -450,8 +464,10 @@
         } else {
             const voice = NPC_VOICES[npcId];
             if (voice) {
-                const tick = voice.ticks[Math.floor(Math.random() * voice.ticks.length)];
-                showToast(`${npc.emoji} ${voice.prefix} ${tick}`, 2000);
+                // Memory-Kommentar Vorrang vor generic tick
+                const memComment = getNpcMemoryComment(voice, npcId);
+                const msg = memComment || `${npc.emoji} ${voice.prefix} ${voice.ticks[Math.floor(Math.random() * voice.ticks.length)]}`;
+                showToast(msg, 3000);
             }
         }
     }
@@ -627,8 +643,97 @@
         (npc, mat, n) => `${npc.emoji} ${npc.prefix} ${n} ${mat}! Jemand hat einen Plan!`,
     ];
 
+    // === NPC-SESSION-GEDÄCHTNIS ===
+    // Speichert pro NPC: letztes Lieblingsmaterial, abgeschlossene Quests, letzter Besuch
+    // Key: 'insel-npc-memory'
+    // Format: { [npcId]: { lastMaterial, lastMaterialKey, lastVisit, questsDone: [] } }
+
+    const NPC_MEMORY_KEY = 'insel-npc-memory';
+
+    function loadNpcMemory() {
+        try { return JSON.parse(localStorage.getItem(NPC_MEMORY_KEY) || '{}'); }
+        catch { return {}; }
+    }
+
+    function saveNpcMemory(mem) {
+        localStorage.setItem(NPC_MEMORY_KEY, JSON.stringify(mem));
+    }
+
+    function getNpcMem(npcId) {
+        return loadNpcMemory()[npcId] || null;
+    }
+
+    // Letzten Besuch für diesen NPC aktualisieren
+    function touchNpcMemory(npcId) {
+        const mem = loadNpcMemory();
+        if (!mem[npcId]) mem[npcId] = { lastVisit: null, lastMaterial: null, lastMaterialKey: null, questsDone: [] };
+        mem[npcId].lastVisit = Date.now();
+        saveNpcMemory(mem);
+    }
+
+    // Quest-Abschluss für diesen NPC vermerken
+    function recordNpcQuestDone(npcId, questTitle) {
+        const mem = loadNpcMemory();
+        if (!mem[npcId]) mem[npcId] = { lastVisit: null, lastMaterial: null, lastMaterialKey: null, questsDone: [] };
+        if (!mem[npcId].questsDone.includes(questTitle)) mem[npcId].questsDone.push(questTitle);
+        mem[npcId].lastVisit = Date.now();
+        saveNpcMemory(mem);
+    }
+
+    // Nach jeder Session: Lieblingsmaterial (meistgenutzt) in alle NPC-Memory-Einträge schreiben
+    // Wird bei beforeunload aufgerufen
+    function flushNpcSessionMemory() {
+        const raw = localStorage.getItem('insel-mat-usage');
+        if (!raw) return;
+        let usage;
+        try { usage = JSON.parse(raw); } catch { return; }
+        const sorted = Object.entries(usage).sort((a, b) => b[1] - a[1]);
+        const favKey = sorted.length > 0 ? sorted[0][0] : null;
+        if (!favKey) return;
+        const favLabel = MATERIALS[favKey]?.label || favKey;
+        const mem = loadNpcMemory();
+        for (const id of Object.keys(NPC_VOICES)) {
+            if (!mem[id]) mem[id] = { lastVisit: null, lastMaterial: null, lastMaterialKey: null, questsDone: [] };
+            mem[id].lastMaterial = favLabel;
+            mem[id].lastMaterialKey = favKey;
+        }
+        saveNpcMemory(mem);
+    }
+
+    // Gedächtnis-Kommentar für NPC erzeugen (gibt null zurück wenn nichts sinnvolles da)
+    function getNpcMemoryComment(npc, npcId) {
+        const m = getNpcMem(npcId);
+        if (!m) return null;
+        const hasName = playerName && playerName !== 'Spieler' && playerName !== 'Anonym';
+        const nameStr = hasName ? ` ${playerName}` : '';
+        const daysSince = m.lastVisit ? Math.floor((Date.now() - m.lastVisit) / 86400000) : null;
+
+        if (m.lastMaterial && m.questsDone && m.questsDone.length > 0) {
+            return `${npc.emoji} ${npc.prefix} Hey${nameStr}! Letztes Mal hast du viel mit ${m.lastMaterial} gebaut. Und ${m.questsDone.length} Quest${m.questsDone.length > 1 ? 's' : ''} geschafft!`;
+        }
+        if (m.lastMaterial) {
+            return `${npc.emoji} ${npc.prefix} Hey${nameStr}! Letztes Mal hast du viel mit ${m.lastMaterial} gebaut...`;
+        }
+        if (daysSince !== null && daysSince >= 1) {
+            const dayText = daysSince === 1 ? 'gestern' : `vor ${daysSince} Tagen`;
+            return `${npc.emoji} ${npc.prefix} Schon ${dayText} warst du zuletzt hier${nameStr}!`;
+        }
+        if (m.questsDone && m.questsDone.length > 0) {
+            return `${npc.emoji} ${npc.prefix} Erinnerst du dich${nameStr}? Wir haben schon ${m.questsDone.length} Quest${m.questsDone.length > 1 ? 's' : ''} zusammen gemacht!`;
+        }
+        return null;
+    }
+
+    // beforeunload: Session-Memory sichern
+    window.addEventListener('beforeunload', flushNpcSessionMemory);
+
     // Context-Kommentare basierend auf Grid-Zustand
-    function getContextComment(npc, stats) {
+    function getContextComment(npc, stats, npcId) {
+        // Memory-Kommentar: 30% Chance, damit er nicht bei jedem Baustein kommt
+        if (npcId && Math.random() < 0.30) {
+            const memComment = getNpcMemoryComment(npc, npcId);
+            if (memComment) return memComment;
+        }
         if (stats.total === 0) return null;
         if (stats.percent > 80) return `${npc.emoji} ${npc.prefix} Die Insel ist fast voll! ${npc.ticks[0]}`;
         if (stats.total % 25 === 0) return `${npc.emoji} ${npc.prefix} ${stats.total} Blöcke! ${REACTIONS[npc.style][Math.floor(Math.random() * REACTIONS[npc.style].length)]}`;
@@ -637,7 +742,9 @@
         if (entries.length >= 2) {
             const sorted = entries.sort((a,b) => b[1] - a[1]);
             if (sorted[0][1] > stats.total * 0.6) {
-                return `${npc.emoji} ${npc.prefix} Sehr viel ${sorted[0][0]}! Wie wärs mit ${sorted[1][0]}?`;
+                const matLabel = MATERIALS[sorted[0][0]]?.label || sorted[0][0];
+                const mat2Label = MATERIALS[sorted[1][0]]?.label || sorted[1][0];
+                return `${npc.emoji} ${npc.prefix} Sehr viel ${matLabel}! Wie wärs mit ${mat2Label}?`;
             }
         }
         return null;
@@ -645,7 +752,9 @@
 
     function generateNpcComment(material) {
         const npcKeys = Object.keys(NPC_VOICES);
-        const npc = NPC_VOICES[npcKeys[Math.floor(Math.random() * npcKeys.length)]];
+        const npcIdx = Math.floor(Math.random() * npcKeys.length);
+        const npcId = npcKeys[npcIdx];
+        const npc = NPC_VOICES[npcId];
         const matLabel = MATERIALS[material]?.label || material;
 
         // Streak-Check
@@ -660,11 +769,11 @@
             materialStreak = 1;
         }
 
-        // Context-Kommentar (10% Chance)
+        // Context-Kommentar (10% Chance) — npcId an getContextComment für Memory
         if (Math.random() < 0.1) {
             const stats = typeof getGridStats === 'function' ? getGridStats() : null;
             if (stats) {
-                const ctx = getContextComment(npc, stats);
+                const ctx = getContextComment(npc, stats, npcId);
                 if (ctx) return ctx;
             }
         }
@@ -678,163 +787,19 @@
         return tmpl(npc, adj, matLabel, react);
     }
 
-    // --- Spontan-Hörspiele: Mini-Szenen bei besonderen Anlässen ---
-    // "Mensch, Maschine, KI" — wie im ZKM Karlsruhe
-    const HOERSPIELE = window.INSEL_STORIES || {}; // Daten in stories.js
-    let playedHoerspiele = JSON.parse(localStorage.getItem('insel-hoerspiele') || '[]');
-
-    // TTS: Emoji und Markup aus Text strippen für Sprachausgabe
-    function stripForTTS(text) {
-        return text
-            .replace(/[\u{1F000}-\u{1FFFF}]|[\u{2600}-\u{27BF}]|[\u{FE00}-\u{FEFF}]|[\u{1F900}-\u{1F9FF}]/gu, '')
-            .replace(/<[^>]+>/g, '')
-            .replace(/—/g, '–')
-            .replace(/\s+/g, ' ')
-            .trim();
-    }
-
-    let hoerspielSpeaking = false;
-
-    // TTS Hörspiele — Cloud TTS via Worker /tts (OpenAI tts-1 über Requesty)
-    // Fallback: Web Speech API wenn Worker nicht erreichbar
-    // Stoppt bei: Mute, Canvas-Klick, oder INSEL_SOUND.isMuted()
-    let hoerspielAborted = false;
-    let hoerspielAudio = null;
+    // --- Spontan-Hörspiele — delegiert an tts.js ---
+    // TTS-Funktionen leben in window.INSEL_TTS (tts.js)
+    // playedHoerspiele.length wird noch für Analytics benötigt
+    const playedHoerspiele = JSON.parse(localStorage.getItem('insel-hoerspiele') || '[]');
 
     function stopHoerspiel() {
-        if (!hoerspielSpeaking) return;
-        hoerspielAborted = true;
-        if (hoerspielAudio) { hoerspielAudio.pause(); hoerspielAudio = null; }
-        if (window.speechSynthesis) window.speechSynthesis.cancel();
-        hoerspielSpeaking = false;
-        INSEL_SOUND.setMasterVolume(1.0);
-        showToast('🎭 Hörspiel gestoppt');
+        if (window.INSEL_TTS) window.INSEL_TTS.stopHoerspiel();
     }
-
-    // Stimme + Sprache aus Zeile extrahieren
-    function detectVoice(line) {
-        if (line.includes('Lanz:')) return { voice: 'lanz', lang: 'de' };
-        if (line.includes('Precht:')) return { voice: 'precht', lang: 'de' };
-        if (line.includes('Merz:')) return { voice: 'merz', lang: 'de' };
-        if (line.includes('Trump:')) return { voice: 'trump', lang: 'en' };
-        if (line.includes('Musk:')) return { voice: 'musk', lang: 'en' };
-        if (line.includes('Mephisto:')) return { voice: 'mephisto', lang: 'de' };
-        if (line.includes('Krömer:')) return { voice: 'echo', lang: 'de' };
-        if (line.includes('Büker:')) return { voice: 'alloy', lang: 'de' };
-        if (line.includes('Kückens:')) return { voice: 'nova', lang: 'de' };
-        if (line.includes('Tommy:')) return { voice: 'shimmer', lang: 'de' };
-        if (line.includes('Lesch:')) return { voice: 'nova', lang: 'de' };
-        if (line.includes('Feynman:')) return { voice: 'fable', lang: 'de' };
-        if (line.includes('Sartre:')) return { voice: 'fable', lang: 'fr' };
-        if (line.includes('Machiavelli:')) return { voice: 'onyx', lang: 'it' };
-        if (line.includes('SpongeBob:')) return { voice: 'default', lang: 'de' };
-        if (line.includes('Python:')) return { voice: 'default', lang: 'de' };
-        if (line.includes('JavaScript:')) return { voice: 'shimmer', lang: 'de' };
-        if (line.includes('TypeScript:')) return { voice: 'echo', lang: 'de' };
-        if (line.includes('Bernd:')) return { voice: 'echo', lang: 'de' };
-        if (line.includes('Elefant:')) return { voice: 'nova', lang: 'de' };
-        if (line.includes('Neinhorn:')) return { voice: 'shimmer', lang: 'de' };
-        return { voice: 'default', lang: 'de' };
-    }
-
-    // Cloud TTS: Text → MP3 via Worker
-    function speakCloudTTS(text, voiceInfo) {
-        const proxy = (window.INSEL_CONFIG && window.INSEL_CONFIG.proxy) || 'https://schatzinsel.hoffmeyer-zlotnik.workers.dev';
-        return fetch(proxy + '/tts', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text: text, voice: voiceInfo.voice, lang: voiceInfo.lang, speed: 1.0 }),
-        }).then(function (r) {
-            if (!r.ok) throw new Error('TTS ' + r.status);
-            return r.blob();
-        }).then(function (blob) {
-            return new Promise(function (resolve, reject) {
-                var url = URL.createObjectURL(blob);
-                var audio = new Audio(url);
-                hoerspielAudio = audio;
-                audio.onended = function () { URL.revokeObjectURL(url); hoerspielAudio = null; resolve(); };
-                audio.onerror = function () { URL.revokeObjectURL(url); hoerspielAudio = null; reject(); };
-                audio.play().catch(reject);
-            });
-        });
-    }
-
-    // Fallback: Web Speech API
-    function speakBrowserTTS(text, lang) {
-        return new Promise(function (resolve) {
-            if (!window.speechSynthesis) { resolve(); return; }
-            var utter = new SpeechSynthesisUtterance(text);
-            utter.lang = (lang === 'en') ? 'en-US' : (lang === 'fr') ? 'fr-FR' : (lang === 'it') ? 'it-IT' : 'de-DE';
-            utter.rate = 0.95;
-            utter.onend = function () { resolve(); };
-            utter.onerror = function () { resolve(); };
-            window.speechSynthesis.speak(utter);
-        });
-    }
-
-    function speakLines(lines, onDone) {
-        if (INSEL_SOUND.isMuted()) {
-            if (onDone) onDone();
-            return;
-        }
-        hoerspielSpeaking = true;
-        hoerspielAborted = false;
-        INSEL_SOUND.setMasterVolume(0.15); // Bau-Töne leiser während Hörspiel
-
-        let index = 0;
-        function speakNext() {
-            if (hoerspielAborted || index >= lines.length) {
-                hoerspielSpeaking = false;
-                hoerspielAborted = false;
-                INSEL_SOUND.setMasterVolume(1.0);
-                if (onDone) onDone();
-                return;
-            }
-            const text = stripForTTS(lines[index]);
-            showToast(lines[index], 4000);
-            if (index === 0) soundAchievement();
-            const voice = detectVoice(lines[index]);
-            index++;
-
-            if (!text || INSEL_SOUND.isMuted()) { setTimeout(speakNext, 500); return; }
-
-            // Cloud TTS mit Fallback auf Browser
-            speakCloudTTS(text, voice).catch(function () {
-                return speakBrowserTTS(text, voice.lang);
-            }).then(function () {
-                setTimeout(speakNext, 400);
-            });
-            window.speechSynthesis.speak(utter);
-        }
-        speakNext();
-    }
-
     function maybeHoerspiel(stats) {
-        let key = null;
-        if (stats.total === 1 && !playedHoerspiele.includes('firstBlock')) key = 'firstBlock';
-        else if (stats.total === 10 && !playedHoerspiele.includes('tenBlocks')) key = 'tenBlocks';
-        else if (stats.total === 50 && !playedHoerspiele.includes('fiftyBlocks')) key = 'fiftyBlocks';
-        else if (stats.total === 75 && !playedHoerspiele.includes('talkshow')) key = 'talkshow';
-        else if (stats.total === 100 && !playedHoerspiele.includes('hundredBlocks')) key = 'hundredBlocks';
-        else if (stats.percent === 50 && !playedHoerspiele.includes('halfIsland')) key = 'halfIsland';
-        else if (stats.percent >= 100 && !playedHoerspiele.includes('fullIsland')) key = 'fullIsland';
-        // Podcast Staffel 1: verschiedene Meilensteine
-        var hasMephisto = window.INSEL_CHARACTERS && window.INSEL_CHARACTERS.mephisto;
-        if (!key && stats.total >= 25 && !playedHoerspiele.includes('podcast_lanz') && hasMephisto) key = 'podcast_lanz';
-        else if (!key && stats.total >= 40 && !playedHoerspiele.includes('podcast_s1e2_schroeder') && hasMephisto) key = 'podcast_s1e2_schroeder';
-        else if (!key && stats.total >= 60 && !playedHoerspiele.includes('podcast_s1e3_bueker') && hasMephisto) key = 'podcast_s1e3_bueker';
-        else if (!key && stats.total >= 80 && !playedHoerspiele.includes('podcast_s1e4_nachts') && hasMephisto) key = 'podcast_s1e4_nachts';
-        else if (!key && stats.total >= 90 && !playedHoerspiele.includes('podcast_s1e5_krapweis') && hasMephisto) key = 'podcast_s1e5_krapweis';
-        else if (!key && stats.percent >= 75 && !playedHoerspiele.includes('podcast_lesch') && hasMephisto) key = 'podcast_lesch';
-
-        if (!key) return;
-
-        playedHoerspiele.push(key);
-        localStorage.setItem('insel-hoerspiele', JSON.stringify(playedHoerspiele));
-
-        const lines = HOERSPIELE[key];
-        speakLines(lines);
-        trackEvent('hoerspiel', { scene: key, blocks: stats.total });
+        if (window.INSEL_TTS) window.INSEL_TTS.maybeHoerspiel(stats);
+    }
+    function speakLines(lines, onDone) {
+        if (window.INSEL_TTS) window.INSEL_TTS.speakLines(lines, onDone);
     }
 
     let lastCommentTime = 0;
@@ -3436,7 +3401,7 @@
     canvas.addEventListener('mousedown', (e) => {
         if (window.resetIdleTimer) window.resetIdleTimer();
         // TTS Hörspiel stoppen bei Canvas-Interaktion (Backlog #87)
-        if (hoerspielSpeaking) stopHoerspiel();
+        if (window.INSEL_TTS && window.INSEL_TTS.hoerspielSpeaking) stopHoerspiel();
         isMouseDown = true;
         undoPushedThisStroke = false;
         const cell = getGridCell(e);
@@ -3936,9 +3901,9 @@
             if (nowMuted && window.speechSynthesis) window.speechSynthesis.cancel();
             muteBtn.textContent = nowMuted ? '🔇' : '🔊';
             // TTS sofort stoppen wenn gemutet
-            if (nowMuted && window.speechSynthesis) {
-                window.speechSynthesis.cancel();
-                hoerspielSpeaking = false;
+            if (nowMuted) {
+                if (window.speechSynthesis) window.speechSynthesis.cancel();
+                if (window.INSEL_TTS && window.INSEL_TTS.hoerspielSpeaking) window.INSEL_TTS.stopHoerspiel();
                 INSEL_SOUND.setMasterVolume(1.0);
             }
             showToast(nowMuted ? 'Ton aus (+ Hörspiele)' : 'Ton an');
