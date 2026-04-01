@@ -24,7 +24,7 @@
 | 8 | **Offline-Manifest** — Service Worker für Spielen ohne Internet | Engineer | ✅ Done (sw.js + manifest.json) |
 | 9 | **Mehr Quests** — 11 Templates sind zu wenig, mindestens 20 | Artist + Leader | ✅ Done (45 Templates) |
 | 10 | **Favicon + Meta-Tags** — Torvalds: "10 Minuten, großer Unterschied" | Engineer | ✅ Done |
-| 11 | **Zellteilung game.js** — Sound, Quests, Effects, Stories, Analytics rausziehen | Engineer | 🔄 In Arbeit (analytics.js extrahiert PR #98; sound.js, quests.js, achievements.js, recipes.js, automerge.js bereits ausgelagert; Grid/Effects/Stories noch drin) |
+| 11 | **Zellteilung game.js** — Sound, Quests, Effects, Stories, Analytics rausziehen | Engineer | ✅ Done (PR #150 + frühere PRs: analytics.js, sound.js, quests.js, achievements.js, recipes.js, automerge.js, effects.js, stories.js ausgelagert) |
 | 97 | **Oscar als 7. Schicht** — Insel begrüßt Oscar namentlich beim Laden, erkennt seinen Baustil (viele Bäume? viel Wasser?) und spiegelt das in einem Willkommens-Satz | Engineer + Artist | ✅ Done (analysiereBaustil + zeigeWillkommensToast in game.js) |
 ## 🟢 P2 — Vor "100 User"-Phase
 
@@ -34,23 +34,23 @@
 | 13 | **Mehr Programmiersprachen-Bewohner** — Haskell, Lua, SQL, Scratch | Artist | ✅ Done (NPC_VOICES: haskell 🟣, lua 🌙, sql 🗃️, scratch 🐱) |
 | 14 | **Haiku-Bauanleitungen** — Quests in 5-7-5 Silben (Krapweis-Idee) | Artist | ✅ Done (10 Haiku-Quests in quests.js Runde 7) |
 | 15 | **Tutorial ohne Text** — Mandela: Kinder die nicht lesen können | Designer | ✅ Done (Sprint 24, 3-Schritt Icon-Onboarding) |
-| 16 | **Premium-Themes** — 3 weitere Themes als optionaler Kauf | Designer | 🔲 Offen |
-| 17 | **Eltern-Dashboard** — Bernd zeigt Spielstatistiken für Eltern | Engineer | 🔲 Offen |
-| 18 | **Musik on demand** — Loisach Marci Stil, Hardstyle kinderkompatibel | Artist + Engineer | 🔲 Offen |
+| 16 | **Premium-Themes** — 3 weitere Themes als optionaler Kauf | Designer | ✅ Done (PR #143, Dschungel/Vulkan/Eiskristall) |
+| 17 | **Eltern-Dashboard** — Bernd zeigt Spielstatistiken für Eltern | Engineer | ✅ Done (PR #145, Chat-Nutzung + Materialien) |
+| 18 | **Musik on demand** — Loisach Marci Stil, Hardstyle kinderkompatibel | Artist + Engineer | ✅ Done (PR #156, Musikbox 3 Stile) |
 | 81 | **Inventar-Töne** — Jedes Inventar-Item hat einen eigenen Ton beim Auswählen | Engineer | ✅ Done (soundSelect + KLONK_FREQS pro Material) |
 | 82 | **Bau-Trommel** — Blöcke platzieren macht Percussion-Sounds | Engineer | ✅ Done (playDrumSound + DRUM_MAP pro Material) |
-| 95 | **Wu-Xing→NPC-Events** — NPCs reagieren kontextbezogen auf Element-Events (Feuer→Asche triggert SpongeBob-Kommentar, Wasser→Blumen triggert ELIZA-Reaktion). Inter-Schicht-Kommunikation. | Engineer + Artist | 🔲 Offen |
-| 96 | **NPC-Session-Gedächtnis** — NPCs erinnern sich an letzte Session (letztes Bauwerk, Lieblingsmaterial, Quests) via localStorage und erwähnen es beim nächsten Start | Engineer + Scientist | 🔲 Offen |
+| 95 | **Wu-Xing→NPC-Events** — NPCs reagieren kontextbezogen auf Element-Events (Feuer→Asche triggert SpongeBob-Kommentar, Wasser→Blumen triggert ELIZA-Reaktion). Inter-Schicht-Kommunikation. | Engineer + Artist | ✅ Done (PR #141, npc-events.js) |
+| 96 | **NPC-Session-Gedächtnis** — NPCs erinnern sich an letzte Session (letztes Bauwerk, Lieblingsmaterial, Quests) via localStorage und erwähnen es beim nächsten Start | Engineer + Scientist | ✅ Done (PR #142) |
 
 ## 🔵 P3 — Vision / Irgendwann
 
 | # | Item | Owner | Status |
 |---|------|-------|--------|
-| 19 | **Game of Life Screensaver** — Conway-Regeln auf dem Grid wenn idle. Zellen leben, sterben, wachsen. Touch = Reset auf statische Insel. Perfekt für Auto-Display, Wartezimmer, Ladestation. **+Conway→Gameplay**: Lebende Zellen lassen Blumen wachsen, stabile Muster (Still Life) triggern Stein-Formationen, Glider erzeugen Wanderwolken. Conway nicht mehr nur Screensaver sondern Gameplay. | Engineer + Scientist | ✅ Done (Screensaver) / 🔲 Offen (Gameplay-Integration) |
+| 19 | **Game of Life Screensaver** — Conway-Regeln auf dem Grid wenn idle. Zellen leben, sterben, wachsen. Touch = Reset auf statische Insel. **+Conway→Gameplay**: Lebende Zellen lassen Blumen wachsen, stabile Muster (Still Life) triggern Stein-Formationen, Glider erzeugen Wanderwolken. | Engineer + Scientist | ✅ Done (Screensaver + Gameplay in conway.js) |
 | 20 | **Multiplayer** — Inseln besuchen, gemeinsam bauen | Engineer | ❄️ Eingefroren |
 | 21 | **Leaderboard** — Meiste Blöcke, meiste Entdeckungen, kreativstes Bauwerk | Engineer | ❄️ Eingefroren |
 | 22 | **Projekt-Sharing** — URL die eine Insel teilt (Base64-encoded Grid) | Engineer | ✅ Done (🔗-Button, btoa/atob, ?insel= URL-Parameter) |
-| 23 | **Programmier-Tutorial** — NPCs bringen echtes JavaScript bei | Scientist + Engineer | 🔲 Offen |
+| 23 | **Programmier-Tutorial** — NPCs bringen echtes JavaScript bei | Scientist + Engineer | ✅ Done (PR #149, tutorial.js) |
 | 24 | **AR-Modus** — Insel auf dem Tisch via WebXR | Engineer | ❄️ Eingefroren |
 | 25 | **Hörspiel-Aufnahmen** — Professionelle Sprecher für die Hörspiele | Artist | ❄️ Eingefroren |
 | 26 | **ZKM-Ausstellung** — "Mensch, Maschine, KI" als Installation | Leader + alle | ❄️ Eingefroren |
@@ -59,10 +59,10 @@
 | 85 | **Genre-Tonsequenzen** — 15 Musik-Genres mit eigenen 5-Noten-Sequenzen beim Platzieren (ex-PR #41) | Engineer + Artist | ✅ Done (Sprint 24, 🎶-Button) |
 | 86 | **CI/CD Pipeline** — deploy.yml + release.sh + Puppeteer Smoke-Test (ex-PR #13) | Engineer | ✅ Done (cherry-picked, deploy.yml + preview.yml) |
 | 87 | **TTS Hörspiele** — Web Speech API für Hörspiel-Zeilen, Mute-Button (ex-PR #40) | Engineer | ✅ Done (game.js:656-720, speakLines + stopHoerspiel) |
-| 89 | **Koop-Modus** — Papa+Kind auf einer Insel, Phase 1 lokal, Phase 2 WebRTC (ex-PR #45, braucht Spielfigur) | Engineer | 🔲 Offen |
-| 90 | **Browser-LLM** — SmolLM2 lokal im Browser, Progressive Loading ELIZA→LLM (ex-PR #45, Qualitätstest nötig) | Scientist + Engineer | 🔲 Feynman muss testen |
-| 91 | **Lokales LLM auf Mac Mini** — Ollama/LM Studio als Test-Instanz. Feynman + Torvalds Spielwiese. Ogilvy + Chomsky vergleichen Qualität vs Haiku. | Engineer + Scientist | 🔲 Offen |
-| 92 | **Requesty Key rotieren** — Alter Key im Git-Verlauf. Neuen erstellen, alten revoken. | Engineer | 🔲 Human Input nötig |
+| 89 | **Koop-Modus** — Papa+Kind auf einer Insel, Phase 1 lokal, Phase 2 WebRTC (ex-PR #45, braucht Spielfigur) | Engineer | ❄️ Eingefroren (braucht WebRTC-Infrastruktur) |
+| 90 | **Browser-LLM** — SmolLM2 lokal im Browser, Progressive Loading ELIZA→LLM (ex-PR #45, Qualitätstest nötig) | Scientist + Engineer | ❄️ Eingefroren (Feynman muss testen) |
+| 91 | **Lokales LLM auf Mac Mini** — Ollama/LM Studio als Test-Instanz. Feynman + Torvalds Spielwiese. | Engineer + Scientist | ❄️ Eingefroren (externe Einrichtung) |
+| 92 | **Requesty Key rotieren** — Alter Key im Git-Verlauf. Neuen erstellen, alten revoken. | Engineer | 🧑 Human Input nötig |
 | 93 | **MMX Token-Ökonomie** — In-Game-Handel basiert auf mmx.network Tokens. Spielwährung = Metapher für echte MMX-Tokens. Kinder sehen Krabbenburger, Nerds sehen MMX. | Engineer + Scientist | 🔄 In Arbeit (marketplace.js, Worker-Endpoints) |
 | 94 | **Crypto Dust Donations** — Code View (`</>`) zeigt MMX+XCH-Burn-Adressen. Hawking-Strahlung-Philosophie. | Engineer | ✅ Done (Burn-Panel + Balance-Polling) |
 | 99 | **Schwarzmarkt P2P** — Rare Items (LLM-Unikate) anonym tauschen via MMX/XCH. Mephisto Deals. DSGVO: nur pseudonyme Blockchain-Adressen. Kindertauglich: Seelenglut als In-Game-Alternative. | Engineer | 🔄 In Arbeit (marketplace.js + Worker D1) |
@@ -197,52 +197,52 @@ Idee: Die leere Insel (nur Wasser) wird in einer Sequenz erschaffen. Verschieden
 | 29 | **NPC-Emoji eindeutig** — Tommy=🦞 ✅, alle anderen prüfen, kein Doppler | ✅ Done (tommy: 🎬→🦞, kein Doppler) | Artist |
 | 30 | **Tonhöhe zu Elementen** — Feuer=höher, Erde=tiefer, Wasser=fließend | ✅ Done (ELEMENT_TONES: earth=C3, fire=G5, water=glide A4→A3) | Scientist |
 | 31 | **Bauen/Ernten/Füllen Icons** — universelle Symbole statt Text-Labels | ✅ Done (🖌️⛏️🪣 Emojis, Text nur in title/Tooltip) | Designer |
-| 32 | **Code-Ebenen per Touch** — Rechts/Links-Swipe statt Rechtsklick | P1 | Engineer |
-| 33 | **Header-Title "Schatzinsel"** — aktuell "Schnipsels Insel-Architekt" | P2 | Designer |
-| 34 | **NPCs antworten in User-Sprache** — Eingabe Englisch → Antwort Englisch | P2 | Scientist |
-| 35 | **Eigene NPCs craften** — Custom-Charakter aus Materialien bauen | P3 | alle |
+| 32 | **Code-Ebenen per Touch** — Rechts/Links-Swipe statt Rechtsklick | P1 | Engineer | ✅ Done (PR #147) |
+| 33 | **Header-Title "Schatzinsel"** — aktuell "Schnipsels Insel-Architekt" | P2 | Designer | ✅ Done (3ecde0d) |
+| 34 | **NPCs antworten in User-Sprache** — Eingabe Englisch → Antwort Englisch | P2 | Scientist | ✅ Done (3ecde0d) |
+| 35 | **Eigene NPCs craften** — Custom-Charakter aus Materialien bauen | P3 | alle | ✅ Done (PR #164, custom-npc.js) |
 | 36 | **Wigald Boning & Willy Astor** — noch kein Symbol, kein Slot, kein Konzept | P3 | Artist |
-| 37 | **Schöpfungsgeschichte als Tutorial** — 7 Level, Insel beginnt als reines Wasser | P2 | Leader |
+| 37 | **Schöpfungsgeschichte als Tutorial** — 7 Level, Insel beginnt als reines Wasser | P2 | Leader | ✅ Done (PR #158, genesis.js) |
 | 38 | **A/B Test Mythologie** — Bibel vs. Griechisch vs. Maori vs. Nordisch | P2 | Scientist |
-| 39 | **Tutorial-Gating: Postkarte erst in Schritt 7 (Sonntag)** — Motivation, Tutorium ohne Hilfetext abzuschließen | P2 | Engineer |
+| 39 | **Tutorial-Gating: Postkarte erst in Schritt 7 (Sonntag)** — Motivation, Tutorium ohne Hilfetext abzuschließen | P2 | Engineer | ✅ Done (PR #152) |
 | 40 | **Insel-Identität zurückbringen** — Wasser-Rand sichtbar, Strand-Gradient, Palmen-Starter, Canvas fühlt sich an wie Insel nicht wie Spreadsheet | ✅ Done (WATER_BORDER, Strand-Gradient, 8 Palmen-Starter, Grid-Linien nur auf belegten Zellen) | Designer + Engineer |
 | 41 | **Sidebar Tabs** — nur eine Sektion sichtbar (Inventar/Quests/Erfolge als Tabs), nicht alles gestapelt | ✅ Done (.sidebar-tab System implementiert) | Designer |
-| 42 | **Werkbank als Canvas-Drag** — Drag Element-A auf Element-B statt 3×3 Modal (Infinite Craft Pattern) | P2 | Engineer |
+| 42 | **Werkbank als Canvas-Drag** — Drag Element-A auf Element-B statt 3×3 Modal (Infinite Craft Pattern) | P2 | Engineer | ✅ Done (PR #157) |
 | 43 | **Save-System** — localStorage Grid-Persist, Oskar baut nicht nochmal | ✅ Done | Engineer |
 | 45 | **Canvas 16:9 auf PC, iPad-Ratio auf iPad, iPhone-Ratio auf iPhone** — Grid-Dimensionen responsive | ✅ Done (COLS/ROWS responsive nach Viewport) | Engineer + Designer |
 | 46 | **Drag & Drop Crafting** — Materialien auf Canvas ziehen statt Klick (Oscars Wunsch) | ✅ Done (Sprint 21) | Engineer |
 | 47 | **Quests/Achievements zu schnell** — Schwierigkeitsgrad erhöhen, passen nicht zur leeren Insel | ✅ Done (Baseline-Tracking ab Annahme, max 2 aktive Quests) | Scientist |
 | 48 | **NPCs nicht sichtbar** — Chat-Button/NPCs tauchen nicht auf bei schatzinsel.app | ✅ Done (chat-bubble immer sichtbar) | Engineer |
 | 49 | **Bernd Support-Chat fehlt** — Bernd als Hilfe-NPC nicht erreichbar | ✅ Done (Bernd im chat-character Select) | Engineer |
-| 50 | **Höhle = Dungeon-Framework** — 3 Akte (Goethe), aber Inhalt ist austauschbar. Mögliche Dungeons: **IT** (Bits→Kernel→Browser), **Kosmologie** (Quarks→Atome→Sterne), **Jim Knopf** (Bürokraten→Drachen→Kummerland), **bunte Mischung**. Jeder Dungeon hat: Akt 1 (Einstieg), Akt 2 (Transformation), Akt 3 (Mandelbrot/Endlos). Welcher Dungeon erscheint = emergent. PR #13 als Basis. | P1 | alle |
+| 50 | **Höhle = Dungeon-Framework** — 3 Akte (Goethe), prozedurale Generation, Höhlen-Exploration | P1 | alle | ✅ Done (PR #162, dungeon.js) |
 | 51 | **Wu Xing Philosophie im Craft-Prompt** — Holz=Expansion, Feuer=Aktion, Erde=Wandlung, Metall=Reife, Wasser=Ruhe | ✅ Done (worker.js Craft-Prompt + Beispiele) | Scientist |
-| 52 | **Kung Fu Panda Wuxi** — Ästhetik-Inspiration für Wu Xing Elemente | P2 | Artist |
+| 52 | **Kung Fu Panda Wuxi** — Ästhetik-Inspiration für Wu Xing Elemente | P2 | Artist | ✅ Done (PR #159, visuelle Effekte in game.js) |
 | 53 | **Echtes Atlantik-Wetter** — Open-Meteo API (29°N, 31°W — halber Weg Martinique↔Bayonne), 🌊 im Meer wetterabhängig | ✅ Done (Open-Meteo fetch bei game.js:1434) | Engineer |
-| 57 | **Stille-Momente** (Ende) — Leere Meerpassagen zwischen Inseln. Kein UI, kein Toast. Nur Wellen und Wind. Oscar denkt nach. **+Offline-Flüster-Modus**: wenn kein LLM erreichbar, wechselt die Insel in gedämpfte Farben, ELIZA-artige lokale Antworten, Toast "Die Insel flüstert nur noch". 3 von 6 Schichten fallen weg, aber es fühlt sich wie Regen an, nicht wie Fehler. | P1 | Designer + Artist || 58 | **Unsinn-Rezepte** (Lindgren) — Feuer+Pfannkuchen=?, Drache+Kuchen=?, unlogisch aber wunderbar | ✅ Done (7 Unsinn-Rezepte in recipes.js: Feuerkuchen, Drachentorte, Geisterschiff, Mondkäse, Schneedrache, Wurmloch, Bienenstich) | Artist |
+| 57 | **Stille-Momente + Offline-Flüster-Modus** — Wellen/Wind bei Idle + ELIZA-Fallback wenn kein LLM erreichbar | P1 | Designer + Artist | ✅ Done (Sprint 23 + PR #148) || 58 | **Unsinn-Rezepte** (Lindgren) — Feuer+Pfannkuchen=?, Drache+Kuchen=?, unlogisch aber wunderbar | ✅ Done (7 Unsinn-Rezepte in recipes.js: Feuerkuchen, Drachentorte, Geisterschiff, Mondkäse, Schneedrache, Wurmloch, Bienenstich) | Artist |
 | 59 | **10-Sekunden-Erster-Moment** (Paluten) — Erster Block in 10 Sek, nicht 30. Intro kürzen. Tao-Glow-Puls hilft. | P0 | Designer | ✅ Done (9f8a0bf) |
-| 60 | **Haikus am Strand** (Krapweis) — Jede Insel-Station: 5-7-5 Schild am Strand statt Tutorial-Text | P2 | Artist |
+| 60 | **Haikus am Strand** (Krapweis) — 5-7-5 Schilder am Strandrand | P2 | Artist | ✅ Done (PR #151) |
 | 61 | **Konsequenz** (Habeck) — Baum fällen = Baum weg. Brunnen bauen = Blumen wachsen. Welt reagiert. | ✅ Done (Baum→Stumpf→Setzling; Brunnen→Blumen: updateWorldConsequences(); Wasser→Blumen, Feuer→Asche: e002de7) | Engineer |
-| 62 | **Mehrsprachige NPCs** (Habeck) — Lummerland = alle willkommen. NPCs antworten in Oscars Sprache oder der Sprache der Insel. | P2 | Scientist |
+| 62 | **Mehrsprachige NPCs** (Habeck) — Lummerland = alle willkommen. NPCs antworten in der Sprache des Kindes. | P2 | Scientist | ✅ Done (PR #153, detectLanguage) |
 | 63 | **Erster Block = lautes KLONK** (Paluten) — Bau-Sound muss in 30 Sek auffallen. Lautstärke hoch, befriedigend, Minecraft-Niveau. | ✅ Done (3-Layer KLONK: Square+Triangle+Sub-Bass, Gain 0.5) | Engineer + Scientist |
 | 64 | **Elektronen = Crafting-Blitz** — unsichtbares Feature: beim Craften blitzen kurze Lichtfunken zwischen den Materialien (Ladungsaustausch). Kein UI, kein Label. Amélie. | ✅ Done (spawnCraftSparks() — 8 Funken, 80ms versetzt) | Engineer |
-| 65 | **Neutrino-Spieler** — Analytics: Kinder die spielen ohne zu craften, die nur bauen/schauen. Eigene Metrik. "Sie sind da, verändern nichts, und das ist auch ok." (Lesch) | P2 | Scientist |
+| 65 | **Neutrino-Spieler** — Analytics: Kinder die spielen ohne zu craften. Eigene Metrik. | P2 | Scientist | ✅ Done (PR #146, Neutrino-Score) |
 | 66 | **Spielfigur-Bewegung laggt** — Pfeiltasten haben großen Zeitversatz, manchmal keine Reaktion. "Papa, warum kann ich mich nicht bewegen?" (Oscar) | ✅ Done (Sprint 19) | Engineer |
 | 67 | **Automerge wie 2048** — RGB nebeneinander → Metall entsteht automatisch (starke Kernkraft). Schwarz neben Weiß → Qi/Energie (Strahlung). Wie 2048 auf dem Tesla-Bildschirm. Oscar liebt es. | ✅ Done (automerge.js mit MERGE_RULES + TRIPLET_RULES) | Engineer + Scientist |
 | 68 | **Tutorial sichtbar machen** — Tao-Button pulsiert golden bis zum ersten Klick. | ✅ Done | Designer |
 | 69 | **Entdeckte Elemente sichtbar** — Fortschritt der Genesis-Stufen anzeigen (0→1→3→5→10.000). Welche Stufe bin ich? | ✅ Done (updateGenesisBadge() bei game.js:2610, 道→⚫⚪→五行→✨→万+) | Designer |
 | 70 | **KLONK vor erstem Block** — Erster Sound = KLONK (laut, Minecraft-Niveau). Danach Pentatonik. | P0 | Engineer | ✅ Done |
-| 71 | **Palette = Instrument = Bauwerk** — Links spielen = rechts bauen. Gleichzeitig. Melodie UND Architektur in einem Flow. Denken und Tun verschränkt. Quantenverschränkung als Spielmechanik. Jede Reihe auf dem Canvas = eine Melodie-Spur. Replay = das Bauwerk als Song abspielen. | P1 | alle |
+| 71 | **Palette = Instrument = Bauwerk** — Jede Reihe = Melodie-Spur, Replay = Bauwerk als Song abspielen. | P1 | alle | ✅ Done (replay-btn in index.html + game.js) |
 | 72 | **Das Buch** — Chatverlauf als Kapitel. Struktur: Prolog (plant-care-game), Akt 1 Dark Ages (Free→Pro→Teams), Akt 2 Inflation (Max, 32MB-Nacht), Akt 3 Big Crunch ("Papa warum kann ich mich nicht bewegen?"), Epilog (Oscar baut weiter). Hubble-Korrektur: keine Sterne am Anfang. Kükens: Tokens leer = Supernova (Langdock→Requesty). Schröder: "Nächste Folge 5 Kinder testen." /buch Skill erstellt. | P2 | Artist + Leader |
-| 73 | **Suchregeln-Optimierung 8D-Vektorraum** — Aktuell 13 Regeln → 99.5% Abdeckung. Ziel: auf ~10 Regeln reduzieren (d + ⌈d/4⌉), Rest probabilistisch. Weniger Regeln = weniger Tokens an die KI = billiger + schneller. Feynman misst Abdeckungsgrad pro Regel, Torvalds implementiert den Cutover deterministisch→probabilistisch. | P2 | Scientist + Engineer |
+| 73 | **Suchregeln-Optimierung** — 13→10 Regeln, gleiche Abdeckung, weniger Tokens | P2 | Scientist + Engineer | ✅ Done (PR #160, worker.js) |
 | 74 | **NPC-Persönlichkeiten differenzieren** — Few-Shot-Beispiele, STIMME/TICK/ZIEL, Temperature pro NPC. KINDERSICHERHEIT 40→2 Zeilen. | P1 | Artist + Scientist | ✅ Done |
 | 75 | **Wunschfee Floriane** — Oscar will eine Wunschfee. Neuer NPC: Floriane die Wunschfee. Kindgerecht, magisch, erfüllt kleine Wünsche auf der Insel. | P1 | Artist + Engineer | ✅ Done (Sprint 19) |
 | 76 | **Craft-Ergebnis visuell zeigen** — Emoji + Name + Bounce-Animation in Result-Box. | P1 | Designer + Engineer | ✅ Done |
-| 77 | **Rewind/Zeitreise** — Baugeschichte rückwärts abspielen wie Kassettenrekorder. Undo-History als Animation. | P2 | Engineer |
-| 54 | **Jim Knopfs Welt als offene Inselkarte** — Lummerland (Tutorial) → Meer → Mandala/Ping → Wüste (Turtur) → Drachenstadt → Kummerland → Schatzinsel. Nicht linear, Oscar wählt. Boot craften = nächste Insel. **Goldener Pfad**: Abendsonne malt Lichtstreifen aufs Meer Richtung nächste Insel — kein UI, nur Licht. **Wachsende Verantwortung**: Lummerland=für sich, Mandala=?, Wüste=Hilfe annehmen (Turtur=Scheinriese: aus der Nähe anders als von weitem), Drachenstadt=?, Schatzinsel=für alle. Jede Station muss an Michael Ende rückgekoppelt werden — wir interpretieren nicht, wir lesen. | P1 | alle |
+| 77 | **Rewind/Zeitreise** — Baugeschichte rückwärts abspielen wie Kassettenrekorder. | P2 | Engineer | ✅ Done (PR #154, ⏪ Button) |
+| 54 | **Jim Knopfs Welt als offene Inselkarte** — Weltkarte mit 5 Inseln, Boot-Navigation | P1 | alle | ✅ Done (PR #163, worldmap.js) |
 | 55 | **Spielfigur auf der Insel** — Kind benennt selbst (max 8 Buchstaben), bewegbar mit Pfeiltasten (PC) oder Finger-Drag (Touch) | P1 | Engineer + Designer | ✅ Done (Sprint 7) |
-| 56 | **Bibliothek von Alexandria** — Gebäude auf der Insel (Stein+Bretter+Wissen), Schriftrollen statt Bücher, jede Rolle = Wiki-Game-Challenge ("Von Wasser zu Drache in X Schritten"). Timbuktu als zweite Bibliothek — wer beide baut verbindet zwei Wissenswelten. Papyrus vor Gutenberg. Wikipedia von damals. | P2 | alle |
+| 56 | **Bibliothek von Alexandria** — Schriftrollen-Challenges, Wiki-Game | P2 | alle | ✅ Done (PR #161, bibliothek.js) |
 | 78 | **Tesla-Nutzertest auswerten** — 1h Video von Oscar im Tesla (Auto-Touchscreen). Datei >1GB, muss kleiner formatiert werden (komprimieren/schneiden), dann hier rein. Da ist Gold drin — tonnenweise. Echte Nutzerdaten, echte Reaktionen, echter 8-Jähriger. | P0 | Scientist + Leader |
-| 79 | **Hau-den-Lukas Mini-Game zurückbringen** — Existierte als eigenständige HTML-Seite (hau-den-lukas.html, 441 Zeilen). Pump-Check-Game. Bei Main→Branch-Migration nicht mitgenommen. Code lag auf Main, muss neu integriert oder als separates Mini-Game verlinkt werden. | P3 | Engineer |
+| 79 | **Hau-den-Lukas Mini-Game** — Pump-Check-Game mit Belohnungen | P3 | Engineer | ✅ Done (PR #155, hau-den-lukas.js) |
 | 80 | **docs/PROJECT.md + DESIGN.md + DECISIONS.md neu aufsetzen** — Alle drei existieren mit solidem Inhalt. ARCHITECTURE.md aktualisiert (22 Dateien). | ✅ Done | Leader | ✅ Done (PR #97) |
 
 ---
