@@ -138,6 +138,7 @@
         if (changed) {
             callbacks.updateStats();
             callbacks.showToast('🌺 Brunnen-Magie! Blumen wachsen...');
+            if (window.INSEL_BUS) window.INSEL_BUS.emit('consequence:flowers', { count: -1 });
         }
     }
 

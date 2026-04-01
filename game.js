@@ -2468,6 +2468,12 @@
                 }
                 if (!undoPushedThisStroke) { pushUndo(); undoPushedThisStroke = true; }
                 grid[r][c] = currentMaterial;
+                // Wu-Xing Element-Events auf den Bus
+                if (window.INSEL_BUS) {
+                    var wu = { fire: 'fire', water: 'water', wood: 'wood', metal: 'metal', earth: 'earth' };
+                    if (wu[currentMaterial]) window.INSEL_BUS.emit('element:' + currentMaterial, { r: r, c: c, material: currentMaterial });
+                    window.INSEL_BUS.emit('block:placed', { r: r, c: c, material: currentMaterial });
+                }
                 checkAutomerge(r, c);
                 checkBlueprintMatch(r, c);
                 const hint = document.getElementById('genesis-hint');
@@ -2492,7 +2498,10 @@
                             const [fr, fc] = empty.splice(idx, 1)[0];
                             grid[fr][fc] = Math.random() < 0.5 ? 'flower' : 'plant';
                         }
-                        if (count > 0) requestRedraw();
+                        if (count > 0) {
+                            requestRedraw();
+                            if (window.INSEL_BUS) window.INSEL_BUS.emit('consequence:flowers', { r: r, c: c, count: count });
+                        }
                     }, 10000);
                 }
                 // Konsequenz: Feuer neben Holz → Holz verbrennt nach 3s
@@ -2502,7 +2511,10 @@
                         const nr = r+dr, nc = c+dc;
                         if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && grid[nr]?.[nc] === 'wood') {
                             setTimeout(() => {
-                                if (grid[nr][nc] === 'wood' && grid[r]?.[c] === 'fire') { grid[nr][nc] = 'ash'; requestRedraw(); }
+                                if (grid[nr][nc] === 'wood' && grid[r]?.[c] === 'fire') {
+                                    grid[nr][nc] = 'ash'; requestRedraw();
+                                    if (window.INSEL_BUS) window.INSEL_BUS.emit('consequence:ash', { r: nr, c: nc });
+                                }
                             }, 3000);
                         }
                     });
@@ -2726,6 +2738,7 @@
         showToast(merge.msg);
         soundCraft();
         unlockMaterial(merge.result);
+        if (window.INSEL_BUS) window.INSEL_BUS.emit('merge:result', { result: merge.result, from: fromMats, type: merge.type });
         if (typeof updateGenesisVisibility === 'function') updateGenesisVisibility();
         requestRedraw();
 
