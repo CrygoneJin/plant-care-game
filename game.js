@@ -1939,6 +1939,75 @@
                     }
                     ctx.fillRect(x + 1, y + 1, CELL_SIZE - 2, CELL_SIZE - 2);
 
+                    // === Wu Xing Ästhetik (#52) — Kung Fu Panda Wuxi ===
+                    const cellType = grid[r][c];
+                    if (!prefersReducedMotion) {
+                        // Feuer: flackernde Glut-Partikel
+                        if (cellType === 'fire') {
+                            for (let p = 0; p < 3; p++) {
+                                const px = x + 3 + Math.sin(time * 6 + p * 2.1 + r) * (CELL_SIZE * 0.3);
+                                const py = y + CELL_SIZE * 0.3 - Math.abs(Math.sin(time * 4 + p * 1.7 + c)) * (CELL_SIZE * 0.25);
+                                const size = 2 + Math.sin(time * 5 + p) * 1;
+                                const alpha = 0.5 + Math.sin(time * 7 + p * 3) * 0.3;
+                                ctx.fillStyle = p % 2 === 0
+                                    ? `rgba(255, 140, 0, ${alpha})`
+                                    : `rgba(255, 60, 20, ${alpha})`;
+                                ctx.beginPath();
+                                ctx.arc(px + CELL_SIZE * 0.35, py + CELL_SIZE * 0.2, size, 0, Math.PI * 2);
+                                ctx.fill();
+                            }
+                        }
+                        // Wasser: Wellen-Shimmer (horizontale Lichtlinien)
+                        else if (cellType === 'water') {
+                            ctx.save();
+                            ctx.globalAlpha = 0.15;
+                            ctx.strokeStyle = '#4FC3F7';
+                            ctx.lineWidth = 1;
+                            for (let w = 0; w < 3; w++) {
+                                const wy = y + 4 + w * (CELL_SIZE * 0.28);
+                                const waveOffset = Math.sin(time * 2.5 + w * 1.2 + c * 0.5) * 3;
+                                ctx.beginPath();
+                                ctx.moveTo(x + 2, wy + waveOffset);
+                                ctx.quadraticCurveTo(
+                                    x + CELL_SIZE * 0.5, wy + waveOffset + Math.sin(time * 3 + w) * 2.5,
+                                    x + CELL_SIZE - 2, wy - waveOffset
+                                );
+                                ctx.stroke();
+                            }
+                            ctx.restore();
+                        }
+                        // Holz: Wachstums-Pulsieren (subtiler Scale-Glow)
+                        else if (cellType === 'wood') {
+                            const pulse = 0.08 + Math.sin(time * 1.5 + r * 0.7 + c * 1.1) * 0.06;
+                            ctx.save();
+                            ctx.globalAlpha = pulse;
+                            ctx.fillStyle = '#66BB6A';
+                            ctx.fillRect(x, y, CELL_SIZE, CELL_SIZE);
+                            ctx.restore();
+                        }
+                        // Metall: Glanz-Highlight (wandernder Lichtpunkt)
+                        else if (cellType === 'metal') {
+                            const shimmerX = x + ((time * 0.8 + r * 0.3 + c * 0.7) % 1) * CELL_SIZE;
+                            const shimmerY = y + CELL_SIZE * 0.4 + Math.sin(time * 2 + c) * (CELL_SIZE * 0.2);
+                            const grad = ctx.createRadialGradient(shimmerX, shimmerY, 0, shimmerX, shimmerY, CELL_SIZE * 0.35);
+                            grad.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
+                            grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                            ctx.fillStyle = grad;
+                            ctx.fillRect(x + 1, y + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+                        }
+                        // Erde: Subtile Textur-Punkte (deterministisch + leichtes Atmen)
+                        else if (cellType === 'earth') {
+                            const breathAlpha = 0.15 + Math.sin(time * 1.2 + r + c * 0.5) * 0.05;
+                            ctx.fillStyle = `rgba(160, 120, 0, ${breathAlpha})`;
+                            for (let d = 0; d < 5; d++) {
+                                // Deterministisches Rauschen — keine Math.random()
+                                const dx = ((d * 7 + r * 13 + c * 17) % (CELL_SIZE - 6)) + 3;
+                                const dy = ((d * 11 + r * 19 + c * 23) % (CELL_SIZE - 6)) + 3;
+                                ctx.fillRect(x + dx, y + dy, 2, 2);
+                            }
+                        }
+                    }
+
                     // Rand
                     ctx.strokeStyle = mat.border;
                     ctx.lineWidth = 2;
