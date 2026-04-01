@@ -950,7 +950,7 @@
         if (material === 'shell') {
             const current = inventory['shell'] || 0;
             if (current >= SHELL_CAP) {
-                showToast('🦀 Krabs: "100 Muscheln! Mehr passt nicht in die Bank! SPAR oder GIB AUS!"', 3000);
+                showToast(`🦀 Krabs: "${SHELL_CAP} Muscheln! The Answer! Mehr passt nicht in die Bank! SPAR oder GIB AUS!"`, 3000);
                 return;
             }
             count = Math.min(count, SHELL_CAP - current);
@@ -4146,7 +4146,7 @@
         ctx.textBaseline = 'top';
         ctx.fillText('🔥 BURN ' + mmxAddr.slice(0, 12) + '...' + mmxAddr.slice(-6), 10, mmxY + 5);
 
-        // Zeile 2: Balance + Muschel-Wallet (Goldstandard: max 100 🐚 = 0.1 MMX)
+        // Zeile 2: Balance + Muschel-Wallet (Goldstandard: max 42 🐚 = 0.042 MMX)
         const shellCount = typeof getInventoryCount === 'function' ? getInventoryCount('shell') : 0;
         const shellMmx = (shellCount * 0.001).toFixed(4);
         ctx.fillStyle = '#888';
