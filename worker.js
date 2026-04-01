@@ -246,7 +246,9 @@ metal+fire → {"emoji":"⚗️","name":"Schmelze","color":"#E8DAEF","border":"#
     };
 
     if (env.CRAFT_KV) {
-        await env.CRAFT_KV.put(cacheKey, JSON.stringify(entry));
+        await env.CRAFT_KV.put(cacheKey, JSON.stringify(entry), {
+            metadata: { name: entry.name, emoji: entry.emoji, color: entry.color, border: entry.border, a, b, discoverer: safeDiscoverer, created: entry.created }
+        });
     }
 
     // D1 Metrics (fire & forget)
@@ -264,14 +266,28 @@ metal+fire → {"emoji":"⚗️","name":"Schmelze","color":"#E8DAEF","border":"#
 async function handleDiscoveries(env) {
     if (!env.CRAFT_KV) return json({ error: 'KV nicht konfiguriert' }, 500);
 
-    // Alle Keys holen (KV.list paginiert intern bei >1000)
+    // KV.list gibt Keys + Metadata in einem Call — kein get() nötig
     const list = await env.CRAFT_KV.list({ prefix: 'craft:' });
+    const discoveries = [];
+    const needFetch = [];
 
-    // Parallel statt seriell — 482 Reads in ~1 Batch statt 482 RTTs
-    const values = await Promise.all(
-        list.keys.map(key => env.CRAFT_KV.get(key.name, 'json'))
-    );
-    const discoveries = values.filter(Boolean);
+    for (const key of list.keys) {
+        if (key.metadata && key.metadata.name) {
+            discoveries.push(key.metadata);
+        } else {
+            needFetch.push(key.name);
+        }
+    }
+
+    // Fallback: alte Einträge ohne Metadata parallel holen
+    if (needFetch.length > 0) {
+        const values = await Promise.all(
+            needFetch.map(k => env.CRAFT_KV.get(k, 'json'))
+        );
+        for (const val of values) {
+            if (val) discoveries.push(val);
+        }
+    }
 
     // Neueste zuerst
     discoveries.sort((a, b) => (b.created || '').localeCompare(a.created || ''));
