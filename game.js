@@ -1,5 +1,5 @@
 // @ts-nocheck — schrittweise typen, siehe types.d.ts
-// === SCHNIPSELS INSEL-ARCHITEKT ===
+// === SCHATZINSEL ===
 
 (function () {
     'use strict';
