@@ -33,6 +33,37 @@
 
 ---
 
+## Sprint Retrospective — 2026-04-01
+
+### Was lief gut?
+
+- **Alle 3 Items in einer Session.** Genre-Musik + stories.js + Tutorial ohne Text — Oscar sieht heute drei Verbesserungen.
+- **soundGenreNote() mit eigenem Throttle-Timer.** Kein Tonbrei wenn man schnell baut — Genre-Wechsel alle 40 Blöcke fühlt sich natürlich an.
+- **stories.js als saubere Daten-Extraktion.** Nur HOERSPIELE-Konstante raus, kein State, kein Risiko. Richtiger erster Schritt für game.js-Zellteilung.
+- **Tutorial ohne Text.** 3 Icons, 2.5s auto, Tap-to-skip. Oscars jüngeres Geschwister kann starten ohne lesen zu können.
+
+### Was lief schlecht?
+
+- **Parallel-Sprint-Namenskonflikt.** Zwei Sessions haben unabhängig Sprint 23 geplant. git fetch origin vor Sprint Planning ist jetzt Pflicht (MEMORY.md).
+- **game.js-Zellteilung halbherzig.** 4246 → 4210 Zeilen — 36 LOC weniger. CODE_EASTER_EGGS (80 LOC), initGrid(), draw() noch drin. Schulden bleiben.
+- **Smoke Test weiterhin blockiert.** Sandbox-Proxy verhindert externe Curls. CI fehlt. Bekannt. Nicht gelöst.
+
+### Was verbessern wir?
+
+1. **game.js: CODE_EASTER_EGGS + initGrid() extrahieren** — Ziel Sprint 25: unter 4000 LOC. Nicht draw() — Canvas-Context zu komplex.
+2. **Vor Sprint Planning: `git fetch origin` + Branch-Check.** Nie wieder Namenskonflikt.
+3. **Oscar-sichtbare Änderung pro Sprint** — Genre-Musik war gut. Sprint 25 braucht ein Pendant.
+
+### Sprint 25 — Empfehlung
+
+| Kandidat | Prio | Warum jetzt |
+|----------|------|-------------|
+| **#11 game.js → easter-eggs.js** | P1 | CODE_EASTER_EGGS (~90 LOC) + initGrid() (~60 LOC) raus. Sicher, kein State. game.js sinkt unter 4000. |
+| **#50 Höhle = Dungeon-Framework** | P1 | Berg+Wasser=Höhle. Erst ein Dungeon (IT: Bits→Kernel→Browser). Oscar entdeckt etwas Neues. |
+| **#71 Palette als Instrument** | P1 | Links spielen = rechts bauen. Oscar spielt Melodie UND baut. Höchster Spaß-Impact. |
+
+---
+
 ## Standup Log
 
 ### 2026-04-01 (Sprint 24 Planning)
