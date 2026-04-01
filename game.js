@@ -3427,6 +3427,10 @@
         if (cell) {
             const npcId = getNpcAt(cell.r, cell.c);
             if (npcId) { showNpcQuestDialog(npcId); isMouseDown = false; return; }
+            // Bibliothek antippen → Schriftrollen-UI
+            if (grid[cell.r]?.[cell.c] === 'library' && window.INSEL_BIBLIOTHEK) {
+                window.INSEL_BIBLIOTHEK.open(); isMouseDown = false; return;
+            }
             applyTool(cell.r, cell.c);
         }
     });
@@ -3469,6 +3473,10 @@
         // NPC antippen → Quest-Dialog
         const npcId = getNpcAt(cell.r, cell.c);
         if (npcId) { showNpcQuestDialog(npcId); return; }
+        // Bibliothek antippen → Schriftrollen-UI
+        if (grid[cell.r]?.[cell.c] === 'library' && window.INSEL_BIBLIOTHEK) {
+            window.INSEL_BIBLIOTHEK.open(); return;
+        }
         // Spielfigur-Drag: Berühre die Spieler-Zelle → Figur ziehen
         if (playerName && cell.r === playerPos.r && cell.c === playerPos.c) {
             playerDragging = true;
