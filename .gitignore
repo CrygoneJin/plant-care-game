@@ -9,5 +9,4 @@ test-results/
 package-lock.json
 mcp/whatsapp/node_modules/
 
-# Docs — lebt lokal, nicht im Repo
-docs/
+# docs/ ist die Bibliothek der Agents — bleibt im Repo
