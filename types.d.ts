@@ -395,6 +395,14 @@ interface Window {
     recordMilestone(id: string): void;
     trackEvent(name: string, data?: Record<string, unknown>): void;
     codeZauber: unknown;
+    INSEL_TUTORIAL: {
+        open(): void;
+        close(): void;
+        isActive(): boolean;
+        getLessons(): unknown[];
+        getProgress(): number;
+        resetProgress(): void;
+    };
     isCodeViewActive(): boolean;
     webkitAudioContext: typeof AudioContext;
     // Flat TTS exports (tts.js)
