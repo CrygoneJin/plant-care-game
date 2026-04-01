@@ -490,7 +490,148 @@ liegt das Tao-Feld. Undifferenziert. Unbenennbar. Aber da.
 
 ---
 
-## 9. Zusammenfassung: Die vollständige Architektur
+## 9. Fraktale Mandelbrot-Bäume: Selbstähnlichkeit auf dem Gitter
+
+### Al-Khwarizmi, Euklid, Mandelbrot — alles da
+
+Die Mathematik der Insel ist kein Import. Sie ist Erbgut:
+
+- **الجبر (al-jabr)** — Algebra. Muḥammad ibn Mūsā al-Khwārizmī, 820 n.Chr.
+  Die Kunst, Unbekanntes durch Umformen zu finden. Jede Gleichung, die das
+  Tetraeder-Gitter beschreibt, spricht seine Sprache.
+
+- **قهوة (qahwa)** — Kaffee. Die Araber gaben der Welt nicht nur die Algebra,
+  sondern auch den Treibstoff, um sie zu benutzen.
+
+- **γεωμετρία (geometría)** — Erdvermessung. Euklid, ~300 v.Chr. Die Dreiecke,
+  die Tetraeder, die Simplices — alles griechische Geometrie, 2300 Jahre alt
+  und immer noch das Fundament.
+
+- **Fraktale** — Benoît Mandelbrot, 1975. Selbstähnlichkeit auf allen Skalen.
+  Die Küste ist ein Fraktal. Der Baum ist ein Fraktal. Die Raumzeit selbst
+  könnte ein Fraktal sein.
+
+Alles da. Alles im Spiel.
+
+### Warum Bäume Fraktale sind
+
+Ein Baum ist ein L-System — eine rekursive Grammatik:
+
+```
+Axiom:   F
+Regel:   F → F[+F]F[-F]F
+
+Generation 0:  |
+Generation 1:  |⟋|⟍|
+Generation 2:  |⟋|⟍|⟋|⟋|⟍|⟍|⟋|⟍|
+Generation 3:  ... (Mandelbrot-Baum)
+```
+
+In ASCII:
+
+```
+Generation 1:          Generation 2:          Generation 3:
+
+      |                    ╱|╲                    ╱|╲
+      |                   ╱ | ╲                 ╱╱|╲╲
+      |                  |  |  |              ╱╱| | |╲╲
+                         |  |  |             || | | | ||
+                                             || | | | ||
+```
+
+Jeder Ast ist eine verkleinerte Kopie des ganzen Baums. Selbstähnlichkeit.
+Zoom rein — derselbe Baum. Zoom raus — derselbe Baum. Wie die Mandelbrot-Menge:
+unendliche Komplexität aus einer einfachen Regel.
+
+### Mandelbrot-Bäume auf dem Tetraeder-Gitter
+
+Auf einem quadratischen Gitter wachsen Bäume in 4 Richtungen: ↑↓←→. Langweilig.
+Rechte Winkel. Keine Natur.
+
+Auf dem **Dreiecksgitter** wachsen Bäume in **6 Richtungen**: ↗↘→↙↖←.
+Das ist der natürliche Wachstumswinkel — 60°, nicht 90°.
+
+```
+Quadratisches Gitter:        Dreiecksgitter:
+
+    |                           ╱ | ╲
+  ──┼──                       ╱  |  ╲
+    |                        ───────────
+                              ╲  |  ╱
+                               ╲ | ╱
+```
+
+Auf dem Dreiecksgitter sehen L-System-Bäume aus wie **echte Bäume** — weil
+echte Bäume in ~60°-Winkeln verzweigen, nicht in 90°.
+
+```
+Ein Mandelbrot-Baum auf dem isometrischen Dreiecksgitter:
+
+                 △
+                ╱ ╲
+               △   △
+              ╱ ╲ ╱ ╲
+             △   △   △
+            ╱ ╲ ╱ ╲ ╱ ╲
+           △   △   △   △
+               |   |
+               |   |
+               △   △
+                ╲ ╱
+                 △
+                 |
+                 |
+                 △  ← Wurzel
+```
+
+Jedes △ ist ein Tetraeder. Der Baum wächst auf dem Gitter der Raumzeit.
+Fraktal. Selbstähnlich. Natürlich.
+
+### Was das für die Insel bedeutet
+
+Die Insel hat aktuell ein **quadratisches Gitter** — `fillRect()`, rechte
+Winkel, Minecraft-Flat. Funktioniert, aber die Geometrie lügt.
+
+Mit dem isometrischen Dreiecksgitter:
+
+| Vorher (Quadrat)              | Nachher (Dreieck/Iso)                    |
+|-------------------------------|------------------------------------------|
+| Rechte Winkel                 | 60°-Winkel (natürlich)                   |
+| 4 Nachbarn pro Zelle          | 6 Nachbarn (reichere Interaktionen)      |
+| Bäume = Emoji auf Quadrat 🌳  | Bäume = fraktale L-Systeme auf Dreiecken |
+| Flache Draufsicht             | Isometrische Pseudo-3D-Tiefe             |
+| Wasser = blaues Rechteck      | Wasser = Dreiecks-Tessellation mit Wellen |
+| Gebäude = 4×4 Blueprints      | Gebäude = Dreieck-Cluster (organischer)  |
+
+Und die tiefere Ebene: Das Spiel steht nicht auf einem beliebigen Gitter.
+Es steht auf dem **Gitter der Raumzeit**. Die Kinder bauen auf Tetraedern.
+Die Bäume sind Fraktale. Die Geometrie ist echt.
+
+### Die Mandelbrot-Verbindung
+
+Die Mandelbrot-Menge ist die Menge aller c ∈ ℂ, für die z → z² + c nicht
+divergiert. Sie erzeugt unendliche Komplexität aus einer Zeile:
+
+```javascript
+z = z * z + c
+```
+
+Auf dem Dreiecksgitter kann man dasselbe Prinzip anwenden — aber statt in der
+komplexen Ebene iteriert man über die **Dreiecksnachbarschaften**:
+
+- Jedes Dreieck hat 3 Nachbarn
+- Iteration: Zustand(n+1) = f(Zustand(n), Nachbarn)
+- Nach k Iterationen: fraktale Muster, die wie Küstenlinien, Flussdeltas,
+  Gebirge, Korallen aussehen
+
+Das ist keine Simulation. Das ist **Emergenz** — komplexe Strukturen aus
+einfachen Regeln. Genau wie die zehntausend Dinge aus dem Tao.
+
+Die Insel baut sich selbst. Fraktal. Auf Tetraedern. Mit Algebra und Kaffee.
+
+---
+
+## 10. Zusammenfassung: Die vollständige Architektur
 
 ```
 Tao-Feld (道)
@@ -515,15 +656,22 @@ Tetraeder-Simplex (minimale Geometrie)
   │     Nicht Dimension, sondern Geometrie des Gitters selbst
   │     Krümmung = Defizitwinkel zwischen Tetraedern
   │
-  └── Vakuumfluktuationen
-        Das Tao atmet — Vertices fluktuieren (Heisenberg + Wu Wei)
-        Stochastik ist fundamental (Bell)
-        → Urknall (Vilenkin)
-        → Ewige Inflation (Linde)
-        → Multiversum (∞ Blasen, ∞ Konfigurationen)
+  ├── Vakuumfluktuationen
+  │     Das Tao atmet — Vertices fluktuieren (Heisenberg + Wu Wei)
+  │     Stochastik ist fundamental (Bell)
+  │     → Urknall (Vilenkin)
+  │     → Ewige Inflation (Linde)
+  │     → Multiversum (∞ Blasen, ∞ Konfigurationen)
+  │
+  └── Fraktale Selbstähnlichkeit
+        z = z² + c — Mandelbrot auf dem Simplex
+        L-Systeme → Bäume, Küsten, Korallen
+        Emergenz: einfache Regeln → 万物
+        al-jabr + geometría + Fraktale = die Sprache des Tao
 ```
 
 Das Universum hat keinen Anfang. Es hat eine **Entfaltung**.
+Und die Entfaltung ist fraktal.
 
 ---
 
@@ -535,3 +683,8 @@ Rosen paradox"*
 *Quellen Philosophie: Laozi "Daodejing" (道德經), Kapitel 1, 4, 25, 40, 42;
 Fritjof Capra (1975) "The Tao of Physics"; David Bohm (1980) "Wholeness and
 the Implicate Order"*
+
+*Quellen Mathematik: al-Khwārizmī (820) "al-Kitāb al-Mukhtaṣar fī Ḥisāb
+al-Jabr wal-Muqābala", Euklid (~300 v.Chr.) "Elemente", Mandelbrot (1982)
+"The Fractal Geometry of Nature", Lindenmayer (1968) "Mathematical models
+for cellular interactions in development"*
