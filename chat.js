@@ -1018,6 +1018,13 @@ ${budgetInfo}`;
         input.value = '';
         addMessage(text, 'user');
 
+        // Chat-Nutzung pro NPC tracken (Dashboard #17)
+        try {
+            const chatStats = JSON.parse(localStorage.getItem('insel-chat-stats') || '{}');
+            chatStats[currentNpcId] = (chatStats[currentNpcId] || 0) + 1;
+            localStorage.setItem('insel-chat-stats', JSON.stringify(chatStats));
+        } catch (_) { /* localStorage voll — kein Drama */ }
+
         // Quest-Annahme erkennen
         const lower = text.toLowerCase();
         if (lower.match(/^(ja|ok|klar|mach ich|los|gerne|auf geht|let.?s go)/)) {

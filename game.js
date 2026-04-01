@@ -4780,9 +4780,47 @@
         set('dash-fav-material', favLabel);
         set('dash-baustil', baustil);
         set('dash-engagement', engagement + ' / 100');
+        set('dash-materials', Object.keys(matUsage).length > 0 ? Object.keys(matUsage).length.toString() : '—');
 
         const fill = document.getElementById('dash-engagement-fill');
         if (fill) fill.style.width = engagement + '%';
+
+        // Chat-Nutzung pro NPC
+        const chatStatsEl = document.getElementById('dash-chat-stats');
+        if (chatStatsEl) {
+            const chatStats = JSON.parse(localStorage.getItem('insel-chat-stats') || '{}');
+            const chatEntries = Object.entries(chatStats).sort((a, b) => b[1] - a[1]);
+            chatStatsEl.textContent = '';
+            if (chatEntries.length === 0) {
+                var emptyP = document.createElement('p');
+                emptyP.className = 'dashboard-empty';
+                emptyP.textContent = 'Noch keine Chat-Nachrichten gesendet.';
+                chatStatsEl.appendChild(emptyP);
+            } else {
+                var chars = window.INSEL_CHARACTERS || {};
+                chatEntries.forEach(function (entry) {
+                    var npcId = entry[0], count = entry[1];
+                    var npcVoice = NPC_VOICES[npcId];
+                    var charInfo = chars[npcId];
+                    var emoji = (npcVoice && npcVoice.emoji) || (charInfo && charInfo.emoji) || '';
+                    var name = (charInfo && charInfo.name) || (npcVoice && npcVoice.prefix.replace(':', '')) || npcId;
+
+                    var row = document.createElement('div');
+                    row.className = 'dashboard-session-row';
+                    var nameSpan = document.createElement('span');
+                    nameSpan.className = 'dashboard-session-date';
+                    nameSpan.textContent = emoji + ' ' + name;
+                    var metaSpan = document.createElement('span');
+                    metaSpan.className = 'dashboard-session-meta';
+                    var countSpan = document.createElement('span');
+                    countSpan.textContent = count + ' Nachrichten';
+                    metaSpan.appendChild(countSpan);
+                    row.appendChild(nameSpan);
+                    row.appendChild(metaSpan);
+                    chatStatsEl.appendChild(row);
+                });
+            }
+        }
 
         // Session-Verlauf
         const listEl = document.getElementById('dash-sessions-list');
