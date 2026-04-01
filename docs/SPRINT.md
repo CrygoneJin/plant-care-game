@@ -1,4 +1,4 @@
-# Sprint 23 — "Oscar baut Musik"
+# Sprint 24 — "Oscar baut Musik"
 
 **Sprint Goal:** Jeder Block klingt nach Genre. Kinder die nicht lesen können, spielen trotzdem. Technische Schuld sinkt.
 
@@ -10,21 +10,34 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S23-1 | **Genre-Tonsequenzen aktivieren** (#85) — `soundGenreNote()` in `soundBuild` einhängen. Genre-Toast bei Wechsel. Oscar hört Musik während er baut. | Engineer | 🔲 Offen |
-| S23-2 | **Tutorial ohne Text** (#15) — Erste 3 Schritte: Icons + Pfeil-Animationen statt Erklärtext. Kinder die nicht lesen können, finden den ersten Block in 10 Sek. | Designer + Engineer | 🔲 Offen |
-| S23-3 | **game.js aufteilen: Grid + Effects** (#11) — `grid.js` (Grid-Rendering, Koordinaten-Logik) und `effects.js` (spawnParticles, spawnCraftSparks, spawnGenesisBurst) rausziehen. Ziel: game.js unter 3000 LOC. | Engineer | 🔲 Offen |
+| S24-1 | **Genre-Tonsequenzen aktivieren** (#85) — `soundGenreNote()` in `soundBuild` einhängen. Genre-Toast bei Wechsel. Oscar hört Musik während er baut. | Engineer | ✅ Done |
+| S24-2 | **Tutorial ohne Text** (#15) — Erste 3 Schritte: Icons + Pfeil-Animationen statt Erklärtext. Kinder die nicht lesen können, finden den ersten Block in 10 Sek. | Designer + Engineer | 🔲 Offen |
+| S24-3 | **game.js aufteilen: Grid + Effects** (#11) — Grid-Rendering und Partikel-Effekte rausziehen. Ziel: game.js unter 3500 LOC. | Engineer | 🔲 Offen |
 
 ---
 
 ## Standup Log
 
-### 2026-04-01 (Sprint 23 Planning)
+### 2026-04-01 (Sprint 24 Planning)
 
-**Kontext (Commits seit Sprint 22):**
-- Sprint 22 fertig: Mephisto, Gemini Voice, Bugfixes, Insel-Upgrade, Lummerland, KLONK-Upgrade
-- Retro-Beschluss: Max 3 Items, eine Oscar-sichtbare Änderung pro Sprint
+**Kontext:**
+- Sprint 23 "Oscar hört das Meer" (PR #106): Chat-Sidebar, Stille-Momente, QR-Code — offen, nicht gemergt
+- Retro S22-Empfehlung: #85 Genre-Töne, #15 Tutorial ohne Text, #11 game.js aufteilen
+- S24-1 bereits implementiert: `soundGenreNote()` in `soundBuild` eingehängt, Genre-Toast bei Wechsel
 
-**Sprint-Fokus:** S23-1 zuerst — kleinste Änderung, höchster Spaß-Impact. Sound.js hat `soundGenreNote()` fertig implementiert, aber nie aufgerufen.
+---
+
+# Sprint 23 — "Oscar hört das Meer" (PR #106, offen)
+
+**Sprint Goal:** Chat als Sidebar, Stille-Momente wenn idle, QR-Code auf Postkarte.
+
+**Start:** 2026-03-31
+
+| # | Item | Status |
+|---|------|--------|
+| S23-1 | Chat-Sidebar (#28) | ✅ Done |
+| S23-2 | Stille-Momente (#57) | ✅ Done |
+| S23-3 | QR-Code auf Postkarte (#7) | ✅ Done |
 
 ---
 
