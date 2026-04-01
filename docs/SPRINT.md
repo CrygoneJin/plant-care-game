@@ -16,6 +16,23 @@
 
 ---
 
+## Sprint Review — 2026-04-01
+
+**Sprint Goal erreicht:** ✅ Ja — alle 3 Items Done.
+
+**Was geliefert wurde:**
+- S24-1: Genre-Tonsequenzen live — 15 Genres (Klassik, Jazz, Blues, Rock, Elektro, Reggae, Country, Funk, Walzer, Schlaflied, Marsch, Samba, Ambient, Piraten, Zirkus). `soundGenreNote()` integriert mit separatem Throttle-Timer. `genre-btn` im Toolbar. Oscar baut und hört Musik.
+- S24-2: `stories.js` extrahiert — Hörspiel-Daten (HOERSPIELE-Konstante) raus aus game.js. game.js: 4246→4210 Zeilen. draw*() und Wetter bleiben (Canvas-Context-Abhängigkeit zu tief für sicheren Refactor in dieser Session).
+- S24-3: Tutorial ohne Text — 3-Schritt Onboarding (🖌️➡️🟫 / 🪵➡️🏝️ / ⚒️+✨), 2.5s auto + Tap-to-skip, nur für Erstbesucher (localStorage-Flag). Kein Wort Text.
+
+**Nicht geliefert:**
+- Vollständige game.js-Zellteilung (draw*/Grid/NPC noch drin). Bleibt für Sprint 25.
+- Parallel-Sprint-Namenskonflikt: Diese Session hat Sprint 23 geplant, Remote hatte schon einen anderen Sprint 23. Fehler dokumentiert in MEMORY.md.
+
+**Oscar-Check:** Genre-Musik + Onboarding = zwei sichtbare Verbesserungen für den nächsten Spieltest.
+
+---
+
 ## Standup Log
 
 ### 2026-04-01 (Sprint 24 Planning)
