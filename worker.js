@@ -491,15 +491,24 @@ async function handleMetricsIngest(request, env) {
     const { type } = body;
 
     if (type === 'session') {
+        // neutrino_score: Spalte wird per ALTER TABLE hinzugefügt wenn sie fehlt
+        // SQLite ignoriert doppeltes ALTER TABLE nicht, daher try/catch
+        try {
+            await env.METRICS_DB.prepare(
+                `ALTER TABLE sessions ADD COLUMN neutrino_score REAL DEFAULT NULL`
+            ).run();
+        } catch (e) { /* Spalte existiert bereits — OK */ }
+
         await env.METRICS_DB.prepare(
             `INSERT INTO sessions (player_name, country, duration_s, blocks_placed, blocks_harvested,
-             quests_completed, crafts_total, crafts_llm, chat_messages, unique_materials, engagement_score)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+             quests_completed, crafts_total, crafts_llm, chat_messages, unique_materials, engagement_score, neutrino_score)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
         ).bind(
             body.player_name || 'Anonym', body.country || 'unknown',
             body.duration_s || 0, body.blocks_placed || 0, body.blocks_harvested || 0,
             body.quests_completed || 0, body.crafts_total || 0, body.crafts_llm || 0,
-            body.chat_messages || 0, body.unique_materials || 0, body.engagement_score || 0
+            body.chat_messages || 0, body.unique_materials || 0, body.engagement_score || 0,
+            typeof body.neutrino_score === 'number' ? body.neutrino_score : null
         ).run();
         return json({ ok: true, type: 'session' });
     }

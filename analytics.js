@@ -123,6 +123,9 @@
             demolishes: events.filter(e => e.e === 'demolish').length,
             zauber: events.filter(e => e.e === 'code_zauber').length,
             postcards: events.filter(e => e.e === 'postcard').length,
+            // Neutrino-Metrik: Crafting- und Chat-Events zählen
+            crafts_count: events.filter(e => e.e === 'craft' || e.e === 'quick-craft' || e.e === 'llm-craft').length,
+            chats_count: events.filter(e => e.e === 'chat' || e.e === 'npc_chat').length,
         };
     }
 
@@ -137,6 +140,14 @@
         // 2. Cloudflare Worker D1 — immer senden
         try {
             var proxy = (window.INSEL_CONFIG && window.INSEL_CONFIG.proxy) || 'https://schatzinsel.hoffmeyer-zlotnik.workers.dev';
+            // Neutrino-Score: 1.0 = nur gebaut/geschaut, 0.5 = wenig Interaktion, 0.0 = viel interagiert
+            var crafts = data.crafts_count || 0;
+            var chats = data.chats_count || 0;
+            var hasChat = data.ms_firstChat ? 1 : 0;
+            var totalChats = chats + hasChat; // Chat-Events + Milestone als Proxy
+            var neutrinoScore = (crafts === 0 && totalChats === 0) ? 1.0
+                : (crafts < 3 && totalChats < 3) ? 0.5
+                : 0.0;
             navigator.sendBeacon(proxy + '/metrics/ingest', JSON.stringify({
                 type: 'session',
                 player_name: localStorage.getItem('insel-spielername') || 'Anonym',
@@ -145,7 +156,7 @@
                 blocks_harvested: data.demolishes || 0,
                 quests_completed: data.quests_done || 0,
                 crafts_total: data.builds || 0,
-                chat_messages: 0,
+                chat_messages: totalChats,
                 unique_materials: data.materials || 0,
                 engagement_score: Math.min(100, Math.round(
                     (data.duration_s > 30 ? 20 : 0) +
@@ -155,6 +166,7 @@
                     (data.easter_eggs > 0 ? 10 : 0) +
                     (data.materials > 3 ? 10 : 0)
                 )),
+                neutrino_score: neutrinoScore,
             }));
         } catch (e) { /* kein Tracking > kaputtes Tracking */ }
     }
