@@ -45,20 +45,20 @@ damit Menschen aufhören konnten zu lügen, wenn sie messen.
 
 ## Mr. Krabs und der blaue Elefant
 
-Oscar ist acht Jahre alt. Er spielt ein Spiel das Schatzinsel heißt.
+Ein Kind ist acht Jahre alt. Es spielt ein Spiel das Schatzinsel heißt.
 
 Auf dieser Insel gibt es einen roten Krebs namens Mr. Krabs. Er ist Händler.
 Er handelt in Muscheln. Drei Muscheln für einen Stein. Fünf Muscheln für ein
 Seil. Niemals 2,5 Muscheln. Niemals 4,7.
 
-Oscar versteht das sofort. Muscheln zählt man. Man teilt sie nicht in Hälften.
+Das Kind versteht das sofort. Muscheln zählt man. Man teilt sie nicht in Hälften.
 Man legt sie hin, man zählt sie, man tauscht sie.
 
 Auf derselben Insel lebt ein blauer Elefant. Er misst Dinge. Er sagt:
 "Heute ist es 23,4 Grad — zu warm zum Bauen, wir warten bis 21." Er sagt:
 "Der Baum ist 7,2 Meter hoch. Dein Turm muss mindestens 8 sein."
 
-Oscar muss nicht nachfragen was 23,4 bedeutet. Er spürt, dass der Elefant
+Das Kind muss nicht nachfragen was 23,4 bedeutet. Er spürt, dass der Elefant
 etwas beschreibt das zwischen zwei ganzen Zahlen liegt. Dass die Welt dort
 draußen nicht in Schritten läuft.
 
@@ -135,9 +135,9 @@ Aber das Bild dahinter, das muss man einmal wirklich gesehen haben.
 
 ---
 
-*Oscar spielt heute noch auf der Schatzinsel. Er handelt mit Mr. Krabs in
+*Das Kind spielt heute noch auf der Schatzinsel. Es handelt mit Mr. Krabs in
 Muscheln. Der Elefant sagt ihm wenn es zu heiß ist zum Bauen.
-Er hat noch nie gefragt warum die eine Zahl ganz ist und die andere nicht.
-Er weiß es einfach.*
+Es hat noch nie gefragt warum die eine Zahl ganz ist und die andere nicht.
+Es weiß es einfach.*
 
 *Das reicht.*
