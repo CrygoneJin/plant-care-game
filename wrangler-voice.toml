@@ -1,0 +1,10 @@
+name = "schatzinsel-voice"
+main = "gemini-voice-worker.js"
+compatibility_date = "2026-03-29"
+
+[durable_objects]
+bindings = [{ name = "VOICE_PROXY", class_name = "VoiceProxy" }]
+
+[[migrations]]
+tag = "v1"
+new_classes = ["VoiceProxy"]
