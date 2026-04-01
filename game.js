@@ -4112,13 +4112,17 @@
             }
         }
         // Code-View Label
+        const shellsNow = typeof getInventoryCount === 'function' ? getInventoryCount('shell') : 0;
+        const adamsMode = shellsNow === 42;
         ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-        ctx.fillRect(5, 5, 200, 24);
-        ctx.fillStyle = '#00FF41';
+        ctx.fillRect(5, 5, adamsMode ? 420 : 200, 24);
+        ctx.fillStyle = adamsMode ? '#FFD700' : '#00FF41';
         ctx.font = 'bold 12px monospace';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'top';
-        ctx.fillText('</> CODE-VIEW: grid[r][c]', 10, 10);
+        ctx.fillText(adamsMode
+            ? 'DON\'T PANIC · The Answer is 42 · So long, and thanks for all the fish'
+            : '</> CODE-VIEW: grid[r][c]', 10, 10);
 
         // === MMX Burn Panel — Nerd Easter Egg ===
         // "Proof of Work. Tokens rein, niemand raus. Pures Statement."
