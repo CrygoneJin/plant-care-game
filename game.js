@@ -4234,6 +4234,20 @@
     // Grid für Chat-Integration exportieren
     window.grid = grid;
 
+    // Genre-Toast bei Wechsel (Backlog #85)
+    const GENRE_LABELS = {
+        klassik: '🎻 Klassik', jazz: '🎷 Jazz', blues: '🎸 Blues',
+        rock: '🤘 Rock', elektro: '⚡ Elektro', reggae: '🌴 Reggae',
+        country: '🤠 Country', funk: '🕺 Funk', walzer: '💃 Walzer',
+        schlaflied: '🌙 Schlaflied', marsch: '🥁 Marsch', samba: '🌶️ Samba',
+        ambient: '🌊 Ambient', piraten: '🏴‍☠️ Piraten', zirkus: '🎪 Zirkus',
+    };
+    if (window.INSEL_SOUND && window.INSEL_SOUND.setOnGenreChange) {
+        window.INSEL_SOUND.setOnGenreChange((genre) => {
+            showToast(GENRE_LABELS[genre] || genre, 2000);
+        });
+    }
+
     // Nature-Modul starten (Baumwachstum + Welt-Konsequenzen)
     window.INSEL_NATURE.start(grid, ROWS, COLS, MATERIALS, {
         addPlaceAnimation: addPlaceAnimation,

@@ -1,3 +1,33 @@
+# Sprint 23 — "Oscar baut Musik"
+
+**Sprint Goal:** Jeder Block klingt nach Genre. Kinder die nicht lesen können, spielen trotzdem. Technische Schuld sinkt.
+
+**Start:** 2026-04-01
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S23-1 | **Genre-Tonsequenzen aktivieren** (#85) — `soundGenreNote()` in `soundBuild` einhängen. Genre-Toast bei Wechsel. Oscar hört Musik während er baut. | Engineer | 🔲 Offen |
+| S23-2 | **Tutorial ohne Text** (#15) — Erste 3 Schritte: Icons + Pfeil-Animationen statt Erklärtext. Kinder die nicht lesen können, finden den ersten Block in 10 Sek. | Designer + Engineer | 🔲 Offen |
+| S23-3 | **game.js aufteilen: Grid + Effects** (#11) — `grid.js` (Grid-Rendering, Koordinaten-Logik) und `effects.js` (spawnParticles, spawnCraftSparks, spawnGenesisBurst) rausziehen. Ziel: game.js unter 3000 LOC. | Engineer | 🔲 Offen |
+
+---
+
+## Standup Log
+
+### 2026-04-01 (Sprint 23 Planning)
+
+**Kontext (Commits seit Sprint 22):**
+- Sprint 22 fertig: Mephisto, Gemini Voice, Bugfixes, Insel-Upgrade, Lummerland, KLONK-Upgrade
+- Retro-Beschluss: Max 3 Items, eine Oscar-sichtbare Änderung pro Sprint
+
+**Sprint-Fokus:** S23-1 zuerst — kleinste Änderung, höchster Spaß-Impact. Sound.js hat `soundGenreNote()` fertig implementiert, aber nie aufgerufen.
+
+---
+
 # Sprint 22 — "The devil is most devilish when respectable"
 
 **Sprint Goal:** Mephisto NPC + Gemini Voice + Insel-Upgrade + Bugfixes. Nacht-Session.
