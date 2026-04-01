@@ -181,9 +181,14 @@ const LOSUNGEN = [
 const TG_API = 'https://api.telegram.org/bot';
 
 export default {
-  // HTTP-Handler: GET /losungen → alle anzeigen, GET /heute → heutige
+  // HTTP-Handler + Telegram Webhook
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    // Telegram Webhook: Bot-Commands verarbeiten
+    if (url.pathname === '/webhook' && request.method === 'POST') {
+      return handleWebhook(request, env);
+    }
 
     if (url.pathname === '/heute') {
       const losung = getTodaysLosung();
@@ -215,8 +220,16 @@ export default {
 
   // Cron: täglich 04:30 UTC = 06:30 MESZ
   async scheduled(event, env) {
+    // Nur senden wenn nicht pausiert
+    const paused = await env.LEHRERLOSUNG_KV?.get('paused');
+    if (paused === 'true') return;
+
     const losung = getTodaysLosung();
-    await sendTelegram(env, formatLosung(losung));
+    // An alle Abonnenten senden
+    const subs = await getSubscribers(env);
+    for (const chatId of subs) {
+      await sendTelegramTo(env, chatId, formatLosung(losung));
+    }
   }
 };
 
@@ -242,9 +255,84 @@ function formatLosung(l) {
   ].join('\n');
 }
 
-async function sendTelegram(env, text) {
+// --- Telegram Webhook: /start, /stop, /heute, /hilfe ---
+
+async function handleWebhook(request, env) {
+  let body;
+  try { body = await request.json(); } catch { return new Response('ok'); }
+
+  const msg = body.message;
+  if (!msg || !msg.text) return new Response('ok');
+
+  const chatId = msg.chat.id.toString();
+  const text = msg.text.trim().toLowerCase();
+  const firstName = msg.from?.first_name || 'du';
+
+  if (text === '/start') {
+    await addSubscriber(env, chatId);
+    const losung = getTodaysLosung();
+    await sendTelegramTo(env, chatId,
+      `Hallo ${firstName} 👋\n\nAb jetzt bekommst du jeden Morgen um 06:30 eine Lehrerlosung.\n\n` +
+      `/stop — Pausieren\n/heute — Heutige Losung\n/hilfe — Alle Befehle\n\n` +
+      `Hier ist deine erste:\n\n${formatLosung(losung)}`
+    );
+    return new Response('ok');
+  }
+
+  if (text === '/stop') {
+    await removeSubscriber(env, chatId);
+    await sendTelegramTo(env, chatId,
+      `Abgemeldet. Keine Losungen mehr. 🤫\n\n/start — Wieder anmelden`
+    );
+    return new Response('ok');
+  }
+
+  if (text === '/heute') {
+    const losung = getTodaysLosung();
+    await sendTelegramTo(env, chatId, formatLosung(losung));
+    return new Response('ok');
+  }
+
+  if (text === '/hilfe' || text === '/help') {
+    await sendTelegramTo(env, chatId,
+      `📖 *Lehrerlosung — Befehle*\n\n` +
+      `/start — Anmelden (täglich 06:30)\n` +
+      `/stop — Abmelden\n` +
+      `/heute — Heutige Losung jetzt\n` +
+      `/hilfe — Diese Übersicht`
+    );
+    return new Response('ok');
+  }
+
+  return new Response('ok');
+}
+
+// --- Subscriber-Verwaltung (KV) ---
+
+async function getSubscribers(env) {
+  if (!env.LEHRERLOSUNG_KV) return [env.TELEGRAM_CHAT_ID].filter(Boolean);
+  const list = await env.LEHRERLOSUNG_KV.get('subscribers', 'json');
+  return list || [env.TELEGRAM_CHAT_ID].filter(Boolean);
+}
+
+async function addSubscriber(env, chatId) {
+  if (!env.LEHRERLOSUNG_KV) return;
+  const subs = await getSubscribers(env);
+  if (!subs.includes(chatId)) subs.push(chatId);
+  await env.LEHRERLOSUNG_KV.put('subscribers', JSON.stringify(subs));
+}
+
+async function removeSubscriber(env, chatId) {
+  if (!env.LEHRERLOSUNG_KV) return;
+  const subs = await getSubscribers(env);
+  const filtered = subs.filter(id => id !== chatId);
+  await env.LEHRERLOSUNG_KV.put('subscribers', JSON.stringify(filtered));
+}
+
+// --- Telegram senden ---
+
+async function sendTelegramTo(env, chatId, text) {
   const token = env.TELEGRAM_BOT_TOKEN;
-  const chatId = env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) return { error: 'Token/ChatID fehlt' };
 
   const res = await fetch(`${TG_API}${token}/sendMessage`, {
