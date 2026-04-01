@@ -3973,6 +3973,62 @@
         });
     }
 
+    // === MUSIKBOX — Musik on demand (#18) ===
+    const musikboxBtn = document.getElementById('musikbox-btn');
+    if (musikboxBtn && _snd.musikboxToggle) {
+        let musikboxStilIdx = 0;
+        const stilNames = _snd.musikboxGetStilNames();
+        const stile = _snd.musikboxGetStile();
+
+        function updateMusikboxBtn() {
+            const playing = _snd.musikboxIsPlaying();
+            const stil = stile[stilNames[musikboxStilIdx]];
+            musikboxBtn.style.opacity = playing ? '1' : '0.6';
+            musikboxBtn.title = playing
+                ? `Musikbox: ${stil.label} — Klick: Stil wechseln, Lang: Stopp`
+                : `Musikbox — ${stil.label}`;
+        }
+
+        musikboxBtn.addEventListener('click', () => {
+            if (_snd.musikboxIsPlaying()) {
+                // Stil wechseln während es läuft
+                musikboxStilIdx = (musikboxStilIdx + 1) % stilNames.length;
+                _snd.musikboxSetStil(stilNames[musikboxStilIdx]);
+                const stil = stile[stilNames[musikboxStilIdx]];
+                showToast(`📻 ${stil.label}`);
+            } else {
+                // Starten
+                _snd.musikboxSetStil(stilNames[musikboxStilIdx]);
+                _snd.musikboxToggle();
+                const stil = stile[stilNames[musikboxStilIdx]];
+                showToast(`📻 ${stil.label} — Musikbox an`);
+            }
+            updateMusikboxBtn();
+        });
+
+        // Langer Druck = Stopp (contextmenu als Fallback für Touch)
+        musikboxBtn.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            if (_snd.musikboxIsPlaying()) {
+                _snd.musikboxStop();
+                showToast('📻 Musikbox aus');
+                updateMusikboxBtn();
+            }
+        });
+
+        // Doppelklick = Stopp
+        musikboxBtn.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+            if (_snd.musikboxIsPlaying()) {
+                _snd.musikboxStop();
+                showToast('📻 Musikbox aus');
+                updateMusikboxBtn();
+            }
+        });
+
+        updateMusikboxBtn();
+    }
+
     // === REPLAY-SONG — Bauwerk als Melodie abspielen ===
     const replayBtn = document.getElementById('replay-btn');
     if (replayBtn) {

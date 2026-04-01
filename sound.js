@@ -755,6 +755,129 @@
         ambientNodes = null;
     }
 
+    // === MUSIKBOX — Musik on demand (#18) ===
+    // 3 Stile: Chillig (langsam, leise), Party (schnell, laut), Ambient (sehr langsam, Hall)
+    // Spielt die Genre-Sequenz als Loop ab, Toggle on/off
+
+    const MUSIKBOX_STILE = {
+        chillig: { tempoMs: 400, vol: 0.6, reverb: false, label: '😌 Chillig' },
+        party:   { tempoMs: 150, vol: 1.4, reverb: false, label: '🎉 Party' },
+        ambient: { tempoMs: 700, vol: 0.5, reverb: true,  label: '🌊 Ambient' },
+    };
+    const MUSIKBOX_STIL_NAMES = Object.keys(MUSIKBOX_STILE);
+
+    let musikboxInterval = null;
+    let musikboxStil = 'chillig';
+    let musikboxNoteIdx = 0;
+    let musikboxConvolver = null; // Reverb-Node für Ambient
+
+    function createReverbBuffer(ctx, duration, decay) {
+        const len = ctx.sampleRate * duration;
+        const buf = ctx.createBuffer(2, len, ctx.sampleRate);
+        for (let ch = 0; ch < 2; ch++) {
+            const data = buf.getChannelData(ch);
+            for (let i = 0; i < len; i++) {
+                data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+            }
+        }
+        return buf;
+    }
+
+    function musikboxPlayNote() {
+        if (isMuted()) return;
+        const genre = GENRES[currentGenre];
+        if (!genre) return;
+        const stil = MUSIKBOX_STILE[musikboxStil];
+        const freq = genre.notes[musikboxNoteIdx % genre.notes.length];
+        musikboxNoteIdx = (musikboxNoteIdx + 1) % genre.notes.length;
+
+        const varFreq = freq * (1 + (Math.random() - 0.5) * 0.01);
+        const vol = genre.vol * stil.vol;
+        const dur = stil.reverb ? genre.dur * 2.5 : genre.dur * 1.2;
+
+        try {
+            const ctx = ensureAudio();
+            const t = ctx.currentTime;
+
+            for (let detune of [0, 5, -5]) {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = genre.wave;
+                osc.frequency.value = varFreq;
+                osc.detune.value = detune;
+                gain.gain.setValueAtTime(vol * 0.5 * masterVolume, t);
+                gain.gain.exponentialRampToValueAtTime(0.001, t + dur);
+
+                osc.connect(gain);
+
+                if (stil.reverb) {
+                    // Reverb für Ambient-Stil
+                    if (!musikboxConvolver) {
+                        musikboxConvolver = ctx.createConvolver();
+                        musikboxConvolver.buffer = createReverbBuffer(ctx, 2.5, 3);
+                        musikboxConvolver.connect(ctx.destination);
+                    }
+                    const dry = ctx.createGain();
+                    dry.gain.value = 0.4;
+                    const wet = ctx.createGain();
+                    wet.gain.value = 0.6;
+                    gain.connect(dry);
+                    gain.connect(wet);
+                    dry.connect(ctx.destination);
+                    wet.connect(musikboxConvolver);
+                } else {
+                    gain.connect(ctx.destination);
+                }
+
+                osc.start(t);
+                osc.stop(t + dur);
+            }
+        } catch (e) { /* Audio nicht verfügbar */ }
+    }
+
+    function musikboxStart() {
+        if (musikboxInterval) return; // Läuft schon
+        musikboxNoteIdx = 0;
+        const stil = MUSIKBOX_STILE[musikboxStil];
+        musikboxPlayNote(); // Erste Note sofort
+        musikboxInterval = setInterval(musikboxPlayNote, stil.tempoMs);
+    }
+
+    function musikboxStop() {
+        if (musikboxInterval) {
+            clearInterval(musikboxInterval);
+            musikboxInterval = null;
+        }
+        musikboxConvolver = null;
+        musikboxNoteIdx = 0;
+    }
+
+    function musikboxToggle() {
+        if (musikboxInterval) {
+            musikboxStop();
+            return false;
+        } else {
+            musikboxStart();
+            return true;
+        }
+    }
+
+    function musikboxSetStil(name) {
+        if (MUSIKBOX_STILE[name]) {
+            musikboxStil = name;
+            // Wenn gerade läuft: Neustart mit neuem Tempo
+            if (musikboxInterval) {
+                musikboxStop();
+                musikboxStart();
+            }
+        }
+    }
+
+    function musikboxGetStil() { return musikboxStil; }
+    function musikboxGetStilNames() { return MUSIKBOX_STIL_NAMES.slice(); }
+    function musikboxGetStile() { return MUSIKBOX_STILE; }
+    function musikboxIsPlaying() { return !!musikboxInterval; }
+
     window.INSEL_SOUND = {
         soundBuild,
         soundDemolish,
@@ -782,6 +905,15 @@
         playAmbient,
         stopAmbient,
         setOnGenreChange: (fn) => { onGenreChange = fn; },
+        // Musikbox — Musik on demand (#18)
+        musikboxToggle,
+        musikboxStart,
+        musikboxStop,
+        musikboxSetStil,
+        musikboxGetStil,
+        musikboxGetStilNames,
+        musikboxGetStile,
+        musikboxIsPlaying,
         // Low-level für Erweiterungen
         playTone,
         playRichTone,
