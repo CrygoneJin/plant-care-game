@@ -1,51 +1,76 @@
-# Schnipsels Insel-Architekt
+# schatzinsel
+
+Browser-based building game. No login, no account, no ads, no build step.
+Open `index.html` — play.
 
 **URL:** schatzinsel.app
 
-**Vision:** "Ausser Text nix gehext" -- Kinder entdecken dass Worte Dinge erschaffen.
+## Stack
 
-## Origin
+- Vanilla JS + Canvas 2D, zero dependencies
+- Cloudflare Workers (LLM proxy, craft cache, voice relay)
+- localStorage for persistence
+- JSDoc + checkJs for type safety without build
 
-Ein Vater baut mit KI Dinge fuer seine Kinder. Schnipsel (Oscar, 8) will
-Architekt werden und liebt es zu bauen. Also hat Papa ihm eine Insel gebaut
-auf der Worte zu Dingen werden.
-
-## Was es ist
-
-Ein browserbasieres Bauspiel. Kein Login, kein Account, keine Werbung.
-`index.html` oeffnen -- spielen. Vanilla JS, kein Build-Step, kein Framework.
-
-### Kern-Mechanik: Wu Xing (五行)
-
-Die fuenf Elemente -- Holz, Feuer, Erde, Metall, Wasser -- bilden einen
-Kreislauf, kein Inventar. Jedes Element erzeugt das naechste, kontrolliert
-ein anderes. Philosophie, nicht Physik.
+## Run
 
 ```
-     Holz
-    ↗    ↘
-Wasser    Feuer
-    ↑       ↓
-Metall ← Erde
+open index.html
 ```
 
-Aus den 5 Elementen entstehen durch Crafting (Infinite Craft Pattern) alle
-weiteren Materialien. LLM generiert neue Rezepte, KV-Cache macht sie
-deterministisch nach der ersten Entdeckung. Wer zuerst entdeckt, steht
-am Rezept.
+No npm. No build. No server.
 
-Automerge (wie 2048): Gleiche Materialien nebeneinander verschmelzen
-automatisch -- starke Kernkraft als Spielmechanik.
+## Architecture
 
-### Zielgruppe
+See `ARCHITECTURE.md`.
 
-- **Primaer:** Oscar (Schnipsel), 8 Jahre, Spielplatz-Kinder
-- **Sekundaer:** Familie (Schwester, Bruder, Mama als Quality Gate)
-- **Tertiaer:** Spielplatz-Test (10 Kinder, 5 Hypothesen)
+## Game mechanics
 
-Details zu den Nutzern: `docs/USERS.md`
+5-element cycle (wood → fire → earth → metal → water → wood).
+Each element generates the next, controls another.
+Crafting via LLM + KV cache. Automerge on adjacency.
+Isometric renderer available (△ toggle).
+L-system fractal trees.
 
-## Warum es existiert
+## Grid
 
-Weil ein Kind gesagt hat: "Du sagst immer warum warum warum -- ich will
-einfach bauen!" Also bauen wir. Mit Worten.
+Responsive: 32×18 (desktop), 28×21 (tablet), 18×28 (mobile).
+Dirty-flag rendering. No rAF loop. CPU < 5%.
+
+## NPCs
+
+10 characters. Dual dialogue: ELIZA offline, LLM online.
+Gemini voice via WebSocket.
+
+## File map
+
+See `ARCHITECTURE.md` for full table. Key files:
+
+| File | Purpose |
+|------|---------|
+| `game.js` | Core engine (~4400 LOC) |
+| `chat.js` | NPC dialogue + LLM |
+| `iso-renderer.js` | Isometric projection |
+| `fractal-trees.js` | L-system tree generation |
+| `materials.js` | Material definitions |
+| `worker.js` | Cloudflare Workers backend |
+
+## Project docs
+
+| File | What |
+|------|------|
+| `ARCHITECTURE.md` | Stack, files, data flow |
+| `DECISIONS.md` | ADRs — why it's built this way |
+| `DESIGN.md` | Visual system, themes, accessibility |
+| `BACKLOG.md` | Product backlog |
+| `SPRINT.md` | Current sprint |
+| `DONE.md` | Definition of Done |
+| `MEMORY.md` | Team learnings |
+
+## Library
+
+Essays, theory, stories → `docs/`
+
+## License
+
+See `LICENSE`.

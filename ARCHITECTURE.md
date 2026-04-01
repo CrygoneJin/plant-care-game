@@ -1,75 +1,71 @@
-# Architektur
+# Architecture
 
 ## Stack
 
-- **HTML5 + CSS3 + Vanilla JavaScript** — kein Framework, kein Build-Tool
-- **Canvas-basiertes Grid** fuer das Bauen (2D, responsive)
-- **localStorage** fuer Speichern/Laden (Auto-Save alle 30s)
-- **Cloudflare Workers** fuer LLM-Proxy, Craft-Cache (KV), Voice-Proxy
-- **JSDoc + checkJs** fuer Typsicherheit ohne Build-Schritt
+```
+Browser (Vanilla JS + Canvas 2D)
+  ├── localStorage (grid, inventory, unlocks, quests)
+  ├── Cloudflare Worker /chat (LLM proxy → Requesty → Claude/GPT)
+  ├── Cloudflare Worker /craft (Infinite Craft → LLM + KV cache)
+  ├── Cloudflare Worker /voice (WebSocket → Gemini Live API)
+  └── Open-Meteo API (real-time weather, optional)
+```
 
-## Dateien
+No framework. No build tool. No npm for frontend.
 
-### Frontend (Browser)
+## Files
 
-| Datei | LOC | Zweck |
-|-------|-----|-------|
-| `index.html` | — | HTML-Struktur, UI-Layout, Dialoge |
-| `style.css` | — | Styling, Themes, Responsive, Animationen |
-| `game.js` | ~4400 | Spiellogik, Grid, Rendering, NPCs, Player, Events |
-| `chat.js` | ~1150 | NPC-Chat, LLM-Integration, Token-Budget, Unlock-System |
-| `voice.js` | ~470 | Gemini Voice Chat (WebSocket, Mikrofon, Audio-Playback) |
-| `sound.js` | ~700 | Web Audio API, pentatonische Toene, Bau-Sounds |
-| `materials.js` | — | Material-Definitionen (Emoji, Farbe, Label) |
-| `recipes.js` | — | Deterministische Crafting-Rezepte (Wu Xing Basis) |
-| `quests.js` | — | 60+ Quest-Templates pro NPC |
-| `achievements.js` | — | Achievement-Definitionen und Tracking |
-| `automerge.js` | — | 2048-artige Merge-Regeln (starke Kernkraft) |
-| `blueprints.js` | ~330 | Bauplan-System |
-| `screensaver.js` | — | Conway's Game of Life Overlay bei Idle |
-| `eliza.js` | ~350 | ELIZA Pattern-Matching (LLM-Fallback offline) |
-| `eliza-scripts.js` | ~300 | ELIZA-Dialogskripte pro NPC |
-| `healthcheck.js` | — | localStorage-LRU, Grid-Integritaet, Speicher-Monitoring |
-| `analytics.js` | ~230 | Session-Metriken, Engagement-Score |
-| `storage.js` | ~70 | Storage-Abstraktion |
-| `insel.js` | — | Bootstrapping, Config-Loading |
-| `config.example.js` | — | Beispiel-Konfiguration (API-Keys, Proxy-URL) |
-| `sw.js` | ~80 | Service Worker fuer Offline-Spiel |
+### Frontend
+
+| File | LOC | Purpose |
+|------|-----|---------|
+| `game.js` | ~4400 | Core: grid, rendering, NPCs, player, events |
+| `chat.js` | ~1150 | NPC chat, LLM integration, token budget |
+| `voice.js` | ~470 | Gemini voice (WebSocket, mic, playback) |
+| `sound.js` | ~700 | Web Audio, pentatonic tones, drums |
+| `iso-renderer.js` | ~350 | Isometric projection, cube rendering |
+| `fractal-trees.js` | ~200 | L-system procedural trees |
+| `materials.js` | — | Material definitions (emoji, color, label) |
+| `recipes.js` | — | Deterministic crafting recipes |
+| `quests.js` | — | 60+ quest templates per NPC |
+| `achievements.js` | — | Achievement tracking |
+| `automerge.js` | — | 2048-style merge rules |
+| `blueprints.js` | ~330 | Blueprint pattern matching |
+| `screensaver.js` | — | Conway's Game of Life overlay |
+| `effects.js` | — | Weather, day/night, particles |
+| `nature.js` | — | Tree growth, world consequences |
+| `marketplace.js` | — | P2P rare item trading |
+| `eliza.js` | ~350 | ELIZA pattern matching (LLM fallback) |
+| `eliza-scripts.js` | ~300 | ELIZA scripts per NPC |
+| `healthcheck.js` | — | localStorage LRU, grid integrity |
+| `analytics.js` | ~230 | Session metrics, engagement score |
+| `storage.js` | ~70 | Storage abstraction |
+| `stories.js` | — | Audio drama data |
+| `sw.js` | ~80 | Service Worker for offline play |
 
 ### Backend (Cloudflare Workers)
 
-| Datei | Zweck |
-|-------|-------|
-| `worker.js` | LLM-Proxy (Requesty), Craft-Endpoint (KV-Cache), Analytics, Bugs |
-| `gemini-voice-worker.js` | WebSocket-Proxy fuer Gemini Live API (Durable Object) |
+| File | Purpose |
+|------|---------|
+| `worker.js` | LLM proxy, craft endpoint (KV), analytics, D1 |
+| `gemini-voice-worker.js` | WebSocket proxy for Gemini Live API |
 
-## Datenfluss
+## Grid
 
-```
-Browser (Vanilla JS)
-  |
-  |-- localStorage (Grid, Inventar, Unlocks, Quests)
-  |
-  |-- Cloudflare Worker /chat (LLM-Proxy → Requesty → Claude/GPT)
-  |-- Cloudflare Worker /craft (Infinite Craft → LLM + KV-Cache)
-  |-- Cloudflare Worker /voice (WebSocket → Gemini Live API)
-  |-- Open-Meteo API (Echtzeit-Wetter, optional)
-```
+- Responsive: 32×18 (16:9), 28×21 (4:3), 18×28 (portrait)
+- `WATER_BORDER = 2` cells around island
+- `CELL_SIZE` dynamic per viewport
+- Dirty-flag rendering: `needsRedraw` flag, no rAF loop
+- Isometric mode: 2:1 diamond tiles, painter's algorithm
 
-## Grid-System
+## NPC system
 
-- Responsive: 32x18 (Desktop 16:9), 28x21 (iPad 4:3), 18x28 (iPhone Portrait)
-- `WATER_BORDER = 2` Zellen Wasser um die Insel
-- `CELL_SIZE` dynamisch berechnet nach Viewport
-- Dirty-Flag Rendering: `needsRedraw` statt rAF-Loop (CPU 20% → <5%)
+- 10 NPCs: 7 on-grid + 3 chat-only
+- Unlock order: 5 starters → Tommy → Neinhorn → Krabs → Elefant → Mephisto
+- Dual dialogue: template-based (offline) + LLM (with API key)
+- Gemini voice: 5 voices mapped to NPCs
 
-## NPC-System
+## Known debt
 
-- 10 NPCs: 7 Grid-NPCs (sichtbar auf Insel) + 3 Chat-only (Bernd, Floriane, Bug)
-- Unlock-Reihenfolge: 5 Starter → Tommy → Neinhorn → Krabs → Elefant → Mephisto
-- Dual-Dialogue: Template-basiert (offline) + LLM-Chat (mit API-Key)
-- Gemini Voice: WebSocket-basiert, 5 Stimmen gemappt auf NPCs
-
-## Starten
-
-`index.html` im Browser oeffnen — fertig. Kein npm, kein Build.
+- `game.js` monolith — grid rendering, draw(), events still coupled
+- Smoke test blocked by sandbox proxy in CI

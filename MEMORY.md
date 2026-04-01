@@ -1,11 +1,10 @@
-# Team Memory
+# Memory
 
-Persistente Erinnerung des Teams. Wird von allen Agents gelesen und vom
-Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
+Persistent team log. Append-only. Read by all agents.
 
 ---
 
-## Fehler (damit wir sie nicht wiederholen)
+## Bugs (so we don't repeat them)
 
 | 2026-03-30 | Backlog-Drift: 14 Items waren in Code done aber Backlog zeigte 🔲 | Keine Session-übergreifende Backlog-Pflege | Am Ende jeder Session: Backlog-Zeilen updaten, bevor MEMORY geschrieben wird |
 
@@ -30,7 +29,7 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 
 ---
 
-## Erfolge (damit wir wissen was funktioniert)
+## Wins
 
 | Datum | Was | Warum gut |
 |-------|-----|-----------|

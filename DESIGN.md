@@ -1,75 +1,70 @@
-# Design-Prinzipien
+# Design System
 
-## Grundsatz
+## Canvas
 
-Insel, nicht Spreadsheet. Wasser-Rand sichtbar, Strand-Gradient, Palmen.
-Grid-Linien nur auf belegten Zellen. Leere Zellen sind Wasser oder Sand,
-nicht leere Kaestchen.
+Grid-based, Canvas 2D rendering. Responsive dimensions.
+Grid lines only on occupied cells — island, not spreadsheet.
 
-## Canvas & Grid
+## Layout
 
-- **Grid-basiert**, Canvas-Rendering (performant, skaliert auf 4K)
-- **Responsive Dimensionen:**
-  - PC 27" 4K: 16:9, grosses Grid
-  - iPad: natives Seitenverhaeltnis
-  - iPhone SE: natives Ratio, Layout stackt (Palette oben, Canvas darunter)
-- `WATER_BORDER` um die Insel, Strand-Gradient am Rand, 8 Palmen als Starter
+| Viewport | Grid | Ratio |
+|----------|------|-------|
+| Desktop 27" 4K | 32×18 | 16:9 |
+| iPad | 28×21 | 4:3 |
+| iPhone SE | 18×28 | portrait |
 
-## Wu Xing Farbsystem
+Water border around island. Sand gradient at edge.
 
-| Element | Farbe | Hex-Bereich |
-|---------|-------|-------------|
-| Holz (木) | Qing (blaugruen) | Gruen-Toene |
-| Feuer (火) | Rot | Rot-Toene |
-| Erde (土) | Braun | Braun/Ocker |
-| Metall (金) | Weiss/Silber | Helle Toene |
-| Wasser (水) | Blau | Blau-Toene |
+## Color system
 
-## Themes (5)
+| Element | Color range |
+|---------|-------------|
+| Wood | Green tones |
+| Fire | Red tones |
+| Earth | Brown/ochre |
+| Metal | White/silver |
+| Water | Blue tones |
 
-1. **Tropical** -- Standard, helle Insel-Farben
-2. **Night** -- Dunkles Theme, Sterne, Mond
-3. **Candy** -- Bonbon-Farben, verspielt
-4. **Ocean** -- Tiefblau, Unterwasser-Feeling
-5. **Retro** -- Pixel-Aesthetik, 8-Bit-Palette
+## Themes
 
-## Day/Night Cycle & Wetter
+1. Tropical (default)
+2. Night
+3. Candy
+4. Ocean
+5. Retro (8-bit)
 
-- Echtzeit Tag/Nacht-Zyklus (Himmel, Beleuchtung)
-- Wetter-System: Regen, Sonne, Regenbogen
-- Echtes Atlantik-Wetter via Open-Meteo API (29N, 31W)
+## Day/night + Weather
+
+Real-time cycle. Weather system: rain, sun, rainbow.
+Live Atlantic weather via Open-Meteo (29°N, 31°W).
 
 ## Sidebar
 
-Tabs statt Stapel -- immer nur eine Sektion sichtbar:
-- **Inventar** -- verfuegbare Materialien
-- **Quests** -- aktive Aufgaben (max 2 gleichzeitig)
-- **Erfolge** -- freigeschaltete Achievements
+Tabs — one section visible at a time:
+Inventory | Quests (max 2 active) | Achievements
 
 ## Mobile
 
-- **Horizontal scrollbare Palette** (kein Dropdown, kein Klappmen)
-- **Touch-Gesten:** Drag & Drop zum Bauen, Swipe fuer Navigation
-- **Toolbar:** Overflow-sicher, Buttons umbrechen auf kleinen Screens
-- **iPhone SE:** Layout stackt vertikal, Buttons min. 48px
+- Horizontal scrollable palette
+- Touch: drag & drop to build, swipe for navigation
+- Toolbar: overflow-safe, buttons wrap on small screens
+- Min touch target: 48px
 
 ## Accessibility
 
-- **ARIA-Labels** auf allen interaktiven Elementen
-- **Tab-Navigation** durch alle Dialoge und Controls
-- **Escape-Key** schliesst jeden Dialog
-- **Kontrast:** WCAG AA als Minimum
-- **Kein Tippen noetig** zum Spielen -- Emojis statt Text wo moeglich
+- ARIA labels on all interactive elements
+- Tab navigation through all dialogs
+- Escape closes any dialog
+- WCAG AA contrast minimum
+- No typing required — emoji over text
 
 ## Hick's Law
 
-Max 7 Optionen gleichzeitig sichtbar. Palette zeigt freigeschaltete
-Materialien progressiv -- nicht alles auf einmal. Weniger Auswahl,
-schnellere Entscheidung, mehr Bauen.
+Max 7 options visible. Palette shows unlocked materials
+progressively. Less choice, faster decision, more building.
 
-## Typographie & Ton
+## Typography
 
-- Deutsche Labels, kurze Woerter
-- Grosse Klickflaechen (min. 48px)
-- Paluten-Ton: ein bisschen lustig, ein bisschen uebertrieben, nie langweilig
-- Nicht belehren, nicht ausfragen, feiern statt bewerten
+- German labels, short words
+- Large click targets (min 48px)
+- Tone: slightly funny, slightly exaggerated, never boring

@@ -1,100 +1,70 @@
-# Architektur-Entscheidungen
+# Architecture Decision Records
 
-Warum es so gebaut ist wie es gebaut ist.
+## ADR-001: Vanilla JS, no framework
 
-## Stack: Vanilla JS + JSDoc
+No React, no Vue, no build tool. `index.html` opens in browser — done.
+30-minute dev windows. `npm install` after 3 weeks of pause is not an option.
+Canvas + vanilla JS is enough for a single-player grid game.
 
-**Entscheidung:** Kein Framework, kein Build-Tool, kein npm.
-`index.html` im Browser oeffnen -- fertig.
+## ADR-002: localStorage over IndexedDB
 
-**Warum:**
-- Zero Overhead. Papa hat 30 Minuten. `npm install` nach 3 Wochen Pause ist keine Option.
-- 256 GB Mac Mini. Kein Platz fuer aufgeblaehte node_modules.
-- Kinderspiel. Keine Enterprise-Architektur noetig.
-- JSDoc + `checkJs` in tsconfig fuer Typsicherheit ohne TypeScript-Build.
+Synchronous. Simple. Sufficient for single-player with one grid.
+Auto-save every 30s + beforeunload.
 
-## Kein Framework (kein React, kein Vue)
+## ADR-003: ELIZA as LLM fallback
 
-**Entscheidung:** Zero Dependencies.
+Offline play requires offline dialogue. ELIZA pattern matching:
+zero API calls, zero cost, zero latency. Works always.
 
-**Warum:** Ein Kinderspiel braucht kein Virtual DOM. Canvas + Vanilla JS
-reicht. Weniger Abstraktion = weniger Fehlerquellen = schnellere Iteration.
+## ADR-004: Requesty as LLM proxy
 
-## localStorage statt IndexedDB
+Cloudflare Worker proxies to Requesty. Model routing per NPC character.
+BYOK dialog for user's own API key.
 
-**Entscheidung:** Spielstand in localStorage.
+## ADR-005: 5-element cycle over 4-element inventory
 
-**Warum:** Einfacher. Synchron. Reicht fuer Single-Player mit einem Grid.
-Auto-Save alle 30s + beforeunload. Kein Backend noetig.
+Cycle creates gameplay (generation + control relationships).
+List creates spreadsheet. Cycle is mechanic, list is data.
 
-## ELIZA als LLM-Fallback
+## ADR-006: Infinite Craft with KV cache
 
-**Entscheidung:** Wenn kein API-Key vorhanden oder offline, antwortet
-ELIZA (Pattern-Matching, kein LLM).
+First discovery: LLM generates recipe → stored in Cloudflare KV.
+Same combination = same result, deterministic after first find.
+First discoverer's name on the recipe.
 
-**Warum:** Kinder spielen ueberall -- auch ohne Internet. ELIZA braucht
-keinen API-Call, keine Kosten, keine Latenz. Funktioniert immer.
+## ADR-007: Automerge (2048 pattern)
 
-## Requesty als LLM-Proxy
+Adjacent identical materials merge automatically.
+Emergent patterns from building without planning.
 
-**Entscheidung:** LLM-Calls gehen ueber Requesty (vorher Langdock).
+## ADR-008: No user accounts
 
-**Warum:** Migration von Langdock wegen Kosten. Requesty erlaubt
-Modell-Routing pro NPC-Charakter (Hirn-Transplantation). BYOK-Dialog
-fuer eigenen API-Key.
+No login, no registration. Privacy first. GDPR/COPPA avoidance.
+Player name stored locally only.
 
-## Wu Xing statt westliche Elemente
+## ADR-009: JSDoc + checkJs
 
-**Entscheidung:** 5 chinesische Elemente (Holz, Feuer, Erde, Metall, Wasser)
-statt Feuer/Wasser/Erde/Luft.
+Type safety without TypeScript build step. `tsconfig.json` with
+`checkJs`, `types.d.ts`, `npm run typecheck`. Zero-build preserved.
 
-**Warum:** Wu Xing ist ein Kreislauf -- jedes Element erzeugt und
-kontrolliert ein anderes. Westliche Elemente sind ein Inventar (4 Dinge
-in einer Liste). Kreislauf ist Spielmechanik, Liste ist Spreadsheet.
-Philosophie statt Physik. Tao: Everything flows.
+## ADR-010: Isometric renderer
 
-## Infinite Craft mit KV-Cache
+Optional isometric projection (△ toggle). 2:1 diamond tiles,
+painter's algorithm, 3-face cube rendering. Grid data unchanged —
+rendering layer only.
 
-**Entscheidung:** Crafting-Rezepte werden beim ersten Mal vom LLM
-generiert, dann im Cloudflare KV-Cache gespeichert.
+## ADR-011: L-system fractal trees
 
-**Warum:** Deterministisch nach der ersten Entdeckung. Gleiche Kombination
-= gleiches Ergebnis, egal wer craftet. Erster Finder steht am Rezept
-(Entdecker-System). Spart API-Calls, spart Geld.
+Procedural tree generation via Lindenmayer grammars.
+Three complexity levels (sapling, small_tree, tree).
+Deterministic per-cell hash for variation.
 
-## Automerge wie 2048
+## Known debt
 
-**Entscheidung:** Gleiche Materialien nebeneinander verschmelzen automatisch.
+- `game.js` monolith: grid rendering + game state still coupled
+- Smoke test: sandbox proxy blocks external fetches in CI
 
-**Warum:** Starke Kernkraft als Metapher. Oscar liebt 2048 auf dem
-Tesla-Bildschirm. Emergentes Gameplay: Muster entstehen beim Bauen
-ohne dass man sie plant.
+## Open questions
 
-## Service Worker fuer Offline
-
-**Entscheidung:** sw.js + manifest.json fuer Offline-Spiel.
-
-**Warum:** Kinder spielen im Auto, auf dem Spielplatz, im Wartezimmer.
-Kein Internet = trotzdem spielen. ELIZA faengt die Chat-Funktionen auf.
-
-## Keine User-Accounts
-
-**Entscheidung:** Kein Login, kein Account, keine Registrierung.
-
-**Warum:** Privacy first. Kinderspiel. DSGVO/COPPA vermeiden.
-Spielername wird lokal gespeichert, nirgends sonst.
-
-## game.js Monolith (bekannte Schuld)
-
-**Status:** game.js ist zu gross. Sound, Quests, Effects, Achievements,
-Recipes, Automerge sind bereits ausgelagert (sound.js, quests.js, etc.).
-Grid-Logik ist noch drin.
-
-**Plan:** Backlog #11 (Zellteilung game.js). Grid-Rendering und
-Game-State als naechstes rausziehen.
-
-## Offene Fragen
-
-- **Requesty Key rotieren** -- alter Key im Git-Verlauf, neuer noetig (#92)
-- **Browser-LLM** -- SmolLM2 lokal im Browser als ELIZA-Upgrade? Feynman muss testen (#90)
-- **Urknall-Crafting** -- Masse+Energie+Licht als Basis statt Wu Xing? Design-Entscheidung offen (#83)
+- Requesty key rotation (old key in git history)
+- Browser-LLM: SmolLM2 local as ELIZA upgrade?
