@@ -3255,7 +3255,14 @@
             const hasBlocks = grid.some(row => row && row.some(cell => cell !== null));
             if (!hasBlocks) startTutorialPulse();
             // Tutorial-Onboarding nur für Erstbesucher (noch kein Grid gespeichert)
-            if (!localStorage.getItem('insel-grid')) showTutorialOnboarding();
+            if (!localStorage.getItem('insel-grid')) {
+                // Genesis-Tutorial (?genesis=1) hat Vorrang vor Standard-Onboarding
+                if (window.INSEL_GENESIS && window.INSEL_GENESIS.isActive()) {
+                    window.INSEL_GENESIS.run();
+                } else {
+                    showTutorialOnboarding();
+                }
+            }
         }, 300);
         window.startSessionClock();
     }
