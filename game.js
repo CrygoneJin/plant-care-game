@@ -2386,8 +2386,10 @@
 
     // --- Aktion auf Zelle ---
     let undoPushedThisStroke = false;
+    let _rewindActive = false; // Zeitreise läuft — Interaktion blockiert
 
     function applyTool(r, c) {
+        if (_rewindActive) return; // Während Zeitreise keine Interaktion
         // Wasser-Rand (äußere 2 Reihen/Spalten) ist nicht bebaubar
         if (r < 2 || r >= ROWS - 2 || c < 2 || c >= COLS - 2) return;
         // NPCs nicht überbauen
@@ -4018,6 +4020,7 @@
             }
             rewindBtn.disabled = true;
             rewindBtn.textContent = '⏳';
+            _rewindActive = true;
 
             // Aktuellen Zustand merken für Forward am Ende
             const currentGrid = JSON.stringify(grid);
@@ -4034,8 +4037,10 @@
                     let fwd = 0;
                     function stepForward() {
                         if (fwd >= snapshots.length) {
+                            _rewindActive = false;
                             rewindBtn.disabled = false;
                             rewindBtn.textContent = '⏪';
+                            updateStats();
                             showToast('⏪ Zeitreise beendet!');
                             return;
                         }
