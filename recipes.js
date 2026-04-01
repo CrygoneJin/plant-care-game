@@ -79,6 +79,8 @@ window.INSEL_CRAFTING_RECIPES = [
     { name: 'Krone',       result: 'crown',     resultCount: 1, ingredients: { metal: 1, diamond: 1 }, desc: 'Metall + Diamant = Krone' },
     { name: 'Schlüssel',   result: 'key',       resultCount: 1, ingredients: { metal: 1, fire: 1 },    desc: 'Metall + Feuer = Schlüssel' },
     { name: 'Schatz',      result: 'treasure',  resultCount: 1, ingredients: { key: 1, earth: 2 },     desc: 'Schlüssel + 2 Erde = Schatz' },
+    // === HANDEL (Mr. Krabs — Muschelwährung) ===
+    { name: 'Muschel',     result: 'shell',  resultCount: 2, ingredients: { sand: 2, water: 1 },  desc: '2 Sand + Wasser = 2 Muscheln (Strandgut!)' },
     // === ABSURD (💩🚀👻👽🤖) ===
     { name: 'Geist',       result: 'ghost',     resultCount: 1, ingredients: { cloud: 1, moon: 1 },    desc: 'Wolke + Mond = Geist' },
     { name: 'Skelett',     result: 'skull',     resultCount: 1, ingredients: { stone: 2, lightning: 1 },desc: '2 Stein + Blitz = Skelett' },

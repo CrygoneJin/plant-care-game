@@ -426,6 +426,9 @@
         } else if (quest) {
             showToast(`${npc.emoji} ${quest.desc}`, 5000);
             window.questSystem.accept(quest);
+        } else if (npcId === 'krabs') {
+            // Krabs: Kein Quest? Dann HANDEL! 🦀💰
+            showKrabsShop();
         } else {
             const voice = NPC_VOICES[npcId];
             if (voice) {
@@ -433,6 +436,96 @@
                 showToast(`${npc.emoji} ${voice.prefix} ${tick}`, 2000);
             }
         }
+    }
+
+    // === KRABS SHOP — Muschelhandel ===
+    function showKrabsShop() {
+        const shells = getInventoryCount('shell');
+        // Welche Materialien kann der Spieler verkaufen?
+        const sellable = Object.entries(KRABS_SHOP)
+            .filter(([mat]) => getInventoryCount(mat) > 0)
+            .map(([mat, price]) => {
+                const info = MATERIALS[mat];
+                return `${info.emoji} ${info.label}: ${price.sell} 🐚`;
+            }).slice(0, 4);
+
+        // Welche kann er kaufen?
+        const buyable = Object.entries(KRABS_SHOP)
+            .filter(([, price]) => shells >= price.buy)
+            .map(([mat, price]) => {
+                const info = MATERIALS[mat];
+                return `${info.emoji} ${info.label}: ${price.buy} 🐚`;
+            }).slice(0, 4);
+
+        // Dialog als Modal
+        let existing = document.getElementById('krabs-shop-modal');
+        if (existing) existing.remove();
+
+        const modal = document.createElement('div');
+        modal.id = 'krabs-shop-modal';
+        modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;display:flex;align-items:center;justify-content:center;';
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+
+        const shopItems = Object.entries(KRABS_SHOP);
+        const shopHTML = shopItems.map(([mat, price]) => {
+            const info = MATERIALS[mat];
+            if (!info) return '';
+            const have = getInventoryCount(mat);
+            return `<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0;border-bottom:1px solid #333;">
+                <span>${info.emoji} ${info.label} (${have}x)</span>
+                <span>
+                    <button class="krabs-buy" data-mat="${mat}" data-cost="${price.buy}"
+                        style="background:#2E7D32;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"
+                        ${shells < price.buy ? 'disabled style="opacity:0.4;background:#2E7D32;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"' : ''}>
+                        Kauf ${price.buy}🐚</button>
+                    <button class="krabs-sell" data-mat="${mat}" data-earn="${price.sell}"
+                        style="background:#C62828;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"
+                        ${have <= 0 ? 'disabled style="opacity:0.4;background:#C62828;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"' : ''}>
+                        Verkauf ${price.sell}🐚</button>
+                </span>
+            </div>`;
+        }).join('');
+
+        modal.innerHTML = `<div style="background:#1a1a2e;color:#eee;border-radius:12px;padding:20px;max-width:360px;width:90%;max-height:70vh;overflow-y:auto;font-family:monospace;">
+            <h3 style="margin:0 0 8px;text-align:center;">🦀 Krabben-Kontor 💰</h3>
+            <p style="text-align:center;margin:0 0 12px;font-size:1.1em;">Dein Vermögen: <strong>${shells} 🐚</strong></p>
+            <p style="text-align:center;margin:0 0 12px;font-size:0.8em;color:#aaa;">Darwin sagt: Handel ist Evolution! Muscheln findest du am Strand!</p>
+            ${shopHTML}
+            <p style="text-align:center;margin:12px 0 0;font-size:0.7em;color:#666;">Klick außerhalb zum Schließen</p>
+        </div>`;
+
+        document.body.appendChild(modal);
+
+        // Event-Handler für Kauf/Verkauf
+        modal.querySelectorAll('.krabs-buy').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const mat = btn.dataset.mat;
+                const cost = parseInt(btn.dataset.cost);
+                if (getInventoryCount('shell') >= cost) {
+                    removeFromInventory('shell', cost);
+                    addToInventory(mat, 1);
+                    unlockMaterial(mat);
+                    showToast(`🦀 DEAL! 1x ${MATERIALS[mat]?.emoji} ${MATERIALS[mat]?.label} für ${cost} 🐚!`, 2000);
+                    modal.remove();
+                    showKrabsShop(); // Refresh
+                }
+            });
+        });
+
+        modal.querySelectorAll('.krabs-sell').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const mat = btn.dataset.mat;
+                const earn = parseInt(btn.dataset.earn);
+                if (getInventoryCount(mat) > 0) {
+                    removeFromInventory(mat, 1);
+                    addToInventory('shell', earn);
+                    unlockMaterial('shell');
+                    showToast(`🦀 VERKAUFT! 1x ${MATERIALS[mat]?.emoji} für ${earn} 🐚! Ahahaha!`, 2000);
+                    modal.remove();
+                    showKrabsShop(); // Refresh
+                }
+            });
+        });
     }
 
     // --- NPC-Kommentare beim Bauen ---
@@ -1521,6 +1614,23 @@
         sapling:    { material: 'wood', count: 1 },
         palm:       { material: 'wood', count: 2 },
     };
+
+    // === KRABS: Muschelhandel — Preisliste ===
+    // Muscheln sind die Insel-Währung. Krabs kauft und verkauft.
+    const KRABS_SHOP = {
+        // material: { buy: Muscheln die Krabs verlangt, sell: Muscheln die Krabs zahlt }
+        wood:     { buy: 2,  sell: 1 },
+        stone:    { buy: 3,  sell: 1 },
+        sand:     { buy: 1,  sell: 1 },
+        planks:   { buy: 4,  sell: 2 },
+        glass:    { buy: 5,  sell: 2 },
+        flower:   { buy: 3,  sell: 1 },
+        fish:     { buy: 4,  sell: 2 },
+        diamond:  { buy: 20, sell: 8 },
+        crystal:  { buy: 15, sell: 6 },
+        honey:    { buy: 8,  sell: 3 },
+        apple:    { buy: 6,  sell: 2 },
+    };
     let isMouseDown = false;
     let hoverCell = null;
     // animations[] → effects.js
@@ -2386,6 +2496,12 @@
                 }
                 addToInventory(yield_.material, yield_.count);
                 unlockMaterial(yield_.material);
+                // Krabs: Sand/Wasser ernten → Chance auf Bonus-Muschel (Strandgut!)
+                if ((cell === 'sand' || cell === 'water') && Math.random() < 0.3) {
+                    addToInventory('shell', 1);
+                    unlockMaterial('shell');
+                    showToast('🐚 Eine Muschel! Mr. Krabs kauft die...', 2000);
+                }
                 EFFECTS.addPlaceAnimation(r, c);
                 soundChop();
                 const info = MATERIALS[yield_.material];
