@@ -20,7 +20,7 @@
 | # | Item | Owner | Status |
 |---|------|-------|--------|
 | 6 | **NPC-Stimmen schärfen** — Ogilvy: Jeder NPC braucht typographisches Tick | Artist | ✅ Done (Elefant/Krabs/Tommy) |
-| 7 | **QR-Code auf Postkarte** — Godin/Welch: Scannen → direkt zum Spiel | Engineer | ✅ Done (Sprint 23) |
+| 7 | **QR-Code auf Postkarte** — Godin/Welch: Scannen → direkt zum Spiel | Engineer | ✅ Done (Sprint 23, qr.js) |
 | 8 | **Offline-Manifest** — Service Worker für Spielen ohne Internet | Engineer | ✅ Done (sw.js + manifest.json) |
 | 9 | **Mehr Quests** — 11 Templates sind zu wenig, mindestens 20 | Artist + Leader | ✅ Done (45 Templates) |
 | 10 | **Favicon + Meta-Tags** — Torvalds: "10 Minuten, großer Unterschied" | Engineer | ✅ Done |
@@ -56,7 +56,7 @@
 | 84 | **Höhlen + Edelsteine** — Berg+Wasser=Höhle, Höhle+Wasser=Tropfsteine, Tropfstein+Feuer=Edelstein | Engineer | ✅ Done (recipes.js:99-101) |
 | 85 | **Genre-Tonsequenzen** — 15 Musik-Genres mit eigenen 5-Noten-Sequenzen beim Platzieren (ex-PR #41) | Engineer + Artist | ✅ Done (Sprint 24, 🎶-Button) |
 | 86 | **CI/CD Pipeline** — deploy.yml + release.sh + Puppeteer Smoke-Test (ex-PR #13) | Engineer | 🔲 Cherry-pick |
-| 87 | **TTS Hörspiele** — Web Speech API für Hörspiel-Zeilen, Mute-Button (ex-PR #40) | Engineer | 🔲 Offen |
+| 87 | **TTS Hörspiele** — Web Speech API für Hörspiel-Zeilen, Mute-Button (ex-PR #40) | Engineer | ✅ Done (game.js:656-720, speakLines + stopHoerspiel) |
 | 88 | **Floriane die Wunschfee** — 3 Wünsche/Tag, Mitternacht-Reset, Feedback-Kanal (ex-PR #40) | Artist + Engineer | 🔲 Offen |
 | 89 | **Koop-Modus** — Papa+Kind auf einer Insel, Phase 1 lokal, Phase 2 WebRTC (ex-PR #45, braucht Spielfigur) | Engineer | 🔲 Offen |
 | 90 | **Browser-LLM** — SmolLM2 lokal im Browser, Progressive Loading ELIZA→LLM (ex-PR #45, Qualitätstest nötig) | Scientist + Engineer | 🔲 Feynman muss testen |
