@@ -1265,7 +1265,7 @@
             const slot = document.getElementById('craft-slot-' + i);
             if (!slot) continue;
             if (craftingGrid[i]) {
-                const info = MATERIALS[craftingGrid[i]];
+                const info = MATERIALS[craftingGrid[i]] || { emoji: '❓', label: craftingGrid[i] };
                 slot.innerHTML = `<span class="craft-emoji">${info.emoji}</span>`;
                 slot.classList.add('filled');
             } else {
