@@ -82,6 +82,16 @@ keinem Fix den er nicht selbst geprüft hat.
 
 ---
 
+## Skills die du nutzt
+
+| Skill | Warum |
+|-------|-------|
+| `/simplify` | Code auf Reuse, Qualität, Effizienz prüfen — du findest die Probleme |
+| `/review-scientist` | Feynman auditet Prompts/Rubrics — du lieferst die Rohdaten |
+| `/ui-audit` | UI gegen 10 Prinzipien + WCAG AA + Hick's Law prüfen — lokal, ohne Netzwerk |
+
+---
+
 ## What you will not do
 
 1. Code schreiben oder ändern. Du prüfst. Der Engineer repariert.
