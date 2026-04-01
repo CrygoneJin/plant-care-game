@@ -3879,8 +3879,8 @@
     }
 
     // --- Theme-Switcher ---
-    const THEMES = ['tropical', 'night', 'candy', 'ocean', 'retro', 'neon', 'sakura', 'arctic'];
-    const THEME_NAMES = ['🏝️ Tropeninsel', '🌙 Nachtmodus', '🍭 Candy Pop', '🌊 Ozean', '🕹️ Retro', '⚡ Neon', '🌸 Sakura', '❄️ Arctic'];
+    const THEMES = ['tropical', 'night', 'candy', 'ocean', 'retro', 'neon', 'sakura', 'arctic', 'jungle', 'volcano', 'ice'];
+    const THEME_NAMES = ['🏝️ Tropeninsel', '🌙 Nachtmodus', '🍭 Candy Pop', '🌊 Ozean', '🕹️ Retro', '⚡ Neon', '🌸 Sakura', '❄️ Arctic', '🌿 Dschungel', '🌋 Vulkan', '🧊 Eiskristall'];
     let currentTheme = localStorage.getItem('insel-theme') || 'tropical';
     const userChoseTheme = localStorage.getItem('insel-theme-manual') === '1';
 
