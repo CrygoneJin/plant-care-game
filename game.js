@@ -50,6 +50,9 @@
 
     let CELL_SIZE = calcCellSize();
 
+    // --- Isometrischer Modus (Tetraeder-Gitter) ---
+    let isoMode = localStorage.getItem('insel-iso-mode') === 'true';
+
     // --- Materialien (aus materials.js) ---
     const MATERIALS = window.INSEL_MATERIALS;
 
@@ -1641,11 +1644,18 @@
 
     function resizeCanvas() {
         CELL_SIZE = calcCellSize();
-        canvas.width = totalCols * CELL_SIZE;
-        canvas.height = totalRows * CELL_SIZE;
-        // CSS-Größe für scharfe Darstellung auf HiDPI/4K
-        canvas.style.width = (totalCols * CELL_SIZE) + 'px';
-        canvas.style.height = (totalRows * CELL_SIZE) + 'px';
+        if (isoMode && window.ISO_RENDERER) {
+            const size = window.ISO_RENDERER.getIsoCanvasSize(CELL_SIZE, totalCols, totalRows);
+            canvas.width = size.width;
+            canvas.height = size.height;
+            canvas.style.width = size.width + 'px';
+            canvas.style.height = size.height + 'px';
+        } else {
+            canvas.width = totalCols * CELL_SIZE;
+            canvas.height = totalRows * CELL_SIZE;
+            canvas.style.width = (totalCols * CELL_SIZE) + 'px';
+            canvas.style.height = (totalRows * CELL_SIZE) + 'px';
+        }
         // Auf Mobilgeräten Canvas in den Container einpassen
         if (window.innerWidth < 768) {
             canvas.style.width = '100%';
@@ -1916,6 +1926,12 @@
         needsRedraw = false;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        // === ISOMETRISCHER MODUS ===
+        if (isoMode && window.ISO_RENDERER) {
+            drawIso();
+            return;
+        }
+
         // Wasser-Hintergrund
         ctx.fillStyle = '#3498DB';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -2005,6 +2021,11 @@
                     ctx.fillText(mat.emoji, x + CELL_SIZE / 2, y + CELL_SIZE / 2 + 1);
                 }
             }
+        }
+
+        // Fraktale Bäume (L-System) über die Zellen rendern
+        if (window.FRACTAL_TREES) {
+            window.FRACTAL_TREES.drawAllTrees(ctx, grid, ROWS, COLS, CELL_SIZE, WATER_BORDER, false);
         }
 
         // Blueprint-Overlay zeichnen (Ghost-Preview)
@@ -2304,6 +2325,97 @@
 
     // addPlaceAnimation + drawAnimations → effects.js
 
+    // --- Isometrische draw()-Funktion ---
+    function drawIso() {
+        const ISO = window.ISO_RENDERER;
+        const time = Date.now() / 1000;
+
+        // Wasser-Hintergrund
+        ctx.fillStyle = '#2980B9';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Wasser (outer)
+        ISO.drawIsoWater(ctx, totalRows, totalCols, ROWS, COLS, WATER_BORDER, CELL_SIZE, time, prefersReducedMotion);
+
+        // Insel + Materialien als isometrische Würfel
+        ISO.drawIsoIsland(ctx, grid, MATERIALS, ROWS, COLS, WATER_BORDER, CELL_SIZE, time, prefersReducedMotion);
+
+        // Fraktale Bäume (L-System) — isometrisch
+        if (window.FRACTAL_TREES) {
+            window.FRACTAL_TREES.drawAllTrees(ctx, grid, ROWS, COLS, CELL_SIZE, WATER_BORDER, true);
+        }
+
+        // Blueprint-Overlay
+        drawBlueprintOverlay();
+
+        // Conway overlay
+        if (conwayOverlay) {
+            const totalColsN = COLS + WATER_BORDER * 2;
+            const originX = (totalColsN * CELL_SIZE) / 2;
+            const originY = CELL_SIZE * 2;
+            ctx.font = `${Math.round(CELL_SIZE * 0.5)}px serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    if (!conwayOverlay[r][c]) continue;
+                    const pos = ISO.gridToIso(r + WATER_BORDER, c + WATER_BORDER, CELL_SIZE, originX, originY);
+                    ctx.fillText(conwayOverlay[r][c], pos.x, pos.y - CELL_SIZE * 0.4);
+                }
+            }
+        }
+
+        // Spielfigur
+        if (playerName) {
+            ISO.drawIsoEntity(ctx, playerPos.r, playerPos.c, '\uD83E\uDDD2', playerName,
+                WATER_BORDER, COLS, CELL_SIZE, time, { shadow: true, fontSize: 0.65 });
+        }
+
+        // NPCs
+        for (const [id, pos] of Object.entries(npcPositions)) {
+            const npc = NPC_DEFS[id];
+            ISO.drawIsoEntity(ctx, pos.r, pos.c, npc.emoji, npc.name,
+                WATER_BORDER, COLS, CELL_SIZE, time, { bob: true, circle: true });
+        }
+
+        // Sammelbare Items
+        for (const ci of collectibles) {
+            const totalColsN = COLS + WATER_BORDER * 2;
+            const originX = (totalColsN * CELL_SIZE) / 2;
+            const originY = CELL_SIZE * 2;
+            const pos = ISO.gridToIso(ci.r + WATER_BORDER, ci.c + WATER_BORDER, CELL_SIZE, originX, originY);
+            const float = Math.sin(time * 3 + ci.r * 2 + ci.c) * 3;
+            const glow = 0.6 + Math.sin(time * 4 + ci.c) * 0.2;
+            ctx.globalAlpha = glow * 0.4;
+            ctx.fillStyle = '#FFD700';
+            ctx.beginPath();
+            ctx.arc(pos.x, pos.y - CELL_SIZE * 0.4 + float, CELL_SIZE * 0.35, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalAlpha = 1;
+            ctx.font = `${CELL_SIZE * 0.45}px serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(ci.emoji, pos.x, pos.y - CELL_SIZE * 0.4 + float);
+        }
+
+        // Hover-Vorschau
+        if (hoverCell) {
+            ISO.drawIsoHover(ctx, hoverCell.r, hoverCell.c, MATERIALS, currentMaterial, currentTool, grid,
+                WATER_BORDER, COLS, CELL_SIZE);
+        }
+
+        // Effects
+        EFFECTS.drawAnimations(ctx, CELL_SIZE, WATER_BORDER);
+        EFFECTS.updateDayNight();
+        const overlay = EFFECTS.getDayNightOverlay();
+        if (overlay) {
+            ctx.fillStyle = overlay;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        EFFECTS.updateWeather();
+        EFFECTS.drawWeather(ctx, canvas);
+    }
+
     // --- Maus → Grid-Koordinaten ---
     function getGridCell(e) {
         const rect = canvas.getBoundingClientRect();
@@ -2311,6 +2423,10 @@
         const scaleY = canvas.height / rect.height;
         const px = (e.clientX - rect.left) * scaleX;
         const py = (e.clientY - rect.top) * scaleY;
+
+        if (isoMode && window.ISO_RENDERER) {
+            return window.ISO_RENDERER.getIsoGridCell(px, py, CELL_SIZE, ROWS, COLS, WATER_BORDER);
+        }
 
         const c = Math.floor(px / CELL_SIZE) - WATER_BORDER;
         const r = Math.floor(py / CELL_SIZE) - WATER_BORDER;
@@ -3903,6 +4019,18 @@
     }
 
     // --- Code-View-Button ---
+    // --- Iso-Toggle (Tetraeder-Gitter) ---
+    const isoBtn = document.getElementById('iso-btn');
+    if (isoBtn) {
+        if (isoMode) isoBtn.classList.add('active');
+        isoBtn.addEventListener('click', () => {
+            isoMode = !isoMode;
+            localStorage.setItem('insel-iso-mode', isoMode);
+            isoBtn.classList.toggle('active', isoMode);
+            resizeCanvas();
+        });
+    }
+
     const codeViewBtn = document.getElementById('code-view-btn');
     if (codeViewBtn) {
         codeViewBtn.addEventListener('click', () => {
