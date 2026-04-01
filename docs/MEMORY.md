@@ -31,6 +31,7 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 
 | Datum | Was | Warum gut |
 |-------|-----|-----------|
+| 2026-03-31 | Sprint 23 — Chat-Sidebar + Stille-Momente + QR-Code | body.chat-open Klasse + resize-Event = Canvas schrumpft sauber wenn Chat auf geht. Wellen-Ambient via Web Audio BufferSource + LFO für Wellenbewegung. QRCode via cdnjs, gezeichnet auf Postkarten-Canvas. Alle 3 Items in einer Session. |
 | 2026-03-31 | JSDoc + checkJs: Typsicherheit ohne Build-Schritt | TypeScript evaluiert → Overkill für 8K LOC Vanilla JS ohne Bundler. Stattdessen: `tsconfig.json` mit `checkJs`, `types.d.ts` (230 Zeilen), `npm run typecheck` = 0 Errors. Zero-Build-Architektur bleibt erhalten. game.js + chat.js mit @ts-nocheck — schrittweise bei Backlog #11 (Code-Splitting). |
 | 2026-03-31 | schatzinsel.app live — DNS + GitHub Pages funktioniert | P0 erledigt. Google Sheet Webhook obsolet (Airtable + D1 Worker reicht). |
 | 2026-03-31 | Mephisto NPC — "The devil is most devilish when respectable" | Neuer Unlock-NPC: charmanter Händler, Goethe-Referenz, 5 Quests, Deal-Mechanik. 10. Charakter im Spiel. |

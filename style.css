@@ -287,6 +287,11 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    transition: padding-right 0.25s ease;
+}
+
+body.chat-open #game-container {
+    padding-right: 320px;
 }
 
 /* === HEADER === */
@@ -1183,6 +1188,10 @@ body.code-view-active #token-budget-display {
 #chat-bubble:hover {
     transform: scale(1.1);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+body.chat-open #chat-bubble {
+    display: none;
 }
 
 #chat-panel {

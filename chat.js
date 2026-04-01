@@ -908,8 +908,15 @@ ${budgetInfo}`;
     }
 
     // --- Events ---
+    function syncChatOpenClass() {
+        const isOpen = !panel.classList.contains('hidden');
+        document.body.classList.toggle('chat-open', isOpen);
+        window.dispatchEvent(new Event('resize'));
+    }
+
     function toggleChat() {
         panel.classList.toggle('hidden');
+        syncChatOpenClass();
         if (!panel.classList.contains('hidden')) {
             input.focus();
             if (window.recordMilestone) window.recordMilestone('firstChat');
@@ -955,6 +962,7 @@ ${budgetInfo}`;
 
     closeBtn.addEventListener('click', () => {
         panel.classList.add('hidden');
+        syncChatOpenClass();
     });
 
     // Chat-Bubble (💬 FAB) öffnet den Chat

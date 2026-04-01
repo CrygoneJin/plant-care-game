@@ -1,4 +1,4 @@
-# Sprint 23 — "Oscar hört die Welt"
+# Sprint 24 — "Oscar hört die Welt"
 
 **Sprint Goal:** Musik beim Bauen (Genre-Sequenzen) + technische Schulden (game.js aufteilen) + Tutorial ohne Text.
 
@@ -10,19 +10,19 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S23-1 | **#85 Genre-Tonsequenzen** — 15 Musik-Genres mit je 5-Noten-Sequenz beim Platzieren. Oscar baut und hört Jazz, Reggae, Metal. | Engineer | ✅ Done |
-| S23-2 | **#11 game.js aufteilen** — HOERSPIELE-Daten → stories.js (77 Zeilen), game.js: 4246→4210. draw*() bleibt (zu viele globale Abhängigkeiten für sicheren Refactor). | Engineer | ✅ Done |
-| S23-3 | **#15 Tutorial ohne Text** — 3-Schritt Icon-Onboarding (🖌️➡️🟫 / 🪵➡️🏝️ / ⚒️+✨), keine Texte, 2.5s auto + Tap-to-skip. Nur für Erstbesucher. | Designer + Engineer | ✅ Done |
+| S24-1 | **#85 Genre-Tonsequenzen** — 15 Musik-Genres mit je 5-Noten-Sequenz beim Platzieren. Oscar baut und hört Jazz, Reggae, Metal. | Engineer | ✅ Done |
+| S24-2 | **#11 game.js aufteilen** — HOERSPIELE-Daten → stories.js (77 Zeilen), game.js: 4246→4210. draw*() bleibt (zu viele globale Abhängigkeiten für sicheren Refactor). | Engineer | ✅ Done |
+| S24-3 | **#15 Tutorial ohne Text** — 3-Schritt Icon-Onboarding (🖌️➡️🟫 / 🪵➡️🏝️ / ⚒️+✨), keine Texte, 2.5s auto + Tap-to-skip. Nur für Erstbesucher. | Designer + Engineer | ✅ Done |
 
 ---
 
 ## Standup Log
 
-### 2026-04-01 (Sprint 23 Planning)
+### 2026-04-01 (Sprint 24 Planning)
 
 **Kontext:** Sprint 22 Review + Retro abgeschlossen (alle 8 Items Done). Retro empfahl max 3 Items/Sprint — wird hart eingehalten.
 
-**Sprint 23 Fokus:** Oscar-sichtbare Änderung zuerst (#85 Genre-Töne). Dann technische Schulden (#11). Dann UX für nicht-lesende Kinder (#15).
+**Sprint 24 Fokus:** Oscar-sichtbare Änderung zuerst (#85 Genre-Töne). Dann technische Schulden (#11). Dann UX für nicht-lesende Kinder (#15).
 
 **Blocker:** Keine.
 
@@ -81,36 +81,54 @@
 
 ---
 
-## Sprint Retrospective — 2026-03-31 (Nacht, nach Review)
+## Sprint Retrospective — 2026-03-31 (Nacht)
 
 ### Was lief gut?
 
-- **Alle 8 Items Done.** Sprint Goal vollständig erreicht, keine Nachläufer.
-- **Mephisto funktioniert.** 10. NPC, Deal-Mechanik, Browning-Zitat — Persönlichkeit ohne Overengineering.
-- **Gemini Voice läuft.** 5 Stimmen (Charon/Puck/Kore/Aoede/Fenrir) live. Kein Vendor-Lock-In durch Worker-Abstraktion.
-- **KLONK auf Minecraft-Niveau.** 3 Oszillatoren, Sub-Bass. Oscar hört den Unterschied.
-- **Lummerland als Easter Egg.** `?lummerland` funktioniert. Kein Feature-Request, kein PR-Drama — einfach gebaut.
+- **8 von 8 Items in einer Nacht-Session.** Höchste Sprint-Dichte bisher.
+- **Mephisto als 10. NPC.** Unlock-Mechanik, Deal-System, Browning-Zitat — fertig in einer Session.
+- **Voice Integration.** Gemini Live API, 5 Stimmen, Worker-Deployment — komplex und trotzdem done.
+- **Lummerland.** Easter Egg in einer Stunde handgebaut — zwei Berge, Lokschuppen, Frau Waas. Oscar freut sich.
+- **Backlog-Audit.** 8 Phantom-Opens bereinigt. Backlog zeigt jetzt Realität.
 
 ### Was lief schlecht?
 
-- **8 Items in einem Sprint.** Dreifach über dem Maximum (3). Wird nicht wiederholt.
-- **Smoke Test weiterhin blockiert.** Sandbox-Proxy verhindert externe Curls. Bekannt. Nicht gelöst.
-- **#28 Chat-Sidebar verschoben.** Layout-Umbau ohne klare Spec. Verschiebt sich weiter wenn kein konkretes Design.
-- **Worker-Discovery-Endpoint leer.** Nicht klar ob Sandbox-Block oder echter Defekt — kein Test möglich.
+- **#28 Chat-Sidebar zweimal verschoben.** War in S21 nicht drin, war in S22 nicht drin. Blockiert Voice UX.
+- **Smoke Test nach wie vor blockiert.** Proxy verhindert externe Curl-Calls aus Claude Code Web. Kein CI, kein automatischer Health-Check.
+- **MMX (U1)** liegt beim User. Kein Druck, keine Erinnerung — Thema wird vergessen.
 
 ### Was verbessern wir?
 
-1. **Max 3 Items pro Sprint — hart.** Auch wenn es verlockend ist: 3 und gut. Overflow → nächster Sprint.
-2. **Smoke Test in GitHub Actions auslagern** — nicht sessionabhängig (BACKLOG #86).
-3. **Vor jedem Sprint: eine Oscar-sichtbare Änderung** — Klang, Optik, oder neuer Charakter. Motivation bleibt hoch.
+1. **#28 Chat-Sidebar wird Sprint 23 Item 1.** Nicht wieder verschieben.
+2. **Smoke Test → GitHub Actions** — BACKLOG #86 (CI/CD) endlich anfassen.
+3. **User-Actions sichtbarer machen** — U1 (MMX Wallet) als explizite Erinnerung im Planning.
 
-### Sprint 23 — Empfehlung (Planning nächste Session)
+### Sprint 23 — Empfehlung (Planning)
 
 | Kandidat | Prio | Warum jetzt |
 |----------|------|-------------|
-| **#85 Genre-Tonsequenzen** | P3 | Oscar hört Musik wenn er baut. Höchster Spaß-Impact pro LOC. |
-| **#15 Tutorial ohne Text** | P2 | Kinder die nicht lesen können (Oscars jüngere Geschwister). |
-| **#11 game.js weiter aufteilen** | P1 | In Arbeit. Grid/Effects/Stories noch drin. Schuldenlast sinken lassen. |
+| **#28 Chat-Sidebar** — Chat als Sidebar, kein Overlay | P1 | 2× verschoben. Voice UX kaputt ohne das. |
+| **#57 Stille-Momente** — Wellen + Wind wenn idle, kein UI | P1 | Oscars Erfahrung. 0 Code-Aufwand. Höchster emotional impact. |
+| **#7 QR-Code auf Postkarte** — Scan → direkt zum Spiel | P1 | Postkarte existiert. QR fehlt. 30 Minuten Arbeit. |
+
+---
+
+# Sprint 23 — "Oscar hört das Meer"
+
+**Sprint Goal:** Chat als Sidebar, Stille-Momente wenn idle, QR-Code auf Postkarte. Oscar soll heute Abend Fortschritt sehen.
+
+**Start:** 2026-03-31
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S23-1 | **Chat-Sidebar** (#28) — Chat-Fenster als seitliche Sidebar, nicht als Overlay über Canvas. CSS-Refactor, kein Layout-Umbau. | Designer + Engineer | ✅ Done |
+| S23-2 | **Stille-Momente** (#57) — Wellen-/Wind-Ambient nach 10s Idle. Kein UI, kein Toast. Nur Meer. stopAmbient() bei Interaktion. | Engineer | ✅ Done |
+| S23-3 | **QR-Code auf Postkarte** (#7) — QR-Code als SVG (qr-code-generator, kein Build) auf dem Postkarten-Download. Scan → schatzinsel.app | Engineer | ✅ Done |
+
 
 ---
 
