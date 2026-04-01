@@ -209,6 +209,14 @@ interface InselEffects {
     addPlaceAnimation(r: number, c: number): void;
     drawAnimations(ctx: CanvasRenderingContext2D, CELL_SIZE: number, WATER_BORDER: number): void;
     spawnCraftSparks(): void;
+    spawnMergeSparks(cells: Array<[number, number]>, opts: {
+        canvas: HTMLCanvasElement;
+        COLS: number;
+        WATER_BORDER: number;
+        extraClass?: string;
+        duration?: number;
+    }): void;
+    flyToInventory(fromEl: HTMLElement, emoji: string): void;
     setWeather(w: string): void;
     getWeather(): string;
     resetWeatherTimer(): void;
@@ -371,7 +379,11 @@ interface Window {
 
     INSEL_TTS: InselTTS;
     INSEL_SAVE: InselSave;
-    INSEL_STORIES: Record<string, string[]>;
+    INSEL_STORIES: Record<string, string[]> & {
+        CODE_EASTER_EGGS: Record<string, string[]>;
+        maybeCodeEasterEgg(material: string, showToast?: Function, recordMilestone?: Function, trackEvent?: Function): boolean;
+        getDiscoveredEggs(): string[];
+    };
     INSEL_CHARACTERS: Record<string, unknown>;
     INSEL_BUS: InselNamespace;
     INSEL_DIMS: { ROWS: number; COLS: number };

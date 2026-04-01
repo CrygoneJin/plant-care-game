@@ -198,6 +198,60 @@
         }
     }
 
+    // #11: Merge/Blueprint Spark-Animation — DOM-basierte Funken auf Canvas-Zellen
+    // Extrahiert aus game.js (3x identischer Code für merge, blueprint, genesis)
+    /**
+     * @param {Array<[number, number]>} cells - [[row, col], ...] Zellen die funkeln
+     * @param {object} opts
+     * @param {HTMLCanvasElement} opts.canvas
+     * @param {number} opts.COLS
+     * @param {number} opts.WATER_BORDER
+     * @param {string} [opts.extraClass] - z.B. 'triplet' oder 'blueprint-spark'
+     * @param {number} [opts.duration] - ms, default 1000
+     */
+    function spawnMergeSparks(cells, opts) {
+        var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) return;
+        var wrapper = document.getElementById('canvas-wrapper');
+        if (!wrapper || !opts.canvas) return;
+        var cellSize = opts.canvas.offsetWidth / (opts.COLS + opts.WATER_BORDER * 2);
+        var duration = opts.duration || 1000;
+        var extraClass = opts.extraClass ? ' ' + opts.extraClass : '';
+        for (var i = 0; i < cells.length; i++) {
+            var mr = cells[i][0];
+            var mc = cells[i][1];
+            var spark = document.createElement('div');
+            spark.className = 'merge-spark' + extraClass;
+            spark.style.left = ((mc + opts.WATER_BORDER) * cellSize + cellSize / 2 - 20) + 'px';
+            spark.style.top = ((mr + opts.WATER_BORDER) * cellSize + cellSize / 2 - 20) + 'px';
+            wrapper.appendChild(spark);
+            (function(s, d) { setTimeout(function() { s.remove(); }, d); })(spark, duration);
+        }
+    }
+
+    // #11: Fly-Animation — Emoji fliegt von einem Element zum Inventar-Tab
+    /**
+     * @param {HTMLElement} fromEl - Quell-Element
+     * @param {string} emoji - Emoji das fliegt
+     */
+    function flyToInventory(fromEl, emoji) {
+        var target = document.querySelector('.sidebar-tab[data-tab="inventory"]');
+        if (!fromEl || !target) return;
+        var fromRect = fromEl.getBoundingClientRect();
+        var toRect = target.getBoundingClientRect();
+        var flyer = document.createElement('div');
+        flyer.className = 'craft-flyer';
+        flyer.textContent = emoji;
+        flyer.style.left = (fromRect.left + fromRect.width / 2) + 'px';
+        flyer.style.top = (fromRect.top + fromRect.height / 2) + 'px';
+        document.body.appendChild(flyer);
+        var dx = (toRect.left + toRect.width / 2) - (fromRect.left + fromRect.width / 2);
+        var dy = (toRect.top + toRect.height / 2) - (fromRect.top + fromRect.height / 2);
+        flyer.style.setProperty('--fly-dx', dx + 'px');
+        flyer.style.setProperty('--fly-dy', dy + 'px');
+        flyer.addEventListener('animationend', function() { flyer.remove(); });
+    }
+
     // === PUBLIC API ===
     window.INSEL_EFFECTS = {
         updateDayNight: updateDayNight,
@@ -208,6 +262,8 @@
         addPlaceAnimation: addPlaceAnimation,
         drawAnimations: drawAnimations,
         spawnCraftSparks: spawnCraftSparks,
+        spawnMergeSparks: spawnMergeSparks,
+        flyToInventory: flyToInventory,
         /** @param {string} w */
         setWeather: function(w) { weather = w; },
         getWeather: function() { return weather; },
