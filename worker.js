@@ -648,16 +648,12 @@ async function handleMarketItems(request, env) {
     const limit = Math.min(parseInt(url.searchParams.get('limit') || '20'), 50);
 
     try {
+        await createMarketTable(env);
         const rows = await env.METRICS_DB.prepare(
             `SELECT * FROM marketplace WHERE status = 'active' ORDER BY created_at DESC LIMIT ?`
         ).bind(limit).all();
         return json({ items: rows.results || [] });
     } catch (e) {
-        // Tabelle existiert noch nicht → erstellen
-        if (e.message && e.message.includes('no such table')) {
-            await createMarketTable(env);
-            return json({ items: [] });
-        }
         return json({ error: e.message }, 500);
     }
 }
