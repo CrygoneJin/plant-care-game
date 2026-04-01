@@ -426,6 +426,27 @@
         }
     }
 
+    // === WU-XING NPC-EVENTS — Elementtransformationen triggern NPC-Reaktionen ===
+    const WU_XING_NPC_EVENTS = {
+        fire_ash:    { npc: 'spongebob', msg: '🧽 SpongeBob: Das riecht nach verbrannten Krabbenburger-Patties! 🔥' },
+        water_bloom: { npc: 'floriane',  msg: '🧚 Floriane: ✨ Die Insel blüht! Ein Wunsch wurde erhört.' }
+    };
+
+    // Cooldown damit NPCs nicht spammen
+    const _wuXingCooldowns = {};
+
+    function triggerWuXingNpcEvent(eventId) {
+        const event = WU_XING_NPC_EVENTS[eventId];
+        if (!event) return;
+        const now = Date.now();
+        if (_wuXingCooldowns[eventId] && now - _wuXingCooldowns[eventId] < 30000) return;
+        _wuXingCooldowns[eventId] = now;
+        // Nur wenn der NPC freigeschaltet ist
+        const npc = NPC_DEFS[event.npc];
+        if (!npc || !unlockedNpcs.includes(event.npc)) return;
+        showToast(event.msg, 3500);
+    }
+
     // === KRABS SHOP — Muschelhandel ===
     // 1 Muschel = 0.001 MMX (Nerd-Ebene). Kinder sehen 🐚, Nerds sehen MMX.
     const SHELL_TO_MMX = 0.001;
@@ -2241,7 +2262,11 @@
                             const [fr, fc] = empty.splice(idx, 1)[0];
                             grid[fr][fc] = Math.random() < 0.5 ? 'flower' : 'plant';
                         }
-                        if (count > 0) requestRedraw();
+                        if (count > 0) {
+                            requestRedraw();
+                            // Wu-Xing-Event: Wasser → Blumen — Floriane reagiert
+                            triggerWuXingNpcEvent('water_bloom');
+                        }
                     }, 10000);
                 }
                 // Konsequenz: Feuer neben Holz → Holz verbrennt nach 3s
@@ -2251,7 +2276,12 @@
                         const nr = r+dr, nc = c+dc;
                         if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && grid[nr]?.[nc] === 'wood') {
                             setTimeout(() => {
-                                if (grid[nr][nc] === 'wood' && grid[r]?.[c] === 'fire') { grid[nr][nc] = 'ash'; requestRedraw(); }
+                                if (grid[nr][nc] === 'wood' && grid[r]?.[c] === 'fire') {
+                                    grid[nr][nc] = 'ash';
+                                    requestRedraw();
+                                    // Wu-Xing-Event: Feuer → Asche — SpongeBob reagiert
+                                    triggerWuXingNpcEvent('fire_ash');
+                                }
                             }, 3000);
                         }
                     });
