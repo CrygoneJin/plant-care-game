@@ -122,6 +122,51 @@
     --btn-bg: #e1f5fe;
 }
 
+/* 9. Dschungel — Tiefes Grün, erdige Töne, dichter Wald */
+[data-theme="jungle"] {
+    --bg: #2d5a27;
+    --header-bg: linear-gradient(135deg, #1b3a1a, #2d5a27);
+    --toolbar-bg: linear-gradient(135deg, #8b6914, #a67c1a);
+    --palette-bg: linear-gradient(180deg, #1b3a1a, #2d5a27);
+    --stats-bg: linear-gradient(180deg, #3e2723, #4e342e);
+    --canvas-bg: #4caf50;
+    --accent: #ffb300;
+    --accent-light: #e8f5e9;
+    --text: #1b3a1a;
+    --text-light: #e8f5e9;
+    --btn-bg: #e8f5e9;
+}
+
+/* 10. Vulkan — Dunkle Lava-Töne, dramatisch aber kindgerecht */
+[data-theme="volcano"] {
+    --bg: #4a1a1a;
+    --header-bg: linear-gradient(135deg, #3e1010, #5d1a1a);
+    --toolbar-bg: linear-gradient(135deg, #e65100, #ff6d00);
+    --palette-bg: linear-gradient(180deg, #3e1010, #4a1a1a);
+    --stats-bg: linear-gradient(180deg, #bf360c, #3e1010);
+    --canvas-bg: #6d3a3a;
+    --accent: #ff9100;
+    --accent-light: #3e1010;
+    --text: #ffe0b2;
+    --text-light: #ffccbc;
+    --btn-bg: #5d1a1a;
+}
+
+/* 11. Eiskristall — Eisblau, Weiß, Frost-Feeling */
+[data-theme="ice"] {
+    --bg: #e0f2f9;
+    --header-bg: linear-gradient(135deg, #4fc3f7, #29b6f6);
+    --toolbar-bg: linear-gradient(135deg, #b3e5fc, #81d4fa);
+    --palette-bg: linear-gradient(180deg, #0288d1, #0277bd);
+    --stats-bg: linear-gradient(180deg, #4fc3f7, #29b6f6);
+    --canvas-bg: #e1f5fe;
+    --accent: #00b0ff;
+    --accent-light: #e0f7fa;
+    --text: #01579b;
+    --text-light: #e1f5fe;
+    --btn-bg: #ffffff;
+}
+
 /* === RESET & BASE === */
 * {
     margin: 0;
