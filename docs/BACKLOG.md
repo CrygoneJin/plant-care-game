@@ -62,8 +62,9 @@
 | 90 | **Browser-LLM** — SmolLM2 lokal im Browser, Progressive Loading ELIZA→LLM (ex-PR #45, Qualitätstest nötig) | Scientist + Engineer | 🔲 Feynman muss testen |
 | 91 | **Lokales LLM auf Mac Mini** — Ollama/LM Studio als Test-Instanz. Feynman + Torvalds Spielwiese. Ogilvy + Chomsky vergleichen Qualität vs Haiku. | Engineer + Scientist | 🔲 Offen |
 | 92 | **Requesty Key rotieren** — Alter Key im Git-Verlauf. Neuen erstellen, alten revoken. | Engineer | 🔲 Human Input nötig |
-| 93 | **MMX Token-Ökonomie** — In-Game-Handel basiert auf mmx.network Tokens. Spielwährung = Metapher für echte MMX-Tokens. Kinder sehen Krabbenburger, Nerds sehen MMX. | P2 | Engineer + Scientist | 🔲 Design-Entscheidung nötig |
-| 94 | **Crypto Dust Donations** — Code View (`</>`) zeigt MMX-Wallet-Adresse für Micro-Donations. Easter Egg auf Nerd-Ebene. Kein Kind sieht es, kein Kind braucht es. | P2 | Engineer | 🔲 Human Input nötig (Wallet-Adresse) |
+| 93 | **MMX Token-Ökonomie** — In-Game-Handel basiert auf mmx.network Tokens. Spielwährung = Metapher für echte MMX-Tokens. Kinder sehen Krabbenburger, Nerds sehen MMX. | P2 | Engineer + Scientist | 🔄 In Arbeit (marketplace.js, Worker-Endpoints) |
+| 94 | **Crypto Dust Donations** — Code View (`</>`) zeigt MMX+XCH-Burn-Adressen. Hawking-Strahlung-Philosophie. | P2 | Engineer | ✅ Done (Burn-Panel + Balance-Polling) |
+| 95 | **Schwarzmarkt P2P** — Rare Items (LLM-Unikate) anonym tauschen via MMX/XCH. Mephisto Deals. DSGVO: nur pseudonyme Blockchain-Adressen. Kindertauglich: Seelenglut als In-Game-Alternative. | P1 | Engineer | 🔄 In Arbeit (marketplace.js + Worker D1) |
 | 88 | ~~Floriane die Wunschfee~~ | | ✅ Done (dd9569e1) |
 
 ---

@@ -1,7 +1,6 @@
 # Sprint 24 — "Oscar hört die Welt"
 
 **Sprint Goal:** Musik beim Bauen (Genre-Sequenzen) + technische Schulden (game.js aufteilen) + Tutorial ohne Text.
-
 **Start:** 2026-04-01
 
 ---
@@ -61,7 +60,6 @@
 | **#11 game.js → easter-eggs.js** | P1 | CODE_EASTER_EGGS (~90 LOC) + initGrid() (~60 LOC) raus. Sicher, kein State. game.js sinkt unter 4000. |
 | **#50 Höhle = Dungeon-Framework** | P1 | Berg+Wasser=Höhle. Erst ein Dungeon (IT: Bits→Kernel→Browser). Oscar entdeckt etwas Neues. |
 | **#71 Palette als Instrument** | P1 | Links spielen = rechts bauen. Oscar spielt Melodie UND baut. Höchster Spaß-Impact. |
-
 ---
 
 ## Standup Log
@@ -74,6 +72,24 @@
 
 **Blocker:** Keine.
 
+**Kontext:**
+- Sprint 23 "Oscar hört das Meer" (PR #106): Chat-Sidebar, Stille-Momente, QR-Code — offen, nicht gemergt
+- Retro S22-Empfehlung: #85 Genre-Töne, #15 Tutorial ohne Text, #11 game.js aufteilen
+- S24-1 bereits implementiert: `soundGenreNote()` in `soundBuild` eingehängt, Genre-Toast bei Wechsel
+
+---
+
+# Sprint 23 — "Oscar hört das Meer" (PR #106, offen)
+
+**Sprint Goal:** Chat als Sidebar, Stille-Momente wenn idle, QR-Code auf Postkarte.
+
+**Start:** 2026-03-31
+
+| # | Item | Status |
+|---|------|--------|
+| S23-1 | Chat-Sidebar (#28) | ✅ Done |
+| S23-2 | Stille-Momente (#57) | ✅ Done |
+| S23-3 | QR-Code auf Postkarte (#7) | ✅ Done |
 ---
 
 # Sprint 22 — "The devil is most devilish when respectable"

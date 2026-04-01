@@ -427,6 +427,9 @@
         } else if (quest) {
             showToast(`${npc.emoji} ${quest.desc}`, 5000);
             window.questSystem.accept(quest);
+        } else if (npcId === 'krabs') {
+            // Krabs: Kein Quest? Dann HANDEL! 🦀💰
+            showKrabsShop();
         } else {
             const voice = NPC_VOICES[npcId];
             if (voice) {
@@ -434,6 +437,96 @@
                 showToast(`${npc.emoji} ${voice.prefix} ${tick}`, 2000);
             }
         }
+    }
+
+    // === KRABS SHOP — Muschelhandel ===
+    function showKrabsShop() {
+        const shells = getInventoryCount('shell');
+        // Welche Materialien kann der Spieler verkaufen?
+        const sellable = Object.entries(KRABS_SHOP)
+            .filter(([mat]) => getInventoryCount(mat) > 0)
+            .map(([mat, price]) => {
+                const info = MATERIALS[mat];
+                return `${info.emoji} ${info.label}: ${price.sell} 🐚`;
+            }).slice(0, 4);
+
+        // Welche kann er kaufen?
+        const buyable = Object.entries(KRABS_SHOP)
+            .filter(([, price]) => shells >= price.buy)
+            .map(([mat, price]) => {
+                const info = MATERIALS[mat];
+                return `${info.emoji} ${info.label}: ${price.buy} 🐚`;
+            }).slice(0, 4);
+
+        // Dialog als Modal
+        let existing = document.getElementById('krabs-shop-modal');
+        if (existing) existing.remove();
+
+        const modal = document.createElement('div');
+        modal.id = 'krabs-shop-modal';
+        modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;display:flex;align-items:center;justify-content:center;';
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+
+        const shopItems = Object.entries(KRABS_SHOP);
+        const shopHTML = shopItems.map(([mat, price]) => {
+            const info = MATERIALS[mat];
+            if (!info) return '';
+            const have = getInventoryCount(mat);
+            return `<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0;border-bottom:1px solid #333;">
+                <span>${info.emoji} ${info.label} (${have}x)</span>
+                <span>
+                    <button class="krabs-buy" data-mat="${mat}" data-cost="${price.buy}"
+                        style="background:#2E7D32;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"
+                        ${shells < price.buy ? 'disabled style="opacity:0.4;background:#2E7D32;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"' : ''}>
+                        Kauf ${price.buy}🐚</button>
+                    <button class="krabs-sell" data-mat="${mat}" data-earn="${price.sell}"
+                        style="background:#C62828;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"
+                        ${have <= 0 ? 'disabled style="opacity:0.4;background:#C62828;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"' : ''}>
+                        Verkauf ${price.sell}🐚</button>
+                </span>
+            </div>`;
+        }).join('');
+
+        modal.innerHTML = `<div style="background:#1a1a2e;color:#eee;border-radius:12px;padding:20px;max-width:360px;width:90%;max-height:70vh;overflow-y:auto;font-family:monospace;">
+            <h3 style="margin:0 0 8px;text-align:center;">🦀 Krabben-Kontor 💰</h3>
+            <p style="text-align:center;margin:0 0 12px;font-size:1.1em;">Dein Vermögen: <strong>${shells} 🐚</strong></p>
+            <p style="text-align:center;margin:0 0 12px;font-size:0.8em;color:#aaa;">Darwin sagt: Handel ist Evolution! Muscheln findest du am Strand!</p>
+            ${shopHTML}
+            <p style="text-align:center;margin:12px 0 0;font-size:0.7em;color:#666;">Klick außerhalb zum Schließen</p>
+        </div>`;
+
+        document.body.appendChild(modal);
+
+        // Event-Handler für Kauf/Verkauf
+        modal.querySelectorAll('.krabs-buy').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const mat = btn.dataset.mat;
+                const cost = parseInt(btn.dataset.cost);
+                if (getInventoryCount('shell') >= cost) {
+                    removeFromInventory('shell', cost);
+                    addToInventory(mat, 1);
+                    unlockMaterial(mat);
+                    showToast(`🦀 DEAL! 1x ${MATERIALS[mat]?.emoji} ${MATERIALS[mat]?.label} für ${cost} 🐚!`, 2000);
+                    modal.remove();
+                    showKrabsShop(); // Refresh
+                }
+            });
+        });
+
+        modal.querySelectorAll('.krabs-sell').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const mat = btn.dataset.mat;
+                const earn = parseInt(btn.dataset.earn);
+                if (getInventoryCount(mat) > 0) {
+                    removeFromInventory(mat, 1);
+                    addToInventory('shell', earn);
+                    unlockMaterial('shell');
+                    showToast(`🦀 VERKAUFT! 1x ${MATERIALS[mat]?.emoji} für ${earn} 🐚! Ahahaha!`, 2000);
+                    modal.remove();
+                    showKrabsShop(); // Refresh
+                }
+            });
+        });
     }
 
     // --- NPC-Kommentare beim Bauen ---
@@ -563,7 +656,6 @@
     // --- Spontan-Hörspiele: Mini-Szenen bei besonderen Anlässen ---
     // "Mensch, Maschine, KI" — wie im ZKM Karlsruhe
     const HOERSPIELE = window.INSEL_STORIES || {}; // Daten in stories.js
-
     let playedHoerspiele = JSON.parse(localStorage.getItem('insel-hoerspiele') || '[]');
 
     // TTS: Emoji und Markup aus Text strippen für Sprachausgabe
@@ -578,21 +670,85 @@
 
     let hoerspielSpeaking = false;
 
-    // TTS Hörspiele — Web Speech API (Backlog #87)
+    // TTS Hörspiele — Cloud TTS via Worker /tts (OpenAI tts-1 über Requesty)
+    // Fallback: Web Speech API wenn Worker nicht erreichbar
     // Stoppt bei: Mute, Canvas-Klick, oder INSEL_SOUND.isMuted()
     let hoerspielAborted = false;
+    let hoerspielAudio = null;
 
     function stopHoerspiel() {
         if (!hoerspielSpeaking) return;
         hoerspielAborted = true;
+        if (hoerspielAudio) { hoerspielAudio.pause(); hoerspielAudio = null; }
         if (window.speechSynthesis) window.speechSynthesis.cancel();
         hoerspielSpeaking = false;
         INSEL_SOUND.setMasterVolume(1.0);
         showToast('🎭 Hörspiel gestoppt');
     }
 
+    // Stimme + Sprache aus Zeile extrahieren
+    function detectVoice(line) {
+        if (line.includes('Lanz:')) return { voice: 'lanz', lang: 'de' };
+        if (line.includes('Precht:')) return { voice: 'precht', lang: 'de' };
+        if (line.includes('Merz:')) return { voice: 'merz', lang: 'de' };
+        if (line.includes('Trump:')) return { voice: 'trump', lang: 'en' };
+        if (line.includes('Musk:')) return { voice: 'musk', lang: 'en' };
+        if (line.includes('Mephisto:')) return { voice: 'mephisto', lang: 'de' };
+        if (line.includes('Krömer:')) return { voice: 'echo', lang: 'de' };
+        if (line.includes('Büker:')) return { voice: 'alloy', lang: 'de' };
+        if (line.includes('Kückens:')) return { voice: 'nova', lang: 'de' };
+        if (line.includes('Tommy:')) return { voice: 'shimmer', lang: 'de' };
+        if (line.includes('Lesch:')) return { voice: 'nova', lang: 'de' };
+        if (line.includes('Feynman:')) return { voice: 'fable', lang: 'de' };
+        if (line.includes('Sartre:')) return { voice: 'fable', lang: 'fr' };
+        if (line.includes('Machiavelli:')) return { voice: 'onyx', lang: 'it' };
+        if (line.includes('SpongeBob:')) return { voice: 'default', lang: 'de' };
+        if (line.includes('Python:')) return { voice: 'default', lang: 'de' };
+        if (line.includes('JavaScript:')) return { voice: 'shimmer', lang: 'de' };
+        if (line.includes('TypeScript:')) return { voice: 'echo', lang: 'de' };
+        if (line.includes('Bernd:')) return { voice: 'echo', lang: 'de' };
+        if (line.includes('Elefant:')) return { voice: 'nova', lang: 'de' };
+        if (line.includes('Neinhorn:')) return { voice: 'shimmer', lang: 'de' };
+        return { voice: 'default', lang: 'de' };
+    }
+
+    // Cloud TTS: Text → MP3 via Worker
+    function speakCloudTTS(text, voiceInfo) {
+        const proxy = (window.INSEL_CONFIG && window.INSEL_CONFIG.proxy) || 'https://schatzinsel.hoffmeyer-zlotnik.workers.dev';
+        return fetch(proxy + '/tts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: text, voice: voiceInfo.voice, lang: voiceInfo.lang, speed: 1.0 }),
+        }).then(function (r) {
+            if (!r.ok) throw new Error('TTS ' + r.status);
+            return r.blob();
+        }).then(function (blob) {
+            return new Promise(function (resolve, reject) {
+                var url = URL.createObjectURL(blob);
+                var audio = new Audio(url);
+                hoerspielAudio = audio;
+                audio.onended = function () { URL.revokeObjectURL(url); hoerspielAudio = null; resolve(); };
+                audio.onerror = function () { URL.revokeObjectURL(url); hoerspielAudio = null; reject(); };
+                audio.play().catch(reject);
+            });
+        });
+    }
+
+    // Fallback: Web Speech API
+    function speakBrowserTTS(text, lang) {
+        return new Promise(function (resolve) {
+            if (!window.speechSynthesis) { resolve(); return; }
+            var utter = new SpeechSynthesisUtterance(text);
+            utter.lang = (lang === 'en') ? 'en-US' : (lang === 'fr') ? 'fr-FR' : (lang === 'it') ? 'it-IT' : 'de-DE';
+            utter.rate = 0.95;
+            utter.onend = function () { resolve(); };
+            utter.onerror = function () { resolve(); };
+            window.speechSynthesis.speak(utter);
+        });
+    }
+
     function speakLines(lines, onDone) {
-        if (!window.speechSynthesis || INSEL_SOUND.isMuted()) {
+        if (INSEL_SOUND.isMuted()) {
             if (onDone) onDone();
             return;
         }
@@ -612,15 +768,17 @@
             const text = stripForTTS(lines[index]);
             showToast(lines[index], 4000);
             if (index === 0) soundAchievement();
+            const voice = detectVoice(lines[index]);
             index++;
 
             if (!text || INSEL_SOUND.isMuted()) { setTimeout(speakNext, 500); return; }
 
-            const utter = new SpeechSynthesisUtterance(text);
-            utter.lang = 'de-DE';
-            utter.rate = 0.95;
-            utter.onend = () => setTimeout(speakNext, 600);
-            utter.onerror = () => setTimeout(speakNext, 600);
+            // Cloud TTS mit Fallback auf Browser
+            speakCloudTTS(text, voice).catch(function () {
+                return speakBrowserTTS(text, voice.lang);
+            }).then(function () {
+                setTimeout(speakNext, 400);
+            });
             window.speechSynthesis.speak(utter);
         }
         speakNext();
@@ -635,6 +793,14 @@
         else if (stats.total === 100 && !playedHoerspiele.includes('hundredBlocks')) key = 'hundredBlocks';
         else if (stats.percent === 50 && !playedHoerspiele.includes('halfIsland')) key = 'halfIsland';
         else if (stats.percent >= 100 && !playedHoerspiele.includes('fullIsland')) key = 'fullIsland';
+        // Podcast Staffel 1: verschiedene Meilensteine
+        var hasMephisto = window.INSEL_CHARACTERS && window.INSEL_CHARACTERS.mephisto;
+        if (!key && stats.total >= 25 && !playedHoerspiele.includes('podcast_lanz') && hasMephisto) key = 'podcast_lanz';
+        else if (!key && stats.total >= 40 && !playedHoerspiele.includes('podcast_s1e2_schroeder') && hasMephisto) key = 'podcast_s1e2_schroeder';
+        else if (!key && stats.total >= 60 && !playedHoerspiele.includes('podcast_s1e3_bueker') && hasMephisto) key = 'podcast_s1e3_bueker';
+        else if (!key && stats.total >= 80 && !playedHoerspiele.includes('podcast_s1e4_nachts') && hasMephisto) key = 'podcast_s1e4_nachts';
+        else if (!key && stats.total >= 90 && !playedHoerspiele.includes('podcast_s1e5_krapweis') && hasMephisto) key = 'podcast_s1e5_krapweis';
+        else if (!key && stats.percent >= 75 && !playedHoerspiele.includes('podcast_lesch') && hasMephisto) key = 'podcast_lesch';
 
         if (!key) return;
 
@@ -1450,6 +1616,23 @@
         small_tree: { material: 'wood', count: 2 },
         sapling:    { material: 'wood', count: 1 },
         palm:       { material: 'wood', count: 2 },
+    };
+
+    // === KRABS: Muschelhandel — Preisliste ===
+    // Muscheln sind die Insel-Währung. Krabs kauft und verkauft.
+    const KRABS_SHOP = {
+        // material: { buy: Muscheln die Krabs verlangt, sell: Muscheln die Krabs zahlt }
+        wood:     { buy: 2,  sell: 1 },
+        stone:    { buy: 3,  sell: 1 },
+        sand:     { buy: 1,  sell: 1 },
+        planks:   { buy: 4,  sell: 2 },
+        glass:    { buy: 5,  sell: 2 },
+        flower:   { buy: 3,  sell: 1 },
+        fish:     { buy: 4,  sell: 2 },
+        diamond:  { buy: 20, sell: 8 },
+        crystal:  { buy: 15, sell: 6 },
+        honey:    { buy: 8,  sell: 3 },
+        apple:    { buy: 6,  sell: 2 },
     };
     let isMouseDown = false;
     let hoverCell = null;
@@ -2316,6 +2499,12 @@
                 }
                 addToInventory(yield_.material, yield_.count);
                 unlockMaterial(yield_.material);
+                // Krabs: Sand/Wasser ernten → Chance auf Bonus-Muschel (Strandgut!)
+                if ((cell === 'sand' || cell === 'water') && Math.random() < 0.3) {
+                    addToInventory('shell', 1);
+                    unlockMaterial('shell');
+                    showToast('🐚 Eine Muschel! Mr. Krabs kauft die...', 2000);
+                }
                 EFFECTS.addPlaceAnimation(r, c);
                 soundChop();
                 const info = MATERIALS[yield_.material];
@@ -3544,6 +3733,74 @@
         });
     }
 
+    // === Schatzkarte — Eltern-Dashboard via Shared Secret ===
+    // Oscar erstellt einen Code, sagt ihn Papa, Papa sieht Stats.
+    // 4 Wörter, 256^4 = 4 Mrd. Kombinationen, 24h TTL.
+    let karteCode = localStorage.getItem('karteCode') || null;
+
+    function getWorkerUrl() {
+        return (window.INSEL_CONFIG && window.INSEL_CONFIG.proxy)
+            || 'https://schatzinsel.hoffmeyer-zlotnik.workers.dev';
+    }
+
+    async function createSchatzkarte() {
+        const stats = getGridStats();
+        const payload = {
+            blocks:    stats.total,
+            shells:    typeof getInventoryCount === 'function' ? getInventoryCount('shell') : 0,
+            quests:    stats.questsDone || 0,
+            minutes:   window._sessionMinutes || 0,
+            materials: stats.uniqueMats || 0,
+            player:    localStorage.getItem('playerName') || 'Anonym',
+        };
+
+        try {
+            const res = await fetch(getWorkerUrl() + '/karte', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+            const data = await res.json();
+            if (data.ok && data.code) {
+                karteCode = data.code;
+                localStorage.setItem('karteCode', karteCode);
+                navigator.clipboard.writeText(karteCode)
+                    .then(() => showToast(`🗺️ Schatzkarte: ${karteCode}\nKopiert! Sag den Code deinen Eltern!`, 6000))
+                    .catch(() => showToast(`🗺️ Schatzkarte: ${karteCode}`, 8000));
+            }
+        } catch (e) {
+            showToast('🗺️ Schatzkarte konnte nicht erstellt werden (offline?)', 3000);
+        }
+    }
+
+    async function updateSchatzkarte() {
+        if (!karteCode) return;
+        const stats = getGridStats();
+        const payload = {
+            blocks:    stats.total,
+            shells:    typeof getInventoryCount === 'function' ? getInventoryCount('shell') : 0,
+            quests:    stats.questsDone || 0,
+            minutes:   window._sessionMinutes || 0,
+            materials: stats.uniqueMats || 0,
+        };
+        try {
+            await fetch(getWorkerUrl() + '/karte/' + karteCode, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+        } catch { /* still — kein Toast bei Update-Fehler */ }
+    }
+
+    // Auto-Update alle 60s wenn Karte aktiv
+    setInterval(() => { if (karteCode) updateSchatzkarte(); }, 60000);
+
+    // Schatzkarte-Button (neben Share-Button)
+    const karteBtn = document.getElementById('karte-btn');
+    if (karteBtn) {
+        karteBtn.addEventListener('click', createSchatzkarte);
+    }
+
     // URL-Sharing: beim Start ?insel= Parameter prüfen und Grid laden
     const sharedGrid = new URLSearchParams(location.search).get('insel');
     if (sharedGrid) {
@@ -4025,11 +4282,14 @@
         ctx.textBaseline = 'top';
         ctx.fillText('</> CODE-VIEW: grid[r][c]', 10, 10);
 
-        // === MMX Burn Panel — Nerd Easter Egg ===
-        // "Proof of Work. Tokens rein, niemand raus. Pures Statement."
+        // === Crypto Donation Panel — Nerd Easter Egg ===
+        // MMX: "Proof of Work. Tokens rein, niemand raus."
+        // XCH: "Proof of Space. Dein Speicher, dein Statement."
         const mmxAddr = window.INSEL_MMX_BURN || 'mmx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq5tuzzn';
+        const xchAddr = window.INSEL_XCH_BURN || 'xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqdlkwut';
         const mmxBal = window._mmxBurnBalance || '?';
-        const panelH = 44;
+        const xchBal = window._xchBurnBalance || '?';
+        const panelH = 58;
         const panelW = Math.min(460, totalCols * CELL_SIZE - 10);
         const mmxY = totalRows * CELL_SIZE - panelH - 5;
 
@@ -4040,36 +4300,54 @@
         ctx.lineWidth = 1;
         ctx.strokeRect(5, mmxY, panelW, panelH);
 
-        // Zeile 1: Burn-Adresse
+        // Zeile 1: MMX
         ctx.fillStyle = '#FF6B00';
         ctx.font = 'bold 10px monospace';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'top';
-        ctx.fillText('🔥 BURN ' + mmxAddr.slice(0, 12) + '...' + mmxAddr.slice(-6), 10, mmxY + 5);
+        ctx.fillText('🔥 MMX  ' + mmxAddr.slice(0, 12) + '...' + mmxAddr.slice(-6) + '  ' + mmxBal + ' MMX', 10, mmxY + 5);
 
-        // Zeile 2: Balance + Link
-        ctx.fillStyle = '#888';
-        ctx.font = '9px monospace';
-        ctx.fillText('Balance: ' + mmxBal + ' MMX  |  mmx.network  |  Proof of Work. Tokens rein, niemand raus.', 10, mmxY + 22);
+        // Zeile 2: XCH (Chia — Bram Cohen)
+        ctx.fillStyle = '#3AAC59';
+        ctx.fillText('🌱 XCH  ' + xchAddr.slice(0, 12) + '...' + xchAddr.slice(-6) + '  ' + xchBal + ' XCH', 10, mmxY + 20);
+
+        // Zeile 3: Hawking-Philosophie
+        ctx.fillStyle = '#666';
+        ctx.font = '8px monospace';
+        ctx.fillText('Schwarze L\u00f6cher. Tokens rein, niemand raus.', 10, mmxY + 38);
+        ctx.fillText('Hawking-Strahlung: die Arbeit die rausstrahlt ist das Eigentliche.', 10, mmxY + 48);
     }
 
-    // MMX Burn-Balance alle 60s abfragen (öffentliche API, kein Auth nötig)
-    // Account-basiert, REST: /wapi/address?id=mmx1...
-    (function fetchMmxBalance() {
-        const addr = window.INSEL_MMX_BURN || 'mmx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq5tuzzn';
-        const apiUrl = 'https://api.mmxplorer.com/wapi/address?id=' + addr;
-        function poll() {
-            fetch(apiUrl).then(r => r.ok ? r.json() : null).then(data => {
+    // Crypto Balance-Polling alle 60s (öffentliche APIs, kein Auth nötig)
+    (function fetchCryptoBalances() {
+        // MMX: Account-basiert, REST: /wapi/address?id=mmx1...
+        const mmxAddr = window.INSEL_MMX_BURN || 'mmx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq5tuzzn';
+        const mmxApi = 'https://api.mmxplorer.com/wapi/address?id=' + mmxAddr;
+        function pollMmx() {
+            fetch(mmxApi).then(r => r.ok ? r.json() : null).then(data => {
                 if (data && data.balances) {
-                    const mmxBal = data.balances['MMX'] || data.balance || 0;
-                    window._mmxBurnBalance = (mmxBal / 10000).toFixed(4);
+                    const bal = data.balances['MMX'] || data.balance || 0;
+                    window._mmxBurnBalance = (bal / 10000).toFixed(4);
                 } else {
                     window._mmxBurnBalance = '0.0000';
                 }
             }).catch(() => { window._mmxBurnBalance = '—'; });
         }
-        poll();
-        setInterval(poll, 60000);
+        // XCH (Chia): spacescan.io public API
+        const xchAddr = window.INSEL_XCH_BURN || 'xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqdlkwut';
+        const xchApi = 'https://api2.spacescan.io/1/xch/balance/' + xchAddr;
+        function pollXch() {
+            fetch(xchApi).then(r => r.ok ? r.json() : null).then(data => {
+                if (data && data.xch_balance != null) {
+                    window._xchBurnBalance = parseFloat(data.xch_balance).toFixed(6);
+                } else {
+                    window._xchBurnBalance = '0.000000';
+                }
+            }).catch(() => { window._xchBurnBalance = '—'; });
+        }
+        pollMmx(); pollXch();
+        setInterval(pollMmx, 60000);
+        setInterval(pollXch, 60000);
     })();
 
     // Monkey-patch requestAnimationFrame callback to add overlay
@@ -4194,6 +4472,12 @@
         });
     });
 
+    // --- Marketplace Button ---
+    const marketBtn = document.getElementById('market-btn');
+    if (marketBtn) marketBtn.addEventListener('click', function () {
+        if (window.INSEL_MARKETPLACE) window.INSEL_MARKETPLACE.open();
+    });
+
     // --- Crafting Dialog Events ---
     const craftBtn = document.getElementById('craft-btn');
     if (craftBtn) craftBtn.addEventListener('click', openCraftingDialog);
@@ -4272,6 +4556,20 @@
 
     // Grid für Chat-Integration exportieren
     window.grid = grid;
+
+    // Genre-Toast bei Wechsel (Backlog #85)
+    const GENRE_LABELS = {
+        klassik: '🎻 Klassik', jazz: '🎷 Jazz', blues: '🎸 Blues',
+        rock: '🤘 Rock', elektro: '⚡ Elektro', reggae: '🌴 Reggae',
+        country: '🤠 Country', funk: '🕺 Funk', walzer: '💃 Walzer',
+        schlaflied: '🌙 Schlaflied', marsch: '🥁 Marsch', samba: '🌶️ Samba',
+        ambient: '🌊 Ambient', piraten: '🏴‍☠️ Piraten', zirkus: '🎪 Zirkus',
+    };
+    if (window.INSEL_SOUND && window.INSEL_SOUND.setOnGenreChange) {
+        window.INSEL_SOUND.setOnGenreChange((genre) => {
+            showToast(GENRE_LABELS[genre] || genre, 2000);
+        });
+    }
 
     // Nature-Modul starten (Baumwachstum + Welt-Konsequenzen)
     window.INSEL_NATURE.start(grid, ROWS, COLS, MATERIALS, {
