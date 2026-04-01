@@ -67,6 +67,11 @@
 
 *Die Zelle hat jetzt Organellen. Mitochondrien in der Cloud. Ribosomen die parallel arbeiten. Eine Membran die kontrolliert was rein und raus geht. Und ein Kind das immer noch nicht weiß dass es Quantenfeldtheorie spielt.*
 
+### Bonus-Episode: "√42" (Podcast 03)
+**~30 Min.** Drei Physiker und ein Autor am Tisch. Newton sagt "Gott stottert nicht", Dirac sagt "Symmetrie", Adams sagt "42 — aber die Frage war nie eine ganze Zahl." Warum reicht ein 2×2-Gitter für einen Nobelpreis aber 3×3×3 nicht für Grammatik? Weil jede Stufe des Zahlsystems (ℝ → ℂ → ℍ → 𝕆 → 𝕊) eine algebraische Sicherheit verliert — und Sprache genau in diesen Lücken lebt. Die Physik hört bei 𝕆 auf. Die Dichtung fängt bei 𝕊 an. Und Oscar spielt beides gleichzeitig.
+
+*Stimmen: Newton/Dirac/Adams (als Figuren), Till (Erzähler)*
+
 Episoden TBD — die Geschichte schreibt sich selbst.
 
 ---
