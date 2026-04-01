@@ -737,24 +737,9 @@ async function handleMarketBuy(request, env) {
 }
 
 async function createMarketTable(env) {
-    await env.METRICS_DB.exec(`
-        CREATE TABLE IF NOT EXISTS marketplace (
-            id TEXT PRIMARY KEY,
-            material_id TEXT NOT NULL,
-            name TEXT NOT NULL,
-            emoji TEXT DEFAULT '✨',
-            description TEXT DEFAULT '',
-            price_mmx REAL DEFAULT 0,
-            price_xch REAL DEFAULT 0,
-            price_glut INTEGER DEFAULT 0,
-            seller_addr TEXT DEFAULT 'anonym',
-            seller_mmx TEXT DEFAULT '',
-            seller_xch TEXT DEFAULT '',
-            buyer_addr TEXT DEFAULT '',
-            status TEXT DEFAULT 'active',
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-        )
-    `);
+    await env.METRICS_DB.prepare(
+        'CREATE TABLE IF NOT EXISTS marketplace (id TEXT PRIMARY KEY, material_id TEXT NOT NULL, name TEXT NOT NULL, emoji TEXT DEFAULT \'✨\', description TEXT DEFAULT \'\', price_mmx REAL DEFAULT 0, price_xch REAL DEFAULT 0, price_glut INTEGER DEFAULT 0, seller_addr TEXT DEFAULT \'anonym\', seller_mmx TEXT DEFAULT \'\', seller_xch TEXT DEFAULT \'\', buyer_addr TEXT DEFAULT \'\', status TEXT DEFAULT \'active\', created_at DATETIME DEFAULT CURRENT_TIMESTAMP)'
+    ).run();
 }
 
 // --- Helpers ---
