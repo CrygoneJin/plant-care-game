@@ -126,6 +126,8 @@ Definition of Done: siehe `docs/DONE.md` — drei Punkte, binär.
    Cherry-Pick ist Notfall, nicht Workflow.
 4. **Branch benennen nach Feature**, nicht nach Session oder Ticket-Batch.
 5. **Typecheck vor jedem Commit.** `tsc --noEmit` muss grün sein.
+6. **Memory nach jedem PR.** `docs/MEMORY.md` updaten — Fehler, Erfolg, oder
+   Learning. Eine Zeile reicht. Nicht am Session-Ende sammeln, sondern sofort.
    Pre-commit Hook und Claude Code PreToolUse Hook erzwingen das.
 
 ---
