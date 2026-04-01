@@ -11,6 +11,7 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 
 | Datum | Was | Warum | Lektion |
 |-------|-----|-------|---------|
+| 2026-04-01 | Robinson-Ökonomie: 3 PRs (#109 #110 #111) in einer Session | Kreative Frage (Sinn/Krabs/Trotzki) → 3 atomare Features auf bestehenden Patterns (nature.js, quest system, NPC dialog) | Bestehende Patterns erweitern > neue Systeme bauen. treeGrowth → seedGrowth war 5 Zeilen statt neuem Timer. |
 | 2026-03-31 | Charakter-Dropdown hatte kein change-Event — NPC-Wechsel funktionierte nicht | Dropdown existierte im HTML, aber kein JS-Listener registriert. Alle NPCs redeten wie SpongeBob. | Jedes UI-Element das Zustand ändert braucht einen Event-Listener. Ohne Listener ist es Dekoration. |
 | 2026-03-31 | Grid-Dimension-Mismatch: Save von Desktop crasht auf Mobile | Auto-Save überschreibt Grid blind — 32×18 Grid auf 18×28 Viewport = undefined rows = Crash. | Beim Restore Grid-Dimensionen prüfen und Inhalte transferieren statt blind überschreiben. |
 | 2026-03-31 | Tutorial-Pulse blinkte endlos für wiederkehrende Spieler | `startTutorialPulse()` wurde für alle aufgerufen, `stopTutorialPulse()` nur bei firstBlock-Milestone der aktuellen Session. | Pulse nur starten wenn noch kein Block platziert wurde. |
@@ -31,6 +32,7 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 
 | Datum | Was | Warum gut |
 |-------|-----|-----------|
+| 2026-04-01 | 3 Wirtschaftssysteme in 30 Min: Zeitinvestition, Muschelhandel, Gemeinschaftsquests | Drei orthogonale Mechaniken statt monolithischem Economy-System. Jedes Feature < 130 LOC. Alle auf existierenden Patterns gebaut (nature.js growth, HARVEST_YIELD, quest completion). Hans-Werner Sinn, Mr. Krabs und Trotzki als Designleitplanken — absurd aber funktional. |
 | 2026-03-31 | JSDoc + checkJs: Typsicherheit ohne Build-Schritt | TypeScript evaluiert → Overkill für 8K LOC Vanilla JS ohne Bundler. Stattdessen: `tsconfig.json` mit `checkJs`, `types.d.ts` (230 Zeilen), `npm run typecheck` = 0 Errors. Zero-Build-Architektur bleibt erhalten. game.js + chat.js mit @ts-nocheck — schrittweise bei Backlog #11 (Code-Splitting). |
 | 2026-03-31 | schatzinsel.app live — DNS + GitHub Pages funktioniert | P0 erledigt. Google Sheet Webhook obsolet (Airtable + D1 Worker reicht). |
 | 2026-03-31 | Mephisto NPC — "The devil is most devilish when respectable" | Neuer Unlock-NPC: charmanter Händler, Goethe-Referenz, 5 Quests, Deal-Mechanik. 10. Charakter im Spiel. |
