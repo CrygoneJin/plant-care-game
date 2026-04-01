@@ -2221,7 +2221,52 @@
         }
     }
 
+    // --- Haikus am Strand (#60) — 5-7-5 Schilder beim Strandspaziergang ---
+    const STRAND_HAIKUS = [
+        '🪧 Wellen tragen Licht\nSand erzählt von fernem Ort\nBau dir deine Welt',
+        '🪧 Holz und Stein vereint\nAuf der Insel wächst ein Traum\nBlock für Block entsteht',
+        '🪧 Muscheln im Sand\nDer Wind flüstert ein Geheimnis\nHör genau hin, Kind',
+        '🪧 Palmen wiegen sich\nSonne malt das Meer in Gold\nHier bist du zu Haus',
+        '🪧 Ein Krebs läuft vorbei\nEr kennt jeden Stein am Strand\nFolge seiner Spur',
+        '🪧 Türme aus dem Sand\nDie Flut kommt und geht und kommt\nBau sie wieder auf',
+        '🪧 Sterne über Meer\nJede Nacht erzählt die Welt\nEine neue Runde',
+        '🪧 Grab tief in den Sand\nVielleicht findest du den Schatz\nDer schon immer da war',
+        '🪧 Kleine Insel hier\nGroße Träume wachsen still\nWas baust du als nächstes?',
+        '🪧 Wasser rauscht so leis\nJeder Block den du hier setzt\nErzählt deine Story',
+    ];
+    let lastHaikuTime = 0;
+    let lastHaikuIndex = -1;
+
+    /** Prüft ob Spieler am Strandrand steht (sand-Zelle neben Wasser/leerem Rand) */
+    function isBeachEdge(r, c) {
+        if (!grid[r] || grid[r][c] !== 'sand') return false;
+        // Mindestens eine Nachbarzelle ist leer (= Wasser) oder am Rand
+        const dirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+        for (const [dr, dc] of dirs) {
+            const nr = r + dr, nc = c + dc;
+            if (nr < 2 || nr >= ROWS - 2 || nc < 2 || nc >= COLS - 2) return true; // Wasser-Rand
+            if (!grid[nr] || grid[nr][nc] === null) return true; // leere Zelle = Wasser
+        }
+        return false;
+    }
+
+    function maybeShowHaiku() {
+        const now = Date.now();
+        if (now - lastHaikuTime < 45000) return; // Cooldown: 45s
+        if (!isBeachEdge(playerPos.r, playerPos.c)) return;
+        // Zufälliges Haiku, nicht dasselbe wie zuletzt
+        let idx;
+        do { idx = Math.floor(Math.random() * STRAND_HAIKUS.length); }
+        while (idx === lastHaikuIndex && STRAND_HAIKUS.length > 1);
+        lastHaikuIndex = idx;
+        lastHaikuTime = now;
+        showToast(STRAND_HAIKUS[idx], 5000);
+    }
+
     function checkPlayerProximity() {
+        // Haiku am Strand? (#60)
+        maybeShowHaiku();
+
         // Sammelbare Items einsammeln (Spieler steht drauf)
         const collected = collectibles.filter(ci => ci.r === playerPos.r && ci.c === playerPos.c);
         if (collected.length > 0) {
