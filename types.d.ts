@@ -84,6 +84,7 @@ interface QuestTemplate {
     desc: string;
     needs: Record<MaterialId, number>;
     reward: string;
+    community?: boolean; // Trotzki: Gemeinschaftsquest — alle NPCs profitieren
 }
 
 interface ActiveQuest extends QuestTemplate {

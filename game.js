@@ -220,14 +220,28 @@
                     const currentBonus = window.getTokenBonus ? window.getTokenBonus(q.npc) : 0;
                     const cappedReward = Math.min(tokenReward, 2000 - currentBonus);
 
-                    if (cappedReward > 0) {
+                    if (q.community) {
+                        // Trotzki: Gemeinschaftsquest — ALLE NPCs profitieren!
+                        showToast(`🤝 Inselrat: ${q.title} geschafft! ALLE profitieren! ${q.reward}`, 4000);
+                        soundQuestComplete();
+                        if (window.addTokenBudget) {
+                            const allNpcs = Object.keys(NPC_DEFS);
+                            const perNpcReward = Math.max(1, Math.round(cappedReward / 2));
+                            allNpcs.forEach(npcId => {
+                                const bonus = window.getTokenBonus ? window.getTokenBonus(npcId) : 0;
+                                const capped = Math.min(perNpcReward, 2000 - bonus);
+                                if (capped > 0) window.addTokenBudget(npcId, capped);
+                            });
+                        }
+                    } else if (cappedReward > 0) {
                         showToast(`🎉 Quest geschafft: ${q.title} ${q.reward} +⚡ Energie!`);
+                        soundQuestComplete();
+                        if (window.addTokenBudget) {
+                            window.addTokenBudget(q.npc, cappedReward);
+                        }
                     } else {
                         showToast(`🎉 Quest geschafft: ${q.title} ${q.reward}`);
-                    }
-                    soundQuestComplete();
-                    if (window.addTokenBudget && cappedReward > 0) {
-                        window.addTokenBudget(q.npc, cappedReward);
+                        soundQuestComplete();
                     }
                     // Hirn-Transplantation: Neuen Charakter freischalten?
                     if (window.tryCharacterUnlock) {
@@ -260,7 +274,8 @@
                 const m = MATERIALS[mat];
                 return `<span class="${done ? 'quest-done' : 'quest-todo'}">${m ? m.emoji : mat} ${have}/${need}</span>`;
             }).join(' ');
-            return `<div class="quest-item"><strong>${q.title}</strong><br><small>${items}</small></div>`;
+            const communityTag = q.community ? ' 🤝<em>Inselrat</em>' : '';
+            return `<div class="quest-item"><strong>${q.title}${communityTag}</strong><br><small>${items}</small></div>`;
         }).join('');
     }
 
