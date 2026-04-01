@@ -391,6 +391,10 @@
         open: openTutorial,
         close: closeTutorial,
         isActive: function () { return tutorialActive; },
+        isDone: function () {
+            loadProgress();
+            return currentLesson >= LESSONS.length;
+        },
         getLessons: function () { return LESSONS; },
         getProgress: function () { return currentLesson; },
         resetProgress: function () {

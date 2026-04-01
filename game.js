@@ -3550,9 +3550,14 @@
     });
 
     // --- Postkarte von Java (Godin: "Ein Share-Moment fehlt") ---
+    // Tutorial-Gating (#39): Postkarte erst nach Tutorial freigeschaltet
     const postcardBtn = document.getElementById('postcard-btn');
     if (postcardBtn) {
         postcardBtn.addEventListener('click', () => {
+            if (window.INSEL_TUTORIAL && !window.INSEL_TUTORIAL.isDone()) {
+                showToast('🏝️ Erst die Insel erkunden! Schließe das Tutorial ab.', 3000);
+                return;
+            }
             const stats = getGridStats();
             const name = projectNameInput.value.trim() || 'Meine Insel';
 
