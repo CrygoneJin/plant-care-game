@@ -426,6 +426,9 @@
         } else if (quest) {
             showToast(`${npc.emoji} ${quest.desc}`, 5000);
             window.questSystem.accept(quest);
+        } else if (npcId === 'krabs') {
+            // Krabs: Kein Quest? Dann HANDEL! 🦀💰
+            showKrabsShop();
         } else {
             const voice = NPC_VOICES[npcId];
             if (voice) {
@@ -433,6 +436,96 @@
                 showToast(`${npc.emoji} ${voice.prefix} ${tick}`, 2000);
             }
         }
+    }
+
+    // === KRABS SHOP — Muschelhandel ===
+    function showKrabsShop() {
+        const shells = getInventoryCount('shell');
+        // Welche Materialien kann der Spieler verkaufen?
+        const sellable = Object.entries(KRABS_SHOP)
+            .filter(([mat]) => getInventoryCount(mat) > 0)
+            .map(([mat, price]) => {
+                const info = MATERIALS[mat];
+                return `${info.emoji} ${info.label}: ${price.sell} 🐚`;
+            }).slice(0, 4);
+
+        // Welche kann er kaufen?
+        const buyable = Object.entries(KRABS_SHOP)
+            .filter(([, price]) => shells >= price.buy)
+            .map(([mat, price]) => {
+                const info = MATERIALS[mat];
+                return `${info.emoji} ${info.label}: ${price.buy} 🐚`;
+            }).slice(0, 4);
+
+        // Dialog als Modal
+        let existing = document.getElementById('krabs-shop-modal');
+        if (existing) existing.remove();
+
+        const modal = document.createElement('div');
+        modal.id = 'krabs-shop-modal';
+        modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;display:flex;align-items:center;justify-content:center;';
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+
+        const shopItems = Object.entries(KRABS_SHOP);
+        const shopHTML = shopItems.map(([mat, price]) => {
+            const info = MATERIALS[mat];
+            if (!info) return '';
+            const have = getInventoryCount(mat);
+            return `<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0;border-bottom:1px solid #333;">
+                <span>${info.emoji} ${info.label} (${have}x)</span>
+                <span>
+                    <button class="krabs-buy" data-mat="${mat}" data-cost="${price.buy}"
+                        style="background:#2E7D32;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"
+                        ${shells < price.buy ? 'disabled style="opacity:0.4;background:#2E7D32;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"' : ''}>
+                        Kauf ${price.buy}🐚</button>
+                    <button class="krabs-sell" data-mat="${mat}" data-earn="${price.sell}"
+                        style="background:#C62828;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"
+                        ${have <= 0 ? 'disabled style="opacity:0.4;background:#C62828;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"' : ''}>
+                        Verkauf ${price.sell}🐚</button>
+                </span>
+            </div>`;
+        }).join('');
+
+        modal.innerHTML = `<div style="background:#1a1a2e;color:#eee;border-radius:12px;padding:20px;max-width:360px;width:90%;max-height:70vh;overflow-y:auto;font-family:monospace;">
+            <h3 style="margin:0 0 8px;text-align:center;">🦀 Krabben-Kontor 💰</h3>
+            <p style="text-align:center;margin:0 0 12px;font-size:1.1em;">Dein Vermögen: <strong>${shells} 🐚</strong></p>
+            <p style="text-align:center;margin:0 0 12px;font-size:0.8em;color:#aaa;">Darwin sagt: Handel ist Evolution! Muscheln findest du am Strand!</p>
+            ${shopHTML}
+            <p style="text-align:center;margin:12px 0 0;font-size:0.7em;color:#666;">Klick außerhalb zum Schließen</p>
+        </div>`;
+
+        document.body.appendChild(modal);
+
+        // Event-Handler für Kauf/Verkauf
+        modal.querySelectorAll('.krabs-buy').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const mat = btn.dataset.mat;
+                const cost = parseInt(btn.dataset.cost);
+                if (getInventoryCount('shell') >= cost) {
+                    removeFromInventory('shell', cost);
+                    addToInventory(mat, 1);
+                    unlockMaterial(mat);
+                    showToast(`🦀 DEAL! 1x ${MATERIALS[mat]?.emoji} ${MATERIALS[mat]?.label} für ${cost} 🐚!`, 2000);
+                    modal.remove();
+                    showKrabsShop(); // Refresh
+                }
+            });
+        });
+
+        modal.querySelectorAll('.krabs-sell').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const mat = btn.dataset.mat;
+                const earn = parseInt(btn.dataset.earn);
+                if (getInventoryCount(mat) > 0) {
+                    removeFromInventory(mat, 1);
+                    addToInventory('shell', earn);
+                    unlockMaterial('shell');
+                    showToast(`🦀 VERKAUFT! 1x ${MATERIALS[mat]?.emoji} für ${earn} 🐚! Ahahaha!`, 2000);
+                    modal.remove();
+                    showKrabsShop(); // Refresh
+                }
+            });
+        });
     }
 
     // --- NPC-Kommentare beim Bauen ---
@@ -637,6 +730,131 @@
             '🦈 Makro: *ganz leise aus dem Wasser* "...ich fand es auch schön."',
             '— Standing Ovation auf der Insel Java. Grüße ans ZKM Karlsruhe. —',
         ],
+        podcast_lanz: [
+            '— 🎙️ INSEL-TALK: "Wer baut die bessere Insel?" — Bei Lanz & Precht —',
+            '🎙️ Lanz: "Guten Abend. Heute bei mir: ein Kanzler, ein Ex-Präsident, ein Milliardär, und mein Freund Richard hat auch was zu sagen."',
+            '🎙️ Lanz: "Herr Merz, Sie haben eine Insel gebaut. Erzählen Sie."',
+            '🏛️ Merz: "Also, Markus—"',
+            '🎙️ Lanz: "Richard."',
+            '🏛️ Merz: "—Richard, ja. Also. Ich habe eine sehr ordentliche Insel gebaut. Steine. Gerade Wege. Ein Zaun. Man muss ja wissen wo die Grenze ist."',
+            '📚 Precht: "Aber Friedrich, ist die Grenze nicht genau das Problem? Heidegger würde sagen: der Zaun definiert nicht was drinnen ist, sondern was draußen bleibt."',
+            '🏛️ Merz: "Richard, ich habe einen Zaun gebaut, keinen Heidegger."',
+            '🇺🇸 Trump: "Can I say something? I built the best island. Everyone says so. Tremendous. Gold sand, gold trees, gold water—"',
+            '🎙️ Lanz: "Gold... Wasser?"',
+            '🇺🇸 Trump: "—the most beautiful golden water. And I built a wall. A beautiful wall. And the NPCs? They paid for it."',
+            '🚀 Musk: "Actually, islands are inefficient. I\'m building a platform. On Mars. Sand is a legacy material."',
+            '📚 Precht: "Herr Musk, Sie wollen den Sandkasten überspringen und direkt auf den Mars. Aber ist der Sandkasten nicht der Ort wo Kinder verhandeln lernen?"',
+            '🚀 Musk: "Sharing is a scaling problem. I\'ll open-source the island."',
+            '🏛️ Merz: "Also ich muss hier mal ganz klar sagen—"',
+            '🎙️ Lanz: "Moment. Herr Trump, Mephisto sagt er hat keinen Cent für die Mauer gesehen."',
+            '🇺🇸 Trump: "Mephisto is a fantastic guy. We had the best deal. I can\'t tell you what he gave me, but it was big. Very big."',
+            '🚀 Musk: "I offered Mephisto a mass-produced Seelen-Laterne at 60% lower cost. He blocked me on the Schwarzmarkt."',
+            '📚 Precht: "Genau hier das Paradox. Der Schwarzmarkt ist ehrlicher als der offizielle. Weil er zugibt dass alles seinen Preis hat. Im Grunde Faust."',
+            '😈 Mephisto: *aus dem Publikum* "Hehehehe... Endlich jemand der es versteht."',
+            '🎙️ Lanz: "Wir haben noch zwei Überraschungsgäste zugeschaltet."',
+            '🇫🇷 Sartre: "L\'île n\'existe pas en soi. Elle existe pour soi. Chaque bloc est un choix — et chaque choix est une condamnation à la liberté."',
+            '📚 Precht: "Herr Sartre sagt: die Insel existiert nicht an sich. Jeder Block ist eine Entscheidung. Und jede Entscheidung verurteilt uns zur Freiheit."',
+            '🇮🇹 Machiavelli: "La questione non è chi costruisce l\'isola più bella. La questione è: chi la controlla? Il principe saggio costruisce mura — non per proteggere, ma per definire chi è dentro e chi è fuori."',
+            '🏛️ Merz: "DAS ist es was ich die ganze Zeit sage!"',
+            '🇮🇹 Machiavelli: "Silenzio. Ich war noch nicht fertig. Il vero potere non sta nelle mura. Sta nel mercato. Chi controlla il Schwarzmarkt, controlla l\'isola."',
+            '😈 Mephisto: *steht auf* "Hehehehe... Niccolò, mein alter Freund. Wir sollten reden."',
+            '🇫🇷 Sartre: "L\'enfer, c\'est les autres. Mais le Schwarzmarkt... c\'est la liberté."',
+            '🎙️ Lanz: "Wir sind DEFINITIV am Ende unserer Zeit."',
+            '🏛️ Merz: "Ich war IMMER NOCH nicht—"',
+            '🎙️ Lanz: "Nächste Woche: Mephisto und Machiavelli. Live vom Schwarzmarkt."',
+            '— Applaus. Trump tweetet. Musk kauft den Applaus. Sartre raucht. Machiavelli lächelt. —',
+        ],
+        // Staffel 1: "Nachts auf der Insel" — 5 Folgen, verschiedene Formate
+        podcast_s1e2_schroeder: [
+            '— 🎙️ KURT KRÖMER SHOW: "Chez Krömer — Spezial von der Insel" —',
+            '🎙️ Krömer: "Setzen Sie sich. Trinken Sie was. Oder nicht. Mir egal. Also Tommy."',
+            '🐢 Tommy: "Klick-klack! Der lockige Mann sagt—"',
+            '🎙️ Krömer: "Welcher lockige Mann?"',
+            '🐢 Tommy: "—klick-klack! Der lockige Mann sagt: Inseln baut man nicht alleine!"',
+            '🎙️ Krömer: "Tommy. Sie leben auf einer Insel die aus JavaScript besteht. Stört Sie das nicht?"',
+            '🐢 Tommy: "Klick-klack! Nein! Stört es DICH? Weil— klick-klack! — du sitzt hier auch!"',
+            '🎙️ Krömer: "Touché. Was macht der Schwarzmarkt?"',
+            '🐢 Tommy: "Mephisto hat neue Ware! Schatten-Kristalle! Die leuchten im Dunkeln!"',
+            '🎙️ Krömer: "Natürlich leuchten sie im Dunkeln. Schwarzmarkt. Dunkel. Ich kapier das System."',
+            '— Stille. Krömer trinkt. Tommy klickt-klackt. —',
+        ],
+        podcast_s1e3_bueker: [
+            '— 🎙️ BÜKER & KÜCKENS: "Frühstart von der Insel" —',
+            '🎙️ Büker: "Guten Morgen. Es ist 5 Uhr 30 und ich stehe auf einer Insel die aus Code besteht."',
+            '🎙️ Kückens: "Die Frage ist: Wer hat das genehmigt?"',
+            '😈 Mephisto: "Ah, die Herren Journalisten! Willkommen im Frühstart. Hehehehe..."',
+            '🎙️ Büker: "Herr Mephisto, Sie betreiben einen unregulierten Marktplatz für digitale Güter. Das Kartellamt—"',
+            '😈 Mephisto: "—hat auf einer JavaScript-Insel keine Jurisdiktion, mein Freund."',
+            '🎙️ Kückens: "Er hat einen Punkt."',
+            '🇺🇸 Trump: *schaltet sich zu* "I heard there\'s a market. Is it the best market? Can I buy it?"',
+            '😈 Mephisto: "Kaufen? Hehehehe. Man kauft den Schwarzmarkt nicht. Man... verdient ihn."',
+            '🎙️ Büker: "Und damit zurück nach Berlin. Wo die Märkte reguliert sind. Theoretisch."',
+            '— Jingle. Kückens trinkt Kaffee. Mephisto bleibt. —',
+        ],
+        podcast_s1e4_nachts: [
+            '— 🌙 NACHTS AUF DER INSEL: "Papa muss pinkeln" —',
+            '— 3:17 Uhr. Ein Vater steht auf. Sein Handy leuchtet. Die Insel ist noch offen. —',
+            '🍞 Bernd: "*seufz* Du schon wieder. Um DIESE Uhrzeit?"',
+            '😈 Mephisto: "Ah, ein Besucher bei Nacht! Die besten Deals macht man nachts, mein Freund."',
+            '🍞 Bernd: "Er muss nur pinkeln, Mephisto."',
+            '😈 Mephisto: "Trotzdem. Schau mal auf den Schwarzmarkt. Mitternachts-Rosen. Blühen NUR jetzt."',
+            '🐢 Tommy: "Klick-klack! Der lockige Mann sagt — klick-klack! — nachts sind alle Blöcke grau!"',
+            '🇺🇸 Trump: *Notification* "3 AM. The best time to tweet. I\'m building a TREMENDOUS island. Goodnight."',
+            '🍞 Bernd: "*seufz* Geh wieder ins Bett. Die Insel läuft nicht weg."',
+            '😈 Mephisto: "Oder doch? Hehehehe..."',
+            '— Der Vater kratzt sich den Kopf. Legt das Handy weg. Schläft wieder ein. Die Insel wartet. —',
+        ],
+        podcast_s1e5_krapweis: [
+            '— 🎙️ TOMMY & FRIENDS: "Die Bernd-Show — Nachts um Drei" —',
+            '🍞 Bernd: "*seufz* Willkommen bei der Bernd-Show. Ich hab nicht darum gebeten."',
+            '🐢 Tommy: "Klick-klack! Bernd! BERND! Wir haben Gäste!"',
+            '🍞 Bernd: "Wir haben immer Gäste. Niemand fragt mich ob ich Gäste WILL."',
+            '😈 Mephisto: *tritt auf* "Guten Abend, Bernd. Ich habe einen Deal für dich."',
+            '🍞 Bernd: "Nein."',
+            '😈 Mephisto: "Du hast noch gar nicht gehört—"',
+            '🍞 Bernd: "NEIN."',
+            '😈 Mephisto: "Ein Hawking-Stern. Strahlt Wärme. Du siehst aus als könntest du Wärme gebrauchen."',
+            '🍞 Bernd: "...was kostet er."',
+            '😈 Mephisto: "Nur ein Lächeln."',
+            '🍞 Bernd: "Ich bin ein BROT. Ich KANN nicht lächeln."',
+            '😈 Mephisto: "Dann lächle INNEN. Das zählt auch. Hehehehe..."',
+            '🐢 Tommy: "Klick-klack! DAS WAR SCHÖN! Klick-klack!"',
+            '🍞 Bernd: "*seufz* ...es war ok."',
+            '— Abspann. Jemand hat Bernd eine Decke gebracht. Er beschwert sich. Leise. —',
+        ],
+        podcast_lesch: [
+            '— 🎙️ INSEL-PODCAST BONUS: "Schwarze Löcher, Kinderlachen und der zweite Hauptsatz" —',
+            '🔬 Feynman: "Harald. Schön dass du da bist. Kaffee?"',
+            '🌌 Lesch: "Richard! Also ich muss dir was sagen. Ich hab mir das angeschaut. Diese Insel. Diesen Schwarzmarkt. Diese Burn-Adressen."',
+            '🌌 Lesch: "Und ich muss sagen—"',
+            '🌌 Lesch: "—das ist PHYSIK!"',
+            '🔬 Feynman: "Ich wusste du würdest das sagen."',
+            '🌌 Lesch: "Die meisten Leute denken Physik ist Formeln. Aber Physik ist: Wie verhält sich ein System? Und DIESES System — ist ein thermodynamisches System!"',
+            '🌌 Lesch: "Stell dir vor du hast ein Glas Wasser. Zimmertemperatur. Langweilig. NICHTS passiert. Maximale Entropie. Tot."',
+            '🌌 Lesch: "Und JETZT schüttest du einen Eiswürfel rein!"',
+            '🔬 Feynman: "Ein Temperaturgefälle."',
+            '🌌 Lesch: "GENAU! Und was passiert? Es FLIESST! Wärme fließt! Und DABEI entsteht STRUKTUR! Konvektionsströme! Wirbel! Muster! Für einen wunderbaren Moment ist das System LEBENDIG!"',
+            '🌌 Lesch: "Und die Burn-Adresse? Die ist der EISWÜRFEL!"',
+            '🌌 Lesch: "Die Blockchain ist lauwarmes Wasser. Tokens hin und her. Langweilig. Und dann kommt dieses Schwarze Loch und SCHLUCKT Tokens. Unwiederbringlich."',
+            '🌌 Lesch: "Und plötzlich gibt es ein GEFÄLLE! Tokens fließen IN EINE RICHTUNG! Und an diesem Gefälle entsteht ARBEIT!"',
+            '🔬 Feynman: "Dissipative Strukturen. Prigogine."',
+            '🌌 Lesch: "PRIGOGINE! Nobelpreis 1977! Systeme WEIT WEG vom Gleichgewicht erzeugen Ordnung! Nicht trotz der Entropie — WEGEN der Entropie!"',
+            '🌌 Lesch: "Und die Hawking-Strahlung? Stephen hat 1974 gezeigt dass Schwarze Löcher strahlen. Ganz leise. Information geht nicht verloren. Sie wird... transformiert."',
+            '🌌 Lesch: "Tokens verschwinden im Burn-Wallet. Für die Blockchain sind sie WEG. Aber die ARBEIT — der Code, die Quests, die Stimmen — DAS ist die Strahlung."',
+            '🔬 Feynman: "Von Tokens zu Spielfreude."',
+            '🌌 Lesch: "Der ZWEITE HAUPTSATZ! In Aktion! Auf einer Spieleinsel!"',
+            '🌌 Lesch: "Der zweite Hauptsatz sagt: In einem geschlossenen System nimmt die Entropie zu. ABER — wir leben in einem OFFENEN System!"',
+            '🌌 Lesch: "Die Burn-Adresse ist die SONNE dieses Ökosystems! Tokens fließen rein — Arbeit strahlt raus — Kinder spielen — Eltern spenden — Positive Rückkopplung! Wie bei einem STERN!"',
+            '🔬 Feynman: "Der Hawking-Stern im Schwarzmarkt. Was sagst du dazu?"',
+            '🌌 Lesch: "Ein Schwarzes Loch im Taschenformat hätte eine Masse von zehn hoch zwölf Kilogramm. Hundert Milliarden Grad. Es würde in einer Nanosekunde explodieren. Energie von hundert Hiroshima-Bomben."',
+            '🌌 Lesch: "Also: Nicht in der Hosentasche tragen."',
+            '🔬 Feynman: "Mephisto hat das sicher im Kleingedruckten."',
+            '🌌 Lesch: "Hehehehe."',
+            '🔬 Feynman: "Harald. Du klingst wie er."',
+            '🌌 Lesch: "Oh Gott. Du hast recht. Ich muss gehen. Bevor der Deal abgeschlossen ist."',
+            '🌌 Lesch: "Sag dem Vater: Schlaf. Die Physik läuft nicht weg. Und Mephisto auch nicht."',
+            '— KLONK. Drei Oszillator-Layer. Man fühlt es im Bauch. —',
+        ],
     };
 
     let playedHoerspiele = JSON.parse(localStorage.getItem('insel-hoerspiele') || '[]');
@@ -653,21 +871,85 @@
 
     let hoerspielSpeaking = false;
 
-    // TTS Hörspiele — Web Speech API (Backlog #87)
+    // TTS Hörspiele — Cloud TTS via Worker /tts (OpenAI tts-1 über Requesty)
+    // Fallback: Web Speech API wenn Worker nicht erreichbar
     // Stoppt bei: Mute, Canvas-Klick, oder INSEL_SOUND.isMuted()
     let hoerspielAborted = false;
+    let hoerspielAudio = null;
 
     function stopHoerspiel() {
         if (!hoerspielSpeaking) return;
         hoerspielAborted = true;
+        if (hoerspielAudio) { hoerspielAudio.pause(); hoerspielAudio = null; }
         if (window.speechSynthesis) window.speechSynthesis.cancel();
         hoerspielSpeaking = false;
         INSEL_SOUND.setMasterVolume(1.0);
         showToast('🎭 Hörspiel gestoppt');
     }
 
+    // Stimme + Sprache aus Zeile extrahieren
+    function detectVoice(line) {
+        if (line.includes('Lanz:')) return { voice: 'lanz', lang: 'de' };
+        if (line.includes('Precht:')) return { voice: 'precht', lang: 'de' };
+        if (line.includes('Merz:')) return { voice: 'merz', lang: 'de' };
+        if (line.includes('Trump:')) return { voice: 'trump', lang: 'en' };
+        if (line.includes('Musk:')) return { voice: 'musk', lang: 'en' };
+        if (line.includes('Mephisto:')) return { voice: 'mephisto', lang: 'de' };
+        if (line.includes('Krömer:')) return { voice: 'echo', lang: 'de' };
+        if (line.includes('Büker:')) return { voice: 'alloy', lang: 'de' };
+        if (line.includes('Kückens:')) return { voice: 'nova', lang: 'de' };
+        if (line.includes('Tommy:')) return { voice: 'shimmer', lang: 'de' };
+        if (line.includes('Lesch:')) return { voice: 'nova', lang: 'de' };
+        if (line.includes('Feynman:')) return { voice: 'fable', lang: 'de' };
+        if (line.includes('Sartre:')) return { voice: 'fable', lang: 'fr' };
+        if (line.includes('Machiavelli:')) return { voice: 'onyx', lang: 'it' };
+        if (line.includes('SpongeBob:')) return { voice: 'default', lang: 'de' };
+        if (line.includes('Python:')) return { voice: 'default', lang: 'de' };
+        if (line.includes('JavaScript:')) return { voice: 'shimmer', lang: 'de' };
+        if (line.includes('TypeScript:')) return { voice: 'echo', lang: 'de' };
+        if (line.includes('Bernd:')) return { voice: 'echo', lang: 'de' };
+        if (line.includes('Elefant:')) return { voice: 'nova', lang: 'de' };
+        if (line.includes('Neinhorn:')) return { voice: 'shimmer', lang: 'de' };
+        return { voice: 'default', lang: 'de' };
+    }
+
+    // Cloud TTS: Text → MP3 via Worker
+    function speakCloudTTS(text, voiceInfo) {
+        const proxy = (window.INSEL_CONFIG && window.INSEL_CONFIG.proxy) || 'https://schatzinsel.hoffmeyer-zlotnik.workers.dev';
+        return fetch(proxy + '/tts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: text, voice: voiceInfo.voice, lang: voiceInfo.lang, speed: 1.0 }),
+        }).then(function (r) {
+            if (!r.ok) throw new Error('TTS ' + r.status);
+            return r.blob();
+        }).then(function (blob) {
+            return new Promise(function (resolve, reject) {
+                var url = URL.createObjectURL(blob);
+                var audio = new Audio(url);
+                hoerspielAudio = audio;
+                audio.onended = function () { URL.revokeObjectURL(url); hoerspielAudio = null; resolve(); };
+                audio.onerror = function () { URL.revokeObjectURL(url); hoerspielAudio = null; reject(); };
+                audio.play().catch(reject);
+            });
+        });
+    }
+
+    // Fallback: Web Speech API
+    function speakBrowserTTS(text, lang) {
+        return new Promise(function (resolve) {
+            if (!window.speechSynthesis) { resolve(); return; }
+            var utter = new SpeechSynthesisUtterance(text);
+            utter.lang = (lang === 'en') ? 'en-US' : (lang === 'fr') ? 'fr-FR' : (lang === 'it') ? 'it-IT' : 'de-DE';
+            utter.rate = 0.95;
+            utter.onend = function () { resolve(); };
+            utter.onerror = function () { resolve(); };
+            window.speechSynthesis.speak(utter);
+        });
+    }
+
     function speakLines(lines, onDone) {
-        if (!window.speechSynthesis || INSEL_SOUND.isMuted()) {
+        if (INSEL_SOUND.isMuted()) {
             if (onDone) onDone();
             return;
         }
@@ -687,15 +969,17 @@
             const text = stripForTTS(lines[index]);
             showToast(lines[index], 4000);
             if (index === 0) soundAchievement();
+            const voice = detectVoice(lines[index]);
             index++;
 
             if (!text || INSEL_SOUND.isMuted()) { setTimeout(speakNext, 500); return; }
 
-            const utter = new SpeechSynthesisUtterance(text);
-            utter.lang = 'de-DE';
-            utter.rate = 0.95;
-            utter.onend = () => setTimeout(speakNext, 600);
-            utter.onerror = () => setTimeout(speakNext, 600);
+            // Cloud TTS mit Fallback auf Browser
+            speakCloudTTS(text, voice).catch(function () {
+                return speakBrowserTTS(text, voice.lang);
+            }).then(function () {
+                setTimeout(speakNext, 400);
+            });
             window.speechSynthesis.speak(utter);
         }
         speakNext();
@@ -710,6 +994,14 @@
         else if (stats.total === 100 && !playedHoerspiele.includes('hundredBlocks')) key = 'hundredBlocks';
         else if (stats.percent === 50 && !playedHoerspiele.includes('halfIsland')) key = 'halfIsland';
         else if (stats.percent >= 100 && !playedHoerspiele.includes('fullIsland')) key = 'fullIsland';
+        // Podcast Staffel 1: verschiedene Meilensteine
+        var hasMephisto = window.INSEL_CHARACTERS && window.INSEL_CHARACTERS.mephisto;
+        if (!key && stats.total >= 25 && !playedHoerspiele.includes('podcast_lanz') && hasMephisto) key = 'podcast_lanz';
+        else if (!key && stats.total >= 40 && !playedHoerspiele.includes('podcast_s1e2_schroeder') && hasMephisto) key = 'podcast_s1e2_schroeder';
+        else if (!key && stats.total >= 60 && !playedHoerspiele.includes('podcast_s1e3_bueker') && hasMephisto) key = 'podcast_s1e3_bueker';
+        else if (!key && stats.total >= 80 && !playedHoerspiele.includes('podcast_s1e4_nachts') && hasMephisto) key = 'podcast_s1e4_nachts';
+        else if (!key && stats.total >= 90 && !playedHoerspiele.includes('podcast_s1e5_krapweis') && hasMephisto) key = 'podcast_s1e5_krapweis';
+        else if (!key && stats.percent >= 75 && !playedHoerspiele.includes('podcast_lesch') && hasMephisto) key = 'podcast_lesch';
 
         if (!key) return;
 
@@ -1520,6 +1812,23 @@
         small_tree: { material: 'wood', count: 2 },
         sapling:    { material: 'wood', count: 1 },
         palm:       { material: 'wood', count: 2 },
+    };
+
+    // === KRABS: Muschelhandel — Preisliste ===
+    // Muscheln sind die Insel-Währung. Krabs kauft und verkauft.
+    const KRABS_SHOP = {
+        // material: { buy: Muscheln die Krabs verlangt, sell: Muscheln die Krabs zahlt }
+        wood:     { buy: 2,  sell: 1 },
+        stone:    { buy: 3,  sell: 1 },
+        sand:     { buy: 1,  sell: 1 },
+        planks:   { buy: 4,  sell: 2 },
+        glass:    { buy: 5,  sell: 2 },
+        flower:   { buy: 3,  sell: 1 },
+        fish:     { buy: 4,  sell: 2 },
+        diamond:  { buy: 20, sell: 8 },
+        crystal:  { buy: 15, sell: 6 },
+        honey:    { buy: 8,  sell: 3 },
+        apple:    { buy: 6,  sell: 2 },
     };
     let isMouseDown = false;
     let hoverCell = null;
@@ -2386,6 +2695,12 @@
                 }
                 addToInventory(yield_.material, yield_.count);
                 unlockMaterial(yield_.material);
+                // Krabs: Sand/Wasser ernten → Chance auf Bonus-Muschel (Strandgut!)
+                if ((cell === 'sand' || cell === 'water') && Math.random() < 0.3) {
+                    addToInventory('shell', 1);
+                    unlockMaterial('shell');
+                    showToast('🐚 Eine Muschel! Mr. Krabs kauft die...', 2000);
+                }
                 EFFECTS.addPlaceAnimation(r, c);
                 soundChop();
                 const info = MATERIALS[yield_.material];
@@ -3558,6 +3873,74 @@
         });
     }
 
+    // === Schatzkarte — Eltern-Dashboard via Shared Secret ===
+    // Oscar erstellt einen Code, sagt ihn Papa, Papa sieht Stats.
+    // 4 Wörter, 256^4 = 4 Mrd. Kombinationen, 24h TTL.
+    let karteCode = localStorage.getItem('karteCode') || null;
+
+    function getWorkerUrl() {
+        return (window.INSEL_CONFIG && window.INSEL_CONFIG.proxy)
+            || 'https://schatzinsel.hoffmeyer-zlotnik.workers.dev';
+    }
+
+    async function createSchatzkarte() {
+        const stats = getGridStats();
+        const payload = {
+            blocks:    stats.total,
+            shells:    typeof getInventoryCount === 'function' ? getInventoryCount('shell') : 0,
+            quests:    stats.questsDone || 0,
+            minutes:   window._sessionMinutes || 0,
+            materials: stats.uniqueMats || 0,
+            player:    localStorage.getItem('playerName') || 'Anonym',
+        };
+
+        try {
+            const res = await fetch(getWorkerUrl() + '/karte', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+            const data = await res.json();
+            if (data.ok && data.code) {
+                karteCode = data.code;
+                localStorage.setItem('karteCode', karteCode);
+                navigator.clipboard.writeText(karteCode)
+                    .then(() => showToast(`🗺️ Schatzkarte: ${karteCode}\nKopiert! Sag den Code deinen Eltern!`, 6000))
+                    .catch(() => showToast(`🗺️ Schatzkarte: ${karteCode}`, 8000));
+            }
+        } catch (e) {
+            showToast('🗺️ Schatzkarte konnte nicht erstellt werden (offline?)', 3000);
+        }
+    }
+
+    async function updateSchatzkarte() {
+        if (!karteCode) return;
+        const stats = getGridStats();
+        const payload = {
+            blocks:    stats.total,
+            shells:    typeof getInventoryCount === 'function' ? getInventoryCount('shell') : 0,
+            quests:    stats.questsDone || 0,
+            minutes:   window._sessionMinutes || 0,
+            materials: stats.uniqueMats || 0,
+        };
+        try {
+            await fetch(getWorkerUrl() + '/karte/' + karteCode, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+        } catch { /* still — kein Toast bei Update-Fehler */ }
+    }
+
+    // Auto-Update alle 60s wenn Karte aktiv
+    setInterval(() => { if (karteCode) updateSchatzkarte(); }, 60000);
+
+    // Schatzkarte-Button (neben Share-Button)
+    const karteBtn = document.getElementById('karte-btn');
+    if (karteBtn) {
+        karteBtn.addEventListener('click', createSchatzkarte);
+    }
+
     // URL-Sharing: beim Start ?insel= Parameter prüfen und Grid laden
     const sharedGrid = new URLSearchParams(location.search).get('insel');
     if (sharedGrid) {
@@ -3999,11 +4382,14 @@
         ctx.textBaseline = 'top';
         ctx.fillText('</> CODE-VIEW: grid[r][c]', 10, 10);
 
-        // === MMX Burn Panel — Nerd Easter Egg ===
-        // "Proof of Work. Tokens rein, niemand raus. Pures Statement."
+        // === Crypto Donation Panel — Nerd Easter Egg ===
+        // MMX: "Proof of Work. Tokens rein, niemand raus."
+        // XCH: "Proof of Space. Dein Speicher, dein Statement."
         const mmxAddr = window.INSEL_MMX_BURN || 'mmx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq5tuzzn';
+        const xchAddr = window.INSEL_XCH_BURN || 'xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqdlkwut';
         const mmxBal = window._mmxBurnBalance || '?';
-        const panelH = 44;
+        const xchBal = window._xchBurnBalance || '?';
+        const panelH = 58;
         const panelW = Math.min(460, totalCols * CELL_SIZE - 10);
         const mmxY = totalRows * CELL_SIZE - panelH - 5;
 
@@ -4014,36 +4400,54 @@
         ctx.lineWidth = 1;
         ctx.strokeRect(5, mmxY, panelW, panelH);
 
-        // Zeile 1: Burn-Adresse
+        // Zeile 1: MMX
         ctx.fillStyle = '#FF6B00';
         ctx.font = 'bold 10px monospace';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'top';
-        ctx.fillText('🔥 BURN ' + mmxAddr.slice(0, 12) + '...' + mmxAddr.slice(-6), 10, mmxY + 5);
+        ctx.fillText('🔥 MMX  ' + mmxAddr.slice(0, 12) + '...' + mmxAddr.slice(-6) + '  ' + mmxBal + ' MMX', 10, mmxY + 5);
 
-        // Zeile 2: Balance + Link
-        ctx.fillStyle = '#888';
-        ctx.font = '9px monospace';
-        ctx.fillText('Balance: ' + mmxBal + ' MMX  |  mmx.network  |  Proof of Work. Tokens rein, niemand raus.', 10, mmxY + 22);
+        // Zeile 2: XCH (Chia — Bram Cohen)
+        ctx.fillStyle = '#3AAC59';
+        ctx.fillText('🌱 XCH  ' + xchAddr.slice(0, 12) + '...' + xchAddr.slice(-6) + '  ' + xchBal + ' XCH', 10, mmxY + 20);
+
+        // Zeile 3: Hawking-Philosophie
+        ctx.fillStyle = '#666';
+        ctx.font = '8px monospace';
+        ctx.fillText('Schwarze L\u00f6cher. Tokens rein, niemand raus.', 10, mmxY + 38);
+        ctx.fillText('Hawking-Strahlung: die Arbeit die rausstrahlt ist das Eigentliche.', 10, mmxY + 48);
     }
 
-    // MMX Burn-Balance alle 60s abfragen (öffentliche API, kein Auth nötig)
-    // Account-basiert, REST: /wapi/address?id=mmx1...
-    (function fetchMmxBalance() {
-        const addr = window.INSEL_MMX_BURN || 'mmx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq5tuzzn';
-        const apiUrl = 'https://api.mmxplorer.com/wapi/address?id=' + addr;
-        function poll() {
-            fetch(apiUrl).then(r => r.ok ? r.json() : null).then(data => {
+    // Crypto Balance-Polling alle 60s (öffentliche APIs, kein Auth nötig)
+    (function fetchCryptoBalances() {
+        // MMX: Account-basiert, REST: /wapi/address?id=mmx1...
+        const mmxAddr = window.INSEL_MMX_BURN || 'mmx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq5tuzzn';
+        const mmxApi = 'https://api.mmxplorer.com/wapi/address?id=' + mmxAddr;
+        function pollMmx() {
+            fetch(mmxApi).then(r => r.ok ? r.json() : null).then(data => {
                 if (data && data.balances) {
-                    const mmxBal = data.balances['MMX'] || data.balance || 0;
-                    window._mmxBurnBalance = (mmxBal / 10000).toFixed(4);
+                    const bal = data.balances['MMX'] || data.balance || 0;
+                    window._mmxBurnBalance = (bal / 10000).toFixed(4);
                 } else {
                     window._mmxBurnBalance = '0.0000';
                 }
             }).catch(() => { window._mmxBurnBalance = '—'; });
         }
-        poll();
-        setInterval(poll, 60000);
+        // XCH (Chia): spacescan.io public API
+        const xchAddr = window.INSEL_XCH_BURN || 'xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqdlkwut';
+        const xchApi = 'https://api2.spacescan.io/1/xch/balance/' + xchAddr;
+        function pollXch() {
+            fetch(xchApi).then(r => r.ok ? r.json() : null).then(data => {
+                if (data && data.xch_balance != null) {
+                    window._xchBurnBalance = parseFloat(data.xch_balance).toFixed(6);
+                } else {
+                    window._xchBurnBalance = '0.000000';
+                }
+            }).catch(() => { window._xchBurnBalance = '—'; });
+        }
+        pollMmx(); pollXch();
+        setInterval(pollMmx, 60000);
+        setInterval(pollXch, 60000);
     })();
 
     // Monkey-patch requestAnimationFrame callback to add overlay
@@ -4168,6 +4572,12 @@
         });
     });
 
+    // --- Marketplace Button ---
+    const marketBtn = document.getElementById('market-btn');
+    if (marketBtn) marketBtn.addEventListener('click', function () {
+        if (window.INSEL_MARKETPLACE) window.INSEL_MARKETPLACE.open();
+    });
+
     // --- Crafting Dialog Events ---
     const craftBtn = document.getElementById('craft-btn');
     if (craftBtn) craftBtn.addEventListener('click', openCraftingDialog);
@@ -4246,6 +4656,20 @@
 
     // Grid für Chat-Integration exportieren
     window.grid = grid;
+
+    // Genre-Toast bei Wechsel (Backlog #85)
+    const GENRE_LABELS = {
+        klassik: '🎻 Klassik', jazz: '🎷 Jazz', blues: '🎸 Blues',
+        rock: '🤘 Rock', elektro: '⚡ Elektro', reggae: '🌴 Reggae',
+        country: '🤠 Country', funk: '🕺 Funk', walzer: '💃 Walzer',
+        schlaflied: '🌙 Schlaflied', marsch: '🥁 Marsch', samba: '🌶️ Samba',
+        ambient: '🌊 Ambient', piraten: '🏴‍☠️ Piraten', zirkus: '🎪 Zirkus',
+    };
+    if (window.INSEL_SOUND && window.INSEL_SOUND.setOnGenreChange) {
+        window.INSEL_SOUND.setOnGenreChange((genre) => {
+            showToast(GENRE_LABELS[genre] || genre, 2000);
+        });
+    }
 
     // Nature-Modul starten (Baumwachstum + Welt-Konsequenzen)
     window.INSEL_NATURE.start(grid, ROWS, COLS, MATERIALS, {

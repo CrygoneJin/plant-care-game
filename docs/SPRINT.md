@@ -1,3 +1,46 @@
+# Sprint 24 — "Oscar baut Musik"
+
+**Sprint Goal:** Jeder Block klingt nach Genre. Kinder die nicht lesen können, spielen trotzdem. Technische Schuld sinkt.
+
+**Start:** 2026-04-01
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S24-1 | **Genre-Tonsequenzen aktivieren** (#85) — `soundGenreNote()` in `soundBuild` einhängen. Genre-Toast bei Wechsel. Oscar hört Musik während er baut. | Engineer | ✅ Done |
+| S24-2 | **Tutorial ohne Text** (#15) — Erste 3 Schritte: Icons + Pfeil-Animationen statt Erklärtext. Kinder die nicht lesen können, finden den ersten Block in 10 Sek. | Designer + Engineer | 🔲 Offen |
+| S24-3 | **game.js aufteilen: Grid + Effects** (#11) — Grid-Rendering und Partikel-Effekte rausziehen. Ziel: game.js unter 3500 LOC. | Engineer | 🔲 Offen |
+
+---
+
+## Standup Log
+
+### 2026-04-01 (Sprint 24 Planning)
+
+**Kontext:**
+- Sprint 23 "Oscar hört das Meer" (PR #106): Chat-Sidebar, Stille-Momente, QR-Code — offen, nicht gemergt
+- Retro S22-Empfehlung: #85 Genre-Töne, #15 Tutorial ohne Text, #11 game.js aufteilen
+- S24-1 bereits implementiert: `soundGenreNote()` in `soundBuild` eingehängt, Genre-Toast bei Wechsel
+
+---
+
+# Sprint 23 — "Oscar hört das Meer" (PR #106, offen)
+
+**Sprint Goal:** Chat als Sidebar, Stille-Momente wenn idle, QR-Code auf Postkarte.
+
+**Start:** 2026-03-31
+
+| # | Item | Status |
+|---|------|--------|
+| S23-1 | Chat-Sidebar (#28) | ✅ Done |
+| S23-2 | Stille-Momente (#57) | ✅ Done |
+| S23-3 | QR-Code auf Postkarte (#7) | ✅ Done |
+
+---
+
 # Sprint 22 — "The devil is most devilish when respectable"
 
 **Sprint Goal:** Mephisto NPC + Gemini Voice + Insel-Upgrade + Bugfixes. Nacht-Session.
@@ -51,6 +94,7 @@
 
 ---
 
+<<<<<<< HEAD
 ## Sprint Retrospective — 2026-03-31 (Nacht)
 
 ### Was lief gut?
@@ -102,6 +146,38 @@
 **Sprint-Fokus:** S23-1 (TTS Hörspiele) als erstes Item dieser Session.
 
 **Blocker:** Keine.
+=======
+## Sprint Retrospective — 2026-03-31 (Nacht, nach Review)
+
+### Was lief gut?
+
+- **Alle 8 Items Done.** Sprint Goal vollständig erreicht, keine Nachläufer.
+- **Mephisto funktioniert.** 10. NPC, Deal-Mechanik, Browning-Zitat — Persönlichkeit ohne Overengineering.
+- **Gemini Voice läuft.** 5 Stimmen (Charon/Puck/Kore/Aoede/Fenrir) live. Kein Vendor-Lock-In durch Worker-Abstraktion.
+- **KLONK auf Minecraft-Niveau.** 3 Oszillatoren, Sub-Bass. Oscar hört den Unterschied.
+- **Lummerland als Easter Egg.** `?lummerland` funktioniert. Kein Feature-Request, kein PR-Drama — einfach gebaut.
+
+### Was lief schlecht?
+
+- **8 Items in einem Sprint.** Dreifach über dem Maximum (3). Wird nicht wiederholt.
+- **Smoke Test weiterhin blockiert.** Sandbox-Proxy verhindert externe Curls. Bekannt. Nicht gelöst.
+- **#28 Chat-Sidebar verschoben.** Layout-Umbau ohne klare Spec. Verschiebt sich weiter wenn kein konkretes Design.
+- **Worker-Discovery-Endpoint leer.** Nicht klar ob Sandbox-Block oder echter Defekt — kein Test möglich.
+
+### Was verbessern wir?
+
+1. **Max 3 Items pro Sprint — hart.** Auch wenn es verlockend ist: 3 und gut. Overflow → nächster Sprint.
+2. **Smoke Test in GitHub Actions auslagern** — nicht sessionabhängig (BACKLOG #86).
+3. **Vor jedem Sprint: eine Oscar-sichtbare Änderung** — Klang, Optik, oder neuer Charakter. Motivation bleibt hoch.
+
+### Sprint 23 — Empfehlung (Planning nächste Session)
+
+| Kandidat | Prio | Warum jetzt |
+|----------|------|-------------|
+| **#85 Genre-Tonsequenzen** | P3 | Oscar hört Musik wenn er baut. Höchster Spaß-Impact pro LOC. |
+| **#15 Tutorial ohne Text** | P2 | Kinder die nicht lesen können (Oscars jüngere Geschwister). |
+| **#11 game.js weiter aufteilen** | P1 | In Arbeit. Grid/Effects/Stories noch drin. Schuldenlast sinken lassen. |
+>>>>>>> origin/main
 
 ---
 

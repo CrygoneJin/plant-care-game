@@ -128,12 +128,35 @@
 
     // --- Webhook-Ping (Session-Ende) ---
     function pingWebhook() {
-        const url = localStorage.getItem('insel-webhook');
-        if (!url) return;
+        var data = collectTestData();
+        // 1. Google Sheets Webhook (falls konfiguriert)
+        var url = localStorage.getItem('insel-webhook');
+        if (url) {
+            try { navigator.sendBeacon(url, JSON.stringify(data)); } catch (e) { /* still */ }
+        }
+        // 2. Cloudflare Worker D1 — immer senden
         try {
-            const data = collectTestData();
-            navigator.sendBeacon(url, JSON.stringify(data));
-        } catch (e) { /* Stille — kein Tracking ist besser als kaputtes Tracking */ }
+            var proxy = (window.INSEL_CONFIG && window.INSEL_CONFIG.proxy) || 'https://schatzinsel.hoffmeyer-zlotnik.workers.dev';
+            navigator.sendBeacon(proxy + '/metrics/ingest', JSON.stringify({
+                type: 'session',
+                player_name: localStorage.getItem('insel-spielername') || 'Anonym',
+                duration_s: data.duration_s,
+                blocks_placed: data.blocks || 0,
+                blocks_harvested: data.demolishes || 0,
+                quests_completed: data.quests_done || 0,
+                crafts_total: data.builds || 0,
+                chat_messages: 0,
+                unique_materials: data.materials || 0,
+                engagement_score: Math.min(100, Math.round(
+                    (data.duration_s > 30 ? 20 : 0) +
+                    (data.blocks > 0 ? 20 : 0) +
+                    (data.ms_firstChat ? 20 : 0) +
+                    (data.quests_done > 0 ? 20 : 0) +
+                    (data.easter_eggs > 0 ? 10 : 0) +
+                    (data.materials > 3 ? 10 : 0)
+                )),
+            }));
+        } catch (e) { /* kein Tracking > kaputtes Tracking */ }
     }
 
     // --- Bug-Reporter ---

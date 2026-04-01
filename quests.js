@@ -84,4 +84,7 @@ window.INSEL_QUEST_TEMPLATES = [
     { npc: 'neinhorn', title: 'Pilzwald', desc: 'NEIN keine Pilze! ...doch. Riesige Pilze. Die LEUCHTEN. Im Dunkeln. Das ist gruselig-gemütlich!', needs: { mushroom: 6, lamp: 4, tree: 3, fence: 2 }, reward: '🌈🌈🌈' },
     { npc: 'maus', title: 'Bibliothek', desc: '*pieps* Bücher! *quak* Die Ente kann nicht lesen! *pieps* Dann LERNT sie es! *quak* ...ok EINE Seite!', needs: { wood: 6, glass: 3, lamp: 4, door: 1 }, reward: '🌻🌻🌻' },
     { npc: 'maus', title: 'Honig-Bäckerei', desc: '*pieps* Honig PLUS Mehl GLEICH Kuchen! *quak* Das ist Mathe! *pieps* Das ist BACKEN! *quak* Beides!', needs: { honey: 3, bee: 2, fire: 2, wood: 4, apple: 3 }, reward: '🌻🌻🌻🌻' },
+    // Runde 9: Krabs Muschelhandel — Wirtschafts-Quests
+    { npc: 'krabs', title: 'Muschelbank', desc: 'Eine BANK! Für Muscheln! Darwin sagt: Sparsamkeit ist der erste Schritt zur WELTHERRSCHAFT! Äh... zum Wohlstand!', needs: { stone: 6, door: 2, metal: 4, lamp: 2 }, reward: '💰💰💰💰💰' },
+    { npc: 'krabs', title: 'Strand-Börse', desc: 'Angebot! Nachfrage! GEWINN! Eine Börse am Strand! Jede Muschel eine Aktie! Jeden Tag mehr WERT! Ahahaha!', needs: { sand: 6, wood: 4, flag: 3, fence: 4 }, reward: '💰💰💰💰' },
 ];

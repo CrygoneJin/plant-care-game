@@ -376,9 +376,10 @@
             playDrumSound(material);
             return;
         }
-        // Nicht-Basis-Materialien: Bau-Trommel statt melodische Skala
-        // Oscar: "Blöcke platzieren ist Trommel"
+        // Nicht-Basis-Materialien: Drum + Genre-Melodie-Schicht
+        // Oscar: "Blöcke platzieren ist Trommel" — und jetzt auch Musik
         playDrumSound(material);
+        soundGenreNote();
     }
 
     function soundDemolish(getGridStats) {
@@ -659,6 +660,8 @@
     function getGenre() { return currentGenre; }
     function getGenreNames() { return GENRE_NAMES.slice(); }
 
+    let onGenreChange = null;
+
     // Spielt die nächste Note der aktuellen Genre-Sequenz
     function soundGenreNote() {
         if (isMuted()) return;
@@ -670,6 +673,7 @@
             genreBlockCounter = 0;
             currentGenre = GENRE_NAMES[Math.floor(Math.random() * GENRE_NAMES.length)];
             genreNoteIndex = 0;
+            if (onGenreChange) onGenreChange(currentGenre);
         }
 
         const genre = GENRES[currentGenre];
@@ -702,6 +706,7 @@
         setGenre,
         getGenre,
         getGenreNames,
+        setOnGenreChange: (fn) => { onGenreChange = fn; },
         // Low-level für Erweiterungen
         playTone,
         playRichTone,

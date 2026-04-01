@@ -11,6 +11,8 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 
 | Datum | Was | Warum | Lektion |
 |-------|-----|-------|---------|
+| 2026-03-31 | Doppelte eliza.js Script-Tags in index.html nach PR-Merge | Merge von effects.js/nature.js Extraktion (#11) hat eliza.js/eliza-scripts.js dupliziert. Smoke-Test fängt console.error → Deployment failed. | Immer `grep -c '<script' index.html` prüfen nach Merge. Duplikate = potentieller Runtime-Crash. |
+| 2026-03-31 | analytics.js schrieb nichts nach D1 — nur Google Sheets Webhook | `pingWebhook()` nutzte nur localStorage-URL (`insel-webhook`), nicht den Worker `/metrics/ingest`. D1-Tabellen blieben leer. | Frontend muss aktiv an den Worker senden. "Endpoint existiert" ≠ "Endpoint wird genutzt". |
 | 2026-03-31 | Charakter-Dropdown hatte kein change-Event — NPC-Wechsel funktionierte nicht | Dropdown existierte im HTML, aber kein JS-Listener registriert. Alle NPCs redeten wie SpongeBob. | Jedes UI-Element das Zustand ändert braucht einen Event-Listener. Ohne Listener ist es Dekoration. |
 | 2026-03-31 | Grid-Dimension-Mismatch: Save von Desktop crasht auf Mobile | Auto-Save überschreibt Grid blind — 32×18 Grid auf 18×28 Viewport = undefined rows = Crash. | Beim Restore Grid-Dimensionen prüfen und Inhalte transferieren statt blind überschreiben. |
 | 2026-03-31 | Tutorial-Pulse blinkte endlos für wiederkehrende Spieler | `startTutorialPulse()` wurde für alle aufgerufen, `stopTutorialPulse()` nur bei firstBlock-Milestone der aktuellen Session. | Pulse nur starten wenn noch kein Block platziert wurde. |
@@ -597,6 +599,27 @@ KINDERSICHERHEIT-Block von 40 auf 2 Zeilen. Persönlichkeit stärker UND billige
 - **Delegation Level 7 = Vertrauen**: 74% der Entscheidungen brauchen den User nicht. Ethik/Kinderschutz und Vision sind Level 1 — das bleibt.
 - **Zellteilung game.js ist schwerer als gedacht**: Analytics war sauber isoliert (nur localStorage). Alles andere (Wetter, NPC, Player) hängt am Canvas-Context und Grid-State. Braucht Event-Bus-Pattern für die nächste Phase.
 - **Bismarck interviewt besser als HR**: "Können Sie sich kurz fassen?" ist die einzige Frage die zählt.
+
+---
+
+## Session 2026-03-31c — Sprint 22 Retrospective
+
+### Fehler
+| Datum | Was | Lektion |
+|-------|-----|---------|
+| 2026-03-31 | Sprint 22 hatte 8 Items — dreifach über Maximum | Max 3 Items pro Sprint. Hart. Kein "ja aber diesmal ist es anders". |
+
+### Erfolge
+| Datum | Was |
+|-------|-----|
+| 2026-03-31 | Mephisto NPC live: 10. Charakter, Deal-Mechanik, Browning-Zitat, Seelenglut-Währung |
+| 2026-03-31 | Gemini Voice Chat: 5 Stimmen, Worker-Abstraktion, kein Vendor-Lock-In |
+| 2026-03-31 | KLONK auf Minecraft-Niveau: 3-Layer Sub-Bass — Oscar hört den Unterschied |
+
+### Learnings
+- **8-Item-Sprints sind technisch möglich aber pädagogisch falsch.** Rhythmus (1 Sprint = 1 Stunde = 3 Items) ist nicht Bürokratie, sondern Fokus.
+- **Smoke Tests gehören in CI, nicht in den Agent.** Proxy-Sandbox macht externe Curls unzuverlässig. BACKLOG #86 löst das.
+- **Easter Eggs bauen sich schnell.** Lummerland: eine Stunde, maximale Freude. Verhältnis merken.
 
 ---
 
