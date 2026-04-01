@@ -1,3 +1,32 @@
+# Sprint 25 — "Oscar wird erkannt"
+
+**Sprint Goal:** Oscar sieht seinen Namen auf der Insel, spielt Melodie und baut gleichzeitig, game.js wird kleiner.
+**Start:** 2026-04-01
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S25-1 | **#11 easter-eggs.js** — CODE_EASTER_EGGS-Daten aus game.js nach easter-eggs.js. `window.INSEL_EASTER_EGGS`. game.js: ~58 LOC kleiner. | Engineer | ✅ Done |
+| S25-2 | **#71 Palette als Instrument** — 🎹-Toggle-Modus: Palette klicken = Ton spielen + Block am Spieler platzieren. Oscar spielt Melodie UND baut gleichzeitig. | Engineer | ✅ Done |
+| S25-3 | **#97 Oscar als 7. Schicht** — Personalisierter Willkommens-Toast beim Laden: Name + Baustil-Erkennung (Waldarchitekt / Meeresarchitekt / Steinarchitekt). Nur für Wiederkehrer. | Engineer + Artist | ✅ Done |
+
+---
+
+## Standup Log
+
+### 2026-04-01 (Sprint 25 Planning)
+
+**Kontext:** Sprint 24 Review + Retro abgeschlossen (alle 3 Items Done, PR #107 gemergt). game.js: 4649 Zeilen nach pull.
+
+**Sprint 25 Fokus:** Oscar-sichtbare Änderungen zuerst (#71 + #97), dann Schulden (#11). Max 3 Items aus Retro-Empfehlung.
+
+**Blocker:** Keine.
+
+---
+
 # Sprint 24 — "Oscar hört die Welt"
 
 **Sprint Goal:** Musik beim Bauen (Genre-Sequenzen) + technische Schulden (game.js aufteilen) + Tutorial ohne Text.

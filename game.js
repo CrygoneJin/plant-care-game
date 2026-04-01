@@ -292,67 +292,9 @@
     const EFFECTS = window.INSEL_EFFECTS;
 
     // ============================================================
-    // === EASTER EGGS + HÖRSPIELE === (→ stories.js bei Zellteilung)
+    // === EASTER EGGS — Daten in easter-eggs.js (Zellteilung #11) ===
     // ============================================================
-    // Kinder entdecken sie beim Bauen — lernen die Namen spielerisch
-    const CODE_EASTER_EGGS = {
-        stone: [
-            '🪨 Im Stein ist geritzt: "C war hier. Erster!" Daneben, viel kleiner: "War ich nicht. Fortran."',
-            '🪨 Jemand ist gegen den Stein gelaufen. Daneben steht "C++" geritzt.',
-            '🪨 BASIC sitzt auf dem Stein und zählt: "10, 20, 30..." Warum? "Jeder fängt mit mir an!"',
-            '🪨 Am Stein lehnt eine uralte Tafel: "Pythagoras war hier. 2500 Jahre vor euch." Alle schweigen.',
-        ],
-        tree: [
-            '🐍 Hinter dem Baum raschelt es! Eine Schlange zwinkert: "Hallo, ich bin Python!"',
-            '🐍 Python gähnt: "Ich bin zwar laaangsam, aber jeder versteht mich!"',
-            '🐍 Python wickelt sich um den Baum: "Die anderen rennen. Ich denke nach."',
-        ],
-        flower: [
-            '💎 Zwischen den Blumen glitzert ein roter Edelstein! "Ruby" steht drauf.',
-            '📿 Im Blumenbeet liegt eine Perlenkette. Auf dem Verschluss steht "PERL".',
-        ],
-        boat: [
-            '🦀 Unter dem Boot sitzt ein kleiner Krebs mit einem Zahnrad. "Ich bin Rust!"',
-            '⚓ Am Anker steht "Rust" geritzt. Der Krebs nickt stolz: "Ich roste NIE."',
-        ],
-        fence: [
-            '🐦 Ein Vogel schießt über den Zaun! "Ich bin Swift!" Zack, weg.',
-            '🧮 Am Zaun zählt jemand Latten: "1, 10, 11, 100..." Das ist kein Quatsch, das ist Binär!',
-        ],
-        fish: [
-            '🦈 Ein Fisch flüstert: "Pass auf Makro auf! Der Hai macht alles RIESIG!"',
-            '🐟 Der Fisch schwimmt Kreise. Immer wieder. Das nennt man eine Schleife!',
-        ],
-        path: [
-            '🧮 Am Wegrand zählt R Kieselsteine. In Binär. Niemand hat ihn darum gebeten.',
-            '🌍 Geo die Geologin kniet am Weg: "Schicht 1, Schicht 2!" R daneben: "47 Steine. In Binär: 101111."',
-        ],
-        bridge: [
-            '🎲 Unter der Brücke spielen zwei Krabben ein Brettspiel. Das heißt Go!',
-            '🌉 Auf der Brücke streiten sich zwei: "ICH baue die Brücke!" "Nee, ICH!" Am Ende braucht man beide.',
-        ],
-        water: [
-            '☕ Das Wasser dampft! "Auf der Insel Java trinkt man viel Kaffee", murmelt C.',
-            '🦈 Makro der Hai taucht auf: "ICH MACHE ALLES GRÖSSER!" Python: "Deswegen mag dich keiner."',
-            '🦈 "Vorsicht vor Makro!" warnt Rust. "Sieht klein aus, wird dann RIESIG!"',
-        ],
-        mushroom: [
-            '🍄 Unter dem Pilz sitzt eine kleine Elfe. "Ich spreche Elixir!"',
-            '🍄 Hinter dem Pilz murmelt jemand: "+++++[>++<-]>!" Das ist Hirnfitz. Keiner versteht ihn.',
-            '🍄 "Was hat Hirnfitz gesagt?" fragt Python. C: "Hallo. Dafür braucht er 100 Zeichen."',
-        ],
-        lamp: [
-            '💡 Die Lampe flackert. In der Birne steht winzig: "Powered by JavaScript".',
-            '💡 JavaScript wurde in 10 Tagen erfunden. Auf einer Insel! Passt ja.',
-            '💡 TypeScript korrigiert JavaScript: "Da fehlt ein Typ!" JavaScript: "Ich funktioniere AUCH SO!"',
-        ],
-        cactus: [
-            '🦜 Auf dem Kaktus sitzt ein Papagei: "Ich bin FORTRAN! Fort ran ich, nie zurück!"',
-            '🦜 Fortran krächzt: "Was macht ein Baum im Internet? Er LOGGT sich ein!"',
-            '🦜 "Warum können Geister nicht lügen? Man DURCH-C-T sie!" Fortran lacht allein.',
-            '🦜 "Warum sitze ich auf dem Kaktus? Der STACK ist übergelaufen!"',
-        ],
-    };
+    const CODE_EASTER_EGGS = window.INSEL_EASTER_EGGS || {};
 
     let lastEasterEggTime = 0;
     let discoveredEggs = JSON.parse(localStorage.getItem('insel-easter-eggs') || '[]');
@@ -3503,6 +3445,13 @@
 
         btn.addEventListener('click', () => {
             selectMaterial(btn.dataset.material);
+            // Instrument-Modus: Ton spielen UND Block am Spieler platzieren
+            if (instrumentMode && playerPos && grid) {
+                const prevTool = currentTool;
+                currentTool = 'build';
+                applyTool(playerPos.r, playerPos.c);
+                currentTool = prevTool;
+            }
         });
 
         // Palette als Drop-Target: Inventar-Item auf Palette-Element droppen = Craft
@@ -4080,6 +4029,21 @@
         });
     }
 
+    // === INSTRUMENT-MODUS — Palette spielen baut gleichzeitig ===
+    let instrumentMode = false;
+    const instrumentBtn = document.getElementById('instrument-btn');
+    if (instrumentBtn) {
+        instrumentBtn.style.opacity = '0.6';
+        instrumentBtn.addEventListener('click', () => {
+            instrumentMode = !instrumentMode;
+            instrumentBtn.style.opacity = instrumentMode ? '1' : '0.6';
+            instrumentBtn.classList.toggle('active', instrumentMode);
+            showToast(instrumentMode
+                ? '🎹 Instrument-Modus an — Palette spielen baut gleichzeitig!'
+                : '🎹 Instrument-Modus aus');
+        });
+    }
+
     // === REPLAY-SONG — Bauwerk als Melodie abspielen ===
     const replayBtn = document.getElementById('replay-btn');
     if (replayBtn) {
@@ -4514,6 +4478,46 @@
         // Pulse nur wenn noch kein Block platziert wurde (leere Insel)
         const hasBlocks = grid.some(row => row && row.some(cell => cell !== null));
         if (!hasBlocks) startTutorialPulse();
+
+        // === Oscar als 7. Schicht — Personalisierter Willkommens-Toast (#97) ===
+        if (playerName && hasBlocks) {
+            setTimeout(() => {
+                // Baustil ermitteln: Materialien zählen
+                const counts = {};
+                grid.forEach(row => row && row.forEach(cell => {
+                    if (cell) counts[cell] = (counts[cell] || 0) + 1;
+                }));
+                const total = Object.values(counts).reduce((a, b) => a + b, 0);
+                const topMat = Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0] || '';
+
+                // Baustil-Gruppen
+                const waldMats = ['tree', 'wood', 'forest', 'flower', 'mushroom', 'plant', 'grass'];
+                const meerMats = ['water', 'fish', 'boat', 'island', 'wave', 'coral', 'sand'];
+                const steinMats = ['stone', 'metal', 'iron', 'rock', 'mountain', 'cave', 'gem'];
+                const feuerMats = ['fire', 'lava', 'ember', 'lamp', 'torch', 'forge'];
+
+                const waldCount = Object.entries(counts).filter(([m]) => waldMats.includes(m)).reduce((s, [, n]) => s + n, 0);
+                const meerCount = Object.entries(counts).filter(([m]) => meerMats.includes(m)).reduce((s, [, n]) => s + n, 0);
+                const steinCount = Object.entries(counts).filter(([m]) => steinMats.includes(m)).reduce((s, [, n]) => s + n, 0);
+                const feuerCount = Object.entries(counts).filter(([m]) => feuerMats.includes(m)).reduce((s, [, n]) => s + n, 0);
+
+                let stil, icon;
+                const max = Math.max(waldCount, meerCount, steinCount, feuerCount);
+                if (max === 0 || max < total * 0.2) {
+                    stil = 'Alles-Architekt'; icon = '🌍';
+                } else if (waldCount === max) {
+                    stil = 'Wald-Architekt'; icon = '🌲';
+                } else if (meerCount === max) {
+                    stil = 'Meeres-Architekt'; icon = '🌊';
+                } else if (steinCount === max) {
+                    stil = 'Stein-Architekt'; icon = '🪨';
+                } else {
+                    stil = 'Feuer-Architekt'; icon = '🔥';
+                }
+
+                showToast(`${icon} Willkommen zurück, ${playerName}! Du bist ein ${stil}.`, 4000);
+            }, 1500);
+        }
     }
 
     updateAchievementDisplay();
