@@ -622,6 +622,27 @@ KINDERSICHERHEIT-Block von 40 auf 2 Zeilen. Persönlichkeit stärker UND billige
 
 ---
 
+## Session 2026-04-01 — Sprint 24 Review
+
+### Fehler
+| Datum | Was | Lektion |
+|-------|-----|---------|
+| 2026-04-01 | Session hat Sprint 23 geplant + implementiert, Remote hatte schon anderen Sprint 23 und Sprint 24 | Vor Sprint Planning: `git fetch origin` + aktuellen Branch-State lesen. Nicht blind planen. |
+| 2026-04-01 | Smoke Test (curl extern) scheitert wegen Sandbox-Proxy — kein Outage, sondern Sandbox-Beschränkung | `x-deny-reason: host_not_allowed` = Proxy-Block. Nicht als Outage reporten. |
+
+### Erfolge
+| Datum | Was |
+|-------|-----|
+| 2026-04-01 | Sprint 24 Review geschrieben und gepusht. Branch feat/sprint-23 auf Remote aktuell. |
+| 2026-04-01 | Parallel-Session-Duplikat erkannt und aufgelöst via `git reset --hard origin/feat/sprint-23` — keine Datenverluste. |
+
+### Learnings
+- **Immer zuerst fetchen**: `git fetch origin && git log origin/BRANCHNAME` — bevor ich etwas plane oder committe.
+- **Sandbox-Proxy blockt externe URLs**: curl auf externe Domains = 403 `host_not_allowed`. Kein echter Outage. CI muss das außerhalb der Sandbox machen (BACKLOG #86).
+- **PR-Pflicht**: Kein `gh` CLI in dieser Sandbox. PR muss vom User oder einer anderen Session erstellt werden wenn der Branch bereit ist.
+
+---
+
 ## Regeln für neue Einträge
 
 1. **Fehler**: Nur wenn es ein echtes Problem verursacht hat (nicht theoretisch)
