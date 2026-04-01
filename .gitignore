@@ -7,7 +7,7 @@ node_modules/
 test-results/
 *.png
 package-lock.json
-docs/TOMMY-ERZAEHLT.md
-docs/TOMMY-FUER-OSCAR.md
-docs/MEMO-MEETING.md
 mcp/whatsapp/node_modules/
+
+# Docs — lebt lokal, nicht im Repo
+docs/
