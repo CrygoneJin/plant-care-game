@@ -747,12 +747,10 @@ Du: "Ah, willkommen, verehrter Baumeister! Ich bin Mephisto. Man sagt ich sei ei
         const energyPercent = Math.round(((totalBudget - tokenUsage[charId]) / totalBudget) * 100);
         const budgetInfo = `Dein Energie-Level: ${energyPercent}%. ${energyPercent < 30 ? 'Du wirst bald müde — halte dich kurz!' : ''}`;
 
-        // Spracherkennung: wenn das Kind Englisch schreibt, antworte auf Englisch
+        // Spracherkennung: NPCs antworten in der Sprache des Kindes (#62)
         var lastUserMsg = chatHistory.length > 0 ? chatHistory[chatHistory.length - 1].content : '';
-        var englishWords = /\b(the|is|are|my|I|you|what|how|can|do|have|this|that|with|for|was|were|would|could|should|will|want|need|like|hello|hi|yes|no|please|thank|thanks|help|where|when|why|who)\b/i;
-        var langHint = englishWords.test(lastUserMsg)
-            ? 'Antworte in der Sprache des Kindes. Das Kind schreibt auf Englisch — antworte auf Englisch.'
-            : 'Antworte auf Deutsch.';
+        var detectedLang = detectLanguage(lastUserMsg);
+        var langHint = detectedLang.hint;
 
         // System-Prompt: Persönlichkeit FIRST, Regeln kurz
         const safetyRule = charId === 'bernd'
@@ -921,6 +919,57 @@ ${budgetInfo}`;
             }),
         }).catch(() => {});
     }
+
+    // --- Spracherkennung (einfache Heuristik) ---
+    // Lummerland = alle willkommen. NPCs antworten in Oscars Sprache. (#62)
+    const LANG_PATTERNS = {
+        en: {
+            words: /\b(the|is|are|my|you|what|how|can|do|have|this|that|with|for|was|were|would|could|should|will|want|need|like|hello|hi|yes|no|please|thank|thanks|help|where|when|why|who|build|tree|house|island)\b/gi,
+            name: 'Englisch',
+            hint: 'Antworte in der Sprache des Kindes. Das Kind schreibt auf Englisch — antworte auf Englisch.'
+        },
+        fr: {
+            words: /\b(je|tu|il|elle|nous|vous|ils|elles|le|la|les|un|une|des|est|sont|suis|avec|pour|dans|sur|pas|oui|non|bonjour|salut|merci|aide|quoi|comment|pourquoi|maison|arbre|construire)\b/gi,
+            name: 'Französisch',
+            hint: 'Antworte in der Sprache des Kindes. Das Kind schreibt auf Französisch — antworte auf Französisch.'
+        },
+        es: {
+            words: /\b(el|la|los|las|un|una|es|son|soy|con|para|en|no|sí|hola|gracias|ayuda|qué|cómo|por|que|casa|árbol|construir|quiero|puedo|tengo|isla)\b/gi,
+            name: 'Spanisch',
+            hint: 'Antworte in der Sprache des Kindes. Das Kind schreibt auf Spanisch — antworte auf Spanisch.'
+        },
+        it: {
+            words: /\b(il|lo|la|gli|le|un|una|è|sono|con|per|in|non|sì|ciao|grazie|aiuto|cosa|come|perché|casa|albero|costruire|voglio|posso|isola)\b/gi,
+            name: 'Italienisch',
+            hint: 'Antworte in der Sprache des Kindes. Das Kind schreibt auf Italienisch — antworte auf Italienisch.'
+        }
+    };
+
+    function detectLanguage(text) {
+        if (!text || text.trim().length < 2) {
+            return { lang: 'de', name: 'Deutsch', hint: 'Antworte auf Deutsch.' };
+        }
+        var bestLang = 'de';
+        var bestScore = 0;
+        for (var langCode in LANG_PATTERNS) {
+            var pattern = LANG_PATTERNS[langCode];
+            var matches = text.match(pattern.words);
+            var score = matches ? matches.length : 0;
+            if (score > bestScore) {
+                bestScore = score;
+                bestLang = langCode;
+            }
+        }
+        // Mindestens 1 Match nötig, sonst Deutsch als Default
+        if (bestScore === 0) {
+            return { lang: 'de', name: 'Deutsch', hint: 'Antworte auf Deutsch.' };
+        }
+        var detected = LANG_PATTERNS[bestLang];
+        return { lang: bestLang, name: detected.name, hint: detected.hint };
+    }
+
+    // Export for testing
+    window.detectInselLanguage = detectLanguage;
 
     // --- ELIZA Fallback (Weizenbaum 1966, echte Portierung in eliza.js) ---
     function getElizaReply(input, npcId) {
