@@ -77,6 +77,51 @@
     --btn-bg: #e0f8d0;
 }
 
+/* 6. Neon — Cyberpunk, leuchtende Konturen, dunkler Hintergrund */
+[data-theme="neon"] {
+    --bg: #0d0d0d;
+    --header-bg: linear-gradient(135deg, #0d0d0d, #1a0033);
+    --toolbar-bg: linear-gradient(135deg, #1a0033, #00001a);
+    --palette-bg: linear-gradient(180deg, #1a0033, #0d0d0d);
+    --stats-bg: linear-gradient(180deg, #00001a, #1a0033);
+    --canvas-bg: #0a0a1a;
+    --accent: #00ffff;
+    --accent-light: #001a1a;
+    --text: #e0e0ff;
+    --text-light: #00ffff;
+    --btn-bg: #1a0033;
+}
+
+/* 7. Sakura — Japanische Kirschblüten, Rosa/Weiß-Palette */
+[data-theme="sakura"] {
+    --bg: #fce4ec;
+    --header-bg: linear-gradient(135deg, #880e4f, #ad1457);
+    --toolbar-bg: linear-gradient(135deg, #f48fb1, #f06292);
+    --palette-bg: linear-gradient(180deg, #ad1457, #c2185b);
+    --stats-bg: linear-gradient(180deg, #880e4f, #ad1457);
+    --canvas-bg: #fce4ec;
+    --accent: #e91e63;
+    --accent-light: #fce4ec;
+    --text: #4a0026;
+    --text-light: #fff8fa;
+    --btn-bg: #fff0f5;
+}
+
+/* 8. Arctic — Eisblau/Weiß, Schnee-Ästhetik, kalte Töne */
+[data-theme="arctic"] {
+    --bg: #e8f4fd;
+    --header-bg: linear-gradient(135deg, #0d47a1, #1565c0);
+    --toolbar-bg: linear-gradient(135deg, #90caf9, #64b5f6);
+    --palette-bg: linear-gradient(180deg, #0d47a1, #1565c0);
+    --stats-bg: linear-gradient(180deg, #01579b, #0d47a1);
+    --canvas-bg: #bbdefb;
+    --accent: #29b6f6;
+    --accent-light: #e1f5fe;
+    --text: #0d47a1;
+    --text-light: #e3f2fd;
+    --btn-bg: #e1f5fe;
+}
+
 /* === RESET & BASE === */
 * {
     margin: 0;

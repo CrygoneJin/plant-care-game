@@ -2668,157 +2668,33 @@
         statsContent.innerHTML = html;
     }
 
-    // --- Speichern ---
-    function saveProject() {
-        const name = projectNameInput.value.trim() || 'Mein Bauwerk';
-        const projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
-
-        projects[name] = {
-            grid: grid,
-            date: new Date().toLocaleDateString('de-DE'),
-            treeGrowth: treeGrowth,
-            inventory: inventory,
-            unlocked: [...unlockedMaterials],
-            discovered: [...discoveredRecipes],
-        };
-
-        localStorage.setItem('insel-projekte', JSON.stringify(projects));
-        saveInventory();
-        saveUnlocked();
-        showToast(`💾 "${name}" gespeichert!`);
-    }
-
-    // --- Auto-Save: alle 30s still im Hintergrund ---
+    // --- Speichern / Laden / AutoSave / URL-Sharing -- delegiert an save.js ---
+    // AUTOSAVE_KEY wird noch beim Start-Restore benoetigt
     const AUTOSAVE_KEY = '~autosave~';
-    let lastSaveHash = '';
+
+    function saveProject() {
+        if (window.INSEL_SAVE) window.INSEL_SAVE.saveProject();
+    }
     function autoSave() {
-        if (!grid || !grid.length) return;
-        const hasContent = grid.some(row => row.some(cell => cell !== null));
-        if (!hasContent) return;
-        // Nur speichern wenn sich was geändert hat
-        const hash = JSON.stringify(grid);
-        if (hash === lastSaveHash) return;
-        lastSaveHash = hash;
-        const projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
-        projects[AUTOSAVE_KEY] = {
-            grid: grid,
-            date: new Date().toLocaleDateString('de-DE'),
-            auto: true,
-            treeGrowth: treeGrowth,
-            inventory: inventory,
-            unlocked: [...unlockedMaterials],
-            discovered: [...discoveredRecipes],
-            playerPos: playerPos,
-        };
-        localStorage.setItem('insel-projekte', JSON.stringify(projects));
-        // Subtiler Indikator: Save-Button blinkt kurz
-        const saveBtn = document.getElementById('save-btn');
-        if (saveBtn) {
-            saveBtn.style.transition = 'opacity 0.3s';
-            saveBtn.style.opacity = '0.5';
-            setTimeout(() => { saveBtn.style.opacity = '1'; }, 600);
-        }
+        if (window.INSEL_SAVE) window.INSEL_SAVE.autoSave();
+    }
+    function showLoadDialog() {
+        if (window.INSEL_SAVE) window.INSEL_SAVE.showLoadDialog();
+    }
+    function isValidGrid(g) {
+        return window.INSEL_SAVE ? window.INSEL_SAVE.isValidGrid(g) : (Array.isArray(g) && g.length > 0);
+    }
+    function loadProject(name) {
+        if (window.INSEL_SAVE) window.INSEL_SAVE.loadProject(name);
+    }
+    function deleteProject(name) {
+        if (window.INSEL_SAVE) window.INSEL_SAVE.deleteProject(name);
+    }
+    function newProject() {
+        if (window.INSEL_SAVE) window.INSEL_SAVE.newProject();
     }
     setInterval(autoSave, 30000);
     window.addEventListener('beforeunload', autoSave);
-
-    // --- Laden-Dialog ---
-    function showLoadDialog() {
-        const projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
-        const names = Object.keys(projects);
-
-        if (names.length === 0) {
-            savedProjectsList.innerHTML = '<p class="no-projects">Keine Projekte gespeichert!</p>';
-        } else {
-            savedProjectsList.innerHTML = names.map(name => {
-                const proj = projects[name];
-                const displayName = name === AUTOSAVE_KEY ? '🔄 Letzte Session (Auto)' : escapeHtml(name);
-                return `
-                    <div class="saved-project-item" data-name="${escapeHtml(name)}">
-                        <div>
-                            <div class="saved-project-name">${displayName}</div>
-                            <div class="saved-project-date">${proj.date}</div>
-                        </div>
-                        <button class="saved-project-delete" data-delete="${escapeHtml(name)}" title="Löschen">🗑️</button>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        loadDialog.classList.remove('hidden');
-    }
-
-    function isValidGrid(g) {
-        return Array.isArray(g) && g.length === ROWS && g[0]?.length === COLS;
-    }
-
-    function loadProject(name) {
-        const projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
-        if (projects[name]) {
-            const saved = projects[name].grid;
-            if (isValidGrid(saved)) {
-                grid = saved;
-            } else {
-                initGrid(); // Fallback bei kaputtem Grid
-            }
-            // treeGrowth ist shared reference → clear + assign
-            Object.keys(treeGrowth).forEach(function(k) { delete treeGrowth[k]; });
-            Object.assign(treeGrowth, projects[name].treeGrowth || {});
-            inventory = projects[name].inventory || {};
-            if (projects[name].unlocked) {
-                unlockedMaterials = new Set(projects[name].unlocked);
-                saveUnlocked();
-            } else {
-                unlockedMaterials = new Set();
-            }
-            if (projects[name].discovered) {
-                discoveredRecipes = new Set(projects[name].discovered);
-                saveDiscoveredRecipes();
-            }
-            window.grid = grid;
-            migrateUnlocked();
-            projectNameInput.value = name === AUTOSAVE_KEY ? '' : name;
-            updateStats();
-            updateInventoryDisplay();
-            updatePaletteVisibility();
-            updateGenesisVisibility();
-            updateDiscoveryCounter();
-            requestRedraw();
-            loadDialog.classList.add('hidden');
-            showToast(`📂 "${name}" geladen!`);
-        }
-    }
-
-    function deleteProject(name) {
-        const projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
-        delete projects[name];
-        localStorage.setItem('insel-projekte', JSON.stringify(projects));
-        showLoadDialog(); // Dialog aktualisieren
-        showToast(`🗑️ "${name}" gelöscht!`);
-    }
-
-    function newProject() {
-        initGrid();
-        Object.keys(treeGrowth).forEach(function(k) { delete treeGrowth[k]; });
-        inventory = {};
-        unlockedMaterials = new Set();
-        discoveredRecipes = new Set();
-        playerPos = { r: Math.floor(ROWS / 2), c: Math.floor(COLS / 2) };
-        localStorage.setItem('insel-player-pos', JSON.stringify(playerPos));
-        saveInventory();
-        saveUnlocked();
-        saveDiscoveredRecipes();
-        projectNameInput.value = '';
-        _genesisYinYangShown = false;
-        _genesisQiShown = false;
-        updateStats();
-        updateInventoryDisplay();
-        updatePaletteVisibility();
-        updateGenesisVisibility();
-        updateDiscoveryCounter();
-        requestRedraw();
-        showToast('🆕 Neue Insel!');
-    }
 
     // --- Automerge (delegiert an automerge.js Modul) ---
     function checkAutomerge(r, c) {
@@ -3793,39 +3669,12 @@
         });
     }
 
-    // --- #22: Projekt-Sharing via URL (Base64-encoded Grid) ---
+    // --- #22: Projekt-Sharing via URL -- delegiert an save.js ---
     function encodeGridToURL() {
-        const cells = [];
-        const matKeys = Object.keys(MATERIALS);
-        for (let r = 0; r < ROWS; r++) {
-            for (let c = 0; c < COLS; c++) {
-                if (grid[r][c]) {
-                    const idx = matKeys.indexOf(grid[r][c]);
-                    cells.push([r, c, idx >= 0 ? idx : grid[r][c]]);
-                }
-            }
-        }
-        const payload = { v: 1, m: matKeys, g: cells };
-        return btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+        return window.INSEL_SAVE ? window.INSEL_SAVE.encodeGridToURL() : '';
     }
-
     function decodeGridFromURL(encoded) {
-        try {
-            const payload = JSON.parse(decodeURIComponent(escape(atob(encoded))));
-            if (!payload.v || !payload.g) return false;
-            initGrid();
-            for (const [r, c, mat] of payload.g) {
-                if (r >= 0 && r < ROWS && c >= 0 && c < COLS) {
-                    const material = typeof mat === 'number' ? payload.m[mat] : mat;
-                    if (material && MATERIALS[material]) grid[r][c] = material;
-                }
-            }
-            requestRedraw();
-            requestStatsUpdate();
-            return true;
-        } catch (e) {
-            return false;
-        }
+        return window.INSEL_SAVE ? window.INSEL_SAVE.decodeGridFromURL(encoded) : false;
     }
 
     // Share-Button
@@ -4016,8 +3865,8 @@
     }
 
     // --- Theme-Switcher ---
-    const THEMES = ['tropical', 'night', 'candy', 'ocean', 'retro'];
-    const THEME_NAMES = ['🏝️ Tropeninsel', '🌙 Nachtmodus', '🍭 Candy Pop', '🌊 Ozean', '🕹️ Retro'];
+    const THEMES = ['tropical', 'night', 'candy', 'ocean', 'retro', 'neon', 'sakura', 'arctic'];
+    const THEME_NAMES = ['🏝️ Tropeninsel', '🌙 Nachtmodus', '🍭 Candy Pop', '🌊 Ozean', '🕹️ Retro', '⚡ Neon', '🌸 Sakura', '❄️ Arctic'];
     let currentTheme = localStorage.getItem('insel-theme') || 'tropical';
     const userChoseTheme = localStorage.getItem('insel-theme-manual') === '1';
 
@@ -4503,6 +4352,52 @@
     window.INSEL_ANALYTICS.initTestUI(showToast);
 
     // --- Block-Tracking ---
+
+    // --- save.js Context registrieren ---
+    if (window.INSEL_SAVE) {
+        window.INSEL_SAVE.registerContext({
+            ROWS: ROWS,
+            COLS: COLS,
+            getGrid: function() { return grid; },
+            setGrid: function(g) { grid = g; },
+            getTreeGrowth: function() { return treeGrowth; },
+            setTreeGrowth: function(tg) {
+                Object.keys(treeGrowth).forEach(function(k) { delete treeGrowth[k]; });
+                Object.assign(treeGrowth, tg);
+            },
+            getInventory: function() { return inventory; },
+            setInventory: function(inv) { inventory = inv; },
+            getUnlockedMaterials: function() { return unlockedMaterials; },
+            setUnlockedMaterials: function(s) { unlockedMaterials = s; },
+            getDiscoveredRecipes: function() { return discoveredRecipes; },
+            setDiscoveredRecipes: function(s) { discoveredRecipes = s; },
+            getPlayerPos: function() { return playerPos; },
+            resetPlayerPos: function() {
+                playerPos = { r: Math.floor(ROWS / 2), c: Math.floor(COLS / 2) };
+                localStorage.setItem('insel-player-pos', JSON.stringify(playerPos));
+            },
+            getMaterials: function() { return MATERIALS; },
+            getProjectName: function() { return projectNameInput ? projectNameInput.value.trim() : ''; },
+            setProjectName: function(n) { if (projectNameInput) projectNameInput.value = n; },
+            initGrid: initGrid,
+            saveInventory: saveInventory,
+            saveUnlocked: saveUnlocked,
+            saveDiscoveredRecipes: saveDiscoveredRecipes,
+            setWindowGrid: function() { window.grid = grid; },
+            migrateUnlocked: migrateUnlocked,
+            updateStats: updateStats,
+            updateInventoryDisplay: updateInventoryDisplay,
+            updatePaletteVisibility: updatePaletteVisibility,
+            updateGenesisVisibility: updateGenesisVisibility,
+            updateDiscoveryCounter: updateDiscoveryCounter,
+            requestRedraw: requestRedraw,
+            requestStatsUpdate: requestStatsUpdate,
+            resetGenesisFlags: function() {
+                _genesisYinYangShown = false;
+                _genesisQiShown = false;
+            },
+        });
+    }
 
     // === START ===
     initGrid();
