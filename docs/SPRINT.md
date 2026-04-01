@@ -1,3 +1,33 @@
+# Sprint 23 — "Oscar hört die Welt"
+
+**Sprint Goal:** Musik beim Bauen (Genre-Sequenzen) + technische Schulden (game.js aufteilen) + Tutorial ohne Text.
+
+**Start:** 2026-04-01
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S23-1 | **#85 Genre-Tonsequenzen** — 15 Musik-Genres mit je 5-Noten-Sequenz beim Platzieren. Oscar baut und hört Jazz, Reggae, Metal. | Engineer | 🔲 Offen |
+| S23-2 | **#11 game.js aufteilen** — Rendering-Funktionen (draw*, drawPlayer, drawBlueprintOverlay, drawCodeOverlay) nach renderer.js auslagern | Engineer | 🔲 Offen |
+| S23-3 | **#15 Tutorial ohne Text** — Erste 3 Schritte als Icon-Animationen statt Text. Für Kinder die noch nicht lesen können. | Designer + Engineer | 🔲 Offen |
+
+---
+
+## Standup Log
+
+### 2026-04-01 (Sprint 23 Planning)
+
+**Kontext:** Sprint 22 Review + Retro abgeschlossen (alle 8 Items Done). Retro empfahl max 3 Items/Sprint — wird hart eingehalten.
+
+**Sprint 23 Fokus:** Oscar-sichtbare Änderung zuerst (#85 Genre-Töne). Dann technische Schulden (#11). Dann UX für nicht-lesende Kinder (#15).
+
+**Blocker:** Keine.
+
+---
+
 # Sprint 22 — "The devil is most devilish when respectable"
 
 **Sprint Goal:** Mephisto NPC + Gemini Voice + Insel-Upgrade + Bugfixes. Nacht-Session.

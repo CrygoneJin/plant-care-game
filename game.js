@@ -3728,6 +3728,46 @@
         });
     }
 
+    // === GENRE-TONSEQUENZEN (Backlog #85) ===
+    const genreBtn = document.getElementById('genre-btn');
+    if (genreBtn && _snd.setGenre && _snd.getGenreNames) {
+        const genreNames = _snd.getGenreNames();
+        let genreIndex = genreNames.indexOf(_snd.getGenre ? _snd.getGenre() : genreNames[0]);
+        if (genreIndex < 0) genreIndex = 0;
+
+        function updateGenreBtn() {
+            const active = _snd.getGenreMode && _snd.getGenreMode();
+            genreBtn.textContent = active ? '🎼' : '🎶';
+            genreBtn.title = active
+                ? `Genre: ${genreNames[genreIndex]} — klicken für nächstes`
+                : 'Musik-Genre aktivieren — klicken';
+            genreBtn.style.opacity = active ? '1' : '0.6';
+        }
+        updateGenreBtn();
+
+        genreBtn.addEventListener('click', () => {
+            const wasActive = _snd.getGenreMode && _snd.getGenreMode();
+            if (!wasActive) {
+                // Aktivieren
+                _snd.setGenreMode(true);
+                showToast(`🎼 ${genreNames[genreIndex]}`);
+            } else {
+                // Nächstes Genre
+                genreIndex = (genreIndex + 1) % genreNames.length;
+                _snd.setGenre(genreNames[genreIndex]);
+                const atEnd = genreIndex === genreNames.length - 1;
+                if (atEnd) {
+                    // Einmal durch alle → deaktivieren beim nächsten Klick klar machen
+                    _snd.setGenreMode(false);
+                    showToast('🔇 Genre-Modus aus');
+                } else {
+                    showToast(`🎼 ${genreNames[genreIndex]}`);
+                }
+            }
+            updateGenreBtn();
+        });
+    }
+
     // === REPLAY-SONG — Bauwerk als Melodie abspielen ===
     const replayBtn = document.getElementById('replay-btn');
     if (replayBtn) {

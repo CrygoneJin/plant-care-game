@@ -357,6 +357,11 @@
             playKlonk();
             return;
         }
+        // Genre-Modus: Sequenz statt Element-Ton
+        if (genreMode) {
+            soundGenreNote();
+            return;
+        }
         const tone = ELEMENT_TONES[material];
         if (tone === null) return; // Tao = Stille
         if (tone) {
@@ -648,14 +653,18 @@
     let currentGenre = GENRE_NAMES[Math.floor(Math.random() * GENRE_NAMES.length)];
     let genreNoteIndex = 0;
     let genreBlockCounter = 0;
+    let genreMode = false; // Genre-Modus: wenn aktiv, ersetzt soundBuild den Element-Ton
 
     function setGenre(name) {
         if (GENRES[name]) {
             currentGenre = name;
             genreNoteIndex = 0;
+            genreBlockCounter = 0;
         }
     }
 
+    function setGenreMode(active) { genreMode = !!active; }
+    function getGenreMode() { return genreMode; }
     function getGenre() { return currentGenre; }
     function getGenreNames() { return GENRE_NAMES.slice(); }
 
@@ -702,6 +711,8 @@
         setGenre,
         getGenre,
         getGenreNames,
+        setGenreMode,
+        getGenreMode,
         // Low-level für Erweiterungen
         playTone,
         playRichTone,
