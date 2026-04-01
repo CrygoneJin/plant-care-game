@@ -1137,6 +1137,7 @@
             }
             flashInventoryTab();
             trackEvent('quick-craft', { a, b, result: recipe.result });
+            window.INSEL_BUS && window.INSEL_BUS.emit('craft:success', { result: recipe.result, ingredients: { [a]: 1, [b]: 1 } });
             updateInventoryDisplay();
             return;
         }
@@ -1312,6 +1313,7 @@
             }
             flashInventoryTab();
             trackEvent('craft', { recipe: recipe.name, result: recipe.result });
+            window.INSEL_BUS && window.INSEL_BUS.emit('craft:success', { result: recipe.result, ingredients: recipe.ingredients });
             updateCraftingDisplay();
             return;
         }
