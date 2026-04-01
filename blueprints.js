@@ -322,10 +322,53 @@
         return cells;
     }
 
+    // === OVERLAY ZEICHNEN — Ghost-Preview auf Canvas ===
+    // Aus game.js extrahiert (Zellteilung #11). Wird als drawBlueprintOverlay() delegiert.
+    // state: { activeBlueprint, grid, ROWS, COLS, WATER_BORDER, CELL_SIZE, MATERIALS }
+    function drawOverlay(ctx, state) {
+        const { activeBlueprint, grid, ROWS, COLS, WATER_BORDER, CELL_SIZE, MATERIALS } = state;
+        if (!activeBlueprint) return;
+        const bp = BLUEPRINTS.find(b => b.id === activeBlueprint.id);
+        if (!bp) return;
+        const overlay = getOverlay(grid, activeBlueprint.startR, activeBlueprint.startC, ROWS, COLS, bp.pattern);
+        for (const cell of overlay) {
+            const x = (cell.c + WATER_BORDER) * CELL_SIZE;
+            const y = (cell.r + WATER_BORDER) * CELL_SIZE;
+            if (cell.status === 'placed') {
+                ctx.fillStyle = 'rgba(39, 174, 96, 0.3)';
+            } else if (cell.status === 'wrong') {
+                ctx.fillStyle = 'rgba(231, 76, 60, 0.3)';
+            } else {
+                ctx.fillStyle = 'rgba(52, 152, 219, 0.25)';
+            }
+            ctx.fillRect(x, y, CELL_SIZE, CELL_SIZE);
+            if (cell.status === 'missing' && cell.material !== '*') {
+                const mat = MATERIALS[cell.material];
+                if (mat) {
+                    ctx.globalAlpha = 0.4;
+                    ctx.font = `${CELL_SIZE * 0.45}px serif`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillStyle = '#fff';
+                    ctx.fillText(mat.emoji, x + CELL_SIZE / 2, y + CELL_SIZE / 2 + 1);
+                    ctx.globalAlpha = 1;
+                }
+            }
+            ctx.strokeStyle = cell.status === 'placed' ? 'rgba(39,174,96,0.6)' :
+                              cell.status === 'wrong' ? 'rgba(231,76,60,0.6)' :
+                              'rgba(52,152,219,0.5)';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([4, 4]);
+            ctx.strokeRect(x + 1, y + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+            ctx.setLineDash([]);
+        }
+    }
+
     window.INSEL_BLUEPRINTS = {
         BLUEPRINTS,
         findBlueprint,
         matchPattern,
         getOverlay,
+        drawOverlay,
     };
 })();

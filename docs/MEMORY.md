@@ -7,6 +7,10 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 
 ## Fehler (damit wir sie nicht wiederholen)
 
+| 2026-04-01 | Sprint 27: 4200-Ziel + Features in einem Sprint schlägt fehl — zwei Features (+70 LOC) + Extraktion (−170 LOC) = netto −100. 4200 braucht reinen Refactor-Sprint. | Falsches Commitment. | Feature-Sprint ≠ Refactor-Sprint. Nicht kombinieren wenn LOC-Ziel gesetzt. |
+
+| 2026-04-01 | Sprint 27: code-view.js + blueprints.drawOverlay = erfolgreiche Extraktion. Parameter-Übergabe `draw(ctx, state)` ist das richtige Muster. Closure-Abhängigkeiten aufbrechen durch explizite state-Objekte. | - | Muster für künftige Extraktionen: `window.INSEL_X.draw(ctx, { ...state })` |
+
 | 2026-04-01 | Sprint 26 Review + Retro fehlten in SPRINT.md obwohl alle Items Done — vorherige Session hat nur Status-Flags gesetzt, kein Review-Text geschrieben | Review-Text erst beim nächsten Session-Start nachgeholt | Review schreiben bevor man Commit macht. "Done" = Items ✅ + Review-Abschnitt existiert. |
 
 | 2026-04-01 | Sprint-26-Branch existierte lokal (Altlast, nicht gepusht) — reset --hard auf origin/feat/sprint-25 war nötig | Kein Remote-Check vor Branch-Erstellung | `git fetch origin && git log origin/feat/sprint-N --oneline -3` IMMER vor Branch-Erstellung |

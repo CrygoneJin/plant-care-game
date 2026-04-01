@@ -1,3 +1,85 @@
+# Sprint 27 — "Oscar, die Insel kennt dich"
+
+**Sprint Goal:** NPCs erinnern sich an Oscar, ein Boot öffnet den Horizont, game.js schrumpft.
+**Start:** 2026-04-01
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S27-1 | **#96 NPC-Session-Gedächtnis** — NPCs lesen letztes Lieblingsmaterial + Sessionzahl aus localStorage. Begrüßen Oscar wie alten Bekannten. `insel-npc-memory` Key. | Engineer + Scientist | ✅ Done |
+| S27-2 | **#54 Goldener Pfad (Phase 1)** — Boot gebaut → Toast "Die andere Insel lockt!" + goldener Lichtstreifen am Horizont. Kein neues Grid. Nur visueller Teaser. | Engineer + Artist | ✅ Done |
+| S27-3 | **#11 code-view.js + blueprints.drawOverlay** — drawCodeOverlay (72 LOC) + fetchCryptoBalances (30 LOC) → code-view.js. drawBlueprintOverlay (48 LOC) → blueprints.js. Inline Spieler-Duplikat (24 LOC) entfernt. game.js: 4528→4358. | Engineer | ✅ Done |
+
+---
+
+---
+
+## Sprint Review — 2026-04-01
+
+**Sprint Goal erreicht:** ✅ Ja — alle 3 Items Done.
+
+**Was geliefert wurde:**
+- S27-1: NPC-Session-Gedächtnis — `insel-npc-memory` in localStorage. Session-Zähler, Lieblingsmaterial (letzter Grid-Snapshot bei beforeunload), lastPlacedMaterial (live getrackt). Ab Session 2 injiziert `getMemoryContext()` den Kontext in NPCs' System-Prompt. "Oscar ist Session 5. Lieblingsmaterial: Baum." NPCs begrüßen ihn wie einen alten Bekannten.
+- S27-2: Goldener Pfad — Boot craften triggert `triggerGoldenPath()`: Toast "Die andere Insel lockt!" + 9s goldener Lichtstreifen (LinearGradient, compositeOperation 'lighter') vom Canvas-Zentrum zum rechten Rand. Pulsiert mit Math.sin, blendet die letzten 1.5s aus.
+- S27-3: code-view.js (107 LOC) — drawCodeOverlay + fetchCryptoBalances raus aus game.js. blueprints.js: drawOverlay() hinzugefügt. Inline Spieler-Duplikat (~24 LOC) entfernt. game.js: 4528→4358 (170 LOC netto gespart).
+
+**Nicht geliefert:**
+- game.js unter 4200 — nicht realistisch wenn zwei Features (+70 LOC) im selben Sprint. Ziel angepasst auf 4358.
+- PRs für sprint-25/26 — User-Action. gh CLI + GitHub MCP fehlen.
+
+**Oscar-Check:** NPCs erinnern sich an ihn. Boot bauen = goldenes Meer. Zwei neue Überraschungen.
+
+---
+
+## Sprint Retrospective — 2026-04-01
+
+### Was lief gut?
+
+- **NPC-Session-Gedächtnis sauber.** beforeunload + `getMemoryContext()` injection in System-Prompt. 45 LOC, keine Architektur-Änderung.
+- **Goldener Pfad visuell stark.** LinearGradient + 'lighter' compositeOperation = echter Lichteffekt. 9s, pulsierend, Oscar sieht es sofort.
+- **code-view.js als saubere Extraktion.** Parameter-Übergabe statt Closure. Muster funktioniert: `draw(ctx, state)` mit explizitem state-Objekt.
+- **blueprints.drawOverlay().** 48 LOC raus aus game.js, in blueprints.js integriert. Kein neues Modul, bestehende Datei erweitert.
+
+### Was lief schlecht?
+
+- **4200-Ziel unrealistisch kombiniert mit Features.** Zwei Features (+70 LOC) + Extraktion (−170 LOC) = netto −100 LOC. 4200 bräuchte einen reinen Refactor-Sprint ohne neue Features.
+- **Smoke Test blockiert.** Seit Sprint 19. CI-Pipeline (#86) ist die einzige Lösung.
+- **PRs ungemergt.** feat/sprint-25/26/27 liegen ungemergt. User muss github.com aufmachen.
+
+### Was verbessern wir?
+
+1. **Refactor-Sprints ohne Features.** Sprint 28 Option: nur Extraktion, game.js unter 4200.
+2. **#78 Tesla-Nutzertest auswerten** (P0 im Backlog) — 1h Oscar-Video. Gold drin. Überfällig.
+3. **feat/sprint-25/26/27 als PRs anlegen** — User-Action, 5 Minuten auf github.com.
+
+### Sprint 28 — Empfehlung
+
+| Kandidat | Prio | Warum jetzt |
+|----------|------|-------------|
+| **#78 Tesla-Nutzertest** | P0 | Oscar-Video auswerten. Echte Nutzerdaten. Überfällig. |
+| **#54 Jim Knopf — zweite Insel Phase 2** | P1 | Goldener Pfad gebaut. Nächster Schritt: Überfahrt. |
+| **#11 draw-layer.js final** | P1 | draw*() raus, game.js unter 4200. Nur Refactor, kein Feature. |
+
+---
+
+## Standup Log
+
+### 2026-04-01 (Sprint 27 Planning)
+
+**Kontext:** Sprint 26 Review + Retro abgeschlossen (alle 3 Items Done). game.js: 4490 LOC.
+feat/sprint-25 und feat/sprint-26 ungemergt — User-Action: PRs auf github.com anlegen.
+
+**Sprint 27 Fokus:** #96 zuerst (Oscar fühlt sich erkannt = emotionaler Impact), dann #54 Phase 1 (Horizont öffnet sich), dann #11 (Schuldenabbau). #97 Oscar als 7. Schicht bereits in Sprint 25 done — nicht nochmal planen.
+
+**Abweichung von Retro-Empfehlung:** Retro empfahl "Refactor-Sprint isolieren". Aber #96 + #54 Phase 1 sind klein genug für denselben Sprint. Retro-Empfehlung war qualitativ, nicht quantitativ.
+
+**Blocker:** Keine.
+
+---
+
 # Sprint 26 — "Oscar findet die Höhle"
 
 **Sprint Goal:** game.js schrumpft auf unter 4500 Zeilen, Oscar entdeckt interaktive Höhlen, NPCs reagieren auf Element-Transformationen.

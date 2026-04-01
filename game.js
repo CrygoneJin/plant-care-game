@@ -1297,6 +1297,7 @@
             }
             flashInventoryTab();
             trackEvent('craft', { recipe: recipe.name, result: recipe.result });
+            if (recipe.result === 'boat') triggerGoldenPath();
             updateCraftingDisplay();
             return;
         }
@@ -1463,6 +1464,39 @@
     // --- Dirty-flag (var-gehoisted, damit requestRedraw() überall nutzbar) ---
     var needsRedraw = true;
     function requestRedraw() { needsRedraw = true; }
+
+    // === GOLDENER PFAD (#54 Phase 1) — Boot gebaut → Horizont-Licht ===
+    let _goldenPathUntil = 0;
+
+    function triggerGoldenPath() {
+        _goldenPathUntil = Date.now() + 9000;
+        showToast('⛵ Die andere Insel lockt! Du hast ein Boot — bald kannst du das Meer überqueren...', 5000);
+        requestRedraw();
+    }
+
+    function drawGoldenPath() {
+        const remaining = _goldenPathUntil - Date.now();
+        if (remaining <= 0) return;
+        needsRedraw = true; // Animation läuft weiter
+
+        const pulse = Math.sin(Date.now() / 400) * 0.3 + 0.7; // 0.4–1.0
+        const fade = Math.min(1, remaining / 1500); // letzten 1.5s ausblenden
+        const alpha = 0.45 * pulse * fade;
+
+        // Goldener Lichtstreifen vom Canvas-Zentrum zum rechten Rand
+        const cx = canvas.width * 0.5;
+        const cy = canvas.height * 0.5;
+        const grad = ctx.createLinearGradient(cx, cy, canvas.width, cy);
+        grad.addColorStop(0, `rgba(255, 215, 0, 0)`);
+        grad.addColorStop(0.4, `rgba(255, 200, 50, ${alpha})`);
+        grad.addColorStop(1, `rgba(255, 240, 120, ${alpha * 0.6})`);
+
+        ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.fillStyle = grad;
+        ctx.fillRect(cx, 0, canvas.width - cx, canvas.height);
+        ctx.restore();
+    }
 
     // --- Zustand ---
     let grid = [];
@@ -1887,31 +1921,6 @@
             }
         }
 
-        // Spielfigur zeichnen
-        if (playerName) {
-            const px = (playerPos.c + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
-            const py = (playerPos.r + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
-            // Schatten
-            ctx.globalAlpha = 0.25;
-            ctx.fillStyle = '#000';
-            ctx.beginPath();
-            ctx.ellipse(px, py + CELL_SIZE * 0.35, CELL_SIZE * 0.25, CELL_SIZE * 0.1, 0, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.globalAlpha = 1;
-            // Figur
-            ctx.font = `${CELL_SIZE * 0.65}px serif`;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('🧒', px, py);
-            // Name
-            ctx.font = `bold ${Math.max(10, CELL_SIZE * 0.3)}px sans-serif`;
-            ctx.fillStyle = '#fff';
-            ctx.strokeStyle = 'rgba(0,0,0,0.7)';
-            ctx.lineWidth = 3;
-            ctx.strokeText(playerName, px, py - CELL_SIZE * 0.52);
-            ctx.fillText(playerName, px, py - CELL_SIZE * 0.52);
-        }
-
         // NPCs zeichnen
         for (const [id, pos] of Object.entries(npcPositions)) {
             const npc = NPC_DEFS[id];
@@ -2048,8 +2057,16 @@
             ctx.globalAlpha = 1;
         }
 
-        // Code-View Overlay (zeigt Quellcode statt Emojis)
-        drawCodeOverlay();
+        // Code-View Overlay — delegiert an code-view.js
+        if (window.INSEL_CODE_VIEW) {
+            window.INSEL_CODE_VIEW.draw(ctx, {
+                codeViewActive, grid, ROWS, COLS, WATER_BORDER, CELL_SIZE,
+                totalRows, totalCols, getInventoryCount,
+            });
+        }
+
+        // Goldener Pfad — Boot gebaut → Horizont-Licht
+        drawGoldenPath();
 
         // Spielfigur zuletzt zeichnen (immer sichtbar über allem)
         drawPlayer();
@@ -2238,6 +2255,7 @@
                 }
                 if (!undoPushedThisStroke) { pushUndo(); undoPushedThisStroke = true; }
                 grid[r][c] = currentMaterial;
+                window.lastPlacedMaterial = currentMaterial; // NPC-Gedächtnis
                 checkAutomerge(r, c);
                 checkBlueprintMatch(r, c);
                 const hint = document.getElementById('genesis-hint');
@@ -2717,54 +2735,12 @@
         updateBlueprintDisplay();
     }
 
-    // Bauplan-Overlay auf Canvas zeichnen (Ghost-Preview)
+    // drawBlueprintOverlay() → blueprints.js (Zellteilung #11)
     function drawBlueprintOverlay() {
-        const BP = window.INSEL_BLUEPRINTS;
-        if (!BP || !activeBlueprint) return;
-
-        const bp = BP.BLUEPRINTS.find(b => b.id === activeBlueprint.id);
-        if (!bp) return;
-
-        const overlay = BP.getOverlay(grid, activeBlueprint.startR, activeBlueprint.startC, ROWS, COLS, bp.pattern);
-
-        for (const cell of overlay) {
-            const x = (cell.c + WATER_BORDER) * CELL_SIZE;
-            const y = (cell.r + WATER_BORDER) * CELL_SIZE;
-
-            if (cell.status === 'placed') {
-                // Grün: Material ist korrekt platziert
-                ctx.fillStyle = 'rgba(39, 174, 96, 0.3)';
-            } else if (cell.status === 'wrong') {
-                // Rot: Falsches Material
-                ctx.fillStyle = 'rgba(231, 76, 60, 0.3)';
-            } else {
-                // Blau-transparent: Material fehlt noch
-                ctx.fillStyle = 'rgba(52, 152, 219, 0.25)';
-            }
-            ctx.fillRect(x, y, CELL_SIZE, CELL_SIZE);
-
-            // Ghost-Emoji für fehlende Materialien
-            if (cell.status === 'missing' && cell.material !== '*') {
-                const mat = MATERIALS[cell.material];
-                if (mat) {
-                    ctx.globalAlpha = 0.4;
-                    ctx.font = `${CELL_SIZE * 0.45}px serif`;
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillStyle = '#fff';
-                    ctx.fillText(mat.emoji, x + CELL_SIZE / 2, y + CELL_SIZE / 2 + 1);
-                    ctx.globalAlpha = 1;
-                }
-            }
-
-            // Rand
-            ctx.strokeStyle = cell.status === 'placed' ? 'rgba(39,174,96,0.6)' :
-                              cell.status === 'wrong' ? 'rgba(231,76,60,0.6)' :
-                              'rgba(52,152,219,0.5)';
-            ctx.lineWidth = 2;
-            ctx.setLineDash([4, 4]);
-            ctx.strokeRect(x + 1, y + 1, CELL_SIZE - 2, CELL_SIZE - 2);
-            ctx.setLineDash([]);
+        if (window.INSEL_BLUEPRINTS && window.INSEL_BLUEPRINTS.drawOverlay) {
+            window.INSEL_BLUEPRINTS.drawOverlay(ctx, {
+                activeBlueprint, grid, ROWS, COLS, WATER_BORDER, CELL_SIZE, MATERIALS,
+            });
         }
     }
 
@@ -4107,115 +4083,7 @@
     };
     window.isCodeViewActive = function () { return codeViewActive; };
 
-    // Code-View Rendering in draw() einhängen — überschreibt Emoji-Darstellung
-    const _originalDraw = draw;
-
-    // Erweiterte draw-Funktion mit Code-View-Overlay
-    function drawCodeOverlay() {
-        if (!codeViewActive) return;
-        for (let r = 0; r < ROWS; r++) {
-            for (let c = 0; c < COLS; c++) {
-                if (grid[r][c]) {
-                    const x = (c + WATER_BORDER) * CELL_SIZE;
-                    const y = (r + WATER_BORDER) * CELL_SIZE;
-                    // Dunkler Hintergrund
-                    ctx.fillStyle = 'rgba(30, 30, 30, 0.85)';
-                    ctx.fillRect(x + 1, y + 1, CELL_SIZE - 2, CELL_SIZE - 2);
-                    // Code-Text (Material-Key)
-                    ctx.fillStyle = '#00FF41'; // Matrix-Grün
-                    ctx.font = `bold ${Math.max(8, CELL_SIZE * 0.28)}px monospace`;
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillText(grid[r][c], x + CELL_SIZE / 2, y + CELL_SIZE / 2);
-                }
-            }
-        }
-        // Code-View Label
-        const shellsNow = typeof getInventoryCount === 'function' ? getInventoryCount('shell') : 0;
-        const adamsMode = shellsNow === 42;
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-        ctx.fillRect(5, 5, adamsMode ? 420 : 200, 24);
-        ctx.fillStyle = adamsMode ? '#FFD700' : '#00FF41';
-        ctx.font = 'bold 12px monospace';
-        ctx.textAlign = 'left';
-        ctx.textBaseline = 'top';
-        ctx.fillText(adamsMode
-            ? 'DON\'T PANIC · The Answer is 42 · So long, and thanks for all the fish'
-            : '</> CODE-VIEW: grid[r][c]', 10, 10);
-
-        // === Crypto Donation Panel — Nerd Easter Egg ===
-        // MMX: "Proof of Work. Tokens rein, niemand raus."
-        // XCH: "Proof of Space. Dein Speicher, dein Statement."
-        const mmxAddr = window.INSEL_MMX_BURN || 'mmx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq5tuzzn';
-        const xchAddr = window.INSEL_XCH_BURN || 'xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqdlkwut';
-        const mmxBal = window._mmxBurnBalance || '?';
-        const xchBal = window._xchBurnBalance || '?';
-        const panelH = 58;
-        const panelW = Math.min(460, totalCols * CELL_SIZE - 10);
-        const mmxY = totalRows * CELL_SIZE - panelH - 5;
-
-        // Panel-Hintergrund
-        ctx.fillStyle = 'rgba(15, 15, 15, 0.88)';
-        ctx.fillRect(5, mmxY, panelW, panelH);
-        ctx.strokeStyle = '#FF6B00';
-        ctx.lineWidth = 1;
-        ctx.strokeRect(5, mmxY, panelW, panelH);
-
-        // Zeile 1: MMX
-        ctx.fillStyle = '#FF6B00';
-        ctx.font = 'bold 10px monospace';
-        ctx.textAlign = 'left';
-        ctx.textBaseline = 'top';
-        ctx.fillText('🔥 MMX  ' + mmxAddr.slice(0, 12) + '...' + mmxAddr.slice(-6) + '  ' + mmxBal + ' MMX', 10, mmxY + 5);
-
-        // Zeile 2: Balance + Muschel-Wallet (Goldstandard: max 42 🐚 = 0.042 MMX)
-        const shellCount = typeof getInventoryCount === 'function' ? getInventoryCount('shell') : 0;
-        const shellMmx = (shellCount * 0.001).toFixed(4);
-        ctx.fillStyle = '#888';
-        ctx.font = '9px monospace';
-        ctx.fillText('Burn: ' + mmxBal + ' MMX  |  Wallet: ' + shellCount + '/42 🐚 ≈ ' + shellMmx + '/0.042 MMX  |  The Answer', 10, mmxY + 22);
-        // Zeile 2: XCH (Chia — Bram Cohen)
-        ctx.fillStyle = '#3AAC59';
-        ctx.fillText('🌱 XCH  ' + xchAddr.slice(0, 12) + '...' + xchAddr.slice(-6) + '  ' + xchBal + ' XCH', 10, mmxY + 20);
-
-        // Zeile 3: Hawking-Philosophie
-        ctx.fillStyle = '#666';
-        ctx.font = '8px monospace';
-        ctx.fillText('Schwarze L\u00f6cher. Tokens rein, niemand raus.', 10, mmxY + 38);
-        ctx.fillText('Hawking-Strahlung: die Arbeit die rausstrahlt ist das Eigentliche.', 10, mmxY + 48);
-    }
-
-    // Crypto Balance-Polling alle 60s (öffentliche APIs, kein Auth nötig)
-    (function fetchCryptoBalances() {
-        // MMX: Account-basiert, REST: /wapi/address?id=mmx1...
-        const mmxAddr = window.INSEL_MMX_BURN || 'mmx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq5tuzzn';
-        const mmxApi = 'https://api.mmxplorer.com/wapi/address?id=' + mmxAddr;
-        function pollMmx() {
-            fetch(mmxApi).then(r => r.ok ? r.json() : null).then(data => {
-                if (data && data.balances) {
-                    const bal = data.balances['MMX'] || data.balance || 0;
-                    window._mmxBurnBalance = (bal / 10000).toFixed(4);
-                } else {
-                    window._mmxBurnBalance = '0.0000';
-                }
-            }).catch(() => { window._mmxBurnBalance = '—'; });
-        }
-        // XCH (Chia): spacescan.io public API
-        const xchAddr = window.INSEL_XCH_BURN || 'xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqdlkwut';
-        const xchApi = 'https://api2.spacescan.io/1/xch/balance/' + xchAddr;
-        function pollXch() {
-            fetch(xchApi).then(r => r.ok ? r.json() : null).then(data => {
-                if (data && data.xch_balance != null) {
-                    window._xchBurnBalance = parseFloat(data.xch_balance).toFixed(6);
-                } else {
-                    window._xchBurnBalance = '0.000000';
-                }
-            }).catch(() => { window._xchBurnBalance = '—'; });
-        }
-        pollMmx(); pollXch();
-        setInterval(pollMmx, 60000);
-        setInterval(pollXch, 60000);
-    })();
+    // drawCodeOverlay() + fetchCryptoBalances() → code-view.js (Zellteilung #11)
 
     // Monkey-patch requestAnimationFrame callback to add overlay
     const origRAF = window.requestAnimationFrame;

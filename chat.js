@@ -394,6 +394,53 @@ Du: "Ah, willkommen, verehrter Baumeister! Ich bin Mephisto. Man sagt ich sei ei
     const apiKeySave = document.getElementById('api-key-save');
     const apiKeyClose = document.getElementById('api-key-close');
 
+    // === NPC-SESSION-GEDÄCHTNIS (#96) ===
+    // Oscar kommt wieder → NPCs erinnern sich an seinen Baustil und wieviele Sessions er schon hatte.
+    const NPC_MEMORY_KEY = 'insel-npc-memory';
+
+    function _loadNpcMemory() {
+        try { return JSON.parse(localStorage.getItem(NPC_MEMORY_KEY) || '{}'); }
+        catch (_) { return {}; }
+    }
+
+    const _npcMemory = _loadNpcMemory();
+    _npcMemory.sessions = (_npcMemory.sessions || 0) + 1; // diese Session zählt
+
+    window.addEventListener('beforeunload', function () {
+        const grid = window.grid;
+        if (grid) {
+            const counts = {};
+            for (let r = 0; r < grid.length; r++)
+                for (let c = 0; c < grid[r].length; c++)
+                    if (grid[r][c]) counts[grid[r][c]] = (counts[grid[r][c]] || 0) + 1;
+            const top = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+            if (top) _npcMemory.favoriteMaterial = top[0];
+        }
+        if (window.lastPlacedMaterial) _npcMemory.lastMaterial = window.lastPlacedMaterial;
+        _npcMemory.lastVisit = Date.now();
+        localStorage.setItem(NPC_MEMORY_KEY, JSON.stringify(_npcMemory));
+    });
+
+    const _MAT_LABELS = {
+        wood: 'Holz', stone: 'Stein', water: 'Wasser', tree: 'Baum', flower: 'Blume',
+        metal: 'Metall', fire: 'Feuer', earth: 'Erde', glass: 'Glas', sand: 'Sand',
+        boat: 'Boot', fish: 'Fisch', bridge: 'Brücke', path: 'Weg', fence: 'Zaun',
+        mushroom: 'Pilz', plant: 'Pflanze', fountain: 'Brunnen', lamp: 'Lampe',
+        cave: 'Höhle', mountain: 'Berg', ore: 'Erz', gem: 'Edelstein',
+    };
+
+    function getMemoryContext() {
+        const m = _npcMemory;
+        if (!m.sessions || m.sessions <= 1) return ''; // Erste Session — kein Gedächtnis
+        const playerName = localStorage.getItem('insel-player-name') || '';
+        const name = playerName ? playerName : 'Das Kind';
+        let ctx = `\nSPIELER-GEDÄCHTNIS: ${name} ist Session ${m.sessions} auf der Insel.`;
+        if (m.favoriteMaterial) ctx += ` Lieblingsmaterial bisher: ${_MAT_LABELS[m.favoriteMaterial] || m.favoriteMaterial}.`;
+        if (m.lastMaterial) ctx += ` Letzter gebauter Block: ${_MAT_LABELS[m.lastMaterial] || m.lastMaterial}.`;
+        ctx += ` Begrüße ihn wie einen alten Bekannten — erwähne sein Lieblingsmaterial in deiner Stimme!`;
+        return ctx;
+    }
+
     // --- State ---
     let currentNpcId = 'bernd'; // Chat-Bubble öffnet immer Bernd (Support)
     let chatHistory = [];
@@ -698,7 +745,7 @@ Antworte auf Deutsch. Max 2-3 kurze Sätze. Tipp: "zaubere 5 bäume" macht Magie
         const systemPrompt = `${char.system}
 
 ${safetyRule}
-Insel: ${gridInfo}${questInfo || ''}
+Insel: ${gridInfo}${questInfo || ''}${getMemoryContext()}
 ${budgetInfo}`;
 
         const temp = char.temperature ?? 0.7;
