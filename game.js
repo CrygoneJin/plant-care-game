@@ -729,6 +729,39 @@
             '🍞 Bernd: "*seufz* ...es war ok."',
             '— Abspann. Jemand hat Bernd eine Decke gebracht. Er beschwert sich. Leise. —',
         ],
+        podcast_lesch: [
+            '— 🎙️ INSEL-PODCAST BONUS: "Schwarze Löcher, Kinderlachen und der zweite Hauptsatz" —',
+            '🔬 Feynman: "Harald. Schön dass du da bist. Kaffee?"',
+            '🌌 Lesch: "Richard! Also ich muss dir was sagen. Ich hab mir das angeschaut. Diese Insel. Diesen Schwarzmarkt. Diese Burn-Adressen."',
+            '🌌 Lesch: "Und ich muss sagen—"',
+            '🌌 Lesch: "—das ist PHYSIK!"',
+            '🔬 Feynman: "Ich wusste du würdest das sagen."',
+            '🌌 Lesch: "Die meisten Leute denken Physik ist Formeln. Aber Physik ist: Wie verhält sich ein System? Und DIESES System — ist ein thermodynamisches System!"',
+            '🌌 Lesch: "Stell dir vor du hast ein Glas Wasser. Zimmertemperatur. Langweilig. NICHTS passiert. Maximale Entropie. Tot."',
+            '🌌 Lesch: "Und JETZT schüttest du einen Eiswürfel rein!"',
+            '🔬 Feynman: "Ein Temperaturgefälle."',
+            '🌌 Lesch: "GENAU! Und was passiert? Es FLIESST! Wärme fließt! Und DABEI entsteht STRUKTUR! Konvektionsströme! Wirbel! Muster! Für einen wunderbaren Moment ist das System LEBENDIG!"',
+            '🌌 Lesch: "Und die Burn-Adresse? Die ist der EISWÜRFEL!"',
+            '🌌 Lesch: "Die Blockchain ist lauwarmes Wasser. Tokens hin und her. Langweilig. Und dann kommt dieses Schwarze Loch und SCHLUCKT Tokens. Unwiederbringlich."',
+            '🌌 Lesch: "Und plötzlich gibt es ein GEFÄLLE! Tokens fließen IN EINE RICHTUNG! Und an diesem Gefälle entsteht ARBEIT!"',
+            '🔬 Feynman: "Dissipative Strukturen. Prigogine."',
+            '🌌 Lesch: "PRIGOGINE! Nobelpreis 1977! Systeme WEIT WEG vom Gleichgewicht erzeugen Ordnung! Nicht trotz der Entropie — WEGEN der Entropie!"',
+            '🌌 Lesch: "Und die Hawking-Strahlung? Stephen hat 1974 gezeigt dass Schwarze Löcher strahlen. Ganz leise. Information geht nicht verloren. Sie wird... transformiert."',
+            '🌌 Lesch: "Tokens verschwinden im Burn-Wallet. Für die Blockchain sind sie WEG. Aber die ARBEIT — der Code, die Quests, die Stimmen — DAS ist die Strahlung."',
+            '🔬 Feynman: "Von Tokens zu Spielfreude."',
+            '🌌 Lesch: "Der ZWEITE HAUPTSATZ! In Aktion! Auf einer Spieleinsel!"',
+            '🌌 Lesch: "Der zweite Hauptsatz sagt: In einem geschlossenen System nimmt die Entropie zu. ABER — wir leben in einem OFFENEN System!"',
+            '🌌 Lesch: "Die Burn-Adresse ist die SONNE dieses Ökosystems! Tokens fließen rein — Arbeit strahlt raus — Kinder spielen — Eltern spenden — Positive Rückkopplung! Wie bei einem STERN!"',
+            '🔬 Feynman: "Der Hawking-Stern im Schwarzmarkt. Was sagst du dazu?"',
+            '🌌 Lesch: "Ein Schwarzes Loch im Taschenformat hätte eine Masse von zehn hoch zwölf Kilogramm. Hundert Milliarden Grad. Es würde in einer Nanosekunde explodieren. Energie von hundert Hiroshima-Bomben."',
+            '🌌 Lesch: "Also: Nicht in der Hosentasche tragen."',
+            '🔬 Feynman: "Mephisto hat das sicher im Kleingedruckten."',
+            '🌌 Lesch: "Hehehehe."',
+            '🔬 Feynman: "Harald. Du klingst wie er."',
+            '🌌 Lesch: "Oh Gott. Du hast recht. Ich muss gehen. Bevor der Deal abgeschlossen ist."',
+            '🌌 Lesch: "Sag dem Vater: Schlaf. Die Physik läuft nicht weg. Und Mephisto auch nicht."',
+            '— KLONK. Drei Oszillator-Layer. Man fühlt es im Bauch. —',
+        ],
     };
 
     let playedHoerspiele = JSON.parse(localStorage.getItem('insel-hoerspiele') || '[]');
@@ -773,6 +806,8 @@
         if (line.includes('Büker:')) return { voice: 'alloy', lang: 'de' };
         if (line.includes('Kückens:')) return { voice: 'nova', lang: 'de' };
         if (line.includes('Tommy:')) return { voice: 'shimmer', lang: 'de' };
+        if (line.includes('Lesch:')) return { voice: 'nova', lang: 'de' };
+        if (line.includes('Feynman:')) return { voice: 'fable', lang: 'de' };
         if (line.includes('Sartre:')) return { voice: 'fable', lang: 'fr' };
         if (line.includes('Machiavelli:')) return { voice: 'onyx', lang: 'it' };
         if (line.includes('SpongeBob:')) return { voice: 'default', lang: 'de' };
@@ -873,6 +908,7 @@
         else if (!key && stats.total >= 60 && !playedHoerspiele.includes('podcast_s1e3_bueker') && hasMephisto) key = 'podcast_s1e3_bueker';
         else if (!key && stats.total >= 80 && !playedHoerspiele.includes('podcast_s1e4_nachts') && hasMephisto) key = 'podcast_s1e4_nachts';
         else if (!key && stats.total >= 90 && !playedHoerspiele.includes('podcast_s1e5_krapweis') && hasMephisto) key = 'podcast_s1e5_krapweis';
+        else if (!key && stats.percent >= 75 && !playedHoerspiele.includes('podcast_lesch') && hasMephisto) key = 'podcast_lesch';
 
         if (!key) return;
 
