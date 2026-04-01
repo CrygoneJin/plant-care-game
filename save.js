@@ -168,6 +168,7 @@
     function newProject() {
         if (!_ctx) return;
         _ctx.initGrid();
+        _ctx.generateStarterIsland();
         _ctx.setTreeGrowth({});
         _ctx.setInventory({});
         _ctx.setUnlockedMaterials(new Set());
@@ -178,6 +179,10 @@
         _ctx.saveDiscoveredRecipes();
         _ctx.setProjectName('');
         _ctx.resetGenesisFlags();
+        // Autosave löschen damit beim Reload nicht die alte Insel zurückkommt
+        var projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+        delete projects[AUTOSAVE_KEY];
+        localStorage.setItem('insel-projekte', JSON.stringify(projects));
         _ctx.updateStats();
         _ctx.updateInventoryDisplay();
         _ctx.updatePaletteVisibility();
