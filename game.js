@@ -1845,6 +1845,12 @@
         small_tree: { material: 'wood', count: 2 },
         sapling:    { material: 'wood', count: 1 },
         palm:       { material: 'wood', count: 2 },
+        // Sinn: Investitions-Erträge — ROI steigt mit Geduld
+        seed:       { material: 'seed', count: 1 },      // Zu früh geerntet: kein Gewinn
+        sprout:     { material: 'plant', count: 2 },      // Halbzeit: 2 Pflanzen
+        fruit:      { material: 'apple', count: 3 },      // Voll reif: 3 Äpfel (2 Saat → 3 Äpfel!)
+        ore:        { material: 'metal', count: 2 },      // Zu früh: 2 Metall zurück
+        ingot:      { material: 'ingot', count: 2 },      // Voll reif: 2 Barren
     };
 
     // === KRABS: Muschelhandel — Preisliste ===
@@ -2664,6 +2670,10 @@
                 if (hint) hint.style.display = 'none';
                 // Setzling platzieren startet Baumwachstum
                 if (currentMaterial === 'sapling') {
+                    treeGrowth[r + ',' + c] = Date.now();
+                }
+                // Saat/Erz platzieren startet Investitions-Wachstum (Sinn)
+                if (currentMaterial === 'seed' || currentMaterial === 'ore') {
                     treeGrowth[r + ',' + c] = Date.now();
                 }
                 // Konsequenz: Wasser/Brunnen zieht nach 10s Blumen an (1-2 Stück)
