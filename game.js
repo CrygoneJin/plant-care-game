@@ -3040,6 +3040,7 @@
         if (!toastBusy) processToastQueue();
     }
     window.showToast = showToast;
+    window.addToInventory = addToInventory;
 
     function processToastQueue() {
         if (toastQueue.length === 0) {
