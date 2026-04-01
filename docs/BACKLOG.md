@@ -25,6 +25,7 @@
 | 9 | **Mehr Quests** — 11 Templates sind zu wenig, mindestens 20 | Artist + Leader | ✅ Done (45 Templates) |
 | 10 | **Favicon + Meta-Tags** — Torvalds: "10 Minuten, großer Unterschied" | Engineer | ✅ Done |
 | 11 | **Zellteilung game.js** — Sound, Quests, Effects, Stories, Analytics rausziehen | Engineer | 🔄 In Arbeit (analytics.js extrahiert PR #98; sound.js, quests.js, achievements.js, recipes.js, automerge.js bereits ausgelagert; Grid/Effects/Stories noch drin) |
+| 97 | **Oscar als 7. Schicht** — Insel begrüßt Oscar namentlich beim Laden, erkennt seinen Baustil (viele Bäume? viel Wasser?) und spiegelt das in einem Willkommens-Satz | Engineer + Artist | 🔲 Offen |
 
 ## 🟢 P2 — Vor "100 User"-Phase
 
@@ -39,12 +40,14 @@
 | 18 | **Musik on demand** — Loisach Marci Stil, Hardstyle kinderkompatibel | Artist + Engineer | 🔲 Offen |
 | 81 | **Inventar-Töne** — Jedes Inventar-Item hat einen eigenen Ton beim Auswählen | Engineer | ✅ Done (soundSelect + KLONK_FREQS pro Material) |
 | 82 | **Bau-Trommel** — Blöcke platzieren macht Percussion-Sounds | Engineer | ✅ Done (playDrumSound + DRUM_MAP pro Material) |
+| 95 | **Wu-Xing→NPC-Events** — NPCs reagieren kontextbezogen auf Element-Events (Feuer→Asche triggert SpongeBob-Kommentar, Wasser→Blumen triggert ELIZA-Reaktion). Inter-Schicht-Kommunikation. | Engineer + Artist | 🔲 Offen |
+| 96 | **NPC-Session-Gedächtnis** — NPCs erinnern sich an letzte Session (letztes Bauwerk, Lieblingsmaterial, Quests) via localStorage und erwähnen es beim nächsten Start | Engineer + Scientist | 🔲 Offen |
 
 ## 🔵 P3 — Vision / Irgendwann
 
 | # | Item | Owner | Status |
 |---|------|-------|--------|
-| 19 | **Game of Life Screensaver** — Conway-Regeln auf dem Grid wenn idle. Zellen leben, sterben, wachsen. Touch = Reset auf statische Insel. Perfekt für Auto-Display, Wartezimmer, Ladestation. | Engineer | ✅ Done (conwayOverlay + 30s idle-Timer, nur null-Zellen, stopConway() auf Interaction) |
+| 19 | **Game of Life Screensaver** — Conway-Regeln auf dem Grid wenn idle. Zellen leben, sterben, wachsen. Touch = Reset auf statische Insel. Perfekt für Auto-Display, Wartezimmer, Ladestation. **+Conway→Gameplay**: Lebende Zellen lassen Blumen wachsen, stabile Muster (Still Life) triggern Stein-Formationen, Glider erzeugen Wanderwolken. Conway nicht mehr nur Screensaver sondern Gameplay. | Engineer + Scientist | ✅ Done (Screensaver) / 🔲 Offen (Gameplay-Integration) |
 | 20 | **Multiplayer** — Inseln besuchen, gemeinsam bauen | Engineer | ❄️ Eingefroren |
 | 21 | **Leaderboard** — Meiste Blöcke, meiste Entdeckungen, kreativstes Bauwerk | Engineer | ❄️ Eingefroren |
 | 22 | **Projekt-Sharing** — URL die eine Insel teilt (Base64-encoded Grid) | Engineer | ✅ Done (🔗-Button, btoa/atob, ?insel= URL-Parameter) |
@@ -216,7 +219,7 @@ Idee: Die leere Insel (nur Wasser) wird in einer Sequenz erschaffen. Verschieden
 | 51 | **Wu Xing Philosophie im Craft-Prompt** — Holz=Expansion, Feuer=Aktion, Erde=Wandlung, Metall=Reife, Wasser=Ruhe | ✅ Done (worker.js Craft-Prompt + Beispiele) | Scientist |
 | 52 | **Kung Fu Panda Wuxi** — Ästhetik-Inspiration für Wu Xing Elemente | P2 | Artist |
 | 53 | **Echtes Atlantik-Wetter** — Open-Meteo API (29°N, 31°W — halber Weg Martinique↔Bayonne), 🌊 im Meer wetterabhängig | ✅ Done (Open-Meteo fetch bei game.js:1434) | Engineer |
-| 57 | **Stille-Momente** (Ende) — Leere Meerpassagen zwischen Inseln. Kein UI, kein Toast. Nur Wellen und Wind. Oscar denkt nach. | P1 | Designer |
+| 57 | **Stille-Momente** (Ende) — Leere Meerpassagen zwischen Inseln. Kein UI, kein Toast. Nur Wellen und Wind. Oscar denkt nach. **+Offline-Flüster-Modus**: wenn kein LLM erreichbar, wechselt die Insel in gedämpfte Farben, ELIZA-artige lokale Antworten, Toast "Die Insel flüstert nur noch". 3 von 6 Schichten fallen weg, aber es fühlt sich wie Regen an, nicht wie Fehler. | P1 | Designer + Artist |
 | 58 | **Unsinn-Rezepte** (Lindgren) — Feuer+Pfannkuchen=?, Drache+Kuchen=?, unlogisch aber wunderbar | ✅ Done (7 Unsinn-Rezepte in recipes.js: Feuerkuchen, Drachentorte, Geisterschiff, Mondkäse, Schneedrache, Wurmloch, Bienenstich) | Artist |
 | 59 | **10-Sekunden-Erster-Moment** (Paluten) — Erster Block in 10 Sek, nicht 30. Intro kürzen. Tao-Glow-Puls hilft. | P0 | Designer | ✅ Done (9f8a0bf) |
 | 60 | **Haikus am Strand** (Krapweis) — Jede Insel-Station: 5-7-5 Schild am Strand statt Tutorial-Text | P2 | Artist |
@@ -243,6 +246,12 @@ Idee: Die leere Insel (nur Wasser) wird in einer Sequenz erschaffen. Verschieden
 | 78 | **Tesla-Nutzertest auswerten** — 1h Video von Oscar im Tesla (Auto-Touchscreen). Datei >1GB, muss kleiner formatiert werden (komprimieren/schneiden), dann hier rein. Da ist Gold drin — tonnenweise. Echte Nutzerdaten, echte Reaktionen, echter 8-Jähriger. | P0 | Scientist + Leader |
 | 79 | **Hau-den-Lukas Mini-Game zurückbringen** — Existierte als eigenständige HTML-Seite (hau-den-lukas.html, 441 Zeilen). Pump-Check-Game. Bei Main→Branch-Migration nicht mitgenommen. Code lag auf Main, muss neu integriert oder als separates Mini-Game verlinkt werden. | P3 | Engineer |
 | 80 | **docs/PROJECT.md + DESIGN.md + DECISIONS.md neu aufsetzen** — Alle drei existieren mit solidem Inhalt. ARCHITECTURE.md aktualisiert (22 Dateien). | ✅ Done | Leader | ✅ Done (PR #97) |
+
+---
+
+## ❄️ Icebox
+
+- **#98 Schiller-Spieltrieb-Balance** — UI-Element das Formtrieb (Quest-Fortschritt) und Stofftrieb (freies Bauen) als Spannung sichtbar macht; z.B. Tao-Symbol das sich je nach Verhältnis dreht. Erst wenn Feynman Daten hat ob Oscar überhaupt in beiden Modi spielt. (8h, Designer + Scientist)
 
 ---
 
