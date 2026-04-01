@@ -264,13 +264,14 @@ metal+fire → {"emoji":"⚗️","name":"Schmelze","color":"#E8DAEF","border":"#
 async function handleDiscoveries(env) {
     if (!env.CRAFT_KV) return json({ error: 'KV nicht konfiguriert' }, 500);
 
+    // Alle Keys holen (KV.list paginiert intern bei >1000)
     const list = await env.CRAFT_KV.list({ prefix: 'craft:' });
-    const discoveries = [];
 
-    for (const key of list.keys) {
-        const val = await env.CRAFT_KV.get(key.name, 'json');
-        if (val) discoveries.push(val);
-    }
+    // Parallel statt seriell — 482 Reads in ~1 Batch statt 482 RTTs
+    const values = await Promise.all(
+        list.keys.map(key => env.CRAFT_KV.get(key.name, 'json'))
+    );
+    const discoveries = values.filter(Boolean);
 
     // Neueste zuerst
     discoveries.sort((a, b) => (b.created || '').localeCompare(a.created || ''));
@@ -429,11 +430,13 @@ async function handleBugs(request, env) {
         return json({ error: 'Nicht autorisiert' }, 401);
     }
     const list = await env.CRAFT_KV.list({ prefix: 'bug:' });
-    const bugs = [];
-    for (const key of list.keys) {
-        const val = await env.CRAFT_KV.get(key.name, 'json');
-        if (val) bugs.push({ id: key.name, ...val });
-    }
+    const values = await Promise.all(
+        list.keys.map(async key => {
+            const val = await env.CRAFT_KV.get(key.name, 'json');
+            return val ? { id: key.name, ...val } : null;
+        })
+    );
+    const bugs = values.filter(Boolean);
     bugs.sort((a, b) => (b.created || '').localeCompare(a.created || ''));
 
     return json({ total: bugs.length, bugs });
