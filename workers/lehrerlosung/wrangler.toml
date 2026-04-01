@@ -1,0 +1,21 @@
+name = "lehrerlosung"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+[triggers]
+crons = ["30 4 * * *"]  # 04:30 UTC = 06:30 MESZ
+
+# KV für Subscriber-Liste
+# wrangler kv namespace create LEHRERLOSUNG_KV
+# → ID eintragen:
+[[kv_namespaces]]
+binding = "LEHRERLOSUNG_KV"
+id = "TODO_KV_ID_HIER_EINTRAGEN"
+
+[vars]
+# TELEGRAM_BOT_TOKEN und TELEGRAM_CHAT_ID als Secrets setzen:
+# wrangler secret put TELEGRAM_BOT_TOKEN
+# wrangler secret put TELEGRAM_CHAT_ID
+#
+# Webhook registrieren:
+# curl "https://api.telegram.org/bot<TOKEN>/setWebhook?url=https://lehrerlosung.<dein-account>.workers.dev/webhook"
