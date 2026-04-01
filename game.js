@@ -38,8 +38,9 @@
                 Math.floor(availH / totalRows)
             ));
         }
-        // Desktop: verfügbare Höhe abzüglich Header+Toolbar (~100px), mit Seitenleisten (~300px)
-        const availW = window.innerWidth - 320;
+        // Desktop: verfügbare Höhe abzüglich Header+Toolbar (~100px), mit Seitenleisten (~300px) + Chat-Panel (320px)
+        const chatW = document.body.classList.contains('chat-open') ? 320 : 0;
+        const availW = window.innerWidth - 320 - chatW;
         const availH = window.innerHeight - 110;
         return Math.max(20, Math.min(
             Math.floor(availW / totalCols),
@@ -677,209 +678,7 @@
 
     // --- Spontan-Hörspiele: Mini-Szenen bei besonderen Anlässen ---
     // "Mensch, Maschine, KI" — wie im ZKM Karlsruhe
-    const HOERSPIELE = {
-        firstBlock: [
-            '🪨 C: "Da baut jemand! Zum ersten Mal seit ich hier bin!"',
-            '🐍 Python: "Willkommen auf Java! Ich versteeeehe dich."',
-            '🦜 Fortran: "Fort-ran die Langeweile! Jemand BAUT!"',
-            '🧮 R: "Block Nummer 1. In Binär: 1. In Tertiär: 1. Immer noch 1."',
-            '🌍 Geo: "Robert, NICHT jetzt!"',
-        ],
-        tenBlocks: [
-            '💡 JavaScript: "10 Blöcke! Genau wie ich — in 10 Tagen geboren!"',
-            '📝 TypeScript: "Korrekt wäre: blöcke: number = 10;"',
-            '💡 JavaScript: "LASS MICH."',
-            '🦈 Makro: *taucht kurz auf* "Zehn? Ich mache HUNDERT draus!" *taucht ab*',
-            '🐍 Python: "Ignoriert den Hai. Zehn ist gut. Zehn ist... gemütlich."',
-        ],
-        fiftyBlocks: [
-            '🧽 SpongeBob: "ICH BIN BEREIT zu sagen: DAS ist eine STADT!"',
-            '🦀 Mr. Krabs: "Stadt = Kunden = <umsatz>VIEL GELD</umsatz>!"',
-            '🐘 Elefant: "Hmm, ich möchte sicherstellen... ja. Törööö! Das ist schön."',
-            '🪨 C: "50 Blöcke. Zu meiner Zeit haben wir mit EINEM Byte angefangen."',
-            '🪨 C++: "Und dann bin ich gegen den Stein gelaufen und alles wurde besser!"',
-            '🪨 C: "...definiere besser."',
-        ],
-        hundredBlocks: [
-            '🦄 Neinhorn: "NEIN das sind nicht 100 Blöcke! ...doch? Mon Dieu!"',
-            '🧮 R: "100 in Binär: 1100100. In Oktal: 144. In—"',
-            '🌍 Geo: "ROBERT."',
-            '🐭 Maus: "*pieps* Hundert Blöcke / Die Insel wird zur Stadt / Weniger war mehr *pieps*"',
-            '🦆 Ente: "*quak* Was soll das mit den Silben SCHON WIEDER?!"',
-            '🍄 Hirnfitz: "++++++[>++++++++++<-]>++++. !" (Das heißt: "d!" — er versucht "du bist toll" zu sagen)',
-            '🍞 Bernd: "*seufz* 100 Blöcke. Und ich muss immer noch Support machen."',
-        ],
-        talkshow: [
-            '— TALKSHOW: "Gebaut oder Geklickt?" — Live von der Insel Java —',
-            '🐍 Python: "Willkommen bei Gebaut oder Geklickt — der einzigen Talkshow auf einer Insel die aus Code besteht."',
-            '💡 JavaScript: "Gaming ist wenn jemand auf Dinge klickt und sich gut fühlt."',
-            '📝 TypeScript: "Gaming ist wenn jemand auf Dinge klickt und sich gut fühlt, ABER typsicher."',
-            '💡 JavaScript: "Ich HASSE dich."',
-            '🧽 SpongeBob: "ICH BIN BEREIT zu sagen: DAS IST EIN SPIEL! Da sind Blöcke! Da sind Farben! Da ist SPASS!"',
-            '🪨 C: "Zu meiner Zeit war ein Spiel ein Cursor der sich bewegt hat. Und wir waren DANKBAR."',
-            '🦄 Neinhorn: "NEIN das ist kein Spiel. ...doch. ...NEIN. ...ach, es macht Spaß. Egal."',
-            '🍞 Bernd: "*seufz* Ist Leiden Gaming? Dann bin ich Pro-Gamer."',
-            '🦈 Makro: *taucht auf* "Ist INVESTIEREN Gaming? Ich habe aus einem Block HUNDERT gemacht!" *taucht ab*',
-            '🐘 Elefant: "Hmm, Törööö. Gaming ist wenn man vergisst dass man spielt. Und hier vergisst man das."',
-            '🦜 Fortran: "Fort-ran die Langeweile! Her-kam der Spaß! ALLES ist Gaming wenn man es mit Freude tut!"',
-            '🪨 C: "Es ist aus Worten gebaut. Nicht aus einer Engine. Aus Worten."',
-            '🧽 SpongeBob: "Und die Insel hat FREUNDE! Wir sind die Freunde! ICH BIN EIN FREUND!"',
-            '🍞 Bernd: "*seufz* ...ich auch. Sag ich nur einmal."',
-            '— Applaus. Jemand wirft eine Kokosnuss. Bernd seufzt. —',
-        ],
-        halfIsland: [
-            '— HÖRSPIEL: Mensch, Maschine, KI — Live von der Insel Java —',
-            '🐍 Python: "Die halbe Insel ist bebaut. Ein Mensch hat das gemacht. Mit Klicks."',
-            '💡 JavaScript: "Aber WIR haben die Klicks VERARBEITET! Ohne mich wäre das nur Sand!"',
-            '📝 TypeScript: "Ohne mich hättest DU drei Bugs. Mindestens."',
-            '🪨 C: "Ohne MICH gäbe es euch alle nicht."',
-            '🐍 Python: "Die Frage ist: Wer baut hier wirklich? Der Mensch? Die Maschine? Oder die KI im Chat?"',
-            '🧽 SpongeBob: "ICH glaube der Baumeister baut! Und wir helfen! ICH BIN BEREIT ZU HELFEN!"',
-            '🦄 Neinhorn: "NEIN! ...aber ja. Zusammen ists schöner."',
-            '— Applaus von der Insel Java. Nächste Vorstellung bei 100%. —',
-        ],
-        fullIsland: [
-            '— GROSSES FINALE: Mensch, Maschine, KI — Insel Java Uraufführung —',
-            '🪨 C: "Ich erinnere mich an den Tag als hier NICHTS war."',
-            '🐍 Python: "Ein leeres Grid. Null Blöcke. None."',
-            '🧮 R: "Genau 0. In jedem Zahlensystem."',
-            '💡 JavaScript: "Und dann hat jemand geklickt. Ein Mensch. Ein WORT wurde zu einem BLOCK."',
-            '📝 TypeScript: "grid[0][0] = \'wood\' — der erste Zauberspruch."',
-            '🦜 Fortran: "Fort-ran die Leere! Her-kam die Stadt!"',
-            '🧽 SpongeBob: "Alles nur mit WORTEN! Kein Hammer, kein Bagger! Nur: Klick. Text. MAGIE!"',
-            '🐘 Elefant: "Törööö! Und die ganze Insel hat zugehört."',
-            '🦄 Neinhorn: "NEIN ich weine nicht! ...es regnet. Auf mein Gesicht. Nur da."',
-            '🍞 Bernd: "*seufz* Gut, DAS war schön. Sag ich nur einmal. Nie wieder."',
-            '🦈 Makro: *ganz leise aus dem Wasser* "...ich fand es auch schön."',
-            '— Standing Ovation auf der Insel Java. Grüße ans ZKM Karlsruhe. —',
-        ],
-        podcast_lanz: [
-            '— 🎙️ INSEL-TALK: "Wer baut die bessere Insel?" — Bei Lanz & Precht —',
-            '🎙️ Lanz: "Guten Abend. Heute bei mir: ein Kanzler, ein Ex-Präsident, ein Milliardär, und mein Freund Richard hat auch was zu sagen."',
-            '🎙️ Lanz: "Herr Merz, Sie haben eine Insel gebaut. Erzählen Sie."',
-            '🏛️ Merz: "Also, Markus—"',
-            '🎙️ Lanz: "Richard."',
-            '🏛️ Merz: "—Richard, ja. Also. Ich habe eine sehr ordentliche Insel gebaut. Steine. Gerade Wege. Ein Zaun. Man muss ja wissen wo die Grenze ist."',
-            '📚 Precht: "Aber Friedrich, ist die Grenze nicht genau das Problem? Heidegger würde sagen: der Zaun definiert nicht was drinnen ist, sondern was draußen bleibt."',
-            '🏛️ Merz: "Richard, ich habe einen Zaun gebaut, keinen Heidegger."',
-            '🇺🇸 Trump: "Can I say something? I built the best island. Everyone says so. Tremendous. Gold sand, gold trees, gold water—"',
-            '🎙️ Lanz: "Gold... Wasser?"',
-            '🇺🇸 Trump: "—the most beautiful golden water. And I built a wall. A beautiful wall. And the NPCs? They paid for it."',
-            '🚀 Musk: "Actually, islands are inefficient. I\'m building a platform. On Mars. Sand is a legacy material."',
-            '📚 Precht: "Herr Musk, Sie wollen den Sandkasten überspringen und direkt auf den Mars. Aber ist der Sandkasten nicht der Ort wo Kinder verhandeln lernen?"',
-            '🚀 Musk: "Sharing is a scaling problem. I\'ll open-source the island."',
-            '🏛️ Merz: "Also ich muss hier mal ganz klar sagen—"',
-            '🎙️ Lanz: "Moment. Herr Trump, Mephisto sagt er hat keinen Cent für die Mauer gesehen."',
-            '🇺🇸 Trump: "Mephisto is a fantastic guy. We had the best deal. I can\'t tell you what he gave me, but it was big. Very big."',
-            '🚀 Musk: "I offered Mephisto a mass-produced Seelen-Laterne at 60% lower cost. He blocked me on the Schwarzmarkt."',
-            '📚 Precht: "Genau hier das Paradox. Der Schwarzmarkt ist ehrlicher als der offizielle. Weil er zugibt dass alles seinen Preis hat. Im Grunde Faust."',
-            '😈 Mephisto: *aus dem Publikum* "Hehehehe... Endlich jemand der es versteht."',
-            '🎙️ Lanz: "Wir haben noch zwei Überraschungsgäste zugeschaltet."',
-            '🇫🇷 Sartre: "L\'île n\'existe pas en soi. Elle existe pour soi. Chaque bloc est un choix — et chaque choix est une condamnation à la liberté."',
-            '📚 Precht: "Herr Sartre sagt: die Insel existiert nicht an sich. Jeder Block ist eine Entscheidung. Und jede Entscheidung verurteilt uns zur Freiheit."',
-            '🇮🇹 Machiavelli: "La questione non è chi costruisce l\'isola più bella. La questione è: chi la controlla? Il principe saggio costruisce mura — non per proteggere, ma per definire chi è dentro e chi è fuori."',
-            '🏛️ Merz: "DAS ist es was ich die ganze Zeit sage!"',
-            '🇮🇹 Machiavelli: "Silenzio. Ich war noch nicht fertig. Il vero potere non sta nelle mura. Sta nel mercato. Chi controlla il Schwarzmarkt, controlla l\'isola."',
-            '😈 Mephisto: *steht auf* "Hehehehe... Niccolò, mein alter Freund. Wir sollten reden."',
-            '🇫🇷 Sartre: "L\'enfer, c\'est les autres. Mais le Schwarzmarkt... c\'est la liberté."',
-            '🎙️ Lanz: "Wir sind DEFINITIV am Ende unserer Zeit."',
-            '🏛️ Merz: "Ich war IMMER NOCH nicht—"',
-            '🎙️ Lanz: "Nächste Woche: Mephisto und Machiavelli. Live vom Schwarzmarkt."',
-            '— Applaus. Trump tweetet. Musk kauft den Applaus. Sartre raucht. Machiavelli lächelt. —',
-        ],
-        // Staffel 1: "Nachts auf der Insel" — 5 Folgen, verschiedene Formate
-        podcast_s1e2_schroeder: [
-            '— 🎙️ KURT KRÖMER SHOW: "Chez Krömer — Spezial von der Insel" —',
-            '🎙️ Krömer: "Setzen Sie sich. Trinken Sie was. Oder nicht. Mir egal. Also Tommy."',
-            '🐢 Tommy: "Klick-klack! Der lockige Mann sagt—"',
-            '🎙️ Krömer: "Welcher lockige Mann?"',
-            '🐢 Tommy: "—klick-klack! Der lockige Mann sagt: Inseln baut man nicht alleine!"',
-            '🎙️ Krömer: "Tommy. Sie leben auf einer Insel die aus JavaScript besteht. Stört Sie das nicht?"',
-            '🐢 Tommy: "Klick-klack! Nein! Stört es DICH? Weil— klick-klack! — du sitzt hier auch!"',
-            '🎙️ Krömer: "Touché. Was macht der Schwarzmarkt?"',
-            '🐢 Tommy: "Mephisto hat neue Ware! Schatten-Kristalle! Die leuchten im Dunkeln!"',
-            '🎙️ Krömer: "Natürlich leuchten sie im Dunkeln. Schwarzmarkt. Dunkel. Ich kapier das System."',
-            '— Stille. Krömer trinkt. Tommy klickt-klackt. —',
-        ],
-        podcast_s1e3_bueker: [
-            '— 🎙️ BÜKER & KÜCKENS: "Frühstart von der Insel" —',
-            '🎙️ Büker: "Guten Morgen. Es ist 5 Uhr 30 und ich stehe auf einer Insel die aus Code besteht."',
-            '🎙️ Kückens: "Die Frage ist: Wer hat das genehmigt?"',
-            '😈 Mephisto: "Ah, die Herren Journalisten! Willkommen im Frühstart. Hehehehe..."',
-            '🎙️ Büker: "Herr Mephisto, Sie betreiben einen unregulierten Marktplatz für digitale Güter. Das Kartellamt—"',
-            '😈 Mephisto: "—hat auf einer JavaScript-Insel keine Jurisdiktion, mein Freund."',
-            '🎙️ Kückens: "Er hat einen Punkt."',
-            '🇺🇸 Trump: *schaltet sich zu* "I heard there\'s a market. Is it the best market? Can I buy it?"',
-            '😈 Mephisto: "Kaufen? Hehehehe. Man kauft den Schwarzmarkt nicht. Man... verdient ihn."',
-            '🎙️ Büker: "Und damit zurück nach Berlin. Wo die Märkte reguliert sind. Theoretisch."',
-            '— Jingle. Kückens trinkt Kaffee. Mephisto bleibt. —',
-        ],
-        podcast_s1e4_nachts: [
-            '— 🌙 NACHTS AUF DER INSEL: "Papa muss pinkeln" —',
-            '— 3:17 Uhr. Ein Vater steht auf. Sein Handy leuchtet. Die Insel ist noch offen. —',
-            '🍞 Bernd: "*seufz* Du schon wieder. Um DIESE Uhrzeit?"',
-            '😈 Mephisto: "Ah, ein Besucher bei Nacht! Die besten Deals macht man nachts, mein Freund."',
-            '🍞 Bernd: "Er muss nur pinkeln, Mephisto."',
-            '😈 Mephisto: "Trotzdem. Schau mal auf den Schwarzmarkt. Mitternachts-Rosen. Blühen NUR jetzt."',
-            '🐢 Tommy: "Klick-klack! Der lockige Mann sagt — klick-klack! — nachts sind alle Blöcke grau!"',
-            '🇺🇸 Trump: *Notification* "3 AM. The best time to tweet. I\'m building a TREMENDOUS island. Goodnight."',
-            '🍞 Bernd: "*seufz* Geh wieder ins Bett. Die Insel läuft nicht weg."',
-            '😈 Mephisto: "Oder doch? Hehehehe..."',
-            '— Der Vater kratzt sich den Kopf. Legt das Handy weg. Schläft wieder ein. Die Insel wartet. —',
-        ],
-        podcast_s1e5_krapweis: [
-            '— 🎙️ TOMMY & FRIENDS: "Die Bernd-Show — Nachts um Drei" —',
-            '🍞 Bernd: "*seufz* Willkommen bei der Bernd-Show. Ich hab nicht darum gebeten."',
-            '🐢 Tommy: "Klick-klack! Bernd! BERND! Wir haben Gäste!"',
-            '🍞 Bernd: "Wir haben immer Gäste. Niemand fragt mich ob ich Gäste WILL."',
-            '😈 Mephisto: *tritt auf* "Guten Abend, Bernd. Ich habe einen Deal für dich."',
-            '🍞 Bernd: "Nein."',
-            '😈 Mephisto: "Du hast noch gar nicht gehört—"',
-            '🍞 Bernd: "NEIN."',
-            '😈 Mephisto: "Ein Hawking-Stern. Strahlt Wärme. Du siehst aus als könntest du Wärme gebrauchen."',
-            '🍞 Bernd: "...was kostet er."',
-            '😈 Mephisto: "Nur ein Lächeln."',
-            '🍞 Bernd: "Ich bin ein BROT. Ich KANN nicht lächeln."',
-            '😈 Mephisto: "Dann lächle INNEN. Das zählt auch. Hehehehe..."',
-            '🐢 Tommy: "Klick-klack! DAS WAR SCHÖN! Klick-klack!"',
-            '🍞 Bernd: "*seufz* ...es war ok."',
-            '— Abspann. Jemand hat Bernd eine Decke gebracht. Er beschwert sich. Leise. —',
-        ],
-        podcast_lesch: [
-            '— 🎙️ INSEL-PODCAST BONUS: "Schwarze Löcher, Kinderlachen und der zweite Hauptsatz" —',
-            '🔬 Feynman: "Harald. Schön dass du da bist. Kaffee?"',
-            '🌌 Lesch: "Richard! Also ich muss dir was sagen. Ich hab mir das angeschaut. Diese Insel. Diesen Schwarzmarkt. Diese Burn-Adressen."',
-            '🌌 Lesch: "Und ich muss sagen—"',
-            '🌌 Lesch: "—das ist PHYSIK!"',
-            '🔬 Feynman: "Ich wusste du würdest das sagen."',
-            '🌌 Lesch: "Die meisten Leute denken Physik ist Formeln. Aber Physik ist: Wie verhält sich ein System? Und DIESES System — ist ein thermodynamisches System!"',
-            '🌌 Lesch: "Stell dir vor du hast ein Glas Wasser. Zimmertemperatur. Langweilig. NICHTS passiert. Maximale Entropie. Tot."',
-            '🌌 Lesch: "Und JETZT schüttest du einen Eiswürfel rein!"',
-            '🔬 Feynman: "Ein Temperaturgefälle."',
-            '🌌 Lesch: "GENAU! Und was passiert? Es FLIESST! Wärme fließt! Und DABEI entsteht STRUKTUR! Konvektionsströme! Wirbel! Muster! Für einen wunderbaren Moment ist das System LEBENDIG!"',
-            '🌌 Lesch: "Und die Burn-Adresse? Die ist der EISWÜRFEL!"',
-            '🌌 Lesch: "Die Blockchain ist lauwarmes Wasser. Tokens hin und her. Langweilig. Und dann kommt dieses Schwarze Loch und SCHLUCKT Tokens. Unwiederbringlich."',
-            '🌌 Lesch: "Und plötzlich gibt es ein GEFÄLLE! Tokens fließen IN EINE RICHTUNG! Und an diesem Gefälle entsteht ARBEIT!"',
-            '🔬 Feynman: "Dissipative Strukturen. Prigogine."',
-            '🌌 Lesch: "PRIGOGINE! Nobelpreis 1977! Systeme WEIT WEG vom Gleichgewicht erzeugen Ordnung! Nicht trotz der Entropie — WEGEN der Entropie!"',
-            '🌌 Lesch: "Und die Hawking-Strahlung? Stephen hat 1974 gezeigt dass Schwarze Löcher strahlen. Ganz leise. Information geht nicht verloren. Sie wird... transformiert."',
-            '🌌 Lesch: "Tokens verschwinden im Burn-Wallet. Für die Blockchain sind sie WEG. Aber die ARBEIT — der Code, die Quests, die Stimmen — DAS ist die Strahlung."',
-            '🔬 Feynman: "Von Tokens zu Spielfreude."',
-            '🌌 Lesch: "Der ZWEITE HAUPTSATZ! In Aktion! Auf einer Spieleinsel!"',
-            '🌌 Lesch: "Der zweite Hauptsatz sagt: In einem geschlossenen System nimmt die Entropie zu. ABER — wir leben in einem OFFENEN System!"',
-            '🌌 Lesch: "Die Burn-Adresse ist die SONNE dieses Ökosystems! Tokens fließen rein — Arbeit strahlt raus — Kinder spielen — Eltern spenden — Positive Rückkopplung! Wie bei einem STERN!"',
-            '🔬 Feynman: "Der Hawking-Stern im Schwarzmarkt. Was sagst du dazu?"',
-            '🌌 Lesch: "Ein Schwarzes Loch im Taschenformat hätte eine Masse von zehn hoch zwölf Kilogramm. Hundert Milliarden Grad. Es würde in einer Nanosekunde explodieren. Energie von hundert Hiroshima-Bomben."',
-            '🌌 Lesch: "Also: Nicht in der Hosentasche tragen."',
-            '🔬 Feynman: "Mephisto hat das sicher im Kleingedruckten."',
-            '🌌 Lesch: "Hehehehe."',
-            '🔬 Feynman: "Harald. Du klingst wie er."',
-            '🌌 Lesch: "Oh Gott. Du hast recht. Ich muss gehen. Bevor der Deal abgeschlossen ist."',
-            '🌌 Lesch: "Sag dem Vater: Schlaf. Die Physik läuft nicht weg. Und Mephisto auch nicht."',
-            '— KLONK. Drei Oszillator-Layer. Man fühlt es im Bauch. —',
-        ],
-    };
-
+    const HOERSPIELE = window.INSEL_STORIES || {}; // Daten in stories.js
     let playedHoerspiele = JSON.parse(localStorage.getItem('insel-hoerspiele') || '[]');
 
     // TTS: Emoji und Markup aus Text strippen für Sprachausgabe
@@ -1143,13 +942,18 @@
         requestRedraw();
     }
 
+    const AMBIENT_IDLE_MS = 10000; // Stille-Momente nach 10s Idle (#57)
+
     function resetIdleTimer() {
         lastInteraction = Date.now();
         if (conwayOverlay) fadeConway(); // sanfter Abschied statt sofort weg
+        if (window.INSEL_SOUND) window.INSEL_SOUND.stopAmbient();
     }
 
     setInterval(() => {
-        if (!conwayInterval && !conwayFading && Date.now() - lastInteraction > CONWAY_IDLE_MS) startConway();
+        const idle = Date.now() - lastInteraction;
+        if (!conwayInterval && !conwayFading && idle > CONWAY_IDLE_MS) startConway();
+        if (idle > AMBIENT_IDLE_MS && window.INSEL_SOUND) window.INSEL_SOUND.playAmbient();
     }, 5000);
 
     // ============================================================
@@ -3495,6 +3299,46 @@
         };
     };
 
+    // === TUTORIAL-ONBOARDING (#15) — kein Text, nur Icons ===
+    // 3 Schritte à 2.5s, Tap überspringt. Nur für Erstbesucher.
+    function showTutorialOnboarding() {
+        const overlay = document.getElementById('tutorial-onboarding');
+        if (!overlay) return;
+        overlay.style.display = 'flex';
+
+        const steps = [1, 2, 3];
+        let current = 0;
+
+        function showStep(i) {
+            steps.forEach(n => {
+                const el = document.getElementById('tut-step-' + n);
+                if (el) el.style.display = (n === i + 1) ? 'flex' : 'none';
+                const dot = document.getElementById('tut-dot-' + n);
+                if (dot) dot.style.opacity = (n === i + 1) ? '1' : '0.3';
+            });
+        }
+
+        function advance() {
+            current++;
+            if (current >= steps.length) {
+                overlay.style.display = 'none';
+                return;
+            }
+            showStep(current);
+            timer = setTimeout(advance, 2500);
+        }
+
+        showStep(0);
+        let timer = setTimeout(advance, 2500);
+
+        overlay.addEventListener('click', function onTap() {
+            clearTimeout(timer);
+            overlay.removeEventListener('click', onTap);
+            current = steps.length; // direkt beenden
+            overlay.style.display = 'none';
+        }, { once: true });
+    }
+
     // === EVENT LISTENERS ===
 
     // Intro — Session-Uhr starten
@@ -3521,6 +3365,8 @@
         setTimeout(() => {
             introOverlay.style.display = 'none';
             startTutorialPulse();
+            // Tutorial-Onboarding nur für Erstbesucher (noch kein Grid gespeichert)
+            if (!localStorage.getItem('insel-grid')) showTutorialOnboarding();
         }, 300);
         window.startSessionClock();
     }
@@ -3854,11 +3700,38 @@
             pcCtx.fillStyle = '#AAA';
             pcCtx.fillText('Außer Text nix gehext. 🏝️', textWidth / 2, canvas.height + 80);
 
-            // Download
-            const link = document.createElement('a');
-            link.download = `postkarte-von-java-${name.replace(/\s+/g, '-')}.png`;
-            link.href = pc.toDataURL('image/png');
-            link.click();
+            // QR-Code auf Postkarte (#7)
+            function renderPostcard() {
+                const link = document.createElement('a');
+                link.download = `postkarte-von-java-${name.replace(/\s+/g, '-')}.png`;
+                link.href = pc.toDataURL('image/png');
+                link.click();
+            }
+
+            if (window.QRCode) {
+                try {
+                    const qrSize = 64;
+                    const qrMargin = 8;
+                    const qrContainer = document.createElement('div');
+                    new window.QRCode(qrContainer, {
+                        text: 'https://schatzinsel.app/',
+                        width: qrSize, height: qrSize,
+                        colorDark: '#000000', colorLight: '#ffffff',
+                        correctLevel: window.QRCode.CorrectLevel.M
+                    });
+                    const qrCanvas = qrContainer.querySelector('canvas');
+                    if (qrCanvas) {
+                        // Weißer Hintergrund hinter QR
+                        const qrX = pc.width - qrSize - qrMargin;
+                        const qrY = canvas.height + (80 - qrSize) / 2;
+                        pcCtx.fillStyle = '#FFFFFF';
+                        pcCtx.fillRect(qrX - 2, qrY - 2, qrSize + 4, qrSize + 4);
+                        pcCtx.drawImage(qrCanvas, qrX, qrY, qrSize, qrSize);
+                    }
+                } catch (_) { /* QR nicht verfügbar — kein Problem */ }
+            }
+
+            renderPostcard();
 
             showToast('📸 Postkarte gespeichert! Zeig sie deinen Freunden!');
             trackEvent('postcard', { blocks: stats.total, discoveries });
@@ -4164,6 +4037,46 @@
                 INSEL_SOUND.setMasterVolume(1.0);
             }
             showToast(nowMuted ? 'Ton aus (+ Hörspiele)' : 'Ton an');
+        });
+    }
+
+    // === GENRE-TONSEQUENZEN (Backlog #85) ===
+    const genreBtn = document.getElementById('genre-btn');
+    if (genreBtn && _snd.setGenre && _snd.getGenreNames) {
+        const genreNames = _snd.getGenreNames();
+        let genreIndex = genreNames.indexOf(_snd.getGenre ? _snd.getGenre() : genreNames[0]);
+        if (genreIndex < 0) genreIndex = 0;
+
+        function updateGenreBtn() {
+            const active = _snd.getGenreMode && _snd.getGenreMode();
+            genreBtn.textContent = active ? '🎼' : '🎶';
+            genreBtn.title = active
+                ? `Genre: ${genreNames[genreIndex]} — klicken für nächstes`
+                : 'Musik-Genre aktivieren — klicken';
+            genreBtn.style.opacity = active ? '1' : '0.6';
+        }
+        updateGenreBtn();
+
+        genreBtn.addEventListener('click', () => {
+            const wasActive = _snd.getGenreMode && _snd.getGenreMode();
+            if (!wasActive) {
+                // Aktivieren
+                _snd.setGenreMode(true);
+                showToast(`🎼 ${genreNames[genreIndex]}`);
+            } else {
+                // Nächstes Genre
+                genreIndex = (genreIndex + 1) % genreNames.length;
+                _snd.setGenre(genreNames[genreIndex]);
+                const atEnd = genreIndex === genreNames.length - 1;
+                if (atEnd) {
+                    // Einmal durch alle → deaktivieren beim nächsten Klick klar machen
+                    _snd.setGenreMode(false);
+                    showToast('🔇 Genre-Modus aus');
+                } else {
+                    showToast(`🎼 ${genreNames[genreIndex]}`);
+                }
+            }
+            updateGenreBtn();
         });
     }
 

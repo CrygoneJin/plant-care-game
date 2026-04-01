@@ -357,6 +357,11 @@
             playKlonk();
             return;
         }
+        // Genre-Modus: Sequenz statt Element-Ton
+        if (genreMode) {
+            soundGenreNote();
+            return;
+        }
         const tone = ELEMENT_TONES[material];
         if (tone === null) return; // Tao = Stille
         if (tone) {
@@ -649,14 +654,18 @@
     let currentGenre = GENRE_NAMES[Math.floor(Math.random() * GENRE_NAMES.length)];
     let genreNoteIndex = 0;
     let genreBlockCounter = 0;
+    let genreMode = false; // Genre-Modus: wenn aktiv, ersetzt soundBuild den Element-Ton
 
     function setGenre(name) {
         if (GENRES[name]) {
             currentGenre = name;
             genreNoteIndex = 0;
+            genreBlockCounter = 0;
         }
     }
 
+    function setGenreMode(active) { genreMode = !!active; }
+    function getGenreMode() { return genreMode; }
     function getGenre() { return currentGenre; }
     function getGenreNames() { return GENRE_NAMES.slice(); }
 
@@ -685,6 +694,67 @@
         playRichTone(varFreq, genre.dur + Math.random() * 0.03, genre.wave, genre.vol);
     }
 
+    // === Stille-Momente: Wellen-Ambient (#57) ===
+    let ambientNodes = null;
+
+    function playAmbient() {
+        if (isMuted()) return;
+        if (ambientNodes) return; // Läuft schon
+        try {
+            const ctx = ensureAudio();
+            // White noise buffer (2 Sekunden, geloopt)
+            const bufLen = ctx.sampleRate * 2;
+            const buf = ctx.createBuffer(1, bufLen, ctx.sampleRate);
+            const data = buf.getChannelData(0);
+            for (let i = 0; i < bufLen; i++) data[i] = Math.random() * 2 - 1;
+
+            const src = ctx.createBufferSource();
+            src.buffer = buf;
+            src.loop = true;
+
+            // Tiefpass für weiches Meeresrauschen
+            const lp = ctx.createBiquadFilter();
+            lp.type = 'lowpass';
+            lp.frequency.value = 600;
+            lp.Q.value = 0.5;
+
+            // Amplituden-LFO für Wellenbewegung
+            const lfo = ctx.createOscillator();
+            lfo.frequency.value = 0.15; // ~1 Welle alle 7 Sekunden
+            const lfoGain = ctx.createGain();
+            lfoGain.gain.value = 0.04;
+            lfo.connect(lfoGain);
+
+            const masterGain = ctx.createGain();
+            masterGain.gain.value = 0.0;
+            masterGain.gain.linearRampToValueAtTime(0.07 * masterVolume, ctx.currentTime + 3);
+            lfoGain.connect(masterGain.gain);
+
+            src.connect(lp);
+            lp.connect(masterGain);
+            masterGain.connect(ctx.destination);
+
+            lfo.start();
+            src.start();
+
+            ambientNodes = { src, lfo, masterGain, ctx };
+        } catch (e) { /* Audio nicht verfügbar */ }
+    }
+
+    function stopAmbient() {
+        if (!ambientNodes) return;
+        try {
+            const { src, lfo, masterGain, ctx } = ambientNodes;
+            masterGain.gain.cancelScheduledValues(ctx.currentTime);
+            masterGain.gain.setValueAtTime(masterGain.gain.value, ctx.currentTime);
+            masterGain.gain.linearRampToValueAtTime(0.0, ctx.currentTime + 1.5);
+            setTimeout(() => {
+                try { src.stop(); lfo.stop(); } catch (_) {}
+            }, 1600);
+        } catch (_) {}
+        ambientNodes = null;
+    }
+
     window.INSEL_SOUND = {
         soundBuild,
         soundDemolish,
@@ -706,6 +776,11 @@
         setGenre,
         getGenre,
         getGenreNames,
+        setGenreMode,
+        getGenreMode,
+        // Stille-Momente: Wellen-Ambient (#57)
+        playAmbient,
+        stopAmbient,
         setOnGenreChange: (fn) => { onGenreChange = fn; },
         // Low-level für Erweiterungen
         playTone,

@@ -12,6 +12,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <!-- QR-Code Generator für Postkarte (#7) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 </head>
 <body>
 
@@ -38,6 +40,36 @@
         </div>
     </div>
 
+    <!-- Tutorial-Onboarding (kein Text — nur Icons) -->
+    <div id="tutorial-onboarding" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.82); z-index:9000; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:0;">
+        <div class="tut-step" id="tut-step-1" style="display:flex; align-items:center; justify-content:center; gap:24px; font-size:64px; animation:tutPop 0.4s ease-out;">
+            <span style="animation:tutBounce 0.8s infinite alternate;">🖌️</span>
+            <span style="font-size:36px; opacity:0.7;">➡️</span>
+            <span style="font-size:72px; animation:tutGlow 1s infinite alternate;">🟫</span>
+        </div>
+        <div class="tut-step" id="tut-step-2" style="display:none; align-items:center; justify-content:center; gap:24px; font-size:64px; animation:tutPop 0.4s ease-out;">
+            <span style="animation:tutBounce 0.8s infinite alternate;">🪵</span>
+            <span style="font-size:36px; opacity:0.7;">➡️</span>
+            <span style="font-size:72px; animation:tutGlow 1s infinite alternate;">🏝️</span>
+        </div>
+        <div class="tut-step" id="tut-step-3" style="display:none; align-items:center; justify-content:center; gap:24px; font-size:64px; animation:tutPop 0.4s ease-out;">
+            <span style="animation:tutBounce 0.8s infinite alternate;">⚒️</span>
+            <span style="font-size:36px; opacity:0.7;">➕</span>
+            <span style="animation:tutBounce 0.9s 0.2s infinite alternate;">✨</span>
+        </div>
+        <!-- Fortschritts-Punkte -->
+        <div style="display:flex; gap:12px; margin-top:32px;">
+            <div id="tut-dot-1" style="width:14px;height:14px;border-radius:50%;background:white;opacity:1;transition:opacity 0.3s;"></div>
+            <div id="tut-dot-2" style="width:14px;height:14px;border-radius:50%;background:white;opacity:0.3;transition:opacity 0.3s;"></div>
+            <div id="tut-dot-3" style="width:14px;height:14px;border-radius:50%;background:white;opacity:0.3;transition:opacity 0.3s;"></div>
+        </div>
+    </div>
+    <style>
+    @keyframes tutPop { from { transform:scale(0.7); opacity:0; } to { transform:scale(1); opacity:1; } }
+    @keyframes tutBounce { from { transform:translateY(0); } to { transform:translateY(-12px); } }
+    @keyframes tutGlow { from { filter:drop-shadow(0 0 0px gold); } to { filter:drop-shadow(0 0 18px gold); } }
+    </style>
+
     <!-- Hauptspiel -->
     <div id="game-container">
 
@@ -57,6 +89,7 @@
                 <button class="tool-btn" id="weather-btn" title="Wetter ändern">☀️</button>
                 <button class="tool-btn" id="theme-btn" title="Theme wechseln">🎨</button>
                 <button class="tool-btn" id="mute-btn" title="Ton an/aus">🔊</button>
+                <button class="tool-btn" id="genre-btn" title="Musik-Genre — klicken um zu wechseln">🎶</button>
                 <button class="tool-btn" id="code-view-btn" title="Code-Ansicht">&lt;/&gt;</button>
                 <button class="tool-btn" id="replay-btn" title="Bauwerk als Song abspielen">🎵</button>
                 <button class="tool-btn" id="rewind-btn" title="Zeitreise: Baugeschichte rückwärts">⏪</button>
@@ -335,6 +368,7 @@
     <script src="automerge.js"></script>
     <script src="blueprints.js"></script>
     <script src="screensaver.js"></script>
+    <script src="stories.js"></script>
     <script src="sound.js"></script>
     <script src="analytics.js"></script>
     <script src="healthcheck.js"></script>

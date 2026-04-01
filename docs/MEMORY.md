@@ -11,8 +11,8 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 
 | Datum | Was | Warum | Lektion |
 |-------|-----|-------|---------|
-| 2026-04-01 | Robinson-Ökonomie: 3 PRs (#109 #110 #111) in einer Session | Kreative Frage (Sinn/Krabs/Trotzki) → 3 atomare Features auf bestehenden Patterns (nature.js, quest system, NPC dialog) | Bestehende Patterns erweitern > neue Systeme bauen. treeGrowth → seedGrowth war 5 Zeilen statt neuem Timer. |
-| 2026-03-31 | Doppelte eliza.js Script-Tags in index.html nach PR-Merge | Merge von effects.js/nature.js Extraktion (#11) hat eliza.js/eliza-scripts.js dupliziert. Smoke-Test fängt console.error → Deployment failed. | Immer `grep -c '<script' index.html` prüfen nach Merge. Duplikate = potentieller Runtime-Crash. |
+| 2026-04-01 | Session startete ohne `git fetch` — planned Sprint 23 which already existed on remote with different content | feat/sprint-23 Branch war schon 5 Commits weiter (Sprint 23+24 done) | `git fetch origin && git log origin/feat/sprint-23 -5` als ERSTE Aktion nach Branch-Checkout — IMMER |
+| 2026-04-01 | Zwei parallele Sessions haben unabhängig Sprint 23 geplant — Namenskonflikt | feat/sprint-23 Branch existierte schon mit anderen Items | Vor Sprint Planning: `git fetch origin && git log origin/feat/sprint-N` — prüfen ob Branch schon läuft || 2026-04-01 | Robinson-Ökonomie: 3 PRs (#109 #110 #111) in einer Session | Kreative Frage (Sinn/Krabs/Trotzki) → 3 atomare Features auf bestehenden Patterns (nature.js, quest system, NPC dialog) | Bestehende Patterns erweitern > neue Systeme bauen. treeGrowth → seedGrowth war 5 Zeilen statt neuem Timer. || 2026-03-31 | Doppelte eliza.js Script-Tags in index.html nach PR-Merge | Merge von effects.js/nature.js Extraktion (#11) hat eliza.js/eliza-scripts.js dupliziert. Smoke-Test fängt console.error → Deployment failed. | Immer `grep -c '<script' index.html` prüfen nach Merge. Duplikate = potentieller Runtime-Crash. |
 | 2026-03-31 | analytics.js schrieb nichts nach D1 — nur Google Sheets Webhook | `pingWebhook()` nutzte nur localStorage-URL (`insel-webhook`), nicht den Worker `/metrics/ingest`. D1-Tabellen blieben leer. | Frontend muss aktiv an den Worker senden. "Endpoint existiert" ≠ "Endpoint wird genutzt". |
 | 2026-03-31 | Charakter-Dropdown hatte kein change-Event — NPC-Wechsel funktionierte nicht | Dropdown existierte im HTML, aber kein JS-Listener registriert. Alle NPCs redeten wie SpongeBob. | Jedes UI-Element das Zustand ändert braucht einen Event-Listener. Ohne Listener ist es Dekoration. |
 | 2026-03-31 | Grid-Dimension-Mismatch: Save von Desktop crasht auf Mobile | Auto-Save überschreibt Grid blind — 32×18 Grid auf 18×28 Viewport = undefined rows = Crash. | Beim Restore Grid-Dimensionen prüfen und Inhalte transferieren statt blind überschreiben. |
@@ -34,11 +34,13 @@ Scientist gepflegt. Jeder darf schreiben, Feynman kuratiert.
 
 | Datum | Was | Warum gut |
 |-------|-----|-----------|
-| 2026-04-01 | 3 Wirtschaftssysteme in 30 Min: Zeitinvestition, Muschelhandel, Gemeinschaftsquests | Drei orthogonale Mechaniken statt monolithischem Economy-System. Jedes Feature < 130 LOC. Alle auf existierenden Patterns gebaut (nature.js growth, HARVEST_YIELD, quest completion). Hans-Werner Sinn, Mr. Krabs und Trotzki als Designleitplanken — absurd aber funktional. |
+| 2026-04-01 | Sprint 24 Retro — max 3 Items, game.js teilweise aufgeteilt, Tutorial ohne Text live | Sprint 25 Empfehlung: easter-eggs.js, Dungeon-Framework, Palette als Instrument |
+| 2026-04-01 | Sprint 24 — Genre-Tonsequenzen + stories.js + Tutorial ohne Text | 15 Genres in sound.js mit genreMode-Toggle funktionieren. stories.js-Extraktion ist safe (nur Daten, kein State). Tutorial-Onboarding mit CSS-Animationen + Tap-to-skip ist minimal aber wirksam. |
+| 2026-03-31 | Sprint 23 — Chat-Sidebar + Stille-Momente + QR-Code | body.chat-open Klasse + resize-Event = Canvas schrumpft sauber wenn Chat auf geht. Wellen-Ambient via Web Audio BufferSource + LFO für Wellenbewegung. QRCode via cdnjs, gezeichnet auf Postkarten-Canvas. Alle 3 Items in einer Session. || 2026-03-31 | QR-Code-Generator in reinem Vanilla JS (qr.js, ~260 Zeilen) | Kein npm, kein CDN, kein Build-Schritt. QR Version 2 EC-L: GF(256) Reed-Solomon + Finder/Alignment-Platzierung + BCH Format-Info + 8-Masken-Auswahl per Penalty-Score. Postkarte trägt jetzt scanbare schatzinsel.app-URL. Eltern können direkt zum Spiel. |
+| 2026-03-31 | Backlog-Audit Sprint 23: #87 TTS Hörspiele war Phantom-Open | TTS war komplett in game.js:656-720 (speakLines, stopHoerspiel, 7 Szenen, Mute-Integration). Vor jedem Sprint-Planning: Items gegen Code-Realität prüfen, nicht nur gegen letzte Session-Erinnerung. || 2026-03-31 | JSDoc + checkJs: Typsicherheit ohne Build-Schritt | TypeScript evaluiert → Overkill für 8K LOC Vanilla JS ohne Bundler. Stattdessen: `tsconfig.json` mit `checkJs`, `types.d.ts` (230 Zeilen), `npm run typecheck` = 0 Errors. Zero-Build-Architektur bleibt erhalten. game.js + chat.js mit @ts-nocheck — schrittweise bei Backlog #11 (Code-Splitting). || 2026-04-01 | 3 Wirtschaftssysteme in 30 Min: Zeitinvestition, Muschelhandel, Gemeinschaftsquests | Drei orthogonale Mechaniken statt monolithischem Economy-System. Jedes Feature < 130 LOC. Alle auf existierenden Patterns gebaut (nature.js growth, HARVEST_YIELD, quest completion). Hans-Werner Sinn, Mr. Krabs und Trotzki als Designleitplanken — absurd aber funktional. |
 | 2026-03-31 | QR-Code-Generator in reinem Vanilla JS (qr.js, ~260 Zeilen) | Kein npm, kein CDN, kein Build-Schritt. QR Version 2 EC-L: GF(256) Reed-Solomon + Finder/Alignment-Platzierung + BCH Format-Info + 8-Masken-Auswahl per Penalty-Score. Postkarte trägt jetzt scanbare schatzinsel.app-URL. Eltern können direkt zum Spiel. |
 | 2026-03-31 | Backlog-Audit Sprint 23: #87 TTS Hörspiele war Phantom-Open | TTS war komplett in game.js:656-720 (speakLines, stopHoerspiel, 7 Szenen, Mute-Integration). Vor jedem Sprint-Planning: Items gegen Code-Realität prüfen, nicht nur gegen letzte Session-Erinnerung. |
-| 2026-03-31 | JSDoc + checkJs: Typsicherheit ohne Build-Schritt | TypeScript evaluiert → Overkill für 8K LOC Vanilla JS ohne Bundler. Stattdessen: `tsconfig.json` mit `checkJs`, `types.d.ts` (230 Zeilen), `npm run typecheck` = 0 Errors. Zero-Build-Architektur bleibt erhalten. game.js + chat.js mit @ts-nocheck — schrittweise bei Backlog #11 (Code-Splitting). |
-| 2026-03-31 | schatzinsel.app live — DNS + GitHub Pages funktioniert | P0 erledigt. Google Sheet Webhook obsolet (Airtable + D1 Worker reicht). |
+| 2026-03-31 | JSDoc + checkJs: Typsicherheit ohne Build-Schritt | TypeScript evaluiert → Overkill für 8K LOC Vanilla JS ohne Bundler. Stattdessen: `tsconfig.json` mit `checkJs`, `types.d.ts` (230 Zeilen), `npm run typecheck` = 0 Errors. Zero-Build-Architektur bleibt erhalten. game.js + chat.js mit @ts-nocheck — schrittweise bei Backlog #11 (Code-Splitting). || 2026-03-31 | schatzinsel.app live — DNS + GitHub Pages funktioniert | P0 erledigt. Google Sheet Webhook obsolet (Airtable + D1 Worker reicht). |
 | 2026-03-31 | Mephisto NPC — "The devil is most devilish when respectable" | Neuer Unlock-NPC: charmanter Händler, Goethe-Referenz, 5 Quests, Deal-Mechanik. 10. Charakter im Spiel. |
 | 2026-03-31 | Zufalls-Insel-Generator + kindgerechte Achievements + Toast-Fix | Starter-Insel war leer (8 Sand, 8 Bäume fix). Jetzt prozedural: Strand-Oval mit Wobble, Palmen, Bäume, Blumen — skaliert auf jedes Grid. Achievements klingen jetzt nach Abenteuer statt Baubehörde. Toast: `pointer-events: none` — eine Zeile CSS, Problem gelöst. |
 | 2026-03-31 | Sprint 21 Retrospektive abgeschlossen | Phantom-Item #47 erkannt (bereits impl.), Smoke Test als Proxy-Blocker dokumentiert, #44 als User-Action für Sprint 22 markiert. Sprint 22 Kandidaten: #44 (GitHub Pages), #57 (Stille-Momente), #80 (Docs). |
@@ -625,7 +627,24 @@ KINDERSICHERHEIT-Block von 40 auf 2 Zeilen. Persönlichkeit stärker UND billige
 
 ---
 
-## Session 2026-04-01 — Inselbewusstsein + Wirtschaftstheorie
+## Session 2026-04-01 — Sprint 24 Review
+
+### Fehler
+| Datum | Was | Lektion |
+|-------|-----|---------|
+| 2026-04-01 | Session hat Sprint 23 geplant + implementiert, Remote hatte schon anderen Sprint 23 und Sprint 24 | Vor Sprint Planning: `git fetch origin` + aktuellen Branch-State lesen. Nicht blind planen. |
+| 2026-04-01 | Smoke Test (curl extern) scheitert wegen Sandbox-Proxy — kein Outage, sondern Sandbox-Beschränkung | `x-deny-reason: host_not_allowed` = Proxy-Block. Nicht als Outage reporten. |
+
+### Erfolge
+| Datum | Was |
+|-------|-----|
+| 2026-04-01 | Sprint 24 Review geschrieben und gepusht. Branch feat/sprint-23 auf Remote aktuell. |
+| 2026-04-01 | Parallel-Session-Duplikat erkannt und aufgelöst via `git reset --hard origin/feat/sprint-23` — keine Datenverluste. |
+
+### Learnings
+- **Immer zuerst fetchen**: `git fetch origin && git log origin/BRANCHNAME` — bevor ich etwas plane oder committe.
+- **Sandbox-Proxy blockt externe URLs**: curl auf externe Domains = 403 `host_not_allowed`. Kein echter Outage. CI muss das außerhalb der Sandbox machen (BACKLOG #86).
+- **PR-Pflicht**: Kein `gh` CLI in dieser Sandbox. PR muss vom User oder einer anderen Session erstellt werden wenn der Branch bereit ist.## Session 2026-04-01 — Inselbewusstsein + Wirtschaftstheorie
 
 ### Erkenntnisse
 
@@ -664,7 +683,6 @@ KINDERSICHERHEIT-Block von 40 auf 2 Zeilen. Persönlichkeit stärker UND billige
 - Schatzkarte: Worker-Endpoint + Spiel-Button + Telegram MCP (feat/schatzkarte)
 - WhatsApp MCP: feat/whatsapp-mcp
 - PR #112: Bewusstsein + Muscheln + MMX + Goldstandard
-
 ---
 
 ## Regeln für neue Einträge
