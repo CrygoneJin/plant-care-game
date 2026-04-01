@@ -3561,7 +3561,7 @@
     // Swipe-Tracking für Code-Layer-Wechsel (S21-2)
     let touchStartX = 0, touchStartY = 0, touchEndX = 0, touchEndY = 0;
     let touchWasPainting = false;
-    const SWIPE_MIN_X = 80;
+    const SWIPE_MIN_X = 50;
     const SWIPE_MAX_Y = 40;
 
     canvas.addEventListener('touchstart', (e) => {
@@ -3616,7 +3616,17 @@
             const dx = touchEndX - touchStartX;
             const dy = Math.abs(touchEndY - touchStartY);
             if (Math.abs(dx) >= SWIPE_MIN_X && dy < SWIPE_MAX_Y) {
-                window.toggleCodeView();
+                if (codeViewActive) {
+                    // Links-Swipe (dx < 0) = nächste Ebene, Rechts-Swipe = vorherige
+                    if (dx < 0) {
+                        window.nextCodeLayer();
+                    } else {
+                        window.prevCodeLayer();
+                    }
+                } else {
+                    // Code-View noch nicht aktiv → einschalten
+                    window.toggleCodeView();
+                }
             }
         }
         isMouseDown = false;
@@ -4277,17 +4287,51 @@
     };
 
     // --- Code-View: zeigt den "Quellcode" hinter den Blöcken ---
+    // Layer 0 = aus, 1 = Material-Key, 2 = Koordinaten, 3 = Farb-Hex
     let codeViewActive = false;
+    let codeViewLayer = 1;
+    const CODE_LAYERS = [
+        { id: 'key',   label: 'grid[r][c]',     color: '#00FF41' },  // Matrix-Grün
+        { id: 'coord', label: '[row, col]',      color: '#00BFFF' },  // Deep Sky Blue
+        { id: 'hex',   label: 'color: #hex',     color: '#FF6B9D' },  // Pink
+    ];
+    let codeViewSwipeHintShown = !!localStorage.getItem('insel-code-swipe-hint');
 
     window.toggleCodeView = function () {
         codeViewActive = !codeViewActive;
-        showToast(codeViewActive ? '👨‍💻 Code-Ansicht AN — so sieht ein Programmierer die Insel!' : '🎨 Normal-Ansicht');
         if (codeViewActive) {
+            showToast('👨‍💻 Code-Ansicht AN — ' + CODE_LAYERS[codeViewLayer - 1].label);
             recordMilestone('firstCodeView');
-            trackEvent('code_view_toggle', { state: 'on' });
+            trackEvent('code_view_toggle', { state: 'on', layer: codeViewLayer });
+            // Touch-Hint beim ersten Mal auf Touch-Geräten
+            if (!codeViewSwipeHintShown && ('ontouchstart' in window)) {
+                setTimeout(function () {
+                    showToast('← swipe → zum Ebenen-Wechsel', 3000);
+                }, 800);
+                codeViewSwipeHintShown = true;
+                localStorage.setItem('insel-code-swipe-hint', '1');
+            }
+        } else {
+            showToast('🎨 Normal-Ansicht');
         }
     };
     window.isCodeViewActive = function () { return codeViewActive; };
+
+    /** Nächste Code-Ebene (Swipe links) */
+    window.nextCodeLayer = function () {
+        if (!codeViewActive) return;
+        codeViewLayer = (codeViewLayer % CODE_LAYERS.length) + 1;
+        showToast('</> ' + CODE_LAYERS[codeViewLayer - 1].label);
+        requestRedraw();
+    };
+
+    /** Vorherige Code-Ebene (Swipe rechts) */
+    window.prevCodeLayer = function () {
+        if (!codeViewActive) return;
+        codeViewLayer = ((codeViewLayer - 2 + CODE_LAYERS.length) % CODE_LAYERS.length) + 1;
+        showToast('</> ' + CODE_LAYERS[codeViewLayer - 1].label);
+        requestRedraw();
+    };
 
     // Code-View Rendering in draw() einhängen — überschreibt Emoji-Darstellung
     const _originalDraw = draw;
@@ -4295,6 +4339,8 @@
     // Erweiterte draw-Funktion mit Code-View-Overlay
     function drawCodeOverlay() {
         if (!codeViewActive) return;
+        const layer = CODE_LAYERS[codeViewLayer - 1];
+        const layerColor = layer.color;
         for (let r = 0; r < ROWS; r++) {
             for (let c = 0; c < COLS; c++) {
                 if (grid[r][c]) {
@@ -4303,27 +4349,39 @@
                     // Dunkler Hintergrund
                     ctx.fillStyle = 'rgba(30, 30, 30, 0.85)';
                     ctx.fillRect(x + 1, y + 1, CELL_SIZE - 2, CELL_SIZE - 2);
-                    // Code-Text (Material-Key)
-                    ctx.fillStyle = '#00FF41'; // Matrix-Grün
-                    ctx.font = `bold ${Math.max(8, CELL_SIZE * 0.28)}px monospace`;
+                    // Code-Text je nach Layer
+                    ctx.fillStyle = layerColor;
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
-                    ctx.fillText(grid[r][c], x + CELL_SIZE / 2, y + CELL_SIZE / 2);
+                    var cellText = '';
+                    if (layer.id === 'key') {
+                        ctx.font = 'bold ' + Math.max(8, CELL_SIZE * 0.28) + 'px monospace';
+                        cellText = grid[r][c];
+                    } else if (layer.id === 'coord') {
+                        ctx.font = 'bold ' + Math.max(7, CELL_SIZE * 0.22) + 'px monospace';
+                        cellText = r + ',' + c;
+                    } else if (layer.id === 'hex') {
+                        var mat = MATERIALS[grid[r][c]];
+                        ctx.font = 'bold ' + Math.max(7, CELL_SIZE * 0.22) + 'px monospace';
+                        cellText = mat ? mat.color : '?';
+                    }
+                    ctx.fillText(cellText, x + CELL_SIZE / 2, y + CELL_SIZE / 2);
                 }
             }
         }
         // Code-View Label
         const shellsNow = typeof getInventoryCount === 'function' ? getInventoryCount('shell') : 0;
         const adamsMode = shellsNow === 42;
+        const labelText = adamsMode
+            ? 'DON\'T PANIC \u00b7 The Answer is 42 \u00b7 So long, and thanks for all the fish'
+            : '</> ' + layer.label + '  [' + codeViewLayer + '/' + CODE_LAYERS.length + ']';
         ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-        ctx.fillRect(5, 5, adamsMode ? 420 : 200, 24);
-        ctx.fillStyle = adamsMode ? '#FFD700' : '#00FF41';
+        ctx.fillRect(5, 5, adamsMode ? 420 : 260, 24);
+        ctx.fillStyle = adamsMode ? '#FFD700' : layerColor;
         ctx.font = 'bold 12px monospace';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'top';
-        ctx.fillText(adamsMode
-            ? 'DON\'T PANIC · The Answer is 42 · So long, and thanks for all the fish'
-            : '</> CODE-VIEW: grid[r][c]', 10, 10);
+        ctx.fillText(labelText, 10, 10);
 
         // === Crypto Donation Panel — Nerd Easter Egg ===
         // MMX: "Proof of Work. Tokens rein, niemand raus."
