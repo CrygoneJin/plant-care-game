@@ -438,12 +438,26 @@
     function showNpcQuestDialog(npcId) {
         const npc = NPC_DEFS[npcId];
         if (!npc) return;
+        // Memory: Besuch registrieren
+        touchNpcMemory(npcId);
         const quest = window.questSystem.getAvailable(npcId);
         const active = window.questSystem.getActive().find(q => q.npc === npcId);
         if (active) {
             showToast(`${npc.emoji} ${npc.name}: Ich warte noch auf "${active.title}"!`, 3000);
         } else if (quest) {
-            showToast(`${npc.emoji} ${quest.desc}`, 5000);
+            // Memory: beim Annehmen eines neuen Quests Gedächtnis-Kommentar zeigen
+            const voice = NPC_VOICES[npcId];
+            if (voice) {
+                const memComment = getNpcMemoryComment(voice, npcId);
+                if (memComment) {
+                    showToast(memComment, 3000);
+                    setTimeout(() => showToast(`${npc.emoji} ${quest.desc}`, 5000), 3200);
+                } else {
+                    showToast(`${npc.emoji} ${quest.desc}`, 5000);
+                }
+            } else {
+                showToast(`${npc.emoji} ${quest.desc}`, 5000);
+            }
             window.questSystem.accept(quest);
         } else if (npcId === 'krabs') {
             // Krabs: Kein Quest? Dann HANDEL! 🦀💰
@@ -451,8 +465,10 @@
         } else {
             const voice = NPC_VOICES[npcId];
             if (voice) {
-                const tick = voice.ticks[Math.floor(Math.random() * voice.ticks.length)];
-                showToast(`${npc.emoji} ${voice.prefix} ${tick}`, 2000);
+                // Memory-Kommentar Vorrang vor generic tick
+                const memComment = getNpcMemoryComment(voice, npcId);
+                const msg = memComment || `${npc.emoji} ${voice.prefix} ${voice.ticks[Math.floor(Math.random() * voice.ticks.length)]}`;
+                showToast(msg, 3000);
             }
         }
     }
@@ -628,8 +644,97 @@
         (npc, mat, n) => `${npc.emoji} ${npc.prefix} ${n} ${mat}! Jemand hat einen Plan!`,
     ];
 
+    // === NPC-SESSION-GEDÄCHTNIS ===
+    // Speichert pro NPC: letztes Lieblingsmaterial, abgeschlossene Quests, letzter Besuch
+    // Key: 'insel-npc-memory'
+    // Format: { [npcId]: { lastMaterial, lastMaterialKey, lastVisit, questsDone: [] } }
+
+    const NPC_MEMORY_KEY = 'insel-npc-memory';
+
+    function loadNpcMemory() {
+        try { return JSON.parse(localStorage.getItem(NPC_MEMORY_KEY) || '{}'); }
+        catch { return {}; }
+    }
+
+    function saveNpcMemory(mem) {
+        localStorage.setItem(NPC_MEMORY_KEY, JSON.stringify(mem));
+    }
+
+    function getNpcMem(npcId) {
+        return loadNpcMemory()[npcId] || null;
+    }
+
+    // Letzten Besuch für diesen NPC aktualisieren
+    function touchNpcMemory(npcId) {
+        const mem = loadNpcMemory();
+        if (!mem[npcId]) mem[npcId] = { lastVisit: null, lastMaterial: null, lastMaterialKey: null, questsDone: [] };
+        mem[npcId].lastVisit = Date.now();
+        saveNpcMemory(mem);
+    }
+
+    // Quest-Abschluss für diesen NPC vermerken
+    function recordNpcQuestDone(npcId, questTitle) {
+        const mem = loadNpcMemory();
+        if (!mem[npcId]) mem[npcId] = { lastVisit: null, lastMaterial: null, lastMaterialKey: null, questsDone: [] };
+        if (!mem[npcId].questsDone.includes(questTitle)) mem[npcId].questsDone.push(questTitle);
+        mem[npcId].lastVisit = Date.now();
+        saveNpcMemory(mem);
+    }
+
+    // Nach jeder Session: Lieblingsmaterial (meistgenutzt) in alle NPC-Memory-Einträge schreiben
+    // Wird bei beforeunload aufgerufen
+    function flushNpcSessionMemory() {
+        const raw = localStorage.getItem('insel-mat-usage');
+        if (!raw) return;
+        let usage;
+        try { usage = JSON.parse(raw); } catch { return; }
+        const sorted = Object.entries(usage).sort((a, b) => b[1] - a[1]);
+        const favKey = sorted.length > 0 ? sorted[0][0] : null;
+        if (!favKey) return;
+        const favLabel = MATERIALS[favKey]?.label || favKey;
+        const mem = loadNpcMemory();
+        for (const id of Object.keys(NPC_VOICES)) {
+            if (!mem[id]) mem[id] = { lastVisit: null, lastMaterial: null, lastMaterialKey: null, questsDone: [] };
+            mem[id].lastMaterial = favLabel;
+            mem[id].lastMaterialKey = favKey;
+        }
+        saveNpcMemory(mem);
+    }
+
+    // Gedächtnis-Kommentar für NPC erzeugen (gibt null zurück wenn nichts sinnvolles da)
+    function getNpcMemoryComment(npc, npcId) {
+        const m = getNpcMem(npcId);
+        if (!m) return null;
+        const hasName = playerName && playerName !== 'Spieler' && playerName !== 'Anonym';
+        const nameStr = hasName ? ` ${playerName}` : '';
+        const daysSince = m.lastVisit ? Math.floor((Date.now() - m.lastVisit) / 86400000) : null;
+
+        if (m.lastMaterial && m.questsDone && m.questsDone.length > 0) {
+            return `${npc.emoji} ${npc.prefix} Hey${nameStr}! Letztes Mal hast du viel mit ${m.lastMaterial} gebaut. Und ${m.questsDone.length} Quest${m.questsDone.length > 1 ? 's' : ''} geschafft!`;
+        }
+        if (m.lastMaterial) {
+            return `${npc.emoji} ${npc.prefix} Hey${nameStr}! Letztes Mal hast du viel mit ${m.lastMaterial} gebaut...`;
+        }
+        if (daysSince !== null && daysSince >= 1) {
+            const dayText = daysSince === 1 ? 'gestern' : `vor ${daysSince} Tagen`;
+            return `${npc.emoji} ${npc.prefix} Schon ${dayText} warst du zuletzt hier${nameStr}!`;
+        }
+        if (m.questsDone && m.questsDone.length > 0) {
+            return `${npc.emoji} ${npc.prefix} Erinnerst du dich${nameStr}? Wir haben schon ${m.questsDone.length} Quest${m.questsDone.length > 1 ? 's' : ''} zusammen gemacht!`;
+        }
+        return null;
+    }
+
+    // beforeunload: Session-Memory sichern
+    window.addEventListener('beforeunload', flushNpcSessionMemory);
+
     // Context-Kommentare basierend auf Grid-Zustand
-    function getContextComment(npc, stats) {
+    function getContextComment(npc, stats, npcId) {
+        // Memory-Kommentar: 30% Chance, damit er nicht bei jedem Baustein kommt
+        if (npcId && Math.random() < 0.30) {
+            const memComment = getNpcMemoryComment(npc, npcId);
+            if (memComment) return memComment;
+        }
         if (stats.total === 0) return null;
         if (stats.percent > 80) return `${npc.emoji} ${npc.prefix} Die Insel ist fast voll! ${npc.ticks[0]}`;
         if (stats.total % 25 === 0) return `${npc.emoji} ${npc.prefix} ${stats.total} Blöcke! ${REACTIONS[npc.style][Math.floor(Math.random() * REACTIONS[npc.style].length)]}`;
@@ -638,7 +743,9 @@
         if (entries.length >= 2) {
             const sorted = entries.sort((a,b) => b[1] - a[1]);
             if (sorted[0][1] > stats.total * 0.6) {
-                return `${npc.emoji} ${npc.prefix} Sehr viel ${sorted[0][0]}! Wie wärs mit ${sorted[1][0]}?`;
+                const matLabel = MATERIALS[sorted[0][0]]?.label || sorted[0][0];
+                const mat2Label = MATERIALS[sorted[1][0]]?.label || sorted[1][0];
+                return `${npc.emoji} ${npc.prefix} Sehr viel ${matLabel}! Wie wärs mit ${mat2Label}?`;
             }
         }
         return null;
@@ -646,7 +753,9 @@
 
     function generateNpcComment(material) {
         const npcKeys = Object.keys(NPC_VOICES);
-        const npc = NPC_VOICES[npcKeys[Math.floor(Math.random() * npcKeys.length)]];
+        const npcIdx = Math.floor(Math.random() * npcKeys.length);
+        const npcId = npcKeys[npcIdx];
+        const npc = NPC_VOICES[npcId];
         const matLabel = MATERIALS[material]?.label || material;
 
         // Streak-Check
@@ -661,11 +770,11 @@
             materialStreak = 1;
         }
 
-        // Context-Kommentar (10% Chance)
+        // Context-Kommentar (10% Chance) — npcId an getContextComment übergeben für Memory
         if (Math.random() < 0.1) {
             const stats = typeof getGridStats === 'function' ? getGridStats() : null;
             if (stats) {
-                const ctx = getContextComment(npc, stats);
+                const ctx = getContextComment(npc, stats, npcId);
                 if (ctx) return ctx;
             }
         }
@@ -1031,6 +1140,7 @@
             }
             flashInventoryTab();
             trackEvent('quick-craft', { a, b, result: recipe.result });
+            window.INSEL_BUS && window.INSEL_BUS.emit('craft:success', { result: recipe.result, ingredients: { [a]: 1, [b]: 1 } });
             updateInventoryDisplay();
             return;
         }
@@ -1150,6 +1260,7 @@
         }
 
         trackEvent('llm-craft', { name: result.name, fromCache: result.fromCache });
+        window.INSEL_BUS && window.INSEL_BUS.emit('craft:success', { result: matId, ingredients: result.ingredients || {} });
         updateCraftingDisplay();
         return matId;
     }
@@ -1205,6 +1316,7 @@
             }
             flashInventoryTab();
             trackEvent('craft', { recipe: recipe.name, result: recipe.result });
+            window.INSEL_BUS && window.INSEL_BUS.emit('craft:success', { result: recipe.result, ingredients: recipe.ingredients });
             updateCraftingDisplay();
             return;
         }
@@ -3360,6 +3472,72 @@
 
     // === EVENT LISTENERS ===
 
+    // --- Oscar als 7. Schicht: Baustil-Erkennung ---
+    // Analysiert das gespeicherte Grid und erkennt den Baustil des Spielers.
+    // Gibt { stil, emoji, blockCount } zurück.
+    function analysiereBaustil(g) {
+        const counts = {};
+        let total = 0;
+
+        // Materialien nach Kategorie gruppieren
+        const kategorien = {
+            gaertner:    ['tree', 'small_tree', 'sapling', 'plant', 'flower', 'garden', 'wood', 'cactus', 'mushroom', 'butterfly', 'bee', 'honey', 'apple', 'nest', 'egg'],
+            seefahrer:   ['water', 'wave', 'fish', 'flyfish', 'boat', 'dock', 'fountain', 'bridge', 'rain', 'rainbow', 'shell'],
+            bergbauer:   ['stone', 'mountain', 'cave', 'stalactite', 'gem', 'diamond', 'metal', 'earth', 'ash', 'crystal'],
+            feuertaenzer:['fire', 'volcano', 'phoenix', 'lightning', 'forge', 'firecake', 'dragoncake', 'tornado'],
+        };
+
+        // Alle Zellen zählen
+        for (let r = 0; r < (g ? g.length : 0); r++) {
+            for (let c = 0; c < (g[r] ? g[r].length : 0); c++) {
+                const mat = g[r][c];
+                if (mat) {
+                    counts[mat] = (counts[mat] || 0) + 1;
+                    total++;
+                }
+            }
+        }
+
+        if (total === 0) return { stil: 'Insel-Architekt', emoji: '🏝️', blockCount: 0 };
+
+        // Score pro Kategorie berechnen
+        const scores = {};
+        for (const [kat, mats] of Object.entries(kategorien)) {
+            scores[kat] = mats.reduce((sum, m) => sum + (counts[m] || 0), 0);
+        }
+
+        const maxScore = Math.max(...Object.values(scores));
+        const dominant = Object.entries(scores).find(([, v]) => v === maxScore)?.[0];
+
+        // Mindest-Schwelle: 15% der platzierten Blöcke müssen in eine Kategorie fallen
+        const threshold = total * 0.15;
+        let stil, stilEmoji;
+        if (maxScore >= threshold && dominant) {
+            const stilMap = {
+                gaertner:    { label: 'Gärtner',    emoji: '🌳' },
+                seefahrer:   { label: 'Seefahrer',  emoji: '⛵' },
+                bergbauer:   { label: 'Bergbauer',  emoji: '⛏️' },
+                feuertaenzer:{ label: 'Feuertänzer',emoji: '🔥' },
+            };
+            stil      = stilMap[dominant].label;
+            stilEmoji = stilMap[dominant].emoji;
+        } else {
+            stil      = 'Insel-Architekt';
+            stilEmoji = '🏝️';
+        }
+
+        return { stil, emoji: stilEmoji, blockCount: total };
+    }
+
+    // Baustil speichern + personalisierten Toast anzeigen (nur für Wiederkehrende)
+    function zeigeWillkommensToast(name) {
+        const { stil, emoji, blockCount } = analysiereBaustil(grid);
+        // Baustil in Spieler-Profil persistieren
+        localStorage.setItem('insel-baustil', stil);
+        const msg = `${emoji} Willkommen zurück, ${name} der ${stil}! Deine Insel hat ${blockCount} Blöcke.`;
+        setTimeout(() => showToast(msg, 5000), 800);
+    }
+
     // Intro — Session-Uhr starten
     function startGame() {
         // Spielernamen aus dem Intro-Eingabefeld übernehmen
@@ -4509,7 +4687,12 @@
         }
         window.grid = grid;
         migrateUnlocked();
-        showToast('🔄 Letzte Insel wiederhergestellt');
+        // Baustil-Erkennung beim Laden — Oscar als 7. Schicht
+        if (playerName) {
+            zeigeWillkommensToast(playerName);
+        } else {
+            showToast('🔄 Letzte Insel wiederhergestellt');
+        }
     } else {
         // Lummerland oder Zufalls-Insel
         if (new URLSearchParams(location.search).has('lummerland')) {
