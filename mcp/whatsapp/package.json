@@ -1,0 +1,10 @@
+{
+  "name": "schatzinsel-whatsapp-mcp",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "WhatsApp MCP Server für Schatzinsel — sendet Nachrichten via Cloud API",
+  "main": "index.js",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  }
+}
