@@ -294,4 +294,73 @@
         ],
     });
 
+    // ── WIGALD BONING — Wissenschaftscomedy, absurde Fakten ─────
+    reg('wigald', {
+        initial: 'Hallo! Wusstest du, dass diese Insel vulkanischen Ursprungs sein könnte? Faszinierend! 🎭',
+        finale: 'Tschüss! Wusstest du, dass Abschiede den Cortisol-Spiegel erhöhen? Also: schnell wiederkommen! 🎭',
+        quit: ['tschüss', 'bye'],
+        pre: {}, post: {},
+        keywords: [
+            { word: 'holz', rank: 7, rules: [
+                { decomp: '*', reassembly: ['Wusstest du, dass Holz technisch ein Polymer ist? Wie Plastik — nur 350 Millionen Jahre älter! 🎭', 'Faszinierend! Ein Kubikmeter Holz bindet eine Tonne CO₂! Bau weiter! 🎭'] },
+            ]},
+            { word: 'stein', rank: 7, rules: [
+                { decomp: '*', reassembly: ['Wusstest du, dass Granit älter ist als Dinosaurier? Du baust mit Geschichte! 🎭', 'Faszinierend! Steine können singen — man nennt es Ringing Rocks! 🎭'] },
+            ]},
+            { word: 'wasser', rank: 6, rules: [
+                { decomp: '*', reassembly: ['Wusstest du, dass heißes Wasser schneller gefriert als kaltes? Mpemba-Effekt! Verrückt! 🎭'] },
+            ]},
+            { word: 'sand', rank: 6, rules: [
+                { decomp: '*', reassembly: ['Wusstest du, dass Sand eigentlich winzige Edelsteine sind? Quarz! Du stehst auf Juwelen! 🎭'] },
+            ]},
+            { word: 'bau', rank: 5, rules: [
+                { decomp: '*', reassembly: ['Faszinierend! Bauen aktiviert 17 verschiedene Gehirnareale! Du wirst gerade schlauer! 🎭'] },
+            ]},
+            { word: 'warum', rank: 8, rules: [
+                { decomp: '* warum *', reassembly: ['(2)? GROSSARTIGE Frage! Die Antwort ist komplizierter als du denkst — und lustiger! 🎭'] },
+                { decomp: '*', reassembly: ['Warum? Die beste Frage der Welt! Damit fängt JEDE Entdeckung an! 🎭'] },
+            ]},
+            { word: 'ich will', rank: 5, rules: [
+                { decomp: '* ich will *', reassembly: ['Du willst (2)? Wusstest du, dass Motivation im Nucleus Accumbens entsteht? Deiner funktioniert! 🎭'] },
+            ]},
+            { word: 'xnone', rank: 0, rules: [
+                { decomp: '*', reassembly: ['Faszinierend! Erzähl mir mehr! 🎭', 'Wusstest du, dass Neugier das Gehirn mit Dopamin flutet? Ich bin gerade SEHR glücklich! 🎭', 'Hmm, interessant! Lass mich nachdenken... 🎭'] },
+            ]},
+        ],
+    });
+
+    // ── WILLY ASTOR — Wortspiele, Reime, Kalauer ──────────────
+    reg('willy', {
+        initial: 'Hallo-le-luja! 🎸 Ich bin Willy! Was baust du? Ich mach ein Wortspiel draus!',
+        finale: 'Tschüss! Das war wort-wörtlich ein Vergnügen! 🎸',
+        quit: ['tschüss', 'bye'],
+        pre: {}, post: {},
+        keywords: [
+            { word: 'holz', rank: 7, rules: [
+                { decomp: '*', reassembly: ['Holz! Das ist ja holz-artig! 🎸 *klimper*', 'Ein Brett! Bretter-t ihr mich? 🎸 Nein? Ich mich auch nicht!'] },
+            ]},
+            { word: 'stein', rank: 7, rules: [
+                { decomp: '*', reassembly: ['Stein-reich! 🎸 Auf dieser Insel hat man es nicht schwer — nur stein-schwer! *klimper*', 'Das rockt! Get it? Rocks? Steine? 🎸 ...ich geh schon.'] },
+            ]},
+            { word: 'sand', rank: 6, rules: [
+                { decomp: '*', reassembly: ['Sand-ationell! 🎸 Da bin ich platt — platt wie der Strand! *klimper*'] },
+            ]},
+            { word: 'baum', rank: 6, rules: [
+                { decomp: '*', reassembly: ['Baum-stark! 🎸 Der hat was — Blätter nämlich! *klimper*', 'Das ist ja un-glaub-lich! Get it? Laub? 🎸'] },
+            ]},
+            { word: 'bau', rank: 5, rules: [
+                { decomp: '*', reassembly: ['Bau-haha! 🎸 Los geht\'s! Stein für Stein — oder Wortspiel für Wortspiel!', 'Wir bauen! Mauer-haft gut! 🎸'] },
+            ]},
+            { word: 'wasser', rank: 6, rules: [
+                { decomp: '*', reassembly: ['Wasser? Da fällt mir ein Witz ein — aber der ist zu flüssig! 🎸 *klimper*'] },
+            ]},
+            { word: 'ich will', rank: 5, rules: [
+                { decomp: '* ich will *', reassembly: ['Du willst (2)? Willy will auch! Wir sind wills-verwandt! 🎸'] },
+            ]},
+            { word: 'xnone', rank: 0, rules: [
+                { decomp: '*', reassembly: ['*klimper* 🎸 Da fällt mir ein Wortspiel ein — warte...', 'Wort-wörtlich sprachlos! Nein, Spaß — ich hab IMMER ein Wortspiel! 🎸', 'Das klingt gut! Aber weißt du was BESSER klingt? Meine Gitarre! 🎸 *klimper*'] },
+            ]},
+        ],
+    });
+
 })();

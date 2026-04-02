@@ -318,6 +318,8 @@
         krabs:     { emoji: '🦀', name: 'Mr. Krabs' },
         tommy:     { emoji: '🦞', name: 'Tommy' },
         mephisto:  { emoji: '😈', name: 'Mephisto' },
+        wigald:    { emoji: '🎭', name: 'Wigald' },
+        willy:     { emoji: '🎸', name: 'Willy' },
     };
 
     // NPCs im Kreis um die Inselmitte verteilen
@@ -517,6 +519,8 @@
         bernd:     { emoji: '🍞', prefix: 'Bernd:', ticks: ['*seufz*', 'Mist.', 'Toll.'], style: 'grumpy' },
         floriane:  { emoji: '🧚', prefix: 'Floriane:', ticks: ['✨', 'Oh!', 'Ein Wunsch!'], style: 'magic' },
         mephisto:  { emoji: '😈', prefix: 'Mephisto:', ticks: ['Hehehehe...', 'Ein Angebot!', 'Deal?'], style: 'deal' },
+        wigald:    { emoji: '🎭', prefix: 'Wigald:', ticks: ['Wusstest du...', 'Faszinierend!', 'Wissenschaft!'], style: 'caps' },
+        willy:     { emoji: '🎸', prefix: 'Willy:', ticks: ['*klimper*', 'Wortspiel!', 'Haha!'], style: 'cute' },
         // #13: Programmiersprachen-Bewohner
         haskell:   { emoji: '🟣', prefix: 'Haskell:', ticks: ['Rein funktional!', 'Keine Seiteneffekte!', 'Typen lösen alles!'], style: 'careful' },
         lua:       { emoji: '🌙', prefix: 'Lua:', ticks: ['Schnell und leicht!', 'Tables!', '-- Ein Kommentar genügt'], style: 'cute' },
