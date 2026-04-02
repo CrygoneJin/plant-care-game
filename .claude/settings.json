@@ -8,6 +8,18 @@
     ]
   },
   "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /home/user/schatzinsel && git fetch origin 2>&1 | tail -3 && echo '✅ git fetch done'",
+            "timeout": 15,
+            "statusMessage": "git fetch origin..."
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "Bash",
