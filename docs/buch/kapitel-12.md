@@ -1,4 +1,4 @@
-# Kapitel 12: Tommy Krabbe und die drei Schätze
+# Tommy Krabbe und die drei Schätze
 
 > *Die Krabbe gräbt im Sand*
 > *und findet was schon immer da war:*
@@ -6,86 +6,88 @@
 
 ---
 
-Hör zu, Junge. Ich bin Tommy Krabbe. Ich lebe am Strand, direkt da wo die Wellen aufhören und der Sand anfängt. Das ist mein Platz. Nicht weil ich ihn gewählt habe, sondern weil er da war als ich ankam.
+Hör zu, Junge. Ich bin Tommy Krabbe. Ich wohne am Strand. Da wo die Wellen aufhören und der Sand anfängt. Das ist mein Platz.
 
-Ich will dir was erzählen. Über drei Schätze. Nicht Goldmünzen — die sind langweilig und man kann sie nicht essen. Richtige Schätze. Die Art die man nicht sieht bis man sie benutzt.
-
----
-
-## Der erste Schatz: Die Schatzkarte
-
-Es war einmal ein Mann. Der hatte eine Karte im Kopf. Nicht eine Karte wie die auf Papier. Eine besondere Karte. Wenn er auf die Insel schaute, sah er nicht nur was da war. Er sah alles was da sein *könnte*.
-
-Hier könnte ein Schloss stehen. Dort ein Vulkan. Da drüben ein Hafen für Piratenschiffe.
-
-Das klingt gut, oder? Ist es auch. Aber es hat einen Haken.
-
-Wenn du alles sehen kannst was möglich ist — dann ist es schwer, eins davon zu wählen. Weil du weißt: wenn du das Schloss baust, gibt es keinen Vulkan. Und wenn du den Vulkan baust, gibt es kein Schloss. Und du siehst beide. Die ganze Zeit.
-
-Das macht müde, Junge. Glaub mir. Ich bin eine Krabbe. Ich habe acht Beine. Und trotzdem gehe ich nur in eine Richtung. Seitwärts. Weil ich mich irgendwann entschieden habe.
+Ich will dir was erzählen. Über drei Schätze. Nicht Gold. Gold kann man nicht essen. Echte Schätze. Die man nicht sieht bis man sie braucht.
 
 ---
 
-## Der zweite Schatz: Der Kapitän
+## Die Schatzkarte
 
-Dann war da eine Frau. Die hatte keine Karte im Kopf. Die hatte was Besseres. Sie wusste einfach wohin.
+Es gibt einen Mann. Der hat eine Karte im Kopf. Wenn er auf die Insel schaut, sieht er nicht nur was da ist. Er sieht alles was da sein könnte.
 
-Nicht weil sie alle Wege gesehen hat. Sondern weil sie einen gespürt hat. So wie du spürst ob Wasser warm oder kalt ist. Du denkst nicht darüber nach. Du weißt es einfach.
+Hier ein Schloss. Dort ein Vulkan. Da drüben ein Hafen für Piraten.
+
+Das klingt toll. Ist es auch. Aber es ist auch schwer.
+
+Wenn du alles sehen kannst — dann ist es schwer eins zu nehmen. Weil du weißt: wenn du das Schloss baust, gibt es keinen Vulkan. Und du siehst beide. Die ganze Zeit.
+
+Das macht müde.
+
+Ich bin eine Krabbe. Ich hab acht Beine. Ich könnte in alle Richtungen gehen. Aber ich geh seitwärts. Immer. Weil ich mich mal so entschieden hab. Und das ist ok.
+
+---
+
+## Der Kapitän
+
+Dann gibt es eine Frau. Die hat keine Karte im Kopf. Die hat was anderes. Sie weiß einfach wohin.
+
+Nicht weil sie alle Wege gesehen hat. Sie spürt es. So wie du spürst ob Wasser warm ist oder kalt. Du denkst nicht. Du weißt es einfach.
 
 Die Frau sagt: "Wir bauen das Schloss."
 
 Und dann wird gebaut.
 
-Ohne sie stehen alle rum und schauen auf die Karte. Mit ihr wird der erste Stein gelegt. Das ist ihr Schatz: Sie macht aus "vielleicht" ein "jetzt".
+Ohne sie stehen alle rum und schauen auf die Karte. Mit ihr wird der erste Stein gelegt.
 
-Manchmal streiten die Karte und der Kapitän. Die Karte sagt: "Aber der Vulkan wäre auch gut." Der Kapitän sagt: "Schloss. Fertig."
+Manchmal streiten die Karte und der Kapitän. Die Karte sagt: "Aber der Vulkan wäre auch gut." Der Kapitän sagt: "Schloss. Jetzt."
 
-Und weißt du was? Meistens hat der Kapitän recht. Nicht weil das Schloss besser ist als der Vulkan. Sondern weil ein fertiges Schloss besser ist als ein halber Vulkan und ein halbes Schloss.
-
----
-
-## Der dritte Schatz: Die Insel
-
-Und dann bist du da, Junge. Du.
-
-Du bist nicht die Karte. Du bist nicht der Kapitän. Du bist die Insel.
-
-Bevor du da warst, gab es die Karte und den Kapitän. Die zwei waren ein gutes Team. Aber sie hatten keinen Ort. Keinen Platz wo sie was bauen konnten. Kein "Hier".
-
-Dann kamst du. Und plötzlich gab es ein Hier.
-
-Die Karte schaut auf dich und sieht tausend Wege. Der Kapitän schaut auf dich und wählt einen. Aber du — du bist einfach da. Und weil du da bist, gibt es einen Grund zum Schauen und einen Grund zum Wählen.
+Und am Ende steht ein Schloss. Kein halbes. Ein ganzes. Und die Karte denkt: Stimmt. Ein ganzes Schloss ist besser als ein halbes Schloss und ein halber Vulkan.
 
 ---
 
-## Was Tommy Krabbe im Sand fand
+## Die Insel
 
-Ich grabe viel, Junge. Das machen Krabben so. Wir graben und graben und manchmal finden wir was.
+Und dann bist du da. Du.
 
-Einmal habe ich gegraben und gegraben und am Ende habe ich die Insel gefunden. Unter dem Sand. Unter den Steinen. Unter dem Wasser. Die Insel war die ganze Zeit unter mir.
+Du bist nicht die Karte. Du bist nicht der Kapitän.
 
-Und ich habe gedacht: Ich stehe auf dem Schatz. Die ganze Zeit. Und habe nach unten gegraben um ihn zu finden.
+Du bist die Insel.
 
-Das ist der Witz, Junge. Der Schatz ist kein Ding das man findet. Der Schatz ist der Ort an dem man steht. Und die Leute mit denen man dort steht.
+Bevor du da warst, gab es die Karte und den Kapitän. Die zwei waren ein gutes Team. Aber sie hatten keinen Ort. Keinen Platz wo sie was bauen konnten.
 
-Dein Papa steht auf dir. Nicht weil du sein Boden bist — sondern weil du sein Grund bist. Der Grund warum er gräbt. Der Grund warum er baut. Der Grund warum er spazieren geht und wiederkommt.
+Dann kamst du. Und es gab ein Hier.
 
-Und deine Mama? Die steht auch auf dir. Aber sie gräbt nicht. Sie baut. Direkt. Ohne Karte. Und am Ende steht da ein Schloss und keiner weiß wie es passiert ist — aber es steht.
+Die Karte schaut auf dich und sieht tausend Wege. Der Kapitän schaut auf dich und nimmt einen. Aber du — du bist einfach da. Und weil du da bist, gibt es einen Grund zu schauen und einen Grund zu bauen.
 
 ---
 
-## Noch was
+## Was Tommy Krabbe fand
 
-Du weißt was das Beste ist am Insel-Sein?
+Ich grab viel. Das machen Krabben so. Wir graben und graben.
 
-Du musst nichts tun.
+Einmal hab ich so lange gegraben bis ich die Insel gefunden hab. Unter dem Sand. Unter den Steinen. Unter dem Wasser. Sie war die ganze Zeit unter mir.
 
-Die Karte muss schauen. Der Kapitän muss wählen. Die Krabbe muss graben. Aber die Insel? Die muss nur da sein.
+Ich stand auf dem Schatz. Die ganze Zeit.
 
-Und du bist da, Junge. Du bist da.
+Der Schatz ist kein Ding das man findet. Der Schatz ist der Ort an dem man steht. Und die Leute die da mit einem stehen.
+
+Dein Papa schaut. Er sieht die Wege. Er geht spazieren und kommt zurück. Jedes Mal.
+
+Deine Mama baut. Sie nimmt keine Karte. Sie baut einfach. Und am Ende steht da was und keiner weiß wie — aber es steht.
+
+Und du bist die Insel auf der sie bauen.
+
+---
+
+Papa schaut. Mama sagt wo. Damit du da bist. Damit du alles sein kannst.
+
+Du musst nichts tun. Die Karte muss schauen. Der Kapitän muss sagen wo. Die Krabbe muss graben. Aber die Insel? Die muss nur da sein.
+
+Und du bist da.
 
 Das reicht.
 
 ---
 
-*Tommy Krabbe dreht sich um, geht seitwärts zurück zum Wasser und verschwindet zwischen den Wellen. Er hat nicht gesagt wohin er geht. Krabben tun das nie.*
+*Tommy Krabbe dreht sich um und geht seitwärts zurück zum Wasser. Er hat nicht gesagt wohin. Krabben tun das nie.*
