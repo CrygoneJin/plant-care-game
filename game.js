@@ -297,6 +297,53 @@
         getCompleted: () => completedQuests
     };
 
+    // === SPIELTRIEB-BALANCE (Schiller #98) ===
+    // Formtrieb = Quest-Fortschritt (strukturiertes Spielen)
+    // Stofftrieb = freies Bauen (kreative Freiheit)
+    // Spieltrieb = die Balance zwischen beiden
+    const SPIELTRIEB_THRESHOLD = 10; // min. Aktionen bevor Widget sichtbar wird
+
+    function updateSpieltriebWidget() {
+        const widget = document.getElementById('spieltrieb-widget');
+        if (!widget) return;
+
+        const questsDone = completedQuests.length;
+        // Jede Quest zaehlt als ~5 "Formtrieb-Einheiten" (Quest = strukturierte Arbeit)
+        const formScore = questsDone * 5;
+        // Freie Bloecke = Gesamtbloecke minus Quest-bezogene Bloecke (Naehrung: ~10 pro Quest)
+        const totalBlocks = playerBlocksPlaced;
+        const questBlocks = questsDone * 10; // geschaetzter Quest-Anteil
+        const stoffScore = Math.max(0, totalBlocks - questBlocks);
+
+        const totalActions = formScore + stoffScore;
+
+        // Erst zeigen nach genug Aktivitaet
+        if (totalActions < SPIELTRIEB_THRESHOLD) {
+            widget.style.display = 'none';
+            return;
+        }
+
+        widget.style.display = '';
+
+        // Ratio: 0 = nur Stoff, 0.5 = Balance, 1 = nur Form
+        const ratio = totalActions > 0 ? formScore / totalActions : 0.5;
+
+        // Rotation: -30° (Form-dominant) bis +30° (Stoff-dominant)
+        // Balance = 0°
+        const rotation = (0.5 - ratio) * 60;
+        widget.style.transform = 'rotate(' + rotation + 'deg)';
+
+        // CSS-Klassen fuer Farbe
+        widget.classList.remove('form-dominant', 'stoff-dominant', 'balanced');
+        if (ratio > 0.6) {
+            widget.classList.add('form-dominant');
+        } else if (ratio < 0.4) {
+            widget.classList.add('stoff-dominant');
+        } else {
+            widget.classList.add('balanced');
+        }
+    }
+
     // === WEATHER + DAY/NIGHT + ANIMATIONS → effects.js (Zellteilung #11) ===
     const EFFECTS = window.INSEL_EFFECTS;
 
@@ -2537,6 +2584,7 @@
             updateStats();
             checkAchievements(stats);
             checkQuests(stats);
+            updateSpieltriebWidget();
             maybeQuestHint(currentMaterial, stats);
             maybeHoerspiel(stats);
         }, 200);

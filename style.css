@@ -542,6 +542,42 @@ header h1 {
     transition: all 0.3s ease;
 }
 
+#spieltrieb-widget {
+    font-size: 18px;
+    cursor: default;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+                color 0.6s ease,
+                text-shadow 0.6s ease,
+                opacity 0.4s ease;
+    opacity: 0.7;
+    user-select: none;
+    display: inline-block;
+    /* Default: balanced — no rotation */
+    transform: rotate(0deg);
+}
+
+#spieltrieb-widget:hover {
+    opacity: 1;
+}
+
+/* Formtrieb-dominant (Quests): blau-violett, nach links geneigt */
+#spieltrieb-widget.form-dominant {
+    color: #7b68ee;
+    text-shadow: 0 0 6px rgba(123, 104, 238, 0.5);
+}
+
+/* Stofftrieb-dominant (freies Bauen): orange-gold, nach rechts geneigt */
+#spieltrieb-widget.stoff-dominant {
+    color: #ff9f43;
+    text-shadow: 0 0 6px rgba(255, 159, 67, 0.5);
+}
+
+/* Balance (Spieltrieb!): grün, aufrecht */
+#spieltrieb-widget.balanced {
+    color: #2ecc71;
+    text-shadow: 0 0 8px rgba(46, 204, 113, 0.5);
+}
+
 #discovery-counter {
     font-family: var(--font-body);
     font-size: 13px;
