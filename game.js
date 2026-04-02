@@ -1512,6 +1512,7 @@
     let playerName = localStorage.getItem('insel-player-name') || '';
     let playerPos  = JSON.parse(localStorage.getItem('insel-player-pos') || 'null')
                      || { r: Math.floor(ROWS / 2), c: Math.floor(COLS / 2) };
+    window.INSEL_PLAYER_POS = playerPos;
     let playerDragging = false;
     let playerBlocksPlaced = parseInt(localStorage.getItem('insel-blocks-placed') || '0');
 
@@ -2179,6 +2180,7 @@
         // Spieler bleibt auf bebaubarem Bereich (kein Wasser-Rand)
         if (nr >= 2 && nr < ROWS - 2 && nc >= 2 && nc < COLS - 2) {
             playerPos = { r: nr, c: nc };
+            window.INSEL_PLAYER_POS = playerPos;
             localStorage.setItem('insel-player-pos', JSON.stringify(playerPos));
             needsRedraw = true;
             draw(); // sofort zeichnen — nicht auf 100ms-Interval warten (#66)

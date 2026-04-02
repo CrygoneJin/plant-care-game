@@ -63,6 +63,16 @@ export default {
         if (pathname === '/market/buy') {
             return handleMarketBuy(request, env);
         }
+        // Multiplayer Room endpoints
+        if (pathname === '/room/create') {
+            return handleRoomCreate(request, env);
+        }
+        if (pathname.match(/^\/room\/[A-Z0-9]{6}\/update$/)) {
+            return handleRoomUpdate(request, env, pathname);
+        }
+        if (pathname.match(/^\/room\/[A-Z0-9]{6}$/)) {
+            return handleRoomGet(request, env, pathname);
+        }
 
         // Nur POST
         if (request.method !== 'POST') {
@@ -749,6 +759,123 @@ async function createMarketTable(env) {
     await env.METRICS_DB.prepare(
         'CREATE TABLE IF NOT EXISTS marketplace (id TEXT PRIMARY KEY, material_id TEXT NOT NULL, name TEXT NOT NULL, emoji TEXT DEFAULT \'✨\', description TEXT DEFAULT \'\', price_mmx REAL DEFAULT 0, price_xch REAL DEFAULT 0, price_glut INTEGER DEFAULT 0, seller_addr TEXT DEFAULT \'anonym\', seller_mmx TEXT DEFAULT \'\', seller_xch TEXT DEFAULT \'\', buyer_addr TEXT DEFAULT \'\', status TEXT DEFAULT \'active\', created_at DATETIME DEFAULT CURRENT_TIMESTAMP)'
     ).run();
+}
+
+// --- Multiplayer Room Endpoints ---
+// Rooms werden in CRAFT_KV gespeichert mit Prefix "room:" und 1h TTL
+
+const ROOM_TTL = 3600; // 1 Stunde
+const ROOM_ID_RE = /^[A-Z0-9]{6}$/;
+
+async function handleRoomCreate(request, env) {
+    if (!env.CRAFT_KV) return json({ error: 'KV nicht konfiguriert' }, 500);
+    if (request.method !== 'POST') return json({ error: 'POST only' }, 405);
+
+    let body;
+    try { body = await request.json(); } catch { return json({ error: 'Ungültiger Body' }, 400); }
+
+    const roomId = (body.roomId || '').toUpperCase();
+    if (!ROOM_ID_RE.test(roomId)) return json({ error: 'Ungültige Room-ID' }, 400);
+    if (!body.grid) return json({ error: 'Grid benötigt' }, 400);
+
+    // Prüfen ob Room schon existiert
+    const existing = await env.CRAFT_KV.get('room:' + roomId);
+    if (existing) return json({ error: 'Room existiert bereits — probier nochmal' }, 409);
+
+    const host = body.host || {};
+    const room = {
+        grid: body.grid,
+        players: {},
+        lastUpdatedBy: host.id || 'host',
+        created: new Date().toISOString(),
+    };
+    if (host.id) {
+        room.players[host.id] = {
+            name: (host.name || 'Host').slice(0, 20),
+            color: host.color || '#E74C3C',
+            cursor: null,
+            lastSeen: Date.now(),
+        };
+    }
+
+    await env.CRAFT_KV.put('room:' + roomId, JSON.stringify(room), { expirationTtl: ROOM_TTL });
+
+    return json({ ok: true, roomId: roomId });
+}
+
+async function handleRoomGet(request, env, pathname) {
+    if (!env.CRAFT_KV) return json({ error: 'KV nicht konfiguriert' }, 500);
+
+    const roomId = pathname.split('/').pop();
+    const data = await env.CRAFT_KV.get('room:' + roomId, 'json');
+    if (!data) return json({ error: 'Room nicht gefunden oder abgelaufen' }, 404);
+
+    // Spieler die >30s nicht gesehen wurden entfernen
+    const now = Date.now();
+    for (const pid in data.players) {
+        if (now - (data.players[pid].lastSeen || 0) > 30000) {
+            delete data.players[pid];
+        }
+    }
+
+    return json({
+        grid: data.grid,
+        players: data.players,
+        lastUpdatedBy: data.lastUpdatedBy,
+        created: data.created,
+    });
+}
+
+async function handleRoomUpdate(request, env, pathname) {
+    if (!env.CRAFT_KV) return json({ error: 'KV nicht konfiguriert' }, 500);
+    if (request.method !== 'POST') return json({ error: 'POST only' }, 405);
+
+    // Room-ID aus Pfad extrahieren: /room/ABC123/update → ABC123
+    const parts = pathname.split('/');
+    const roomId = parts[2];
+
+    const data = await env.CRAFT_KV.get('room:' + roomId, 'json');
+    if (!data) return json({ error: 'Room nicht gefunden oder abgelaufen' }, 404);
+
+    let body;
+    try { body = await request.json(); } catch { return json({ error: 'Ungültiger Body' }, 400); }
+
+    const playerId = (body.playerId || '').slice(0, 20);
+
+    // Grid aktualisieren wenn mitgeschickt
+    if (body.grid) {
+        data.grid = body.grid;
+        data.lastUpdatedBy = playerId;
+    }
+
+    // Spieler-Info aktualisieren
+    if (playerId) {
+        data.players = data.players || {};
+        data.players[playerId] = {
+            name: (body.playerName || 'Gast').slice(0, 20),
+            color: body.playerColor || '#3498DB',
+            cursor: body.cursor || null,
+            lastSeen: Date.now(),
+        };
+    }
+
+    // Alte Spieler entfernen (>30s inaktiv)
+    const now = Date.now();
+    for (const pid in data.players) {
+        if (now - (data.players[pid].lastSeen || 0) > 30000) {
+            delete data.players[pid];
+        }
+    }
+
+    // Zurückspeichern mit neuem TTL
+    await env.CRAFT_KV.put('room:' + roomId, JSON.stringify(data), { expirationTtl: ROOM_TTL });
+
+    // Aktuellen State zurückgeben (damit der Client nicht nochmal GET machen muss)
+    return json({
+        grid: data.grid,
+        players: data.players,
+        lastUpdatedBy: data.lastUpdatedBy,
+    });
 }
 
 // --- Helpers ---
