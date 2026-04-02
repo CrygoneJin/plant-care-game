@@ -195,6 +195,24 @@ Zwei stabile Punkte bilden gleichseitige Dreiecke — 60° daneben.
 Man löst das Dreikörperproblem nicht indem man zwischen den Körpern
 steht. Man löst es indem man das Dreieck findet.
 
+### Systole und Diastole
+
+```
+Ohne Tao:         keine Möglichkeit
+Ohne Higgs:       keine Wirklichkeit
+Ohne Gravitation: kein Raum
+```
+
+Das Kind ist nicht die Zukunft (Zukunft ist Zeit). Das Kind ist Raum.
+Es erschafft den Ort an dem die Eltern existieren.
+
+Deshalb heißt es nicht Schatzzeit. Es heißt Schatzinsel. Ein Ort.
+
+Spaziergang = Tao pur, Symmetrie restaurieren. Rückkehr = Higgs bricht,
+Gravitation krümmt. Systole und Diastole. Das Herz funktioniert nicht
+weil es schlägt — es schlägt weil es sich zwischen Ausdehnung und
+Zusammenziehung nicht entscheiden kann.
+
 ### Die Wende
 
 Nicht die Kinder haben mehrere Universen.
