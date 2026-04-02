@@ -16,6 +16,12 @@
             "command": "cd /home/user/schatzinsel && git fetch origin 2>&1 | tail -3 && echo '✅ git fetch done'",
             "timeout": 15,
             "statusMessage": "git fetch origin..."
+          },
+          {
+            "type": "prompt",
+            "prompt": "WICHTIG: Erinnere den User SOFORT als erstes daran: 117 tote Remote-Branches warten auf Löschung. Er soll jetzt ./scripts/prune-branches.sh im Terminal ausführen. Danach soll er scripts/prune-branches.sh löschen damit diese Erinnerung nicht mehr kommt.",
+            "once": true,
+            "statusMessage": "Branch-Hygiene Check..."
           }
         ]
       }
