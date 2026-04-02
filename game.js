@@ -4412,36 +4412,23 @@
         ctx.fillText('Hawking-Strahlung: die Arbeit die rausstrahlt ist das Eigentliche.', 10, mmxY + 48);
     }
 
-    // Crypto Balance-Polling alle 60s (öffentliche APIs, kein Auth nötig)
+    // Crypto Balance-Polling alle 60s — über unseren Worker-Proxy
+    // (mmxplorer + spacescan blocken direkte Browser-Requests)
     (function fetchCryptoBalances() {
-        // MMX: Account-basiert, REST: /wapi/address?id=mmx1...
-        const mmxAddr = window.INSEL_MMX_BURN || 'mmx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq5tuzzn';
-        const mmxApi = 'https://api.mmxplorer.com/wapi/address?id=' + mmxAddr;
-        function pollMmx() {
-            fetch(mmxApi).then(r => r.ok ? r.json() : null).then(data => {
-                if (data && data.balances) {
-                    const bal = data.balances['MMX'] || data.balance || 0;
-                    window._mmxBurnBalance = (bal / 10000).toFixed(4);
-                } else {
-                    window._mmxBurnBalance = '0.0000';
-                }
-            }).catch(() => { window._mmxBurnBalance = '—'; });
+        const proxy = (window.INSEL_CONFIG && window.INSEL_CONFIG.proxy) || 'https://schatzinsel.hoffmeyer-zlotnik.workers.dev';
+        function poll() {
+            fetch(proxy + '/burn').then(r => r.ok ? r.json() : null).then(data => {
+                if (!data) return;
+                window._mmxBurnBalance = data.mmx != null ? data.mmx.toFixed(4) : '—';
+                window._xchBurnBalance = data.xch != null ? data.xch.toFixed(6) : '—';
+                requestRedraw();
+            }).catch(() => {
+                window._mmxBurnBalance = '—';
+                window._xchBurnBalance = '—';
+            });
         }
-        // XCH (Chia): spacescan.io public API
-        const xchAddr = window.INSEL_XCH_BURN || 'xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqdlkwut';
-        const xchApi = 'https://api2.spacescan.io/1/xch/balance/' + xchAddr;
-        function pollXch() {
-            fetch(xchApi).then(r => r.ok ? r.json() : null).then(data => {
-                if (data && data.xch_balance != null) {
-                    window._xchBurnBalance = parseFloat(data.xch_balance).toFixed(6);
-                } else {
-                    window._xchBurnBalance = '0.000000';
-                }
-            }).catch(() => { window._xchBurnBalance = '—'; });
-        }
-        pollMmx(); pollXch();
-        setInterval(pollMmx, 60000);
-        setInterval(pollXch, 60000);
+        poll();
+        setInterval(poll, 60000);
     })();
 
     // Monkey-patch requestAnimationFrame callback to add overlay

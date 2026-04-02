@@ -50,6 +50,10 @@ export default {
         if (pathname === '/metrics/ingest') {
             return handleMetricsIngest(request, env);
         }
+        // Burn-Balance Proxy — mmxplorer blockt direkte Browser-Requests (Cloudflare Challenge)
+        if (pathname === '/burn') {
+            return handleBurnBalance(request);
+        }
         // Marketplace endpoints
         if (pathname === '/market/items') {
             return handleMarketItems(request, env);
@@ -749,6 +753,49 @@ async function createMarketTable(env) {
     await env.METRICS_DB.prepare(
         'CREATE TABLE IF NOT EXISTS marketplace (id TEXT PRIMARY KEY, material_id TEXT NOT NULL, name TEXT NOT NULL, emoji TEXT DEFAULT \'✨\', description TEXT DEFAULT \'\', price_mmx REAL DEFAULT 0, price_xch REAL DEFAULT 0, price_glut INTEGER DEFAULT 0, seller_addr TEXT DEFAULT \'anonym\', seller_mmx TEXT DEFAULT \'\', seller_xch TEXT DEFAULT \'\', buyer_addr TEXT DEFAULT \'\', status TEXT DEFAULT \'active\', created_at DATETIME DEFAULT CURRENT_TIMESTAMP)'
     ).run();
+}
+
+// --- Burn-Balance Proxy ---
+// mmxplorer + spacescan blocken direkte Browser-Requests (Cloudflare Challenge).
+// Worker-zu-API geht ohne Challenge. Cached 60s.
+
+async function handleBurnBalance(request) {
+    const url = new URL(request.url);
+    const mmxAddr = url.searchParams.get('mmx') || 'mmx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq5tuzzn';
+    const xchAddr = url.searchParams.get('xch') || 'xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqdlkwut';
+
+    const results = { mmx: null, xch: null, ts: Date.now() };
+
+    // MMX Balance
+    try {
+        const mmxRes = await fetch('https://api.mmxplorer.com/wapi/address?id=' + mmxAddr, {
+            headers: { 'User-Agent': 'SchatzinselWorker/1.0' }
+        });
+        if (mmxRes.ok) {
+            const data = await mmxRes.json();
+            if (data && data.balances) {
+                results.mmx = (data.balances['MMX'] || data.balance || 0) / 10000;
+            }
+        }
+    } catch (e) { /* API nicht erreichbar */ }
+
+    // XCH Balance
+    try {
+        const xchRes = await fetch('https://api2.spacescan.io/1/xch/balance/' + xchAddr, {
+            headers: { 'User-Agent': 'SchatzinselWorker/1.0' }
+        });
+        if (xchRes.ok) {
+            const data = await xchRes.json();
+            if (data && data.xch_balance != null) {
+                results.xch = parseFloat(data.xch_balance);
+            }
+        }
+    } catch (e) { /* API nicht erreichbar */ }
+
+    return json(results, 200, {
+        ...corsHeaders(),
+        'Cache-Control': 'public, max-age=60'
+    });
 }
 
 // --- Helpers ---
