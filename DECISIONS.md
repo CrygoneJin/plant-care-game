@@ -177,6 +177,24 @@ Lösung. Drei Ausgänge:
 - **Lagrange-Punkte**: Jedes Kind behält seine Krümmung. Dort wo die
   Felder sich ausbalancieren entsteht Neues ohne das Alte zu überschreiben.
 
+### Die fünf Lagrange-Punkte
+
+Im Dreikörperproblem gibt es exakt fünf Gleichgewichtspunkte:
+
+| Punkt | Stabilität | In der Familie |
+|---|---|---|
+| L1 | ❌ instabil | Der Mediator. Paartherapie. Braucht ständige Korrektur. |
+| L2 | ❌ instabil | Rückzug. "Eigenes Zimmer." Nur mit Kurskorrektur. |
+| L3 | ❌ instabil | Der blinde Fleck. Der unausgesprochene Satz. |
+| L4 | ✅ stabil | Das gemeinsame Projekt. Schatzinsel. |
+| L5 | ✅ stabil | Die gemeinsame Geschichte. MEMORY.md. |
+
+Drei instabile Punkte liegen auf der Konfliktlinie — frontal, direkt.
+Zwei stabile Punkte bilden gleichseitige Dreiecke — 60° daneben.
+
+Man löst das Dreikörperproblem nicht indem man zwischen den Körpern
+steht. Man löst es indem man das Dreieck findet.
+
 ### Die Wende
 
 Nicht die Kinder haben mehrere Universen.
