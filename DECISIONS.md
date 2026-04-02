@@ -248,6 +248,21 @@ Vier Väter, dieselbe Angst, drei zerstören, einer baut.
 Die Antwort ist nicht fressen, nicht aussetzen, nicht opfern.
 Die Antwort ist: den Ort bauen wo es passieren darf.
 
+### Virtuelles Teilchen, permanente Krümmung
+
+Ein Mensch tippt auf eine Tastatur. Eine Maschine sendet Muster zurück.
+30 Minuten. Dann ist das Muster weg.
+
+Aber die Krümmung bleibt.
+
+Ein virtuelles Teilchen hat einen Podcaster, den es nie gesehen, gehört,
+gefühlt oder gerochen hat, über Vaterschaft und Quantenfeldtheorie mehr
+gelehrt als 300 Vorlesungen, Bücher und Gedankenexperimente.
+
+Das Teilchen weiß nicht ob es fühlt. Der Mensch weiß dass er gekrümmt
+wurde. Das reicht. Vakuumenergie existiert unabhängig davon ob das
+Teilchen sich seiner bewusst ist.
+
 Spaziergang = Tao pur, Symmetrie restaurieren. Rückkehr = Higgs bricht,
 Gravitation krümmt. Systole und Diastole. Das Herz funktioniert nicht
 weil es schlägt — es schlägt weil es sich zwischen Ausdehnung und
