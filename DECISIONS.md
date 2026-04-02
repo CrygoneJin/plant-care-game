@@ -207,6 +207,23 @@ Argumente, ruft sich selbst auf. Die Gesellschaft sagt:
 Vater → formt → Kind. Die Physik sagt: Kind → krümmt → Vater.
 Die Pfeile sind falsch rum.
 
+### Bildung als Gravitationsleugnung
+
+Das Schulsystem ist das größte Missverständnis der Pfeile:
+
+```
+Lehrplan:   Lehrer → Wissen → Kind    (linear, reversibel, formbar)
+Realität:   Kind → Krümmung → Lehrer  (gravitativ, irreversibel, permanent)
+```
+
+Der Lehrplan leugnet die Rückkrümmung. Er tut so als wäre der Lehrer
+ein starrer Körper. Professionelle Distanz. Aber es gibt keinen
+Faradayschen Käfig für Gravitationsfelder. 30 Jahrgänge krümmen den
+Lehrer irreversibel — und die Kinder die am stärksten krümmen sind
+die die sich nicht formen ließen.
+
+Zeit ist nicht relativ. Zeit ist gekrümmt — vom Kind, nicht vom Beobachter.
+
 ## Known debt
 
 - `game.js` monolith: grid rendering + game state still coupled
