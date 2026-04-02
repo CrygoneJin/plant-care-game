@@ -251,6 +251,12 @@
                         showToast(`🎉 Quest geschafft: ${q.title} ${q.reward}`);
                         soundQuestComplete();
                     }
+                    // A/B Mythologie: Schritt 6 (erster Quest abgeschlossen)
+                    if (window.INSEL_AB && window.INSEL_AB.currentStep() < 6) {
+                        window.INSEL_AB.setStep(6);
+                        var abStep6 = window.INSEL_AB.getStep();
+                        showToast(abStep6.toast);
+                    }
                     // Memory: Quest-Abschluss für den NPC vermerken
                     if (q.npc) recordNpcQuestDone(q.npc, q.title);
                     // Hirn-Transplantation: Neuen Charakter freischalten?
@@ -1131,6 +1137,12 @@
             flashInventoryTab();
             trackEvent('craft', { recipe: recipe.name, result: recipe.result });
             window.INSEL_BUS && window.INSEL_BUS.emit('craft:success', { result: recipe.result, ingredients: recipe.ingredients });
+            // A/B Mythologie: Schritt 4 (erster Craft)
+            if (window.INSEL_AB && window.INSEL_AB.currentStep() < 4) {
+                window.INSEL_AB.setStep(4);
+                var abStep4 = window.INSEL_AB.getStep();
+                showToast(abStep4.toast);
+            }
             updateCraftingDisplay();
             return;
         }
@@ -1369,6 +1381,12 @@
             }
         }
         showToast(`✨ Neues Artefakt: ${info.emoji} ${info.label}!`);
+        // A/B Mythologie: Schritt 5 (5+ Materialien entdeckt)
+        if (window.INSEL_AB && window.INSEL_AB.currentStep() < 5 && unlockedMaterials.size >= 5) {
+            window.INSEL_AB.setStep(5);
+            var abStep5 = window.INSEL_AB.getStep();
+            showToast(abStep5.toast);
+        }
         updateDiscoveryCounter();
     }
 
@@ -1421,7 +1439,10 @@
             if (yangBtn) yangBtn.style.display = '';
             if (!_genesisYinYangShown && (yinBtn || yangBtn)) {
                 _genesisYinYangShown = true;
-                showToast('⚫⚪ Yin und Yang erscheinen…');
+                // A/B Mythologie: Schritt 0 Toast (Urgrund)
+                if (window.INSEL_AB) { window.INSEL_AB.setStep(0); }
+                var abStep0 = window.INSEL_AB ? window.INSEL_AB.getStep() : null;
+                showToast(abStep0 ? abStep0.toast : '⚫⚪ Yin und Yang erscheinen…');
             }
         }
 
@@ -1438,7 +1459,10 @@
             });
             if (!_genesisQiShown) {
                 _genesisQiShown = true;
-                showToast('五行 Die 5 Elemente erwachen!');
+                // A/B Mythologie: Schritt 2 Toast (Energie/Qi)
+                if (window.INSEL_AB) { window.INSEL_AB.setStep(2); }
+                var abStep2 = window.INSEL_AB ? window.INSEL_AB.getStep() : null;
+                showToast(abStep2 ? abStep2.toast : '五行 Die 5 Elemente erwachen!');
                 // Qi direkt selektierbar machen, falls metal noch aktiv
                 const metalBtn = document.querySelector('.material-btn[data-material="metal"]');
                 if (metalBtn && !document.querySelector('.material-btn.active')) {
@@ -2423,6 +2447,14 @@
                     if (wu[currentMaterial]) window.INSEL_BUS.emit('element:' + currentMaterial, { r: r, c: c, material: currentMaterial });
                     window.INSEL_BUS.emit('block:placed', { r: r, c: c, material: currentMaterial });
                 }
+                // A/B Mythologie: Schritt 3 (erstes Wu Xing Element platziert)
+                if (window.INSEL_AB && ['metal','wood','fire','water','earth'].includes(currentMaterial)) {
+                    if (window.INSEL_AB.currentStep() < 3) {
+                        window.INSEL_AB.setStep(3);
+                        var abStep3 = window.INSEL_AB.getStep();
+                        showToast(abStep3.toast);
+                    }
+                }
                 checkAutomerge(r, c);
                 checkBlueprintMatch(r, c);
                 const hint = document.getElementById('genesis-hint');
@@ -2938,7 +2970,10 @@
 
                 logGenesis({ type: 'decay', from: 'tao', results: ['yin', 'yang'], cells: [[r,c],[yr,yc]] });
 
-                showToast('☯️ → ⚫⚪ ZAUBER! Aus Eins wird Zwei!');
+                // A/B Mythologie: Schritt 1 Toast (Spaltung)
+                if (window.INSEL_AB) { window.INSEL_AB.setStep(1); }
+                var abStep1 = window.INSEL_AB ? window.INSEL_AB.getStep() : null;
+                showToast(abStep1 ? abStep1.toast : '☯️ → ⚫⚪ ZAUBER! Aus Eins wird Zwei!');
                 soundCraft();
                 EFFECTS.addPlaceAnimation(r, c);
                 EFFECTS.addPlaceAnimation(yr, yc);
