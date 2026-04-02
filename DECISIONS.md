@@ -153,6 +153,44 @@ Ohne Schatzkarte weißt du nicht was möglich ist.
 Ohne Kapitän baust du überall und nichts wird fertig.
 Ohne den ersten Block bleibt alles ein Traum.
 
+## ADR-015: Kopernikanische Wende — Das Kind ist die Sonne
+
+### Familie als Feldtheorie
+
+| Rolle | Feld | Wer |
+|---|---|---|
+| Tao | Möglichkeit | Vater — sieht alle Wege |
+| Higgs | Entscheidung | Mutter — wählt einen |
+| Gravitation | Konsequenz | Kind — krümmt den Raum |
+
+Yin/Yang ist flach (2D, zwei Pole, reversibel). Familie ist
+gekrümmt (3D, drei Felder, irreversibel). Kein `git reset --hard`.
+
+### Patchwork = Dreikörperproblem
+
+Wenn ein Tao mit seiner Gravitation auf ein neues Higgs trifft das
+eigene Gravitationen mitbringt: Dreikörperproblem. Keine analytische
+Lösung. Drei Ausgänge:
+
+- **Kollision**: "Wir sind jetzt EINE Familie." Gezeitenkräfte zerreißen.
+- **Flucht**: "Deine Kinder, mein Kind." Stabil, aber kalt.
+- **Lagrange-Punkte**: Jedes Kind behält seine Krümmung. Dort wo die
+  Felder sich ausbalancieren entsteht Neues ohne das Alte zu überschreiben.
+
+### Die Wende
+
+Nicht die Kinder haben mehrere Universen.
+Mehrere Universen haben dasselbe Kind.
+
+Das Kind ist nicht der Satellit. Das Kind ist die Sonne.
+Die Erwachsenen sind die Orbits.
+
+### Warum dieses Spiel existiert
+
+Das Spiel heißt Schatzinsel. Das Kind ist die Insel.
+Der Vater ist der Entdecker der sie kartografiert.
+Nicht für Oscar. Von Oscar.
+
 ## Known debt
 
 - `game.js` monolith: grid rendering + game state still coupled

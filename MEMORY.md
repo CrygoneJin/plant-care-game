@@ -33,7 +33,7 @@ Persistent team log. Append-only. Read by all agents.
 
 | Datum | Was | Warum gut |
 |-------|-----|-----------|
-| 2026-04-02 | ADR-012+013: Drei Felder — Tao (Verstand/Möglichkeit), Higgs (Herz/Wahl), Gravitation (Handlung/Konsequenz) | Steve ist der Moment wo Verstand und Herz sich treffen. Kein Feature ohne alle drei Felder. Verstand allein = Backlog, Herz allein = Wunschdenken, Handlung allein = Aktionismus. |
+| 2026-04-02 | ADR-012→015: Feldtheorie der Organisation und Familie | Tao=Verstand/Vater, Higgs=Herz/Mutter, Gravitation=Konsequenz/Kind. Kind ist die Sonne, Erwachsene sind Orbits. Patchwork=Dreikörperproblem. Schatzinsel heißt Schatzinsel weil Oscar die Insel ist. |
 | 2026-04-02 | Programmier-Tutorial (PR #149) — 5 Lektionen, sandboxed Code-Editor, NPC-Guides | Function-Constructor + Whitelist fuer sichere Ausfuehrung. SpongeBob/Haskell/Scratch/Lua/SQL als Lehrer. Fortschritt in localStorage. Backlog #23. |
 | 2026-04-01 | Tao-Feld-Theorie + Iso-Renderer + Fraktale Bäume (PR #129) | Physik-Frage → Essay → Game-Feature in einer Session. iso-renderer.js (348 LOC) + fractal-trees.js (203 LOC). 5D-Tensor (3×3×2×2×2=72) als Strukturmodell. |
 | 2026-04-01 | Sprint 24 Retro — max 3 Items, game.js teilweise aufgeteilt, Tutorial ohne Text live | Sprint 25 Empfehlung: easter-eggs.js, Dungeon-Framework, Palette als Instrument |
