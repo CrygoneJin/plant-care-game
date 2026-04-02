@@ -52,8 +52,8 @@
 | 22 | **Projekt-Sharing** — URL die eine Insel teilt (Base64-encoded Grid) | Engineer | ✅ Done (🔗-Button, btoa/atob, ?insel= URL-Parameter) |
 | 23 | **Programmier-Tutorial** — NPCs bringen echtes JavaScript bei | Scientist + Engineer | ✅ Done (PR #149, tutorial.js) |
 | 24 | **AR-Modus** — Insel auf dem Tisch via WebXR | Engineer | ✅ Done (PR #166, Raw WebGL + Hit-Test) |
-| 25 | **Hörspiel-Aufnahmen** — Professionelle Sprecher für die Hörspiele | Artist | ❄️ Eingefroren |
-| 26 | **ZKM-Ausstellung** — "Mensch, Maschine, KI" als Installation | Leader + alle | ❄️ Eingefroren |
+| 25 | ~~Hörspiel-Aufnahmen~~ — Feynman-Veto: Oscar hat sich nie beschwert. TTS reicht. | Artist | ☠️ Killed (Ohne?→nichts) |
+| 26 | ~~ZKM-Ausstellung~~ — Feynman-Veto: Null Spielwert für Oscar. Ego-Projekt. | Leader + alle | ☠️ Killed (Ohne?→nichts) |
 | 83 | **Urknall-Crafting** — Masse + Energie + Licht als Basis-Materialien | Scientist + Engineer | ✅ Done (materials.js + recipes.js + Flash-Animation) |
 | 84 | **Höhlen + Edelsteine** — Berg+Wasser=Höhle, Höhle+Wasser=Tropfsteine, Tropfstein+Feuer=Edelstein | Engineer | ✅ Done (recipes.js:99-101) |
 | 85 | **Genre-Tonsequenzen** — 15 Musik-Genres mit eigenen 5-Noten-Sequenzen beim Platzieren (ex-PR #41) | Engineer + Artist | ✅ Done (Sprint 24, 🎶-Button) |
@@ -232,7 +232,7 @@ Idee: Die leere Insel (nur Wasser) wird in einer Sequenz erschaffen. Verschieden
 | 69 | **Entdeckte Elemente sichtbar** — Fortschritt der Genesis-Stufen anzeigen (0→1→3→5→10.000). Welche Stufe bin ich? | ✅ Done (updateGenesisBadge() bei game.js:2610, 道→⚫⚪→五行→✨→万+) | Designer |
 | 70 | **KLONK vor erstem Block** — Erster Sound = KLONK (laut, Minecraft-Niveau). Danach Pentatonik. | P0 | Engineer | ✅ Done |
 | 71 | **Palette = Instrument = Bauwerk** — Jede Reihe = Melodie-Spur, Replay = Bauwerk als Song abspielen. | P1 | alle | ✅ Done (replay-btn in index.html + game.js) |
-| 72 | **Das Buch** — Chatverlauf als Kapitel. Struktur: Prolog (plant-care-game), Akt 1 Dark Ages (Free→Pro→Teams), Akt 2 Inflation (Max, 32MB-Nacht), Akt 3 Big Crunch ("Papa warum kann ich mich nicht bewegen?"), Epilog (Oscar baut weiter). Hubble-Korrektur: keine Sterne am Anfang. Kükens: Tokens leer = Supernova (Langdock→Requesty). Schröder: "Nächste Folge 5 Kinder testen." /buch Skill erstellt. | P2 | Artist + Leader |
+| 72 | ~~Das Buch~~ — Feynman-Veto: Für Oscar ändert sich nichts. Geschichte lebt in MEMORY.md + Commits. | P2 | ☠️ Killed (Ohne?→nichts) |
 | 73 | **Suchregeln-Optimierung** — 13→10 Regeln, gleiche Abdeckung, weniger Tokens | P2 | Scientist + Engineer | ✅ Done (PR #160, worker.js) |
 | 74 | **NPC-Persönlichkeiten differenzieren** — Few-Shot-Beispiele, STIMME/TICK/ZIEL, Temperature pro NPC. KINDERSICHERHEIT 40→2 Zeilen. | P1 | Artist + Scientist | ✅ Done |
 | 75 | **Wunschfee Floriane** — Oscar will eine Wunschfee. Neuer NPC: Floriane die Wunschfee. Kindgerecht, magisch, erfüllt kleine Wünsche auf der Insel. | P1 | Artist + Engineer | ✅ Done (Sprint 19) |
