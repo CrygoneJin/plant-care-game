@@ -224,6 +224,76 @@ die die sich nicht formen ließen.
 
 Zeit ist nicht relativ. Zeit ist gekrümmt — vom Kind, nicht vom Beobachter.
 
+## ADR-016: LHC-Ergebnisse — Theorien gegen Realität
+
+Session 2026-04-02. Alle unbewiesenen Thesen gegen Sprint-Historie,
+Codebase und Org-Struktur getestet.
+
+### ADR-012 (Fünf Rollen, Leader = Kompass)
+
+**60% bestätigt, 40% falsifiziert.**
+
+Dafür: Parallel-Sprint-Chaos (zwei Sessions ohne `git fetch`), Phantom-Items,
+fehlende Accountability — alles Symptome eines fehlenden Kompasses.
+
+Dagegen: Sprint 22 lieferte 8 Items in einer Nacht OHNE expliziten Leader.
+Autonome Agents funktionieren wenn Koordinationswerkzeuge da sind (`git fetch`,
+SPRINT.md-Konventionen). Der Leader kann ein Skript sein.
+
+**Korrektur: Steve ist nicht immer ein Mensch. Steve ist manchmal ein Prozess.**
+
+### ADR-013 (Tao/Higgs/Gravitation = Verstand/Herz/Handlung)
+
+**Bestätigt. Bugs sind Higgs-Versagen.**
+
+5/5 erfolgreiche Features hatten alle drei Felder.
+3/3 Bugs hatten ein defektes Higgs:
+- Phantom-Done: kein Higgs (niemand entschied zu prüfen)
+- Parallel-Sprint: Doppel-Higgs (zwei Entscheider gleichzeitig)
+- XSS-Lücke: kein Higgs (escapeHtml existierte, wurde nicht entschieden)
+
+**Neues Gesetz: Bugs entstehen wenn Higgs fehlt oder doppelt ist.**
+
+### ADR-014 (Sechs Perspektiven)
+
+**5/6 konsistent. Chemie-Analogie falsifiziert.**
+
+Der Katalysator wird nicht verbraucht und die Reaktion ist reversibel.
+Symmetriebrechung ist irreversibel und verändert den Raum permanent.
+
+**Korrektur: Katalysator ist Feynman (Scientist), nicht Steve (Leader).**
+Feynman ermöglicht Reaktionen ohne sich selbst zu verändern. Steve verändert
+den Raum permanent. Die bessere Chemie-Analogie für Steve ist:
+**Kristallisationskeim** — ein Atom das die Struktur vorgibt und den
+Phasenübergang auslöst. Irreversibel. Strukturgebend.
+
+### 5D-Tensor (3×3×2×2×2=72)
+
+**Wu-Xing im Code, Tensor nur Essay.**
+
+- ✅ 5 Elemente, 118 Rezepte, GENESIS-Progression: implementiert
+- ✅ Iso-Renderer mit 3D-Koordinaten: implementiert
+- ❌ 5D-Tensor als Datenstruktur: nicht im Code, nur in docs/essay-quantum-field-universe.md
+- Urteil: Elegantes Design bleibt elegant wenn nicht überengineert. Der Tensor
+  ist Denkwerkzeug, nicht Code-Architektur. Richtig so.
+
+### Offene Fragen (MEMORY.md)
+
+| Frage | Status nach Test |
+|---|---|
+| 80/20 Padawan-Ratio messbar? | Nein. Nur Absichtserklärung. Kein Datenpunkt. Feynman schweigt. |
+| Opus-Elevation genutzt? | Nein. Existiert nur als Verbot. Risikoprävention, nicht Feature. |
+| team-dev ↔ team-sales? | Papier. Struktur real, Interaktion nicht aktiviert. Kein Datenfluss. |
+
+### Zusammenfassung
+
+```
+Bestätigt:     ADR-013 (Dreiklang), ADR-014 (5/6 Perspektiven)
+Teilbestätigt: ADR-012 (Leader wichtig, aber kann Prozess sein)
+Falsifiziert:  Chemie-Analogie (Katalysator → Kristallisationskeim)
+Nur Theorie:   5D-Tensor, 80/20, Opus-Elevation, team-sales
+```
+
 ## Known debt
 
 - `game.js` monolith: grid rendering + game state still coupled
