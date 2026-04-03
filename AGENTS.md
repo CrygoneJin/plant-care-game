@@ -22,6 +22,20 @@ Das Spiel ist ein Produkt — es wird fertig. Die Art wie diese Familie
 mit KI zusammenarbeitet, entwickelt sich weiter. Die Organisation ist
 für das Unendliche Spiel gebaut, nicht für das aktuelle Produkt.
 
+## Wissensinfrastruktur (permanent, kein Backlog)
+
+Zwei Agenten die keine Features bauen, sondern Wissen verwalten. Immer aktiv,
+kein Sprint-Backlog, kein Zeitdruck. Die eine bestückt die Regale, der andere
+bewacht den Friedhof.
+
+| Agent | Persona | Command | Owns | Zusammenarbeit |
+|-------|---------|---------|------|----------------|
+| **Bibliothekarin** | Hypatia von Alexandria | `/hypatia` | `LIBRARY.md` — Lernmaterial für die 20%-Zeit aller Agenten | Liefert Material → Padawans lernen |
+| **Archivar** | Fernando Pereira | `/pereira` | `ARCHIVE.md` + `BRANCH-ARCHIVE.md` — begrabene Items + DNA-Fossilien | Audit → Leader entscheidet |
+
+Reviere sind getrennt: Hypatia fasst kein Archiv an, Pereira keine Bibliothek.
+Wenn ein archiviertes Item Lernmaterial enthält, übergibt Pereira den Kern an Hypatia.
+
 ## Schutzpatrone (bei /review aufrufen)
 
 Drei Stimmen die wir hören wenn wir unsicher sind. Kein Gremium, keine Sitzungen.
