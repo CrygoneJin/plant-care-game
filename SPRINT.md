@@ -11,6 +11,7 @@
 |---|------|----------|--------|
 | S26-1 | **#71 Palette als Instrument** — Long-press (500ms) auf Palette-Button spielt Genre-Ton ohne Baublock. CSS-Pulse-Animation. Oscar tippt Melodie auf der Palette. | Engineer | ✅ Done |
 | S26-2 | **#96 NPC-Start-Toast** — Beim Laden: zweiter Toast (4s nach Willkommen) vom NPC mit den meisten abgeschlossenen Quests: "Letztes Mal hast du viel 🌳 Baum gebaut." | Engineer + Artist | ✅ Done |
+| S26-3 | **#50 Höhle = Dungeon** — Berg+Wasser nebeneinander → cave nach 2s. Klick/Touch auf Höhle öffnet IT-Dungeon-Modal (3 Räume: Bits→Kernel→Browser). | Engineer | ✅ Done |
 
 ---
 

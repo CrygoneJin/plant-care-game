@@ -2282,6 +2282,29 @@
                         }
                     }, 10000);
                 }
+                // Konsequenz: Berg neben Wasser → Höhle nach 2s (#50)
+                if (currentMaterial === 'mountain' || currentMaterial === 'water') {
+                    const adj4 = [[-1,0],[1,0],[0,-1],[0,1]];
+                    adj4.forEach(([dr,dc]) => {
+                        const nr = r+dr, nc = c+dc;
+                        if (nr < 0 || nr >= ROWS || nc < 0 || nc >= COLS) return;
+                        const neighbor = grid[nr]?.[nc];
+                        const isMtnPair   = currentMaterial === 'mountain' && neighbor === 'water';
+                        const isWaterPair = currentMaterial === 'water'    && neighbor === 'mountain';
+                        if (!isMtnPair && !isWaterPair) return;
+                        const mtnR = isMtnPair ? r : nr;
+                        const mtnC = isMtnPair ? c : nc;
+                        setTimeout(() => {
+                            if (grid[mtnR]?.[mtnC] === 'mountain') {
+                                grid[mtnR][mtnC] = 'cave';
+                                requestRedraw();
+                                showToast('🕳️ Eine Höhle öffnet sich…');
+                                if (window.INSEL_BUS) window.INSEL_BUS.emit('consequence:cave', { r: mtnR, c: mtnC });
+                            }
+                        }, 2000);
+                    });
+                }
+
                 // Konsequenz: Feuer neben Holz → Holz verbrennt nach 3s
                 if (currentMaterial === 'fire') {
                     const adj = [[-1,0],[1,0],[0,-1],[0,1]];
@@ -3309,6 +3332,10 @@
         if (cell) {
             const npcId = getNpcAt(cell.r, cell.c);
             if (npcId) { showNpcQuestDialog(npcId); isMouseDown = false; return; }
+            // Höhle klicken → Dungeon (#50)
+            if (grid[cell.r]?.[cell.c] === 'cave' && currentTool === 'build') {
+                openDungeon(); isMouseDown = false; return;
+            }
             applyTool(cell.r, cell.c);
         }
     });
@@ -3351,6 +3378,8 @@
         // NPC antippen → Quest-Dialog
         const npcId = getNpcAt(cell.r, cell.c);
         if (npcId) { showNpcQuestDialog(npcId); return; }
+        // Höhle antippen → Dungeon (#50)
+        if (grid[cell.r]?.[cell.c] === 'cave' && currentTool === 'build') { openDungeon(); return; }
         // Spielfigur-Drag: Berühre die Spieler-Zelle → Figur ziehen
         if (playerName && cell.r === playerPos.r && cell.c === playerPos.c) {
             playerDragging = true;
@@ -3882,6 +3911,50 @@
             }
             updateGenreBtn();
         });
+    }
+
+    // === DUNGEON (#50): Höhle klicken öffnet IT-Dungeon ===
+    const DUNGEON_ROOMS = [
+        { emoji: '💾', name: 'Bits-Höhle',    desc: 'Hier wohnen 0 und 1. Sie flüstern ständig miteinander.',  npc: 'Bit-Wächter 🤖' },
+        { emoji: '⚙️', name: 'Kernel-Kammer', desc: 'Das Herz des Computers schläft hier. Es schlägt 3 Milliarden Mal pro Sekunde.', npc: 'Kernel-Geist 👻' },
+        { emoji: '🌐', name: 'Browser-Salon', desc: 'Ganz oben wohnt das Internet. Alle Seiten der Welt passen hier rein!', npc: 'Netz-Fee 🧚' },
+    ];
+
+    function openDungeon() {
+        document.getElementById('dungeon-modal')?.remove();
+        let roomIdx = 0;
+        const overlay = document.createElement('div');
+        overlay.id = 'dungeon-modal';
+        overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;display:flex;align-items:center;justify-content:center;';
+        const box = document.createElement('div');
+        box.style.cssText = 'background:#1a1a2e;color:#e2e8f0;border-radius:16px;padding:32px 28px;max-width:340px;width:90%;text-align:center;font-family:inherit;box-shadow:0 8px 32px rgba(0,0,0,0.6);border:2px solid #7c3aed;';
+        function renderRoom() {
+            const room = DUNGEON_ROOMS[roomIdx];
+            const isLast = roomIdx === DUNGEON_ROOMS.length - 1;
+            box.innerHTML = `
+                <div style="font-size:56px;margin-bottom:8px;">${room.emoji}</div>
+                <div style="font-size:11px;color:#a78bfa;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">Raum ${roomIdx + 1} von ${DUNGEON_ROOMS.length}</div>
+                <h2 style="margin:0 0 12px;font-size:20px;color:#c4b5fd;">${room.name}</h2>
+                <p style="margin:0 0 8px;font-size:14px;line-height:1.5;color:#cbd5e1;">${room.desc}</p>
+                <p style="margin:0 0 24px;font-size:12px;color:#a78bfa;">${room.npc} schaut dich an.</p>
+                <div style="display:flex;gap:12px;justify-content:center;">
+                    ${isLast
+                        ? `<button id="dungeon-exit" style="background:#7c3aed;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:15px;cursor:pointer;">🚪 Verlassen</button>`
+                        : `<button id="dungeon-next" style="background:#7c3aed;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:15px;cursor:pointer;">Weiter →</button>
+                           <button id="dungeon-exit" style="background:transparent;color:#94a3b8;border:1px solid #475569;border-radius:8px;padding:10px 16px;font-size:14px;cursor:pointer;">✕</button>`
+                    }
+                </div>`;
+            box.querySelector('#dungeon-next')?.addEventListener('click', () => { roomIdx++; renderRoom(); });
+            box.querySelector('#dungeon-exit')?.addEventListener('click', () => {
+                overlay.remove();
+                if (isLast) showToast('🕳️ Dungeon bezwungen! +1 ⭐');
+            });
+        }
+        renderRoom();
+        overlay.appendChild(box);
+        overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+        document.body.appendChild(overlay);
+        trackEvent('dungeon_open', {});
     }
 
     // === REPLAY-SONG — Bauwerk als Melodie abspielen ===
