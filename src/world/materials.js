@@ -14,6 +14,10 @@
 //   Tao = Singularität. Yin = Down-Quark. Yang = Up-Quark.
 //   Qi = Starke Kernkraft (hält zusammen).
 //
+//   Generation 1: Up (Yang) / Down (Yin)       — leichte Quarks, Grundbausteine
+//   Generation 2: Charm / Strange              — schwere Quarks, brauchen Beschleuniger (Blitz!)
+//   Generation 3: Top (Berg) / Bottom (Höhle)  — schwerste Quarks, Oberfläche & Tiefe
+//
 //   Ist das exakt? Nein. Ist es falsch? Auch nicht.
 //   Eine brauchbare Lüge die zur Wahrheit führt. — Amélie-Prinzip.
 
@@ -26,6 +30,10 @@ window.INSEL_MATERIALS = {
     yin:      { emoji: '⚫', label: 'Yin',       color: '#1A1A1A', border: '#000000' },  // Down-Quark
     yang:     { emoji: '⚪', label: 'Yang',      color: '#F0F0F0', border: '#D0D0D0' },  // Up-Quark
     qi:       { emoji: '✨', label: 'Qi',        color: '#FFD700', border: '#DAA520' },  // Starke Kernkraft
+    // === GENERATION 2 — Charm & Strange (schwere Quarks, brauchen Beschleuniger) ===
+    charm:    { emoji: '💫', label: 'Charm',     color: '#E8B4F8', border: '#C77DDB' },  // Charm-Quark: schweres Yang (Generation 2)
+    strange:  { emoji: '🌀', label: 'Strange',   color: '#7B2FBE', border: '#5B1F8E' },  // Strange-Quark: schweres Yin (Generation 2)
+    antimatter:{ emoji: '⚛️', label: 'Antimaterie', color: '#1A0033', border: '#0D001A' },  // Charm + Strange = gebundene Gegensätze
     // === 5 — DIE 5 ELEMENTE (五行 Wu Xing = Quark-Farben + Bindung + Strahlung) ===
     metal:    { emoji: '⬜', label: 'Metall',   color: '#C0C0C0', border: '#A0A0A0' },  // Weiß = r+g+b = gebundenes Atom
     wood:     { emoji: '🟩', label: 'Holz',     color: '#2E7D32', border: '#1B5E20' },  // Grün = Farbladung Grün
@@ -139,6 +147,8 @@ window.INSEL_MATERIALS = {
 window.INSEL_SCROLLS = [
     { title: 'Farben der Materie', text: 'Rot, Grün, Blau — die drei Farben der Quarks. Zusammen werden sie Weiß. Wie Metall. Und das Gelb? Das ist das erste Licht des Universums.' },
     { title: 'Drei Quarks', text: 'Up-Up-Down = Proton. Up-Down-Down = Neutron. Yin und Yang und Qi — die alten Chinesen wussten es schon.' },
+    { title: 'Charm & Strange', text: 'Die schweren Geschwister von Up und Down. Charm ist elegant und symmetrisch — wie ein Rezept das beim ersten Versuch klappt. Strange ist rätselhaft und langlebig — wie eine Entdeckung die niemand erklären kann. Man braucht einen Beschleuniger um sie zu sehen.' },
+    { title: 'Antimaterie', text: 'Wenn Charm und Strange sich verbinden, entsteht etwas das die normale Materie spiegelt. Berührt es Materie, wird beides zu reiner Energie. E=mc². Die gefährlichste Gleichung der Welt.' },
     { title: 'Heisenbergs Geheimnis', text: 'Je genauer du hinschaust, desto unschärfer wird der Rest. Wasser ist schwarz UND blau — bis jemand hinschaut.' },
     { title: 'Oppenheimers Licht', text: 'Wenn Energie zu Materie wird, strahlt sie. E=mc². Das Gelb der Erde ist das Leuchten der Verwandlung.' },
     { title: 'Leschs Kaffee', text: '75% Wasserstoff, 25% Helium, Spuren von allem anderen. 75% JavaScript, 25% Rest. Zufall? Natürlich. Aber ein hübscher.' },

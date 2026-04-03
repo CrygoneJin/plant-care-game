@@ -13,6 +13,10 @@ window.INSEL_CRAFTING_RECIPES = [
     { name: 'Feuer',    result: 'fire',  resultCount: 2, ingredients: { yang: 2 },              desc: '2 Licht = 2 Feuer!' },
     { name: 'Wasser',   result: 'water', resultCount: 2, ingredients: { yin: 2 },               desc: '2 Dunkelheit = 2 Wasser' },
     { name: 'Erde',     result: 'earth', resultCount: 2, ingredients: { yin: 1, yang: 1, qi: 1 }, desc: 'Dunkel + Hell + Energie = 2 Erde' },
+    // === GENERATION 2 — Charm & Strange (Blitz = Teilchenbeschleuniger) ===
+    { name: 'Charm',       result: 'charm',      resultCount: 1, ingredients: { yang: 1, qi: 1, lightning: 1 },  desc: 'Yang + Qi + Blitz = Charm-Quark (schweres Licht, beschleunigt!)' },
+    { name: 'Strange',     result: 'strange',     resultCount: 1, ingredients: { yin: 1, qi: 1, lightning: 1 },   desc: 'Yin + Qi + Blitz = Strange-Quark (schwere Dunkelheit, beschleunigt!)' },
+    { name: 'Antimaterie', result: 'antimatter',  resultCount: 1, ingredients: { charm: 1, strange: 1 },         desc: 'Charm + Strange = Antimaterie (gebundene Gegensätze!)' },
     // Stufe 5→10.000: Der Kreislauf der 5 Elemente
     // Holz nährt Feuer (Holz brennt)
     { name: 'Glut',     result: 'fire',  resultCount: 3, ingredients: { wood: 2, fire: 1 }, desc: 'Holz brennt! 2 Holz + Feuer = 3 Feuer' },
