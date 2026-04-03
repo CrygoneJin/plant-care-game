@@ -671,6 +671,16 @@
 
     let onGenreChange = null;
 
+    // Palette als Instrument: spielt die Note am Slot-Index aus der aktuellen Genre-Tonleiter
+    function soundPaletteNote(slotIndex) {
+        if (isMuted()) return;
+        if (!canPlaySound()) return;
+        const genre = GENRES[currentGenre];
+        const freq = genre.notes[slotIndex % genre.notes.length];
+        const varFreq = freq * (1 + (Math.random() - 0.5) * 0.01);
+        playRichTone(varFreq, genre.dur + 0.05, genre.wave, genre.vol * 1.2);
+    }
+
     // Spielt die nächste Note der aktuellen Genre-Sequenz
     function soundGenreNote() {
         if (isMuted()) return;
@@ -773,6 +783,8 @@
         isMuted,
         // Genre-Tonsequenzen (Backlog #85)
         soundGenreNote,
+        // Palette als Instrument (#71)
+        soundPaletteNote,
         setGenre,
         getGenre,
         getGenreNames,

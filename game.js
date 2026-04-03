@@ -104,6 +104,7 @@
     function soundSelect(material)   { if (_snd.soundSelect)      _snd.soundSelect(material); }
     function soundFirstBlock()       { if (_snd.soundFirstBlock)  _snd.soundFirstBlock(); }
     function playMaterialSound(mat)  { if (_snd.playMaterialSound) _snd.playMaterialSound(mat); }
+    function soundPaletteNote(idx)   { if (_snd.soundPaletteNote)  _snd.soundPaletteNote(idx); }
 
     // ============================================================
     // === ACHIEVEMENTS === (aus achievements.js)
@@ -1368,10 +1369,11 @@
                     selectMaterial(mat);
                 });
                 btn.addEventListener('click', () => {
+                    const paletteIdx = Array.from(document.querySelectorAll('.material-btn')).indexOf(btn);
+                    soundPaletteNote(paletteIdx >= 0 ? paletteIdx : 0);
                     document.querySelectorAll('.material-btn').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     currentMaterial = mat;
-                    soundBuild(mat);
                     currentTool = 'build';
                     document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
                     document.querySelector('[data-tool="build"]').classList.add('active');
@@ -3428,8 +3430,8 @@
         document.querySelector('[data-tool="build"]').classList.add('active');
     }
 
-    // Material-Buttons — Klick = Ton spielen (Palette als Klavier)
-    document.querySelectorAll('.material-btn').forEach(btn => {
+    // Material-Buttons — Klick = Ton spielen (Palette als Klavier, #71)
+    Array.from(document.querySelectorAll('.material-btn')).forEach((btn, idx) => {
         // Drag & Drop: Material aus Palette auf Canvas ziehen (Oscar's Wunsch)
         btn.setAttribute('draggable', 'true');
         btn.addEventListener('dragstart', e => {
@@ -3439,6 +3441,7 @@
         });
 
         btn.addEventListener('click', () => {
+            soundPaletteNote(idx);
             selectMaterial(btn.dataset.material);
         });
 

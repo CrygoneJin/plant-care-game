@@ -1,3 +1,32 @@
+# Sprint 25 — "Oscar spielt und baut"
+
+**Sprint Goal:** Palette als Instrument (links spielen = rechts bauen) + Höhle als neue Welt + game.js weiter aufteilen.
+**Start:** 2026-04-03
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S25-1 | **#71 Palette = Instrument** — Linke Palette: Töne spielen. Rechte Aktion: Block bauen. Oscar spielt Melodie UND baut. Genre-Taste wählt Tonleiter. | Engineer + Artist | ✅ Done |
+| S25-2 | **#50 Höhle = Dungeon** — Berg+Wasser=Höhle via Crafting. Erste Dungeon-Ebene (IT: Bits→Kernel→Browser). Oscar entdeckt eine neue Welt. | Engineer | 🔲 Offen |
+| S25-3 | **#11 game.js → easter-eggs.js** — CODE_EASTER_EGGS (~90 LOC) + initGrid() (~60 LOC) extrahieren. game.js unter 4000 LOC. | Engineer | 🔲 Offen |
+
+---
+
+## Standup Log
+
+### 2026-04-03 (Sprint 25 Planning)
+
+**Kontext:** Sprint 24 vollständig abgeschlossen (Review + Retro done). Alle 3 Items Done.
+
+**Fokus:** #71 zuerst — höchster Oscar-Impact. "Oscar spielt Melodie und baut gleichzeitig."
+
+**Blocker:** Keine.
+
+---
+
 # Sprint 24 — "Oscar hört die Welt"
 
 **Sprint Goal:** Musik beim Bauen (Genre-Sequenzen) + technische Schulden (game.js aufteilen) + Tutorial ohne Text.
