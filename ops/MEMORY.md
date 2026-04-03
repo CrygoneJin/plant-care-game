@@ -10,6 +10,8 @@ Persistent team log. Append-only. Read by all agents.
 | 2026-04-03 | CI kaputt seit 31.3 — `sleep 2` reicht nicht für `npx serve` | Race Condition: Server startet nach Puppeteer | `curl`-Retry-Loop statt `sleep`, SW Cache-Version auto per Commit-Count |
 | 2026-04-03 | NPCs nicht sichtbar auf Live-Site | CI kaputt → kein Deploy → alte game.js ohne NPC-Grid-Code | Root Cause war CI, nicht NPC-Code. Immer CI-Status prüfen bei "Feature fehlt auf Prod" |
 | 2026-04-03 | Root Cleanup 1·3·5·10000 + Isidor-Modell | 42 JS-Dateien + 13 MD im Root = Chaos | src/(core,world,infra), docs/, ops/. archive/library nur wenn befüllt. tsconfig: nur typsichere Dateien includen (nicht alles per Glob) |
+| 2026-04-03 | S25-2 (Dungeon) war schon in main (commit #181) aber SPRINT.md nicht aktualisiert | Zwei Features in einer Session — SPRINT.md-Update vergessen | Nach jedem Commit: SPRINT.md sofort aktualisieren. Nicht am Session-Ende sammeln. |
+| 2026-04-03 | S25-3: NPC-Daten → npc-data.js. game.js 4979→4920 (−59 LOC). PR #205 | window.INSEL_NPC_DATA Pattern wie materials.js/stories.js. tsc grün. | Zellteilung in kleinen Schritten: ~60 LOC pro Session ist realistisch. Kein Big Bang. |
 
 | Datum | Was | Warum | Lektion |
 |-------|-----|-------|---------|
