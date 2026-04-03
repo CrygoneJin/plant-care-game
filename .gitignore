@@ -1,12 +1,12 @@
 config.js
 .worktrees/
 .claude/worktrees/
+.claude/launch.json
 .playwright-mcp/
+.superpowers/
 .wrangler/
 node_modules/
 test-results/
 *.png
 package-lock.json
-mcp/whatsapp/node_modules/
-
-# docs/ ist die Bibliothek der Agents — bleibt im Repo
+ops/mcp/whatsapp/node_modules/

@@ -488,43 +488,47 @@
         </div>
     </div>
 
-    <script src="bus.js"></script>
-    <script src="npc-events.js"></script>
-    <script src="qr.js"></script>
-    <script src="insel.js"></script>
-    <script src="storage.js"></script>
-    <script src="materials.js"></script>
-    <script src="achievements.js"></script>
-    <script src="quests.js"></script>
-    <script src="recipes.js"></script>
-    <script src="automerge.js"></script>
-    <script src="blueprints.js"></script>
-    <script src="screensaver.js"></script>
-    <script src="island-generators.js"></script>
-    <script src="stories.js"></script>
-    <script src="sound.js"></script>
-    <script src="analytics.js"></script>
-    <script src="healthcheck.js"></script>
-    <script src="iso-renderer.js"></script>
-    <script src="fractal-trees.js"></script>
-    <script src="effects.js"></script>
-    <script src="eliza.js"></script>
-    <script src="eliza-scripts.js"></script>
-    <script src="nature.js"></script>
-    <script src="marketplace.js"></script>
-    <script src="conway.js"></script>
-    <script src="hex-grid.js"></script>
-    <script src="hex-renderer.js"></script>
-    <script src="hex-marble.js"></script>
-    <script src="tts.js"></script>
-    <script src="save.js"></script>
-    <script src="tutorial.js"></script>
-    <script src="game.js"></script>
-    <script src="npc-craft.js"></script>
+    <!-- core: Engine, Rendering, Event-Bus -->
+    <script src="src/core/bus.js"></script>
+    <script src="src/core/insel.js"></script>
+    <script src="src/core/sound.js"></script>
+    <script src="src/core/screensaver.js"></script>
+    <script src="src/core/iso-renderer.js"></script>
+    <script src="src/core/fractal-trees.js"></script>
+    <script src="src/core/effects.js"></script>
+    <script src="src/core/conway.js"></script>
+    <script src="src/core/hex-grid.js"></script>
+    <script src="src/core/hex-renderer.js"></script>
+    <script src="src/core/hex-marble.js"></script>
+    <!-- world: Spielwelt, NPCs, Crafting -->
+    <script src="src/world/npc-events.js"></script>
+    <script src="src/world/materials.js"></script>
+    <script src="src/world/achievements.js"></script>
+    <script src="src/world/quests.js"></script>
+    <script src="src/world/recipes.js"></script>
+    <script src="src/world/automerge.js"></script>
+    <script src="src/world/blueprints.js"></script>
+    <script src="src/world/island-generators.js"></script>
+    <script src="src/world/eliza.js"></script>
+    <script src="src/world/eliza-scripts.js"></script>
+    <script src="src/world/nature.js"></script>
+    <script src="src/world/marketplace.js"></script>
+    <script src="src/world/npc-craft.js"></script>
+    <script src="src/world/chat.js"></script>
+    <script src="src/world/voice.js"></script>
+    <!-- infra: Storage, Analytics, TTS -->
+    <script src="src/infra/qr.js"></script>
+    <script src="src/infra/storage.js"></script>
+    <script src="src/infra/stories.js"></script>
+    <script src="src/infra/analytics.js"></script>
+    <script src="src/infra/healthcheck.js"></script>
+    <script src="src/infra/tts.js"></script>
+    <script src="src/infra/save.js"></script>
+    <script src="src/infra/tutorial.js"></script>
+    <script src="src/infra/bedtime.js"></script>
+    <!-- game.js muss nach allen Modulen laden -->
+    <script src="src/core/game.js"></script>
     <script src="config.js"></script>
-    <script src="chat.js"></script>
-    <script src="bedtime.js"></script>
-    <script src="voice.js"></script>
     <script>
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js').catch(() => {});

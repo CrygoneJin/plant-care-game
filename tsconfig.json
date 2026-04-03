@@ -14,28 +14,27 @@
     "skipLibCheck": true
   },
   "include": [
-    "types.d.ts",
-    "insel.js",
-    "materials.js",
-    "storage.js",
-    "tts.js",
-    "save.js",
-    "sound.js",
-    "achievements.js",
-    "quests.js",
-    "recipes.js",
-    "healthcheck.js",
-    "nature.js",
-    "effects.js",
-    "game.js",
-    "chat.js",
-    "automerge.js",
-    "blueprints.js",
-    "screensaver.js"
+    "src/types.d.ts",
+    "src/core/insel.js",
+    "src/core/sound.js",
+    "src/core/effects.js",
+    "src/core/screensaver.js",
+    "src/core/game.js",
+    "src/world/materials.js",
+    "src/world/achievements.js",
+    "src/world/quests.js",
+    "src/world/recipes.js",
+    "src/world/automerge.js",
+    "src/world/blueprints.js",
+    "src/world/nature.js",
+    "src/world/chat.js",
+    "src/infra/storage.js",
+    "src/infra/tts.js",
+    "src/infra/save.js",
+    "src/infra/healthcheck.js"
   ],
   "exclude": [
     "sw.js",
-    "worker.js",
     "node_modules"
   ]
 }
