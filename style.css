@@ -241,6 +241,44 @@ body {
     animation: introFadeIn 0.3s ease-out;
 }
 
+/* Big Bang: 1D Singularität — schwarzer Hintergrund */
+#intro-overlay.bigbang-phase-singularity {
+    background: #000;
+}
+
+#intro-overlay.bigbang-phase-singularity .intro-content {
+    background: transparent;
+    box-shadow: none;
+    color: #fff;
+    z-index: 2;
+    position: relative;
+}
+
+#intro-overlay.bigbang-phase-singularity .intro-content h1 {
+    color: #fff;
+    font-size: 64px;
+    animation: singularityPulse 2s ease-in-out infinite;
+}
+
+#intro-overlay.bigbang-phase-singularity .intro-subtitle {
+    color: rgba(255,255,255,0.5);
+}
+
+#intro-overlay.bigbang-phase-singularity #start-button {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+}
+
+#intro-overlay.bigbang-phase-singularity #start-button:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+@keyframes singularityPulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
 @keyframes introFadeIn {
     from { opacity: 0; }
     to { opacity: 1; }

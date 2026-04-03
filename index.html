@@ -20,15 +20,14 @@
     <!-- Regenbogen Hintergrund-Effekt -->
     <div id="rainbow-bg" class="rainbow-hidden"></div>
 
-    <!-- Intro-Overlay -->
-    <div id="intro-overlay">
+    <!-- Intro-Overlay — Big Bang: 1D → Countdown → 2D -->
+    <div id="intro-overlay" class="bigbang-phase-singularity">
         <div class="intro-content">
-            <h1>🏝️ Schatzinsel</h1>
-            <p class="intro-subtitle"><em>Bau deine Insel.</em></p>
-            <button id="start-button">🏝️ Los!</button>
+            <h1 id="intro-title">·</h1>
+            <p class="intro-subtitle" id="intro-subtitle"><em>Singularität</em></p>
             <div id="player-name-group" style="margin-top:16px;">
-                <input type="text" id="player-name-input" maxlength="8" placeholder="Dein Name (optional)" autocomplete="off"
-                    style="width:180px; padding:6px 10px; border-radius:12px; border:2px solid rgba(255,255,255,0.5); background:rgba(255,255,255,0.2); color:#2C3E50; font-size:15px; text-align:center; font-family:inherit; outline:none;">
+                <input type="text" id="player-name-input" maxlength="8" placeholder="Dein Name" autocomplete="off"
+                    style="width:180px; padding:6px 10px; border-radius:12px; border:2px solid rgba(255,255,255,0.5); background:rgba(255,255,255,0.15); color:#fff; font-size:15px; text-align:center; font-family:inherit; outline:none;">
                 <div id="avatar-picker" style="margin-top:8px; display:flex; gap:8px; justify-content:center;" aria-label="Wähle dein Insel-Emoji">
                     <button class="avatar-btn active" data-avatar="🧒" title="Kind" style="font-size:28px; background:none; border:2px solid rgba(255,255,255,0.6); border-radius:12px; padding:4px 8px; cursor:pointer;">🧒</button>
                     <button class="avatar-btn" data-avatar="👦" title="Junge" style="font-size:28px; background:none; border:2px solid transparent; border-radius:12px; padding:4px 8px; cursor:pointer;">👦</button>
@@ -37,6 +36,7 @@
                     <button class="avatar-btn" data-avatar="🐢" title="Schildkröte" style="font-size:28px; background:none; border:2px solid transparent; border-radius:12px; padding:4px 8px; cursor:pointer;">🐢</button>
                 </div>
             </div>
+            <button id="start-button" style="margin-top:16px;">☯️ Urknall</button>
         </div>
     </div>
 
@@ -507,6 +507,7 @@
     <script src="src/core/hex-grid.js"></script>
     <script src="src/core/hex-renderer.js"></script>
     <script src="src/core/hex-marble.js"></script>
+    <script src="src/core/bigbang.js"></script>
     <!-- world: Spielwelt, NPCs, Crafting -->
     <script src="src/world/npc-events.js"></script>
     <script src="src/world/materials.js"></script>

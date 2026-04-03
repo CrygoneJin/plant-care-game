@@ -3387,14 +3387,33 @@
             playerEmoji = activeAvatar.dataset.avatar;
             localStorage.setItem('insel-player-emoji', playerEmoji);
         }
+
+        // Big Bang Countdown — nur für Erstbesucher
+        const isFirstVisit = !localStorage.getItem('insel-grid');
+        const BB = window.INSEL_BIGBANG;
+        if (isFirstVisit && BB) {
+            BB.startCountdown();
+            // Warten bis Countdown fertig, dann Grid zeigen
+            const checkDone = setInterval(() => {
+                if (!BB.isActive()) {
+                    clearInterval(checkDone);
+                    finishIntro(isFirstVisit);
+                }
+            }, 100);
+        } else {
+            finishIntro(isFirstVisit);
+        }
+    }
+
+    function finishIntro(isFirstVisit) {
         introOverlay.classList.add('hiding');
         setTimeout(() => {
             introOverlay.style.display = 'none';
             // Pulse nur wenn noch kein Block platziert wurde
             const hasBlocks = grid.some(row => row && row.some(cell => cell !== null));
             if (!hasBlocks) startTutorialPulse();
-            // Tutorial-Onboarding nur für Erstbesucher (noch kein Grid gespeichert)
-            if (!localStorage.getItem('insel-grid')) showTutorialOnboarding();
+            // Tutorial-Onboarding nur für Erstbesucher
+            if (isFirstVisit) showTutorialOnboarding();
         }, 300);
         window.startSessionClock();
     }
@@ -3420,6 +3439,11 @@
     }
 
     startButton.addEventListener('click', startGame);
+
+    // Big Bang Canvas initialisieren für Erstbesucher
+    if (!localStorage.getItem('insel-grid') && window.INSEL_BIGBANG) {
+        window.INSEL_BIGBANG.init(introOverlay);
+    }
 
     // Werkzeug-Buttons
     document.querySelectorAll('.tool-btn').forEach(btn => {
