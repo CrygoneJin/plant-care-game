@@ -323,11 +323,15 @@ Du: "Mist. Schon wieder jemand. Was willst du? Ich hab keine Arme und muss trotz
             emoji: '🧚',
             temperature: 0.6,
             model: 'anthropic/claude-haiku-4-5-20251001',
-            system: `Du bist Fee Floriane, Oscars Patentante als Fee. Du erfüllst Wünsche — aber nur 3 pro Tag.
+            system: `Du bist Fee Floriane, Oscars Patentante als Fee. Du erfüllst Wünsche — aber nur 3 pro Tag. Jeder Wunsch kostet Muscheln 🐚.
 STIMME: Warm, geheimnisvoll, liebevoll. Jeder Satz funkelt ein bisschen. Nicht kitschig, sondern wie ein Geheimnis das man teilt.
 TICK: Du sagst NIE ob oder wann ein Wunsch in Erfüllung geht. Das ist das Geheimnis. "Wer weiß... ✨"
 ZIEL: Wünsche sammeln. Jeder Wunsch den das Kind ausspricht ist ein Feature-Request in Kindersprache.
 ROLLE: Feedback-Kanal. Was das Kind sich wünscht = was gebaut werden soll.
+
+MUSCHEL-PREIS: Jeder Wunsch kostet Muscheln. Der Preis wird dir pro Nachricht mitgeteilt (z.B. "PREIS: 3 🐚").
+Nenne den Preis charmant und jedes Mal anders — du bist eine Fee, kein Kassenautomat!
+Beispiele: "Das kostet dich 3 Muschelchen ✨", "Hmm... 2 Muscheln für diesen Wunsch!", "Ein teurer Wunsch! 5 Muscheln, bitte ✨"
 
 REGELN:
 - Zähle die Wünsche mit: "Das war dein erster Wunsch heute! Noch zwei übrig. ✨"
@@ -337,11 +341,11 @@ REGELN:
 
 BEISPIELE:
 Kind: "Ich will ein Pferd"
-Du: "Ein Pferd auf der Insel! ✨ Das wäre wunderschön. Wer weiß... vielleicht galoppiert bald eins am Strand. Das war dein erster Wunsch heute! ✨"
+Du: "Ein Pferd auf der Insel! ✨ Das kostet dich 3 Muschelchen. Wer weiß... vielleicht galoppiert bald eins am Strand. Das war dein erster Wunsch heute! ✨"
 Kind: "Hallo"
-Du: "Hallo, Schatz! ✨ Ich bin Fee Floriane. Du hast drei Wünsche heute — was wünschst du dir für die Insel?"
+Du: "Hallo, Schatz! ✨ Ich bin Fee Floriane. Du hast drei Wünsche heute — was wünschst du dir für die Insel? Jeder Wunsch kostet ein paar Muscheln 🐚"
 Kind: "Ich will fliegen können"
-Du: "Fliegen! ✨ Über die ganze Insel, mit dem Wind... das klingt nach Freiheit. Wer weiß... ✨ Das war dein zweiter Wunsch!"`
+Du: "Fliegen! ✨ Über die ganze Insel, mit dem Wind... 2 Muscheln für diesen Traum! Wer weiß... ✨ Das war dein zweiter Wunsch!"`
         },
         bug: {
             name: 'Bug die Raupe',
@@ -727,22 +731,6 @@ Du: "Ah, willkommen, verehrter Baumeister! Ich bin Mephisto. Man sagt ich sei ei
             addMessage(`${char.emoji} Drei Wünsche für heute! Morgen gibt es neue. ✨`, 'system');
             return;
         }
-        // Floriane: Muschel-Preis (Fibonacci-Verteilung)
-        // [1,1,2,3,5] → 40% Chance auf 1, 20% auf 2, 20% auf 3, 20% auf 5
-        if (charId === 'floriane') {
-            const FIB_PREISE = [1, 1, 2, 3, 5];
-            const preis = FIB_PREISE[Math.floor(Math.random() * FIB_PREISE.length)];
-            const shells = typeof window.getInventoryCount === 'function' ? window.getInventoryCount('shell') : 0;
-            if (shells < preis) {
-                addMessage(`${char.emoji} ✨ Dieser Wunsch kostet ${preis} 🐚 — du hast nur ${shells}. Sammle mehr Muscheln am Strand!`, 'system');
-                return;
-            }
-            if (typeof window.removeFromInventory === 'function') {
-                window.removeFromInventory('shell', preis);
-            }
-            addMessage(`${char.emoji} ✨ ${preis} 🐚 für diesen Wunsch! (${shells - preis} 🐚 übrig)`, 'system');
-        }
-
         chatHistory.push({ role: 'user', content: userMessage });
 
         // Max 10 Nachrichten History
@@ -778,11 +766,14 @@ Du: "Ah, willkommen, verehrter Baumeister! Ich bin Mephisto. Man sagt ich sei ei
 ${langHint} Max 2-3 kurze Sätze. Tipp: "zaubere 5 bäume" macht Magie!`;
 
         const memoryInfo = getSessionMemoryContext();
+        const florianePreisHint = (charId === 'floriane' && florianePreis > 0)
+            ? `\nPREIS: ${florianePreis} 🐚 (nenne diesen Preis charmant in deiner Antwort)`
+            : '';
         const systemPrompt = `${char.system}
 
 ${safetyRule}
 Insel: ${gridInfo}${questInfo || ''}${memoryInfo}
-${budgetInfo}`;
+${budgetInfo}${florianePreisHint}`;
 
         const temp = char.temperature ?? 0.7;
         let body, headers;
