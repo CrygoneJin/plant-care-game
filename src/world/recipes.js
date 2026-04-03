@@ -17,6 +17,10 @@ window.INSEL_CRAFTING_RECIPES = [
     { name: 'Charm',       result: 'charm',      resultCount: 1, ingredients: { yang: 1, qi: 1, lightning: 1 },  desc: 'Yang + Qi + Blitz = Charm-Quark (schweres Licht, beschleunigt!)' },
     { name: 'Strange',     result: 'strange',     resultCount: 1, ingredients: { yin: 1, qi: 1, lightning: 1 },   desc: 'Yin + Qi + Blitz = Strange-Quark (schwere Dunkelheit, beschleunigt!)' },
     { name: 'Antimaterie', result: 'antimatter',  resultCount: 1, ingredients: { charm: 1, strange: 1 },         desc: 'Charm + Strange = Antimaterie (gebundene Gegensätze!)' },
+    // === LEPTONEN — ohne Qi! (Leptonen spüren keine starke Kernkraft) ===
+    { name: 'Elektron',    result: 'electron', resultCount: 1, ingredients: { lightning: 1, metal: 1 },      desc: 'Blitz + Metall = Elektron (Strom ist Elektronenfluss!)' },
+    { name: 'Myon',        result: 'muon',     resultCount: 1, ingredients: { electron: 1, star: 1 },        desc: 'Elektron + Stern = Myon (kosmische Strahlung!)' },
+    { name: 'Tau',         result: 'tau',      resultCount: 1, ingredients: { electron: 1, antimatter: 1 },  desc: 'Elektron + Antimaterie = Tau (schwerstes Lepton!)' },
     // Stufe 5→10.000: Der Kreislauf der 5 Elemente
     // Holz nährt Feuer (Holz brennt)
     { name: 'Glut',     result: 'fire',  resultCount: 3, ingredients: { wood: 2, fire: 1 }, desc: 'Holz brennt! 2 Holz + Feuer = 3 Feuer' },

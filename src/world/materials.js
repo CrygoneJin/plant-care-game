@@ -14,9 +14,18 @@
 //   Tao = Singularität. Yin = Down-Quark. Yang = Up-Quark.
 //   Qi = Starke Kernkraft (hält zusammen).
 //
-//   Generation 1: Up (Yang) / Down (Yin)       — leichte Quarks, Grundbausteine
-//   Generation 2: Charm / Strange              — schwere Quarks, brauchen Beschleuniger (Blitz!)
-//   Generation 3: Top (Berg) / Bottom (Höhle)  — schwerste Quarks, Oberfläche & Tiefe
+//   3×3×3 = 27 Fermionen:
+//
+//   Achse 1 — Generation:  1 (leicht) → 2 (schwer) → 3 (schwerst)
+//   Achse 2 — Typ:         Up-Quark / Down-Quark / Lepton
+//   Achse 3 — Farbe:       Rot (Feuer) / Grün (Holz) / Blau (Wasser)
+//
+//              Gen 1          Gen 2          Gen 3
+//   Up:       Yang ⚪        Charm 💫       Berg 🏔️  (Top)
+//   Down:     Yin ⚫         Strange 🌀     Höhle 🕳️ (Bottom)
+//   Lepton:   Elektron 🔹    Myon 🔸        Tau 🔻
+//
+//   × 3 Farben (Rot/Grün/Blau = Feuer/Holz/Wasser) = 27 Zustände
 //
 //   Ist das exakt? Nein. Ist es falsch? Auch nicht.
 //   Eine brauchbare Lüge die zur Wahrheit führt. — Amélie-Prinzip.
@@ -34,6 +43,10 @@ window.INSEL_MATERIALS = {
     charm:    { emoji: '💫', label: 'Charm',     color: '#E8B4F8', border: '#C77DDB' },  // Charm-Quark: schweres Yang (Generation 2)
     strange:  { emoji: '🌀', label: 'Strange',   color: '#7B2FBE', border: '#5B1F8E' },  // Strange-Quark: schweres Yin (Generation 2)
     antimatter:{ emoji: '⚛️', label: 'Antimaterie', color: '#1A0033', border: '#0D001A' },  // Charm + Strange = gebundene Gegensätze
+    // === LEPTONEN — die leichten Teilchen (spüren keine starke Kraft / kein Qi!) ===
+    electron: { emoji: '🔹', label: 'Elektron',  color: '#0080FF', border: '#0060CC' },  // Gen 1: leichtestes geladenes Lepton
+    muon:     { emoji: '🔸', label: 'Myon',      color: '#9B59B6', border: '#7D3C98' },  // Gen 2: schweres Elektron, kosmisch
+    tau:      { emoji: '🔻', label: 'Tau',       color: '#FF4500', border: '#CC3700' },  // Gen 3: schwerstes Lepton
     // === 5 — DIE 5 ELEMENTE (五行 Wu Xing = Quark-Farben + Bindung + Strahlung) ===
     metal:    { emoji: '⬜', label: 'Metall',   color: '#C0C0C0', border: '#A0A0A0' },  // Weiß = r+g+b = gebundenes Atom
     wood:     { emoji: '🟩', label: 'Holz',     color: '#2E7D32', border: '#1B5E20' },  // Grün = Farbladung Grün
@@ -149,6 +162,7 @@ window.INSEL_SCROLLS = [
     { title: 'Drei Quarks', text: 'Up-Up-Down = Proton. Up-Down-Down = Neutron. Yin und Yang und Qi — die alten Chinesen wussten es schon.' },
     { title: 'Charm & Strange', text: 'Die schweren Geschwister von Up und Down. Charm ist elegant und symmetrisch — wie ein Rezept das beim ersten Versuch klappt. Strange ist rätselhaft und langlebig — wie eine Entdeckung die niemand erklären kann. Man braucht einen Beschleuniger um sie zu sehen.' },
     { title: 'Antimaterie', text: 'Wenn Charm und Strange sich verbinden, entsteht etwas das die normale Materie spiegelt. Berührt es Materie, wird beides zu reiner Energie. E=mc². Die gefährlichste Gleichung der Welt.' },
+    { title: 'Leptonen', text: 'Die leichten Teilchen. Elektron, Myon, Tau — drei Generationen wie bei den Quarks, aber ohne starke Kraft. Kein Qi nötig. Das Elektron fließt durch jeden Blitz und jeden Bildschirm. Das Myon regnet aus dem Weltall. Das Tau existiert nur für einen Wimpernschlag.' },
     { title: 'Heisenbergs Geheimnis', text: 'Je genauer du hinschaust, desto unschärfer wird der Rest. Wasser ist schwarz UND blau — bis jemand hinschaut.' },
     { title: 'Oppenheimers Licht', text: 'Wenn Energie zu Materie wird, strahlt sie. E=mc². Das Gelb der Erde ist das Leuchten der Verwandlung.' },
     { title: 'Leschs Kaffee', text: '75% Wasserstoff, 25% Helium, Spuren von allem anderen. 75% JavaScript, 25% Rest. Zufall? Natürlich. Aber ein hübscher.' },
