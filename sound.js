@@ -755,6 +755,31 @@
         ambientNodes = null;
     }
 
+    // === MUSIK ON DEMAND: Hintergrund-Loop (#18) ===
+    let musicLoopInterval = null;
+    let musicLoopActive = false;
+
+    function startMusicLoop() {
+        if (musicLoopActive) return;
+        musicLoopActive = true;
+        const genre = GENRES[currentGenre];
+        const intervalMs = Math.round((genre.dur + 0.12) * 1000);
+        musicLoopInterval = setInterval(() => {
+            if (!musicLoopActive || isMuted()) return;
+            soundGenreNote();
+        }, intervalMs);
+    }
+
+    function stopMusicLoop() {
+        musicLoopActive = false;
+        if (musicLoopInterval) {
+            clearInterval(musicLoopInterval);
+            musicLoopInterval = null;
+        }
+    }
+
+    function isMusicLoopActive() { return musicLoopActive; }
+
     window.INSEL_SOUND = {
         soundBuild,
         soundDemolish,
@@ -778,6 +803,10 @@
         getGenreNames,
         setGenreMode,
         getGenreMode,
+        // Musik on demand: Hintergrund-Loop (#18)
+        startMusicLoop,
+        stopMusicLoop,
+        isMusicLoopActive,
         // Stille-Momente: Wellen-Ambient (#57)
         playAmbient,
         stopAmbient,

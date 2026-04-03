@@ -3792,6 +3792,32 @@
         });
     }
 
+    // === MUSIK ON DEMAND (#18) — Genre-Loop starten/stoppen ===
+    const musicBtn = document.getElementById('music-btn');
+    if (musicBtn && _snd.startMusicLoop && _snd.stopMusicLoop) {
+        function updateMusicBtn() {
+            const active = _snd.isMusicLoopActive && _snd.isMusicLoopActive();
+            musicBtn.title = active
+                ? `Musik stoppen (${_snd.getGenre ? _snd.getGenre() : ''})`
+                : 'Musik on demand — Genre-Loop starten';
+            musicBtn.style.opacity = active ? '1' : '0.6';
+            musicBtn.style.outline = active ? '2px solid var(--accent, #f59e0b)' : '';
+        }
+        updateMusicBtn();
+
+        musicBtn.addEventListener('click', () => {
+            if (_snd.isMusicLoopActive && _snd.isMusicLoopActive()) {
+                _snd.stopMusicLoop();
+                showToast('📻 Musik aus');
+            } else {
+                const genre = _snd.getGenre ? _snd.getGenre() : '';
+                _snd.startMusicLoop();
+                showToast(`📻 ${genre}`);
+            }
+            updateMusicBtn();
+        });
+    }
+
     // === REPLAY-SONG — Bauwerk als Melodie abspielen ===
     const replayBtn = document.getElementById('replay-btn');
     if (replayBtn) {
