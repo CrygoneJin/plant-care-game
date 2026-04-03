@@ -27,15 +27,19 @@ jobs:
       - name: JS Syntax-Check
         run: |
           FAIL=0
-          # Cloudflare Worker-Files, Service Worker und Dev-Config-Files ueberspringen
           SKIP="worker.js gemini-voice-worker.js playwright.config.js sw.js"
           for f in *.js; do
-            echo "$SKIP" | grep -qw "$f" && continue  # Cloudflare Worker / Service Worker / Dev-Config
+            echo "$SKIP" | grep -qw "$f" && continue
             if ! node -c "$f" 2>&1; then
               FAIL=1
             fi
           done
           exit $FAIL
+
+      - name: TypeScript Type-Check
+        run: |
+          npm install typescript --no-save
+          npx tsc --noEmit
 
       - name: Smoke-Test -- Seite laedt ohne Fehler
         run: |
