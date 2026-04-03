@@ -101,11 +101,43 @@
         return true;
     }
 
+    // #50 Dungeon-Entry: IT-Schichten wenn Höhle platziert wird (Discovery wie Code-Easter-Eggs)
+    var DUNGEON_LAYERS = [
+        '🕳️ Du hast eine Höhle entdeckt! Tief unten liegt die Welt der Computer...',
+        '⚡ Schicht 1: Bits — nur 0 und 1. Alles was du siehst ist eigentlich Strom an oder aus.',
+        '🔧 Schicht 2: Transistor — winzige Schalter aus Sand. Milliarden davon in deinem Gerät!',
+        '🧠 Schicht 3: Kernel — das Gehirn, das alles organisiert. Es teilt den Strom gerecht auf.',
+        '🌐 Schicht 4: Browser — hier bist du gerade! Er macht aus Bits eine bunte Insel.',
+        '🏴‍☠️ Schicht 5: Schatzinsel — das bist du! Der Schatz war die ganze Zeit der Code.',
+    ];
+    var DUNGEON_REMINDERS = [
+        '🕳️ Tief unter der Höhle: Bits→Transistor→Kernel→Browser→Du.',
+        '🕳️ Jede Höhle erinnert dich: Deine Insel läuft auf Milliarden Transistoren.',
+        '🕳️ Bits in der Tiefe flüstern: "0... 1... 0... 1..." — das bist auch du.',
+    ];
+    function maybeDungeonEntry(material, showToast, recordMilestone, trackEvent) {
+        if (material !== 'cave') return;
+        var shown = localStorage.getItem('insel-dungeon-intro');
+        if (!shown) {
+            localStorage.setItem('insel-dungeon-intro', '1');
+            DUNGEON_LAYERS.forEach(function(msg, i) {
+                setTimeout(function() { showToast(msg, 3800); }, 600 + i * 4200);
+            });
+            recordMilestone('firstDungeon');
+            trackEvent('dungeon_entry', { first: true });
+        } else {
+            var msg = DUNGEON_REMINDERS[Math.floor(Math.random() * DUNGEON_REMINDERS.length)];
+            showToast(msg, 2800);
+        }
+    }
+
     window.INSEL_STORIES = {
         // Easter Eggs API
         CODE_EASTER_EGGS: CODE_EASTER_EGGS,
         maybeCodeEasterEgg: maybeCodeEasterEgg,
         getDiscoveredEggs: function() { return discoveredEggs; },
+        // Dungeon-Entry API (#50)
+        maybeDungeonEntry: maybeDungeonEntry,
         // Hörspiel-Szenen
         firstBlock: [
             '🪨 C: "Da baut jemand! Zum ersten Mal seit ich hier bin!"',

@@ -316,6 +316,11 @@
         STORIES.maybeCodeEasterEgg(material, showToast, recordMilestone, trackEvent);
     }
 
+    // #50 Höhle = Dungeon-Einstieg: delegiert an stories.js (wie Code-Easter-Eggs)
+    function maybeDungeonEntry(material) {
+        STORIES.maybeDungeonEntry(material, showToast, recordMilestone, trackEvent);
+    }
+
     // --- NPC-Positionen auf der Insel ---
     // Questgeber die auf dem Grid stehen und anklickbar sind
     const NPC_DEFS = {
@@ -2326,6 +2331,7 @@
                 trackMaterialUsage(currentMaterial);
                 maybeNpcComment(currentMaterial);
                 maybeCodeEasterEgg(currentMaterial);
+                maybeDungeonEntry(currentMaterial);
                 recordMilestone('firstBlock');
             }
         } else if (currentTool === 'harvest') {
@@ -3250,7 +3256,18 @@
         const taoBtn = document.querySelector('.material-btn[data-material="tao"]');
         if (taoBtn) taoBtn.classList.add('tao-clicked');
         currentMaterial = mat;
-        soundSelect(currentMaterial);
+        // #71 Palette als Instrument: Pentatonik-Ton je Button-Position
+        if (_snd.soundPaletteNote && target) {
+            const allBtns = Array.from(document.querySelectorAll('#palette .material-btn'));
+            const idx = allBtns.indexOf(target);
+            if (idx >= 0) {
+                _snd.soundPaletteNote(idx);
+            } else {
+                soundSelect(mat);
+            }
+        } else {
+            soundSelect(currentMaterial);
+        }
         currentTool = 'build';
         document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
         document.querySelector('[data-tool="build"]').classList.add('active');

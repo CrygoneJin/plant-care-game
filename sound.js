@@ -755,6 +755,39 @@
         ambientNodes = null;
     }
 
+    // #71 Palette als Instrument: melodischer Marimba-Ton je Palette-Index (Pentatonik C-Dur)
+    const PENTATONIC = [
+        261.63, 293.66, 329.63, 392.00, 440.00, // C4 D4 E4 G4 A4
+        523.25, 587.33, 659.25, 784.00, 880.00, // C5 D5 E5 G5 A5 (eine Oktave höher)
+        1046.5, 1174.7, 1318.5, 1568.0, 1760.0, // C6 D6 E6 G6 A6
+    ];
+    function soundPaletteNote(index) {
+        if (isMuted()) return;
+        try {
+            const ctx = ensureAudio();
+            const t = ctx.currentTime;
+            const freq = PENTATONIC[index % PENTATONIC.length];
+            // Marimba: kurzer Anschlag (sine+triangle), schnelles Decay
+            const osc1 = ctx.createOscillator();
+            const g1 = ctx.createGain();
+            osc1.type = 'sine';
+            osc1.frequency.value = freq;
+            g1.gain.setValueAtTime(0.28 * masterVolume, t);
+            g1.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
+            osc1.connect(g1); g1.connect(ctx.destination);
+            osc1.start(t); osc1.stop(t + 0.45);
+            // Oberton für Xylophon-Charakter
+            const osc2 = ctx.createOscillator();
+            const g2 = ctx.createGain();
+            osc2.type = 'triangle';
+            osc2.frequency.value = freq * 3.0;
+            g2.gain.setValueAtTime(0.06 * masterVolume, t);
+            g2.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+            osc2.connect(g2); g2.connect(ctx.destination);
+            osc2.start(t); osc2.stop(t + 0.12);
+        } catch (e) {}
+    }
+
     window.INSEL_SOUND = {
         soundBuild,
         soundDemolish,
@@ -764,6 +797,7 @@
         soundCraft,
         soundSelect,
         soundFirstBlock,
+        soundPaletteNote,
         playMaterialSound,
         playDrumSound,
         // Volume-Steuerung
