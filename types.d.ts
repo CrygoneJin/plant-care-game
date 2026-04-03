@@ -358,6 +358,59 @@ interface InselSave {
     decodeGridFromURL(encoded: string): boolean;
 }
 
+// --- HexGrid ---
+interface HexCell {
+    surface: string | null;
+    height: number;
+    dark: number;
+    trixels: null | Array<{ material: string | null; depth: number; dark: number }>;
+}
+
+interface HexGrid {
+    cells: Map<string, HexCell>;
+    radius: number;
+    get(q: number, r: number): HexCell | undefined;
+    set(q: number, r: number, cell: HexCell): void;
+    neighbors(q: number, r: number): Array<[number, number]>;
+    hexToPixel(q: number, r: number, size: number): { x: number; y: number };
+    pixelToHex(x: number, y: number, size: number): { q: number; r: number };
+    forEach(fn: (cell: HexCell, q: number, r: number) => void): void;
+}
+
+interface InselHex {
+    createGrid(radius: number): HexGrid;
+    migrateCell(value: string | HexCell | unknown): HexCell;
+    DIRECTIONS: Array<[number, number]>;
+    hexKey(q: number, r: number): string;
+}
+
+// --- HexRenderer ---
+interface InselHexRenderer {
+    drawHexGrid(ctx: CanvasRenderingContext2D, grid: HexGrid, size: number, offsetX: number, offsetY: number, materials: MaterialMap): void;
+    drawHex(ctx: CanvasRenderingContext2D, x: number, y: number, size: number, cell: HexCell, materials: MaterialMap): void;
+    drawTrixelOverlay(ctx: CanvasRenderingContext2D, x: number, y: number, size: number, cell: HexCell): void;
+    hitTest(mouseX: number, mouseY: number, grid: HexGrid, size: number, offsetX: number, offsetY: number): { q: number; r: number };
+    ISO_FACTOR: number;
+    HEIGHT_PX: number;
+}
+
+// --- Marble ---
+interface Marble {
+    q: number;
+    r: number;
+    active: boolean;
+    path: Array<{ q: number; r: number }>;
+    speed: number;
+    steps: number;
+}
+
+interface InselMarble {
+    createMarble(q: number, r: number): Marble;
+    tickMarble(marble: Marble, grid: HexGrid): void;
+    animateMarble(marble: Marble, grid: HexGrid, onTick?: (marble: Marble) => void, onDone?: (marble: Marble) => void): ReturnType<typeof setInterval>;
+    TICK_MS: number;
+}
+
 // --- Window Extensions ---
 interface Window {
     INSEL: InselNamespace;
@@ -385,6 +438,9 @@ interface Window {
         getDiscoveredEggs(): string[];
     };
     INSEL_CHARACTERS: Record<string, unknown>;
+    INSEL_HEX: InselHex;
+    INSEL_HEX_RENDERER: InselHexRenderer;
+    INSEL_MARBLE: InselMarble;
     INSEL_BUS: InselNamespace;
     INSEL_DIMS: { ROWS: number; COLS: number };
     startSessionClock?(): void;
