@@ -174,7 +174,7 @@
             }
         }
 
-        // Lukas' Lokomotiv-Schuppen
+        // Lokführer-Schuppen
         const schuppenR = cy + Math.floor(ry * 0.1), schuppenC = cx - Math.floor(rx * 0.1);
         const schuppen = [
             [-1,-1,'wood'],[-1,0,'wood'],[-1,1,'wood'],
@@ -186,7 +186,7 @@
             if (r >= 0 && r < ROWS && c >= 0 && c < COLS && MATERIALS[mat]) grid[r][c] = mat;
         }
 
-        // Frau Waas' Laden
+        // Krämerladen
         const ladenR = cy, ladenC = cx + Math.floor(rx * 0.15);
         const laden = [
             [-1,-1,'stone'],[-1,0,'glass'],[-1,1,'stone'],
