@@ -19,10 +19,19 @@
         // E=mc²: Antimaterie trifft Materie → Energie
         { a: 'antimatter', b: 'qi', result: 'fire', msg: '💥 Antimaterie + Energie → Feuer! (E=mc²)' },
 
-        // === Pauli-Prinzip: Identische Fermionen → Druck → nächste Generation ===
-        // Zwei gleiche Leptonen nebeneinander = Pauli-Druck → schwerer
-        { a: 'electron', b: 'electron', result: 'muon', msg: '🔸 Elektron + Elektron → Myon! (Pauli-Druck)' },
-        { a: 'muon', b: 'muon', result: 'tau', msg: '🔻 Myon + Myon → Tau! (Pauli-Druck)' },
+        // === Pauli-Prinzip: A×A → nächste Generation (Multiplikation) ===
+        // Identische Fermionen können nicht am selben Ort sein.
+        // Pauli-Druck → höhere Energie → schwerer → nächste Generation.
+        //
+        // Up-type:   Yang → Charm → Berg (Top)
+        // Down-type: Yin → Strange → Höhle (Bottom)
+        // Lepton:    Elektron → Myon → Tau
+        { a: 'yang', b: 'yang', result: 'charm', msg: '💫 Yang × Yang → Charm! (Pauli-Druck: Gen1→2)' },
+        { a: 'yin', b: 'yin', result: 'strange', msg: '🌀 Yin × Yin → Strange! (Pauli-Druck: Gen1→2)' },
+        { a: 'charm', b: 'charm', result: 'mountain', msg: '🏔️ Charm × Charm → Berg! (Pauli-Druck: Gen2→3, Top-Quark)' },
+        { a: 'strange', b: 'strange', result: 'cave', msg: '🕳️ Strange × Strange → Höhle! (Pauli-Druck: Gen2→3, Bottom-Quark)' },
+        { a: 'electron', b: 'electron', result: 'muon', msg: '🔸 Elektron × Elektron → Myon! (Pauli-Druck: Gen1→2)' },
+        { a: 'muon', b: 'muon', result: 'tau', msg: '🔻 Myon × Myon → Tau! (Pauli-Druck: Gen2→3)' },
 
         // === Wu Xing Erzeugungszyklus (相生 xiāng shēng) ===
         // Holz nährt Feuer, Feuer erzeugt Erde (Asche),

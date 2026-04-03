@@ -1674,6 +1674,8 @@
     // Qi erscheint sobald Qi im Inventar. Wu Xing erscheinen mit Qi.
     let _genesisYinYangShown = false;
     let _genesisQiShown = false;
+    let _genesisQuarksShown = false;
+    let _genesisLeptonsShown = false;
 
     function updateGenesisVisibility() {
         // Tao irgendwo auf dem Grid?
@@ -1722,6 +1724,32 @@
                 }
             }
         }
+
+        // Stufe 3: Teilchen (Charm/Strange/Antimatter/Leptonen)
+        const QUARK_MATS = ['charm', 'strange', 'antimatter'];
+        const LEPTON_MATS = ['electron', 'muon', 'tau'];
+        const hasAnyQuark = QUARK_MATS.some(m => unlockedMaterials.has(m) || (inventory[m] || 0) > 0);
+        const hasAnyLepton = LEPTON_MATS.some(m => unlockedMaterials.has(m) || (inventory[m] || 0) > 0);
+
+        if (hasAnyQuark || hasAnyLepton) {
+            const heading = document.getElementById('quarks-heading');
+            if (heading) heading.style.display = '';
+            [...QUARK_MATS, ...LEPTON_MATS].forEach(mat => {
+                if (unlockedMaterials.has(mat) || (inventory[mat] || 0) > 0) {
+                    const btn = document.querySelector(`.material-btn[data-material="${mat}"]`);
+                    if (btn) { btn.style.display = ''; btn.classList.remove('craft-locked'); }
+                }
+            });
+            if (hasAnyQuark && !_genesisQuarksShown) {
+                _genesisQuarksShown = true;
+                showToast('⚛️ Generation-2-Quarks entdeckt! Der Beschleuniger funktioniert!');
+            }
+            if (hasAnyLepton && !_genesisLeptonsShown) {
+                _genesisLeptonsShown = true;
+                showToast('🔹 Leptonen! Teilchen ohne starke Kraft!');
+            }
+        }
+
         updateGenesisBadge();
     }
 
@@ -3061,6 +3089,27 @@
     // Alle 1 Sekunde prüfen
     setInterval(tickTaoDecay, 1000);
 
+    // Kosmologischer Zeitstrahl: Spielereignis → Epoche des Universums
+    const COSMIC_EPOCHS = [
+        { result: 'qi',         epoch: 't = 10⁻¹²s',   label: 'Quark-Gluon-Plasma' },
+        { result: 'charm',      epoch: 't = 10⁻⁶s',    label: 'Quark-Ära' },
+        { result: 'strange',    epoch: 't = 10⁻⁶s',    label: 'Quark-Ära' },
+        { result: 'antimatter', epoch: 't = 1s',        label: 'Annihilation' },
+        { result: 'electron',   epoch: 't = 10s',       label: 'Lepton-Ära' },
+        { result: 'muon',       epoch: 't = 10s',       label: 'Lepton-Ära' },
+        { result: 'tau',        epoch: 't = 10s',       label: 'Lepton-Ära' },
+        { result: 'metal',      epoch: 't = 3min',      label: 'Nukleosynthese' },
+        { result: 'mountain',   epoch: 't = 380.000y',  label: 'Erste Sterne' },
+        { result: 'cave',       epoch: 't = 380.000y',  label: 'Dunkle Materie' },
+    ];
+
+    function getCosmicEpoch(event) {
+        if (event.type === 'decay') return 't = 10⁻³⁶s';
+        const match = COSMIC_EPOCHS.find(e => e.result === event.result);
+        if (match) return match.epoch;
+        return `+${((event.time - (genesisLog[0]?.time || event.time)) / 1000).toFixed(1)}s`;
+    }
+
     // Genesis-Replay: Urknall in Zeitlupe abspielen
     function playGenesisReplay() {
         if (genesisLog.length === 0) {
@@ -3073,7 +3122,7 @@
         overlay.className = 'genesis-replay-overlay';
         overlay.innerHTML = `
             <div class="genesis-replay-modal">
-                <h2>🌌 Genesis — Der Urknall in Zeitlupe</h2>
+                <h2>🌌 Genesis — Vom Urknall zur Insel</h2>
                 <div class="genesis-timeline" id="genesis-timeline"></div>
                 <button class="genesis-replay-close" id="genesis-replay-close">Schließen</button>
             </div>
@@ -3093,16 +3142,19 @@
                 step.className = 'genesis-step';
                 const elapsed = ((event.time - startTime) / 1000).toFixed(1);
 
+                // Kosmologische Epoche bestimmen
+                const epoch = getCosmicEpoch(event);
+
                 if (event.type === 'decay') {
                     step.innerHTML = `
-                        <span class="genesis-time">+${elapsed}s</span>
+                        <span class="genesis-time">${epoch}</span>
                         <span class="genesis-icon">☯️ → ⚫⚪</span>
-                        <span class="genesis-text">Aus Eins wird Zwei! Hell und Dunkel.</span>
+                        <span class="genesis-text">Symmetriebrechung! Aus Eins wird Zwei.</span>
                     `;
                 } else if (event.type === 'merge') {
                     const emoji = MATERIALS[event.result]?.emoji || '?';
                     step.innerHTML = `
-                        <span class="genesis-time">+${elapsed}s</span>
+                        <span class="genesis-time">${epoch}</span>
                         <span class="genesis-icon">${event.from.map(m => MATERIALS[m]?.emoji || '?').join(' + ')} → ${emoji}</span>
                         <span class="genesis-text">${event.msg || event.result}</span>
                     `;
@@ -3436,18 +3488,27 @@
     function updateGenesisBadge() {
         const badge = document.getElementById('genesis-badge');
         if (!badge) return;
-        const crafted = unlockedMaterials.size; // alles außer BASE_MATERIALS
+        const crafted = unlockedMaterials.size;
+        const hasQuarks = ['charm', 'strange'].some(m => unlockedMaterials.has(m));
+        const hasLeptons = ['electron', 'muon', 'tau'].some(m => unlockedMaterials.has(m));
+        const hasAntimatter = unlockedMaterials.has('antimatter');
         let label, tip;
         if (!_genesisYinYangShown) {
-            label = '道'; tip = 'Genesis: Tao — Der Anfang aller Dinge';
+            label = '道'; tip = 'Singularität (t=0) — Lege ☯️ auf die Insel';
         } else if (!_genesisQiShown) {
-            label = '⚫⚪'; tip = 'Genesis: Yin & Yang — Zwei Kräfte erwachen';
-        } else if (crafted < 5) {
-            label = '五行'; tip = 'Genesis: Die 5 Elemente — Die Welt entfaltet sich';
+            label = '⚫⚪'; tip = 'Symmetriebrechung (t=10⁻³⁶s) — Yin + Yang';
+        } else if (!hasQuarks && crafted < 10) {
+            label = '五行'; tip = 'Nukleosynthese (t=3min) — Die 5 Elemente';
+        } else if (hasQuarks && !hasLeptons) {
+            label = '⚛️'; tip = 'Quark-Ära — Charm & Strange entdeckt!';
+        } else if (hasLeptons && !hasAntimatter) {
+            label = '🔹'; tip = 'Lepton-Ära — Teilchen ohne starke Kraft';
+        } else if (hasAntimatter) {
+            label = '💥'; tip = `Materie-Antimaterie — E=mc² (${crafted} entdeckt)`;
         } else if (crafted < 20) {
             label = `✨${crafted}`; tip = `Genesis: ${crafted} Dinge erschaffen`;
         } else {
-            label = '万+'; tip = `Genesis: 万物 — 10.000 Dinge (${crafted} entdeckt)`;
+            label = '万+'; tip = `万物 — 10.000 Dinge (${crafted} entdeckt)`;
         }
         badge.textContent = label;
         badge.title = tip;
