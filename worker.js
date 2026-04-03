@@ -765,22 +765,17 @@ async function createMarketTable(env) {
 
 async function handleBurnBalance(request, env) {
     const url = new URL(request.url);
-    const mmxAddr = url.searchParams.get('mmx') || 'mmx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq5tuzzn';
-    const xchAddr = url.searchParams.get('xch') || 'xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqdlkwut';
+    const mmxAddr = url.searchParams.get('mmx') || 'mmx1dvufsshkk2vyujjs2uwarsk99as8qp4he7srf529yu0ulhm904jskmthxq';
 
-    const results = { mmx: null, xch: null, ts: Date.now() };
+    const results = { mmx: null, ts: Date.now() };
 
     // 1. KV-Cache prüfen (manuell gesetzt oder letzter erfolgreicher API-Call)
     try {
         const kvMmx = await env.CRAFT_KV.get('burn:mmx', 'json');
         if (kvMmx) results.mmx = kvMmx.balance;
-
-        const kvXch = await env.CRAFT_KV.get('burn:xch', 'json');
-        if (kvXch) results.xch = kvXch.balance;
     } catch (e) { /* KV nicht verfügbar */ }
 
     // 2. API versuchen — überschreibt KV wenn erfolgreich
-    // MMX Balance
     try {
         const mmxRes = await fetch('https://api.mmxplorer.com/wapi/address?id=' + mmxAddr, {
             headers: { 'User-Agent': 'SchatzinselWorker/1.0' }
@@ -789,26 +784,8 @@ async function handleBurnBalance(request, env) {
             const data = await mmxRes.json();
             if (data && data.balances) {
                 results.mmx = (data.balances['MMX'] || data.balance || 0) / 10000;
-                // KV updaten bei API-Erfolg
                 await env.CRAFT_KV.put('burn:mmx', JSON.stringify({
                     balance: results.mmx, ts: Date.now()
-                }), { expirationTtl: 86400 });
-            }
-        }
-    } catch (e) { /* API nicht erreichbar — KV-Fallback reicht */ }
-
-    // XCH Balance
-    try {
-        const xchRes = await fetch('https://api2.spacescan.io/1/xch/balance/' + xchAddr, {
-            headers: { 'User-Agent': 'SchatzinselWorker/1.0' }
-        });
-        if (xchRes.ok) {
-            const data = await xchRes.json();
-            if (data && data.xch_balance != null) {
-                results.xch = parseFloat(data.xch_balance);
-                // KV updaten bei API-Erfolg
-                await env.CRAFT_KV.put('burn:xch', JSON.stringify({
-                    balance: results.xch, ts: Date.now()
                 }), { expirationTtl: 86400 });
             }
         }
@@ -830,9 +807,6 @@ async function handleBurnSet(request, env) {
     const body = await request.json();
     await env.CRAFT_KV.put('burn:mmx', JSON.stringify({
         balance: body.mmx || 0, ts: Date.now()
-    }), { expirationTtl: 86400 });
-    await env.CRAFT_KV.put('burn:xch', JSON.stringify({
-        balance: body.xch || 0, ts: Date.now()
     }), { expirationTtl: 86400 });
     return json({ ok: true });
 }

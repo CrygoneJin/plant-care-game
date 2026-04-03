@@ -4403,11 +4403,9 @@
 
     // Burn-Panel als eigene Funktion — auch ohne Code-View nutzbar
     function drawBurnPanel(ctx, x, y, w) {
-        const mmxAddr = window.INSEL_MMX_BURN || 'mmx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq5tuzzn';
-        const xchAddr = window.INSEL_XCH_BURN || 'xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqdlkwut';
+        const mmxAddr = window.INSEL_MMX_BURN || 'mmx1dvufsshkk2vyujjs2uwarsk99as8qp4he7srf529yu0ulhm904jskmthxq';
         const mmxBal = window._mmxBurnBalance || '?';
-        const xchBal = window._xchBurnBalance || '?';
-        const panelH = 58;
+        const panelH = 48;
 
         // Panel-Hintergrund
         ctx.fillStyle = 'rgba(15, 15, 15, 0.88)';
@@ -4416,23 +4414,18 @@
         ctx.lineWidth = 1;
         ctx.strokeRect(x, y, w, panelH);
 
-        // Zeile 1: MMX
+        // Zeile 1: MMX (Nerd-Ebene — kein Goldstandard, nur Energiebeweis)
         ctx.fillStyle = '#FF6B00';
         ctx.font = 'bold 10px monospace';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'top';
-        ctx.fillText('\uD83D\uDD25 MMX  ' + mmxAddr.slice(0, 12) + '...' + mmxAddr.slice(-6) + '  ' + mmxBal + ' MMX', x + 5, y + 5);
+        ctx.fillText('\uD83D\uDD25 ' + mmxBal + ' MMX gefarmt  [nerd easter egg]', x + 5, y + 5);
 
-        // Zeile 2: XCH (Chia -- Bram Cohen)
-        ctx.fillStyle = '#3AAC59';
-        ctx.font = '9px monospace';
-        ctx.fillText('\uD83C\uDF31 XCH  ' + xchAddr.slice(0, 12) + '...' + xchAddr.slice(-6) + '  ' + xchBal + ' XCH', x + 5, y + 20);
-
-        // Zeile 3: Hawking-Philosophie
+        // Zeile 2: Wu Xing Kreislauf
         ctx.fillStyle = '#666';
         ctx.font = '8px monospace';
-        ctx.fillText('Schwarze L\u00f6cher. Tokens rein, niemand raus.', x + 5, y + 38);
-        ctx.fillText('Hawking-Strahlung: die Arbeit die rausstrahlt ist das Eigentliche.', x + 5, y + 48);
+        ctx.fillText('\u2600\uFE0F Sonne \u2192 \uD83C\uDF31 Farmer \u2192 \uD83E\uDE99 Token \u2192 \uD83D\uDD73\uFE0F Loch \u2192 \uD83C\uDFDD\uFE0F Spiel', x + 5, y + 22);
+        ctx.fillText('\u706B        \u6728        \u91D1        \u6C34        \u571F', x + 5, y + 34);
     }
 
     // Crypto Balance-Polling alle 60s — über unseren Worker-Proxy
@@ -4450,11 +4443,9 @@
                 }
                 _lastKnownMmxBal = newBal;
                 window._mmxBurnBalance = newBal || '\u2014';
-                window._xchBurnBalance = data.xch != null ? data.xch.toFixed(6) : '\u2014';
                 requestRedraw();
             }).catch(() => {
                 window._mmxBurnBalance = '\u2014';
-                window._xchBurnBalance = '\u2014';
             });
         }
         poll();

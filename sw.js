@@ -43,7 +43,7 @@ const STATIC_ASSETS = [
 ];
 
 // External API hosts — these get network-first strategy
-const API_HOSTS = ['requesty', 'anthropic', 'open-meteo', 'workers.dev', 'googleapis.com', 'mmxplorer', 'xchscan'];
+const API_HOSTS = ['requesty', 'anthropic', 'open-meteo', 'workers.dev', 'googleapis.com', 'mmxplorer'];
 
 function isApiRequest(url) {
     return API_HOSTS.some(host => url.hostname.includes(host));
