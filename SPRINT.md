@@ -1,3 +1,40 @@
+# Sprint 25 — "Oscar entdeckt die Tiefe"
+
+**Sprint Goal:** Insel-Generatoren raus aus game.js + Höhle als Dungeon + Palette als Instrument. Oscar sieht heute: einen neuen Ort UND kann Musik spielen während er baut.
+**Start:** 2026-04-03
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S25-1 | **#11 game.js → island-generators.js** — `generateStarterIsland` + `generateLummerland` (235 LOC) extrahiert. window.INSEL_ISLAND API. game.js: 4975→4740. | Engineer | ✅ Done |
+| S25-2 | **#50 Höhle = Dungeon** — Berg+Wasser nebeneinander → nach 1.5s wird Höhle (🕳️). Klick → IT-Dungeon-Entdeckung (Bits/Kernel/Netz/Browser). | Engineer + Artist | ✅ Done |
+| S25-3 | **#71 Palette als Instrument** — `soundPaletteNote()` ersetzt `soundSelect()`. Pentatonik-Xylophon: jedes Material hat feste Note. Palette = Klaviatur. | Engineer | ✅ Done |
+
+---
+
+## Standup Log
+
+### 2026-04-03 (Sprint 25 Planning)
+
+**Kontext (Commits seit Sprint 24):**
+- Hexvoxel-Engine Phase 1 (hex-grid.js, hex-renderer.js, hex-marble.js)
+- Burn-Detektor + KV-Fallback
+- game.js: 4210 → 4975 LOC durch neue Features
+
+**Sprint 25 Fokus:**
+- S25-1: Sicherste Extraktion zuerst (island-generators.js, reines Grid-Placement)
+- S25-2: Oscar-sichtbar: Höhle als neuer Ort (#50 war lange offen)
+- S25-3: Oscar-sichtbar: Palette spielt Töne (#71 höchster Spaß-Impact)
+
+**Hinweis zu game.js Zellteilung:** CODE_EASTER_EGGS bereits in stories.js. game.js gewachsen von 4210→4975 durch Hexvoxel+Burn. Ziel <4000 bleibt langfristig, Sprint 25 macht ~239 LOC Fortschritt.
+
+**Blocker:** Keine.
+
+---
+
 # Sprint 24 — "Oscar hört die Welt"
 
 **Sprint Goal:** Musik beim Bauen (Genre-Sequenzen) + technische Schulden (game.js aufteilen) + Tutorial ohne Text.

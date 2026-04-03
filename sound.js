@@ -694,6 +694,49 @@
         playRichTone(varFreq, genre.dur + Math.random() * 0.03, genre.wave, genre.vol);
     }
 
+    // === PALETTE ALS INSTRUMENT (#71) ===
+    // Pentatonik C-Dur: jedes Material hat eine feste Note (Xylophon-Feeling)
+    const PENTATONIC = [130.8, 146.8, 164.8, 196.0, 220.0, 261.6, 293.7, 329.6, 392.0, 440.0, 523.3, 587.3];
+
+    function _hashMat(str) {
+        let h = 0;
+        for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
+        return h % PENTATONIC.length;
+    }
+
+    function soundPaletteNote(material) {
+        if (isMuted()) return;
+        const freq = KLONK_FREQS[material] || PENTATONIC[_hashMat(material || 'wood')];
+        if (!freq) return;
+        try {
+            const ctx = ensureAudio();
+            const t = ctx.currentTime;
+            // Marimba-Charakter: Sinus-Anschlag + Oberton
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0.0, t);
+            gain.gain.linearRampToValueAtTime(0.45, t + 0.01);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(t);
+            osc.stop(t + 0.4);
+            // Oberton-Ping (Holz-Charakter)
+            const osc2 = ctx.createOscillator();
+            const g2 = ctx.createGain();
+            osc2.type = 'triangle';
+            osc2.frequency.value = freq * 3.1;
+            g2.gain.setValueAtTime(0.1, t);
+            g2.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+            osc2.connect(g2);
+            g2.connect(ctx.destination);
+            osc2.start(t);
+            osc2.stop(t + 0.12);
+        } catch (e) {}
+    }
+
     // === Stille-Momente: Wellen-Ambient (#57) ===
     let ambientNodes = null;
 
@@ -786,6 +829,8 @@
         playTone,
         playRichTone,
         canPlaySound,
+        // Palette als Instrument (#71)
+        soundPaletteNote,
     };
 
 })();

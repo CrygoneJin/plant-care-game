@@ -101,9 +101,10 @@
     function soundQuestComplete()    { if (_snd.soundQuestComplete) _snd.soundQuestComplete(); }
     function soundChop()             { if (_snd.soundChop)        _snd.soundChop(); }
     function soundCraft()            { if (_snd.soundCraft)       _snd.soundCraft(); }
-    function soundSelect(material)   { if (_snd.soundSelect)      _snd.soundSelect(material); }
-    function soundFirstBlock()       { if (_snd.soundFirstBlock)  _snd.soundFirstBlock(); }
-    function playMaterialSound(mat)  { if (_snd.playMaterialSound) _snd.playMaterialSound(mat); }
+    function soundSelect(material)      { if (_snd.soundSelect)       _snd.soundSelect(material); }
+    function soundFirstBlock()          { if (_snd.soundFirstBlock)   _snd.soundFirstBlock(); }
+    function playMaterialSound(mat)     { if (_snd.playMaterialSound) _snd.playMaterialSound(mat); }
+    function soundPaletteNote(material) { if (_snd.soundPaletteNote)  _snd.soundPaletteNote(material); }
 
     // ============================================================
     // === ACHIEVEMENTS === (aus achievements.js)
@@ -1616,248 +1617,13 @@
     }
 
     // Zufalls-Insel generieren: Strand, Palmen, Blumen, Steine
+    // === ISLAND GENERATORS → island-generators.js (Zellteilung #11) ===
     function generateStarterIsland() {
-        // Pseudo-random mit Seed damit jeder Start anders ist
-        let seed = Date.now();
-        function rng() { seed = (seed * 16807 + 0) % 2147483647; return seed / 2147483647; }
-
-        // Bebaubarer Bereich: innerhalb des Wasser-Rands (2 Zellen pro Seite)
-        const WE = 2; // isWaterEdge threshold
-        const innerRows = ROWS - WE * 2;
-        const innerCols = COLS - WE * 2;
-        const cx = COLS / 2, cy = ROWS / 2;
-        // Ellipse passt in den bebaubaren Bereich
-        const rx = innerCols * 0.48, ry = innerRows * 0.48;
-
-        // Strandrand (Sand-Ring am Rand der bebaubaren Fläche)
-        for (let r = WE; r < ROWS - WE; r++) {
-            for (let c = WE; c < COLS - WE; c++) {
-                const dx = (c - cx) / rx, dy = (r - cy) / ry;
-                const dist = dx * dx + dy * dy;
-                const wobble = 0.15 * Math.sin(r * 1.7 + c * 0.9) + 0.1 * Math.cos(c * 2.3 - r * 0.7);
-                if (dist < (0.7 + wobble) && dist >= (0.5 + wobble)) {
-                    grid[r][c] = 'sand';
-                }
-            }
-        }
-
-        // Palmen am Strand verteilen
-        const palmCount = Math.max(6, Math.floor((ROWS + COLS) * 0.3));
-        let palmsPlaced = 0;
-        for (let attempt = 0; attempt < 200 && palmsPlaced < palmCount; attempt++) {
-            const r = Math.floor(rng() * ROWS);
-            const c = Math.floor(rng() * COLS);
-            if (grid[r][c] === 'sand') {
-                grid[r][c] = 'palm';
-                palmsPlaced++;
-            }
-        }
-
-        // Bäume im Insel-Inneren
-        const treeCount = Math.max(4, Math.floor((ROWS + COLS) * 0.2));
-        let treesPlaced = 0;
-        for (let attempt = 0; attempt < 200 && treesPlaced < treeCount; attempt++) {
-            const r = Math.floor(rng() * ROWS);
-            const c = Math.floor(rng() * COLS);
-            const dx = (c - cx) / rx, dy = (r - cy) / ry;
-            if (dx * dx + dy * dy < 0.4 && !grid[r][c]) {
-                grid[r][c] = rng() < 0.5 ? 'tree' : 'small_tree';
-                treesPlaced++;
-            }
-        }
-
-        // Ein paar Blumen und Pflanzen
-        const floraCount = Math.max(3, Math.floor((ROWS + COLS) * 0.15));
-        let floraPlaced = 0;
-        for (let attempt = 0; attempt < 200 && floraPlaced < floraCount; attempt++) {
-            const r = Math.floor(rng() * ROWS);
-            const c = Math.floor(rng() * COLS);
-            const dx = (c - cx) / rx, dy = (r - cy) / ry;
-            if (dx * dx + dy * dy < 0.45 && !grid[r][c]) {
-                grid[r][c] = rng() < 0.6 ? 'flower' : 'plant';
-                floraPlaced++;
-            }
-        }
-
-        // Fluss: schlängelt sich von oben nach unten durch die Inselmitte
-        const riverStartC = Math.floor(cx + (rng() - 0.5) * 4);
-        let rc = riverStartC;
-        for (let r = Math.floor(cy - ry * 0.6); r < Math.floor(cy + ry * 0.6); r++) {
-            if (r >= 0 && r < ROWS && rc >= 0 && rc < COLS) {
-                const dx = (rc - cx) / rx, dy = (r - cy) / ry;
-                if (dx * dx + dy * dy < 0.5) {
-                    grid[r][rc] = 'water';
-                    // Fluss 2 Zellen breit an manchen Stellen
-                    if (rng() < 0.4 && rc + 1 < COLS) grid[r][rc + 1] = 'water';
-                }
-            }
-            // Schlängeln
-            rc += rng() < 0.3 ? -1 : rng() > 0.7 ? 1 : 0;
-            rc = Math.max(2, Math.min(COLS - 3, rc));
-        }
-
-        // Steingruppe (kleine Felsformation)
-        const stoneCount = Math.max(3, Math.floor((ROWS + COLS) * 0.08));
-        // Steine eher im oberen Drittel (Hügel-Feeling)
-        let stonesPlaced = 0;
-        const stoneCy = cy - ry * 0.3;
-        for (let attempt = 0; attempt < 200 && stonesPlaced < stoneCount; attempt++) {
-            const r = Math.floor(stoneCy + (rng() - 0.5) * ry * 0.4);
-            const c = Math.floor(cx + (rng() - 0.5) * rx * 0.5);
-            if (r >= 0 && r < ROWS && c >= 0 && c < COLS && !grid[r][c]) {
-                const dx = (c - cx) / rx, dy = (r - cy) / ry;
-                if (dx * dx + dy * dy < 0.35) {
-                    grid[r][c] = 'stone';
-                    stonesPlaced++;
-                }
-            }
-        }
-
-        // Berg (1-2 Berge im Insel-Inneren, wenn Material existiert)
-        if (MATERIALS['mountain']) {
-            const mountainCount = rng() < 0.5 ? 1 : 2;
-            let mountainsPlaced = 0;
-            for (let attempt = 0; attempt < 100 && mountainsPlaced < mountainCount; attempt++) {
-                const r = Math.floor(cy - ry * 0.2 + rng() * ry * 0.3);
-                const c = Math.floor(cx + (rng() - 0.5) * rx * 0.4);
-                if (r >= 0 && r < ROWS && c >= 0 && c < COLS && !grid[r][c]) {
-                    grid[r][c] = 'mountain';
-                    mountainsPlaced++;
-                }
-            }
-        }
-
-        // Mehr Bäume — dichter Wald im Zentrum
-        const extraTrees = Math.max(4, Math.floor((ROWS + COLS) * 0.15));
-        let extraPlaced = 0;
-        for (let attempt = 0; attempt < 300 && extraPlaced < extraTrees; attempt++) {
-            const r = Math.floor(rng() * ROWS);
-            const c = Math.floor(rng() * COLS);
-            const dx = (c - cx) / rx, dy = (r - cy) / ry;
-            if (dx * dx + dy * dy < 0.3 && !grid[r][c]) {
-                grid[r][c] = rng() < 0.3 ? 'tree' : rng() < 0.6 ? 'small_tree' : 'plant';
-                extraPlaced++;
-            }
-        }
-
-        // Weg vom Strand zum Zentrum
-        const pathStartR = Math.floor(cy + ry * 0.6);
-        for (let r = pathStartR; r > Math.floor(cy); r--) {
-            const c = Math.floor(cx + Math.sin(r * 0.3) * 2);
-            if (r >= 0 && r < ROWS && c >= 0 && c < COLS) {
-                if (!grid[r][c] || grid[r][c] === 'sand') {
-                    grid[r][c] = 'path';
-                }
-            }
-        }
-
-        window.grid = grid;
+        window.INSEL_ISLAND.generateStarterIsland(grid, ROWS, COLS, MATERIALS);
     }
 
-    // === LUMMERLAND — handgebaute Tutorial-Insel ===
-    // Michael Ende: "Lummerland war nur eine kleine Insel mit zwei Bergen."
-    // Aktivierung: ?lummerland in der URL oder localStorage
     function generateLummerland() {
-        const cx = Math.floor(COLS / 2), cy = Math.floor(ROWS / 2);
-        const rx = Math.floor(COLS * 0.38), ry = Math.floor(ROWS * 0.38);
-
-        // 1. Inselform: ovaler Strand
-        for (let r = 0; r < ROWS; r++) {
-            for (let c = 0; c < COLS; c++) {
-                const dx = (c - cx) / rx, dy = (r - cy) / ry;
-                const dist = dx * dx + dy * dy;
-                if (dist < 0.7 && dist >= 0.55) grid[r][c] = 'sand';
-            }
-        }
-
-        // 2. Zwei Berge ("eine kleine Insel mit zwei Bergen")
-        const berg1r = cy - Math.floor(ry * 0.3), berg1c = cx - Math.floor(rx * 0.2);
-        const berg2r = cy - Math.floor(ry * 0.2), berg2c = cx + Math.floor(rx * 0.25);
-        if (MATERIALS['mountain']) {
-            if (grid[berg1r]) grid[berg1r][berg1c] = 'mountain';
-            if (grid[berg2r]) grid[berg2r][berg2c] = 'mountain';
-            // Steine um die Berge
-            for (const [br, bc] of [[berg1r, berg1c], [berg2r, berg2c]]) {
-                for (const [dr, dc] of [[0,1],[0,-1],[1,0],[-1,0]]) {
-                    const nr = br + dr, nc = bc + dc;
-                    if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && !grid[nr][nc]) {
-                        grid[nr][nc] = 'stone';
-                    }
-                }
-            }
-        }
-
-        // 3. Lukas' Lokomotiv-Schuppen (Holz + Tür + Dach)
-        const schuppenR = cy + Math.floor(ry * 0.1), schuppenC = cx - Math.floor(rx * 0.1);
-        const schuppen = [
-            [-1,-1,'wood'],[-1,0,'wood'],[-1,1,'wood'],
-            [0,-1,'wood'],[0,0,'door'],[0,1,'wood'],
-            [-2,-1,'roof'],[-2,0,'roof'],[-2,1,'roof'],
-        ];
-        for (const [dr, dc, mat] of schuppen) {
-            const r = schuppenR + dr, c = schuppenC + dc;
-            if (r >= 0 && r < ROWS && c >= 0 && c < COLS && MATERIALS[mat]) {
-                grid[r][c] = mat;
-            }
-        }
-
-        // 4. Frau Waas' Laden (Stein + Glas + Lampe)
-        const ladenR = cy, ladenC = cx + Math.floor(rx * 0.15);
-        const laden = [
-            [-1,-1,'stone'],[-1,0,'glass'],[-1,1,'stone'],
-            [0,-1,'stone'],[0,0,'door'],[0,1,'stone'],
-            [-2,-1,'roof'],[-2,0,'lamp'],[-2,1,'roof'],
-        ];
-        for (const [dr, dc, mat] of laden) {
-            const r = ladenR + dr, c = ladenC + dc;
-            if (r >= 0 && r < ROWS && c >= 0 && c < COLS && MATERIALS[mat]) {
-                grid[r][c] = mat;
-            }
-        }
-
-        // 5. Schienen (Weg von Schuppen quer über die Insel)
-        for (let c = schuppenC + 2; c < cx + Math.floor(rx * 0.4); c++) {
-            if (c >= 0 && c < COLS && schuppenR >= 0 && schuppenR < ROWS) {
-                if (!grid[schuppenR][c]) grid[schuppenR][c] = 'path';
-            }
-        }
-
-        // 6. Bäume und Palmen
-        const spots = [
-            [cy - Math.floor(ry*0.1), cx - Math.floor(rx*0.35), 'palm'],
-            [cy + Math.floor(ry*0.3), cx - Math.floor(rx*0.15), 'palm'],
-            [cy + Math.floor(ry*0.35), cx + Math.floor(rx*0.1), 'palm'],
-            [cy + Math.floor(ry*0.2), cx + Math.floor(rx*0.3), 'palm'],
-            [cy - Math.floor(ry*0.15), cx + Math.floor(rx*0.35), 'tree'],
-            [cy + Math.floor(ry*0.05), cx - Math.floor(rx*0.3), 'tree'],
-            [cy - Math.floor(ry*0.35), cx, 'tree'],
-            [cy + Math.floor(ry*0.1), cx + Math.floor(rx*0.05), 'flower'],
-            [cy + Math.floor(ry*0.15), cx - Math.floor(rx*0.05), 'flower'],
-            [cy + Math.floor(ry*0.25), cx, 'plant'],
-        ];
-        for (const [r, c, mat] of spots) {
-            if (r >= 0 && r < ROWS && c >= 0 && c < COLS && !grid[r][c]) {
-                grid[r][c] = mat;
-            }
-        }
-
-        // 7. Kleiner Hafen (Wasser + Boot)
-        const hafenR = cy + Math.floor(ry * 0.45);
-        const hafenC = cx;
-        for (let dc = -1; dc <= 1; dc++) {
-            const c = hafenC + dc;
-            if (hafenR >= 0 && hafenR < ROWS && c >= 0 && c < COLS) {
-                grid[hafenR][c] = 'water';
-            }
-            if (hafenR + 1 < ROWS && c >= 0 && c < COLS) {
-                grid[hafenR + 1][c] = 'water';
-            }
-        }
-        if (MATERIALS['boat'] && hafenR >= 0 && hafenR < ROWS && hafenC >= 0 && hafenC < COLS) {
-            grid[hafenR][hafenC] = 'boat';
-        }
-
-        window.grid = grid;
+        window.INSEL_ISLAND.generateLummerland(grid, ROWS, COLS, MATERIALS);
     }
 
     // --- Zeichnen ---
@@ -2489,6 +2255,24 @@
                             if (window.INSEL_BUS) window.INSEL_BUS.emit('consequence:flowers', { r: r, c: c, count: count });
                         }
                     }, 10000);
+                }
+                // Konsequenz: Berg neben Wasser → Höhleneingang (#50 Dungeon)
+                if (currentMaterial === 'mountain') {
+                    const adj = [[-1,0],[1,0],[0,-1],[0,1]];
+                    const hasWater = adj.some(([dr,dc]) => {
+                        const nr = r+dr, nc = c+dc;
+                        return nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && grid[nr]?.[nc] === 'water';
+                    });
+                    if (hasWater) {
+                        setTimeout(() => {
+                            if (grid[r]?.[c] === 'mountain') {
+                                grid[r][c] = 'cave';
+                                requestRedraw();
+                                showToast('🕳️ Eine Höhle! Tippe drauf um sie zu erkunden.', 4000);
+                                if (window.INSEL_BUS) window.INSEL_BUS.emit('dungeon:discovered', { r, c });
+                            }
+                        }, 1500);
+                    }
                 }
                 // Konsequenz: Feuer neben Holz → Holz verbrennt nach 3s
                 if (currentMaterial === 'fire') {
@@ -3422,7 +3206,7 @@
         const taoBtn = document.querySelector('.material-btn[data-material="tao"]');
         if (taoBtn) taoBtn.classList.add('tao-clicked');
         currentMaterial = mat;
-        soundSelect(currentMaterial);
+        soundPaletteNote(currentMaterial); // Palette als Instrument (#71)
         currentTool = 'build';
         document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
         document.querySelector('[data-tool="build"]').classList.add('active');
@@ -3486,6 +3270,7 @@
         if (cell) {
             const npcId = getNpcAt(cell.r, cell.c);
             if (npcId) { showNpcQuestDialog(npcId); isMouseDown = false; return; }
+            if (grid[cell.r]?.[cell.c] === 'cave') { showDungeonExploration(cell.r, cell.c); isMouseDown = false; return; }
             applyTool(cell.r, cell.c);
         }
     });
@@ -3528,6 +3313,8 @@
         // NPC antippen → Quest-Dialog
         const npcId = getNpcAt(cell.r, cell.c);
         if (npcId) { showNpcQuestDialog(npcId); return; }
+        // Höhle antippen → Dungeon (#50)
+        if (grid[cell.r]?.[cell.c] === 'cave') { showDungeonExploration(cell.r, cell.c); return; }
         // Spielfigur-Drag: Berühre die Spieler-Zelle → Figur ziehen
         if (playerName && cell.r === playerPos.r && cell.c === playerPos.c) {
             playerDragging = true;
@@ -4019,6 +3806,24 @@
             }
             showToast(nowMuted ? 'Ton aus (+ Hörspiele)' : 'Ton an');
         });
+    }
+
+    // === DUNGEON — Höhlen-Entdeckung (#50) ===
+    const DUNGEON_LEVELS = [
+        { emoji: '🔩', title: 'Bits & Bytes', text: 'Alles beginnt mit 0 und 1. Zwei Zahlen. Damit baut der Computer die Welt.' },
+        { emoji: '⚙️', title: 'Der Kernel', text: 'Tief im Computer arbeitet der Kernel — wie ein Hausmeister, der alles regelt, aber nie schläft.' },
+        { emoji: '🌐', title: 'Das Netz', text: 'Milliarden Computer reden miteinander. Jedes Wort kommt in kleinen Paketen an.' },
+        { emoji: '🦊', title: 'Der Browser', text: 'Der Browser übersetzt Zahlen in Bilder, Text und Spiele. Wie ein Zauberer der Zahlen.' },
+    ];
+
+    let dungeonDiscoveredAt = null; // merkt sich die letzte entdeckte Höhle
+
+    function showDungeonExploration(r, c) {
+        dungeonDiscoveredAt = { r, c };
+        const level = DUNGEON_LEVELS[Math.floor(Math.random() * DUNGEON_LEVELS.length)];
+        showToast(`${level.emoji} ${level.title}: ${level.text}`, 6000);
+        recordMilestone('dungeonExplored');
+        trackEvent('dungeon_explored', { r, c, title: level.title });
     }
 
     // === GENRE-TONSEQUENZEN (Backlog #85) ===

@@ -20,8 +20,8 @@ Alles was nicht in eine dieser Kategorien fällt → `ARCHIVE.md`.
 | # | Item | Owner | Status | Oscar-Outcome |
 |---|------|-------|--------|---------------|
 | 11 | **Zellteilung game.js** — Grid/Effects/Stories noch drin. Ziel: <4000 LOC | Engineer | 🔄 In Arbeit | Oscar merkt nichts. Aber ohne das wird alles langsamer. |
-| 50 | **Höhle = Dungeon** — Berg+Wasser=Höhle. Erster Dungeon (IT: Bits→Kernel→Browser). | alle | 🔲 Offen | Oscar entdeckt eine neue Welt unter der Insel. |
-| 71 | **Palette = Instrument = Bauwerk** — Links spielen = rechts bauen. Melodie UND Architektur. | alle | 🔲 Offen | Oscar spielt Musik und baut gleichzeitig. |
+| 50 | **Höhle = Dungeon** — Berg+Wasser=Höhle. Erster Dungeon (IT: Bits→Kernel→Browser). | alle | ✅ Done | Oscar entdeckt eine neue Welt unter der Insel. |
+| 71 | **Palette = Instrument = Bauwerk** — Links spielen = rechts bauen. Melodie UND Architektur. | alle | ✅ Done | Oscar spielt Musik und baut gleichzeitig. |
 | 54 | **Jim Knopfs Welt** — Lummerland → Meer → weitere Inseln. Boot craften = nächste Insel. | alle | 🔲 Offen | Oscar segelt zu neuen Inseln. |
 | 95 | **Wu-Xing→NPC-Events** — NPCs reagieren auf Element-Events. Inter-Schicht-Kommunikation. | Engineer + Artist | 🔲 Offen | SpongeBob kommentiert wenn Oscar Feuer macht. |
 | 96 | **NPC-Session-Gedächtnis** — NPCs erinnern sich an letzte Session via localStorage. | Engineer + Scientist | 🔲 Offen | "Hey Oscar, gestern hast du viele Bäume gebaut!" |

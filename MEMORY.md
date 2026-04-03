@@ -33,6 +33,7 @@ Persistent team log. Append-only. Read by all agents.
 
 | Datum | Was | Warum gut |
 |-------|-----|-----------|
+| 2026-04-03 | Sprint 25 — island-generators.js + Höhle + Palette als Instrument | 3 Items in einer Session. island-generators.js: saubere Extraktion (window.INSEL_ISLAND API, 235 LOC raus, game.js 4975→4740). Höhle (#50): Berg+Wasser→cave nach 1.5s, Klick zeigt IT-Dungeon-Inhalte (4 Level). Palette (#71): soundPaletteNote() Pentatonik-Xylophon — jedes Material hat feste Note, Xylophon-Charakter statt Click-Sound. Alle 3 DoD-Punkte erfüllt. |
 | 2026-04-02 | Oscar am Telefon: "Ich will mit dir spielen." | Nicht um zu spielen. Um zusammen zu sein. Das ist die Wurzel. Alles andere ist Blattwerk. |
 | 2026-04-02 | Pereira-Audit: Backlog von 99 auf 18 aktive Items | "Backlog items age like milk." 17 Items archiviert (ARCHIVE.md), 5 eingefrorene begraben, Schöpfungsgeschichten nach docs/ ausgelagert. Oscar-Filter als Priorisierungsregel. Jedes Item braucht einen Satz: "Oscar wird ___ weil ___." |
 | 2026-04-02 | Programmier-Tutorial (PR #149) — 5 Lektionen, sandboxed Code-Editor, NPC-Guides | Function-Constructor + Whitelist fuer sichere Ausfuehrung. SpongeBob/Haskell/Scratch/Lua/SQL als Lehrer. Fortschritt in localStorage. Backlog #23. |
