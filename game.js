@@ -2520,6 +2520,11 @@
             }
         } else if (currentTool === 'harvest') {
             const cell = grid[r][c];
+            // Höhle betreten → Dungeon öffnen statt ernten
+            if (cell === 'cave' && window.DUNGEON) {
+                window.DUNGEON.open();
+                return;
+            }
             if (cell !== null) {
                 if (!undoPushedThisStroke) { pushUndo(); undoPushedThisStroke = true; }
                 const yield_ = HARVEST_YIELD[cell] || { material: cell, count: 1 };

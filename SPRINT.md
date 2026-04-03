@@ -1,3 +1,40 @@
+# Sprint 25 — "Oscar entdeckt die Tiefe"
+
+**Sprint Goal:** Höhle als Dungeon (Oscar entdeckt eine neue Welt) + Palette als Instrument (Melodie = Bauwerk) + game.js Zellteilung (<4000 LOC).
+**Start:** 2026-04-03
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S25-1 | **#50 Höhle = Dungeon** — Berg+Wasser=Höhle-Eingang. Betritt man ihn → 3-Raum-Dungeon (Bits→Kernel→Browser). Oscar entdeckt eine neue Welt unter der Insel. | Engineer + Artist | 🔲 Offen |
+| S25-2 | **#71 Palette als Instrument** — Palette-Buttons links erzeugen Töne (Note = Material). Oscar spielt Melodie UND baut gleichzeitig. | Engineer + Artist | 🔲 Offen |
+| S25-3 | **#11 game.js Zellteilung** — initGrid() + Wetter-Block extrahieren. Ziel: game.js < 4000 LOC. | Engineer | 🔲 Offen |
+
+---
+
+## Standup Log
+
+### 2026-04-03 (Sprint 25 Planning)
+
+**Kontext (Commits seit Sprint 24):**
+- `ab2e9c5` Hexvoxel-Engine Phase 1 — hex-grid, hex-renderer, hex-marble (Superpowers-Branch, nicht im Sprint)
+- `6fc9bc1` fix: Burn-Detektor — KV-Fallback + Toast bei Balance-Änderung
+- `ae4eaa1` test: Burn-Panel Smoke-Test + Memory-Eintrag
+- game.js ist auf 4975 LOC gewachsen (nach Hexvoxel-Merge)
+
+**Sprint 25 Fokus:** Oscar-sichtbare Änderung zuerst (#50 Dungeon, #71 Instrument). Dann technische Schulden (#11).
+
+**Retro S24 Empfehlungen umgesetzt:**
+- Vor Sprint Planning: `git fetch origin` + Branch-Check ✅ (SessionStart Hook)
+- game.js Zellteilung: initGrid() + Wetter als nächste sichere Extraktion
+
+**Blocker:** Keine.
+
+---
+
 # Sprint 24 — "Oscar hört die Welt"
 
 **Sprint Goal:** Musik beim Bauen (Genre-Sequenzen) + technische Schulden (game.js aufteilen) + Tutorial ohne Text.
