@@ -13,6 +13,27 @@
     var AUTOSAVE_KEY = '~autosave~';
     var lastSaveHash = '';
 
+    // Sicheres JSON.parse — corrupted localStorage crasht nicht mehr die App
+    function safeParse(key, fallback) {
+        try {
+            var raw = localStorage.getItem(key);
+            return raw ? JSON.parse(raw) : fallback;
+        } catch (e) {
+            return fallback;
+        }
+    }
+
+    // Sicheres localStorage.setItem — QuotaExceededError wird gefangen
+    function safeSet(key, value) {
+        try {
+            localStorage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value));
+            return true;
+        } catch (e) {
+            if (window.showToast) window.showToast('\u26A0\uFE0F Speicher voll! Alte Projekte l\u00F6schen.', 5000);
+            return false;
+        }
+    }
+
     function isValidGrid(g) {
         if (!_ctx) return Array.isArray(g) && g.length > 0;
         return Array.isArray(g) && g.length === _ctx.ROWS && g[0] && g[0].length === _ctx.COLS;
@@ -49,7 +70,7 @@
     function saveProject() {
         if (!_ctx) return;
         var name = _ctx.getProjectName() || 'Mein Bauwerk';
-        var projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+        var projects = safeParse('insel-projekte', {});
         projects[name] = {
             grid: _ctx.getGrid(),
             date: new Date().toLocaleDateString('de-DE'),
@@ -58,7 +79,7 @@
             unlocked: Array.from(_ctx.getUnlockedMaterials()),
             discovered: Array.from(_ctx.getDiscoveredRecipes()),
         };
-        localStorage.setItem('insel-projekte', JSON.stringify(projects));
+        safeSet('insel-projekte', projects);
         _ctx.saveInventory();
         _ctx.saveUnlocked();
         if (window.showToast) window.showToast('\uD83D\uDCBE "' + name + '" gespeichert!');
@@ -74,7 +95,7 @@
         var hash = JSON.stringify(grid);
         if (hash === lastSaveHash) return;
         lastSaveHash = hash;
-        var projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+        var projects = safeParse('insel-projekte', {});
         projects[AUTOSAVE_KEY] = {
             grid: grid,
             date: new Date().toLocaleDateString('de-DE'),
@@ -85,7 +106,7 @@
             discovered: Array.from(_ctx.getDiscoveredRecipes()),
             playerPos: _ctx.getPlayerPos(),
         };
-        localStorage.setItem('insel-projekte', JSON.stringify(projects));
+        safeSet('insel-projekte', projects);
         var saveBtn = document.getElementById('save-btn');
         if (saveBtn) {
             saveBtn.style.transition = 'opacity 0.3s';
@@ -97,7 +118,7 @@
     // --- Laden-Dialog ---
     function showLoadDialog() {
         if (!_ctx) return;
-        var projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+        var projects = safeParse('insel-projekte', {});
         var names = Object.keys(projects);
         var savedProjectsList = document.getElementById('saved-projects-list');
         var loadDialog = document.getElementById('load-dialog');
@@ -122,7 +143,7 @@
 
     function loadProject(name) {
         if (!_ctx) return;
-        var projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+        var projects = safeParse('insel-projekte', {});
         if (!projects[name]) return;
 
         var saved = projects[name].grid;
@@ -166,9 +187,9 @@
     }
 
     function deleteProject(name) {
-        var projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+        var projects = safeParse('insel-projekte', {});
         delete projects[name];
-        localStorage.setItem('insel-projekte', JSON.stringify(projects));
+        safeSet('insel-projekte', projects);
         showLoadDialog();
         if (window.showToast) window.showToast('\uD83D\uDDD1\uFE0F "' + name + '" gel\u00F6scht!');
     }
@@ -188,9 +209,9 @@
         _ctx.setProjectName('');
         _ctx.resetGenesisFlags();
         // Autosave löschen damit beim Reload nicht die alte Insel zurückkommt
-        var projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
+        var projects = safeParse('insel-projekte', {});
         delete projects[AUTOSAVE_KEY];
-        localStorage.setItem('insel-projekte', JSON.stringify(projects));
+        safeSet('insel-projekte', projects);
         _ctx.updateStats();
         _ctx.updateInventoryDisplay();
         _ctx.updatePaletteVisibility();
@@ -252,6 +273,8 @@
         registerContext: registerContext,
         AUTOSAVE_KEY: AUTOSAVE_KEY,
         isValidGrid: isValidGrid,
+        safeParse: safeParse,
+        safeSet: safeSet,
         saveProject: saveProject,
         autoSave: autoSave,
         showLoadDialog: showLoadDialog,

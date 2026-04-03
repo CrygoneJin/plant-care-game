@@ -13,10 +13,16 @@
 
     let masterVolume = 1.0;
 
+    // Mute-State gecacht — vermeidet 15+ localStorage-Reads pro Sound-Aufruf
+    let _mutedCache = localStorage.getItem('insel-muted') === 'true';
+
     function setMasterVolume(v) { masterVolume = Math.max(0, Math.min(1, v)); }
-    function getMasterVolume() { return isMuted() ? 0 : masterVolume; }
-    function setMuted(m) { localStorage.setItem('insel-muted', m ? 'true' : 'false'); }
-    function isMuted() { return localStorage.getItem('insel-muted') === 'true'; }
+    function getMasterVolume() { return _mutedCache ? 0 : masterVolume; }
+    function setMuted(m) {
+        _mutedCache = !!m;
+        localStorage.setItem('insel-muted', m ? 'true' : 'false');
+    }
+    function isMuted() { return _mutedCache; }
 
     function ensureAudio() {
         if (!audioCtx) audioCtx = new AudioCtx();

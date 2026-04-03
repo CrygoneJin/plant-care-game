@@ -16,6 +16,10 @@ Persistent team log. Append-only. Read by all agents.
 | 2026-04-03 | **Test-Pfade falsch** — unit.test.js und hex-grid.test.js suchten Dateien in ops/ statt src/core/ seit der Zellteilung (#11) | ROOT-Pfad nie nach Datei-Move aktualisiert | Pfade auf SRC_CORE/SRC_INFRA gefixt |
 | 2026-04-03 | **florianeWishes Phantom-Stat** — types.d.ts deklarierte Stats die getGridStats() nie liefert | Typ-Deklaration ohne Implementation | Phantom-Types entfernt (florianeWishes, npcCount, darkModeUsed, etc.) |
 | 2026-04-03 | **handleBurnSet ohne try/catch** — worker.js JSON.parse auf request.json() ohne Error Handling → 500 bei kaputtem JSON | Kein Input-Validation | try/catch + 400-Response |
+| 2026-04-03 | **save.js 6× JSON.parse ohne try/catch + 4× setItem ohne QuotaExceeded** — localStorage-Corruption oder volles Quota crasht Speicher-Funktionen | Copy-Paste-Pattern, nie abgesichert | safeParse() + safeSet() Helper, alle 10 Stellen migriert |
+| 2026-04-03 | **/metrics/ingest ohne Auth** — Worker akzeptierte POST von jeder Origin, Metrics konnten gespooft werden | Endpoint vor API-Key-Check geroutet, kein Origin-Check | Origin-Whitelist + optionaler X-Ingest-Key Header |
+| 2026-04-03 | **CORS Wildcard `*`** in worker.js — alle Responses erlaubten jede Origin | Default-Pattern ohne Nachdenken übernommen | Origin-basiertes CORS: nur schatzinsel.app + localhost |
+| 2026-04-03 | **sound.js 15× localStorage.getItem pro Sound** — jeder Sound-Aufruf las localStorage neu | isMuted() ohne Cache | _mutedCache Variable, setMuted() aktualisiert Cache + Storage |
 | 2026-03-30 | Backlog-Drift: 14 Items waren in Code done aber Backlog zeigte 🔲 | Keine Session-übergreifende Backlog-Pflege | Am Ende jeder Session: Backlog-Zeilen updaten, bevor MEMORY geschrieben wird |
 | 2026-04-03 | CI kaputt seit 31.3 — `sleep 2` reicht nicht für `npx serve` | Race Condition: Server startet nach Puppeteer | `curl`-Retry-Loop statt `sleep`, SW Cache-Version auto per Commit-Count |
 | 2026-04-03 | NPCs nicht sichtbar auf Live-Site | CI kaputt → kein Deploy → alte game.js ohne NPC-Grid-Code | Root Cause war CI, nicht NPC-Code. Immer CI-Status prüfen bei "Feature fehlt auf Prod" |

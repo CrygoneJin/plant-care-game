@@ -23,8 +23,12 @@ const API_URL = 'https://router.requesty.ai/v1/chat/completions';
 const RATE_LIMIT = 60;
 const RATE_WINDOW = 3600;
 
+// Module-level Request-Referenz für corsHeaders()
+let _currentRequest = null;
+
 export default {
     async fetch(request, env) {
+        _currentRequest = request;
         // CORS Preflight
         if (request.method === 'OPTIONS') {
             return new Response(null, { headers: corsHeaders() });
@@ -495,6 +499,16 @@ async function handleMetricsIngest(request, env) {
     if (!env.METRICS_DB) return json({ error: 'D1 nicht konfiguriert' }, 500);
     if (request.method !== 'POST') return json({ error: 'POST only' }, 405);
 
+    // Auth: Shared Secret oder Origin-Check (kein offenes Ingest von fremden Domains)
+    const origin = request.headers.get('origin') || '';
+    const ingestKey = request.headers.get('x-ingest-key') || '';
+    const allowedOrigins = ['https://schatzinsel.app', 'https://www.schatzinsel.app', 'http://localhost'];
+    const hasValidOrigin = allowedOrigins.some(o => origin.startsWith(o));
+    const hasValidKey = env.INGEST_KEY && ingestKey === env.INGEST_KEY;
+    if (!hasValidOrigin && !hasValidKey) {
+        return json({ error: 'Nicht autorisiert' }, 403);
+    }
+
     let body;
     try { body = await request.json(); } catch (e) {
         return json({ error: 'Ungültiger Request-Body' }, 400);
@@ -823,10 +837,14 @@ async function handleBurnSet(request, env) {
 // --- Helpers ---
 
 function corsHeaders() {
+    const origin = _currentRequest ? (_currentRequest.headers.get('origin') || '') : '';
+    const allowed = ['https://schatzinsel.app', 'https://www.schatzinsel.app'];
+    // Localhost für Entwicklung erlauben
+    const isAllowed = allowed.includes(origin) || origin.startsWith('http://localhost');
     return {
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': isAllowed ? origin : allowed[0],
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Headers': 'Content-Type, X-Ingest-Key',
         'Access-Control-Max-Age': '86400',
     };
 }

@@ -37,6 +37,9 @@ Python redet.
 - 2026-04-03: Bestehende Tests hatten falsche Pfade (ops/ statt src/core/) — unsichtbar kaputt seit der Zellteilung. Pfade gefixt.
 - 2026-04-03: SQL Injection in worker.js handleMetrics — Template-Literal `SELECT * FROM ${table}` durch Whitelist-Queries ersetzt. Auch wenn table validiert war: Defense in Depth.
 - 2026-04-03: Lesson: Tests die nicht laufen weil Pfade falsch sind, sind schlimmer als keine Tests. Sie geben falsche Sicherheit.
+- 2026-04-03: save.js hatte 6× `JSON.parse(localStorage.getItem(...) || '{}')` und 4× nacktes `setItem` — Copy-Paste-Muster ohne Absicherung. safeParse() + safeSet() als Paar eingeführt. QuotaExceededError zeigt jetzt Toast statt stummem Crash.
+- 2026-04-03: CORS `Access-Control-Allow-Origin: *` ist nie OK für Produktions-APIs. Origin-basiert mit Whitelist, _currentRequest als Module-Level-Ref weil 70 json()-Aufrufe nicht umgebaut werden.
+- 2026-04-03: sound.js isMuted() las 15× pro Sound-Call localStorage. Cache-Variable + setMuted()-Sync. Einfachste Performance-Optimierung die man machen kann.
 
 ## Feynman-Notiz
 

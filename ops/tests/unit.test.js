@@ -232,8 +232,8 @@ describe('INSEL_SOUND.isMuted', () => {
         loadScript(path.join(SRC_CORE, 'sound.js'), ctx);
     });
 
-    it('isMuted() returns true when localStorage has insel-muted=true', () => {
-        ctx.localStorage.setItem('insel-muted', 'true');
+    it('isMuted() returns true after setMuted(true)', () => {
+        ctx.INSEL_SOUND.setMuted(true);
         assert.equal(ctx.INSEL_SOUND.isMuted(), true);
     });
 

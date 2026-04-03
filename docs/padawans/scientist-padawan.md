@@ -60,6 +60,18 @@ Hypothese: "Floriane hat ein 3-Wünsche-Limit" → falsifiziert durch Code-Revie
 Die Gegenhypothese "Floriane hat kein Limit" war die Realität.
 Messplan übersetzbar. Das ist der Wert.
 
+### 2026-04-03 — V-Modell Sprint: Runde 2
+
+Gelernt: save.js Tests haben sofort aufgedeckt dass safeParse/safeSet nicht exportiert
+waren — der Code war intern korrekt aber für Tests unsichtbar. Ein Modul das nicht
+testbar ist, ist ein Modul das nicht verifizierbar ist. Export-als-Test-Requirement.
+
+Gelernt: Der isMuted()-Test brach nach dem Cache-Refactor — nicht weil der Code
+falsch war, sondern weil der Test direkt localStorage manipulierte statt die API
+(setMuted) zu benutzen. Tests die Implementation-Details testen statt Verhalten,
+brechen bei jedem Refactor. Gegenhypothese bestätigt: "Cache bricht alten Test"
+war der Beweis dass der alte Test falsch war.
+
 Offene Frage: Sind 5 Hypothesen zu viele für eine Session? Feynman würde sagen:
 "Lieber 2 echte als 5 halbgare." Iteration 3 sollte radikaler priorisieren.
 
