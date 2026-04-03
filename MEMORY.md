@@ -34,6 +34,7 @@ Persistent team log. Append-only. Read by all agents.
 
 | Datum | Was | Warum gut |
 |-------|-----|-----------|
+| 2026-04-03 | S25-3: NPC-Daten → npc-data.js — game.js 4977→4918 LOC | Phantom-Open S25-2 (Dungeon war schon in Commit 4cf2646 implementiert) erkannt. 59 LOC raus aus game.js. Pattern: nur Daten extrahieren (NPC_VOICES, MAT_ADJECTIVES, REACTIONS, TEMPLATES, STREAK_COMMENTS), State (lastMaterial, materialStreak) bleibt in game.js. |
 | 2026-04-03 | Bug-NPC (PR #188): Raupe Nimmersatt als Meta-Bug-Melder | Worktree war auf falschem Branch → Commit landete auf feat/floriane-muscheln statt feat/bug-npc. Fix: `git branch -f` + force push. Lektion: In Worktrees immer `git branch --show-current` prüfen vor Commit. |
 | 2026-04-03 | Floriane-Muscheln: Bestätigungsflow statt Silent-Deduction | Vorheriger Agent hatte Fibonacci-Preise die bei sendToApi() still abzogen — Kind sah nur "X 🐚 für diesen Wunsch" als System-Message. Neuer Flow: Wunsch-Erkennung → Preis anzeigen → Kind bestätigt/ablehnt → erst dann abziehen. Wortanzahl-basierte Preise (3/5/8 🐚) statt Zufall. |
 | 2026-04-02 | Oscar am Telefon: "Ich will mit dir spielen." | Nicht um zu spielen. Um zusammen zu sein. Das ist die Wurzel. Alles andere ist Blattwerk. |

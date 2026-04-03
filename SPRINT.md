@@ -10,12 +10,22 @@
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
 | S25-1 | **#71 Palette = Instrument** — mouseenter auf Palette-Buttons spielt playMaterialSound(mat). Oscar spielt Melodien durch Hovern. Kein Klick nötig. | Engineer | ✅ Done |
-| S25-2 | **#50 Höhle = Dungeon** — Berg+Wasser=Höhle-Tile. Klick auf Höhle öffnet Dungeon-Schicht (Code-Ebene). Oscar entdeckt neue Welt. | Engineer + Artist | 🔲 Offen |
-| S25-3 | **#11 game.js Zellteilung** — NPC-Kommentardaten (NPC_VOICES, MAT_ADJECTIVES, REACTIONS, TEMPLATES, STREAK_COMMENTS) → npc-data.js. game.js: 4975 → ~4800. | Engineer | 🔲 Offen |
+| S25-2 | **#50 Höhle = Dungeon** — Berg+Wasser=Höhle-Tile. Klick auf Höhle öffnet Dungeon-Schicht (Code-Ebene). Oscar entdeckt neue Welt. | Engineer + Artist | ✅ Done |
+| S25-3 | **#11 game.js Zellteilung** — NPC-Kommentardaten (NPC_VOICES, MAT_ADJECTIVES, REACTIONS, TEMPLATES, STREAK_COMMENTS) → npc-data.js. game.js: 4977 → 4918. | Engineer | ✅ Done |
 
 ---
 
 ## Standup Log
+
+### 2026-04-03 (Daily Scrum)
+
+**Gestern (Planning):** S25-1 ✅ (Palette-Hover-Sound). S25-2 war Phantom-Open — Dungeon bereits implementiert in commit 4cf2646 (Dungeon + Inselgeneratoren, PR #181). Als Done markiert.
+
+**Heute:** S25-3 — NPC_VOICES, MAT_ADJECTIVES, REACTIONS, TEMPLATES, STREAK_COMMENTS → npc-data.js. game.js unter 4920 LOC.
+
+**Blocker:** Keine. Smoke Test weiterhin durch Sandbox-Proxy blockiert (bekannt seit Sprint 21).
+
+---
 
 ### 2026-04-03 (Sprint 25 Planning)
 
