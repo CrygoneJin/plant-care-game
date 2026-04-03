@@ -694,6 +694,33 @@
         playRichTone(varFreq, genre.dur + Math.random() * 0.03, genre.wave, genre.vol);
     }
 
+    // === Palette als Instrument (#71) ===
+    // Klick auf Material-Button → Note. Jedes Element hat eine feste Tonhöhe.
+    const PALETTE_NOTES = {
+        tao:    261.63, // C4
+        yin:    293.66, // D4
+        yang:   329.63, // E4
+        qi:     349.23, // F4
+        metal:  392.00, // G4
+        wood:   440.00, // A4
+        fire:   493.88, // B4
+        water:  523.25, // C5
+        earth:  587.33, // D5
+    };
+    const PALETTE_PENTA = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.26, 783.99, 880.00];
+
+    function soundPaletteNote(material) {
+        if (isMuted()) return;
+        if (!canPlaySound()) return;
+        let freq = PALETTE_NOTES[material];
+        if (!freq) {
+            let hash = 0;
+            for (let i = 0; i < material.length; i++) hash = (hash * 31 + material.charCodeAt(i)) & 0xffff;
+            freq = PALETTE_PENTA[hash % PALETTE_PENTA.length];
+        }
+        playRichTone(freq, 0.35, 'sine', 0.18);
+    }
+
     // === Stille-Momente: Wellen-Ambient (#57) ===
     let ambientNodes = null;
 
@@ -786,6 +813,8 @@
         playTone,
         playRichTone,
         canPlaySound,
+        // Palette als Instrument (#71)
+        soundPaletteNote,
     };
 
 })();

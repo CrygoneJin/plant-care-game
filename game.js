@@ -3445,6 +3445,10 @@
 
         btn.addEventListener('click', () => {
             selectMaterial(btn.dataset.material);
+            // Palette als Instrument: jeder Klick klingt (#71)
+            if (window.INSEL_SOUND && window.INSEL_SOUND.soundPaletteNote) {
+                window.INSEL_SOUND.soundPaletteNote(btn.dataset.material);
+            }
         });
 
         // Palette als Drop-Target: Inventar-Item auf Palette-Element droppen = Craft
