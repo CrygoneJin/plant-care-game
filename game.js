@@ -4394,11 +4394,11 @@
         ctx.textBaseline = 'top';
         ctx.fillText('\uD83D\uDD25 MMX  ' + mmxAddr.slice(0, 12) + '...' + mmxAddr.slice(-6) + '  ' + mmxBal + ' MMX', x + 5, y + 5);
 
-        // Zeile 2: Hawking-Philosophie
+        // Zeile 2: Wu Xing Kreislauf
         ctx.fillStyle = '#666';
         ctx.font = '8px monospace';
-        ctx.fillText('Sonne \u2192 Farmer \u2192 Token \u2192 Schwarzes Loch', x + 5, y + 22);
-        ctx.fillText('Die Arbeit die rausstrahlt ist das Eigentliche.', x + 5, y + 34);
+        ctx.fillText('\u2600\uFE0F Sonne \u2192 \uD83C\uDF31 Farmer \u2192 \uD83E\uDE99 Token \u2192 \uD83D\uDD73\uFE0F Loch \u2192 \uD83C\uDFDD\uFE0F Spiel', x + 5, y + 22);
+        ctx.fillText('\u706B        \u6728        \u91D1        \u6C34        \u571F', x + 5, y + 34);
     }
 
     // Crypto Balance-Polling alle 60s — über unseren Worker-Proxy
