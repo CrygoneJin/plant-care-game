@@ -1,46 +1,52 @@
-// === ACHIEVEMENTS — Meilensteine die sich verdient anfühlen ===
+// === ACHIEVEMENTS — Progressiv schwerer werdende Meilensteine ===
 // Exportiert als window.INSEL_ACHIEVEMENTS (Vanilla JS, kein Build-Tool)
 //
-// Design-Prinzip (Molyneux/RCT):
-//   - Wenige Achievements, jedes ein echter Meilenstein
-//   - Gebunden an Spieler-Aktionen, nicht Generator-Blöcke
-//   - stats.playerPlaced = nur vom Spieler gesetzte Blöcke
-//   - Blueprints, Quests, Rezepte = echte Leistungen
+// Design-Prinzip:
+//   - 5 Kategorien × 4 Stufen = 20 Achievements
+//   - Jede Stufe ~3× schwerer als die vorherige (Fibonacci-Progression)
+//   - Nur Stats verwenden die getGridStats() tatsächlich liefert:
+//     playerPlaced, questsDone, blueprintsDone, recipesFound, uniqueMats, percent, total
+//   - Stufe 1: Erste 5 Minuten. Stufe 4: Wochen.
 
 window.INSEL_ACHIEVEMENTS = {
-    // --- Erste Schritte ---
-    firstBuild:     { emoji: '🔨', title: 'Grundstein!', desc: 'Deinen allerersten Block selbst gebaut!', check: (s) => s.playerPlaced >= 1 },
-    homeBuilder:    { emoji: '🛖', title: 'Eigene Hütte!', desc: 'Einen Bauplan fertig gebaut — dein erstes Gebäude!', check: (s) => s.blueprintsDone >= 1 },
 
-    // --- Crafting & Entdecken ---
-    firstRecipe:    { emoji: '⚗️', title: 'Erster Mix!', desc: 'Dein erstes Crafting-Rezept entdeckt!', check: (s) => s.recipesFound >= 1 },
-    alchemist:      { emoji: '🧪', title: 'Alchemist!', desc: '10 verschiedene Rezepte entdeckt — du kennst die Geheimnisse!', check: (s) => s.recipesFound >= 10 },
-    masterCrafter:  { emoji: '🔮', title: 'Meister-Mixer!', desc: '25 Rezepte! Die Insel hat keine Geheimnisse mehr vor dir!', check: (s) => s.recipesFound >= 25 },
+    // ═══════════════════════════════════════════
+    // 🔨 BAUEN — playerPlaced (Spieler-gesetzte Blöcke)
+    // ═══════════════════════════════════════════
+    bau1: { emoji: '🔨', title: 'Grundstein',      desc: 'Deinen allerersten Block gebaut!',                    check: (s) => s.playerPlaced >= 1 },
+    bau2: { emoji: '🛖', title: 'Hüttenbauer',      desc: '25 Blöcke gebaut — das wird was!',                   check: (s) => s.playerPlaced >= 25 },
+    bau3: { emoji: '🏗️', title: 'Architekt',        desc: '100 Blöcke! Eine richtige Siedlung!',                check: (s) => s.playerPlaced >= 100 },
+    bau4: { emoji: '🏰', title: 'Burgherr',          desc: '500 Blöcke — deine Insel ist legendär!',            check: (s) => s.playerPlaced >= 500 },
 
-    // --- Quests ---
-    questHelper:    { emoji: '📜', title: 'Guter Freund!', desc: 'Deine erste Quest für einen Insel-Bewohner geschafft!', check: (s) => s.questsDone >= 1 },
-    questHero:      { emoji: '🦸', title: 'Insel-Held!', desc: '5 Quests erledigt — alle Bewohner lieben dich!', check: (s) => s.questsDone >= 5 },
-    questLegend:    { emoji: '👑', title: 'Legende!', desc: '10 Quests geschafft — Schnipsel ist stolz auf dich!', check: (s) => s.questsDone >= 10 },
+    // ═══════════════════════════════════════════
+    // ⚗️ CRAFTEN — recipesFound (entdeckte Rezepte)
+    // ═══════════════════════════════════════════
+    mix1: { emoji: '⚗️', title: 'Erster Mix',       desc: 'Dein erstes Rezept entdeckt!',                       check: (s) => s.recipesFound >= 1 },
+    mix2: { emoji: '🧪', title: 'Tüftler',           desc: '5 Rezepte — du experimentierst gerne!',             check: (s) => s.recipesFound >= 5 },
+    mix3: { emoji: '🔮', title: 'Alchemist',          desc: '15 Rezepte! Du kennst die Geheimnisse!',           check: (s) => s.recipesFound >= 15 },
+    mix4: { emoji: '🌟', title: 'Meister-Mixer',     desc: '30 Rezepte — nichts ist dir fremd!',                check: (s) => s.recipesFound >= 30 },
 
-    // --- Bauen ---
-    fleissig:       { emoji: '🏗️', title: 'Fleißige Hände!', desc: '50 Blöcke selbst gebaut — das sieht man!', check: (s) => s.playerPlaced >= 50 },
-    architect:      { emoji: '🏛️', title: 'Architekt!', desc: '3 verschiedene Gebäude per Bauplan gebaut!', check: (s) => s.blueprintsDone >= 3 },
-    stadtplaner:    { emoji: '🏙️', title: 'Stadtplaner!', desc: '200 Blöcke selbst platziert — eine richtige Stadt!', check: (s) => s.playerPlaced >= 200 },
-    burgherr:       { emoji: '🏰', title: 'Burgherr!', desc: 'Alle 8 Baupläne gebaut — die Insel ist komplett!', check: (s) => s.blueprintsDone >= 8 },
+    // ═══════════════════════════════════════════
+    // 📜 QUESTS — questsDone (abgeschlossene Quests)
+    // ═══════════════════════════════════════════
+    quest1: { emoji: '📜', title: 'Guter Freund',    desc: 'Deine erste Quest geschafft!',                      check: (s) => s.questsDone >= 1 },
+    quest2: { emoji: '🤝', title: 'Helfer',           desc: '3 Quests — die Bewohner mögen dich!',              check: (s) => s.questsDone >= 3 },
+    quest3: { emoji: '🦸', title: 'Insel-Held',       desc: '10 Quests! Alle kennen deinen Namen!',             check: (s) => s.questsDone >= 10 },
+    quest4: { emoji: '👑', title: 'Legende',           desc: '25 Quests — du bist die Legende der Insel!',      check: (s) => s.questsDone >= 25 },
 
-    // --- Entdecken & Sammeln ---
-    orcaGrossmutter: { emoji: '🐋', title: 'Orca-Großmutter!', desc: '50 verschiedene Materialien entdeckt — Weisheit der Tiefe!', check: (s) => s.materialsFound >= 50 },
-    entdecker:       { emoji: '🧭', title: 'Entdecker!', desc: 'Alle 5 Wu Xing Elemente benutzt — Holz, Feuer, Erde, Metall, Wasser!', check: (s) => s.wuXingUsed >= 5 },
-    verwandler:      { emoji: '⚗️', title: 'Verwandler!', desc: '20 verschiedene Crafting-Rezepte benutzt — Meister der Verwandlung!', check: (s) => s.recipesUsed >= 20 },
+    // ═══════════════════════════════════════════
+    // 📐 BAUPLÄNE — blueprintsDone (fertige Gebäude)
+    // ═══════════════════════════════════════════
+    plan1: { emoji: '📐', title: 'Bauplan-Finder',   desc: 'Deinen ersten Bauplan gebaut!',                     check: (s) => s.blueprintsDone >= 1 },
+    plan2: { emoji: '🏠', title: 'Häuslebauer',       desc: '3 Gebäude — ein kleines Dorf!',                    check: (s) => s.blueprintsDone >= 3 },
+    plan3: { emoji: '🏘️', title: 'Stadtplaner',      desc: '5 Gebäude stehen — eine Siedlung!',                check: (s) => s.blueprintsDone >= 5 },
+    plan4: { emoji: '🏙️', title: 'Großstadt',         desc: 'Alle 8 Baupläne gebaut — Insel komplett!',        check: (s) => s.blueprintsDone >= 8 },
 
-    // --- NPCs & Interaktion ---
-    pythia:          { emoji: '🔮', title: 'Pythia!', desc: '10 Wünsche bei Floriane gewünscht — sie kennt dich schon!', check: (s) => s.florianeWishes >= 10 },
-    bugJaeger:       { emoji: '🐛', title: 'Bug-Jäger!', desc: '5 Bugs bei Bug gemeldet — die Insel wird besser dank dir!', check: (s) => s.bugsReported >= 5 },
-    geschichtenerzaehler: { emoji: '📖', title: 'Geschichtenerzähler!', desc: 'Alle NPCs angesprochen — jeder kennt dich!', check: (s) => s.npcsSpokenTo >= s.npcCount },
-
-    // --- Spielverhalten ---
-    nachtwaechter:   { emoji: '🌙', title: 'Nachtwächter!', desc: 'Im Dark Mode gespielt — die dunkle Seite der Insel!', check: (s) => s.darkModeUsed === true },
-    stilleInsel:     { emoji: '🧘', title: 'Stille Insel!', desc: '5 Minuten nichts gebaut — manchmal ist Pause das Beste!', check: (s) => s.idleMinutes >= 5 },
-    rekordhalter:    { emoji: '🏆', title: 'Rekordhalter!', desc: '200 Blöcke in einer einzigen Session — unaufhaltbar!', check: (s) => s.sessionPlaced >= 200 },
-    baumeister:      { emoji: '📐', title: 'Baumeister!', desc: '5 Baupläne gebaut — du denkst in Strukturen!', check: (s) => s.blueprintsDone >= 5 },
+    // ═══════════════════════════════════════════
+    // 🧭 ENTDECKEN — uniqueMats (verschiedene Materialien auf dem Grid)
+    // ═══════════════════════════════════════════
+    mat1: { emoji: '🧭', title: 'Neugierig',         desc: '5 verschiedene Materialien benutzt!',               check: (s) => s.uniqueMats >= 5 },
+    mat2: { emoji: '🗺️', title: 'Entdecker',         desc: '15 verschiedene Materialien — bunt!',              check: (s) => s.uniqueMats >= 15 },
+    mat3: { emoji: '🌈', title: 'Sammler',            desc: '30 verschiedene Materialien entdeckt!',            check: (s) => s.uniqueMats >= 30 },
+    mat4: { emoji: '🐋', title: 'Orca-Großmutter',    desc: '50 Materialien — Weisheit der Tiefe!',            check: (s) => s.uniqueMats >= 50 },
 };
