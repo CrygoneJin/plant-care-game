@@ -9,9 +9,9 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S25-1 | **#50 Höhle = Dungeon** — Berg+Wasser=Höhle-Eingang. Betritt man ihn → 3-Raum-Dungeon (Bits→Kernel→Browser). Oscar entdeckt eine neue Welt unter der Insel. | Engineer + Artist | 🔲 Offen |
-| S25-2 | **#71 Palette als Instrument** — Palette-Buttons links erzeugen Töne (Note = Material). Oscar spielt Melodie UND baut gleichzeitig. | Engineer + Artist | 🔲 Offen |
-| S25-3 | **#11 game.js Zellteilung** — initGrid() + Wetter-Block extrahieren. Ziel: game.js < 4000 LOC. | Engineer | 🔲 Offen |
+| S25-1 | **#50 Höhle = Dungeon** — Berg+Wasser=Höhle-Eingang. Betritt man ihn → 3-Raum-Dungeon (Bits→Kernel→Browser). Oscar entdeckt eine neue Welt unter der Insel. | Engineer + Artist | ✅ Done |
+| S25-2 | **#71 Palette als Instrument** — Palette-Buttons links erzeugen Töne (Note = Material). Oscar spielt Melodie UND baut gleichzeitig. | Engineer + Artist | ✅ Done |
+| S25-3 | **#11 game.js Zellteilung** — Wetter-Block → weather.js extrahiert (4975→4959). Ziel < 4000 verschoben: game.js ist seit Hexvoxel-Merge gewachsen, sicherer Schnitt braucht mehr Sessions. | Engineer | 🔄 In Arbeit |
 
 ---
 
