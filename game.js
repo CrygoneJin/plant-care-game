@@ -4194,60 +4194,63 @@
         ctx.fillText(labelText, 10, 10);
 
         // === Crypto Donation Panel — Nerd Easter Egg ===
-        // MMX: "Proof of Work. Tokens rein, niemand raus."
-        // XCH: "Proof of Space. Dein Speicher, dein Statement."
+        drawBurnPanel(ctx, 5, totalRows * CELL_SIZE - 63, Math.min(460, totalCols * CELL_SIZE - 10));
+    }
+
+    // Burn-Panel als eigene Funktion — auch ohne Code-View nutzbar
+    function drawBurnPanel(ctx, x, y, w) {
         const mmxAddr = window.INSEL_MMX_BURN || 'mmx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq5tuzzn';
         const xchAddr = window.INSEL_XCH_BURN || 'xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqdlkwut';
         const mmxBal = window._mmxBurnBalance || '?';
         const xchBal = window._xchBurnBalance || '?';
         const panelH = 58;
-        const panelW = Math.min(460, totalCols * CELL_SIZE - 10);
-        const mmxY = totalRows * CELL_SIZE - panelH - 5;
 
         // Panel-Hintergrund
         ctx.fillStyle = 'rgba(15, 15, 15, 0.88)';
-        ctx.fillRect(5, mmxY, panelW, panelH);
+        ctx.fillRect(x, y, w, panelH);
         ctx.strokeStyle = '#FF6B00';
         ctx.lineWidth = 1;
-        ctx.strokeRect(5, mmxY, panelW, panelH);
+        ctx.strokeRect(x, y, w, panelH);
 
         // Zeile 1: MMX
         ctx.fillStyle = '#FF6B00';
         ctx.font = 'bold 10px monospace';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'top';
-        ctx.fillText('🔥 MMX  ' + mmxAddr.slice(0, 12) + '...' + mmxAddr.slice(-6) + '  ' + mmxBal + ' MMX', 10, mmxY + 5);
+        ctx.fillText('\uD83D\uDD25 MMX  ' + mmxAddr.slice(0, 12) + '...' + mmxAddr.slice(-6) + '  ' + mmxBal + ' MMX', x + 5, y + 5);
 
-        // Zeile 2: Balance + Muschel-Wallet (Goldstandard: max 42 🐚 = 0.042 MMX)
-        const shellCount = typeof getInventoryCount === 'function' ? getInventoryCount('shell') : 0;
-        const shellMmx = (shellCount * 0.001).toFixed(4);
-        ctx.fillStyle = '#888';
-        ctx.font = '9px monospace';
-        ctx.fillText('Burn: ' + mmxBal + ' MMX  |  Wallet: ' + shellCount + '/42 🐚 ≈ ' + shellMmx + '/0.042 MMX  |  The Answer', 10, mmxY + 22);
-        // Zeile 2: XCH (Chia — Bram Cohen)
+        // Zeile 2: XCH (Chia -- Bram Cohen)
         ctx.fillStyle = '#3AAC59';
-        ctx.fillText('🌱 XCH  ' + xchAddr.slice(0, 12) + '...' + xchAddr.slice(-6) + '  ' + xchBal + ' XCH', 10, mmxY + 20);
+        ctx.font = '9px monospace';
+        ctx.fillText('\uD83C\uDF31 XCH  ' + xchAddr.slice(0, 12) + '...' + xchAddr.slice(-6) + '  ' + xchBal + ' XCH', x + 5, y + 20);
 
         // Zeile 3: Hawking-Philosophie
         ctx.fillStyle = '#666';
         ctx.font = '8px monospace';
-        ctx.fillText('Schwarze L\u00f6cher. Tokens rein, niemand raus.', 10, mmxY + 38);
-        ctx.fillText('Hawking-Strahlung: die Arbeit die rausstrahlt ist das Eigentliche.', 10, mmxY + 48);
+        ctx.fillText('Schwarze L\u00f6cher. Tokens rein, niemand raus.', x + 5, y + 38);
+        ctx.fillText('Hawking-Strahlung: die Arbeit die rausstrahlt ist das Eigentliche.', x + 5, y + 48);
     }
 
     // Crypto Balance-Polling alle 60s — über unseren Worker-Proxy
     // (mmxplorer + spacescan blocken direkte Browser-Requests)
+    let _lastKnownMmxBal = null;
     (function fetchCryptoBalances() {
         const proxy = (window.INSEL_CONFIG && window.INSEL_CONFIG.proxy) || 'https://schatzinsel.hoffmeyer-zlotnik.workers.dev';
         function poll() {
             fetch(proxy + '/burn').then(r => r.ok ? r.json() : null).then(data => {
                 if (!data) return;
-                window._mmxBurnBalance = data.mmx != null ? data.mmx.toFixed(4) : '—';
-                window._xchBurnBalance = data.xch != null ? data.xch.toFixed(6) : '—';
+                const newBal = data.mmx != null ? data.mmx.toFixed(4) : null;
+                // Toast bei Balance-Änderung (nicht beim ersten Load)
+                if (_lastKnownMmxBal !== null && newBal !== _lastKnownMmxBal && newBal !== null) {
+                    showToast('\uD83D\uDD25 Schwarzes Loch: ' + newBal + ' MMX verschlungen!', 5000);
+                }
+                _lastKnownMmxBal = newBal;
+                window._mmxBurnBalance = newBal || '\u2014';
+                window._xchBurnBalance = data.xch != null ? data.xch.toFixed(6) : '\u2014';
                 requestRedraw();
             }).catch(() => {
-                window._mmxBurnBalance = '—';
-                window._xchBurnBalance = '—';
+                window._mmxBurnBalance = '\u2014';
+                window._xchBurnBalance = '\u2014';
             });
         }
         poll();

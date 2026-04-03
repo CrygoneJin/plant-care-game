@@ -52,7 +52,11 @@ export default {
         }
         // Burn-Balance Proxy — mmxplorer blockt direkte Browser-Requests (Cloudflare Challenge)
         if (pathname === '/burn') {
-            return handleBurnBalance(request);
+            return handleBurnBalance(request, env);
+        }
+        // Manueller Balance-Eintrag (wenn API dauerhaft blockt)
+        if (pathname === '/burn/set' && request.method === 'POST') {
+            return handleBurnSet(request, env);
         }
         // Marketplace endpoints
         if (pathname === '/market/items') {
@@ -759,13 +763,23 @@ async function createMarketTable(env) {
 // mmxplorer + spacescan blocken direkte Browser-Requests (Cloudflare Challenge).
 // Worker-zu-API geht ohne Challenge. Cached 60s.
 
-async function handleBurnBalance(request) {
+async function handleBurnBalance(request, env) {
     const url = new URL(request.url);
     const mmxAddr = url.searchParams.get('mmx') || 'mmx1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq5tuzzn';
     const xchAddr = url.searchParams.get('xch') || 'xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqdlkwut';
 
     const results = { mmx: null, xch: null, ts: Date.now() };
 
+    // 1. KV-Cache prüfen (manuell gesetzt oder letzter erfolgreicher API-Call)
+    try {
+        const kvMmx = await env.CRAFT_KV.get('burn:mmx', 'json');
+        if (kvMmx) results.mmx = kvMmx.balance;
+
+        const kvXch = await env.CRAFT_KV.get('burn:xch', 'json');
+        if (kvXch) results.xch = kvXch.balance;
+    } catch (e) { /* KV nicht verfügbar */ }
+
+    // 2. API versuchen — überschreibt KV wenn erfolgreich
     // MMX Balance
     try {
         const mmxRes = await fetch('https://api.mmxplorer.com/wapi/address?id=' + mmxAddr, {
@@ -775,9 +789,13 @@ async function handleBurnBalance(request) {
             const data = await mmxRes.json();
             if (data && data.balances) {
                 results.mmx = (data.balances['MMX'] || data.balance || 0) / 10000;
+                // KV updaten bei API-Erfolg
+                await env.CRAFT_KV.put('burn:mmx', JSON.stringify({
+                    balance: results.mmx, ts: Date.now()
+                }), { expirationTtl: 86400 });
             }
         }
-    } catch (e) { /* API nicht erreichbar */ }
+    } catch (e) { /* API nicht erreichbar — KV-Fallback reicht */ }
 
     // XCH Balance
     try {
@@ -788,14 +806,35 @@ async function handleBurnBalance(request) {
             const data = await xchRes.json();
             if (data && data.xch_balance != null) {
                 results.xch = parseFloat(data.xch_balance);
+                // KV updaten bei API-Erfolg
+                await env.CRAFT_KV.put('burn:xch', JSON.stringify({
+                    balance: results.xch, ts: Date.now()
+                }), { expirationTtl: 86400 });
             }
         }
-    } catch (e) { /* API nicht erreichbar */ }
+    } catch (e) { /* API nicht erreichbar — KV-Fallback reicht */ }
 
     return json(results, 200, {
         ...corsHeaders(),
         'Cache-Control': 'public, max-age=60'
     });
+}
+
+// POST /burn/set — manueller Balance-Eintrag via Secret-Key
+async function handleBurnSet(request, env) {
+    const url = new URL(request.url);
+    const secret = url.searchParams.get('key');
+    if (!secret || secret !== (env.BUGS_SECRET || '')) {
+        return json({ error: 'Nicht autorisiert' }, 401);
+    }
+    const body = await request.json();
+    await env.CRAFT_KV.put('burn:mmx', JSON.stringify({
+        balance: body.mmx || 0, ts: Date.now()
+    }), { expirationTtl: 86400 });
+    await env.CRAFT_KV.put('burn:xch', JSON.stringify({
+        balance: body.xch || 0, ts: Date.now()
+    }), { expirationTtl: 86400 });
+    return json({ ok: true });
 }
 
 // --- Helpers ---
