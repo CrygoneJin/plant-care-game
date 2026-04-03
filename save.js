@@ -146,6 +146,7 @@
         _ctx.setWindowGrid();
         _ctx.migrateUnlocked();
         _ctx.setProjectName(name === AUTOSAVE_KEY ? '' : name);
+        if (_ctx.initNpcPositions) _ctx.initNpcPositions();
 
         // Schwere Updates (O(n²) Grid-Iteration + DOM) per rAF entzerren
         // damit der Browser zwischen den Schritten rendern kann
@@ -191,6 +192,7 @@
         var projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
         delete projects[AUTOSAVE_KEY];
         localStorage.setItem('insel-projekte', JSON.stringify(projects));
+        if (_ctx.initNpcPositions) _ctx.initNpcPositions();
         _ctx.updateStats();
         _ctx.updateInventoryDisplay();
         _ctx.updatePaletteVisibility();
