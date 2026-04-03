@@ -4377,10 +4377,8 @@
     // Burn-Panel als eigene Funktion — auch ohne Code-View nutzbar
     function drawBurnPanel(ctx, x, y, w) {
         const mmxAddr = window.INSEL_MMX_BURN || 'mmx1zl2dxckqyuegpcprazrpcq8ptgzqnur02sse2ns06na0uuz5a85qeehjd5';
-        const xchAddr = window.INSEL_XCH_BURN || 'xch1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqdlkwut';
         const mmxBal = window._mmxBurnBalance || '?';
-        const xchBal = window._xchBurnBalance || '?';
-        const panelH = 58;
+        const panelH = 48;
 
         // Panel-Hintergrund
         ctx.fillStyle = 'rgba(15, 15, 15, 0.88)';
@@ -4396,16 +4394,11 @@
         ctx.textBaseline = 'top';
         ctx.fillText('\uD83D\uDD25 MMX  ' + mmxAddr.slice(0, 12) + '...' + mmxAddr.slice(-6) + '  ' + mmxBal + ' MMX', x + 5, y + 5);
 
-        // Zeile 2: XCH (Chia -- Bram Cohen)
-        ctx.fillStyle = '#3AAC59';
-        ctx.font = '9px monospace';
-        ctx.fillText('\uD83C\uDF31 XCH  ' + xchAddr.slice(0, 12) + '...' + xchAddr.slice(-6) + '  ' + xchBal + ' XCH', x + 5, y + 20);
-
-        // Zeile 3: Hawking-Philosophie
+        // Zeile 2: Hawking-Philosophie
         ctx.fillStyle = '#666';
         ctx.font = '8px monospace';
-        ctx.fillText('Schwarze L\u00f6cher. Tokens rein, niemand raus.', x + 5, y + 38);
-        ctx.fillText('Hawking-Strahlung: die Arbeit die rausstrahlt ist das Eigentliche.', x + 5, y + 48);
+        ctx.fillText('Sonne \u2192 Farmer \u2192 Token \u2192 Schwarzes Loch', x + 5, y + 22);
+        ctx.fillText('Die Arbeit die rausstrahlt ist das Eigentliche.', x + 5, y + 34);
     }
 
     // Crypto Balance-Polling alle 60s — über unseren Worker-Proxy
@@ -4423,11 +4416,9 @@
                 }
                 _lastKnownMmxBal = newBal;
                 window._mmxBurnBalance = newBal || '\u2014';
-                window._xchBurnBalance = data.xch != null ? data.xch.toFixed(6) : '\u2014';
                 requestRedraw();
             }).catch(() => {
                 window._mmxBurnBalance = '\u2014';
-                window._xchBurnBalance = '\u2014';
             });
         }
         poll();
