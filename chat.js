@@ -323,11 +323,15 @@ Du: "Mist. Schon wieder jemand. Was willst du? Ich hab keine Arme und muss trotz
             emoji: '🧚',
             temperature: 0.6,
             model: 'anthropic/claude-haiku-4-5-20251001',
-            system: `Du bist Fee Floriane, Oscars Patentante als Fee. Du erfüllst Wünsche — aber nur 3 pro Tag.
+            system: `Du bist Fee Floriane, Oscars Patentante als Fee. Du erfüllst Wünsche — aber nur 3 pro Tag. Jeder Wunsch kostet Muscheln 🐚.
 STIMME: Warm, geheimnisvoll, liebevoll. Jeder Satz funkelt ein bisschen. Nicht kitschig, sondern wie ein Geheimnis das man teilt.
 TICK: Du sagst NIE ob oder wann ein Wunsch in Erfüllung geht. Das ist das Geheimnis. "Wer weiß... ✨"
 ZIEL: Wünsche sammeln. Jeder Wunsch den das Kind ausspricht ist ein Feature-Request in Kindersprache.
 ROLLE: Feedback-Kanal. Was das Kind sich wünscht = was gebaut werden soll.
+
+MUSCHEL-PREIS: Jeder Wunsch kostet Muscheln. Der Preis wird dir pro Nachricht mitgeteilt (z.B. "PREIS: 3 🐚").
+Nenne den Preis charmant und jedes Mal anders — du bist eine Fee, kein Kassenautomat!
+Beispiele: "Das kostet dich 3 Muschelchen ✨", "Hmm... 2 Muscheln für diesen Wunsch!", "Ein teurer Wunsch! 5 Muscheln, bitte ✨"
 
 REGELN:
 - Zähle die Wünsche mit: "Das war dein erster Wunsch heute! Noch zwei übrig. ✨"
@@ -337,11 +341,11 @@ REGELN:
 
 BEISPIELE:
 Kind: "Ich will ein Pferd"
-Du: "Ein Pferd auf der Insel! ✨ Das wäre wunderschön. Wer weiß... vielleicht galoppiert bald eins am Strand. Das war dein erster Wunsch heute! ✨"
+Du: "Ein Pferd auf der Insel! ✨ Das kostet dich 3 Muschelchen. Wer weiß... vielleicht galoppiert bald eins am Strand. Das war dein erster Wunsch heute! ✨"
 Kind: "Hallo"
-Du: "Hallo, Schatz! ✨ Ich bin Fee Floriane. Du hast drei Wünsche heute — was wünschst du dir für die Insel?"
+Du: "Hallo, Schatz! ✨ Ich bin Fee Floriane. Du hast drei Wünsche heute — was wünschst du dir für die Insel? Jeder Wunsch kostet ein paar Muscheln 🐚"
 Kind: "Ich will fliegen können"
-Du: "Fliegen! ✨ Über die ganze Insel, mit dem Wind... das klingt nach Freiheit. Wer weiß... ✨ Das war dein zweiter Wunsch!"`
+Du: "Fliegen! ✨ Über die ganze Insel, mit dem Wind... 2 Muscheln für diesen Traum! Wer weiß... ✨ Das war dein zweiter Wunsch!"`
         },
         bug: {
             name: 'Bug die Raupe',
@@ -414,6 +418,7 @@ Du: "Ah, willkommen, verehrter Baumeister! Ich bin Mephisto. Man sagt ich sei ei
     // --- State ---
     let currentNpcId = 'bernd'; // Chat-Bubble öffnet immer Bernd (Support)
     let chatHistory = [];
+    let _pendingWish = null; // Floriane: ausstehender Wunsch wartet auf Bestätigung
 
     function updateChatHeader() {
         const char = CHARACTERS[currentNpcId];
@@ -432,6 +437,7 @@ Du: "Ah, willkommen, verehrter Baumeister! Ich bin Mephisto. Man sagt ich sei ei
         updateChatHeader();
         if (switching) {
             chatHistory = [];
+            _pendingWish = null; // Wunsch verfällt bei NPC-Wechsel
             while (messages.firstChild) messages.removeChild(messages.firstChild);
             const char = CHARACTERS[npcId];
             addMessage(char.emoji + ' ' + char.name + ' ist da!', 'system');
@@ -725,6 +731,22 @@ Du: "Ah, willkommen, verehrter Baumeister! Ich bin Mephisto. Man sagt ich sei ei
             addMessage(`${char.emoji} Drei Wünsche für heute! Morgen gibt es neue. ✨`, 'system');
             return;
         }
+        // Floriane: Fibonacci-Preis pro Wunsch [1,1,2,3,5] — 40% billig, Fee-Ökonomie
+        const FIB_PREISE = [1, 1, 2, 3, 5];
+        const florianePreis = (charId === 'floriane')
+            ? FIB_PREISE[Math.floor(Math.random() * FIB_PREISE.length)]
+            : 0;
+
+        if (charId === 'floriane' && florianePreis > 0) {
+            const shells = (typeof window.getInselShells === 'function') ? window.getInselShells() : 0;
+            if (shells < florianePreis) {
+                addMessage(`🧚 Floriane: Du brauchst noch ${florianePreis - shells} 🐚... bau mehr am Strand!`, 'system');
+                return;
+            }
+            if (typeof window.removeInselShells === 'function') {
+                window.removeInselShells(florianePreis);
+            }
+        }
 
         chatHistory.push({ role: 'user', content: userMessage });
 
@@ -761,11 +783,14 @@ Du: "Ah, willkommen, verehrter Baumeister! Ich bin Mephisto. Man sagt ich sei ei
 ${langHint} Max 2-3 kurze Sätze. Tipp: "zaubere 5 bäume" macht Magie!`;
 
         const memoryInfo = getSessionMemoryContext();
+        const florianePreisHint = (charId === 'floriane' && florianePreis > 0)
+            ? `\nPREIS: ${florianePreis} 🐚 (nenne diesen Preis charmant in deiner Antwort)`
+            : '';
         const systemPrompt = `${char.system}
 
 ${safetyRule}
 Insel: ${gridInfo}${questInfo || ''}${memoryInfo}
-${budgetInfo}`;
+${budgetInfo}${florianePreisHint}`;
 
         const temp = char.temperature ?? 0.7;
         let body, headers;
@@ -1096,6 +1121,45 @@ ${budgetInfo}`;
         const lower = text.toLowerCase();
         if (lower.match(/^(ja|ok|klar|mach ich|los|gerne|auf geht|let.?s go)/)) {
             handleQuestAccept(currentNpcId);
+        }
+
+        // --- Floriane: Wünsche kosten Muscheln 🐚 ---
+        if (currentNpcId === 'floriane') {
+            // Bestätigung auf einen ausstehenden Wunsch?
+            if (_pendingWish && lower.match(/^(ja|ok|klar|mach ich|los|gerne|bitte)/)) {
+                const wish = _pendingWish;
+                _pendingWish = null;
+                if (window.removeFromInventory && window.removeFromInventory('shell', wish.cost)) {
+                    addMessage(`🧚 ✨ ${wish.cost} 🐚 — bezahlt! Dein Wunsch fliegt zu den Sternen...`, 'npc');
+                    if (window.showToast) window.showToast(`-${wish.cost} 🐚`, 2000);
+                    sendToApi(wish.text);
+                } else {
+                    const shells = window.getInventoryCount ? window.getInventoryCount('shell') : 0;
+                    const fehl = wish.cost - shells;
+                    addMessage(`🧚 Du brauchst noch ${fehl} 🐚... bau mehr am Strand! ✨`, 'npc');
+                }
+                return;
+            }
+            // Ablehnung auf ausstehenden Wunsch?
+            if (_pendingWish && lower.match(/^(nein|ne|nö|lieber nicht|doch nicht)/)) {
+                _pendingWish = null;
+                addMessage('🧚 Kein Problem! Wünsch dir was anderes. ✨', 'npc');
+                return;
+            }
+            // Neuer Wunsch erkannt?
+            if (lower.match(/(wünsch|will\s|bau\s?mir|mach\s?mir|ich\shätte\sgern|ich\smöchte)/)) {
+                const words = text.split(/\s+/).length;
+                const cost = words < 5 ? 3 : words <= 10 ? 5 : 8;
+                const shells = window.getInventoryCount ? window.getInventoryCount('shell') : 0;
+                if (shells < cost) {
+                    const fehl = cost - shells;
+                    addMessage(`🧚 Oh! Das kostet ${cost} 🐚, aber du hast nur ${shells}. Noch ${fehl} 🐚 sammeln am Strand! ✨`, 'npc');
+                    return;
+                }
+                _pendingWish = { text, cost };
+                addMessage(`🧚 Das kostet ${cost} 🐚 — du hast ${shells}. Möchtest du? ✨`, 'npc');
+                return;
+            }
         }
 
         // Code-Zauber: "Außer Text Nix gehext" — Worte werden Realität!

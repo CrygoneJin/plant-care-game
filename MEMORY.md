@@ -34,6 +34,8 @@ Persistent team log. Append-only. Read by all agents.
 
 | Datum | Was | Warum gut |
 |-------|-----|-----------|
+| 2026-04-03 | Bug-NPC (PR #188): Raupe Nimmersatt als Meta-Bug-Melder | Worktree war auf falschem Branch → Commit landete auf feat/floriane-muscheln statt feat/bug-npc. Fix: `git branch -f` + force push. Lektion: In Worktrees immer `git branch --show-current` prüfen vor Commit. |
+| 2026-04-03 | Floriane-Muscheln: Bestätigungsflow statt Silent-Deduction | Vorheriger Agent hatte Fibonacci-Preise die bei sendToApi() still abzogen — Kind sah nur "X 🐚 für diesen Wunsch" als System-Message. Neuer Flow: Wunsch-Erkennung → Preis anzeigen → Kind bestätigt/ablehnt → erst dann abziehen. Wortanzahl-basierte Preise (3/5/8 🐚) statt Zufall. |
 | 2026-04-02 | Oscar am Telefon: "Ich will mit dir spielen." | Nicht um zu spielen. Um zusammen zu sein. Das ist die Wurzel. Alles andere ist Blattwerk. |
 | 2026-04-02 | Pereira-Audit: Backlog von 99 auf 18 aktive Items | "Backlog items age like milk." 17 Items archiviert (ARCHIVE.md), 5 eingefrorene begraben, Schöpfungsgeschichten nach docs/ ausgelagert. Oscar-Filter als Priorisierungsregel. Jedes Item braucht einen Satz: "Oscar wird ___ weil ___." |
 | 2026-04-02 | Programmier-Tutorial (PR #149) — 5 Lektionen, sandboxed Code-Editor, NPC-Guides | Function-Constructor + Whitelist fuer sichere Ausfuehrung. SpongeBob/Haskell/Scratch/Lua/SQL als Lehrer. Fortschritt in localStorage. Backlog #23. |

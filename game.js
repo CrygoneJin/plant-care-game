@@ -1020,6 +1020,9 @@
     function getInventoryCount(material) {
         return inventory[material] || 0;
     }
+    // Export für chat.js (Floriane Muschel-Wünsche)
+    window.getInventoryCount = getInventoryCount;
+    window.removeFromInventory = removeFromInventory;
 
     function saveInventory() {
         localStorage.setItem('insel-inventar', JSON.stringify(inventory));
@@ -3270,6 +3273,10 @@
         if (!toastBusy) processToastQueue();
     }
     window.showToast = showToast;
+
+    // Inventory-API für chat.js (Floriane Muschel-Wünsche)
+    window.getInselShells = function () { return getInventoryCount('shell'); };
+    window.removeInselShells = function (count) { return removeFromInventory('shell', count); };
 
     function processToastQueue() {
         if (toastQueue.length === 0) {
