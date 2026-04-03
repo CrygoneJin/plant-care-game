@@ -414,6 +414,7 @@ Du: "Ah, willkommen, verehrter Baumeister! Ich bin Mephisto. Man sagt ich sei ei
     // --- State ---
     let currentNpcId = 'bernd'; // Chat-Bubble öffnet immer Bernd (Support)
     let chatHistory = [];
+    let _pendingWish = null; // Floriane: ausstehender Wunsch wartet auf Bestätigung
 
     function updateChatHeader() {
         const char = CHARACTERS[currentNpcId];
@@ -432,6 +433,7 @@ Du: "Ah, willkommen, verehrter Baumeister! Ich bin Mephisto. Man sagt ich sei ei
         updateChatHeader();
         if (switching) {
             chatHistory = [];
+            _pendingWish = null; // Wunsch verfällt bei NPC-Wechsel
             while (messages.firstChild) messages.removeChild(messages.firstChild);
             const char = CHARACTERS[npcId];
             addMessage(char.emoji + ' ' + char.name + ' ist da!', 'system');
@@ -724,6 +726,21 @@ Du: "Ah, willkommen, verehrter Baumeister! Ich bin Mephisto. Man sagt ich sei ei
         if (charId === 'floriane' && wishesLeft() <= 0) {
             addMessage(`${char.emoji} Drei Wünsche für heute! Morgen gibt es neue. ✨`, 'system');
             return;
+        }
+        // Floriane: Muschel-Preis (Fibonacci-Verteilung)
+        // [1,1,2,3,5] → 40% Chance auf 1, 20% auf 2, 20% auf 3, 20% auf 5
+        if (charId === 'floriane') {
+            const FIB_PREISE = [1, 1, 2, 3, 5];
+            const preis = FIB_PREISE[Math.floor(Math.random() * FIB_PREISE.length)];
+            const shells = typeof window.getInventoryCount === 'function' ? window.getInventoryCount('shell') : 0;
+            if (shells < preis) {
+                addMessage(`${char.emoji} ✨ Dieser Wunsch kostet ${preis} 🐚 — du hast nur ${shells}. Sammle mehr Muscheln am Strand!`, 'system');
+                return;
+            }
+            if (typeof window.removeFromInventory === 'function') {
+                window.removeFromInventory('shell', preis);
+            }
+            addMessage(`${char.emoji} ✨ ${preis} 🐚 für diesen Wunsch! (${shells - preis} 🐚 übrig)`, 'system');
         }
 
         chatHistory.push({ role: 'user', content: userMessage });
@@ -1096,6 +1113,45 @@ ${budgetInfo}`;
         const lower = text.toLowerCase();
         if (lower.match(/^(ja|ok|klar|mach ich|los|gerne|auf geht|let.?s go)/)) {
             handleQuestAccept(currentNpcId);
+        }
+
+        // --- Floriane: Wünsche kosten Muscheln 🐚 ---
+        if (currentNpcId === 'floriane') {
+            // Bestätigung auf einen ausstehenden Wunsch?
+            if (_pendingWish && lower.match(/^(ja|ok|klar|mach ich|los|gerne|bitte)/)) {
+                const wish = _pendingWish;
+                _pendingWish = null;
+                if (window.removeFromInventory && window.removeFromInventory('shell', wish.cost)) {
+                    addMessage(`🧚 ✨ ${wish.cost} 🐚 — bezahlt! Dein Wunsch fliegt zu den Sternen...`, 'npc');
+                    if (window.showToast) window.showToast(`-${wish.cost} 🐚`, 2000);
+                    sendToApi(wish.text);
+                } else {
+                    const shells = window.getInventoryCount ? window.getInventoryCount('shell') : 0;
+                    const fehl = wish.cost - shells;
+                    addMessage(`🧚 Du brauchst noch ${fehl} 🐚... bau mehr am Strand! ✨`, 'npc');
+                }
+                return;
+            }
+            // Ablehnung auf ausstehenden Wunsch?
+            if (_pendingWish && lower.match(/^(nein|ne|nö|lieber nicht|doch nicht)/)) {
+                _pendingWish = null;
+                addMessage('🧚 Kein Problem! Wünsch dir was anderes. ✨', 'npc');
+                return;
+            }
+            // Neuer Wunsch erkannt?
+            if (lower.match(/(wünsch|will\s|bau\s?mir|mach\s?mir|ich\shätte\sgern|ich\smöchte)/)) {
+                const words = text.split(/\s+/).length;
+                const cost = words < 5 ? 3 : words <= 10 ? 5 : 8;
+                const shells = window.getInventoryCount ? window.getInventoryCount('shell') : 0;
+                if (shells < cost) {
+                    const fehl = cost - shells;
+                    addMessage(`🧚 Oh! Das kostet ${cost} 🐚, aber du hast nur ${shells}. Noch ${fehl} 🐚 sammeln am Strand! ✨`, 'npc');
+                    return;
+                }
+                _pendingWish = { text, cost };
+                addMessage(`🧚 Das kostet ${cost} 🐚 — du hast ${shells}. Möchtest du? ✨`, 'npc');
+                return;
+            }
         }
 
         // Code-Zauber: "Außer Text Nix gehext" — Worte werden Realität!

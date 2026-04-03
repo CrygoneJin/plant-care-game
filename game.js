@@ -401,6 +401,10 @@
                 showToast(`${npc.emoji} ${quest.desc}`, 5000);
             }
             window.questSystem.accept(quest);
+        } else if (npcId === 'bug') {
+            // Bug-NPC: Bug-Report-Dialog
+            showBugDialog();
+            return;
         } else if (npcId === 'krabs') {
             // Krabs: Kein Quest? Dann HANDEL! 🦀💰
             showKrabsShop();
@@ -513,6 +517,159 @@
         });
     }
 
+    // === BUG-NPC: Raupe Nimmersatt Lifecycle ===
+    // Phase: caterpillar → cocoon (60s) → butterfly (30s) → caterpillar
+    const BUG_STATE_KEY = 'insel-bug-state';
+    const BUG_COCOON_MS = 60000;
+    const BUG_BUTTERFLY_MS = 30000;
+
+    function loadBugState() {
+        try { return JSON.parse(localStorage.getItem(BUG_STATE_KEY) || 'null') || { reports: [], phase: 'caterpillar', cocoonStart: null }; }
+        catch { return { reports: [], phase: 'caterpillar', cocoonStart: null }; }
+    }
+
+    function saveBugState(state) {
+        localStorage.setItem(BUG_STATE_KEY, JSON.stringify(state));
+    }
+
+    /** @returns {'caterpillar'|'cocoon'|'butterfly'} */
+    function getBugPhase() {
+        const s = loadBugState();
+        if (s.phase === 'cocoon' && s.cocoonStart) {
+            if (Date.now() - s.cocoonStart >= BUG_COCOON_MS) {
+                s.phase = 'butterfly';
+                s.cocoonStart = null;
+                s.butterflyStart = Date.now();
+                s.reports = [];
+                saveBugState(s);
+                showToast('🦋 Bug hat sich verwandelt! Alle Bugs gefressen!', 4000);
+                return 'butterfly';
+            }
+            return 'cocoon';
+        }
+        if (s.phase === 'butterfly' && s.butterflyStart) {
+            if (Date.now() - s.butterflyStart >= BUG_BUTTERFLY_MS) {
+                s.phase = 'caterpillar';
+                s.butterflyStart = null;
+                saveBugState(s);
+                return 'caterpillar';
+            }
+            return 'butterfly';
+        }
+        return s.phase;
+    }
+
+    function getBugEmoji() {
+        const phase = getBugPhase();
+        if (phase === 'cocoon') return '🫘';
+        if (phase === 'butterfly') return '🦋';
+        const s = loadBugState();
+        const count = s.reports.length;
+        if (count >= 5) return '🐛🐛🐛';
+        if (count >= 3) return '🐛🐛';
+        return '🐛';
+    }
+
+    function showBugDialog() {
+        const phase = getBugPhase();
+        if (phase === 'cocoon') {
+            const s = loadBugState();
+            const remaining = Math.ceil((BUG_COCOON_MS - (Date.now() - (s.cocoonStart || 0))) / 1000);
+            showToast(`🫘 Bug verpuppt sich... noch ${remaining}s`, 3000);
+            return;
+        }
+        if (phase === 'butterfly') {
+            showToast('🦋 Bug fliegt herum! Alle Bugs sind weg!', 3000);
+            return;
+        }
+
+        // Caterpillar: Bug-Report-Dialog
+        let existing = document.getElementById('bug-npc-modal');
+        if (existing) existing.remove();
+
+        const s = loadBugState();
+        const modal = document.createElement('div');
+        modal.id = 'bug-npc-modal';
+        modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:10000;display:flex;align-items:center;justify-content:center;';
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+
+        // Build modal content via DOM API (no innerHTML with user data)
+        const container = document.createElement('div');
+        container.style.cssText = 'background:#1a2e1a;color:#eee;border-radius:12px;padding:20px;max-width:360px;width:90%;max-height:70vh;overflow-y:auto;font-family:monospace;';
+
+        const title = document.createElement('h3');
+        title.style.cssText = 'margin:0 0 8px;text-align:center;';
+        title.textContent = getBugEmoji() + ' Bug \u2014 Was ist kaputt?';
+        container.appendChild(title);
+
+        const subtitle = document.createElement('p');
+        subtitle.style.cssText = 'text-align:center;margin:0 0 12px;font-size:0.8em;color:#aaa;';
+        subtitle.textContent = 'Schreib was nicht geht. Bug frisst es!';
+        container.appendChild(subtitle);
+
+        const reportsList = document.createElement('div');
+        reportsList.style.cssText = 'margin-bottom:12px;';
+        if (s.reports.length > 0) {
+            s.reports.forEach(r => {
+                const row = document.createElement('div');
+                row.style.cssText = 'padding:2px 0;font-size:0.85em;';
+                row.textContent = '\uD83D\uDC1B ' + r;
+                reportsList.appendChild(row);
+            });
+        } else {
+            const empty = document.createElement('div');
+            empty.style.cssText = 'color:#888;font-size:0.85em;';
+            empty.textContent = 'Noch keine Bugs gemeldet.';
+            reportsList.appendChild(empty);
+        }
+        container.appendChild(reportsList);
+
+        const inputRow = document.createElement('div');
+        inputRow.style.cssText = 'display:flex;gap:8px;';
+        const input = document.createElement('input');
+        input.id = 'bug-report-input';
+        input.type = 'text';
+        input.placeholder = 'Beschreib den Bug...';
+        input.style.cssText = 'flex:1;padding:8px;border-radius:6px;border:1px solid #555;background:#0a1a0a;color:#eee;font-size:0.9em;';
+        const submitBtn = document.createElement('button');
+        submitBtn.id = 'bug-report-submit';
+        submitBtn.textContent = 'Melden';
+        submitBtn.style.cssText = 'background:#2E7D32;color:white;border:none;border-radius:6px;padding:8px 12px;cursor:pointer;font-size:0.9em;';
+        inputRow.appendChild(input);
+        inputRow.appendChild(submitBtn);
+        container.appendChild(inputRow);
+
+        const counter = document.createElement('p');
+        counter.style.cssText = 'text-align:center;margin:12px 0 0;font-size:0.65em;color:#666;';
+        counter.textContent = s.reports.length + '/7 \u2014 bei 7 verpuppt sich Bug';
+        container.appendChild(counter);
+
+        modal.appendChild(container);
+        document.body.appendChild(modal);
+
+        const doSubmit = () => {
+            const text = input.value.trim();
+            if (!text) return;
+            const state = loadBugState();
+            state.reports.push(text);
+            if (state.reports.length >= 7) {
+                state.phase = 'cocoon';
+                state.cocoonStart = Date.now();
+                saveBugState(state);
+                modal.remove();
+                showToast('🫘 Bug hat zu viele Bugs gefressen und verpuppt sich! 60 Sekunden...', 4000);
+                return;
+            }
+            saveBugState(state);
+            showToast(getBugEmoji() + ' *mampf* \u2014 Bug ' + state.reports.length + '/7', 2000);
+            modal.remove();
+            showBugDialog();
+        };
+        submitBtn.addEventListener('click', doSubmit);
+        input.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSubmit(); });
+        input.focus();
+    }
+
     // --- NPC-Kommentare beim Bauen ---
     // === GENERATIVE NPC-KOMMENTARE ===
     // Baustein-System: Satzteile werden live gemischt = unendliche Kombinationen
@@ -527,6 +684,7 @@
         bernd:     { emoji: '🍞', prefix: 'Bernd:', ticks: ['*seufz*', 'Mist.', 'Toll.'], style: 'grumpy' },
         floriane:  { emoji: '🧚', prefix: 'Floriane:', ticks: ['✨', 'Oh!', 'Ein Wunsch!'], style: 'magic' },
         mephisto:  { emoji: '😈', prefix: 'Mephisto:', ticks: ['Hehehehe...', 'Ein Angebot!', 'Deal?'], style: 'deal' },
+        bug:       { emoji: '🐛', prefix: 'Bug:', ticks: ['*mampf*', 'Was ist kaputt?', 'Zeig mal!'], style: 'bug' },
         // #13: Programmiersprachen-Bewohner
         haskell:   { emoji: '🟣', prefix: 'Haskell:', ticks: ['Rein funktional!', 'Keine Seiteneffekte!', 'Typen lösen alles!'], style: 'careful' },
         lua:       { emoji: '🌙', prefix: 'Lua:', ticks: ['Schnell und leicht!', 'Tables!', '-- Ein Kommentar genügt'], style: 'cute' },
@@ -566,6 +724,7 @@
         chaos:   ['SCHNITT! Nochmal! BESSER!', 'Das wird im Film GEIL!', 'KAMERA LÄUFT!', 'Action!'],
         grumpy:  ['Na toll.', 'Muss das sein?', 'Kann man machen.', 'Hab ich auch mal probiert. War schlecht.'],
         deal:    ['Interessant...', 'Das hat seinen Preis.', 'Ein fairer Tausch!', 'Hehehehe...', 'Wir kommen ins Geschäft!'],
+        bug:     ['*mampf mampf*', 'Lecker Bug!', 'Nom nom!', 'Noch einen!', 'Der war knusprig!'],
     };
 
     const TEMPLATES = [
@@ -843,6 +1002,9 @@
     function getInventoryCount(material) {
         return inventory[material] || 0;
     }
+    // Export für chat.js (Floriane Muschel-Wünsche)
+    window.getInventoryCount = getInventoryCount;
+    window.removeFromInventory = removeFromInventory;
 
     function saveInventory() {
         localStorage.setItem('insel-inventar', JSON.stringify(inventory));
@@ -2031,7 +2193,7 @@
             ctx.font = `${CELL_SIZE * 0.6}px serif`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(npc.emoji, nx, ny + bob);
+            ctx.fillText(id === 'bug' ? getBugEmoji() : npc.emoji, nx, ny + bob);
             // Name
             ctx.font = `bold ${Math.max(8, CELL_SIZE * 0.25)}px sans-serif`;
             ctx.fillStyle = '#fff';
@@ -2341,7 +2503,8 @@
         // NPCs
         for (const [id, pos] of Object.entries(npcPositions)) {
             const npc = NPC_DEFS[id];
-            ISO.drawIsoEntity(ctx, pos.r, pos.c, npc.emoji, npc.name,
+            const npcEmoji = id === 'bug' ? getBugEmoji() : npc.emoji;
+            ISO.drawIsoEntity(ctx, pos.r, pos.c, npcEmoji, npc.name,
                 WATER_BORDER, COLS, CELL_SIZE, time, { bob: true, circle: true });
         }
 
@@ -3088,6 +3251,10 @@
         if (!toastBusy) processToastQueue();
     }
     window.showToast = showToast;
+
+    // Inventory-API für chat.js (Floriane Muschel-Wünsche)
+    window.getInselShells = function () { return getInventoryCount('shell'); };
+    window.removeInselShells = function (count) { return removeFromInventory('shell', count); };
 
     function processToastQueue() {
         if (toastQueue.length === 0) {
