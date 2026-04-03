@@ -15,13 +15,25 @@
   },
   "include": [
     "src/types.d.ts",
-    "src/core/**/*.js",
-    "src/world/**/*.js",
-    "src/infra/**/*.js"
+    "src/core/insel.js",
+    "src/core/sound.js",
+    "src/core/effects.js",
+    "src/core/screensaver.js",
+    "src/core/game.js",
+    "src/world/materials.js",
+    "src/world/achievements.js",
+    "src/world/quests.js",
+    "src/world/recipes.js",
+    "src/world/automerge.js",
+    "src/world/blueprints.js",
+    "src/world/nature.js",
+    "src/world/chat.js",
+    "src/infra/storage.js",
+    "src/infra/tts.js",
+    "src/infra/save.js",
+    "src/infra/healthcheck.js"
   ],
   "exclude": [
-    "src/infra/worker.js",
-    "src/infra/gemini-voice-worker.js",
     "sw.js",
     "node_modules"
   ]
