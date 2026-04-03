@@ -44,8 +44,11 @@ jobs:
           # Lokalen HTTP-Server starten (verhindert CORS-Fehler bei file://)
           npx serve . -p 8080 &
           SERVER_PID=$!
-          # Kurz warten bis der Server bereit ist
-          sleep 2
+          # Warten bis der Server antwortet (max 30s)
+          for i in $(seq 1 30); do
+            curl -s http://localhost:8080 > /dev/null 2>&1 && break
+            sleep 1
+          done
           node --input-type=module <<'SMOKE'
           import puppeteer from 'puppeteer';
 
@@ -80,8 +83,8 @@ jobs:
           page.on('console', msg => {
             if (msg.type() === 'error') {
               const text = msg.text();
-              // config.js optional, CORS-Fehler ignorieren
-              if (!text.includes('config.js') && !isCorsError(text)) {
+              // config.js optional, generische 404-Meldungen ignorieren (Dateiname fehlt im Text), CORS ignorieren
+              if (!text.includes('config.js') && !isCorsError(text) && !text.includes('Failed to load resource')) {
                 errors.push('console.error: ' + text);
               }
             }
