@@ -1,6 +1,6 @@
-# Sprint 25 — "Oscar entdeckt die Tiefe"
+# Sprint 27 — "Oscar entdeckt die Tiefe"
 
-**Sprint Goal:** game.js aufräumen (easter-eggs.js) + Höhle als Dungeon-Einstieg + Palette als Instrument.
+**Sprint Goal:** Höhle = IT-Dungeon-Einstieg + melodische Palette (Marimba-Töne) + maybeDungeonEntry nach stories.js.
 **Start:** 2026-04-03
 
 ---
@@ -9,26 +9,44 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S25-1 | **#11 game.js Zellteilung** — `maybeDungeonEntry` + Dungeon-Daten nach stories.js extrahiert. CODE_EASTER_EGGS war bereits in stories.js. initGrid() zu tief verwurzelt (IIFE). game.js: 5010 LOC (neue Features inklusive). | Engineer | ✅ Done |
-| S25-2 | **#50 Höhle = Dungeon** — `cave` platzieren → IT-Schichten-Sequenz (Bits→Transistor→Kernel→Browser→Schatzinsel). Erst-Sequenz + Reminder-Modus. In stories.js als `maybeDungeonEntry` exportiert. | Engineer + Artist | ✅ Done |
-| S25-3 | **#71 Palette als Instrument** — `soundPaletteNote(index)` in sound.js: C-Dur Pentatonik (15 Töne, 3 Oktaven). `selectMaterial()` nutzt Palette-Button-Index → melodischer Marimba-Ton je Position. | Engineer | ✅ Done |
+| S27-1 | **#11 game.js Zellteilung** — `maybeDungeonEntry` + Dungeon-Daten nach stories.js extrahiert. Analog zu CODE_EASTER_EGGS-Extraktion. | Engineer | ✅ Done |
+| S27-2 | **#50 Höhle = Dungeon** — `cave` platzieren → IT-Schichten-Sequenz (Bits→Transistor→Kernel→Browser→Schatzinsel). Erst-Sequenz + Reminder-Modus. In stories.js als `maybeDungeonEntry` exportiert. | Engineer + Artist | ✅ Done |
+| S27-3 | **#71 Palette Marimba** — `soundPaletteNote(index)` in sound.js: C-Dur Pentatonik (15 Töne, 3 Oktaven). `selectMaterial()` nutzt Palette-Button-Index → melodischer Marimba-Ton. Ergänzt S26-1 (Long-press). | Engineer | ✅ Done |
 
 ---
 
 ## Standup Log
 
-### 2026-04-03 (Sprint 25 Planning)
+### 2026-04-03 (Sprint 27 Planning + Daily Scrum)
 
-**Kontext:** Sprint 24 Review + Retro abgeschlossen — alle 3 Items Done. Retro empfahl genau diese 3 Items für S25.
+**Kontext:** Sprint 26 Done (2/2 auf Remote: Long-press Palette + NPC-Toast). Dieser Sprint ergänzt die Palette-Melodie (Pentatonik beim normalen Klick) und bringt den IT-Dungeon.
 
-**Sprint 25 Fokus:**
-- S25-1: Technische Schulden (#11 game.js) — sicher, kein State-Risiko
-- S25-2: Erster Dungeon (#50) — Oscar entdeckt etwas Neues unter der Insel
-- S25-3: Palette als Instrument (#71) — höchster Spaß-Impact laut Retro
+**Blocker:** Parallel-Sprint-Namenskonflikt (wieder). Remote hatte feat/sprint-25 schon auf S26. git fetch vor Sprint Planning ist jetzt Pflicht + Sprint-Nummer aus Remote lesen.
 
-**Branch:** `feat/sprint-25`
+---
 
-**Blocker:** Keine.
+# Sprint 26 — "Oscar tippt Melodie"
+
+**Sprint Goal:** Palette wird Instrument (Long-press = Ton) + NPC begrüßt Oscar mit Erinnerung beim Start.
+**Start:** 2026-04-03
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S26-1 | **#71 Palette als Instrument** — Long-press (500ms) auf Palette-Button spielt Genre-Ton ohne Baublock. CSS-Pulse-Animation. Oscar tippt Melodie auf der Palette. | Engineer | ✅ Done |
+| S26-2 | **#96 NPC-Start-Toast** — Beim Laden: zweiter Toast (4s nach Willkommen) vom NPC mit den meisten abgeschlossenen Quests. | Engineer + Artist | ✅ Done |
+
+---
+
+# Sprint 25 — "Die Insel kennt dich"
+
+**Sprint Goal:** Oscar kommt zurück — die Insel begrüßt ihn namentlich. Boot-Rezept als erster Schritt zur Inselkarte. grid.js sauber extrahiert.
+**Start:** 2026-04-02
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S25-1 | **#54 Jim Knopf — Boot + goldener Pfad** — Boot im Inventar + neben Wasser → goldener Lichtstreifen. | Engineer | ✅ Done |
+| S25-2 | **#11 grid.js — Extraktion** — initGrid() + generateStarterIsland() + generateLummerland() raus aus game.js. game.js: 4972→4764 (−208 LOC). | Engineer | ✅ Done |
+| S25-3 | **Backlog-Audit** — 4 Phantom-Opens bereinigt (#95, #96, #57, #23). | Scientist | ✅ Done |
 
 ---
 
