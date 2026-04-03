@@ -32,6 +32,11 @@ Python redet.
 - 2026-03-30: Worker mit Rate Limiting + CORS + Validation in 364 Zeilen. Wenig Code der alles abdeckt > viel Code mit Lücken.
 - 2026-03-30: healthcheck.js (138 Zeilen) als DNA-Reparatur. Heilt localStorage, aber nicht die 41 Globals. Nächstes Ziel: INSEL-Namespace.
 - 2026-03-30: 9× `localStorage.getItem('insel-muted')` in sound.js. Copy-Paste ist kein Engineering. Refactoring-Kandidat #1.
+- 2026-04-03: V-Modell Sprint — 103 Unit Tests geschrieben (Achievements, Automerge, ELIZA, Recipes, Quests, Blueprints, Integration). Tests decken jetzt alle world/-Module ab.
+- 2026-04-03: `safeParse(key, fallback)` Helper in game.js — 12 ungeschützte JSON.parse-Stellen abgesichert. Corrupted localStorage crasht nicht mehr die App.
+- 2026-04-03: Bestehende Tests hatten falsche Pfade (ops/ statt src/core/) — unsichtbar kaputt seit der Zellteilung. Pfade gefixt.
+- 2026-04-03: SQL Injection in worker.js handleMetrics — Template-Literal `SELECT * FROM ${table}` durch Whitelist-Queries ersetzt. Auch wenn table validiert war: Defense in Depth.
+- 2026-04-03: Lesson: Tests die nicht laufen weil Pfade falsch sind, sind schlimmer als keine Tests. Sie geben falsche Sicherheit.
 
 ## Feynman-Notiz
 

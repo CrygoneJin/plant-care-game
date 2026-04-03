@@ -3,7 +3,7 @@ const assert = require('node:assert');
 
 // hex-grid.js wird als IIFE geladen, wir simulieren window
 globalThis.window = globalThis;
-require('../hex-grid.js');
+require('../../src/core/hex-grid.js');
 
 describe('HexGrid', () => {
     it('erstellt ein Grid mit korrektem Radius', () => {

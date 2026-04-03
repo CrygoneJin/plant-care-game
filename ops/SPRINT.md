@@ -1,3 +1,43 @@
+# Sprint 26 — "Putztag. V-Modell. Alles muss raus."
+
+**Sprint Goal:** V-Modell konsequent einführen. Tests schreiben, Bugs finden, fixen. Kein Feature — nur Qualität.
+**Start:** 2026-04-03
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S26-1 | **V-Modell Unit Tests** — 103 Tests für Achievements, Automerge, ELIZA, Recipes, Quests, Blueprints, Integration | Scientist + Engineer | ✅ Done |
+| S26-2 | **Floriane/Bug sichtbar + anklickbar** — Feste Grid-Positionen, Grid-Klick→Chat für alle NPCs | Designer + Engineer | ✅ Done |
+| S26-3 | **10 Bugs gefixt** — addWish(), ELIZA-Scripts, Race Condition, SQL Injection, JSON.parse, Test-Pfade, Phantom-Types | Engineer | ✅ Done |
+| S26-4 | **Padawan-Codizes** — Learnings aus V-Modell-Sprint in 3 Codizes eingetragen | Alle | ✅ Done |
+
+---
+
+## Standup Log
+
+### 2026-04-03 (Sprint 26 — V-Modell Marathon)
+
+**Gefundene Bugs (10):**
+1. `addWish()` nie aufgerufen → Floriane 3-Wünsche-Limit kaputt
+2. Mephisto/Krämerin/Lokführer ohne ELIZA-Script → offline stumm
+3. NPC Grid-Klick = nur Toast, nie Chat → NPCs unerreichbar
+4. Character-Switch Race Condition → Antwort für falschen NPC
+5. Double loadingDiv.remove() → DOM-Exception
+6. SQL Injection in worker.js handleMetrics → Template-Literal
+7. handleBurnSet ohne try/catch → 500 bei kaputtem JSON
+8. JSON.parse ohne Error Handling an 12 Stellen → App-Crash bei corrupted localStorage
+9. Test-Pfade falsch seit Zellteilung → Tests liefen nie
+10. Phantom-Types in types.d.ts → versprechen was Code nicht hält
+
+**Tests:** 103 Unit + Integration Tests. 16 Test-Suites. Alle grün. tsc grün.
+
+**Blocker:** Keine.
+
+---
+
 # Sprint 25 — "Oscar spielt und entdeckt"
 
 **Sprint Goal:** Palette wird Instrument (Oscar spielt Melodien) + Höhle als neue Welt + game.js Zellteilung.

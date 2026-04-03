@@ -893,6 +893,9 @@ ${budgetInfo}${florianePreisHint}`;
 
             loadingDiv.remove();
 
+            // Race Condition Guard: NPC gewechselt während API-Call?
+            if (currentNpcId !== charId) return;
+
             if (!response.ok) {
                 // Flüster-Modus: ELIZA statt Fehlermeldung
                 enterWhisperMode();
@@ -900,7 +903,6 @@ ${budgetInfo}${florianePreisHint}`;
                 chatHistory.pop();
                 chatHistory.push({ role: 'assistant', content: elizaReply });
                 addMessage(`${char.emoji} ${elizaReply}`, 'npc');
-                loadingDiv.remove();
                 sendBtn.disabled = false;
                 input.focus();
                 return;
@@ -925,8 +927,11 @@ ${budgetInfo}${florianePreisHint}`;
             addMessage(`${char.emoji} ${reply}`, 'npc');
             updateTokenDisplay(charId);
 
-            // Floriane: Wünsche loggen / Bug: Bug-Reports loggen
-            if (charId === 'floriane' || charId === 'bug') {
+            // Floriane: Wunsch zählen + loggen / Bug: Bug-Reports loggen
+            if (charId === 'floriane') {
+                addWish(userMessage);
+                logFeedback(charId, userMessage, reply);
+            } else if (charId === 'bug') {
                 logFeedback(charId, userMessage, reply);
             }
 

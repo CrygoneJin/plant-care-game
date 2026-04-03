@@ -6,6 +6,16 @@ Persistent team log. Append-only. Read by all agents.
 
 ## Bugs (so we don't repeat them)
 
+| 2026-04-03 | **addWish() nie aufgerufen** — Floriane 3-Wünsche/Tag-Limit war nie enforced. wishesLeft() gab immer 3 zurück. | addWish() definiert aber nie in sendToApi() aufgerufen | addWish(userMessage) nach erfolgreicher Floriane-Antwort eingefügt |
+| 2026-04-03 | **3 NPCs ohne ELIZA-Script** — Mephisto, Krämerin, Lokführer hatten keinen Offline-Fallback. Ohne API-Key = stumm. | ELIZA-Scripts nie geschrieben für späte NPCs | Scripts mit passenden Persönlichkeiten ergänzt |
+| 2026-04-03 | **NPC Grid-Klick = nur Toast** — Klick auf NPC ohne Quest zeigte nur Tick-Toast, öffnete nie den Chat. Dropdown gekillt = kein Weg zu NPCs. | showNpcQuestDialog else-Branch: Toast statt Chat | else-Branch öffnet jetzt window.openChat() für alle NPCs |
+| 2026-04-03 | **Character-Switch Race Condition** — API-Antwort für NPC A landet bei NPC B wenn User während des Calls wechselt | chatHistory + currentNpcId sind global, async fetch prüft nicht ob NPC noch aktiv | Guard nach fetch: `if (currentNpcId !== charId) return` |
+| 2026-04-03 | **Double loadingDiv.remove()** — In chat.js bei !response.ok: loadingDiv.remove() wurde 2× aufgerufen (Zeile 894 + 903) | Copy-Paste in Error-Branch | Zweiten remove()-Call entfernt |
+| 2026-04-03 | **SQL Injection in worker.js** — `SELECT * FROM ${table}` mit Template-Literal. Table war whitelisted, aber Defense-in-Depth fehlte | Template-Literal statt parametrisierter Query | Whitelist-Map mit festen Query-Strings |
+| 2026-04-03 | **JSON.parse ohne try/catch** an ~20 Stellen in game.js — corrupted localStorage crasht die App | localStorage-Reads ohne Error Handling | safeParse(key, fallback) Helper, 12 Stellen migriert |
+| 2026-04-03 | **Test-Pfade falsch** — unit.test.js und hex-grid.test.js suchten Dateien in ops/ statt src/core/ seit der Zellteilung (#11) | ROOT-Pfad nie nach Datei-Move aktualisiert | Pfade auf SRC_CORE/SRC_INFRA gefixt |
+| 2026-04-03 | **florianeWishes Phantom-Stat** — types.d.ts deklarierte Stats die getGridStats() nie liefert | Typ-Deklaration ohne Implementation | Phantom-Types entfernt (florianeWishes, npcCount, darkModeUsed, etc.) |
+| 2026-04-03 | **handleBurnSet ohne try/catch** — worker.js JSON.parse auf request.json() ohne Error Handling → 500 bei kaputtem JSON | Kein Input-Validation | try/catch + 400-Response |
 | 2026-03-30 | Backlog-Drift: 14 Items waren in Code done aber Backlog zeigte 🔲 | Keine Session-übergreifende Backlog-Pflege | Am Ende jeder Session: Backlog-Zeilen updaten, bevor MEMORY geschrieben wird |
 | 2026-04-03 | CI kaputt seit 31.3 — `sleep 2` reicht nicht für `npx serve` | Race Condition: Server startet nach Puppeteer | `curl`-Retry-Loop statt `sleep`, SW Cache-Version auto per Commit-Count |
 | 2026-04-03 | NPCs nicht sichtbar auf Live-Site | CI kaputt → kein Deploy → alte game.js ohne NPC-Grid-Code | Root Cause war CI, nicht NPC-Code. Immer CI-Status prüfen bei "Feature fehlt auf Prod" |

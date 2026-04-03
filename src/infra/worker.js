@@ -475,12 +475,16 @@ async function handleMetrics(request, env) {
     const table = url.searchParams.get('table') || 'sessions';
     const limit = Math.min(parseInt(url.searchParams.get('limit') || '50'), 200);
 
-    const allowed = ['sessions', 'craft_events', 'agent_metrics', 'npc_chats'];
-    if (!allowed.includes(table)) return json({ error: 'Ungültige Tabelle' }, 400);
+    // Whitelist statt Template Literal — verhindert SQL Injection
+    const QUERIES = {
+        sessions:      'SELECT * FROM sessions ORDER BY ts DESC LIMIT ?',
+        craft_events:  'SELECT * FROM craft_events ORDER BY ts DESC LIMIT ?',
+        agent_metrics: 'SELECT * FROM agent_metrics ORDER BY ts DESC LIMIT ?',
+        npc_chats:     'SELECT * FROM npc_chats ORDER BY ts DESC LIMIT ?',
+    };
+    if (!QUERIES[table]) return json({ error: 'Ungültige Tabelle' }, 400);
 
-    const rows = await env.METRICS_DB.prepare(
-        `SELECT * FROM ${table} ORDER BY ts DESC LIMIT ?`
-    ).bind(limit).all();
+    const rows = await env.METRICS_DB.prepare(QUERIES[table]).bind(limit).all();
 
     return json({ table, count: rows.results.length, rows: rows.results });
 }
@@ -804,7 +808,12 @@ async function handleBurnSet(request, env) {
     if (!secret || secret !== (env.BUGS_SECRET || '')) {
         return json({ error: 'Nicht autorisiert' }, 401);
     }
-    const body = await request.json();
+    let body;
+    try {
+        body = await request.json();
+    } catch (_) {
+        return json({ error: 'Ungültiges JSON' }, 400);
+    }
     await env.CRAFT_KV.put('burn:mmx', JSON.stringify({
         balance: body.mmx || 0, ts: Date.now()
     }), { expirationTtl: 86400 });

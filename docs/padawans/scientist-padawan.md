@@ -42,6 +42,22 @@ Dekoration) hat die Persona gerettet. Immer fragen: Was erwartet jeder, und was 
 
 Gelernt: Falsifizierbarkeit und Gegenhypothesen sind kein akademisches Extra — sie
 zeigen direkt auf Testdesign. H2 (Lukas als Kalibrierungswerkzeug) ist sofort in einen
+
+### 2026-04-03 — V-Modell Sprint: Tests als Bugs-Detektor
+
+Gelernt: Tests schreiben IST Bugs finden. Die ELIZA-Tests haben sofort aufgedeckt dass
+Mephisto, Krämerin und Lokführer kein ELIZA-Script haben. Ohne Tests wäre das unsichtbar
+geblieben — der LLM-Fallback kaschiert es. Erst wenn man offline testet, fällt es auf.
+
+Gelernt: Die Integrationstests (Cross-Modul) haben den Phantom-Stat-Bug bestätigt —
+`florianeWishes` war in types.d.ts deklariert aber nie implementiert. Der Test fragte:
+"Nutzen die Achievements nur Stats die getGridStats() tatsächlich liefert?" Antwort: ja,
+aber types.d.ts versprach mehr als der Code hält. Popper hätte gesagt: der Typ log.
+
+Gelernt: `addWish()` war definiert aber nie aufgerufen. Die Floriane-Wish-Limit-Prüfung
+(`wishesLeft()`) funktionierte syntaktisch, aber semantisch war das Limit nie enforced.
+Hypothese: "Floriane hat ein 3-Wünsche-Limit" → falsifiziert durch Code-Review.
+Die Gegenhypothese "Floriane hat kein Limit" war die Realität.
 Messplan übersetzbar. Das ist der Wert.
 
 Offene Frage: Sind 5 Hypothesen zu viele für eine Session? Feynman würde sagen:

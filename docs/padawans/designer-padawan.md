@@ -31,6 +31,8 @@ Er ist Rams' Messinstrument. Rams sagt "Weniger ist mehr." Hick sagt
 - 2026-03-30: 3 Geräte (4K, MacBook 2013, iPhone SE) responsive mit einem CSS. Aspect-Ratio-Grid statt Breakpoints war der Schlüssel.
 - 2026-03-30: Sidebar-Tabs statt Overlay-Dialoge. Weniger Klicks = weniger Hick-Alarm. Gutes Pattern für kleine Viewports.
 - 2026-03-30: 48px Touch-Targets konsequent eingehalten. Bruder (Chaos-Tester) hat keinen Button verfehlt.
+- 2026-04-03: NPC-Klick öffnet jetzt Chat statt nur Toast — das Dropdown existiert nicht mehr. Grid-Klick ist der einzige Weg zu NPCs. UX-Implikation: NPCs müssen sichtbar und anklickbar sein, Quest-Indikator (❗) ist jetzt kritischer denn je.
+- 2026-04-03: Floriane (🧚) und Bug (🐛) haben feste Positionen statt generischer Kreis. Floriane am Ufer (magisch), Bug im Wald (Natur). Positionierung ist UX — wo ein NPC steht, sagt was er ist.
 
 ## Feynman-Notiz
 

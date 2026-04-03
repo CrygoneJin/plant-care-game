@@ -68,13 +68,8 @@ interface GridStats {
     materialsFound?: number;
     wuXingUsed?: number;
     recipesUsed?: number;
-    florianeWishes?: number;
     bugsReported?: number;
     npcsSpokenTo?: number;
-    npcCount?: number;
-    darkModeUsed?: boolean;
-    idleMinutes?: number;
-    sessionPlaced?: number;
 }
 
 // --- Quests ---

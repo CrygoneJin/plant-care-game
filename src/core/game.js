@@ -4,6 +4,11 @@
 (function () {
     'use strict';
 
+    function safeParse(key, fallback) {
+        try { return JSON.parse(localStorage.getItem(key) || 'null') ?? fallback; }
+        catch { return fallback; }
+    }
+
     // SW Cache-Update: automatisch neu laden wenn neue Version verfügbar
     if (navigator.serviceWorker) {
         navigator.serviceWorker.addEventListener('message', function(e) {
@@ -110,7 +115,7 @@
     // ============================================================
     const ACHIEVEMENTS = window.INSEL_ACHIEVEMENTS;
 
-    let unlockedAchievements = JSON.parse(localStorage.getItem('insel-achievements') || '[]');
+    let unlockedAchievements = safeParse('insel-achievements', []);
 
     function checkAchievements(stats) {
         if (!stats) stats = getGridStats();
@@ -173,8 +178,8 @@
     // ============================================================
     const QUEST_TEMPLATES = window.INSEL_QUEST_TEMPLATES;
 
-    let activeQuests = JSON.parse(localStorage.getItem('insel-quests') || '[]');
-    let completedQuests = JSON.parse(localStorage.getItem('insel-quests-done') || '[]');
+    let activeQuests = safeParse('insel-quests', []);
+    let completedQuests = safeParse('insel-quests-done', []);
 
     function getAvailableQuest(npcId) {
         return QUEST_TEMPLATES.find(q =>
@@ -366,6 +371,18 @@
             if (grid[ladenR] && grid[ladenR][ladenC]) grid[ladenR][ladenC] = null;
         }
 
+        // Floriane: am Ufer (unten-links) — Fee gehört ans Wasser
+        const florianeR = Math.min(ROWS - 3, cy + Math.floor(ry * 0.7));
+        const florianeC = Math.max(2, cx - Math.floor(rx * 0.6));
+        npcPositions['floriane'] = { r: florianeR, c: florianeC };
+        if (grid[florianeR] && grid[florianeR][florianeC]) grid[florianeR][florianeC] = null;
+
+        // Bug: im Grünen (oben-rechts) — Raupe gehört in den Wald
+        const bugR = Math.max(2, cy - Math.floor(ry * 0.5));
+        const bugC = Math.min(COLS - 3, cx + Math.floor(rx * 0.6));
+        npcPositions['bug'] = { r: bugR, c: bugC };
+        if (grid[bugR] && grid[bugR][bugC]) grid[bugR][bugC] = null;
+
         // Alle anderen NPCs im Kreis um die Inselmitte
         const circleIds = ids.filter(id => !npcPositions[id]);
         circleIds.forEach((id, i) => {
@@ -457,19 +474,24 @@
             ];
             showToast(stories[Math.floor(Math.random() * stories.length)], 5000);
         } else {
-            const voice = NPC_VOICES[npcId];
-            if (voice) {
-                // Memory-Kommentar Vorrang vor generic tick
-                const memComment = getNpcMemoryComment(voice, npcId);
-                const msg = memComment || `${npc.emoji} ${voice.prefix} ${voice.ticks[Math.floor(Math.random() * voice.ticks.length)]}`;
-                showToast(msg, 3000);
+            // Kein Quest → Chat öffnen (Grid-Klick ist der einzige Weg zu NPCs)
+            if (window.openChat) {
+                window.openChat(npcId);
+            } else {
+                // Fallback: Toast wenn Chat nicht geladen
+                const voice = NPC_VOICES[npcId];
+                if (voice) {
+                    const memComment = getNpcMemoryComment(voice, npcId);
+                    const msg = memComment || `${npc.emoji} ${voice.prefix} ${voice.ticks[Math.floor(Math.random() * voice.ticks.length)]}`;
+                    showToast(msg, 3000);
+                }
             }
         }
     }
 
     // === DUNGEON-FRAMEWORK (#50 Höhle = Dungeon) ===
     // IT-Ebenen: Bits → Kernel → Browser. Oscar entdeckt die Welt unter der Insel.
-    let _dungeonVisited = JSON.parse(localStorage.getItem('insel-dungeon-visited') || '[]');
+    let _dungeonVisited = safeParse('insel-dungeon-visited', []);
 
     function openDungeon() {
         const dlg = document.getElementById('dungeon-dialog');
@@ -508,7 +530,7 @@
         wood: 5, stone: 3, sand: 10, planks: 2, glass: 2,
         flower: 3, fish: 3, diamond: 1, crystal: 1, honey: 2, apple: 3
     };
-    const krabsStock = JSON.parse(localStorage.getItem('insel-krabs-stock') || 'null') || { ...KRABS_STOCK_INIT };
+    const krabsStock = safeParse('insel-krabs-stock', null) || { ...KRABS_STOCK_INIT };
     function saveKrabsStock() { localStorage.setItem('insel-krabs-stock', JSON.stringify(krabsStock)); }
 
     function showKrabsShop() {
@@ -963,7 +985,7 @@
     // --- Spontan-Hörspiele — delegiert an tts.js ---
     // TTS-Funktionen leben in window.INSEL_TTS (tts.js)
     // playedHoerspiele.length wird noch für Analytics benötigt
-    const playedHoerspiele = JSON.parse(localStorage.getItem('insel-hoerspiele') || '[]');
+    const playedHoerspiele = safeParse('insel-hoerspiele', []);
 
     function stopHoerspiel() {
         if (window.INSEL_TTS) window.INSEL_TTS.stopHoerspiel();
@@ -1042,7 +1064,7 @@
     }
 
     function loadInventory() {
-        inventory = JSON.parse(localStorage.getItem('insel-inventar') || '{}');
+        inventory = safeParse('insel-inventar', {});
     }
 
     function updateInventoryDisplay() {
@@ -1221,7 +1243,7 @@
     let craftingGrid = Array(9).fill(null); // 3x3 = 9 Slots
 
     // Entdeckte Rezepte — Spieler sieht nur was er schon gefunden hat
-    let discoveredRecipes = new Set(JSON.parse(localStorage.getItem('insel-discovered-recipes') || '[]'));
+    let discoveredRecipes = new Set(safeParse('insel-discovered-recipes', []));
 
     function saveDiscoveredRecipes() {
         localStorage.setItem('insel-discovered-recipes', JSON.stringify([...discoveredRecipes]));
@@ -1527,7 +1549,7 @@
     }
 
     function loadUnlocked() {
-        const saved = JSON.parse(localStorage.getItem('insel-unlocked-materials') || '[]');
+        const saved = safeParse('insel-unlocked-materials', []);
         unlockedMaterials = new Set(saved);
     }
 
@@ -1746,7 +1768,7 @@
 
     // --- Spielfigur ---
     let playerName = localStorage.getItem('insel-player-name') || '';
-    let playerPos  = JSON.parse(localStorage.getItem('insel-player-pos') || 'null')
+    let playerPos  = safeParse('insel-player-pos', null)
                      || { r: Math.floor(ROWS / 2), c: Math.floor(COLS / 2) };
     let playerDragging = false;
     let playerBlocksPlaced = parseInt(localStorage.getItem('insel-blocks-placed') || '0');
@@ -2300,7 +2322,7 @@
     // --- Spieler-Abenteuer: Entdecken durch Laufen ---
 
     // Sammelbare Items auf der Insel
-    let collectibles = JSON.parse(localStorage.getItem('insel-collectibles') || '[]');
+    let collectibles = safeParse('insel-collectibles', []);
     let lastNpcGreet = {}; // NPC-ID → timestamp, damit nicht jede Sekunde gegrüßt wird
 
     function spawnCollectibles() {
@@ -2827,7 +2849,7 @@
     // === BLUEPRINTS — 4×4 Bauplan-Erkennung ===
     // ============================================================
     let activeBlueprint = null; // { id, startR, startC } — aktuell angezeigter Bauplan-Overlay
-    let completedBlueprints = JSON.parse(localStorage.getItem('insel-blueprints-done') || '[]');
+    let completedBlueprints = safeParse('insel-blueprints-done', []);
 
     function checkBlueprintMatch(r, c) {
         const BP = window.INSEL_BLUEPRINTS;

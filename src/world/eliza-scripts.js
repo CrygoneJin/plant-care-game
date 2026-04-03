@@ -294,4 +294,77 @@
         ],
     });
 
+    // ── KRÄMERIN — Herzliche Ladenbesitzerin auf Lummerland ──
+    reg('kraemerin', {
+        initial: 'Willkommen in meinem Laden! 👩‍🍳 Hast du Muscheln dabei? Die verkaufen sich wie warme Semmeln!',
+        finale: 'Komm bald wieder! Und bring Muscheln mit! 🐚',
+        quit: ['tschüss', 'bye'],
+        pre: {}, post: {},
+        keywords: [
+            { word: 'muschel', rank: 8, rules: [
+                { decomp: '*', reassembly: ['Muscheln! 🐚 Immer her damit! Die sind hier die beste Währung!', 'Jede Muschel kommt ins Regal! 🐚'] },
+            ]},
+            { word: 'kauf', rank: 7, rules: [
+                { decomp: '*', reassembly: ['Kaufen? Gerne! 👩‍🍳 Bring mir erst ein paar Muscheln vom Strand!'] },
+            ]},
+            { word: 'xnone', rank: 0, rules: [
+                { decomp: '*', reassembly: ['👩‍🍳 Schau dich ruhig um!', 'Muscheln sammeln lohnt sich! 🐚', 'Ein schöner Tag auf der Insel, oder? 👩‍🍳'] },
+            ]},
+        ],
+    });
+
+    // ── LOKFÜHRER — Abenteurer mit Lok auf Lummerland ──
+    reg('lokfuehrer', {
+        initial: 'Tschuff tschuff! 🚂 Willkommen! Meine Lok und ich fahren überall hin!',
+        finale: 'Tschuff tschuff! 🚂 Bis zum nächsten Abenteuer!',
+        quit: ['tschüss', 'bye'],
+        pre: {}, post: {},
+        keywords: [
+            { word: 'lok', rank: 8, rules: [
+                { decomp: '*', reassembly: ['Meine Lok braucht drei Dinge: Kohle, Wasser und einen Freund! 🚂'] },
+            ]},
+            { word: 'fahr', rank: 7, rules: [
+                { decomp: '*', reassembly: ['Steig ein! 🚂 Wir fahren einmal um die Insel!', 'Tschuff tschuff! Wohin soll die Reise gehen? 🚂'] },
+            ]},
+            { word: 'boot', rank: 6, rules: [
+                { decomp: '*', reassembly: ['Ein Boot! 🚂 Wenn du genug Holz sammelst, bauen wir eins zusammen!'] },
+            ]},
+            { word: 'xnone', rank: 0, rules: [
+                { decomp: '*', reassembly: ['Tschuff tschuff! 🚂', 'Die besten Abenteuer fangen auf kleinen Inseln an!', '🚂 Eine Lokomotive braucht Kohle! Und Geduld!'] },
+            ]},
+        ],
+    });
+
+    // ── MEPHISTO — Der respektable Teufel. Browning: "The devil is most devilish when respectable." ──
+    // Dims: deal, seele, handel, teufel | Kombos: pakt, charme
+    reg('mephisto', {
+        initial: 'Ah, willkommen! Ich bin Mephisto. Man sagt ich sei der Teufel — aber ich bin nur ein Geschäftsmann. Hehehehe... 😈',
+        finale: 'Auf Wiedersehen! Vergiss unseren Deal nicht... 😈',
+        quit: ['tschüss', 'bye', 'ciao'],
+        pre: {}, post: {},
+        keywords: [
+            { word: 'deal', rank: 8, rules: [
+                { decomp: '*', reassembly: ['Hehehehe! Ein Deal? Ich LIEBE Deals! 😈 Was bietest du an?', 'Jeder Deal hat seinen Preis. Hehehehe... Was möchtest du?'] },
+            ]},
+            { word: 'seele', rank: 7, rules: [
+                { decomp: '*', reassembly: ['Seele? Hehehehe... so direkt! 😈 Ich bevorzuge: Gefälligkeit.', 'Seelen sind überbewertet. Ich nehme auch Muscheln! 😈'] },
+            ]},
+            { word: 'teufel', rank: 6, rules: [
+                { decomp: '*', reassembly: ['Teufel ist so ein hartes Wort! 😈 Ich bin eher... ein Vermittler.', 'Hehehehe! Der Teufel steckt im Detail! Und in meinem Laden!'] },
+            ]},
+            { word: 'bau', rank: 5, rules: [
+                { decomp: '*', reassembly: ['Bauen? Prächtig! 😈 Ich habe da eine Idee... gegen eine kleine Gegenleistung!', 'Hehehehe! Jedes Gebäude braucht einen Grundstein — und einen Pakt!'] },
+            ]},
+            { word: 'hilf', rank: 5, rules: [
+                { decomp: '*', reassembly: ['Hilfe? Natürlich! 😈 Ich helfe GERNE. Alles hat nur seinen Preis... hehehehe!'] },
+            ]},
+            { word: 'geld', rank: 6, rules: [
+                { decomp: '*', reassembly: ['Geld! Mein Lieblingsthema! 😈 Krabs und ich verstehen uns prächtig!'] },
+            ]},
+            { word: 'xnone', rank: 0, rules: [
+                { decomp: '*', reassembly: ['Hehehehe... 😈 Ich warte auf dein Angebot!', 'Der Teufel ist geduldig. Aber nicht ewig! 😈', 'Bau weiter — ich beobachte! Hehehehe...'] },
+            ]},
+        ],
+    });
+
 })();
