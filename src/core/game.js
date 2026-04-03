@@ -3105,6 +3105,55 @@
     // Spontaner Zerfall: ~5% pro Sekunde → mittlere Wartezeit ~20s
     const TAO_DECAY_CHANCE = 0.05;
 
+    // Abstand zählt: Distanz zum nächsten Tao bestimmt Zerfallsprodukte.
+    // Mappt auf die drei fundamentalen Kräfte und ihre Reichweiten:
+    //   Nah  (1-2): Starke Kraft → schwere Quarks (Charm, Strange)
+    //   Mitte(3-5): Elektroschwach → Leptonen (Elektron, Neutrino)
+    //   Weit (6+):  Elektromagnetisch/Standard → Yin+Yang (leichteste Teilchen)
+    //   Allein:     Reiner Symmetriebruch → Yin+Yang
+
+    // Zerfallsprodukte nach Distanzband
+    const DECAY_NEAR = [
+        // Starke Kraft: schwere Quarks direkt
+        { a: 'charm',   b: 'strange',  weight: 3, msg: '💫🌀 Nahzerfall! Starke Kraft → Charm + Strange!' },
+        { a: 'yin',     b: 'yang',     weight: 2, msg: '☯️ Nahzerfall → Yin + Yang (Grundzustand)' },
+        { a: 'yang',    b: 'yang',     weight: 1, msg: '⚡⚡ Nahzerfall! Zwei Yang — Pauli-Druck!' },
+    ];
+    const DECAY_MID = [
+        // Elektroschwache Kraft: Leptonen + leichte Quarks
+        { a: 'electron', b: 'neutrino', weight: 3, msg: '🔹👻 Elektroschwacher Zerfall → Elektron + Neutrino!' },
+        { a: 'yin',      b: 'yang',     weight: 3, msg: '☯️ Mittlerer Zerfall → Yin + Yang' },
+        { a: 'electron', b: 'yin',      weight: 1, msg: '🔹⚫ Elektron + Yin — Neutrino-Einfang möglich!' },
+    ];
+    const DECAY_FAR = [
+        // EM: unendliche Reichweite, leichteste Teilchen
+        { a: 'yin',  b: 'yang',  weight: 5, msg: '☯️ Fernzerfall → Yin + Yang' },
+        { a: 'qi',   b: 'qi',   weight: 1, msg: '💛💛 Weit entfernt! Qi × Qi — Photon möglich!' },
+    ];
+
+    function findNearestTaoDistance(r, c) {
+        let minDist = Infinity;
+        for (let rr = 0; rr < ROWS; rr++) {
+            for (let cc = 0; cc < COLS; cc++) {
+                if (rr === r && cc === c) continue;
+                if (grid[rr][cc] !== 'tao') continue;
+                const dist = Math.abs(rr - r) + Math.abs(cc - c); // Manhattan
+                if (dist < minDist) minDist = dist;
+            }
+        }
+        return minDist;
+    }
+
+    function pickWeightedDecay(table) {
+        const total = table.reduce((s, e) => s + e.weight, 0);
+        let roll = Math.random() * total;
+        for (const entry of table) {
+            roll -= entry.weight;
+            if (roll <= 0) return entry;
+        }
+        return table[table.length - 1];
+    }
+
     function tickTaoDecay() {
         let hasTao = false;
         for (let r = 0; r < ROWS; r++) {
@@ -3113,25 +3162,37 @@
                 hasTao = true;
                 if (Math.random() > TAO_DECAY_CHANCE) continue;
 
-                // Kante (50%) = starke Higgs-Kopplung → schwere Teilchen
-                // Ecke  (50%) = schwache Higgs-Kopplung → leichte Teilchen (√2 Distanz)
+                // Abstand zählt: Distanz zum nächsten Tao → Kraftband
+                const dist = findNearestTaoDistance(r, c);
+                let decayTable;
+                let coupling;
+                if (dist <= 2) {
+                    decayTable = DECAY_NEAR;
+                    coupling = 'stark';
+                } else if (dist <= 5) {
+                    decayTable = DECAY_MID;
+                    coupling = 'elektroschwach';
+                } else {
+                    decayTable = DECAY_FAR;
+                    coupling = 'elektromagnetisch';
+                }
+
+                const decay = pickWeightedDecay(decayTable);
+
+                // Freie Nachbarzelle finden
                 const isEdge = Math.random() < 0.5;
                 const free = findFreeNeighbor(r, c, isEdge ? EDGE_DIRS : CORNER_DIRS)
                           || findFreeNeighbor(r, c, isEdge ? CORNER_DIRS : EDGE_DIRS);
                 if (!free) continue; // Kein Platz → kein Zerfall
 
                 // ZERFALL! Symmetriebrechung.
-                const coupling = isEdge ? 'stark' : 'schwach';
                 const [yr, yc] = free;
-                grid[r][c] = 'yin';
-                grid[yr][yc] = 'yang';
+                grid[r][c] = decay.a;
+                grid[yr][yc] = decay.b;
 
-                logGenesis({ type: 'decay', from: 'tao', results: ['yin', 'yang'], cells: [[r,c],[yr,yc]], coupling });
+                logGenesis({ type: 'decay', from: 'tao', results: [decay.a, decay.b], cells: [[r,c],[yr,yc]], coupling, distance: dist });
 
-                const couplingMsg = isEdge
-                    ? '☯️ → ⚫⚪ Kante! Schwere Teilchen!'
-                    : '☯️ → ⚫⚪ Ecke! Leichte Teilchen!';
-                showToast(couplingMsg);
+                showToast(decay.msg);
                 soundCraft();
                 EFFECTS.addPlaceAnimation(r, c);
                 EFFECTS.addPlaceAnimation(yr, yc);
@@ -3145,7 +3206,7 @@
 
                 updateGenesisVisibility();
 
-                // Automerge-Kettenreaktion: Yin + Yang nebeneinander → Qi
+                // Automerge-Kettenreaktion
                 setTimeout(() => {
                     checkAutomerge(r, c);
                     checkAutomerge(yr, yc);
