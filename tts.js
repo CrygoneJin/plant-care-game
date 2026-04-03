@@ -82,12 +82,39 @@
     }
 
     // Fallback: Web Speech API
+    var _cachedVoices = {};
+
+    function getBestVoice(langCode) {
+        if (_cachedVoices[langCode]) return _cachedVoices[langCode];
+        var voices = window.speechSynthesis.getVoices();
+        if (!voices.length) return null;
+        // Bevorzuge lokale (nicht-Remote) Stimmen, dann nach Sprache filtern
+        var matching = voices.filter(function (v) { return v.lang.indexOf(langCode.substring(0, 2)) === 0; });
+        var best = matching.find(function (v) { return v.localService; }) || matching[0];
+        if (best) _cachedVoices[langCode] = best;
+        return best || null;
+    }
+
+    // Voices vorladen (Chrome liefert sie asynchron)
+    if (window.speechSynthesis) {
+        window.speechSynthesis.getVoices();
+        if (window.speechSynthesis.onvoiceschanged !== undefined) {
+            window.speechSynthesis.onvoiceschanged = function () {
+                _cachedVoices = {};
+            };
+        }
+    }
+
     function speakBrowserTTS(text, lang) {
         return new Promise(function (resolve) {
             if (!window.speechSynthesis) { resolve(); return; }
             var utter = new SpeechSynthesisUtterance(text);
-            utter.lang = (lang === 'en') ? 'en-US' : (lang === 'fr') ? 'fr-FR' : (lang === 'it') ? 'it-IT' : 'de-DE';
-            utter.rate = 0.95;
+            var langCode = (lang === 'en') ? 'en-US' : (lang === 'fr') ? 'fr-FR' : (lang === 'it') ? 'it-IT' : 'de-DE';
+            utter.lang = langCode;
+            var voice = getBestVoice(langCode);
+            if (voice) utter.voice = voice;
+            utter.rate = 0.92;
+            utter.pitch = 1.05;
             utter.onend = function () { resolve(); };
             utter.onerror = function () { resolve(); };
             window.speechSynthesis.speak(utter);

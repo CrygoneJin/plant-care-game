@@ -416,8 +416,17 @@
     }
 
     // === KRABS SHOP — Muschelhandel ===
-    // 1 Muschel = 0.001 MMX (Nerd-Ebene). Kinder sehen 🐚, Nerds sehen MMX.
+    // 1 Muschel = 0.001 MMX (Nerd-Ebene, Easter Egg). Kinder sehen 🐚.
     const SHELL_TO_MMX = 0.001;
+
+    // Krabbs-Vorrat: endlich pro Session (Ricardo #101)
+    // Wenn Krabbs kein Holz hat, kann er keins verkaufen.
+    const KRABS_STOCK_INIT = {
+        wood: 5, stone: 3, sand: 10, planks: 2, glass: 2,
+        flower: 3, fish: 3, diamond: 1, crystal: 1, honey: 2, apple: 3
+    };
+    const krabsStock = JSON.parse(localStorage.getItem('insel-krabs-stock') || 'null') || { ...KRABS_STOCK_INIT };
+    function saveKrabsStock() { localStorage.setItem('insel-krabs-stock', JSON.stringify(krabsStock)); }
 
     function showKrabsShop() {
         const shells = getInventoryCount('shell');
@@ -451,12 +460,13 @@
             const info = MATERIALS[mat];
             if (!info) return '';
             const have = getInventoryCount(mat);
+            const stock = krabsStock[mat] || 0;
             return `<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0;border-bottom:1px solid #333;">
-                <span>${info.emoji} ${info.label} (${have}x)</span>
+                <span>${info.emoji} ${info.label} (${have}x) <span style="color:#888;font-size:0.8em;">Lager:${stock}</span></span>
                 <span>
                     <button class="krabs-buy" data-mat="${mat}" data-cost="${price.buy}"
                         style="background:#2E7D32;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"
-                        ${shells < price.buy ? 'disabled style="opacity:0.4;background:#2E7D32;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"' : ''}>
+                        ${shells < price.buy || stock <= 0 ? 'disabled style="opacity:0.4;background:#2E7D32;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"' : ''}>
                         Kauf ${price.buy}🐚</button>
                     <button class="krabs-sell" data-mat="${mat}" data-earn="${price.sell}"
                         style="background:#C62828;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"
@@ -486,11 +496,17 @@
             btn.addEventListener('click', () => {
                 const mat = btn.dataset.mat;
                 const cost = parseInt(btn.dataset.cost);
+                if ((krabsStock[mat] || 0) <= 0) {
+                    showToast(`🦀 Krabbs: "${MATERIALS[mat]?.label}? Hab ich nicht! Komm später!"`, 2500);
+                    return;
+                }
                 if (getInventoryCount('shell') >= cost) {
                     removeFromInventory('shell', cost);
                     addToInventory(mat, 1);
                     unlockMaterial(mat);
-                    showToast(`🦀 DEAL! 1x ${MATERIALS[mat]?.emoji} ${MATERIALS[mat]?.label} für ${cost} 🐚!`, 2000);
+                    krabsStock[mat] = (krabsStock[mat] || 0) - 1;
+                    saveKrabsStock();
+                    showToast(`🦀 DEAL! 1x ${MATERIALS[mat]?.emoji} ${MATERIALS[mat]?.label} für ${cost} 🐚! (${krabsStock[mat]} übrig)`, 2500);
                     modal.remove();
                     showKrabsShop(); // Refresh
                 }
@@ -505,6 +521,8 @@
                     removeFromInventory(mat, 1);
                     addToInventory('shell', earn);
                     unlockMaterial('shell');
+                    krabsStock[mat] = (krabsStock[mat] || 0) + 1;
+                    saveKrabsStock();
                     showToast(`🦀 VERKAUFT! 1x ${MATERIALS[mat]?.emoji} für ${earn} 🐚! Ahahaha!`, 2000);
                     modal.remove();
                     showKrabsShop(); // Refresh

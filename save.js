@@ -146,12 +146,20 @@
         _ctx.setWindowGrid();
         _ctx.migrateUnlocked();
         _ctx.setProjectName(name === AUTOSAVE_KEY ? '' : name);
-        _ctx.updateStats();
-        _ctx.updateInventoryDisplay();
-        _ctx.updatePaletteVisibility();
-        _ctx.updateGenesisVisibility();
-        _ctx.updateDiscoveryCounter();
-        _ctx.requestRedraw();
+
+        // Schwere Updates (O(n²) Grid-Iteration + DOM) per rAF entzerren
+        // damit der Browser zwischen den Schritten rendern kann
+        requestAnimationFrame(function () {
+            _ctx.updateStats();
+            _ctx.updateInventoryDisplay();
+            requestAnimationFrame(function () {
+                _ctx.updatePaletteVisibility();
+                _ctx.updateGenesisVisibility();
+                _ctx.updateDiscoveryCounter();
+                _ctx.requestRedraw();
+            });
+        });
+
         var loadDialog = document.getElementById('load-dialog');
         if (loadDialog) loadDialog.classList.add('hidden');
         if (window.showToast) window.showToast('\uD83D\uDCC2 "' + name + '" geladen!');
