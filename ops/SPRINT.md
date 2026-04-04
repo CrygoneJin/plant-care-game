@@ -177,9 +177,9 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S27-1 | **Taschentücher + Ogilvy-Copy** — 5 One-Pager mit 3-Akt-Struktur (Kubrick/Spielberg/Goethe), mehrdimensional (Baby→Greis, Spielegeschichte, Accessibility/Mandela) | Sales + Artist | 🔄 In Arbeit |
-| S27-2 | **Metrik-Audit Feynman×Heidegger** — Jede Metrik prüfen: was messen wir, lügt es, was ist zuhanden vs. vorhanden? | Scientist + Beirat | 🔄 In Arbeit |
-| S27-3 | **Sprint 26 Backlog-Sync** — Erledigte Items (#54, #95, #96) im Backlog als Done markieren. Distribution-Items erfassen. | Leader | 🔲 Offen |
+| S27-1 | **Taschentücher + Ogilvy-Copy** — 5 One-Pager mit 3-Akt-Struktur (Kubrick/Spielberg/Goethe), mehrdimensional (Baby→Greis, Spielegeschichte, Accessibility/Mandela) | Sales + Artist | ✅ Done |
+| S27-2 | **Metrik-Audit Feynman×Heidegger** — Jede Metrik geprüft: Engagement Score binär, crafts_total lügt, Neutrino bestraft Stille. Zuhandenheit-Audit. | Scientist + Beirat | ✅ Done |
+| S27-3 | **itch.io Settings + Distribution** — Finale Parameter dokumentiert, ?danke=1 Toast, ZIP neu gebaut (221KB). | Leader + Engineer | ✅ Done |
 
 ---
 
