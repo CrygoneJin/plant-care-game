@@ -37,6 +37,87 @@
 
 ---
 
+## Sprint Review — 2026-04-04
+
+**Sprint Goal erreicht:** ✅ Ja — alle 3 Items Done.
+
+**Was geliefert wurde:**
+- S25-1: Palette als Instrument — `mouseenter` auf Palette-Buttons spielt Ton. Oscar hovert und hört Melodien. Kein Klick nötig. `playMaterialSound()` war bereits vorhanden, nur Event-Binding fehlte.
+- S25-2: Höhle = Dungeon — `openDungeon()` in `game.js`, Dungeon-Dialog in `index.html` mit 3 IT-Ebenen (Bits ⚡, Kernel ⚙️, Browser 🌐). Berg + Wasser = Höhle-Tile. Klick auf Höhle → Dialog öffnet. Geheimnis-Reveal wenn alle 3 Ebenen besucht. War bereits in `4cf2646` implementiert, SPRINT.md hatte Drift.
+- S25-3: game.js Zellteilung — NPC_VOICES, MAT_ADJECTIVES, REACTIONS, TEMPLATES, STREAK_COMMENTS → `src/world/npc-data.js`. Muster: `window.INSEL_NPC_DATA`. game.js: 5196 → 5133 (−63 LOC). PR #207 offen.
+
+**Oscar-Check:** Hover-Sound auf Palette ist sofort spürbar. Dungeon-Entdeckung ist "wow" für Erstbesucher. NPC-Daten: Oscar merkt nichts — aber die Schulden schrumpfen.
+
+---
+
+## Sprint Retrospective — 2026-04-04
+
+### Was lief gut?
+
+- **Alle 3 Items geliefert.** Sprint Goal vollständig.
+- **Hover-Sound war 1 Zeile.** Hoher Impact, minimaler Aufwand. Richtige Priorisierung.
+- **Dungeon als Oscar-Discovery.** 3 Ebenen + Geheimnis = gamifizierte IT-Bildung. Konzept stark.
+- **npc-data.js sauber extrahiert.** Nur Daten, kein State, kein Risiko. game.js schrumpft schrittweise.
+
+### Was lief schlecht?
+
+- **SPRINT.md Drift (wieder).** S25-2 war seit `4cf2646` implementiert — SPRINT.md auf main wusste nichts davon. Parallel-Sessions erzeugen Drift.
+- **game.js noch bei 5133 LOC.** Ziel war ~4800. Zellteilung ist langsamer als erwartet — Abhängigkeiten tiefer als sichtbar.
+- **PR #207 noch ungemergt.** S25-3 liegt auf Branch. Kein auto-merge.
+
+### Was verbessern wir?
+
+1. **Backlog-Items #50 + #71 als Done markieren** — BACKLOG.md aktualisieren nach jedem Sprint.
+2. **game.js Ziel realistischer setzen** — nicht "4800" sondern "−100 LOC pro Sprint". Messbar, erreichbar.
+3. **Smoke Test bleibt blockiert** — akzeptiert als bekannte Einschränkung der Sandbox.
+
+### Sprint 26 — Empfehlung
+
+| Kandidat | Prio | Warum jetzt |
+|----------|------|-------------|
+| **#96 NPC-Session-Gedächtnis** — NPCs erinnern sich via localStorage. "Hey Oscar, gestern Bäume!" | P1 | Höchster Oscar-Impact. localStorage-Pattern existiert. |
+| **#95 Wu-Xing→NPC-Events** — NPCs reagieren auf Element-Events (Feuer, Wasser, Wind). | P1 | Event-Bus (bus.js) existiert. Wenig neuer Code nötig. |
+| **#11 Zellteilung fortsetzen** — Effects/Weather aus game.js extrahieren. −100 LOC Ziel. | P1 | Schulden schrumpfen. Kein Oscar-Impact aber notwendig. |
+
+---
+
+# Sprint 26 — "Oscar, die NPCs erinnern sich"
+
+**Sprint Goal:** NPCs haben Gedächtnis + reagieren auf Elementarmagie. Oscar fühlt sich erinnert.
+**Start:** 2026-04-04
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S26-1 | **#96 NPC-Session-Gedächtnis** — NPCs lesen `localStorage`-Statistiken aus letzter Session. "Hey [Name], gestern hast du [X] Bäume gebaut!" — Begrüßungs-Kommentar beim ersten Chat pro Session. | Engineer + Artist | ✅ Done |
+| S26-2 | **#95 Wu-Xing→NPC-Events** — NPCs kommentieren wenn Oscar ein Element-Material platziert (Feuer→🔥, Wasser→🌊, Holz→🌳, Erde→⛰️, Metall→⚙️). Über `bus.js` Event-Bus. | Engineer + Artist | ✅ Done |
+| S26-3 | **#11 Zellteilung: Effects** — `weather`-Funktionen (drawWeather, updateWeather) + `effects.js`-Koordination aus `game.js`. Ziel: −100 LOC. | Engineer | 🔲 Offen |
+
+---
+
+## Standup Log
+
+### 2026-04-04 (Sprint 26 Planning)
+
+**Kontext:** Sprint 25 Review + Retro abgeschlossen. Alle 3 Items Done. PR #207 (S25-3) offen.
+
+**Sprint 26 Fokus:** Oscar-sichtbar zuerst (#96 Gedächtnis). Dann Reaktivität (#95 Wu-Xing). Dann Schulden (#11).
+
+**Blocker:** PR #207 muss gemergt werden damit S25-3 auf main landet.
+
+### 2026-04-04 (Sprint 26 Daily Scrum)
+
+**Gestern:** Sprint 25 abgeschlossen.
+
+**Heute:** S26-1 ✅ — NPC-Gedächtnis hatte `_sessionGreeted` Guard noch nicht: Memory-Kommentar konnte unendlich oft pro Session kommen. Jetzt einmal pro NPC. S26-2 ✅ — Wu-Xing-Events wurden schon emittiert (`element:fire` etc.) aber kein Handler. NPC-Kommentare mit 15s Throttle + max 3/Session implementiert.
+
+**Blocker:** S26-3 (Effects-Extraktion) offen.
+
+---
+
 # Sprint 24 — "Oscar hört die Welt"
 
 **Sprint Goal:** Musik beim Bauen (Genre-Sequenzen) + technische Schulden (game.js aufteilen) + Tutorial ohne Text.

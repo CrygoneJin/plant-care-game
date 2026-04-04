@@ -787,6 +787,8 @@
     // Format: { [npcId]: { lastMaterial, lastMaterialKey, lastVisit, questsDone: [] } }
 
     const NPC_MEMORY_KEY = 'insel-npc-memory';
+    // Welche NPCs haben diese Session schon ihren Gedächtnis-Kommentar gezeigt?
+    const _sessionGreeted = new Set();
 
     function loadNpcMemory() {
         try { return JSON.parse(localStorage.getItem(NPC_MEMORY_KEY) || '{}'); }
@@ -880,26 +882,27 @@
 
     // Gedächtnis-Kommentar für NPC erzeugen (gibt null zurück wenn nichts sinnvolles da)
     function getNpcMemoryComment(npc, npcId) {
+        // Nur einmal pro NPC pro Session zeigen
+        if (_sessionGreeted.has(npcId)) return null;
         const m = getNpcMem(npcId);
         if (!m) return null;
         const hasName = playerName && playerName !== 'Spieler' && playerName !== 'Anonym';
         const nameStr = hasName ? ` ${playerName}` : '';
         const daysSince = m.lastVisit ? Math.floor((Date.now() - m.lastVisit) / 86400000) : null;
 
+        let comment = null;
         if (m.lastMaterial && m.questsDone && m.questsDone.length > 0) {
-            return `${npc.emoji} ${npc.prefix} Hey${nameStr}! Letztes Mal hast du viel mit ${m.lastMaterial} gebaut. Und ${m.questsDone.length} Quest${m.questsDone.length > 1 ? 's' : ''} geschafft!`;
-        }
-        if (m.lastMaterial) {
-            return `${npc.emoji} ${npc.prefix} Hey${nameStr}! Letztes Mal hast du viel mit ${m.lastMaterial} gebaut...`;
-        }
-        if (daysSince !== null && daysSince >= 1) {
+            comment = `${npc.emoji} ${npc.prefix} Hey${nameStr}! Letztes Mal hast du viel mit ${m.lastMaterial} gebaut. Und ${m.questsDone.length} Quest${m.questsDone.length > 1 ? 's' : ''} geschafft!`;
+        } else if (m.lastMaterial) {
+            comment = `${npc.emoji} ${npc.prefix} Hey${nameStr}! Letztes Mal hast du viel mit ${m.lastMaterial} gebaut...`;
+        } else if (daysSince !== null && daysSince >= 1) {
             const dayText = daysSince === 1 ? 'gestern' : `vor ${daysSince} Tagen`;
-            return `${npc.emoji} ${npc.prefix} Schon ${dayText} warst du zuletzt hier${nameStr}!`;
+            comment = `${npc.emoji} ${npc.prefix} Schon ${dayText} warst du zuletzt hier${nameStr}!`;
+        } else if (m.questsDone && m.questsDone.length > 0) {
+            comment = `${npc.emoji} ${npc.prefix} Erinnerst du dich${nameStr}? Wir haben schon ${m.questsDone.length} Quest${m.questsDone.length > 1 ? 's' : ''} zusammen gemacht!`;
         }
-        if (m.questsDone && m.questsDone.length > 0) {
-            return `${npc.emoji} ${npc.prefix} Erinnerst du dich${nameStr}? Wir haben schon ${m.questsDone.length} Quest${m.questsDone.length > 1 ? 's' : ''} zusammen gemacht!`;
-        }
-        return null;
+        if (comment) _sessionGreeted.add(npcId);
+        return comment;
     }
 
     // beforeunload: Session-Memory sichern
@@ -3252,6 +3255,36 @@
             if (data.key === 'firstBlock') stopTutorialPulse();
         });
     }
+
+    // === WU-XING NPC-EVENTS (#95) ===
+    // NPCs kommentieren wenn Oscar ein Element-Material platziert.
+    // Throttle: max 1 Kommentar alle 15s, max 3 pro Session.
+    (function () {
+        if (!window.INSEL_BUS) return;
+        var _wuThrottle = 0;
+        var _wuCount = 0;
+        var WU_XING_COMMENTS = {
+            fire:   ['🔥 Feuer! Mephisto flüstert: "Schön warm hier..."', '🔥 SpongeBob: Vorsicht! Das brennt!', '🔥 Floriane: Feuer ist Wandel — heute Holz, morgen Asche.'],
+            water:  ['🌊 Tommy: Wasser! Das fühlt sich an wie Zuhause.', '🌊 Maus: Psst — Fische mögen das!', '🌊 SpongeBob: Herrlich! Ich lebe doch am liebsten im Wasser!'],
+            wood:   ['🌳 Elefant: Holz trägt viel. Wie gute Gedanken.', '🌳 Floriane: Jeder Baum war mal ein Samenkorn.', '🌳 Neinhorn: Wald? NEIN! ...okay, vielleicht ein bisschen schön.'],
+            metal:  ['⚙️ Bug: Metall — mein Lieblingsmaterial zum Draufsetzen!', '⚙️ Maus: Klingt nach Werkzeug. Werkzeug ist Macht!', '⚙️ Mephisto: Stahl bleibt. Fleisch vergeht.'],
+            earth:  ['⛰️ Elefant: Erde erinnert sich an alles was je drauf stand.', '⛰️ Tommy: Gute Erde, gute Insel!', '⛰️ Maus: Riechst du das? Frische Erde!'],
+        };
+        function onElementPlaced(element) {
+            var now = Date.now();
+            if (_wuCount >= 3) return;
+            if (now - _wuThrottle < 15000) return;
+            var lines = WU_XING_COMMENTS[element];
+            if (!lines) return;
+            var line = lines[Math.floor(Math.random() * lines.length)];
+            showToast(line, 3500);
+            _wuThrottle = now;
+            _wuCount++;
+        }
+        ['fire', 'water', 'wood', 'metal', 'earth'].forEach(function (el) {
+            window.INSEL_BUS.on('element:' + el, function () { onElementPlaced(el); });
+        });
+    })();
 
     // Feynman-Dashboard: game.js-State + analytics.js-Daten
     window.getTestData = function () {
