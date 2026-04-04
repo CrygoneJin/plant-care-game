@@ -15,6 +15,9 @@ Persistent team log. Append-only. Read by all agents.
 | 2026-04-03 | 6 Duplikat-PRs für S25-3 (npc-data.js) | Multiple Sessions starteten ohne zu prüfen was bereits als offene PRs existiert | Session-Start: `gh pr list` auf offene PRs prüfen. Kein neuer Branch für Feature das schon als PR existiert. |
 | 2026-04-03 | REACTIONS fehlten 3 Styles: magic, warm, adventure | Floriane/Krämerin/Lokführer haben Styles die nicht in REACTIONS-Map definiert waren — würde undefined ergeben | Wenn neuer NPC-Style definiert wird, sofort REACTIONS-Eintrag mitliefern. |
 
+| 2026-04-04 | Lokale `main` Branch war an `d114852` (divergiert von `origin/main` `8d1d509`) | Pre-existing aus paralleler Session | Feature-Branches immer von `origin/main` basieren, nicht von lokalem `main`. `git checkout -b feat/X origin/main` statt `git checkout -b feat/X main`. |
+| 2026-04-04 | S26-1+S26-2 bereits in PR #213 (NPC-spezifische Stimmen, sogar besser) | Parallele Session lief bereits | Session-Start: `gh pr list` prüfen — diesmal Duplikat erkannt BEVOR Push. S26-3 war unique → eigener PR #214. |
+
 | Datum | Was | Warum | Lektion |
 |-------|-----|-------|---------|
 | 2026-04-01 | Session startete ohne `git fetch` — planned Sprint 23 which already existed on remote with different content | feat/sprint-23 Branch war schon 5 Commits weiter (Sprint 23+24 done) | `git fetch origin && git log origin/feat/sprint-23 -5` als ERSTE Aktion nach Branch-Checkout — IMMER |

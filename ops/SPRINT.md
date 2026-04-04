@@ -94,9 +94,9 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S26-1 | **#96 NPC-Session-Gedächtnis** — NPCs erinnern sich via localStorage. Beim ersten Chat-Klick nach Pause: "Hey Oscar, gestern hast du viel [Material] gebaut!" `_sessionGreeted` Set verhindert Wiederholung. | Engineer + Artist | 🔲 Offen |
-| S26-2 | **#95 Wu-Xing→NPC-Events** — `INSEL_BUS.on('element:fire')` etc. NPCs kommentieren wenn Oscar Feuer/Wasser/Holz/Metall/Erde platziert. 15s Throttle, max 3x/Session. | Engineer + Artist | 🔲 Offen |
-| S26-3 | **#54 Jim Knopfs Welt** — Boot craften (Planks + Seil + Mast) → neue Insel-Auswahl. Mindestens 1 neue erreichbare Insel. Oscar segelt. | Engineer | 🔲 Offen |
+| S26-1 | **#96 NPC-Session-Gedächtnis** — NPCs erinnern sich via localStorage. Beim ersten Chat-Klick nach Pause: "Hey Oscar, gestern hast du viel [Material] gebaut!" `_sessionGreeted` Set verhindert Wiederholung. | Engineer + Artist | ✅ Done (PR #213 + diese Session) |
+| S26-2 | **#95 Wu-Xing→NPC-Events** — `INSEL_BUS.on('element:fire')` etc. NPCs kommentieren wenn Oscar Feuer/Wasser/Holz/Metall/Erde platziert. 15s Throttle, max 3x/Session. | Engineer + Artist | ✅ Done (Infrastruktur bereits da, Session-Cap #213) |
+| S26-3 | **#54 Jim Knopfs Welt** — Boot craften → Insel-Auswahl-Dialog. Lummerland + Wüsteninsel. Oscar segelt. | Engineer | ✅ Done (PR #214) |
 
 ---
 
@@ -109,6 +109,17 @@
 **Sprint 26 Fokus:** Oscar-sichtbare Änderungen. NPCs werden lebendig (#96 Session-Gedächtnis). Welt reagiert (#95 Wu-Xing). Dann Expansion (#54 Boot/Insel).
 
 **Blocker:** Keine.
+
+### 2026-04-04 (Daily Scrum)
+
+**Heute:**
+- S26-1 implementiert: `_sessionGreeted` Set + `buildSessionGreeting()` in chat.js. Liest `insel-session-snapshot`, zeigt einmaliges Greeting (>30s alt = neue Session). PR #213 existierte bereits mit NPC-spezifischen Stimmen — beide Implementierungen komplementär.
+- S26-2: Phantom-teilweise — npc-events.js war bereits live. Neu: `sessionReactionCount` + `SESSION_MAX=3` Cap hinzugefügt.
+- S26-3: `openBoatDialog()` in game.js, `generateWuesteinsel()` in island-generators.js, Boat-Dialog in index.html. PR #214 erstellt.
+
+**Blocker:** Lokale `main` Branch divergiert von `origin/main` (pre-existing). PR-Branch von `origin/main` basiert.
+
+**Duplikat-Prüfung:** PR #213 (S26-1+S26-2) existierte. S26-3 war neu → eigener Branch `feat/jim-knopfs-welt`.
 
 ---
 
