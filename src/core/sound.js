@@ -694,62 +694,134 @@
         playRichTone(varFreq, genre.dur + Math.random() * 0.03, genre.wave, genre.vol);
     }
 
-    // === Stille-Momente: Wellen-Ambient (#57) ===
+    // === Stille-Momente: Navier-Stokes Wellenorchester (#57) ===
+    // Das Meer als Orchester: jede Harmonische ist ein Instrument.
+    //
+    //   n=1  Kontrabass    C2 (65 Hz)   — Grunddünung, 12s Periode
+    //   n=2  Cello         C3 (131 Hz)  — mittlere Wellen
+    //   n=3  Viola         G3 (196 Hz)  — Quinte, Brandungsrollen
+    //   n=4  Violine I     C4 (262 Hz)  — Schaumkronen
+    //   n=5  Violine II    E4 (330 Hz)  — Gischt, Obertöne
+    //   n=6  Flöte         G4 (392 Hz)  — Wind über Wasser
+    //   turb Perkussion    <300 Hz      — Brownsche Brandung
+    //
+    // Physik: Pierson-Moskowitz E(f) ∝ f⁻⁵·exp(-β/f⁴)
+    // Musik: Harmonische Reihe auf C = Naturtonreihe
+    // Beide sind dasselbe: Superposition stehender Wellen mit Energieabfall.
     let ambientNodes = null;
+
+    // Naturtonreihe auf C2 — die Obertöne die eine Saite von selbst erzeugt
+    const OCEAN_ORCHESTRA = [
+        { note: 'Kontrabass', freq: 65.41,  wave: 'sine',     vol: 1.0   },
+        { note: 'Cello',      freq: 130.81, wave: 'sine',     vol: 0.25  },
+        { note: 'Viola',      freq: 196.00, wave: 'triangle', vol: 0.11  },
+        { note: 'Violine I',  freq: 261.63, wave: 'sine',     vol: 0.063 },
+        { note: 'Violine II', freq: 329.63, wave: 'triangle', vol: 0.04  },
+        { note: 'Flöte',      freq: 392.00, wave: 'sine',     vol: 0.028 },
+    ];
 
     function playAmbient() {
         if (isMuted()) return;
-        if (ambientNodes) return; // Läuft schon
+        if (ambientNodes) return;
         try {
             const ctx = ensureAudio();
-            // White noise buffer (2 Sekunden, geloopt)
-            const bufLen = ctx.sampleRate * 2;
-            const buf = ctx.createBuffer(1, bufLen, ctx.sampleRate);
-            const data = buf.getChannelData(0);
-            for (let i = 0; i < bufLen; i++) data[i] = Math.random() * 2 - 1;
-
-            const src = ctx.createBufferSource();
-            src.buffer = buf;
-            src.loop = true;
-
-            // Tiefpass für weiches Meeresrauschen
-            const lp = ctx.createBiquadFilter();
-            lp.type = 'lowpass';
-            lp.frequency.value = 600;
-            lp.Q.value = 0.5;
-
-            // Amplituden-LFO für Wellenbewegung
-            const lfo = ctx.createOscillator();
-            lfo.frequency.value = 0.15; // ~1 Welle alle 7 Sekunden
-            const lfoGain = ctx.createGain();
-            lfoGain.gain.value = 0.04;
-            lfo.connect(lfoGain);
-
             const masterGain = ctx.createGain();
             masterGain.gain.value = 0.0;
-            masterGain.gain.linearRampToValueAtTime(0.07 * masterVolume, ctx.currentTime + 3);
-            lfoGain.connect(masterGain.gain);
-
-            src.connect(lp);
-            lp.connect(masterGain);
+            masterGain.gain.linearRampToValueAtTime(0.06 * masterVolume, ctx.currentTime + 3);
             masterGain.connect(ctx.destination);
 
-            lfo.start();
-            src.start();
+            const f0 = 0.08; // Grundfrequenz der Dünung (12s Wellenperiode)
+            const oscillators = [];
+            const lfoNodes = [];
 
-            ambientNodes = { src, lfo, masterGain, ctx };
+            for (let n = 0; n < OCEAN_ORCHESTRA.length; n++) {
+                const instr = OCEAN_ORCHESTRA[n];
+
+                // Instrument: tonale Harmonische
+                const osc = ctx.createOscillator();
+                osc.type = instr.wave;
+                osc.frequency.value = instr.freq;
+
+                // Leichtes Vibrato — kein Synthesizer, ein Orchester
+                const vibrato = ctx.createOscillator();
+                vibrato.frequency.value = 0.3 + Math.random() * 0.4;
+                const vibratoGain = ctx.createGain();
+                vibratoGain.gain.value = instr.freq * 0.003; // ±0.3% Pitch
+                vibrato.connect(vibratoGain);
+                vibratoGain.connect(osc.frequency);
+
+                // Wellen-LFO: Amplitude pulsiert wie Dünung
+                // Jede Stimme hat eigene Phase — keine stehende Welle
+                const lfo = ctx.createOscillator();
+                lfo.frequency.value = f0 * (n + 1) + (Math.random() * 0.02 - 0.01);
+                const lfoGain = ctx.createGain();
+                lfoGain.gain.value = instr.vol * 0.5; // LFO-Tiefe
+                lfo.connect(lfoGain);
+
+                const envGain = ctx.createGain();
+                envGain.gain.value = instr.vol;
+                lfoGain.connect(envGain.gain);
+
+                // Sanfter Tiefpass — weicher Klang, kein scharfer Synth
+                const lp = ctx.createBiquadFilter();
+                lp.type = 'lowpass';
+                lp.frequency.value = instr.freq * 2.5;
+                lp.Q.value = 0.3;
+
+                osc.connect(lp);
+                lp.connect(envGain);
+                envGain.connect(masterGain);
+
+                // Phasen-Versatz: Orchester stimmt sich ein
+                const startTime = ctx.currentTime + Math.random() * 3;
+                osc.start(startTime);
+                vibrato.start(startTime);
+                lfo.start(startTime);
+
+                oscillators.push(osc, vibrato);
+                lfoNodes.push(lfo);
+            }
+
+            // Perkussion: Brownsche Brandung (Turbulenz-Schicht)
+            const turbLen = ctx.sampleRate * 6;
+            const turbBuf = ctx.createBuffer(1, turbLen, ctx.sampleRate);
+            const turbData = turbBuf.getChannelData(0);
+            for (let i = 0; i < turbLen; i++) {
+                turbData[i] = i > 0
+                    ? turbData[i - 1] * 0.998 + (Math.random() * 2 - 1) * 0.05
+                    : 0;
+            }
+            const turbSrc = ctx.createBufferSource();
+            turbSrc.buffer = turbBuf;
+            turbSrc.loop = true;
+            const turbLp = ctx.createBiquadFilter();
+            turbLp.type = 'lowpass';
+            turbLp.frequency.value = 300;
+            turbLp.Q.value = 0.3;
+            const turbGain = ctx.createGain();
+            turbGain.gain.value = 0.3;
+            turbSrc.connect(turbLp);
+            turbLp.connect(turbGain);
+            turbGain.connect(masterGain);
+            turbSrc.start();
+            oscillators.push(turbSrc);
+
+            ambientNodes = { oscillators, lfoNodes, masterGain, ctx };
         } catch (e) { /* Audio nicht verfügbar */ }
     }
 
     function stopAmbient() {
         if (!ambientNodes) return;
         try {
-            const { src, lfo, masterGain, ctx } = ambientNodes;
+            const { oscillators, lfoNodes, masterGain, ctx } = ambientNodes;
             masterGain.gain.cancelScheduledValues(ctx.currentTime);
             masterGain.gain.setValueAtTime(masterGain.gain.value, ctx.currentTime);
             masterGain.gain.linearRampToValueAtTime(0.0, ctx.currentTime + 1.5);
             setTimeout(() => {
-                try { src.stop(); lfo.stop(); } catch (_) {}
+                try {
+                    oscillators.forEach(s => { try { s.stop(); } catch (_) {} });
+                    lfoNodes.forEach(l => { try { l.stop(); } catch (_) {} });
+                } catch (_) {}
             }, 1600);
         } catch (_) {}
         ambientNodes = null;
