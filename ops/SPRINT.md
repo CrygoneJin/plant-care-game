@@ -198,13 +198,13 @@ Bonus: Geräte-Kompatibilitätsmatrix (PR #217), Heidegger im Beirat, Essay "Bes
 **Blocker:** Keine.
 
 **Kontext:**
-- Sprint 23 "Oscar hört das Meer" (PR #106): Chat-Sidebar, Stille-Momente, QR-Code — offen, nicht gemergt
+- Sprint 23 "Oscar hört das Meer" (PR #106): ✅ Gemergt 2026-04-01
 - Retro S22-Empfehlung: #85 Genre-Töne, #15 Tutorial ohne Text, #11 game.js aufteilen
 - S24-1 bereits implementiert: `soundGenreNote()` in `soundBuild` eingehängt, Genre-Toast bei Wechsel
 
 ---
 
-# Sprint 23 — "Oscar hört das Meer" (PR #106, offen)
+# Sprint 23 — "Oscar hört das Meer" (PR #106, ✅ gemergt)
 
 **Sprint Goal:** Chat als Sidebar, Stille-Momente wenn idle, QR-Code auf Postkarte.
 
@@ -244,7 +244,7 @@ Bonus: Geräte-Kompatibilitätsmatrix (PR #217), Heidegger im Beirat, Essay "Bes
 
 | # | Was | Wer | Status |
 |---|-----|-----|--------|
-| U1 | **MMX Wallet erstellen** — mmx.network Wallet für Donation-Adresse im Code View | User | 🔲 Offen |
+| U1 | **MMX Wallet erstellen** — mmx.network Wallet für Donation-Adresse im Code View | User | ✅ Done |
 | U2 | **Cloudflare Voice Worker testen** — schatzinsel.app Chat → 🎤 → Mikrofon erlauben | User | 🔲 Offen |
 | U3 | **Gemini API Key in Worker** — `wrangler secret put GEMINI_API_KEY` | User | ✅ Done |
 
