@@ -169,16 +169,148 @@
         prevCells = nextCells;
     }
 
+    // Spezies-Gruppen für Schwarmerkennung
+    const SPECIES_GROUP = {
+        '🐟': 'fish', '🐠': 'fish', '🦀': 'crab',
+        '🐚': 'shell', '🐸': 'frog',
+        '🦋': 'butterfly', '🐝': 'bee', '🌸': 'flower',
+        '🦅': 'bird', '🦢': 'bird',
+    };
+
+    // Habitat: wo darf dieses Tier leben?
+    // water = nur auf leeren Zellen am Rand (zone=water), land = Innenbereich
+    const HABITAT = {
+        '🐟': 'water', '🐠': 'water', '🦀': 'beach',
+        '🐚': 'beach', '🐸': 'beach',
+        '🦋': 'land', '🐝': 'land', '🌸': 'land',
+        '🦅': 'any', '🦢': 'any',
+    };
+
+    function habitatOk(emoji, r, c) {
+        const h = HABITAT[emoji] || 'land';
+        if (h === 'any') return true;
+        const z = conwayZone(r, c);
+        if (h === 'water') return z === 'water';
+        if (h === 'beach') return z === 'water' || z === 'beach';
+        return z === 'land' || z === 'beach';
+    }
+
+    // Boids-Schritt: jedes Tier wählt seinen nächsten Zielschritt
+    // Kohäsion: bewege dich zur Mitte der gleichen Spezies in Sichtweite
+    // Separation: vermeide Gedränge (>3 Gleiche im 3x3)
+    // Terrain: bleib im Habitat
+    function boidMove(emoji, r, c, overlay, grid, ROWS, COLS) {
+        const myGroup = SPECIES_GROUP[emoji] || emoji;
+        const radius = 4;
+        let sumR = 0, sumC = 0, countSame = 0, crowding = 0;
+
+        for (let dr = -radius; dr <= radius; dr++) {
+            for (let dc = -radius; dc <= radius; dc++) {
+                if (dr === 0 && dc === 0) continue;
+                const nr = r + dr, nc = c + dc;
+                if (nr < 0 || nr >= ROWS || nc < 0 || nc >= COLS) continue;
+                const neighbor = overlay[nr][nc];
+                if (!neighbor) continue;
+                if (SPECIES_GROUP[neighbor] === myGroup) {
+                    sumR += nr; sumC += nc; countSame++;
+                    if (Math.abs(dr) <= 1 && Math.abs(dc) <= 1) crowding++;
+                }
+            }
+        }
+
+        // Separation: zu eng → zufällige Flucht
+        if (crowding >= 3) {
+            const dirs = [[-1,0],[1,0],[0,-1],[0,1],[-1,-1],[-1,1],[1,-1],[1,1]];
+            const free = dirs.filter(([dr, dc]) => {
+                const nr = r + dr, nc = c + dc;
+                return nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS
+                    && grid[nr][nc] === null && !overlay[nr][nc]
+                    && habitatOk(emoji, nr, nc);
+            });
+            if (free.length > 0) {
+                const [dr, dc] = free[Math.floor(Math.random() * free.length)];
+                return [r + dr, c + dc];
+            }
+            return null; // bleibt
+        }
+
+        // Kohäsion: bewege dich Richtung Schwarmzentrum
+        if (countSame > 0) {
+            const targetR = Math.round(sumR / countSame);
+            const targetC = Math.round(sumC / countSame);
+            const dr = Math.sign(targetR - r);
+            const dc = Math.sign(targetC - c);
+            const candidates = [];
+            // Priorität: direkt zum Ziel, dann diagonal, dann seitwärts
+            if (dr !== 0 || dc !== 0) candidates.push([dr, dc]);
+            if (dr !== 0) candidates.push([dr, 0]);
+            if (dc !== 0) candidates.push([0, dc]);
+            for (const [mdr, mdc] of candidates) {
+                const nr = r + mdr, nc = c + mdc;
+                if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS
+                    && grid[nr][nc] === null && !overlay[nr][nc]
+                    && habitatOk(emoji, nr, nc)) {
+                    return [nr, nc];
+                }
+            }
+        }
+
+        // Brownsche Bewegung: kein Schwarm in der Nähe → zufällig wandern
+        if (Math.random() < 0.4) {
+            const dirs = [[-1,0],[1,0],[0,-1],[0,1]];
+            const d = dirs[Math.floor(Math.random() * dirs.length)];
+            const nr = r + d[0], nc = c + d[1];
+            if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS
+                && grid[nr][nc] === null && !overlay[nr][nc]
+                && habitatOk(emoji, nr, nc)) {
+                return [nr, nc];
+            }
+        }
+        return null; // bleibt
+    }
+
     function startConway() {
         const { ROWS, COLS } = dims();
         const grid = window.grid;
         if (conwayInterval || prefersReducedMotion || !grid) return;
         conwayFading = false;
         conwayOverlay = Array.from({ length: ROWS }, () => Array(COLS).fill(''));
-        for (let r = 0; r < ROWS; r++)
-            for (let c = 0; c < COLS; c++)
-                if (grid[r][c] === null && Math.random() < 0.04)
-                    conwayOverlay[r][c] = conwayCreature(r, c);
+
+        // Tiere in kleinen Gruppen spawnen (je 3-5 gleicher Spezies zusammen)
+        const groups = [
+            { pool: CONWAY_WATER,  zone: 'water', count: 2 },
+            { pool: CONWAY_BEACH,  zone: 'beach', count: 2 },
+            { pool: CONWAY_LAND,   zone: 'land',  count: 3 },
+        ];
+        for (const g of groups) {
+            const emoji = g.pool[Math.floor(Math.random() * g.pool.length)];
+            let placed = 0, attempts = 0;
+            // Ankerpunkt für die Gruppe
+            const ar = Math.floor(Math.random() * ROWS);
+            const ac = Math.floor(Math.random() * COLS);
+            while (placed < g.count && attempts < 80) {
+                attempts++;
+                const r = Math.max(0, Math.min(ROWS - 1, ar + Math.floor((Math.random() - 0.5) * 4)));
+                const c = Math.max(0, Math.min(COLS - 1, ac + Math.floor((Math.random() - 0.5) * 4)));
+                if (grid[r][c] === null && !conwayOverlay[r][c] && habitatOk(emoji, r, c)) {
+                    conwayOverlay[r][c] = emoji;
+                    placed++;
+                }
+            }
+        }
+        // 1-2 Migranten
+        for (const emoji of CONWAY_MIGRANT) {
+            if (Math.random() < 0.5) continue;
+            for (let attempt = 0; attempt < 30; attempt++) {
+                const r = Math.floor(Math.random() * ROWS);
+                const c = Math.floor(Math.random() * COLS);
+                if (grid[r][c] === null && !conwayOverlay[r][c]) {
+                    conwayOverlay[r][c] = emoji;
+                    break;
+                }
+            }
+        }
+
         initGameplayTracking(ROWS, COLS);
         conwayInterval = setInterval(conwayStep, 650);
         bus && bus.emit('idle:start');
@@ -188,25 +320,41 @@
         const { ROWS, COLS } = dims();
         const grid = window.grid;
         if (!conwayOverlay || conwayFading || !grid) return;
+
+        // Boids: alle Tiere bewegen sich gleichzeitig (shuffle für Fairness)
+        const creatures = [];
+        for (let r = 0; r < ROWS; r++)
+            for (let c = 0; c < COLS; c++)
+                if (conwayOverlay[r][c]) creatures.push([r, c, conwayOverlay[r][c]]);
+
+        // Fisher-Yates shuffle
+        for (let i = creatures.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [creatures[i], creatures[j]] = [creatures[j], creatures[i]];
+        }
+
         const next = Array.from({ length: ROWS }, () => Array(COLS).fill(''));
-        for (let r = 0; r < ROWS; r++) {
-            for (let c = 0; c < COLS; c++) {
-                if (grid[r][c] !== null) continue; // Materialien unberührt
-                let alive = 0;
-                for (let dr = -1; dr <= 1; dr++)
-                    for (let dc = -1; dc <= 1; dc++)
-                        if ((dr || dc) && conwayOverlay[r + dr]?.[c + dc]) alive++;
-                const cur = conwayOverlay[r][c] !== '';
-                const isMigrant = cur && CONWAY_MIGRANT.includes(conwayOverlay[r][c]);
-                if (cur) {
-                    next[r][c] = (alive >= 2 && alive <= 4 && !(isMigrant && Math.random() < 0.35))
-                        ? conwayOverlay[r][c] : '';
-                } else {
-                    if (alive === 3)
-                        next[r][c] = conwayCreature(r, c);
+
+        // Erst alle Positionen reservieren (verhindert Kollisionen)
+        const claimed = new Set();
+        const moves = [];
+        for (const [r, c, emoji] of creatures) {
+            const target = boidMove(emoji, r, c, conwayOverlay, grid, ROWS, COLS);
+            if (target && !claimed.has(target[0] + ',' + target[1])) {
+                claimed.add(target[0] + ',' + target[1]);
+                moves.push([r, c, emoji, target[0], target[1]]);
+            } else {
+                const key = r + ',' + c;
+                if (!claimed.has(key)) {
+                    claimed.add(key);
+                    moves.push([r, c, emoji, r, c]);
                 }
+                // sonst: Tier stirbt (verdrängt)
             }
         }
+
+        for (const [,, emoji, nr, nc] of moves) next[nr][nc] = emoji;
+
         analyzeGameplay(conwayOverlay, next, ROWS, COLS);
         conwayOverlay = next;
         redraw();
