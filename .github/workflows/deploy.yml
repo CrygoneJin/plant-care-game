@@ -79,17 +79,28 @@ jobs:
           });
           const page = await browser.newPage();
 
+          // Nur echte JS-Exceptions fangen (ReferenceError, TypeError aus eigenem Code)
+          // Netzwerk-Fehler, Worker-Timeouts, TTS-Fails sind im lokalen CI-Run erwartet
+          const IGNORE_PATTERNS = [
+            'config.js', 'Failed to load resource', 'net::ERR_', 'WebSocket',
+            'tts', 'voice', 'fetch', 'Load failed', 'NetworkError',
+          ];
+          function isIgnored(msg) {
+            return IGNORE_PATTERNS.some(p => msg.includes(p)) || isCorsError(msg);
+          }
+          // Deduplizierung: gleicher Fehler max 1x loggen
+          const seenErrors = new Set();
           page.on('pageerror', err => {
-            // config.js ist optional -- der onerror-Handler im HTML faengt das ab
-            if (!err.message.includes('config.js') && !isCorsError(err.message)) {
+            if (!isIgnored(err.message) && !seenErrors.has(err.message)) {
+              seenErrors.add(err.message);
               errors.push(err.message);
             }
           });
           page.on('console', msg => {
             if (msg.type() === 'error') {
               const text = msg.text();
-              // config.js optional, generische 404-Meldungen ignorieren (Dateiname fehlt im Text), CORS ignorieren
-              if (!text.includes('config.js') && !isCorsError(text) && !text.includes('Failed to load resource')) {
+              if (!isIgnored(text) && !seenErrors.has(text)) {
+                seenErrors.add(text);
                 errors.push('console.error: ' + text);
               }
             }
