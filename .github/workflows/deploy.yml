@@ -183,3 +183,12 @@ jobs:
           path: .
       - id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Deploy to itch.io via Butler
+        run: |
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          unzip butler.zip
+          chmod +x butler
+          ./butler push . crygonejin/schatzinsel:web --userversion "${{ steps.version.outputs.version }}"
+        env:
+          BUTLER_API_KEY: ${{ secrets.itch_io_butler }}
