@@ -125,6 +125,7 @@
             postcards: events.filter(e => e.e === 'postcard').length,
             // Neutrino-Metrik: Crafting- und Chat-Events zählen
             crafts_count: events.filter(e => e.e === 'craft' || e.e === 'quick-craft' || e.e === 'llm-craft').length,
+            discovery_count: events.filter(e => e.e === 'discovery' || e.e === 'dungeon_level' || e.e === 'easter_egg' || e.e === 'hoerspiel' || e.e === 'code_zauber').length,
             chats_count: events.filter(e => e.e === 'chat' || e.e === 'npc_chat').length,
         };
     }
@@ -167,6 +168,8 @@
                     (data.materials > 3 ? 10 : 0)
                 )),
                 neutrino_score: neutrinoScore,
+                discovery_count: data.discovery_count || 0,
+                discovery_craft_ratio: crafts > 0 ? Math.round((data.discovery_count || 0) / crafts * 10) / 10 : null,
             }));
         } catch (e) { /* kein Tracking > kaputtes Tracking */ }
     }

@@ -409,6 +409,7 @@
         if (!npc) return;
         // Memory: Besuch registrieren
         touchNpcMemory(npcId);
+        trackEvent('discovery', { type: 'npc', npc: npcId });
         const quest = window.questSystem.getAvailable(npcId);
         const active = window.questSystem.getActive().find(q => q.npc === npcId);
         if (active) {
@@ -482,7 +483,7 @@
             if (!_dungeonVisited.includes(key)) {
                 _dungeonVisited.push(key);
                 localStorage.setItem('insel-dungeon-visited', JSON.stringify(_dungeonVisited));
-                if (trackEvent) trackEvent('dungeon_level', { level: key });
+                if (trackEvent) { trackEvent('dungeon_level', { level: key }); trackEvent('discovery', { type: 'dungeon', level: key }); }
             }
         });
 
