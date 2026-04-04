@@ -499,6 +499,65 @@
         if (closeBtn) closeBtn.focus();
     }
 
+    // === SEGELBOOT → INSEL-AUSWAHL (#54 Jim Knopfs Welt) ===
+    function showSailDialog() {
+        const existingDlg = document.getElementById('sail-dialog');
+        if (existingDlg) { existingDlg.classList.remove('hidden'); return; }
+
+        const dlg = document.createElement('div');
+        dlg.id = 'sail-dialog';
+        dlg.className = 'dialog-overlay';
+        dlg.innerHTML = `
+            <div class="dialog-content" style="max-width:340px;text-align:center;">
+                <h3>⛵ Wohin segeln?</h3>
+                <p style="margin:12px 0;font-size:14px;">Dein Segelboot ist bereit!</p>
+                <div style="display:flex;flex-direction:column;gap:8px;margin:16px 0;">
+                    <button class="sail-dest" data-dest="lummerland" style="padding:12px;font-size:16px;border-radius:8px;border:2px solid #2E86C1;background:#EBF5FB;cursor:pointer;">
+                        🏝️ Lummerland<br><small>Eine kleine Insel mit zwei Bergen</small>
+                    </button>
+                </div>
+                <button id="sail-cancel" style="margin-top:8px;padding:8px 16px;border:none;background:#eee;border-radius:6px;cursor:pointer;">Noch nicht</button>
+            </div>
+        `;
+        document.body.appendChild(dlg);
+
+        dlg.querySelector('#sail-cancel').addEventListener('click', () => dlg.classList.add('hidden'));
+        dlg.querySelectorAll('.sail-dest').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const dest = btn.dataset.dest;
+                dlg.classList.add('hidden');
+                sailToIsland(dest);
+            });
+        });
+    }
+
+    function sailToIsland(dest) {
+        showToast('⛵ Du segelst los...', 2000);
+        soundCraft();
+
+        setTimeout(() => {
+            // Grid leeren
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    grid[r][c] = null;
+                }
+            }
+
+            if (dest === 'lummerland') {
+                generateLummerland();
+                showToast('🏝️ Willkommen auf Lummerland! Eine kleine Insel mit zwei Bergen...', 4000);
+            }
+
+            // NPCs neu platzieren
+            initNpcPositions();
+            requestRedraw();
+
+            // Speichern
+            localStorage.setItem('insel-current-island', dest);
+            if (window.INSEL_BUS) window.INSEL_BUS.emit('island:arrived', { dest: dest });
+        }, 2000);
+    }
+
     // === KRABS SHOP — Muschelhandel ===
     // 1 Muschel = 0.001 MMX (Nerd-Ebene, Easter Egg). Kinder sehen 🐚.
     const SHELL_TO_MMX = 0.001;
@@ -2583,6 +2642,10 @@
                             }, 3000);
                         }
                     });
+                }
+                // Segelboot platziert → Insel-Auswahl
+                if (currentMaterial === 'sailboat') {
+                    setTimeout(() => showSailDialog(), 500);
                 }
                 playerBlocksPlaced++;
                 localStorage.setItem('insel-blocks-placed', playerBlocksPlaced);
