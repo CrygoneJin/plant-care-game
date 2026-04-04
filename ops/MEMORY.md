@@ -99,6 +99,10 @@ Persistent team log. Append-only. Read by all agents.
 
 ---
 
+| 2026-04-04 | **Elevation-System** — Simplex-Noise Heightmap für 2D+Iso. 443 LOC neu. Berge, Täler, Hillshade, Konturen. Kein externer Dep. | elevation.js, island-generators, game.js, iso-renderer, save.js |
+
+---
+
 ## Learnings (Muster die wir erkannt haben)
 
 ### Für den Coding-Vater
