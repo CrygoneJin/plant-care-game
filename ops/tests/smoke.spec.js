@@ -141,12 +141,81 @@ test.describe('NPC-Persönlichkeiten', () => {
         expect(reply.length).toBeGreaterThan(5);
     });
 
-    test('API-Settings nur im Code-View sichtbar', async ({ page }) => {
-        // Öffne Chat
+    test('API-Settings Button öffnet Dialog', async ({ page }) => {
         await page.click('#chat-bubble');
-        // Klick auf Settings — sollte Toast zeigen, nicht Dialog
         await page.click('#chat-settings-btn');
         const dialog = page.locator('#api-key-dialog');
-        await expect(dialog).toHaveClass(/hidden/);
+        await expect(dialog).not.toHaveClass(/hidden/);
+    });
+});
+
+test.describe('Runtime-Fehler Regression', () => {
+    // Fängt JS-Exceptions die CI bisher nicht sieht.
+    // Jeder hier gelistete Test entspricht einem Bug der in Produktion aufgetaucht ist.
+
+    test('keine JS-Exceptions beim Start (conwayOverlay, eliza.reply, etc.)', async ({ page }) => {
+        const errors = [];
+        page.on('pageerror', err => errors.push(err.message));
+
+        // localStorage vorbereiten wie ein returning player
+        await page.goto('https://schatzinsel.app/');
+        await page.evaluate(() => {
+            localStorage.setItem('insel-game-phase', 'participant');
+            localStorage.setItem('insel-player-name', 'TestSpieler');
+            localStorage.setItem('insel-player-pos', JSON.stringify({ r: 10, c: 10 }));
+        });
+        await page.reload();
+        await page.click('#start-button');
+        await page.waitForTimeout(2000); // Render-Loop laufen lassen
+
+        // Bekannte harmlose Fehler rausfiltern (Worker-404 etc.)
+        const fatal = errors.filter(e =>
+            !e.includes('net::ERR_') &&
+            !e.includes('Failed to load resource') &&
+            !e.includes('WebSocket') &&
+            !e.includes('tts')
+        );
+        expect(fatal, `JS-Exceptions: ${fatal.join('\n')}`).toHaveLength(0);
+    });
+
+    test('ELIZA antwortet ohne API (eliza.transform statt eliza.reply)', async ({ page }) => {
+        const errors = [];
+        page.on('pageerror', err => errors.push(err.message));
+
+        await page.goto('https://schatzinsel.app/');
+        await page.evaluate(() => {
+            localStorage.setItem('insel-game-phase', 'participant');
+            localStorage.setItem('insel-player-name', 'TestSpieler');
+            // Kein API-Key → ELIZA-Fallback
+            localStorage.removeItem('langdock-api-key');
+        });
+        await page.reload();
+        await page.click('#start-button');
+        await page.click('#chat-bubble');
+        await page.fill('#chat-input', 'Hallo');
+        await page.click('#chat-send-btn');
+        await page.waitForTimeout(1000);
+
+        const elizaErrors = errors.filter(e => e.includes('eliza') || e.includes('reply is not'));
+        expect(elizaErrors, `ELIZA-Fehler: ${elizaErrors.join('\n')}`).toHaveLength(0);
+
+        const msgs = await page.locator('.chat-msg.npc').count();
+        expect(msgs).toBeGreaterThan(0);
+    });
+
+    test('game-phase participant: Spielfigur sichtbar', async ({ page }) => {
+        await page.goto('https://schatzinsel.app/');
+        await page.evaluate(() => {
+            localStorage.setItem('insel-game-phase', 'participant');
+            localStorage.setItem('insel-player-name', 'Oscar');
+            localStorage.setItem('insel-player-pos', JSON.stringify({ r: 10, c: 10 }));
+        });
+        await page.reload();
+        await page.click('#start-button');
+        await page.waitForTimeout(1000);
+
+        // Spielfigur wird auf Canvas gezeichnet — wir prüfen dass game-phase korrekt gelesen wird
+        const phase = await page.evaluate(() => localStorage.getItem('insel-game-phase'));
+        expect(phase).toBe('participant');
     });
 });

@@ -98,12 +98,34 @@ jobs:
           // Lokaler HTTP-Server statt file:// (vermeidet CORS-Blockierung von ES-Modulen)
           await page.goto('http://localhost:8080', { waitUntil: 'load', timeout: 15000 });
 
-          // Warte kurz damit alle DOMContentLoaded-Handler laufen
-          await new Promise(r => setTimeout(r, 2000));
+          // Returning-Player simulieren: localStorage setzen + neu laden
+          // Deckt Bugs die nur im participant-Modus auftreten (conwayOverlay, drawPlayer etc.)
+          await page.evaluate(() => {
+            localStorage.setItem('insel-game-phase', 'participant');
+            localStorage.setItem('insel-player-name', 'CI-Spieler');
+            localStorage.setItem('insel-player-pos', JSON.stringify({ r: 10, c: 10 }));
+          });
+          await page.reload({ waitUntil: 'load', timeout: 15000 });
+
+          // Render-Loop 3s laufen lassen (deckt Runtime-Fehler in draw(), movePlayer() etc.)
+          await new Promise(r => setTimeout(r, 3000));
 
           // Pruefe ob Canvas existiert und game.js geladen hat
           const canvasExists = await page.$('#game-canvas');
           if (!canvasExists) errors.push('Canvas #game-canvas nicht gefunden');
+
+          // ELIZA-Fallback testen: Chat oeffnen + Nachricht senden ohne API-Key
+          const chatBubble = await page.$('#chat-bubble');
+          if (chatBubble) {
+            await chatBubble.click();
+            const input = await page.$('#chat-input');
+            if (input) {
+              await input.type('Hallo');
+              const sendBtn = await page.$('#chat-send-btn');
+              if (sendBtn) await sendBtn.click();
+              await new Promise(r => setTimeout(r, 800));
+            }
+          }
 
           await browser.close();
 
