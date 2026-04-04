@@ -249,7 +249,7 @@
 |---|------|----------|--------|
 | S28-1 | **#100 Energie vs Geld trennen** — Muscheln: goldene Summary-Box oben im Inventar. NPC-Energie: blaue Box im Chat mit Label "💬 Rede-Energie:". | Designer + Engineer | 🔄 In Progress (PR #238) |
 | S28-2 | **#101 Krabbs-Vorrat sichtbar** — Krabbs hat endliches Inventar (max 20 pro Material). Kein Holz → kein Verkauf. | Engineer | ✅ Done (PR #239) |
-| S28-3 | **PR #236 reviewen + mergen** — i18n DE/HE/AR + RTL + Spieler-Bug-Fix (breakSymmetry nie aufgerufen → Spieler unsichtbar). | Engineer | 🔲 Offen |
+| S28-3 | **PR #236 reviewen + mergen** — i18n DE/HE/AR + RTL + Spieler-Bug-Fix (breakSymmetry nie aufgerufen → Spieler unsichtbar). | Engineer | ✅ Done (PR #236, gemergt 2026-04-04) |
 
 ---
 
@@ -268,6 +268,19 @@
 **Heute:** S28-2 implementiert — KRABS_STOCK_MAX=20, Lager-Indikator (🔴/🟡/🟢), Sell-Cap, PR #239. S28-1 in PR #238 (andere Session). S28-3 in PR #236.
 
 **Blocker:** S28-1 + S28-3 brauchen Merge durch Till.
+
+### 2026-04-05 (Daily Scrum)
+
+**Heute:**
+- PR #236 (i18n + Spieler-Bug) bereits gemergt — S28-3 ✅ Done.
+- PR #239 (S28-2 Krabbs-Vorrat) gemergt — CI war grün.
+- PR #240 (fix/player-bernd-trees — Auto-Participant sichtbar) gemergt — CI grün.
+- PR #238 (S28-1 Energie vs Geld) hatte Merge-Konflikt in SPRINT.md → rebase, Konflikt aufgelöst.
+- `feat/sprint-27-economy` — alter Sprint-27-Branch (Muschel-Counter V1), superseded durch PR #238.
+
+**Smoke Test:** schatzinsel.app → 403 host_not_allowed (Cloudflare blockiert Curl aus dieser Umgebung — kein echter Ausfall). Worker-API nicht erreichbar von CI-Umgebung.
+
+**Blocker:** PR #238 (S28-1) rebase läuft — danach merge.
 
 ---
 

@@ -1376,22 +1376,42 @@ body.offline-whisper {
     background: radial-gradient(circle, #F39C12, #E67E22, transparent) !important;
 }
 
-/* === TOKEN DISPLAY === */
+/* === TOKEN DISPLAY (Rede-Energie — nicht Muscheln!) === */
 #token-budget-display {
-    display: none;
-}
-
-body.code-view-active #token-budget-display {
     display: block;
 }
 
 .token-display {
     text-align: center;
     font-size: 11px;
-    color: #F1C40F;
-    background: rgba(0, 0, 0, 0.3);
-    padding: 3px 8px;
+    color: #64b5f6;
+    background: rgba(30, 60, 100, 0.5);
+    border-top: 1px solid rgba(100, 181, 246, 0.2);
+    padding: 4px 8px;
     font-weight: bold;
+}
+
+/* === MUSCHELN-VERMÖGEN (Handelswährung — nicht Rede-Energie!) === */
+.inv-shell-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, rgba(249,168,37,0.15), rgba(255,193,7,0.08));
+    border: 1px solid rgba(249,168,37,0.35);
+    border-radius: 8px;
+    padding: 6px 10px;
+    margin-bottom: 8px;
+    font-size: 12px;
+}
+.inv-shell-label {
+    color: rgba(255,255,255,0.6);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+}
+.inv-shell-amount {
+    color: #f9a825;
+    font-weight: 700;
+    font-size: 13px;
 }
 
 /* === NPC CHAT === */

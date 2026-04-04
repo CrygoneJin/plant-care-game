@@ -111,14 +111,16 @@
         const bars = Math.max(0, Math.ceil(percent / 20));
         const energyBar = currency.emoji.repeat(bars);
 
+        // Rede-Energie ≠ Muscheln: klares Label damit Oscar den Unterschied sieht
+        const prefix = '💬 Rede-Energie: ';
         if (percent > 60) {
-            budgetDisplay.textContent = `${energyBar} Voller ${currency.unit}-Vorrat!`;
+            budgetDisplay.textContent = `${prefix}${energyBar} Voller ${currency.unit}-Vorrat!`;
         } else if (percent > 30) {
-            budgetDisplay.textContent = `${energyBar} Noch ${currency.unit} übrig!`;
+            budgetDisplay.textContent = `${prefix}${energyBar} Noch ${currency.unit} übrig!`;
         } else if (percent > 0) {
-            budgetDisplay.textContent = `${energyBar} Fast leer... Quest für mehr ${currency.unit}!`;
+            budgetDisplay.textContent = `${prefix}${energyBar} Fast leer... Quest für mehr ${currency.unit}!`;
         } else {
-            budgetDisplay.textContent = `Keine ${currency.unit} mehr! Quest abschließen!`;
+            budgetDisplay.textContent = `${prefix}Keine ${currency.unit} mehr! Quest abschließen!`;
         }
     }
 

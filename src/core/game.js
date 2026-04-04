@@ -1151,7 +1151,19 @@
             container.innerHTML = '<p class="inv-empty">Ernte Bäume für Holz! ⛏️</p>';
             return;
         }
-        container.innerHTML = items.map(([mat, count]) => {
+        // Muscheln = Handelswährung → eigener prominenter Block oben
+        const shells = inventory['shell'] || 0;
+        const shellHeader = shells > 0
+            ? `<div class="inv-shell-summary" title="Muscheln — deine Handelswährung bei Mr. Krabs">
+                <span class="inv-shell-label">💰 Dein Vermögen</span>
+                <span class="inv-shell-amount">🐚 ${shells} Muscheln</span>
+               </div>`
+            : '';
+
+        // Alle Items außer Muscheln (Muscheln werden im Header angezeigt)
+        const otherItems = items.filter(([mat]) => mat !== 'shell');
+
+        container.innerHTML = shellHeader + otherItems.map(([mat, count]) => {
             const info = MATERIALS[mat];
             if (!info) return '';
             return `<div class="inv-item" data-material="${mat}" title="${info.label}: ${count}" draggable="true">
