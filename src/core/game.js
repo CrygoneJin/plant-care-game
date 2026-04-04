@@ -587,11 +587,13 @@
     // 1 Muschel = 0.001 MMX (Nerd-Ebene, Easter Egg). Kinder sehen 🐚.
     const SHELL_TO_MMX = 0.001;
 
-    // Krabbs-Vorrat: endlich pro Session (Ricardo #101)
+    // Krabbs-Vorrat: endlich, max 20 pro Material (Ricardo #101 S28-2)
     // Wenn Krabbs kein Holz hat, kann er keins verkaufen.
+    // Angebot und Nachfrage ohne Erklärung — Oscar sieht es, lernt es.
+    const KRABS_STOCK_MAX = 20;
     const KRABS_STOCK_INIT = {
-        wood: 5, stone: 3, sand: 10, planks: 2, glass: 2,
-        flower: 3, fish: 3, diamond: 1, crystal: 1, honey: 2, apple: 3
+        wood: 8, stone: 6, sand: 12, planks: 4, glass: 3,
+        flower: 5, fish: 5, diamond: 2, crystal: 2, honey: 4, apple: 6
     };
     const krabsStock = JSON.parse(localStorage.getItem('insel-krabs-stock') || 'null') || { ...KRABS_STOCK_INIT };
     function saveKrabsStock() { localStorage.setItem('insel-krabs-stock', JSON.stringify(krabsStock)); }
@@ -629,8 +631,13 @@
             if (!info) return '';
             const have = getInventoryCount(mat);
             const stock = krabsStock[mat] || 0;
-            return `<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0;border-bottom:1px solid #333;">
-                <span>${info.emoji} ${info.label} (${have}x) <span style="color:#888;font-size:0.8em;">Lager:${stock}</span></span>
+            const stockFull = stock >= KRABS_STOCK_MAX;
+            // Lager-Indikator: 🔴 leer, 🟡 wenig (1-3), 🟢 gut (4+)
+            const stockDot = stock === 0 ? '🔴' : stock <= 3 ? '🟡' : '🟢';
+            const stockLabel = stock === 0 ? 'Ausverkauft!' : `Lager: ${stock}`;
+            const stockColor = stock === 0 ? '#c33' : stock <= 3 ? '#e6a800' : '#4caf50';
+            return `<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0;border-bottom:1px solid #333;${stock === 0 ? 'opacity:0.7;' : ''}">
+                <span>${info.emoji} ${info.label} (${have}x) <span style="color:${stockColor};font-size:0.8em;">${stockDot} ${stockLabel}</span></span>
                 <span>
                     <button class="krabs-buy" data-mat="${mat}" data-cost="${price.buy}"
                         style="background:#2E7D32;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"
@@ -638,7 +645,7 @@
                         Kauf ${price.buy}🐚</button>
                     <button class="krabs-sell" data-mat="${mat}" data-earn="${price.sell}"
                         style="background:#C62828;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"
-                        ${have <= 0 ? 'disabled style="opacity:0.4;background:#C62828;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"' : ''}>
+                        ${have <= 0 || stockFull ? `disabled style="opacity:0.4;background:#C62828;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;" title="${stockFull ? 'Krabbs hat genug!' : ''}"` : ''}>
                         Verkauf ${price.sell}🐚</button>
                 </span>
             </div>`;
@@ -685,11 +692,15 @@
             btn.addEventListener('click', () => {
                 const mat = btn.dataset.mat;
                 const earn = parseInt(btn.dataset.earn);
+                if ((krabsStock[mat] || 0) >= KRABS_STOCK_MAX) {
+                    showToast(`🦀 Krabbs: "Ich hab schon genug ${MATERIALS[mat]?.emoji}! Komm wenn ich leer bin!"`, 2500);
+                    return;
+                }
                 if (getInventoryCount(mat) > 0) {
                     removeFromInventory(mat, 1);
                     addToInventory('shell', earn);
                     unlockMaterial('shell');
-                    krabsStock[mat] = (krabsStock[mat] || 0) + 1;
+                    krabsStock[mat] = Math.min((krabsStock[mat] || 0) + 1, KRABS_STOCK_MAX);
                     saveKrabsStock();
                     showToast(`🦀 VERKAUFT! 1x ${MATERIALS[mat]?.emoji} für ${earn} 🐚! Ahahaha!`, 2000);
                     modal.remove();
