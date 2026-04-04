@@ -14,6 +14,9 @@ Persistent team log. Append-only. Read by all agents.
 | 2026-04-03 | Achievements: alte Phantom-Stats | wuXingUsed, florianeWishes etc. existierten nie in getGridStats() | Nur Stats verwenden die tatsächlich geliefert werden. Dynamische Achievements für ∞-Systeme. |
 | 2026-04-03 | 6 Duplikat-PRs für S25-3 (npc-data.js) | Multiple Sessions starteten ohne zu prüfen was bereits als offene PRs existiert | Session-Start: `gh pr list` auf offene PRs prüfen. Kein neuer Branch für Feature das schon als PR existiert. |
 | 2026-04-03 | REACTIONS fehlten 3 Styles: magic, warm, adventure | Floriane/Krämerin/Lokführer haben Styles die nicht in REACTIONS-Map definiert waren — würde undefined ergeben | Wenn neuer NPC-Style definiert wird, sofort REACTIONS-Eintrag mitliefern. |
+| 2026-04-04 | NPC-Session-Gedächtnis war zu 80% fertig — nur _sessionGreeted Set fehlte | getNpcMemoryComment() existierte, wurde aber nur bei 30% Zufall oder Quest-Annahme gezeigt | Vor Feature-Implementierung immer prüfen was schon da ist. Oft reicht ein kleiner Eingriff. |
+| 2026-04-04 | Wu-Xing NPC-Events waren bereits komplett — nur Limiter fehlte | npc-events.js hatte alle 9 Event-Typen, 15s Cooldown, Reactions. Nur max 3x/Session fehlte. | Backlog-Items gegen Code abgleichen. "Offen" heißt nicht "nicht angefangen". |
+| 2026-04-04 | Heidegger als Zuhandenheit-Auditor im Beirat | "Die Zahl ist nie das Kind" — Messung verwandelt Zuhandenheit in Vorhandenheit | Essay docs/essays/beschreibung-und-messung.md dokumentiert die Epistemologie des Projekts. |
 
 | Datum | Was | Warum | Lektion |
 |-------|-----|-------|---------|

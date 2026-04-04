@@ -94,9 +94,9 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S26-1 | **#96 NPC-Session-Gedächtnis** — NPCs erinnern sich via localStorage. Beim ersten Chat-Klick nach Pause: "Hey Oscar, gestern hast du viel [Material] gebaut!" `_sessionGreeted` Set verhindert Wiederholung. | Engineer + Artist | 🔲 Offen |
-| S26-2 | **#95 Wu-Xing→NPC-Events** — `INSEL_BUS.on('element:fire')` etc. NPCs kommentieren wenn Oscar Feuer/Wasser/Holz/Metall/Erde platziert. 15s Throttle, max 3x/Session. | Engineer + Artist | 🔲 Offen |
-| S26-3 | **#54 Jim Knopfs Welt** — Boot craften (Planks + Seil + Mast) → neue Insel-Auswahl. Mindestens 1 neue erreichbare Insel. Oscar segelt. | Engineer | 🔲 Offen |
+| S26-1 | **#96 NPC-Session-Gedächtnis** — `_sessionGreeted` Set, garantierter Gruß beim ersten Antippen. Kein 30%-Zufall mehr. | Engineer | ✅ Done (PR #218) |
+| S26-2 | **#95 Wu-Xing→NPC-Events** — `sessionReactionCount` Limiter auf max 3. Events existierten bereits. | Engineer | ✅ Done (PR #219) |
+| S26-3 | **#54 Jim Knopfs Welt** — Seil+Segel+Segelboot Rezepte. Segelboot platzieren → Insel-Auswahl → Lummerland. | Engineer | ✅ Done (PR #220) |
 
 ---
 
@@ -107,6 +107,17 @@
 **Kontext:** Sprint 25 vollständig (alle 3 Items Done, PR #212 gemergt). Retro: Duplikat-PR-Problem identifiziert und gelöst.
 
 **Sprint 26 Fokus:** Oscar-sichtbare Änderungen. NPCs werden lebendig (#96 Session-Gedächtnis). Welt reagiert (#95 Wu-Xing). Dann Expansion (#54 Boot/Insel).
+
+**Blocker:** Keine.
+
+### 2026-04-04 (Daily Scrum — Sprint 26)
+
+**Heute:** Alle 3 Items implementiert und als PRs eingereicht.
+- S26-1: `_sessionGreeted` Set — NPCs grüßen genau 1x pro Session mit Kontext (PR #218)
+- S26-2: `sessionReactionCount` Limiter max 3 — Wu-Xing Events existierten bereits (PR #219)
+- S26-3: 3 neue Materialien (Seil, Segel, Segelboot) + 3 Rezepte + Insel-Auswahl-Dialog → Lummerland (PR #220)
+
+Bonus: Geräte-Kompatibilitätsmatrix (PR #217), Heidegger im Beirat, Essay "Beschreibung und Messung".
 
 **Blocker:** Keine.
 
