@@ -1,50 +1,62 @@
-// === FRAKTALE BÄUME — L-System SpreadTree auf dem Insel-Grid ===
-// Lindenmayer (1968): Axiom + Regeln → Rekursion → Baum
-// Jeder Baum wächst aus seiner Grid-Position, deterministisch pro Zelle.
+// === FRAKTALE BÄUME — Stochastisches L-System nach Prusinkiewicz & Lindenmayer ===
+// Jeder Baum wächst anders: Winkel, Verzweigung, Farbe aus Zell-Hash.
+// Keine zwei Bäume auf der Insel sind identisch.
 
 (function () {
     'use strict';
 
-    // --- L-System definitions ---
-    // Each tree type has an axiom, rules, angle, iterations, and length shrink factor
-    var TREE_TYPES = {
-        small_tree: {
-            axiom: 'F',
-            rules: { F: 'F[+F][-F]' },
-            angle: 25,
-            iterations: 2,
-            lengthFactor: 0.6,
-            baseLength: 0.7,   // relative to CELL_SIZE
-            lineWidth: 2.5,
-            trunkColor: '#5D4037',
-            leafColor: '#43A047',
-            leafSize: 0.12     // relative to CELL_SIZE
-        },
-        tree: {
-            axiom: 'F',
-            rules: { F: 'FF[+F[-F]F][-F[+F]F]' },
-            angle: 22,
-            iterations: 2,
-            lengthFactor: 0.5,
-            baseLength: 1.2,
-            lineWidth: 3,
-            trunkColor: '#4E342E',
-            leafColor: '#2E7D32',
-            leafSize: 0.15
-        },
-        sapling: {
-            axiom: 'F',
-            rules: { F: 'F[+F][-F]' },
-            angle: 30,
-            iterations: 1,
-            lengthFactor: 0.65,
-            baseLength: 0.4,
-            lineWidth: 1.5,
-            trunkColor: '#795548',
-            leafColor: '#66BB6A',
-            leafSize: 0.08
-        }
+    // --- Deterministic hash per cell --- mehrere unabhängige Werte
+    function cellHash(r, c, salt) {
+        salt = salt || 0;
+        var h = ((r * 7919 + c * 104729 + salt * 1013) ^ (r << 5) ^ (c << 3)) >>> 0;
+        h = ((h ^ (h >>> 16)) * 0x45d9f3b) >>> 0;
+        h = ((h ^ (h >>> 16)) * 0x45d9f3b) >>> 0;
+        return (h ^ (h >>> 16)) / 4294967296;
+    }
+
+    // --- Stochastisches L-System: Regelauswahl per Zell-Seed ---
+    // Prusinkiewicz: p-Tabellen mit Wahrscheinlichkeiten → hier deterministisch per Position
+    var RULE_VARIANTS = {
+        tree: [
+            { F: 'FF[+F[-F]F][-F[+F]F]' },           // klassisch symmetrisch
+            { F: 'F[+F]F[-F]F' },                      // Zickzack
+            { F: 'FF[+F][-F][++F][--F]' },             // breit gefächert
+            { F: 'F[+FF][-FF]F[+F][-F]' },             // dicht
+            { F: 'FF[+F[-F[-F]F]F][-F[+F]F]' },        // asymmetrisch tief
+        ],
+        small_tree: [
+            { F: 'F[+F][-F]' },
+            { F: 'F[+F][-F]F' },
+            { F: 'F[++F][-F]' },
+            { F: 'F[+F][--F]F' },
+        ],
+        sapling: [
+            { F: 'F[+F][-F]' },
+            { F: 'F[+F]F' },
+            { F: 'F[-F][+F]' },
+        ]
     };
+
+    // Winkel-Varianten: verschiedene Spreizungen
+    var ANGLE_VARIANTS = {
+        tree:       [18, 22, 26, 30, 15, 35],
+        small_tree: [20, 25, 30, 35],
+        sapling:    [25, 30, 35, 40]
+    };
+
+    // Blattfarb-Palette — von hellgrün bis dunkelgrün bis herbstlich
+    var LEAF_PALETTES = [
+        ['#2E7D32', '#388E3C', '#43A047'],   // Tiefgrün
+        ['#1B5E20', '#2E7D32', '#4CAF50'],   // Dunkelwald
+        ['#558B2F', '#689F38', '#7CB342'],   // Hellgrün
+        ['#33691E', '#558B2F', '#8BC34A'],   // Limettengrün
+        ['#BF360C', '#E64A19', '#FF5722'],   // Herbst Orange
+        ['#4E342E', '#6D4C41', '#8D6E63'],   // Winterkahl (nur Stamm)
+        ['#1A237E', '#283593', '#3F51B5'],   // Magischer Blaubaum
+        ['#F57F17', '#F9A825', '#FBC02D'],   // Goldener Herbst
+    ];
+
+    var TRUNK_COLORS = ['#4E342E', '#5D4037', '#6D4C41', '#3E2723', '#795548'];
 
     // --- L-System string generation ---
     function generateLSystem(axiom, rules, iterations) {
@@ -60,35 +72,64 @@
         return current;
     }
 
-    // --- Deterministic pseudo-random per cell (for variation) ---
-    function cellHash(r, c) {
-        // Simple hash for per-cell variation
-        var h = (r * 7919 + c * 104729 + 31) % 256;
-        return h / 256; // 0..1
+    // --- Per-Zelle eindeutige Baum-Konfiguration ---
+    function getTreeConfig(treeType, r, c) {
+        var h0 = cellHash(r, c, 0);
+        var h1 = cellHash(r, c, 1);
+        var h2 = cellHash(r, c, 2);
+        var h3 = cellHash(r, c, 3);
+        var h4 = cellHash(r, c, 4);
+
+        var rules    = RULE_VARIANTS[treeType];
+        var angles   = ANGLE_VARIANTS[treeType];
+        var palette  = LEAF_PALETTES[Math.floor(h3 * LEAF_PALETTES.length)];
+        var trunk    = TRUNK_COLORS[Math.floor(h4 * TRUNK_COLORS.length)];
+
+        var chosenRule  = rules[Math.floor(h0 * rules.length)];
+        var chosenAngle = angles[Math.floor(h1 * angles.length)];
+
+        var iterations = treeType === 'sapling' ? 1 : (h2 < 0.3 ? 3 : 2);
+        var baseLength = treeType === 'tree'
+            ? (0.9 + h0 * 0.6)
+            : treeType === 'small_tree'
+                ? (0.5 + h1 * 0.4)
+                : (0.3 + h2 * 0.25);
+
+        var leafSize = treeType === 'tree'
+            ? (0.10 + h1 * 0.08)
+            : (0.07 + h2 * 0.06);
+
+        return {
+            axiom:        'F',
+            rules:        chosenRule,
+            angle:        chosenAngle,
+            iterations:   iterations,
+            lengthFactor: treeType === 'tree' ? (0.45 + h2 * 0.15) : (0.55 + h0 * 0.15),
+            baseLength:   baseLength,
+            lineWidth:    treeType === 'tree' ? (2.5 + h3 * 1.5) : (1.5 + h4 * 1.0),
+            trunkColor:   trunk,
+            leafColor:    palette[Math.floor(h4 * palette.length)],
+            leafColors:   palette,
+            leafSize:     leafSize
+        };
     }
 
     // --- Draw L-System tree on canvas ---
     function drawTree(ctx, x, y, cellSize, treeType, r, c) {
-        var def = TREE_TYPES[treeType];
-        if (!def) return;
-
+        var def = getTreeConfig(treeType, r, c);
         var lStr = generateLSystem(def.axiom, def.rules, def.iterations);
         var len = cellSize * def.baseLength;
         var angleRad = def.angle * Math.PI / 180;
 
-        // Per-cell variation: slight angle + length offset
-        var hash = cellHash(r, c);
-        var hash2 = cellHash(c, r);
-        var angleVariation = (hash - 0.5) * 10 * Math.PI / 180; // ±5°
-        var lengthVariation = 0.85 + hash2 * 0.3; // 0.85..1.15
+        // Winkeloffset: leichte Neigung je nach Zellposition
+        var tilt = (cellHash(r, c, 5) - 0.5) * 8 * Math.PI / 180;
 
         ctx.save();
         ctx.translate(x, y);
 
-        // Start at bottom of cell, draw upward
         var stack = [];
-        var currentAngle = -Math.PI / 2 + angleVariation; // straight up + variation
-        var currentLen = len * lengthVariation;
+        var currentAngle = -Math.PI / 2 + tilt;
+        var currentLen = len;
         var depth = 0;
         var maxDepth = def.iterations + 1;
 
@@ -98,10 +139,10 @@
             var ch = lStr[i];
 
             if (ch === 'F') {
-                // Draw a branch
-                var branchWidth = def.lineWidth * (1 - depth / (maxDepth + 2) * 0.6);
-                ctx.strokeStyle = depth < maxDepth - 1 ? def.trunkColor : def.leafColor;
-                ctx.lineWidth = Math.max(0.5, branchWidth);
+                var branchWidth = def.lineWidth * Math.max(0.15, 1 - depth / (maxDepth + 1) * 0.75);
+                var isLeafBranch = depth >= maxDepth - 1;
+                ctx.strokeStyle = isLeafBranch ? def.leafColor : def.trunkColor;
+                ctx.lineWidth = Math.max(0.4, branchWidth);
 
                 var dx = Math.cos(currentAngle) * currentLen;
                 var dy = Math.sin(currentAngle) * currentLen;
@@ -113,11 +154,12 @@
 
                 ctx.translate(dx, dy);
 
-                // Draw leaf at terminal branches
-                if (depth >= maxDepth - 1) {
-                    var leafR = cellSize * def.leafSize * (0.8 + cellHash(r + depth, c + i) * 0.4);
-                    ctx.fillStyle = def.leafColor;
-                    ctx.globalAlpha = 0.8;
+                // Blatt an Endästen — Größe und Farbe variieren
+                if (isLeafBranch) {
+                    var leafIdx = Math.floor(cellHash(r + depth, c + i, 7) * def.leafColors.length);
+                    var leafR = cellSize * def.leafSize * (0.7 + cellHash(r + i, c + depth, 6) * 0.6);
+                    ctx.fillStyle = def.leafColors[leafIdx];
+                    ctx.globalAlpha = 0.75 + cellHash(i, depth, 8) * 0.25;
                     ctx.beginPath();
                     ctx.arc(0, 0, leafR, 0, Math.PI * 2);
                     ctx.fill();
@@ -129,10 +171,10 @@
                 currentAngle -= angleRad;
             } else if (ch === '[') {
                 stack.push({
-                    x: ctx.getTransform().e,
-                    y: ctx.getTransform().f,
+                    x:     ctx.getTransform().e,
+                    y:     ctx.getTransform().f,
                     angle: currentAngle,
-                    len: currentLen,
+                    len:   currentLen,
                     depth: depth
                 });
                 currentLen *= def.lengthFactor;
@@ -143,8 +185,8 @@
                     ctx.setTransform(1, 0, 0, 1, 0, 0);
                     ctx.translate(state.x, state.y);
                     currentAngle = state.angle;
-                    currentLen = state.len;
-                    depth = state.depth;
+                    currentLen   = state.len;
+                    depth        = state.depth;
                 }
             }
         }
@@ -152,31 +194,26 @@
         ctx.restore();
     }
 
-    // --- Draw tree in flat (top-down) mode ---
-    // Renders on top of the grid cell, centered, growing "up" on canvas
+    // --- Flat (top-down) mode ---
     function drawFlatTree(ctx, r, c, cellSize, treeType, waterBorder) {
         var x = (c + waterBorder) * cellSize + cellSize / 2;
-        var y = (r + waterBorder) * cellSize + cellSize * 0.85; // base at bottom of cell
+        var y = (r + waterBorder) * cellSize + cellSize * 0.85;
         drawTree(ctx, x, y, cellSize, treeType, r, c);
     }
 
-    // --- Draw tree in isometric mode ---
+    // --- Isometric mode ---
     function drawIsoTree(ctx, r, c, cellSize, treeType, waterBorder, COLS) {
         if (!window.ISO_RENDERER) return;
         var totalCols = COLS + waterBorder * 2;
-        var originX = (totalCols * cellSize) / 2;
-        var originY = cellSize * 2;
-        var depth = cellSize * 0.4;
+        var originX   = (totalCols * cellSize) / 2;
+        var originY   = cellSize * 2;
+        var depth     = cellSize * 0.4;
 
-        var gr = r + waterBorder;
-        var gc = c + waterBorder;
-        var pos = window.ISO_RENDERER.gridToIso(gr, gc, cellSize, originX, originY);
-
-        // Tree base is at the top of the iso cube
+        var pos = window.ISO_RENDERER.gridToIso(r + waterBorder, c + waterBorder, cellSize, originX, originY);
         drawTree(ctx, pos.x, pos.y - depth, cellSize, treeType, r, c);
     }
 
-    // --- Batch draw all trees on the grid ---
+    // --- Batch draw all trees ---
     function drawAllTrees(ctx, grid, ROWS, COLS, cellSize, waterBorder, isoMode) {
         for (var r = 0; r < ROWS; r++) {
             for (var c = 0; c < COLS; c++) {
@@ -192,12 +229,10 @@
         }
     }
 
-    // --- Public API ---
     window.FRACTAL_TREES = {
         drawAllTrees: drawAllTrees,
         drawFlatTree: drawFlatTree,
-        drawIsoTree: drawIsoTree,
-        TREE_TYPES: TREE_TYPES
+        drawIsoTree:  drawIsoTree
     };
 
 })();
