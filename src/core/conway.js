@@ -13,6 +13,21 @@
     const CONWAY_LAND    = ['🦋','🐝','🌸'];
     const CONWAY_MIGRANT = ['🦅','🦢']; // erscheinen überall, kurz
 
+    // Raubtiere — verscheuchen Beute, fressen nicht (kindgerecht)
+    // Beute-Emoji flieht, Raubtier zieht allein weiter
+    const PREDATORS = {
+        '🦊': { habitat: 'land',  hunts: new Set(['🦋','🐝','🌸','🐸']) },
+        '🦈': { habitat: 'water', hunts: new Set(['🐟','🐠']) },
+        '🦉': { habitat: 'any',   hunts: new Set(['🦋','🐝','🌸','🐸','🦀']) },
+    };
+    const PREDATOR_EMOJIS = Object.keys(PREDATORS);
+    // Toast wenn Raubtier auftaucht
+    const PREDATOR_TOAST = {
+        '🦊': '🦊 Ein Fuchs schleicht über die Insel!',
+        '🦈': '🦈 Ein Hai kreist im Wasser!',
+        '🦉': '🦉 Eine Eule wacht über die Insel!',
+    };
+
     // State
     let conwayOverlay  = null; // 2D String-Array ('' = leer, sonst Emoji)
     let conwayInterval = null;
@@ -178,12 +193,12 @@
     };
 
     // Habitat: wo darf dieses Tier leben?
-    // water = nur auf leeren Zellen am Rand (zone=water), land = Innenbereich
     const HABITAT = {
         '🐟': 'water', '🐠': 'water', '🦀': 'beach',
         '🐚': 'beach', '🐸': 'beach',
         '🦋': 'land', '🐝': 'land', '🌸': 'land',
         '🦅': 'any', '🦢': 'any',
+        '🦊': 'land', '🦈': 'water', '🦉': 'any',
     };
 
     function habitatOk(emoji, r, c) {
@@ -195,15 +210,98 @@
         return z === 'land' || z === 'beach';
     }
 
-    // Boids-Schritt: jedes Tier wählt seinen nächsten Zielschritt
-    // Kohäsion: bewege dich zur Mitte der gleichen Spezies in Sichtweite
-    // Separation: vermeide Gedränge (>3 Gleiche im 3x3)
-    // Terrain: bleib im Habitat
-    function boidMove(emoji, r, c, overlay, grid, ROWS, COLS) {
-        const myGroup = SPECIES_GROUP[emoji] || emoji;
-        const radius = 4;
-        let sumR = 0, sumC = 0, countSame = 0, crowding = 0;
+    function isPredator(emoji) { return emoji in PREDATORS; }
 
+    // Findet nächstes Raubtier das diese Spezies jagt, gibt Richtung zurück
+    function fleeDir(emoji, r, c, overlay, ROWS, COLS) {
+        const fleeRadius = 3;
+        let threatR = -1, threatC = -1, minDist = Infinity;
+        for (let dr = -fleeRadius; dr <= fleeRadius; dr++) {
+            for (let dc = -fleeRadius; dc <= fleeRadius; dc++) {
+                if (dr === 0 && dc === 0) continue;
+                const nr = r + dr, nc = c + dc;
+                if (nr < 0 || nr >= ROWS || nc < 0 || nc >= COLS) continue;
+                const n = overlay[nr][nc];
+                if (n && isPredator(n) && PREDATORS[n].hunts.has(emoji)) {
+                    const d = Math.abs(dr) + Math.abs(dc);
+                    if (d < minDist) { minDist = d; threatR = nr; threatC = nc; }
+                }
+            }
+        }
+        if (threatR < 0) return null;
+        // Flieh weg vom Raubtier
+        return [Math.sign(r - threatR), Math.sign(c - threatC)];
+    }
+
+    // Boids-Schritt: Kohäsion + Separation + Flucht + Brownsche Bewegung
+    function boidMove(emoji, r, c, overlay, grid, ROWS, COLS) {
+        const isPred = isPredator(emoji);
+        const myGroup = SPECIES_GROUP[emoji] || emoji;
+        const radius = isPred ? 5 : 4;
+
+        // Flucht vor Raubtier (höchste Priorität für Beute)
+        if (!isPred) {
+            const flee = fleeDir(emoji, r, c, overlay, ROWS, COLS);
+            if (flee) {
+                const dirs = [];
+                dirs.push(flee);
+                if (flee[0] !== 0) dirs.push([flee[0], 0]);
+                if (flee[1] !== 0) dirs.push([0, flee[1]]);
+                // auch diagonale Fluchtwege
+                dirs.push([flee[0] || (Math.random() < 0.5 ? 1 : -1), flee[1] || (Math.random() < 0.5 ? 1 : -1)]);
+                for (const [dr, dc] of dirs) {
+                    const nr = r + dr, nc = c + dc;
+                    if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS
+                        && grid[nr][nc] === null && !overlay[nr][nc]
+                        && habitatOk(emoji, nr, nc)) {
+                        return [nr, nc];
+                    }
+                }
+            }
+        }
+
+        // Raubtier: jagt nächste Beute (bewegt sich Richtung Beute)
+        if (isPred) {
+            const hunts = PREDATORS[emoji].hunts;
+            let nearestR = -1, nearestC = -1, minDist = Infinity;
+            for (let dr = -radius; dr <= radius; dr++) {
+                for (let dc = -radius; dc <= radius; dc++) {
+                    if (dr === 0 && dc === 0) continue;
+                    const nr = r + dr, nc = c + dc;
+                    if (nr < 0 || nr >= ROWS || nc < 0 || nc >= COLS) continue;
+                    if (overlay[nr][nc] && hunts.has(overlay[nr][nc])) {
+                        const d = Math.abs(dr) + Math.abs(dc);
+                        if (d < minDist) { minDist = d; nearestR = nr; nearestC = nc; }
+                    }
+                }
+            }
+            if (nearestR >= 0) {
+                const dr = Math.sign(nearestR - r);
+                const dc = Math.sign(nearestC - c);
+                const candidates = [[dr, dc], [dr, 0], [0, dc]].filter(([a, b]) => a !== 0 || b !== 0);
+                for (const [mdr, mdc] of candidates) {
+                    const nr = r + mdr, nc = c + mdc;
+                    if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS
+                        && grid[nr][nc] === null && !overlay[nr][nc]
+                        && habitatOk(emoji, nr, nc)) {
+                        return [nr, nc];
+                    }
+                }
+            }
+            // Raubtier wandert allein (kein Schwarm)
+            if (Math.random() < 0.6) {
+                const dirs = [[-1,0],[1,0],[0,-1],[0,1]];
+                const d = dirs[Math.floor(Math.random() * dirs.length)];
+                const nr = r + d[0], nc = c + d[1];
+                if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS
+                    && grid[nr][nc] === null && !overlay[nr][nc]
+                    && habitatOk(emoji, nr, nc)) return [nr, nc];
+            }
+            return null;
+        }
+
+        // Schwarm-Kohäsion und Separation für Beute
+        let sumR = 0, sumC = 0, countSame = 0, crowding = 0;
         for (let dr = -radius; dr <= radius; dr++) {
             for (let dc = -radius; dc <= radius; dc++) {
                 if (dr === 0 && dc === 0) continue;
@@ -218,7 +316,6 @@
             }
         }
 
-        // Separation: zu eng → zufällige Flucht
         if (crowding >= 3) {
             const dirs = [[-1,0],[1,0],[0,-1],[0,1],[-1,-1],[-1,1],[1,-1],[1,1]];
             const free = dirs.filter(([dr, dc]) => {
@@ -231,17 +328,15 @@
                 const [dr, dc] = free[Math.floor(Math.random() * free.length)];
                 return [r + dr, c + dc];
             }
-            return null; // bleibt
+            return null;
         }
 
-        // Kohäsion: bewege dich Richtung Schwarmzentrum
         if (countSame > 0) {
             const targetR = Math.round(sumR / countSame);
             const targetC = Math.round(sumC / countSame);
             const dr = Math.sign(targetR - r);
             const dc = Math.sign(targetC - c);
             const candidates = [];
-            // Priorität: direkt zum Ziel, dann diagonal, dann seitwärts
             if (dr !== 0 || dc !== 0) candidates.push([dr, dc]);
             if (dr !== 0) candidates.push([dr, 0]);
             if (dc !== 0) candidates.push([0, dc]);
@@ -255,7 +350,7 @@
             }
         }
 
-        // Brownsche Bewegung: kein Schwarm in der Nähe → zufällig wandern
+        // Brownsche Bewegung
         if (Math.random() < 0.4) {
             const dirs = [[-1,0],[1,0],[0,-1],[0,1]];
             const d = dirs[Math.floor(Math.random() * dirs.length)];
@@ -310,6 +405,28 @@
                 }
             }
         }
+
+        // 1 Raubtier — taucht nach 8s auf, verschwindet nach 30s
+        setTimeout(() => {
+            if (!conwayOverlay) return;
+            const pred = PREDATOR_EMOJIS[Math.floor(Math.random() * PREDATOR_EMOJIS.length)];
+            for (let attempt = 0; attempt < 50; attempt++) {
+                const r = Math.floor(Math.random() * ROWS);
+                const c = Math.floor(Math.random() * COLS);
+                if (grid[r][c] === null && !conwayOverlay[r][c] && habitatOk(pred, r, c)) {
+                    conwayOverlay[r][c] = pred;
+                    if (window.showToast) window.showToast(PREDATOR_TOAST[pred]);
+                    // Verschwindet nach 25-35s
+                    setTimeout(() => {
+                        if (!conwayOverlay) return;
+                        for (let rr = 0; rr < ROWS; rr++)
+                            for (let cc = 0; cc < COLS; cc++)
+                                if (conwayOverlay[rr][cc] === pred) conwayOverlay[rr][cc] = '';
+                    }, 25000 + Math.random() * 10000);
+                    break;
+                }
+            }
+        }, 8000);
 
         initGameplayTracking(ROWS, COLS);
         conwayInterval = setInterval(conwayStep, 650);
