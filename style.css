@@ -484,6 +484,7 @@ header {
     text-align: center;
     padding: 10px 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    position: relative;
 }
 
 header h1 {
@@ -491,6 +492,19 @@ header h1 {
     font-size: 24px;
     letter-spacing: 1px;
 }
+
+.donate-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    cursor: pointer;
+}
+.donate-btn:hover { opacity: 1; }
 
 /* === TOOLBAR === */
 #toolbar {
