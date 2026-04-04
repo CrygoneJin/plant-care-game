@@ -409,36 +409,57 @@
         if (!npc) return;
         // Memory: Besuch registrieren
         touchNpcMemory(npcId);
+
+        // Session-Begrüßung: beim ersten Klick auf diesen NPC in dieser Session
+        const voice = NPC_VOICES[npcId];
+        let sessionGreeting = null;
+        if (!_sessionGreeted.has(npcId) && voice) {
+            sessionGreeting = getNpcMemoryComment(voice, npcId);
+            _sessionGreeted.add(npcId);
+        }
+
         const quest = window.questSystem.getAvailable(npcId);
         const active = window.questSystem.getActive().find(q => q.npc === npcId);
         if (active) {
-            showToast(`${npc.emoji} ${npc.name}: Ich warte noch auf "${active.title}"!`, 3000);
+            if (sessionGreeting) {
+                showToast(sessionGreeting, 3000);
+                setTimeout(() => showToast(`${npc.emoji} ${npc.name}: Ich warte noch auf "${active.title}"!`, 3000), 3200);
+            } else {
+                showToast(`${npc.emoji} ${npc.name}: Ich warte noch auf "${active.title}"!`, 3000);
+            }
         } else if (quest) {
-            // Memory: beim Annehmen eines neuen Quests Gedächtnis-Kommentar zeigen
-            const voice = NPC_VOICES[npcId];
-            if (voice) {
-                const memComment = getNpcMemoryComment(voice, npcId);
-                if (memComment) {
-                    showToast(memComment, 3000);
-                    setTimeout(() => showToast(`${npc.emoji} ${quest.desc}`, 5000), 3200);
-                } else {
-                    showToast(`${npc.emoji} ${quest.desc}`, 5000);
-                }
+            if (sessionGreeting) {
+                showToast(sessionGreeting, 3000);
+                setTimeout(() => showToast(`${npc.emoji} ${quest.desc}`, 5000), 3200);
             } else {
                 showToast(`${npc.emoji} ${quest.desc}`, 5000);
             }
             window.questSystem.accept(quest);
         } else if (npcId === 'bug') {
-            // Bug-NPC: Bug-Report-Dialog
+            if (sessionGreeting) showToast(sessionGreeting, 3000);
             showBugDialog();
-            return;
         } else if (npcId === 'krabs') {
-            // Krabs: Kein Quest? Dann HANDEL! 🦀💰
-            showKrabsShop();
+            if (sessionGreeting) {
+                showToast(sessionGreeting, 3000);
+                setTimeout(() => showKrabsShop(), 3200);
+            } else {
+                showKrabsShop();
+            }
         } else if (npcId === 'kraemerin') {
-            // Krämerin: Muscheln für den Laden annehmen
             const shells = getInventoryCount('shell');
-            if (shells > 0) {
+            if (sessionGreeting) {
+                showToast(sessionGreeting, 3000);
+                setTimeout(() => {
+                    if (shells > 0) {
+                        removeFromInventory('shell', shells);
+                        showToast(`👩‍🍳 Krämerin: ${shells} Muschel${shells > 1 ? 'n' : ''}! Die kommen ins Regal. Danke, Schatz! 🐚`, 4000);
+                        updateInventoryDisplay();
+                        soundCraft();
+                    } else {
+                        showToast('👩‍🍳 Krämerin: Bring mir Muscheln vom Strand! Die verkaufen sich wie warme Semmeln! 🐚', 4000);
+                    }
+                }, 3200);
+            } else if (shells > 0) {
                 removeFromInventory('shell', shells);
                 showToast(`👩‍🍳 Krämerin: ${shells} Muschel${shells > 1 ? 'n' : ''}! Die kommen ins Regal. Danke, Schatz! 🐚`, 4000);
                 updateInventoryDisplay();
@@ -447,7 +468,6 @@
                 showToast('👩‍🍳 Krämerin: Bring mir Muscheln vom Strand! Die verkaufen sich wie warme Semmeln! 🐚', 4000);
             }
         } else if (npcId === 'lokfuehrer') {
-            // Lokführer: Abenteuergeschichten
             const stories = [
                 '🚂 Lokführer: Meine Lok und ich sind einmal bis zum Ende der Welt gefahren! Naja, fast.',
                 '🚂 Lokführer: Weißt du was? Die besten Abenteuer fangen auf kleinen Inseln an!',
@@ -455,13 +475,18 @@
                 '🚂 Lokführer: Hör mal — wenn du genug Holz sammelst, bauen wir ein Boot!',
                 '🚂 Lokführer: Tschuff tschuff! Steig ein, wir fahren einmal um die Insel!',
             ];
-            showToast(stories[Math.floor(Math.random() * stories.length)], 5000);
+            const story = stories[Math.floor(Math.random() * stories.length)];
+            if (sessionGreeting) {
+                showToast(sessionGreeting, 3000);
+                setTimeout(() => showToast(story, 5000), 3200);
+            } else {
+                showToast(story, 5000);
+            }
         } else {
-            const voice = NPC_VOICES[npcId];
-            if (voice) {
-                // Memory-Kommentar Vorrang vor generic tick
-                const memComment = getNpcMemoryComment(voice, npcId);
-                const msg = memComment || `${npc.emoji} ${voice.prefix} ${voice.ticks[Math.floor(Math.random() * voice.ticks.length)]}`;
+            if (sessionGreeting) {
+                showToast(sessionGreeting, 3000);
+            } else if (voice) {
+                const msg = `${npc.emoji} ${voice.prefix} ${voice.ticks[Math.floor(Math.random() * voice.ticks.length)]}`;
                 showToast(msg, 3000);
             }
         }
@@ -782,6 +807,8 @@
     // Format: { [npcId]: { lastMaterial, lastMaterialKey, lastVisit, questsDone: [] } }
 
     const NPC_MEMORY_KEY = 'insel-npc-memory';
+    /** @type {Set<string>} NPCs die diese Session schon gegrüßt haben */
+    const _sessionGreeted = new Set();
 
     function loadNpcMemory() {
         try { return JSON.parse(localStorage.getItem(NPC_MEMORY_KEY) || '{}'); }
