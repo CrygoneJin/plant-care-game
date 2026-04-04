@@ -2067,31 +2067,6 @@
             }
         }
 
-        // Spielfigur zeichnen (nur als Teilnehmer — nach Symmetriebrechung)
-        if (playerName && isParticipant()) {
-            const px = (playerPos.c + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
-            const py = (playerPos.r + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
-            // Schatten
-            ctx.globalAlpha = 0.25;
-            ctx.fillStyle = '#000';
-            ctx.beginPath();
-            ctx.ellipse(px, py + CELL_SIZE * 0.35, CELL_SIZE * 0.25, CELL_SIZE * 0.1, 0, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.globalAlpha = 1;
-            // Figur
-            ctx.font = `${CELL_SIZE * 0.65}px serif`;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('🧒', px, py);
-            // Name
-            ctx.font = `bold ${Math.max(10, CELL_SIZE * 0.3)}px sans-serif`;
-            ctx.fillStyle = '#fff';
-            ctx.strokeStyle = 'rgba(0,0,0,0.7)';
-            ctx.lineWidth = 3;
-            ctx.strokeText(playerName, px, py - CELL_SIZE * 0.52);
-            ctx.fillText(playerName, px, py - CELL_SIZE * 0.52);
-        }
-
         // NPCs zeichnen
         for (const [id, pos] of Object.entries(npcPositions)) {
             const npc = NPC_DEFS[id];
@@ -2498,7 +2473,7 @@
 
         // Spielfigur (nur als Teilnehmer)
         if (playerName && isParticipant()) {
-            ISO.drawIsoEntity(ctx, playerPos.r, playerPos.c, '\uD83E\uDDD2', playerName,
+            ISO.drawIsoEntity(ctx, playerPos.r, playerPos.c, playerEmoji, playerName,
                 WATER_BORDER, COLS, CELL_SIZE, time, { shadow: true, fontSize: 0.65 });
         }
 
@@ -3521,6 +3496,8 @@
             // Tutorial-Onboarding nur für Erstbesucher
             if (isFirstVisit) showTutorialOnboarding();
         }, 300);
+        // Spieler ist nach Intro immer Teilnehmer — Figur sichtbar machen
+        breakSymmetry();
         window.startSessionClock();
     }
 

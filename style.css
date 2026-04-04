@@ -2821,3 +2821,93 @@ body.code-view-active #chat-settings-btn {
 .dungeon-content .action-btn:hover {
     background: #7a55c5;
 }
+
+/* === RTL SUPPORT — Hebräisch & Arabisch === */
+
+/* Language picker */
+.lang-picker {
+    position: fixed;
+    top: 8px;
+    right: 8px;
+    z-index: 9999;
+    display: flex;
+    gap: 4px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: 4px 6px;
+}
+[dir="rtl"] .lang-picker {
+    right: auto;
+    left: 8px;
+}
+.lang-picker button {
+    background: none;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 2px 4px;
+    line-height: 1;
+    transition: border-color 0.2s;
+}
+.lang-picker button.active {
+    border-color: rgba(255, 255, 255, 0.8);
+}
+.lang-picker button:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* RTL: Mirror layout direction */
+[dir="rtl"] #main-area {
+    direction: rtl;
+}
+[dir="rtl"] #palette {
+    text-align: right;
+}
+[dir="rtl"] #stats {
+    text-align: right;
+}
+[dir="rtl"] header h1 {
+    direction: rtl;
+}
+[dir="rtl"] .toolbar-group {
+    direction: rtl;
+}
+[dir="rtl"] #chat-panel {
+    left: 8px;
+    right: auto;
+}
+[dir="rtl"] #chat-input-area {
+    direction: rtl;
+}
+[dir="rtl"] #chat-input {
+    text-align: right;
+}
+[dir="rtl"] .crafting-layout {
+    direction: rtl;
+}
+[dir="rtl"] .craft-arrow {
+    transform: scaleX(-1);
+}
+[dir="rtl"] .genesis-hint {
+    direction: rtl;
+}
+[dir="rtl"] .sidebar-panel {
+    text-align: right;
+}
+[dir="rtl"] .dashboard-modal {
+    direction: rtl;
+    text-align: right;
+}
+[dir="rtl"] .bedtime-container {
+    direction: rtl;
+    text-align: right;
+}
+[dir="rtl"] .dungeon-content {
+    direction: rtl;
+    text-align: right;
+}
+/* RTL font: keep Arabic/Hebrew-friendly fonts */
+[dir="rtl"] body {
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}

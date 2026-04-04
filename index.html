@@ -17,6 +17,13 @@
 </head>
 <body>
 
+    <!-- Sprachwahl — 🇩🇪 🇮🇱 🇵🇸 -->
+    <div class="lang-picker" id="lang-picker">
+        <button data-lang="de" class="active" title="Deutsch">🇩🇪</button>
+        <button data-lang="he" title="עברית">🇮🇱</button>
+        <button data-lang="ar" title="العربية">🇵🇸</button>
+    </div>
+
     <!-- Regenbogen Hintergrund-Effekt -->
     <div id="rainbow-bg" class="rainbow-hidden"></div>
 
@@ -26,7 +33,7 @@
             <h1 id="intro-title">·</h1>
             <p class="intro-subtitle" id="intro-subtitle"><em>Am Anfang war ein Punkt...</em></p>
             <div id="player-name-group" style="margin-top:16px;">
-                <input type="text" id="player-name-input" maxlength="8" placeholder="Dein Name" autocomplete="off"
+                <input type="text" id="player-name-input" maxlength="8" placeholder="Dein Name" data-i18n-placeholder="intro.name_placeholder" autocomplete="off"
                     style="width:180px; padding:6px 10px; border-radius:12px; border:2px solid rgba(255,255,255,0.5); background:rgba(255,255,255,0.15); color:#fff; font-size:15px; text-align:center; font-family:inherit; outline:none;">
                 <div id="avatar-picker" style="margin-top:8px; display:flex; gap:8px; justify-content:center;" aria-label="Wähle dein Insel-Emoji">
                     <button class="avatar-btn active" data-avatar="🧒" title="Kind" style="font-size:28px; background:none; border:2px solid rgba(255,255,255,0.6); border-radius:12px; padding:4px 8px; cursor:pointer;">🧒</button>
@@ -76,7 +83,7 @@
 
         <!-- Header -->
         <header>
-            <h1>🏝️ Schatzinsel</h1>
+            <h1 data-i18n="header.title">🏝️ Schatzinsel</h1>
             <a href="https://donate.stripe.com/test_7sY9AMcTD6wQ7e9flD1ZS00" target="_blank" rel="noopener"
                class="donate-btn" title="Projekt unterstützen" aria-label="Projekt unterstützen — Kaffee spendieren">☕</a>
         </header>
@@ -84,37 +91,37 @@
         <!-- Toolbar -->
         <div id="toolbar" role="toolbar" aria-label="Werkzeuge und Aktionen">
             <div class="toolbar-group" id="tools-group">
-                <button class="tool-btn active" data-tool="build" title="Bauen (B)">🖌️</button>
-                <button class="tool-btn" data-tool="harvest" title="Aufnehmen (E)">⛏️</button>
-                <button class="tool-btn" data-tool="fill" title="Füllen (F)">🪣</button>
+                <button class="tool-btn active" data-tool="build" title="Bauen (B)" data-i18n-title="tool.build">🖌️</button>
+                <button class="tool-btn" data-tool="harvest" title="Aufnehmen (E)" data-i18n-title="tool.harvest">⛏️</button>
+                <button class="tool-btn" data-tool="fill" title="Füllen (F)" data-i18n-title="tool.fill">🪣</button>
             </div>
             <div class="toolbar-group" id="view-group">
-                <button class="tool-btn" id="weather-btn" title="Wetter ändern">☀️</button>
-                <button class="tool-btn" id="theme-btn" title="Theme wechseln">🎨</button>
-                <button class="tool-btn" id="mute-btn" title="Ton an/aus">🔊</button>
+                <button class="tool-btn" id="weather-btn" title="Wetter ändern" data-i18n-title="tool.weather">☀️</button>
+                <button class="tool-btn" id="theme-btn" title="Theme wechseln" data-i18n-title="tool.theme">🎨</button>
+                <button class="tool-btn" id="mute-btn" title="Ton an/aus" data-i18n-title="tool.mute">🔊</button>
             </div>
             <div class="toolbar-group" id="craft-group">
-                <button class="tool-btn craft-open-btn" id="craft-btn" title="Werkbank">⚒️</button>
+                <button class="tool-btn craft-open-btn" id="craft-btn" title="Werkbank" data-i18n-title="tool.craft">⚒️</button>
             </div>
             <div class="toolbar-group" id="overflow-group" style="position:relative">
                 <button class="tool-btn" id="toolbar-more-btn" title="Mehr Werkzeuge" onclick="document.getElementById('toolbar-overflow').classList.toggle('open')">⋯</button>
                 <div class="toolbar-overflow" id="toolbar-overflow">
-                    <button class="tool-btn" id="genre-btn" title="Musik-Genre — klicken um zu wechseln">🎶</button>
-                    <button class="tool-btn" id="iso-btn" title="Isometrische Ansicht (Tetraeder-Gitter)">&#x25B3;</button>
-                    <button class="tool-btn" id="code-view-btn" title="Code-Ansicht">&lt;/&gt;</button>
-                    <button class="tool-btn" id="tutorial-btn" title="Programmier-Tutorial">🎓</button>
-                    <button class="tool-btn" id="replay-btn" title="Bauwerk als Song abspielen">🎵</button>
-                    <button class="tool-btn" id="rewind-btn" title="Zeitreise: Baugeschichte rückwärts">⏪</button>
-                    <button class="tool-btn" id="bedtime-btn" title="Gute-Nacht-Geschichte von Tommy Krab">📖</button>
-                    <input type="text" id="project-name" placeholder="Meine Insel" maxlength="30" aria-label="Projektname">
-                    <button class="tool-btn" id="save-btn" title="Speichern">💾</button>
-                    <button class="tool-btn" id="load-btn" title="Laden">📂</button>
-                    <button class="tool-btn" id="new-btn" title="Neu">🆕</button>
-                    <button class="tool-btn" id="postcard-btn" title="Postkarte">📸</button>
-                    <button class="tool-btn" id="share-btn" title="Insel-Link kopieren">🔗</button>
-                    <button class="tool-btn" id="karte-btn" title="Schatzkarte für Eltern 🗺️">🗺️</button>
-                    <button class="tool-btn" id="dashboard-btn" title="Eltern-Dashboard — Spielstatistiken">📊</button>
-                    <button class="tool-btn" id="market-btn" title="Tauschbörse — Rare Items tauschen">🏪</button>
+                    <button class="tool-btn" id="genre-btn" title="Musik-Genre — klicken um zu wechseln" data-i18n-title="tool.genre">🎶</button>
+                    <button class="tool-btn" id="iso-btn" title="Isometrische Ansicht (Tetraeder-Gitter)" data-i18n-title="tool.iso">&#x25B3;</button>
+                    <button class="tool-btn" id="code-view-btn" title="Code-Ansicht" data-i18n-title="tool.code">&lt;/&gt;</button>
+                    <button class="tool-btn" id="tutorial-btn" title="Programmier-Tutorial" data-i18n-title="tool.tutorial">🎓</button>
+                    <button class="tool-btn" id="replay-btn" title="Bauwerk als Song abspielen" data-i18n-title="tool.replay">🎵</button>
+                    <button class="tool-btn" id="rewind-btn" title="Zeitreise: Baugeschichte rückwärts" data-i18n-title="tool.rewind">⏪</button>
+                    <button class="tool-btn" id="bedtime-btn" title="Gute-Nacht-Geschichte von Tommy Krab" data-i18n-title="tool.bedtime">📖</button>
+                    <input type="text" id="project-name" placeholder="Meine Insel" data-i18n-placeholder="project.name_placeholder" maxlength="30" aria-label="Projektname">
+                    <button class="tool-btn" id="save-btn" title="Speichern" data-i18n-title="tool.save">💾</button>
+                    <button class="tool-btn" id="load-btn" title="Laden" data-i18n-title="tool.load">📂</button>
+                    <button class="tool-btn" id="new-btn" title="Neu" data-i18n-title="tool.new">🆕</button>
+                    <button class="tool-btn" id="postcard-btn" title="Postkarte" data-i18n-title="tool.postcard">📸</button>
+                    <button class="tool-btn" id="share-btn" title="Insel-Link kopieren" data-i18n-title="tool.share">🔗</button>
+                    <button class="tool-btn" id="karte-btn" title="Schatzkarte für Eltern 🗺️" data-i18n-title="tool.map">🗺️</button>
+                    <button class="tool-btn" id="dashboard-btn" title="Eltern-Dashboard — Spielstatistiken" data-i18n-title="tool.dashboard">📊</button>
+                    <button class="tool-btn" id="market-btn" title="Tauschbörse — Rare Items tauschen" data-i18n-title="tool.market">🏪</button>
                     <button class="tool-btn" id="testdata-btn" title="Testdaten" style="display:none">📊</button>
                     <button class="tool-btn" id="bug-btn" title="Bug melden" style="display:none">🐛</button>
                 </div>
@@ -206,43 +213,43 @@
             <!-- Sidebar Tabs -->
             <div id="stats">
                 <div class="sidebar-tabs">
-                    <button class="sidebar-tab active" data-tab="info" aria-label="Insel-Info">🏝️</button>
-                    <button class="sidebar-tab" data-tab="inventory" aria-label="Inventar">🎒</button>
-                    <button class="sidebar-tab" data-tab="quests" aria-label="Quests">📜</button>
-                    <button class="sidebar-tab" data-tab="achievements" aria-label="Erfolge">🏆</button>
-                    <button class="sidebar-tab" data-tab="blueprints" aria-label="Baupläne">🏗️</button>
+                    <button class="sidebar-tab active" data-tab="info" aria-label="Insel-Info" data-i18n-label="sidebar.info">🏝️</button>
+                    <button class="sidebar-tab" data-tab="inventory" aria-label="Inventar" data-i18n-label="sidebar.inventory">🎒</button>
+                    <button class="sidebar-tab" data-tab="quests" aria-label="Quests" data-i18n-label="sidebar.quests">📜</button>
+                    <button class="sidebar-tab" data-tab="achievements" aria-label="Erfolge" data-i18n-label="sidebar.achievements">🏆</button>
+                    <button class="sidebar-tab" data-tab="blueprints" aria-label="Baupläne" data-i18n-label="sidebar.blueprints">🏗️</button>
                 </div>
 
                 <div class="sidebar-panel active" id="panel-info">
-                    <h2>Insel-Info</h2>
+                    <h2 data-i18n="info.title">Insel-Info</h2>
                     <div id="stats-content">
-                        <p>Deine Insel wartet! 🏝️</p>
-                        <p>Klick links, bau los!</p>
+                        <p data-i18n="info.welcome">Deine Insel wartet! 🏝️</p>
+                        <p data-i18n="info.hint">Klick links, bau los!</p>
                     </div>
                 </div>
 
                 <div class="sidebar-panel" id="panel-inventory">
-                    <h2>🎒 Inventar</h2>
+                    <h2 data-i18n="inventory.title">🎒 Inventar</h2>
                     <div id="inventory-content">
-                        <p class="inv-empty">Ernte Bäume für Holz! ⛏️</p>
+                        <p class="inv-empty" data-i18n="inventory.empty">Ernte Bäume für Holz! ⛏️</p>
                     </div>
                 </div>
 
                 <div class="sidebar-panel" id="panel-quests">
-                    <h2>📜 Quests</h2>
+                    <h2 data-i18n="quests.title">📜 Quests</h2>
                     <div id="quest-list">
-                        <p class="no-quests">Bau was — die Bewohner melden sich! 💬</p>
+                        <p class="no-quests" data-i18n="quests.empty">Bau was — die Bewohner melden sich! 💬</p>
                     </div>
                 </div>
 
                 <div class="sidebar-panel" id="panel-achievements">
-                    <h2>🏆 Erfolge</h2>
+                    <h2 data-i18n="achievements.title">🏆 Erfolge</h2>
                     <div id="achievement-list"></div>
                 </div>
 
                 <div class="sidebar-panel" id="panel-blueprints">
-                    <h2>🏗️ Baupläne</h2>
-                    <p class="blueprint-hint">Baue das Muster auf der Insel — wenn es passt, entsteht ein Gebäude!</p>
+                    <h2 data-i18n="blueprints.title">🏗️ Baupläne</h2>
+                    <p class="blueprint-hint" data-i18n="blueprints.hint">Baue das Muster auf der Insel — wenn es passt, entsteht ein Gebäude!</p>
                     <div id="blueprint-list"></div>
                 </div>
             </div>
@@ -252,7 +259,7 @@
         <!-- Lade-Dialog -->
         <div id="load-dialog" class="dialog-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="load-dialog-title">
             <div class="dialog-content">
-                <h2 id="load-dialog-title">📂 Projekt laden</h2>
+                <h2 id="load-dialog-title" data-i18n="dialog.load_title">📂 Projekt laden</h2>
                 <div id="saved-projects-list"></div>
                 <button class="action-btn" id="close-load-dialog">❌ Schließen</button>
             </div>
@@ -261,12 +268,12 @@
         <!-- Crafting Dialog -->
         <div id="crafting-dialog" class="dialog-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="crafting-dialog-title">
             <div class="dialog-content crafting-content">
-                <h2 id="crafting-dialog-title">⚒️ Werkbank</h2>
+                <h2 id="crafting-dialog-title" data-i18n="dialog.craft_title">⚒️ Werkbank</h2>
                 <div class="crafting-layout">
                     <div class="crafting-left">
-                        <h3>Dein Inventar</h3>
+                        <h3 data-i18n="craft.inventory">Dein Inventar</h3>
                         <div id="craft-inventory" class="craft-inventory"></div>
-                        <p class="craft-hint">Leg Materialien rein und probier aus!</p>
+                        <p class="craft-hint" data-i18n="craft.hint">Leg Materialien rein und probier aus!</p>
                     </div>
                     <div class="crafting-center">
                         <div class="crafting-grid">
@@ -286,17 +293,17 @@
                         </div>
                     </div>
                     <div class="crafting-right">
-                        <h3>🔮 Was passiert?</h3>
+                        <h3 data-i18n="craft.what_happens">🔮 Was passiert?</h3>
                         <div id="recipe-book" class="recipe-book">
-                            <p class="craft-discover-hint">Mische die Elemente und finde heraus was entsteht!</p>
+                            <p class="craft-discover-hint" data-i18n="craft.discover">Mische die Elemente und finde heraus was entsteht!</p>
                         </div>
                     </div>
                 </div>
                 <div id="craft-hints" class="craft-hints"></div>
                 <div class="crafting-actions">
-                    <button class="action-btn" id="do-craft-btn">⚒️ Craften!</button>
-                    <button class="action-btn" id="clear-craft-btn">🔄 Leeren</button>
-                    <button class="action-btn" id="close-crafting-dialog">❌ Schließen</button>
+                    <button class="action-btn" id="do-craft-btn" data-i18n="craft.do">⚒️ Craften!</button>
+                    <button class="action-btn" id="clear-craft-btn" data-i18n="craft.clear">🔄 Leeren</button>
+                    <button class="action-btn" id="close-crafting-dialog" data-i18n="dialog.close">❌ Schließen</button>
                 </div>
             </div>
         </div>
@@ -325,7 +332,7 @@
             <div id="token-budget-display" class="token-display">💰 2000/2000 Tokens</div>
             <div id="chat-messages"></div>
             <div id="chat-input-area">
-                <input type="text" id="chat-input" placeholder="Sag was zu deinem Inselbewohner..." maxlength="200" aria-label="Nachricht an Inselbewohner">
+                <input type="text" id="chat-input" placeholder="Sag was zu deinem Inselbewohner..." data-i18n-placeholder="chat.placeholder" maxlength="200" aria-label="Nachricht an Inselbewohner">
                 <button id="chat-send-btn" aria-label="Nachricht senden">➤</button>
             </div>
         </div>
@@ -379,8 +386,8 @@
     <!-- Dungeon-Dialog (#50 Höhle = Dungeon) -->
     <div id="dungeon-dialog" class="dialog-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="dungeon-title">
         <div class="dialog-content dungeon-content">
-            <h2 id="dungeon-title">🕳️ Du bist in der Höhle!</h2>
-            <p class="dungeon-intro">Tief unter der Insel liegt die Welt der Computer. Kannst du alle Ebenen erkunden?</p>
+            <h2 id="dungeon-title" data-i18n="dungeon.title">🕳️ Du bist in der Höhle!</h2>
+            <p class="dungeon-intro" data-i18n="dungeon.intro">Tief unter der Insel liegt die Welt der Computer. Kannst du alle Ebenen erkunden?</p>
             <div class="dungeon-levels">
                 <div class="dungeon-level" data-level="bits">
                     <div class="dungeon-level-icon">⚡</div>
@@ -407,7 +414,7 @@
             <div class="dungeon-secret hidden" id="dungeon-secret">
                 <p>🏆 Du hast alle Ebenen entdeckt! Du bist ein echter Computer-Archäologe!</p>
             </div>
-            <button class="action-btn" id="close-dungeon-dialog">🚪 Höhle verlassen</button>
+            <button class="action-btn" id="close-dungeon-dialog" data-i18n="dungeon.exit">🚪 Höhle verlassen</button>
         </div>
     </div>
 
@@ -531,7 +538,8 @@
     <script src="src/world/npc-craft.js"></script>
     <script src="src/world/chat.js"></script>
     <script src="src/world/voice.js"></script>
-    <!-- infra: Storage, Analytics, TTS -->
+    <!-- infra: i18n, Storage, Analytics, TTS -->
+    <script src="src/infra/i18n.js"></script>
     <script src="src/infra/qr.js"></script>
     <script src="src/infra/storage.js"></script>
     <script src="src/infra/stories.js"></script>
@@ -546,6 +554,32 @@
     <script src="src/core/game.js"></script>
     <script src="config.js"></script>
     <script>
+    // i18n: Sprachwahl initialisieren
+    (function () {
+        var I18N = window.INSEL_I18N;
+        if (!I18N) return;
+        // Apply saved language on load
+        I18N.apply();
+        // Language picker clicks
+        var picker = document.getElementById('lang-picker');
+        if (picker) {
+            picker.addEventListener('click', function (e) {
+                var btn = e.target.closest('[data-lang]');
+                if (!btn) return;
+                picker.querySelectorAll('button').forEach(function (b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                I18N.setLanguage(btn.dataset.lang);
+            });
+            // Set active button on load
+            var saved = I18N.getLanguage();
+            var activeBtn = picker.querySelector('[data-lang="' + saved + '"]');
+            if (activeBtn) {
+                picker.querySelectorAll('button').forEach(function (b) { b.classList.remove('active'); });
+                activeBtn.classList.add('active');
+            }
+        }
+    })();
+
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js').catch(() => {});
     }
