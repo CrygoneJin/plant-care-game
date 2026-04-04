@@ -94,9 +94,9 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S26-1 | **#96 NPC-Session-Gedächtnis** — NPCs erinnern sich via localStorage. Beim ersten Chat-Klick nach Pause: "Hey Oscar, gestern hast du viel [Material] gebaut!" `_sessionGreeted` Set verhindert Wiederholung. | Engineer + Artist | 🔲 Offen |
-| S26-2 | **#95 Wu-Xing→NPC-Events** — `INSEL_BUS.on('element:fire')` etc. NPCs kommentieren wenn Oscar Feuer/Wasser/Holz/Metall/Erde platziert. 15s Throttle, max 3x/Session. | Engineer + Artist | 🔲 Offen |
-| S26-3 | **#54 Jim Knopfs Welt** — Boot craften (Planks + Seil + Mast) → neue Insel-Auswahl. Mindestens 1 neue erreichbare Insel. Oscar segelt. | Engineer | 🔲 Offen |
+| S26-1 | **#96 NPC-Session-Gedächtnis** — NPCs erinnern sich via localStorage. Beim ersten Chat-Klick nach Pause: "Hey Oscar, gestern hast du viel [Material] gebaut!" `_sessionGreeted` Set verhindert Wiederholung. | Engineer + Artist | ✅ Done (PR #218) |
+| S26-2 | **#95 Wu-Xing→NPC-Events** — `INSEL_BUS.on('element:fire')` etc. NPCs kommentieren wenn Oscar Feuer/Wasser/Holz/Metall/Erde platziert. 15s Throttle, max 3x/Session. | Engineer + Artist | ✅ Done (PR #219) |
+| S26-3 | **#54 Jim Knopfs Welt** — Segelboot craften (Boot + Segel) → Insel-Auswahl-Dialog. Seil, Segel, Segelboot als neue Materialien + Rezepte. Lummerland erreichbar. | Engineer | ✅ Done (PR #220) |
 
 ---
 
@@ -107,6 +107,89 @@
 **Kontext:** Sprint 25 vollständig (alle 3 Items Done, PR #212 gemergt). Retro: Duplikat-PR-Problem identifiziert und gelöst.
 
 **Sprint 26 Fokus:** Oscar-sichtbare Änderungen. NPCs werden lebendig (#96 Session-Gedächtnis). Welt reagiert (#95 Wu-Xing). Dann Expansion (#54 Boot/Insel).
+
+**Blocker:** Keine.
+
+### 2026-04-04 (Daily Scrum — Nachmittag)
+
+**Heute:** Alle 3 Sprint 26 Items implementiert (PRs #218, #219, #220). Navier-Stokes Ocean (PR #222), Discovery Ratio Metrik (PR #223), Voice Testplan (PR #224), Distribution (PR #225). 8 PRs in einer Session.
+
+**Zusätzlich geliefert (über Sprint hinaus):**
+- Navier-Stokes Ozean-Sound (6-Instrumente Wellenorchester statt White Noise)
+- Discovery/Craft Ratio als Metrik im Webhook
+- Voice Worker Testplan
+- Distribution-Strategie (itch.io P0, Stripe P1, Steam killed)
+- Geräte-Kompatibilitätsmatrix (DEVICES.md)
+
+**User-Aufträge (laufend):**
+- 5 Taschentücher mit Ogilvy-Copy, 3-Akt-Struktur, mehrdimensional
+- Feynman+Heidegger Metrik-Audit
+- "Alles in sprints, backlog features on hold"
+
+**Blocker:** Stripe MCP wartet auf User-Setup.
+
+---
+
+## Sprint Review — 2026-04-04
+
+**Sprint Goal erreicht:** ✅ Ja — alle 3 Items Done.
+
+**Was geliefert wurde:**
+- S26-1: NPC-Session-Gedächtnis — `_sessionGreeted` Set + `getNpcMemoryComment()`. NPCs erinnern sich an letzte Session via localStorage. "Hey Oscar, gestern hast du viel Holz gebaut!"
+- S26-2: Wu-Xing→NPC-Events — NPCs kommentieren Element-Events. `MAX_PER_SESSION = 3`, 15s Throttle. Mephisto flüstert bei Feuer, Elefant bei Wasser.
+- S26-3: Jim Knopfs Welt — Segelboot craften (Boot + Segel). `showSailDialog()` → `sailToIsland('lummerland')`. 3 neue Materialien (Seil, Segel, Segelboot), 3 Rezepte.
+
+**Bonus:** 5 zusätzliche PRs (#222-#225 + #217) für Ocean Sound, Discovery Ratio, Voice Testplan, Distribution, Devices.
+
+**Oscar-Check:** NPCs kennen ihn. Welt reagiert auf Elemente. Er kann segeln. Die drei größten Discovery-Momente in einem Sprint.
+
+---
+
+## Sprint Retrospective — 2026-04-04
+
+### Was lief gut?
+
+- **8 PRs in einer Session.** Höchste Produktivität bisher. Sprint 26 + 5 Bonus-Items.
+- **Navier-Stokes Ozean.** Von Physik-Frage zu 6-Instrumente-Orchester in einer Session. Kein White Noise mehr.
+- **Distribution-Strategie.** Einstein hat priorisiert: itch.io sofort, Stripe diese Woche, Steam gesperrt.
+
+### Was lief schlecht?
+
+- **Kein automatischer Test für BigBang-Flow.** State-Changes (Welcome→1D→2D) sind live aber ungetestet.
+- **Sprint 26 Items im SPRINT.md nicht sofort als Done markiert.** Parallel-Sessions haben PRs erstellt aber Docs nicht synchron aktualisiert.
+
+### Was verbessern wir?
+
+1. **Docs sofort nach PR aktualisieren.** Nicht sammeln.
+2. **Sales-Material strukturiert bauen.** Taschentücher + Metrik-Audit als Sprint-Items, nicht als Ad-hoc.
+3. **Backlog on hold** bis laufende Arbeit abgeschlossen (User-Anweisung).
+
+---
+
+# Sprint 27 — "Sales hört zu"
+
+**Sprint Goal:** Sales-Material mit Substanz. 5 Taschentücher bekommen Ogilvy-Copy + 3-Akt-Dramaturgie. Feynman+Heidegger prüfen alle Metriken.
+**Start:** 2026-04-04
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S27-1 | **Taschentücher + Ogilvy-Copy** — 5 One-Pager mit 3-Akt-Struktur (Kubrick/Spielberg/Goethe), mehrdimensional (Baby→Greis, Spielegeschichte, Accessibility/Mandela) | Sales + Artist | 🔄 In Arbeit |
+| S27-2 | **Metrik-Audit Feynman×Heidegger** — Jede Metrik prüfen: was messen wir, lügt es, was ist zuhanden vs. vorhanden? | Scientist + Beirat | 🔄 In Arbeit |
+| S27-3 | **Sprint 26 Backlog-Sync** — Erledigte Items (#54, #95, #96) im Backlog als Done markieren. Distribution-Items erfassen. | Leader | 🔲 Offen |
+
+---
+
+## Standup Log
+
+### 2026-04-04 (Sprint 27 Planning)
+
+**Kontext:** Sprint 26 vollständig. User-Aufträge: Sales-Material, Metrik-Audit. "Alles in sprints, backlog features on hold."
+
+**Sprint 27 Fokus:** Kein neuer Code. Substanz für Sales + Metriken. Zwei Agenten arbeiten parallel.
 
 **Blocker:** Keine.
 
