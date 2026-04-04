@@ -131,45 +131,80 @@
         const totalCols = COLS + WATER_BORDER * 2;
         const originX = (totalCols * cellSize) / 2;
         const originY = cellSize * 2;
-        const depth = cellSize * 0.4;
+        const baseDepth = cellSize * 0.4;
+
+        // Heightmap für Elevation
+        const hm = window.heightMap;
+        const EL = window.INSEL_ELEVATION;
 
         // Draw back-to-front for correct overlap (painter's algorithm)
         for (let r = 0; r < ROWS; r++) {
             for (let c = 0; c < COLS; c++) {
                 const gr = r + WATER_BORDER;
                 const gc = c + WATER_BORDER;
+
+                // Elevation-basierter Y-Offset: höhere Zellen werden nach oben verschoben
+                const elev = (hm && hm[r]) ? hm[r][c] : 0.35;
+                const elevOffset = elev * cellSize * 1.2; // max ~1.2 Zellgrößen Versatz
+
                 const pos = gridToIso(gr, gc, cellSize, originX, originY);
+                pos.y -= elevOffset; // Höhe hebt die Zelle an
 
                 const isWaterEdge = r < 2 || r >= ROWS - 2 || c < 2 || c >= COLS - 2;
                 const isBeachEdge = !isWaterEdge && (r === 2 || r === ROWS - 3 || c === 2 || c === COLS - 3);
 
                 if (isWaterEdge) {
-                    // Water edge — same as outer water
+                    // Water edge — no elevation, same as outer water
+                    const wPos = gridToIso(gr, gc, cellSize, originX, originY);
                     const wave = prefersReducedMotion ? 0 : Math.sin(time * 2 + gr * 0.5 + gc * 0.3) * 10;
                     const blue = 52 + wave;
-                    drawDiamond(ctx, pos.x, pos.y, tileW, tileH);
+                    drawDiamond(ctx, wPos.x, wPos.y, tileW, tileH);
                     ctx.fillStyle = `rgb(${blue}, ${blue + 100}, ${blue + 167})`;
                     ctx.fill();
                     continue;
                 }
 
-                // Sand base — flat diamond
+                // Sand base — elevated diamond
                 const sandVariation = ((r * 7 + c * 13) % 5) * 2;
                 const sandBase = isBeachEdge ? [220, 185, 100] : [245, 222, 179];
-                const sandColor = `rgb(${sandBase[0] - sandVariation}, ${sandBase[1] - sandVariation}, ${sandBase[2] - sandVariation})`;
 
-                drawDiamond(ctx, pos.x, pos.y, tileW, tileH);
-                ctx.fillStyle = sandColor;
-                ctx.fill();
+                // Elevation-Shading auf Sand
+                let elevShift = 0;
+                if (EL && hm && hm[r]) {
+                    const hs = EL.getHillshade(hm, r, c, ROWS, COLS);
+                    const tint = EL.getElevationTint(hm[r][c]);
+                    elevShift = Math.round((hs - 0.5) * 25 + tint);
+                }
+
+                const sandColor = `rgb(${sandBase[0] - sandVariation + elevShift}, ${sandBase[1] - sandVariation + elevShift}, ${sandBase[2] - sandVariation + elevShift})`;
+
+                // Terrain-Sockel: Seitenflächen unter der angehobenen Diamond-Fläche
+                if (elevOffset > 2) {
+                    const sockelDepth = elevOffset * 0.6;
+                    const sockelColor = adjustColor(sandColor, -40);
+                    const sockelColor2 = adjustColor(sandColor, -60);
+                    drawIsoCube(ctx, pos.x, pos.y, tileW, tileH, sockelDepth, sandColor, sockelColor, sockelColor2);
+                } else {
+                    drawDiamond(ctx, pos.x, pos.y, tileW, tileH);
+                    ctx.fillStyle = sandColor;
+                    ctx.fill();
+                }
                 ctx.strokeStyle = 'rgba(0,0,0,0.05)';
                 ctx.lineWidth = 0.5;
                 ctx.stroke();
 
-                // Material — isometric cube!
+                // Material — isometric cube on top of terrain
                 if (grid[r][c]) {
                     const mat = MATERIALS[grid[r][c]];
-                    let topColor;
+                    // Tiefere Materialien (water, cave) bekommen flacheren Würfel
+                    const matElev = (EL && EL.MATERIAL_ELEVATION[grid[r][c]]) || null;
+                    let depth = baseDepth;
+                    if (matElev) {
+                        // Berge = hoher Würfel, Wasser/Höhlen = flach
+                        depth = baseDepth * (0.5 + (matElev.min + matElev.max) * 0.5);
+                    }
 
+                    let topColor;
                     if (grid[r][c] === 'tao') {
                         const flicker = prefersReducedMotion ? 0 : Math.sin(time * 8 + r * 3.7 + c * 2.3) * 0.15;
                         const base = 128;

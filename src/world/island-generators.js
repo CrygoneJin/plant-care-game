@@ -135,6 +135,11 @@
         }
 
         window.grid = grid;
+
+        // Heightmap generieren (wenn elevation.js geladen)
+        if (window.INSEL_ELEVATION) {
+            window.heightMap = window.INSEL_ELEVATION.generateHeightMap(grid, ROWS, COLS, seed);
+        }
     }
 
     /**
@@ -235,6 +240,11 @@
         }
 
         window.grid = grid;
+
+        // Heightmap generieren (wenn elevation.js geladen)
+        if (window.INSEL_ELEVATION) {
+            window.heightMap = window.INSEL_ELEVATION.generateHeightMap(grid, ROWS, COLS, Date.now());
+        }
     }
 
     window.INSEL_GENERATORS = { generateStarterIsland, generateLummerland };

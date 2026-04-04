@@ -71,6 +71,11 @@
         if (!_ctx) return;
         var name = _ctx.getProjectName() || 'Mein Bauwerk';
         var projects = safeParse('insel-projekte', {});
+        var heightData = null;
+        var EL = window.INSEL_ELEVATION;
+        if (EL && window.heightMap) {
+            heightData = EL.serializeHeightMap(window.heightMap, _ctx.ROWS, _ctx.COLS);
+        }
         projects[name] = {
             grid: _ctx.getGrid(),
             date: new Date().toLocaleDateString('de-DE'),
@@ -78,6 +83,7 @@
             inventory: _ctx.getInventory(),
             unlocked: Array.from(_ctx.getUnlockedMaterials()),
             discovered: Array.from(_ctx.getDiscoveredRecipes()),
+            heightMap: heightData,
         };
         safeSet('insel-projekte', projects);
         _ctx.saveInventory();
@@ -99,6 +105,11 @@
         if (hash === lastSaveHash) return;
         lastSaveHash = hash;
         var projects = safeParse('insel-projekte', {});
+        var heightData = null;
+        var EL = window.INSEL_ELEVATION;
+        if (EL && window.heightMap) {
+            heightData = EL.serializeHeightMap(window.heightMap, _ctx.ROWS, _ctx.COLS);
+        }
         projects[AUTOSAVE_KEY] = {
             grid: grid,
             date: new Date().toLocaleDateString('de-DE'),
@@ -108,6 +119,7 @@
             unlocked: Array.from(_ctx.getUnlockedMaterials()),
             discovered: Array.from(_ctx.getDiscoveredRecipes()),
             playerPos: _ctx.getPlayerPos(),
+            heightMap: heightData,
         };
         safeSet('insel-projekte', projects);
         var saveBtn = document.getElementById('save-btn');
@@ -156,6 +168,14 @@
             _ctx.initGrid();
         }
         _ctx.setTreeGrowth(projects[name].treeGrowth || {});
+        // Heightmap wiederherstellen
+        var EL = window.INSEL_ELEVATION;
+        if (EL && projects[name].heightMap) {
+            window.heightMap = EL.deserializeHeightMap(projects[name].heightMap, _ctx.ROWS, _ctx.COLS);
+        } else if (EL) {
+            // Keine gespeicherte Heightmap → neu generieren
+            window.heightMap = EL.generateHeightMap(_ctx.getGrid(), _ctx.ROWS, _ctx.COLS, Date.now());
+        }
         _ctx.setInventory(projects[name].inventory || {});
         if (projects[name].unlocked) {
             _ctx.setUnlockedMaterials(new Set(projects[name].unlocked));

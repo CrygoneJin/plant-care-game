@@ -1933,11 +1933,30 @@
                     continue;
                 }
 
-                // Sand oder Strand (Strand etwas dunkler)
+                // Sand oder Strand (Strand etwas dunkler) + Elevation-Shading
                 const sandVariation = ((r * 7 + c * 13) % 5) * 2; // deterministisches Rauschen
                 const sandBase = isBeachEdge ? [220, 185, 100] : [245, 222, 179];
-                ctx.fillStyle = `rgb(${sandBase[0] - sandVariation}, ${sandBase[1] - sandVariation}, ${sandBase[2] - sandVariation})`;
+
+                // Elevation-Shading: Hillshade + Höhentint
+                const EL = window.INSEL_ELEVATION;
+                const hm = window.heightMap;
+                let elevShift = 0;
+                if (EL && hm && hm[r]) {
+                    const hillshade = EL.getHillshade(hm, r, c, ROWS, COLS);
+                    const tint = EL.getElevationTint(hm[r][c]);
+                    // hillshade 0..1 → -20..+10, tint -25..+25
+                    elevShift = Math.round((hillshade - 0.5) * 30 + tint);
+                }
+
+                ctx.fillStyle = `rgb(${sandBase[0] - sandVariation + elevShift}, ${sandBase[1] - sandVariation + elevShift}, ${sandBase[2] - sandVariation + elevShift})`;
                 ctx.fillRect(x, y, CELL_SIZE, CELL_SIZE);
+
+                // Konturlinien bei starken Höhenunterschieden
+                if (EL && hm && hm[r] && EL.hasContour(hm, r, c, ROWS, COLS, 0.12)) {
+                    ctx.strokeStyle = 'rgba(80, 60, 30, 0.18)';
+                    ctx.lineWidth = 1;
+                    ctx.strokeRect(x, y, CELL_SIZE, CELL_SIZE);
+                }
 
                 // Material zeichnen (Grid-Linie nur auf belegten Zellen — kein Spreadsheet-Look)
                 if (grid[r][c]) {
@@ -1963,6 +1982,20 @@
                         ctx.fillStyle = mat.color;
                     }
                     ctx.fillRect(x + 1, y + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+
+                    // Elevation-Overlay auf Material (Hillshade)
+                    if (EL && hm && hm[r] && grid[r][c] !== 'tao') {
+                        const hs = EL.getHillshade(hm, r, c, ROWS, COLS);
+                        if (hs < 0.4) {
+                            // Schatten
+                            ctx.fillStyle = `rgba(0, 0, 0, ${(0.4 - hs) * 0.35})`;
+                            ctx.fillRect(x + 1, y + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+                        } else if (hs > 0.65) {
+                            // Licht
+                            ctx.fillStyle = `rgba(255, 255, 255, ${(hs - 0.65) * 0.25})`;
+                            ctx.fillRect(x + 1, y + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+                        }
+                    }
 
                     // Rand
                     ctx.strokeStyle = mat.border;
@@ -2553,6 +2586,13 @@
                 }
                 if (!undoPushedThisStroke) { pushUndo(); undoPushedThisStroke = true; }
                 grid[r][c] = currentMaterial;
+                // Heightmap lokal aktualisieren bei Material-Constraint
+                if (window.INSEL_ELEVATION && window.heightMap && window.heightMap[r]) {
+                    const mc = window.INSEL_ELEVATION.MATERIAL_ELEVATION[currentMaterial];
+                    if (mc) {
+                        window.heightMap[r][c] = mc.min + (mc.max - mc.min) * 0.6;
+                    }
+                }
                 // Wu-Xing Element-Events auf den Bus
                 if (window.INSEL_BUS) {
                     var wu = { fire: 'fire', water: 'water', wood: 'wood', metal: 'metal', earth: 'earth' };
@@ -4764,6 +4804,16 @@
             playerPos = savedProjects[AUTOSAVE_KEY].playerPos;
         }
         window.grid = grid;
+        // Heightmap wiederherstellen oder neu generieren
+        if (window.INSEL_ELEVATION) {
+            const saved = savedProjects[AUTOSAVE_KEY];
+            if (saved.heightMap) {
+                window.heightMap = window.INSEL_ELEVATION.deserializeHeightMap(saved.heightMap, ROWS, COLS);
+            }
+            if (!window.heightMap) {
+                window.heightMap = window.INSEL_ELEVATION.generateHeightMap(grid, ROWS, COLS, Date.now());
+            }
+        }
         migrateUnlocked();
         // Baustil-Erkennung beim Laden — Oscar als 7. Schicht
         if (playerName) {

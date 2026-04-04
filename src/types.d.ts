@@ -343,6 +343,8 @@ interface InselSave {
     AUTOSAVE_KEY: string;
     registerContext(ctx: InselSaveContext): void;
     isValidGrid(g: unknown): boolean;
+    safeParse(key: string, fallback: unknown): unknown;
+    safeSet(key: string, value: unknown): boolean;
     saveProject(): void;
     autoSave(): void;
     showLoadDialog(): void;
@@ -351,6 +353,32 @@ interface InselSave {
     newProject(): void;
     encodeGridToURL(): string;
     decodeGridFromURL(encoded: string): boolean;
+}
+
+// --- Elevation System ---
+interface ElevationBand {
+    max: number;
+    label: string;
+    tint: number;
+}
+
+interface MaterialElevationConstraint {
+    min: number;
+    max: number;
+}
+
+interface InselElevation {
+    generateHeightMap(grid: Grid, ROWS: number, COLS: number, seed?: number): Float32Array[];
+    getElevationTint(h: number): number;
+    hasContour(heightMap: Float32Array[], r: number, c: number, ROWS: number, COLS: number, threshold?: number): boolean;
+    getHillshade(heightMap: Float32Array[], r: number, c: number, ROWS: number, COLS: number): number;
+    serializeHeightMap(heightMap: Float32Array[], ROWS: number, COLS: number): string;
+    deserializeHeightMap(encoded: string, ROWS: number, COLS: number): Float32Array[] | null;
+    MATERIAL_ELEVATION: Record<string, MaterialElevationConstraint>;
+    ELEVATION_BANDS: ElevationBand[];
+    simplex2(x: number, y: number): number;
+    fbm(x: number, y: number, octaves: number, lacunarity: number, gain: number): number;
+    seedNoise(seed: number): void;
 }
 
 // --- HexGrid ---
@@ -441,6 +469,9 @@ interface Window {
     startSessionClock?(): void;
     soundAchievement?(): void;
     resetIdleTimer?(): void;
+
+    INSEL_ELEVATION: InselElevation;
+    heightMap: Float32Array[] | null;
 
     // Cross-module functions
     grid: Grid;
