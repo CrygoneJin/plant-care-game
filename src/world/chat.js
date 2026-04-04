@@ -1049,8 +1049,7 @@ ${budgetInfo}${florianePreisHint}`;
 
     function initChat() {
         const char = CHARACTERS[currentNpcId];
-        const brain = shortModel(getActiveModel(currentNpcId));
-        addMessage(`${char.emoji} ${char.name} ist da! [${brain}]`, 'system');
+        addMessage(`${char.emoji} ${char.name} ist da!`, 'system');
         addMessage('⚠️ Bitte keine echten Namen oder Adressen eingeben.', 'system');
         if (!getApiKey() || getApiKey() === '__proxy__' && !hasProxy()) {
             addMessage('🔑 Klick auf ⚙️ oben und gib deinen API-Key ein — dann können wir reden!', 'system');
@@ -1121,9 +1120,7 @@ ${budgetInfo}${florianePreisHint}`;
         chatBubble.addEventListener('click', () => {
             // Bubble = immer Bernd (Support). Andere NPCs nur über Insel-Interaktion.
             if (panel.classList.contains('hidden')) {
-                currentNpcId = 'bernd';
-                updateChatHeader();
-                updateTokenDisplay('bernd');
+                window.openChat('bernd');
             }
             toggleChat();
         });
