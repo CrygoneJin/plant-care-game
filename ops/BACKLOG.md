@@ -23,8 +23,8 @@ Alles was nicht in eine dieser Kategorien fällt → `ARCHIVE.md`.
 | 50 | **Höhle = Dungeon** — Berg+Wasser=Höhle. IT-Ebenen Bits→Kernel→Browser im Dialog. | alle | ✅ Done (Commit #181, S25-2) | Oscar entdeckt eine neue Welt unter der Insel. |
 | 71 | **Palette = Instrument** — mouseenter auf Palette-Buttons spielt Ton. Oscar spielt Melodie durch Hovern. | alle | ✅ Done (S25-1, PR #196) | Oscar spielt Musik und baut gleichzeitig. |
 | 54 | **Jim Knopfs Welt** — Lummerland → Meer → weitere Inseln. Boot craften = nächste Insel. | alle | 🔲 Offen | Oscar segelt zu neuen Inseln. |
-| 95 | **Wu-Xing→NPC-Events** — NPCs reagieren auf Element-Events. Inter-Schicht-Kommunikation. | Engineer + Artist | 🔲 Offen | SpongeBob kommentiert wenn Oscar Feuer macht. |
-| 96 | **NPC-Session-Gedächtnis** — NPCs erinnern sich an letzte Session via localStorage. | Engineer + Scientist | 🔲 Offen | "Hey Oscar, gestern hast du viele Bäume gebaut!" |
+| 95 | **Wu-Xing→NPC-Events** — NPCs reagieren auf Element-Events. Inter-Schicht-Kommunikation. | Engineer + Artist | ✅ Done (S26-2) | SpongeBob kommentiert wenn Oscar Feuer macht. |
+| 96 | **NPC-Session-Gedächtnis** — NPCs erinnern sich an letzte Session via localStorage. | Engineer + Scientist | ✅ Done (S26-1) | "Hey Oscar, gestern hast du viele Bäume gebaut!" |
 | 100 | **Energie vs Geld trennen** — NPC-Currencies (Burger, Noten, Glut) visuell von Muscheln trennen. Zwei Orte, zwei Konzepte. (Ricardo) | Designer | 🔲 Offen | Oscar versteht sofort: Burger = Reden, Muschel = Kaufen. |
 | 101 | **Krabbs-Vorrat sichtbar** — Krabbs hat endliches Inventar. Kein Holz → kein Verkauf. Angebot und Nachfrage ohne Erklärung. (Ricardo) | Engineer | 🔲 Offen | Oscar lernt: wenn Krabbs kein Holz hat, muss er warten. |
 | 102 | **MMX = Nerd-Easter-Egg** — Burn-Panel ehrlich labeln. Keine Goldstandard-Behauptung. (Ricardo) | Designer + Engineer | 🔲 Offen | Nerds freuen sich. Oscar merkt nichts. |

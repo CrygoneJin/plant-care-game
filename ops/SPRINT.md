@@ -1,4 +1,41 @@
-# Sprint 26 — "Oscar wird erkannt"
+# Sprint 27 — "Oscar segelt"
+
+**Sprint Goal:** Boot craften → neue Insel. Elevation-System live. Episteme dokumentiert.
+**Start:** 2026-04-04
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S27-1 | **#54 Jim Knopfs Welt** — Boot craften → Insel-Auswahl. Oscar segelt. | Engineer | 🔲 Offen |
+| S27-2 | **#78 Tesla-Nutzertest auswerten** — 1h Video, echte Nutzerdaten. Gold. | Scientist + Leader | 🔲 Offen |
+| S27-3 | **#100 Energie vs Geld trennen** — NPC-Currencies visuell von Muscheln trennen. | Designer | 🔲 Offen |
+
+---
+
+## Standup Log
+
+### 2026-04-04 (Sprint 27 Planning)
+
+**Kontext:** Sprint 26 Review + Retro abgeschlossen. 6 von 7 Items Done. S26-3 (#54 Jim Knopfs Welt) offen — zu groß für den V-Modell-Sprint, wird S27-1.
+
+**Einstein (CEO) — Priorisierung:**
+- P0: #54 Jim Knopfs Welt. Oscar segelt. Größter Discovery-Impact seit Dungeon. Carriedover aus S26.
+- P0: #78 Tesla-Nutzertest. Echte Daten > Annahmen. Liegt zu lange.
+- P1: #100 Energie vs Geld. Ricardo-Empfehlung. Oscar versteht zwei Währungen.
+
+**Jobs (Leader) — Routing:**
+- S27-1 → Engineer (Boot-Crafting, Insel-Generator, Navigation)
+- S27-2 → Scientist + Leader (Video analysieren, Hypothesen ableiten)
+- S27-3 → Designer (visuelles Konzept, dann Engineer für Implementation)
+
+**Blocker:** #78 braucht Zugang zum Tesla-Video.
+
+---
+
+# Sprint 26 — "Oscar wird erkannt" ✅
 
 **Sprint Goal:** NPCs kennen Oscar (Session-Gedächtnis) + NPCs reagieren auf Elemente (Wu-Xing-Events). V-Modell Hardening parallel.
 **Start:** 2026-04-04
@@ -11,11 +48,52 @@
 |---|------|----------|--------|
 | S26-1 | **#96 NPC-Session-Gedächtnis** — NPCs erinnern sich via localStorage. `_sessionGreeted` Set, `buildSessionGreeting()` liest Session-Snapshot. | Engineer + Artist | ✅ Done |
 | S26-2 | **#95 Wu-Xing→NPC-Events** — Max 3 NPC-Event-Reaktionen pro Session. `sessionReactionCount` Counter + `SESSION_MAX = 3`. | Engineer + Artist | ✅ Done |
-| S26-3 | **#54 Jim Knopfs Welt** — Boot craften → neue Insel-Auswahl. Oscar segelt. | Engineer | 🔲 Offen |
+| S26-3 | **#54 Jim Knopfs Welt** — Boot craften → neue Insel-Auswahl. Oscar segelt. | Engineer | ➡️ Carried → S27-1 |
 | S26-V1 | **V-Modell Unit Tests** — 111 Tests (Achievements, Automerge, ELIZA, Recipes, Quests, Blueprints, Integration, Save) | Scientist + Engineer | ✅ Done |
 | S26-V2 | **15 Bugs gefixt** — addWish, ELIZA-Scripts, Race Condition, SQL Injection, JSON.parse, CORS Hardening, save.js QuotaExceeded, sound.js Cache | Engineer | ✅ Done |
 | S26-V3 | **Hardening** — save.js safeParse/safeSet, worker.js Origin-CORS + /metrics/ingest Auth, sound.js isMuted-Cache | Engineer | ✅ Done |
 | S26-V4 | **Padawan-Codizes** — Learnings in Kernighan, Popper, Hick. 15 MEMORY-Einträge. | Alle | ✅ Done |
+
+---
+
+## Sprint Review — 2026-04-04
+
+**Sprint Goal erreicht:** ⚠️ Teilweise — 6 von 7 Items Done, S26-3 carried.
+
+**Was geliefert wurde:**
+- S26-1: NPC-Session-Gedächtnis — NPCs begrüßen Oscar mit Session-Kontext. `_sessionGreeted` Set verhindert Doppelbegrüßung. `buildSessionGreeting()` liest Snapshot (Blöcke, Quests, Materialien).
+- S26-2: Wu-Xing→NPC-Events — Feuer → Mephisto flüstert. Wasser → Elefant kommentiert. Max 3 Reaktionen pro Session, nicht nervig.
+- S26-V1: 111 Unit + Integration Tests. 17 Test-Suites. Alle grün. V-Modell erstmals komplett.
+- S26-V2: 15 Bugs — SQL Injection, Race Condition, CORS Wildcard, JSON.parse ohne Schutz. Schwerste Funde: SQL Injection und CORS.
+- S26-V3: Hardening — safeParse/safeSet als Pattern. Origin-CORS. isMuted-Cache.
+- S26-V4: Padawan-Codizes aktualisiert. 15 MEMORY-Einträge.
+- **Bonus (diese Session):** Elevation-System (Simplex-Noise Heightmap), /foucault Beirat-Agent, Episteme-Analyse ins Archiv.
+
+**Nicht geliefert:**
+- S26-3: Jim Knopfs Welt. Zu groß neben V-Modell-Marathon. Carried zu S27-1.
+
+**Oscar-Check:** NPCs erkennen ihn. Welt reagiert auf Elemente. Berge haben Höhe. Das sind drei Schichten die gleichzeitig schwingen — wie Foucault richtig bemerkt hat.
+
+---
+
+## Sprint Retrospective — 2026-04-04
+
+### Was lief gut?
+
+- **V-Modell-Marathon.** 111 Tests, 15 Bugs, Hardening — alles in einer Session. Infrastruktur-Schulden massiv abgebaut.
+- **Episteme-Analyse.** Foucault als Beirat hat den Blick geschärft: Level sind keine Treppe, sie sind Saiten. Gleichzeitigkeit statt Sequenz.
+- **Elevation-System.** Simplex-Noise für Heightmaps. Berge sehen aus wie Berge.
+
+### Was lief schlecht?
+
+- **S26-3 nicht geschafft.** Jim Knopfs Welt ist Feature-Arbeit, nicht Hardening. Beides in einem Sprint war zu viel.
+- **Backlog #95 und #96 nicht als Done markiert.** Code ist da, Backlog zeigt 🔲.
+
+### Was verbessern wir?
+
+1. **Feature-Sprint und Hardening-Sprint trennen.** Nicht mischen. Entweder Oscar sieht was Neues, oder die Fundamente werden gefestigt.
+2. **Backlog sofort updaten** wenn Code committed ist. Nicht am Sprint-Ende.
+3. **Tesla-Video (#78) endlich auswerten.** Liegt seit Tagen. Echte Nutzerdaten > Annahmen.
 
 ---
 
