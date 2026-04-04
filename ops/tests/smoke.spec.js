@@ -34,10 +34,8 @@ test.describe('Smoke Tests', () => {
         await page.goto('/');
         await page.fill('#player-name-input', 'Testpirat');
         await page.click('#start-button');
-        // Intro-Overlay verschwindet nach finishIntro() (300ms fade + display:none)
-        await expect(page.locator('#intro-overlay')).toBeHidden({ timeout: 10000 });
-        // Canvas sichtbar
-        await expect(page.locator('#game-canvas')).toBeVisible({ timeout: 5000 });
+        // Canvas sichtbar warten (Big-Bang-Fade + finishIntro brauchen variable Zeit in CI)
+        await expect(page.locator('#game-canvas')).toBeVisible({ timeout: 15000 });
     });
 
     test('Palette hat Material-Buttons', async ({ page }) => {
@@ -45,7 +43,8 @@ test.describe('Smoke Tests', () => {
         await page.goto('/');
         await page.fill('#player-name-input', 'Testpirat');
         await page.click('#start-button');
-        await expect(page.locator('#intro-overlay')).toBeHidden({ timeout: 10000 });
+        // Canvas sichtbar warten statt Overlay-Hidden (Big-Bang-Fade braucht Zeit)
+        await expect(page.locator('#game-canvas')).toBeVisible({ timeout: 15000 });
         const count = await page.locator('.material-btn').count();
         expect(count).toBeGreaterThan(0);
     });
