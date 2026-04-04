@@ -1937,6 +1937,13 @@ body.code-view-active #chat-settings-btn {
     padding: 8px 0;
 }
 
+.crafting-actions .action-btn {
+    width: auto;
+    padding: 8px 16px;
+    font-size: 16px;
+    gap: 4px;
+}
+
 /* Mobile: Crafting vertikal stapeln */
 @media (max-width: 767px) {
     .crafting-layout {
