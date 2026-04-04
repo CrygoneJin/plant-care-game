@@ -1,3 +1,103 @@
+# Sprint 27 — "Krabbs wird Kaufmann"
+
+**Sprint Goal:** Wirtschaft wird sichtbar — Krabbs-Vorrat endlich + Currencies klar getrennt + MMX ehrlich gelabelt.
+**Start:** 2026-04-04
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S27-1 | **#100 Muschel-Counter im Inventar** — Permanenter 🐚-Badge oben im Inventar-Panel. Klick → Krabbs-Kontor. Muscheln nie im Chat-Header. Energie (Burger/Noten/Glut) nur im Chat. | Designer + Engineer | 🔲 Offen |
+| S27-2 | **Backlog-Audit** — #101, #102, weitere Phantom-Dones in ops/BACKLOG.md als ✅ Done markieren. Backlog zeigt Realität. | Scientist | 🔲 Offen |
+| S27-3 | **#33 Titel** — `<title>Schatzinsel 🏝️</title>` kürzer und erkennbarer. Browser-Tab klar. | Designer | 🔲 Offen |
+
+---
+
+## Standup Log
+
+### 2026-04-04 (Sprint 27 Planning)
+
+**Kontext:** Sprint 26 vollständig (PRs #218-220, Doku PR #221). Retro: 25+ offene PRs — PR-Stau. Sprint 27 fokussiert auf kleine, sichhere Items ohne Merge-Konflikt-Risiko.
+
+**Sprint 27 Fokus:** Klares UI für Wirtschaft. #101 und #102 sind Phantom-Dones (bereits in game.js). S27-1 macht Muscheln sichtbar wo sie hingehören: ins Inventar. Alle 3 Items ≤ 30 LOC.
+
+**Blocker:** Keine.
+
+---
+
+# Sprint 26 — "Oscar wird erkannt"
+
+**Sprint Goal:** NPCs kennen Oscar (Session-Gedächtnis) + NPCs reagieren auf Elemente (Wu-Xing-Events).
+**Start:** 2026-04-04
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S26-1 | **#96 NPC-Session-Gedächtnis** — NPCs erinnern sich via localStorage. Beim ersten Chat-Klick nach Pause: "Hey Oscar, gestern hast du viel [Material] gebaut!" `_sessionGreeted` Set verhindert Wiederholung. | Engineer + Artist | ✅ Done (PR #218) |
+| S26-2 | **#95 Wu-Xing→NPC-Events** — `INSEL_BUS.on('element:fire')` etc. NPCs kommentieren wenn Oscar Feuer/Wasser/Holz/Metall/Erde platziert. 15s Throttle, max 3x/Session. | Engineer + Artist | ✅ Done (PR #219) |
+| S26-3 | **#54 Jim Knopfs Welt** — Boot craften (Planks + Seil + Mast) → neue Insel-Auswahl. Mindestens 1 neue erreichbare Insel. Oscar segelt. | Engineer | ✅ Done (PR #220) |
+
+---
+
+## Standup Log
+
+### 2026-04-04 (Sprint 26 Planning)
+
+**Kontext:** Sprint 25 vollständig (alle 3 Items Done, PR #212 gemergt). Retro: Duplikat-PR-Problem identifiziert und gelöst.
+
+**Sprint 26 Fokus:** Oscar-sichtbare Änderungen. NPCs werden lebendig (#96 Session-Gedächtnis). Welt reagiert (#95 Wu-Xing). Dann Expansion (#54 Boot/Insel).
+
+**Blocker:** Keine.
+
+### 2026-04-04 (Daily Scrum)
+
+**Heute:** Sprint 26 vollständig durch parallele Sessions. PR #218 (S26-1 NPC-Gedächtnis), PR #219 (S26-2 Wu-Xing-Limit), PR #220 (S26-3 Segelboot), PR #221 (Doku). Alle offen, noch nicht in main. Sprint 26 Review + Retro durchgeführt. Sprint 27 geplant.
+
+**Blocker:** 25+ offene PRs gesamt — PR-Stau.
+
+---
+
+## Sprint Review — 2026-04-04
+
+**Sprint Goal erreicht:** ✅ Ja — alle 3 Items Done.
+
+**Was geliefert wurde:**
+- S26-1: NPC-Session-Gedächtnis — `_sessionGreeted` Set, `buildSessionGreeting()` liest `insel-session-snapshot` (>60s = neue Session). 11 NPC-Stimmen. SpongeBob: "ICH BIN BEREIT! Letzte Runde 23 Blöcke Holz — REKORD!" (PR #218 + #213)
+- S26-2: Wu-Xing Events — `sessionReactionCount` Counter + `SESSION_MAX = 3`. Bestehende Throttle (15s) + 30% Chance bleiben. (PR #219)
+- S26-3: Segelboot craften → Insel-Auswahl-Dialog. Seil + Segel + Segelboot als neue Materialien + Rezepte. Lummerland + Wüsteninsel erreichbar. `island:arrived` Event auf INSEL_BUS. (PR #220 + #214)
+
+**Nicht geliefert:** Nichts.
+
+**Oscar-Check:** SpongeBob erinnert sich an Oscar. Oscar segelt. Welt lebt.
+
+---
+
+## Sprint Retrospective — 2026-04-04
+
+### Was lief gut?
+
+- **Sprint 26 vollständig.** Alle 3 Items Done, alle als PRs vorhanden.
+- **NPC-Gedächtnis ist emotional stark.** "Hey Oscar! Letzte Runde 23 Blöcke Holz." Kind fühlt sich erkannt.
+- **Segelboot sauber implementiert.** Neue Materialien, neue Rezepte, neues Event — alles in Muster eingepasst.
+
+### Was lief schlecht?
+
+- **25+ offene PRs.** PR-Stau. Neue Features werden gebaut, aber mergen liegt beim User. Duplikat-Risiko bleibt.
+- **feat/sprint-27 Branch ohne merge base.** Parallele Session hat Sprint 27 auf veraltetem Stand gestartet. Weggeworfen.
+
+### Was verbessern wir?
+
+1. **Sprint 27: nur kleine Items** — max 50 LOC pro Item. Kein Merge-Risiko.
+2. **PR-Stau ansprechen.** User soll Sprint 26 PRs mergen: #218, #219, #220, #221.
+3. **Krabbs-Wirtschaft sichtbar machen** — Oscar versteht Angebot/Nachfrage durch Spielen, nicht durch Erklären.
+
+---
+
 # Sprint 25 — "Oscar spielt und entdeckt"
 
 **Sprint Goal:** Palette wird Instrument (Oscar spielt Melodien) + Höhle als neue Welt + game.js Zellteilung.

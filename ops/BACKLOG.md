@@ -22,12 +22,12 @@ Alles was nicht in eine dieser Kategorien fällt → `ARCHIVE.md`.
 | 11 | **Zellteilung game.js** — NPC-Daten in npc-data.js. game.js: 5196→5128. Grid/Effects noch drin. | Engineer | ✅ Done (S25-3, PR #212) | Oscar merkt nichts. Aber ohne das wird alles langsamer. |
 | 50 | **Höhle = Dungeon** — Berg+Wasser=Höhle. IT-Ebenen Bits→Kernel→Browser im Dialog. | alle | ✅ Done (Commit #181, S25-2) | Oscar entdeckt eine neue Welt unter der Insel. |
 | 71 | **Palette = Instrument** — mouseenter auf Palette-Buttons spielt Ton. Oscar spielt Melodie durch Hovern. | alle | ✅ Done (S25-1, PR #196) | Oscar spielt Musik und baut gleichzeitig. |
-| 54 | **Jim Knopfs Welt** — Lummerland → Meer → weitere Inseln. Boot craften = nächste Insel. | alle | 🔲 Offen | Oscar segelt zu neuen Inseln. |
-| 95 | **Wu-Xing→NPC-Events** — NPCs reagieren auf Element-Events. Inter-Schicht-Kommunikation. | Engineer + Artist | 🔲 Offen | SpongeBob kommentiert wenn Oscar Feuer macht. |
-| 96 | **NPC-Session-Gedächtnis** — NPCs erinnern sich an letzte Session via localStorage. | Engineer + Scientist | 🔲 Offen | "Hey Oscar, gestern hast du viele Bäume gebaut!" |
-| 100 | **Energie vs Geld trennen** — NPC-Currencies (Burger, Noten, Glut) visuell von Muscheln trennen. Zwei Orte, zwei Konzepte. (Ricardo) | Designer | 🔲 Offen | Oscar versteht sofort: Burger = Reden, Muschel = Kaufen. |
-| 101 | **Krabbs-Vorrat sichtbar** — Krabbs hat endliches Inventar. Kein Holz → kein Verkauf. Angebot und Nachfrage ohne Erklärung. (Ricardo) | Engineer | 🔲 Offen | Oscar lernt: wenn Krabbs kein Holz hat, muss er warten. |
-| 102 | **MMX = Nerd-Easter-Egg** — Burn-Panel ehrlich labeln. Keine Goldstandard-Behauptung. (Ricardo) | Designer + Engineer | 🔲 Offen | Nerds freuen sich. Oscar merkt nichts. |
+| 54 | **Jim Knopfs Welt** — Lummerland → Meer → weitere Inseln. Boot craften = nächste Insel. | alle | ✅ Done (PR #220) | Oscar segelt zu neuen Inseln. |
+| 95 | **Wu-Xing→NPC-Events** — NPCs reagieren auf Element-Events. Inter-Schicht-Kommunikation. | Engineer + Artist | ✅ Done (PR #219) | SpongeBob kommentiert wenn Oscar Feuer macht. |
+| 96 | **NPC-Session-Gedächtnis** — NPCs erinnern sich an letzte Session via localStorage. | Engineer + Scientist | ✅ Done (PR #218) | "Hey Oscar, gestern hast du viele Bäume gebaut!" |
+| 100 | **Energie vs Geld trennen** — 🐚-Badge im Inventar-Panel + Klick→Krabbs. Muscheln nie im Chat-Header. | Designer + Engineer | ✅ Done (S27-1) | Oscar sieht Muscheln im Inventar, Energie im Chat. |
+| 101 | **Krabbs-Vorrat sichtbar** — Krabbs hat endliches Inventar (`KRABS_STOCK_INIT`). Kein Vorrat → deaktivierter Kaufen-Button. | Engineer | ✅ Done (Phantom-Done, game.js:507) | Oscar lernt: wenn Krabbs kein Holz hat, muss er warten. |
+| 102 | **MMX = Nerd-Easter-Egg** — Burn-Panel: "🔥 X MMX gefarmt  [nerd easter egg]". Kein Goldstandard. | Designer + Engineer | ✅ Done (Phantom-Done, game.js:4558) | Nerds freuen sich. Oscar merkt nichts. |
 
 ## 🟢 P2 — Irgendwann, aber mit Oscar-Outcome
 

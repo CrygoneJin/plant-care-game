@@ -1045,9 +1045,25 @@
         inventory = JSON.parse(localStorage.getItem('insel-inventar') || '{}');
     }
 
+    function updateShellCounter() {
+        const counter = document.getElementById('shell-counter');
+        const countEl = document.getElementById('shell-count');
+        if (!counter || !countEl) return;
+        const shells = getInventoryCount('shell');
+        countEl.textContent = shells;
+        counter.style.display = shells > 0 ? '' : 'none';
+        if (!counter.dataset.listenerAdded) {
+            counter.dataset.listenerAdded = '1';
+            counter.addEventListener('click', () => {
+                showKrabsShop();
+            });
+        }
+    }
+
     function updateInventoryDisplay() {
         const container = document.getElementById('inventory-content');
         if (!container) return;
+        updateShellCounter();
         const items = Object.entries(inventory).filter(([, count]) => count > 0);
         if (items.length === 0) {
             container.innerHTML = '<p class="inv-empty">Ernte Bäume für Holz! ⛏️</p>';
