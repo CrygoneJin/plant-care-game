@@ -41,7 +41,8 @@
     </div>
 
     <!-- Tutorial-Onboarding (kein Text — nur Icons) -->
-    <div id="tutorial-onboarding" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.82); z-index:9000; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:0;">
+    <div id="tutorial-onboarding" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.82); z-index:9000; align-items:center; justify-content:center; flex-direction:column; gap:0;">
+        <button onclick="this.parentElement.style.display='none'" style="position:absolute; top:16px; right:16px; background:none; border:none; color:white; font-size:32px; cursor:pointer; z-index:1;" aria-label="Tutorial schliessen">✕</button>
         <div class="tut-step" id="tut-step-1" style="display:flex; align-items:center; justify-content:center; gap:24px; font-size:64px; animation:tutPop 0.4s ease-out;">
             <span style="animation:tutBounce 0.8s infinite alternate;">🖌️</span>
             <span style="font-size:36px; opacity:0.7;">➡️</span>
