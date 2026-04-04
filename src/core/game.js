@@ -3624,7 +3624,7 @@
         const hasAntimatter = unlockedMaterials.has('antimatter');
         let label, tip;
         if (!_genesisYinYangShown) {
-            label = '道'; tip = 'Singularität (t=0) — Lege ☯️ auf die Insel';
+            label = '道'; tip = 'Am Anfang war ein Punkt... — Lege ☯️ auf die Insel';
         } else if (!_genesisQiShown) {
             label = '⚫⚪'; tip = 'Symmetriebrechung (t=10⁻³⁶s) — Yin + Yang';
         } else if (!hasQuarks && crafted < 10) {

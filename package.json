@@ -1,6 +1,7 @@
 {
   "scripts": {
     "test:unit": "node --test tests/unit.test.js",
+    "test:e2e": "npx playwright test --config ops/tests/playwright.config.js",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {

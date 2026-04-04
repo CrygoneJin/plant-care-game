@@ -484,6 +484,7 @@ header {
     text-align: center;
     padding: 10px 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    position: relative;
 }
 
 header h1 {
@@ -491,6 +492,24 @@ header h1 {
     font-size: 24px;
     letter-spacing: 1px;
 }
+
+.donate-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    cursor: pointer;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.donate-btn:hover { opacity: 1; }
 
 /* === TOOLBAR === */
 #toolbar {
@@ -548,6 +567,23 @@ header h1 {
     background: var(--accent-light);
     box-shadow: 0 0 0 2px var(--accent);
 }
+
+/* Overflow-Menü für zusätzliche Toolbar-Buttons */
+.toolbar-overflow {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: rgba(30,20,50,0.95);
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 100;
+    flex-wrap: wrap;
+    gap: 4px;
+    max-width: 300px;
+}
+.toolbar-overflow.open { display: flex; }
 
 /* Action-Buttons haben gleiche Größe wie Tool-Buttons */
 .action-btn {
@@ -789,6 +825,11 @@ header h1 {
     border-radius: 6px;
     opacity: 0.5;
     transition: all 0.2s;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .sidebar-tab.active {
@@ -1442,6 +1483,11 @@ body.code-view-active #chat-settings-btn {
     padding: 4px;
     opacity: 0.8;
     transition: opacity 0.2s;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #chat-settings-btn:hover, #chat-close-btn:hover {
@@ -2036,8 +2082,8 @@ body.code-view-active #chat-settings-btn {
 }
 
 .genesis-hint {
-    font-size: 12px;
-    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
     text-align: center;
     animation: pulse 2s ease-in-out infinite;
     margin: 4px 0;

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schatzinsel — Außer Text nix gehext</title>
+    <title>Schatzinsel — Baue deine Insel!</title>
     <meta name="description" content="Baue deine eigene Stadt auf der Insel Java! Ein kostenloses Bauspiel für Kinder — mit Programmiersprachen als Inselbewohnern.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏝️</text></svg>">
     <link rel="manifest" href="manifest.json">
@@ -24,7 +24,7 @@
     <div id="intro-overlay" class="bigbang-phase-singularity">
         <div class="intro-content">
             <h1 id="intro-title">·</h1>
-            <p class="intro-subtitle" id="intro-subtitle"><em>Singularität</em></p>
+            <p class="intro-subtitle" id="intro-subtitle"><em>Am Anfang war ein Punkt...</em></p>
             <div id="player-name-group" style="margin-top:16px;">
                 <input type="text" id="player-name-input" maxlength="8" placeholder="Dein Name" autocomplete="off"
                     style="width:180px; padding:6px 10px; border-radius:12px; border:2px solid rgba(255,255,255,0.5); background:rgba(255,255,255,0.15); color:#fff; font-size:15px; text-align:center; font-family:inherit; outline:none;">
@@ -77,6 +77,8 @@
         <!-- Header -->
         <header>
             <h1>🏝️ Schatzinsel</h1>
+            <a href="https://donate.stripe.com/test_7sY9AMcTD6wQ7e9flD1ZS00" target="_blank" rel="noopener"
+               class="donate-btn" title="Projekt unterstützen" aria-label="Projekt unterstützen — Kaffee spendieren">☕</a>
         </header>
 
         <!-- Toolbar -->
@@ -90,29 +92,32 @@
                 <button class="tool-btn" id="weather-btn" title="Wetter ändern">☀️</button>
                 <button class="tool-btn" id="theme-btn" title="Theme wechseln">🎨</button>
                 <button class="tool-btn" id="mute-btn" title="Ton an/aus">🔊</button>
-                <button class="tool-btn" id="genre-btn" title="Musik-Genre — klicken um zu wechseln">🎶</button>
-                <button class="tool-btn" id="iso-btn" title="Isometrische Ansicht (Tetraeder-Gitter)">&#x25B3;</button>
-                <button class="tool-btn" id="code-view-btn" title="Code-Ansicht">&lt;/&gt;</button>
-                <button class="tool-btn" id="tutorial-btn" title="Programmier-Tutorial">🎓</button>
-                <button class="tool-btn" id="replay-btn" title="Bauwerk als Song abspielen">🎵</button>
-                <button class="tool-btn" id="rewind-btn" title="Zeitreise: Baugeschichte rückwärts">⏪</button>
-                <button class="tool-btn" id="bedtime-btn" title="Gute-Nacht-Geschichte von Tommy Krab">📖</button>
-            </div>
-            <div class="toolbar-group" id="project-group">
-                <input type="text" id="project-name" placeholder="Mein Bauwerk" maxlength="30">
-                <button class="tool-btn" id="save-btn" title="Speichern">💾</button>
-                <button class="tool-btn" id="load-btn" title="Laden">📂</button>
-                <button class="tool-btn" id="new-btn" title="Neu">🆕</button>
-                <button class="tool-btn" id="postcard-btn" title="Postkarte">📸</button>
-                <button class="tool-btn" id="share-btn" title="Insel-Link kopieren">🔗</button>
-                <button class="tool-btn" id="karte-btn" title="Schatzkarte für Eltern 🗺️">🗺️</button>
-                <button class="tool-btn" id="dashboard-btn" title="Eltern-Dashboard — Spielstatistiken">📊</button>
-                <button class="tool-btn" id="testdata-btn" title="Testdaten" style="display:none">📊</button>
-                <button class="tool-btn" id="bug-btn" title="Bug melden" style="display:none">🐛</button>
             </div>
             <div class="toolbar-group" id="craft-group">
                 <button class="tool-btn craft-open-btn" id="craft-btn" title="Werkbank">⚒️</button>
-                <button class="tool-btn" id="market-btn" title="Schwarzmarkt — Rare Items tauschen">🏪</button>
+            </div>
+            <div class="toolbar-group" id="overflow-group" style="position:relative">
+                <button class="tool-btn" id="toolbar-more-btn" title="Mehr Werkzeuge" onclick="document.getElementById('toolbar-overflow').classList.toggle('open')">⋯</button>
+                <div class="toolbar-overflow" id="toolbar-overflow">
+                    <button class="tool-btn" id="genre-btn" title="Musik-Genre — klicken um zu wechseln">🎶</button>
+                    <button class="tool-btn" id="iso-btn" title="Isometrische Ansicht (Tetraeder-Gitter)">&#x25B3;</button>
+                    <button class="tool-btn" id="code-view-btn" title="Code-Ansicht">&lt;/&gt;</button>
+                    <button class="tool-btn" id="tutorial-btn" title="Programmier-Tutorial">🎓</button>
+                    <button class="tool-btn" id="replay-btn" title="Bauwerk als Song abspielen">🎵</button>
+                    <button class="tool-btn" id="rewind-btn" title="Zeitreise: Baugeschichte rückwärts">⏪</button>
+                    <button class="tool-btn" id="bedtime-btn" title="Gute-Nacht-Geschichte von Tommy Krab">📖</button>
+                    <input type="text" id="project-name" placeholder="Meine Insel" maxlength="30" aria-label="Projektname">
+                    <button class="tool-btn" id="save-btn" title="Speichern">💾</button>
+                    <button class="tool-btn" id="load-btn" title="Laden">📂</button>
+                    <button class="tool-btn" id="new-btn" title="Neu">🆕</button>
+                    <button class="tool-btn" id="postcard-btn" title="Postkarte">📸</button>
+                    <button class="tool-btn" id="share-btn" title="Insel-Link kopieren">🔗</button>
+                    <button class="tool-btn" id="karte-btn" title="Schatzkarte für Eltern 🗺️">🗺️</button>
+                    <button class="tool-btn" id="dashboard-btn" title="Eltern-Dashboard — Spielstatistiken">📊</button>
+                    <button class="tool-btn" id="market-btn" title="Tauschbörse — Rare Items tauschen">🏪</button>
+                    <button class="tool-btn" id="testdata-btn" title="Testdaten" style="display:none">📊</button>
+                    <button class="tool-btn" id="bug-btn" title="Bug melden" style="display:none">🐛</button>
+                </div>
             </div>
             <div class="toolbar-group" id="genesis-group" style="display:none">
                 <button class="tool-btn" id="genesis-replay-btn" title="Nochmal abspielen: Wie alles angefangen hat">🔄</button>
@@ -132,7 +137,7 @@
                 <div id="recent-materials" class="recent-bar" style="display:none">
                     <span class="recent-label">Zuletzt</span>
                 </div>
-                <h2>道 Ursprung</h2>
+                <h2>道 Start</h2>
                 <button class="material-btn" data-material="tao" data-base="true" title="☯ Tao — Hier fängt alles an!">
                     <span class="mat-emoji">☯️</span>
                 </button>
@@ -303,7 +308,7 @@
         <div id="chat-bubble" title="Mit Inselbewohnern reden" role="button" aria-label="Chat mit Inselbewohnern öffnen" tabindex="0">💬</div>
         <div id="chat-panel" class="hidden">
             <div id="chat-header">
-                <select id="chat-character">
+                <select id="chat-character" aria-label="Inselbewohner auswählen">
                     <option value="spongebob">🧽 SpongeBob</option>
                     <option value="krabs">🦀 Mr. Krabs</option>
                     <option value="elefant">🐘 Blauer Elefant</option>
@@ -320,7 +325,7 @@
             <div id="token-budget-display" class="token-display">💰 2000/2000 Tokens</div>
             <div id="chat-messages"></div>
             <div id="chat-input-area">
-                <input type="text" id="chat-input" placeholder="Sag was zu deinem Inselbewohner..." maxlength="200">
+                <input type="text" id="chat-input" placeholder="Sag was zu deinem Inselbewohner..." maxlength="200" aria-label="Nachricht an Inselbewohner">
                 <button id="chat-send-btn" aria-label="Nachricht senden">➤</button>
             </div>
         </div>
@@ -544,6 +549,14 @@
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js').catch(() => {});
     }
+    // Toolbar-Overflow: Klick außerhalb schließt das Menü
+    document.addEventListener('click', function(e) {
+        var overflow = document.getElementById('toolbar-overflow');
+        var btn = document.getElementById('toolbar-more-btn');
+        if (overflow && btn && !overflow.contains(e.target) && e.target !== btn) {
+            overflow.classList.remove('open');
+        }
+    });
     </script>
 </body>
 </html>

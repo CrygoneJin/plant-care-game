@@ -48,7 +48,7 @@
     // --- Manuell Speichern ---
     function saveProject() {
         if (!_ctx) return;
-        var name = _ctx.getProjectName() || 'Mein Bauwerk';
+        var name = _ctx.getProjectName() || 'Meine Insel';
         var projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
         projects[name] = {
             grid: _ctx.getGrid(),

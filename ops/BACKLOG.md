@@ -11,6 +11,7 @@ Alles was nicht in eine dieser Kategorien fällt → `ARCHIVE.md`.
 
 | # | Item | Owner | Status |
 |---|------|-------|--------|
+| 103 | **Live Launch** — Playwright Tests + Stripe Donation + itch.io Upload | alle | 🔄 In Progress |
 | 78 | **Tesla-Nutzertest auswerten** — 1h Video von Oscar im Tesla. Echte Nutzerdaten. Da ist Gold drin. | Scientist + Leader | 🔲 Offen |
 | 27 | **Cloudflare Worker CORS** — User muss worker.js im Dashboard deployen | User | 🔲 Human Input |
 | 92 | **Requesty Key rotieren** — Alter Key im Git-Verlauf. Sicherheitsrisiko. | Engineer | 🔲 Human Input |

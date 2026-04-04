@@ -166,9 +166,9 @@
 
 ---
 
-# Sprint 27 — "Sales hört zu"
+# Sprint 27 — "Live Launch"
 
-**Sprint Goal:** Sales-Material mit Substanz. 5 Taschentücher bekommen Ogilvy-Copy + 3-Akt-Dramaturgie. Feynman+Heidegger prüfen alle Metriken.
+**Sprint Goal:** schatzinsel.app ist öffentlich spielbar mit Donation-Button und Qualitätssicherung.
 **Start:** 2026-04-04
 
 ---
@@ -177,9 +177,10 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S27-1 | **Taschentücher + Ogilvy-Copy** — 5 One-Pager mit 3-Akt-Struktur (Kubrick/Spielberg/Goethe), mehrdimensional (Baby→Greis, Spielegeschichte, Accessibility/Mandela) | Sales + Artist | 🔄 In Arbeit |
-| S27-2 | **Metrik-Audit Feynman×Heidegger** — Jede Metrik prüfen: was messen wir, lügt es, was ist zuhanden vs. vorhanden? | Scientist + Beirat | 🔄 In Arbeit |
-| S27-3 | **Sprint 26 Backlog-Sync** — Erledigte Items (#54, #95, #96) im Backlog als Done markieren. Distribution-Items erfassen. | Leader | 🔲 Offen |
+| S27-1 | **Playwright Smoke Tests** — 7 Tests: Load, Intro, Start, Play, Palette, Console, SW. Ersetzt Puppeteer. | Engineer | 🔄 In Progress |
+| S27-2 | **Stripe Payment Links im Dashboard erstellen** — 3 Stufen: 5€/10€/25€. Produkt existiert (prod_UH8GIdCYDVu1H5). | User (Till) | 🔲 Human Input |
+| S27-3 | **Donation-Button in index.html** — Nach Intro, dezent. Verlinkt auf Stripe Payment Links. | Designer + Engineer | 🔲 Offen |
+| S27-4 | **itch.io Upload via Butler** — Zweiter Distributionskanal. Butler Key nötig. | User (Till) | 🔲 Human Input |
 
 ---
 
@@ -187,11 +188,9 @@
 
 ### 2026-04-04 (Sprint 27 Planning)
 
-**Kontext:** Sprint 26 vollständig. User-Aufträge: Sales-Material, Metrik-Audit. "Alles in sprints, backlog features on hold."
+**Kontext:** Sprint 25+26 done. Einstein-Entscheidung: Live Launch. Stripe Produkt angelegt. Playwright wird aufgesetzt.
 
-**Sprint 27 Fokus:** Kein neuer Code. Substanz für Sales + Metriken. Zwei Agenten arbeiten parallel.
-
-**Blocker:** Keine.
+**Blocker:** Payment Links brauchen Stripe Dashboard (Till). itch.io Butler Key (Till).
 
 ---
 

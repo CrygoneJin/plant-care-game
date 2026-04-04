@@ -44,6 +44,8 @@ Persistent team log. Append-only. Read by all agents.
 
 | Datum | Was | Warum gut |
 |-------|-----|-----------|
+| 2026-04-04 | Designer+Artist Audit → 11 Fixes in 3 parallelen Agents. Toolbar 25→7 Buttons, Touch Targets 44px, Model-Tags gefiltert, Copy kindgerecht, NPC-Unlock-Hints dynamisch. 9/9 Playwright grün. Mobile Canvas 28%→60%. | Full-throttle Session: Till bemalt Ostereier, Agents arbeiten autonom. Parallele Agents + sofortige Verifikation = 11 Fixes in einer Runde. |
+| 2026-04-04 | Sprint 27 = Release-Sprint geplant. Stripe Produkt live (prod_UH8GIdCYDVu1H5, 3 Preise: 5€/10€/25€). Playwright ersetzt Puppeteer. itch.io als zweiter Kanal. | Einstein-Entscheidung: "Spiel soll live gehen." Alles andere hat Pause. |
 | 2026-04-04 | 7 Duplikat-PRs für S25-3 — parallele Sessions implementierten dasselbe unabhängig | Vor jeder Session: `gh pr list --state open` prüfen. Wenn Feature schon in PR → Review + Merge statt Neuimplementierung. PR #212 (sauberste Base) gemergt, 7 andere geschlossen. |
 | 2026-04-03 | Bug-NPC (PR #188): Raupe Nimmersatt als Meta-Bug-Melder | Worktree war auf falschem Branch → Commit landete auf feat/floriane-muscheln statt feat/bug-npc. Fix: `git branch -f` + force push. Lektion: In Worktrees immer `git branch --show-current` prüfen vor Commit. |
 | 2026-04-03 | Floriane-Muscheln: Bestätigungsflow statt Silent-Deduction | Vorheriger Agent hatte Fibonacci-Preise die bei sendToApi() still abzogen — Kind sah nur "X 🐚 für diesen Wunsch" als System-Message. Neuer Flow: Wunsch-Erkennung → Preis anzeigen → Kind bestätigt/ablehnt → erst dann abziehen. Wortanzahl-basierte Preise (3/5/8 🐚) statt Zufall. |
