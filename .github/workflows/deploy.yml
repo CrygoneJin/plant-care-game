@@ -183,3 +183,40 @@ jobs:
           path: .
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  deploy-itch:
+    name: Deploy to itch.io
+    needs: check
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Version stempeln
+        run: |
+          COUNT=$(git rev-list --count HEAD)
+          if git describe --tags --match 'v*' HEAD 2>/dev/null; then
+            VERSION=$(git describe --tags --match 'v*' HEAD)
+          else
+            SHA=$(git rev-parse --short HEAD)
+            VERSION="v0.${COUNT}.${SHA}"
+          fi
+          DATE=$(date -u +%Y-%m-%d)
+          STAMP="${VERSION} (${DATE})"
+          sed -i "s|<!--VERSION-->.*<!--/VERSION-->|<!--VERSION-->${STAMP}<!--/VERSION-->|g" index.html
+          sed -i "s|const CACHE_VERSION = [0-9]*;|const CACHE_VERSION = ${COUNT};|g" sw.js
+
+      - name: butler installieren
+        run: |
+          curl -L -o butler.zip https://broth.itch.zone/butler/linux-amd64/LATEST/archive/default
+          unzip butler.zip
+          chmod +x butler
+          ./butler -V
+
+      - name: Auf itch.io pushen
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+        run: |
+          ./butler push . crygonejin/schatzinsel:html5 --userversion=$(git describe --tags --match 'v*' HEAD 2>/dev/null || echo "0.$(git rev-list --count HEAD)")
