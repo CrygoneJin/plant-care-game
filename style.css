@@ -2952,6 +2952,10 @@ body.code-view-active #chat-settings-btn {
 [dir="rtl"] #chat-panel {
     left: 8px;
     right: auto;
+    border-radius: 0 16px 16px 0;
+}
+[dir="rtl"] #chat-panel.hidden {
+    transform: translateX(-100%);
 }
 [dir="rtl"] #chat-input-area {
     direction: rtl;
