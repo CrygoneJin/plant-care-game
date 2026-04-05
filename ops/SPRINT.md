@@ -177,9 +177,9 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S27-1 | **Playwright Smoke Tests** — 7 Tests: Load, Intro, Start, Play, Palette, Console, SW. Ersetzt Puppeteer. | Engineer | 🔄 In Progress |
+| S27-1 | **Playwright Smoke Tests** — 6 Tests in `ops/tests/smoke.spec.js`. | Engineer | ✅ Done (in main) |
 | S27-2 | **Stripe Payment Links im Dashboard erstellen** — 3 Stufen: 5€/10€/25€. Produkt existiert (prod_UH8GIdCYDVu1H5). | User (Till) | 🔲 Human Input |
-| S27-3 | **Donation-Button in index.html** — Nach Intro, dezent. Verlinkt auf Stripe Payment Links. | Designer + Engineer | 🔲 Offen |
+| S27-3 | **Donation-Button in index.html** — ☕-Button öffnet 3-Stufen-Modal (5€/10€/25€). | Designer + Engineer | ✅ Done (PR #237) |
 | S27-4 | **itch.io Upload via Butler** — Zweiter Distributionskanal. Butler Key nötig. | User (Till) | 🔲 Human Input |
 
 ---
@@ -191,6 +191,96 @@
 **Kontext:** Sprint 25+26 done. Einstein-Entscheidung: Live Launch. Stripe Produkt angelegt. Playwright wird aufgesetzt.
 
 **Blocker:** Payment Links brauchen Stripe Dashboard (Till). itch.io Butler Key (Till).
+
+### 2026-04-04 (Daily Scrum)
+
+**Gestern/Heute:** S27-1 bereits in main (smoke.spec.js, 6 Tests). S27-3 implementiert: ☕-Button öffnet 3-Stufen-Modal (5€/10€/25€) — PR #237. S27-2 + S27-4 dauerhaft blockiert auf Human Input.
+
+**Blocker:** S27-2 (Stripe Links) + S27-4 (itch.io Key) warten auf Till.
+
+---
+
+## Sprint Review — 2026-04-04
+
+**Sprint Goal erreicht:** ✅ Teilweise — alle implementierbaren Items done. Zwei Items dauerhaft blockiert (Human Input).
+
+**Was geliefert wurde:**
+- S27-1: Playwright Smoke Tests — 6 Tests (Load, Intro, Start, Canvas, Palette, SW). CI grün. Puppeteer abgelöst.
+- S27-3: Donation-Modal — ☕-Button im Header, 3 Stufen (5€/10€/25€), dezent, responsive. Test-URLs bis echte Stripe-Links von Till kommen.
+
+**Blockiert:**
+- S27-2: 3 Stripe Payment Links (prod_UH8GIdCYDVu1H5) — Till muss im Stripe Dashboard erstellen und in index.html eintragen (3× TODO S27-2).
+- S27-4: itch.io Butler Key — Till muss API Key hinterlegen.
+
+**Oscar-Check:** Donation-Button ist da. Oscar kann Schatzinsel spielen.
+
+---
+
+## Sprint Retrospective — 2026-04-04
+
+### Was lief gut?
+
+- **Playwright sauber.** CI war mit Puppeteer blockiert — Umbau hat CI entblockt. 6 Tests laufen stabil.
+- **Donation-Modal in einer Session.** 3-Tier-Auswahl, dezent, kein Overengineering.
+- **Blocked Items früh identifiziert.** S27-2 + S27-4 brauchen Till — klar kommuniziert.
+
+### Was lief schlecht?
+
+- **Mehrere itch.io PRs.** PR #227 + #231 — beide offen, Duplikat. Bereinigung nötig.
+- **i18n (PR #236) nicht geplant aber gebaut.** Großes Feature außerhalb des Sprints. Scope-Creep.
+
+### Was verbessern wir?
+
+1. PRs prüfen bevor implementiert wird — gh pr list als Standard-Schritt.
+2. Scope-Creep dokumentieren: War i18n Sprint-relevant? In Memory.md festhalten.
+
+---
+
+# Sprint 28 — "Economy sichtbar"
+
+**Sprint Goal:** Oscar sieht seinen Reichtum (Muscheln) und seine Beziehungsenergie (NPC-Tokens) als zwei klar getrennte Dinge.
+**Start:** 2026-04-04
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S28-1 | **#100 Energie vs Geld trennen** — Muscheln: goldene Summary-Box oben im Inventar. NPC-Energie: blaue Box im Chat mit Label "💬 Rede-Energie:". | Designer + Engineer | ✅ Done (PR #238, gemergt 2026-04-05) |
+| S28-2 | **#101 Krabbs-Vorrat sichtbar** — Krabbs hat endliches Inventar (max 20 pro Material). Kein Holz → kein Verkauf. | Engineer | ✅ Done (PR #239) |
+| S28-3 | **PR #236 reviewen + mergen** — i18n DE/HE/AR + RTL + Spieler-Bug-Fix (breakSymmetry nie aufgerufen → Spieler unsichtbar). | Engineer | ✅ Done (PR #236, gemergt 2026-04-04) |
+
+---
+
+## Standup Log
+
+### 2026-04-04 (Sprint 28 Planning)
+
+**Kontext:** Sprint 27 done. Ricardo-Prinzip: Muscheln = Handel ≠ NPC-Tokens = Beziehung. Zwei Konzepte, zwei Orte.
+
+**Fokus:** S28-1 zuerst (Oscar-sichtbar). Dann S28-3 (Bug-Fix + i18n). Dann S28-2 (Krabbs-Mechanik).
+
+**Blocker:** Keine.
+
+### 2026-04-04 (Daily Scrum)
+
+**Heute:** S28-2 implementiert — KRABS_STOCK_MAX=20, Lager-Indikator (🔴/🟡/🟢), Sell-Cap, PR #239. S28-1 in PR #238 (andere Session). S28-3 in PR #236.
+
+**Blocker:** S28-1 + S28-3 brauchen Merge durch Till.
+
+### 2026-04-05 (Daily Scrum)
+
+**Heute:**
+- PR #236 (i18n + Spieler-Bug) bereits gemergt — S28-3 ✅ Done.
+- PR #239 (S28-2 Krabbs-Vorrat) gemergt — CI war grün.
+- PR #240 (fix/player-bernd-trees — Auto-Participant sichtbar) gemergt — CI grün.
+- PR #238 (S28-1 Energie vs Geld) hatte Merge-Konflikt in SPRINT.md → rebase, Konflikt aufgelöst.
+- `feat/sprint-27-economy` — alter Sprint-27-Branch (Muschel-Counter V1), superseded durch PR #238.
+
+**Smoke Test:** schatzinsel.app → 403 host_not_allowed (Cloudflare blockiert Curl aus dieser Umgebung — kein echter Ausfall). Worker-API nicht erreichbar von CI-Umgebung.
+
+**Blocker:** PR #238 (S28-1) rebase läuft — danach merge.
 
 ---
 

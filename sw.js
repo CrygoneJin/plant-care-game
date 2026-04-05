@@ -40,6 +40,7 @@ const STATIC_ASSETS = [
     '/src/world/chat.js',
     '/src/world/voice.js',
     // infra
+    '/src/infra/i18n.js',
     '/src/infra/qr.js',
     '/src/infra/storage.js',
     '/src/infra/stories.js',

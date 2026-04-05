@@ -17,6 +17,13 @@ Persistent team log. Append-only. Read by all agents.
 | 2026-04-04 | NPC-Session-Gedächtnis war zu 80% fertig — nur _sessionGreeted Set fehlte | getNpcMemoryComment() existierte, wurde aber nur bei 30% Zufall oder Quest-Annahme gezeigt | Vor Feature-Implementierung immer prüfen was schon da ist. Oft reicht ein kleiner Eingriff. |
 | 2026-04-04 | Wu-Xing NPC-Events waren bereits komplett — nur Limiter fehlte | npc-events.js hatte alle 9 Event-Typen, 15s Cooldown, Reactions. Nur max 3x/Session fehlte. | Backlog-Items gegen Code abgleichen. "Offen" heißt nicht "nicht angefangen". |
 | 2026-04-04 | Heidegger als Zuhandenheit-Auditor im Beirat | "Die Zahl ist nie das Kind" — Messung verwandelt Zuhandenheit in Vorhandenheit | Essay docs/essays/beschreibung-und-messung.md dokumentiert die Epistemologie des Projekts. |
+| 2026-04-04 | Spieler nicht sichtbar — breakSymmetry() nie aufgerufen | breakSymmetry() war definiert + als window.breakSymmetry exportiert, aber kein Button und kein automatischer Aufruf. gamePhase blieb 'observer'. | breakSymmetry() jetzt in finishIntro() aufgerufen. Doppeltes Player-Rendering (inline + drawPlayer) bereinigt, hardcoded Emoji durch playerEmoji ersetzt. |
+| 2026-04-04 | i18n DE/HE/AR + RTL-Support | itch.io Butler pushed ganzes Repo statt nur Spieldateien | i18n.js mit data-i18n Attributen, RTL CSS, Sprachwahl 🇩🇪🇮🇱🇵🇸. Butler-Deploy auf _itchio Staging-Dir beschränkt. |
+| 2026-04-04 | S28-2: Krabbs-Stock war 80% fertig — Kern da, Max-Cap + visueller Indikator fehlte | Backlog sagte "offen", Code hatte bereits KRABS_STOCK_INIT und disabled-Button | Vor Implementierung prüfen was schon da ist. Oft reicht ein kleiner Eingriff. |
+| 2026-04-04 | Sprint 27 Review/Retro in SPRINT.md fehlte auf main obwohl Arbeit in Branch done war | Parallele Session hat Sprint 27 Review/Retro in Branch gemacht, aber nicht auf main gemergt | Ceremony-Einträge in SPRINT.md gehören auf main, nicht in Feature-Branches. |
+| 2026-04-04 | Smoke Test Netzwerk blockiert (Sandbox-Proxy) — extern nicht erreichbar | CI-Umgebung hat keinen Outbound-Zugang zu schatzinsel.app oder workers.dev | Smoke Tests lokal durch Playwright in CI ersetzen, nicht via curl im Agent. |
+| 2026-04-04 | S27-3 PR #233 veraltet — base 15 Commits hinter main, CI-Failure | Parallele Session hat main weiterentwickelt während PR offen lag | Vor Merge: `git log --oneline HEAD..origin/main` — wenn > 3 Commits, neu aufsetzen statt rebasen. |
+| 2026-04-04 | #100 auf falschem Branch committed (feat/s27-3-donation-modal) | Zwei Features auf einem Branch — CLAUDE.md: Ein Feature = ein Branch | Vor erstem Commit prüfen: bin ich auf dem richtigen Branch? `git branch` vor `git add`. |
 
 | Datum | Was | Warum | Lektion |
 |-------|-----|-------|---------|
