@@ -126,6 +126,21 @@
 
 ---
 
+## Sprint Review — 2026-04-05
+
+**Sprint Goal erreicht:** ⚠️ Teilweise — 2 von 3 Items Done, 1 Blocked (Human Input).
+
+**Was geliefert wurde:**
+- S35-1: Alien-NPC Dialog — `alien` in NPC_VOICES + NPC_DEFS. 7 rotierende Dialoge (neugierig, staunend, philosophisch). Alien erscheint an exakter Position der Mondlandschaft. Mondkäse-Referenz drin.
+- S35-2: Mars-Oberfläche — 5. Insel im Archipel. Rote Oberfläche, Staubsturm-Pattern, Krater, Rover-Easter-Egg. Genesis "🪐🌬️🤖". Freischaltung via Mars im Inventar. Adresse: `roter.staub.einsamkeit`. Schatzkarte: 5 von 5 Inseln.
+
+**Nicht geliefert:**
+- S35-3: Stripe Production-Links fehlen. itch.io Butler gefixt, Playwright verifiziert — aber ohne echte Stripe-Links kein Live Launch. Blocker liegt bei Till.
+
+**Oscar-Check:** Oscar baut Mond + Eis → Mars. Segelt dorthin. Roter Staub. Rover steht da. Zurück zum Mond: Alien anklicken → "Ihr seid nicht die Einzigen, die bauen."
+
+---
+
 # Sprint 33 — "Oscar sieht wie alles beginnt"
 
 **Sprint Goal:** Heimatinsel-Genesis + Genesis-Bug fix + Backlog sauber.
