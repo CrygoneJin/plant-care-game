@@ -17,6 +17,15 @@
 
 ## Standup Log
 
+### 2026-04-05 — Feynman-Bonus: NTP + Token-Tracking ✅
+
+**Implementiert:**
+- `startSessionClock()` holt `unixtime` von worldtimeapi.org (2s Timeout, Fallback `Date.now()/1000`)
+- `duration_s` in `collectTestData()` nutzt NTP-genauen Startzeitpunkt
+- Nach jedem LLM-Call in `chat.js`: geschätzte Tokens (`÷3.5`) in `insel-token-counter` (localStorage)
+- Eltern-Dashboard zeigt: NPC-Calls, ~Input-Tokens, ~Output-Tokens, ~Kosten $ (Requesty-Preise $0.002/$0.006 per 1k)
+- Kein Blocking im Hot-Path, kein neues IndexedDB, kein Toast
+
 ### 2026-04-05 (Sprint 34 Planning)
 
 **Kontext:** Sprint 33 vollständig (Review + Retro). Genesis-Bug gefixt. Heimatinsel sieht Oscar nur einmal. Backlog teilweise aufgeräumt. Retro-Empfehlungen: Weltraum-Insel (Oscar-sichtbar), vollständiger Backlog-Audit, CI-Smoke-Test.
