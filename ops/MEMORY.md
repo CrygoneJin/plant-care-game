@@ -30,6 +30,8 @@ Persistent team log. Append-only. Read by all agents.
 | 2026-04-05 | Genesis-Bug: `_showIslandGenesis()` definiert `key` aber ruft nie `localStorage.getItem(key)` auf — Genesis zeigt sich jedes Mal | Copy-Paste-Fehler: key-Variable definiert aber vergessen zu nutzen | Wenn localStorage-Key definiert: sofort auch `if (localStorage.getItem(key)) return;` + `localStorage.setItem(key, '1')` schreiben. |
 | 2026-04-05 | Gestapelte PRs (#243→#244→#245): Rebase-Aufwand + Merge-Reihenfolge zwingend | Sprint 31 basierte auf Sprint 30 Branch, Sprint 32 auf Sprint 31 Branch | Jeder Sprint direkt auf main branchen. Nie auf Feature-Branch eines anderen Sprints aufbauen. |
 | 2026-04-05 | 3 Sprints (30–32) in einer Session akkumuliert ohne sofortigen Merge | PRs lagen offen, keine Ceremony zwischen Sprints | Ceremony (Review+Retro+Planning) nach jedem Sprint, nicht nach drei Sprints. Merge sofort nach PR-Erstellung. |
+| 2026-04-05 | Sprint 34: 2 von 3 Items waren Phantom-Opens (S34-2, S34-3 bereits implementiert) | Backlog + deploy.yml nicht vor Sprint Planning geprüft | Vor Sprint Planning: deploy.yml lesen + BACKLOG gegen Code verifizieren. Nie Items planen ohne zu prüfen ob bereits fertig. |
+| 2026-04-05 | Alien auf Mond: als Grid-Block platziert, aber kein NPC-Dialog | island-generators.js platziert Alien als Material, NPC_DEFS kannte kein 'alien' | NPC auf neuer Insel: NPC_DEFS + NPC_VOICES + initNpcPositions() braucht moon/island-Flag. Analog zu lummerland-Flag. |
 
 | Datum | Was | Warum | Lektion |
 |-------|-----|-------|---------|

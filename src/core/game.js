@@ -331,6 +331,8 @@
         // Bonusfamilie (nur auf Startinsel sichtbar, Spieler benennt sie selbst)
         kraemerin: { emoji: '👩‍🍳', name: 'Krämerin', lummerland: true },
         lokfuehrer:{ emoji: '🚂', name: 'Lokführer', lummerland: true },
+        // Mond-Bewohner
+        alien:     { emoji: '👽', name: 'Alien', moon: true },
     };
 
     // NPCs im Kreis um die Inselmitte verteilen
@@ -344,12 +346,28 @@
         const cy = Math.floor(ROWS / 2);
         const rx = Math.floor(COLS * 0.3);
         const ry = Math.floor(ROWS * 0.3);
+        const _currentIsland = localStorage.getItem('insel-current-island') || 'home';
+        const _isMoon = _currentIsland === 'moon';
         const ids = Object.keys(NPC_DEFS).filter(id => {
             // Lummerland-NPCs nur auf Lummerland
             if (NPC_DEFS[id].lummerland && !_isLummerland) return false;
+            // Mond-NPCs nur auf dem Mond
+            if (NPC_DEFS[id].moon && !_isMoon) return false;
             return true;
         });
         npcPositions = {};
+
+        // Mond-NPCs bekommen feste Position (identisch mit generateMoonIsland)
+        if (_isMoon) {
+            const moonRx = Math.floor(COLS * 0.44), moonRy = Math.floor(ROWS * 0.44);
+            const alienR = cy - Math.floor(moonRy * 0.1);
+            const alienC = cx - Math.floor(moonRx * 0.05);
+            if (alienR >= 0 && alienR < ROWS && alienC >= 0 && alienC < COLS) {
+                npcPositions['alien'] = { r: alienR, c: alienC };
+                // Alien-Block entfernen — NPC ersetzt den Block
+                if (grid[alienR] && grid[alienR][alienC] === 'alien') grid[alienR][alienC] = null;
+            }
+        }
 
         // Lummerland-NPCs bekommen feste Positionen bei ihren Gebäuden
         if (_isLummerland) {
@@ -483,6 +501,23 @@
             } else {
                 showToast(story, 5000);
             }
+        } else if (npcId === 'alien') {
+            const alienStories = [
+                '👽 Alien: *bloop bloop* Wir beobachten eure Insel schon seit... langer Zeit.',
+                '👽 Alien: Interessant. Ihr baut mit Holz und Stein. Wir bauen mit Licht und Zeit.',
+                '👽 Alien: Euer Raketen-Design ist... charmant. Funktioniert aber!',
+                '👽 Alien: Habt ihr gewusst dass der Mondkäse von uns stammt? Lecker, oder?',
+                '👽 Alien: Auf meinem Planeten gibt es auch Kinder. Die bauen auch. Aber in 7 Dimensionen.',
+                '👽 Alien: *scannt Oscar* ...Kreativitätswert: außerordentlich hoch. Gut.',
+                '👽 Alien: Willkommen im Kosmos. Ihr seid nicht die Einzigen, die bauen.',
+            ];
+            const alienMsg = alienStories[Math.floor(Math.random() * alienStories.length)];
+            if (sessionGreeting) {
+                showToast(sessionGreeting, 3000);
+                setTimeout(() => showToast(alienMsg, 5000), 3200);
+            } else {
+                showToast(alienMsg, 5000);
+            }
         } else {
             if (sessionGreeting) {
                 showToast(sessionGreeting, 3000);
@@ -532,6 +567,7 @@
         lummerland: 'zwei.berge.abenteuer',
         dinobucht:  'knochen.urzeit.staunen',
         moon:       'mond.staub.stille',
+        mars:       'roter.staub.einsamkeit',
     };
 
     function showSailDialog() {
@@ -545,8 +581,10 @@
             lummerland: !!localStorage.getItem('insel-archipel-lummerland'),
             dinobucht:  !!localStorage.getItem('insel-archipel-dinobucht'),
             moon:       !!localStorage.getItem('insel-archipel-moon'),
+            mars:       !!localStorage.getItem('insel-archipel-mars'),
         };
         const hasRocket = typeof getInventoryCount === 'function' && getInventoryCount('rocket') > 0;
+        const hasMars = typeof getInventoryCount === 'function' && getInventoryCount('mars') > 0;
 
         function islandBtn(dest, emoji, label, desc, borderColor, bgColor) {
             const addr = _ISLAND_ADDRESSES[dest] || '';
@@ -584,6 +622,13 @@
                         : `<div style="padding:10px 12px;font-size:15px;border-radius:8px;border:2px dashed #BDC3C7;background:#FDFEFE;color:#95A5A6;text-align:left;display:flex;align-items:center;gap:10px;">
                             <span style="font-size:22px;">🌙</span>
                             <span><strong>Mondlandschaft</strong><br><small>Baue erst eine 🚀 Rakete!</small></span>
+                           </div>`
+                    }
+                    ${hasMars
+                        ? islandBtn('mars', '🪐', 'Mars', 'Roter Staub, Staubstürme, und ein Rover', '#C0392B', '#FDEDEC')
+                        : `<div style="padding:10px 12px;font-size:15px;border-radius:8px;border:2px dashed #BDC3C7;background:#FDFEFE;color:#95A5A6;text-align:left;display:flex;align-items:center;gap:10px;">
+                            <span style="font-size:22px;">🪐</span>
+                            <span><strong>Mars</strong><br><small>Crafte erst 🪐 Mars (Mond + Eis)!</small></span>
                            </div>`
                     }
                 </div>
@@ -656,6 +701,11 @@
                         window.INSEL_GENERATORS.generateMoonIsland(grid, ROWS, COLS, MATERIALS);
                     }
                     _showIslandGenesis('moon');
+                } else if (dest === 'mars') {
+                    if (window.INSEL_GENERATORS && window.INSEL_GENERATORS.generateMarsIsland) {
+                        window.INSEL_GENERATORS.generateMarsIsland(grid, ROWS, COLS, MATERIALS);
+                    }
+                    _showIslandGenesis('mars');
                 } else if (dest === 'home') {
                     showToast('🏠 Du bist wieder zuhause!', 3000);
                 }
@@ -664,6 +714,7 @@
                               dest === 'lummerland' ? '🏝️ Lummerland — wieder da!' :
                               dest === 'dinobucht' ? '🦕 Die Dino-Bucht — du kennst dich hier schon aus!' :
                               dest === 'moon' ? '🌙 Der Mond — du kennst dich hier schon aus!' :
+                              dest === 'mars' ? '🪐 Der Mars — roter Staub, soweit das Auge reicht!' :
                               '⛵ Angekommen!';
                 showToast(label, 3000);
             }
@@ -2079,6 +2130,7 @@
         lummerland: ['🌊 Das Meer trennt sich...', '🏝️ Eine kleine Insel erscheint!', '🏔️ Zwei Berge wachsen in den Himmel.'],
         dinobucht:  ['🌊 Das Urmeer weicht zurück...', '🦴 Fossilien tauchen aus dem Sand!', '🦕 Die Dinosaurier sind noch hier!'],
         moon:       ['🚀 Die Rakete landet auf dem Mond...', '🌙 Mondstaub wirbelt auf!', '👽 Ein Alien schaut zu.'],
+        mars:       ['🪐 Roter Staub überall...', '🌬️ Ein Sturm fegt über die Ebene!', '🤖 Ein alter Rover schaut zu.'],
     };
 
     function _showIslandGenesis(dest) {
