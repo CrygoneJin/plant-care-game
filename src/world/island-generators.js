@@ -237,5 +237,116 @@
         window.grid = grid;
     }
 
-    window.INSEL_GENERATORS = { generateStarterIsland, generateLummerland };
+    /**
+     * Dino-Bucht — eine urzeitliche Insel voller Fossilien und Dinosaurier.
+     * Fossilien im Strandsand, Dinos im Wald, T-Rex auf dem Gipfel.
+     * @param {Array<Array<string|null>>} grid
+     * @param {number} ROWS
+     * @param {number} COLS
+     * @param {Record<string, {emoji:string, label:string}>} MATERIALS
+     */
+    function generateDinoIsland(grid, ROWS, COLS, MATERIALS) {
+        let seed = 66000000; // 66 Millionen Jahre — Kreide-Paläogen-Grenze
+        function rng() { seed = (seed * 16807 + 0) % 2147483647; return seed / 2147483647; }
+
+        const cx = Math.floor(COLS / 2), cy = Math.floor(ROWS / 2);
+        const rx = Math.floor(COLS * 0.42), ry = Math.floor(ROWS * 0.42);
+
+        // Strandring mit Fossilien-Einschlüssen
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                const dx = (c - cx) / rx, dy = (r - cy) / ry;
+                const dist = dx * dx + dy * dy;
+                const wobble = 0.1 * Math.sin(r * 2.1 + c * 1.3) + 0.08 * Math.cos(c * 1.7 - r * 0.9);
+                if (dist < (0.72 + wobble) && dist >= (0.52 + wobble)) {
+                    // Strandrand: meistens Sand, ab und zu Fossil
+                    grid[r][c] = rng() < 0.18 && MATERIALS['fossil'] ? 'fossil' : 'sand';
+                }
+            }
+        }
+
+        // Dichter Urwald (Bäume + Pflanzen) im Inneren
+        for (let attempt = 0; attempt < 400; attempt++) {
+            const r = Math.floor(rng() * ROWS);
+            const c = Math.floor(rng() * COLS);
+            const dx = (c - cx) / rx, dy = (r - cy) / ry;
+            const dist = dx * dx + dy * dy;
+            if (dist < 0.38 && !grid[r][c]) {
+                const roll = rng();
+                grid[r][c] = roll < 0.45 ? 'tree' :
+                             roll < 0.7  ? 'small_tree' :
+                             roll < 0.85 ? 'plant' : 'flower';
+            }
+        }
+
+        // Fossilien-Cluster im mittleren Bereich
+        if (MATERIALS['fossil']) {
+            const fossilMax = Math.max(5, Math.floor((ROWS + COLS) * 0.12));
+            let fossilPlaced = 0;
+            for (let attempt = 0; attempt < 300 && fossilPlaced < fossilMax; attempt++) {
+                const r = Math.floor(rng() * ROWS);
+                const c = Math.floor(rng() * COLS);
+                const dx = (c - cx) / rx, dy = (r - cy) / ry;
+                if (dx * dx + dy * dy < 0.45 && !grid[r][c]) {
+                    grid[r][c] = 'fossil';
+                    fossilPlaced++;
+                }
+            }
+        }
+
+        // Dinosaurier-Herde (6–8 Dinos)
+        if (MATERIALS['dino']) {
+            let placed = 0;
+            for (let attempt = 0; attempt < 200 && placed < 7; attempt++) {
+                const r = Math.floor(rng() * ROWS);
+                const c = Math.floor(rng() * COLS);
+                const dx = (c - cx) / rx, dy = (r - cy) / ry;
+                if (dx * dx + dy * dy < 0.35 && !grid[r][c]) {
+                    grid[r][c] = 'dino';
+                    placed++;
+                }
+            }
+        }
+
+        // T-Rex auf dem höchsten Punkt (Mitte oben)
+        if (MATERIALS['trex']) {
+            const trexR = Math.floor(cy - ry * 0.35);
+            const trexC = Math.floor(cx + (rng() - 0.5) * rx * 0.3);
+            if (trexR >= 0 && trexR < ROWS && trexC >= 0 && trexC < COLS) {
+                grid[trexR][trexC] = 'trex';
+                // Steinpodest unter dem T-Rex
+                for (const [dr, dc] of [[1,-1],[1,0],[1,1]]) {
+                    const nr = trexR + dr, nc = trexC + dc;
+                    if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && !grid[nr][nc]) {
+                        grid[nr][nc] = 'stone';
+                    }
+                }
+            }
+        }
+
+        // Meteorit-Einschlag-Krater (nordwestliche Ecke)
+        if (MATERIALS['meteor']) {
+            const kraterR = Math.floor(cy - ry * 0.2);
+            const kraterC = Math.floor(cx - rx * 0.25);
+            grid[kraterR][kraterC] = 'meteor';
+            // Krater-Rand aus Stein
+            for (const [dr, dc] of [[-1,0],[1,0],[0,-1],[0,1],[-1,-1],[-1,1],[1,-1],[1,1]]) {
+                const nr = kraterR + dr, nc = kraterC + dc;
+                if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && !grid[nr][nc]) {
+                    grid[nr][nc] = 'stone';
+                }
+            }
+        }
+
+        // Kleiner Tümpel (Wasserstelle)
+        const tumpelR = Math.floor(cy + ry * 0.15), tumpelC = Math.floor(cx + rx * 0.1);
+        for (const [dr, dc] of [[0,0],[0,1],[1,0],[0,-1]]) {
+            const nr = tumpelR + dr, nc = tumpelC + dc;
+            if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS) grid[nr][nc] = 'water';
+        }
+
+        window.grid = grid;
+    }
+
+    window.INSEL_GENERATORS = { generateStarterIsland, generateLummerland, generateDinoIsland };
 })();

@@ -37,14 +37,14 @@ Alles was nicht in eine dieser Kategorien fällt → `ARCHIVE.md`.
 | 17 | **Eltern-Dashboard** — Bernd zeigt Spielstatistiken für Eltern | Engineer | ✅ Done (📊-Button + Bernd-NPC-Klick + Schatzkarte 🗺️) | Mama sieht was Oscar gebaut hat. |
 | 33 | **Header-Title "Schatzinsel"** | Designer | ✅ Done (h1 + title-Tag existieren) | Kosmetik. 5 Minuten. |
 | 34 | **NPCs in User-Sprache** — Eingabe Englisch → Antwort Englisch | Scientist | ✅ Done (S30-2, PR #243) | Oscars englischsprachige Freunde können mitspielen. |
-| 37 | **Schöpfungsgeschichte als Tutorial** — 7 Level, Insel beginnt als Wasser | Leader | 🔲 Offen | Oscar erlebt wie seine Insel entsteht. |
+| 37 | **Schöpfungsgeschichte als Tutorial** — 7 Level, Insel beginnt als Wasser | Leader | 🔄 Phase 1 Done (S31-2: Genesis-Toasts beim Ankommen) | Oscar erlebt wie seine Insel entsteht. |
 | 42 | **Werkbank als Canvas-Drag** — Infinite Craft Pattern | Engineer | ✅ Done (Palette→Canvas drag + Inventar drag-drop existieren) | Oscar zieht Feuer auf Wasser statt Modal. |
 | 62 | **Mehrsprachige NPCs** | Scientist | 🔲 Offen | Spielplatz-Phase mit nicht-deutschen Kindern. |
 | 18 | **Musik on demand** | Artist + Engineer | ✅ Done (genre-btn + setGenre() existieren) | Oscar wählt seinen Soundtrack. |
-| 23 | **Programmier-Tutorial** — NPCs bringen JavaScript bei | Scientist + Engineer | 🔲 Offen | Oscar lernt coden durch Spielen. |
+| 23 | **Programmier-Tutorial** — NPCs bringen JavaScript bei | Scientist + Engineer | ✅ Done (PR #149 — 5 Lektionen, sandboxed Code-Editor, NPC-Guides) | Oscar lernt coden durch Spielen. |
 | 19 | **Conway→Gameplay** — Lebende Zellen → Blumen, Glider → Wolken | Engineer + Scientist | ✅ Done (conway.js: bloom/stone/glider Events → Blöcke auf Grid) | Die Insel lebt auch wenn Oscar nicht baut. |
 | 32 | **Code-Ebenen per Touch** — Swipe statt Rechtsklick | Engineer | ✅ Done |
-| 103 | **Insel-Archipel** — Heimatinsel bleibt erhalten wenn Oscar segelt. Jede neue Insel ist ein Kapitel. Wissen (Rezepte, NPCs, Materialien) wird mitgenommen. Schatzkarte mit drei Worten = Adresse jeder Insel. Tommy erzählt abends davon. | alle | 🔲 Offen | Oscar entdeckt mit dem Gelernten immer neue Welten — und findet immer den Weg nach Hause. |
+| 103 | **Insel-Archipel** — Phase 1 (S29): Save/Load. Phase 2 (S31): Dino-Bucht als neue Insel. Noch offen: Schatzkarte mit drei Worten = Adresse. | alle | 🔄 Phase 2 Done (S31-1) | Oscar entdeckt mit dem Gelernten immer neue Welten — und findet immer den Weg nach Hause. |
 
 ---
 

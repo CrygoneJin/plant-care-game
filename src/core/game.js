@@ -540,6 +540,9 @@
                     <button class="sail-dest" data-dest="lummerland" style="padding:12px;font-size:16px;border-radius:8px;border:2px solid #2E86C1;background:#EBF5FB;cursor:pointer;">
                         🏝️ Lummerland<br><small>Eine kleine Insel mit zwei Bergen</small>
                     </button>
+                    <button class="sail-dest" data-dest="dinobucht" style="padding:12px;font-size:16px;border-radius:8px;border:2px solid #8E44AD;background:#F5EEF8;cursor:pointer;">
+                        🦕 Dino-Bucht<br><small>Vor 66 Millionen Jahren lebten hier Dinosaurier</small>
+                    </button>
                     <button class="sail-dest" data-dest="home" style="padding:12px;font-size:16px;border-radius:8px;border:2px solid #27AE60;background:#EAFAF1;cursor:pointer;">
                         🏠 Heimatinsel<br><small>Deine Insel wartet auf dich</small>
                     </button>
@@ -596,19 +599,26 @@
             const restored = loadIslandState(dest);
 
             if (!restored) {
-                // Erste Reise: Insel generieren
+                // Erste Reise: Insel generieren + Genesis-Toasts
                 for (let r = 0; r < ROWS; r++) {
                     for (let c = 0; c < COLS; c++) grid[r][c] = null;
                 }
                 if (dest === 'lummerland') {
                     generateLummerland();
-                    showToast('🏝️ Willkommen auf Lummerland! Eine kleine Insel mit zwei Bergen...', 4000);
+                    _showIslandGenesis('lummerland');
+                } else if (dest === 'dinobucht') {
+                    if (window.INSEL_GENERATORS && window.INSEL_GENERATORS.generateDinoIsland) {
+                        window.INSEL_GENERATORS.generateDinoIsland(grid, ROWS, COLS, MATERIALS);
+                    }
+                    _showIslandGenesis('dinobucht');
                 } else if (dest === 'home') {
                     showToast('🏠 Du bist wieder zuhause!', 3000);
                 }
             } else {
                 const label = dest === 'home' ? '🏠 Du bist wieder zuhause — deine Insel wartet!' :
-                              dest === 'lummerland' ? '🏝️ Lummerland — wieder da!' : '⛵ Angekomm!';
+                              dest === 'lummerland' ? '🏝️ Lummerland — wieder da!' :
+                              dest === 'dinobucht' ? '🦕 Die Dino-Bucht — du kennst dich hier schon aus!' :
+                              '⛵ Angekomm!';
                 showToast(label, 3000);
             }
 
@@ -2002,6 +2012,24 @@
         window.INSEL_GENERATORS.generateLummerland(grid, ROWS, COLS, MATERIALS);
     }
 
+    // === GENESIS-TOASTS: Schöpfungsgeschichte Phase 1 (#37) ===
+    // Zeigt beim ersten Betreten einer neuen Insel 3 kurze Toasts die die Insel "erschaffen".
+    // Nur einmal pro Insel (localStorage-Flag).
+    const _ISLAND_GENESIS = {
+        lummerland: ['🌊 Das Meer trennt sich...', '🏝️ Eine kleine Insel erscheint!', '🏔️ Zwei Berge wachsen in den Himmel.'],
+        dinobucht:  ['🌊 Das Urmeer weicht zurück...', '🦴 Fossilien tauchen aus dem Sand!', '🦕 Die Dinosaurier sind noch hier!'],
+    };
+
+    function _showIslandGenesis(dest) {
+        const key = 'insel-genesis-' + dest;
+        const msgs = _ISLAND_GENESIS[dest];
+        if (!msgs) {
+            showToast('⛵ Angekomm!', 2000);
+            return;
+        }
+        msgs.forEach((msg, i) => setTimeout(() => showToast(msg, 2200), i * 1400));
+    }
+
     // --- Zeichnen ---
     function draw() {
         if (!needsRedraw) return;
@@ -2665,6 +2693,9 @@
                 if (window.INSEL_BUS) {
                     var wu = { fire: 'fire', water: 'water', wood: 'wood', metal: 'metal', earth: 'earth' };
                     if (wu[currentMaterial]) window.INSEL_BUS.emit('element:' + currentMaterial, { r: r, c: c, material: currentMaterial });
+                    // Dino-Materialien
+                    var dinoMats = { fossil: 1, dino: 1, trex: 1, meteor: 1 };
+                    if (dinoMats[currentMaterial]) window.INSEL_BUS.emit('material:dino', { r: r, c: c, material: currentMaterial });
                     window.INSEL_BUS.emit('block:placed', { r: r, c: c, material: currentMaterial });
                 }
                 checkAutomerge(r, c);

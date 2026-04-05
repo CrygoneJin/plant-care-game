@@ -57,6 +57,15 @@
             { npc: 'krabs', emoji: '🦀', text: 'Kann man das verkaufen? 💰' },
             { npc: 'tommy', emoji: '🦞', text: 'Nicht schlecht! Klick-klack! 🦞' },
         ],
+        'material:dino': [
+            { npc: 'mephisto', emoji: '😈', text: 'Ah... Urzeitliche Energie. Die Saurier wussten was Macht ist. 🦕' },
+            { npc: 'bernd', emoji: '🐻', text: 'WOW! Vor 66 Millionen Jahren war das lebendig! 🦴' },
+            { npc: 'elefant', emoji: '🐘', text: 'Meine Vorfahren! Ich erkenne uns... 🦣' },
+        ],
+        'island:arrived': [
+            { npc: 'bernd', emoji: '🐻', text: 'Neue Insel! Was werden wir hier entdecken? 🗺️' },
+            { npc: 'maus', emoji: '🐭', text: 'Ich rieche Abenteuer! 🌊' },
+        ],
     };
 
     /**
