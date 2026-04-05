@@ -531,6 +531,7 @@
         home:      'wellen.sand.zuhause',
         lummerland: 'zwei.berge.abenteuer',
         dinobucht:  'knochen.urzeit.staunen',
+        moon:       'mond.staub.stille',
     };
 
     function showSailDialog() {
@@ -543,7 +544,9 @@
             home:       true,
             lummerland: !!localStorage.getItem('insel-archipel-lummerland'),
             dinobucht:  !!localStorage.getItem('insel-archipel-dinobucht'),
+            moon:       !!localStorage.getItem('insel-archipel-moon'),
         };
+        const hasRocket = typeof getInventoryCount === 'function' && getInventoryCount('rocket') > 0;
 
         function islandBtn(dest, emoji, label, desc, borderColor, bgColor) {
             const addr = _ISLAND_ADDRESSES[dest] || '';
@@ -576,6 +579,13 @@
                     ${islandBtn('home',      '🏠', 'Heimatinsel', 'Deine Insel wartet auf dich',                '#27AE60', '#EAFAF1')}
                     ${islandBtn('lummerland','🏝️', 'Lummerland',  'Eine kleine Insel mit zwei Bergen',          '#2E86C1', '#EBF5FB')}
                     ${islandBtn('dinobucht', '🦕', 'Dino-Bucht',  'Vor 66 Millionen Jahren lebten hier Dinos', '#8E44AD', '#F5EEF8')}
+                    ${hasRocket
+                        ? islandBtn('moon', '🌙', 'Mondlandschaft', 'Staub, Stille, und ein Alien wartet', '#7F8C8D', '#F2F3F4')
+                        : `<div style="padding:10px 12px;font-size:15px;border-radius:8px;border:2px dashed #BDC3C7;background:#FDFEFE;color:#95A5A6;text-align:left;display:flex;align-items:center;gap:10px;">
+                            <span style="font-size:22px;">🌙</span>
+                            <span><strong>Mondlandschaft</strong><br><small>Baue erst eine 🚀 Rakete!</small></span>
+                           </div>`
+                    }
                 </div>
                 <button id="sail-cancel" style="padding:8px 16px;border:none;background:#eee;border-radius:6px;cursor:pointer;">Noch nicht</button>
             </div>
@@ -641,6 +651,11 @@
                         window.INSEL_GENERATORS.generateDinoIsland(grid, ROWS, COLS, MATERIALS);
                     }
                     _showIslandGenesis('dinobucht');
+                } else if (dest === 'moon') {
+                    if (window.INSEL_GENERATORS && window.INSEL_GENERATORS.generateMoonIsland) {
+                        window.INSEL_GENERATORS.generateMoonIsland(grid, ROWS, COLS, MATERIALS);
+                    }
+                    _showIslandGenesis('moon');
                 } else if (dest === 'home') {
                     showToast('🏠 Du bist wieder zuhause!', 3000);
                 }
@@ -648,7 +663,8 @@
                 const label = dest === 'home' ? '🏠 Du bist wieder zuhause — deine Insel wartet!' :
                               dest === 'lummerland' ? '🏝️ Lummerland — wieder da!' :
                               dest === 'dinobucht' ? '🦕 Die Dino-Bucht — du kennst dich hier schon aus!' :
-                              '⛵ Angekomm!';
+                              dest === 'moon' ? '🌙 Der Mond — du kennst dich hier schon aus!' :
+                              '⛵ Angekommen!';
                 showToast(label, 3000);
             }
 
@@ -2062,6 +2078,7 @@
         home:       ['🌊 Das Wasser weicht zurück...', '🏝️ Eine Insel entsteht!', '🌳 Der erste Baum wächst.'],
         lummerland: ['🌊 Das Meer trennt sich...', '🏝️ Eine kleine Insel erscheint!', '🏔️ Zwei Berge wachsen in den Himmel.'],
         dinobucht:  ['🌊 Das Urmeer weicht zurück...', '🦴 Fossilien tauchen aus dem Sand!', '🦕 Die Dinosaurier sind noch hier!'],
+        moon:       ['🚀 Die Rakete landet auf dem Mond...', '🌙 Mondstaub wirbelt auf!', '👽 Ein Alien schaut zu.'],
     };
 
     function _showIslandGenesis(dest) {

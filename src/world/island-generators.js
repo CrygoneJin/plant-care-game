@@ -348,5 +348,103 @@
         window.grid = grid;
     }
 
-    window.INSEL_GENERATORS = { generateStarterIsland, generateLummerland, generateDinoIsland };
+    /**
+     * Mondlandschaft — staubig, karg, mit Kratern und Aliens.
+     * Oscar landet hier mit seiner Rakete. Der erste Baum wächst nicht hier.
+     * @param {Array<Array<string|null>>} grid
+     * @param {number} ROWS
+     * @param {number} COLS
+     * @param {Record<string, {emoji:string, label:string}>} MATERIALS
+     */
+    function generateMoonIsland(grid, ROWS, COLS, MATERIALS) {
+        let seed = 384400; // Mondentfernung in km
+        function rng() { seed = (seed * 16807 + 0) % 2147483647; return seed / 2147483647; }
+
+        const cx = Math.floor(COLS / 2), cy = Math.floor(ROWS / 2);
+        const rx = Math.floor(COLS * 0.44), ry = Math.floor(ROWS * 0.44);
+
+        // Mondstaub-Oberfläche: Stone-Rand + Innen leer (Regolith)
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                const dx = (c - cx) / rx, dy = (r - cy) / ry;
+                const dist = dx * dx + dy * dy;
+                const wobble = 0.08 * Math.sin(r * 3.1 + c * 2.3) + 0.06 * Math.cos(c * 1.9 - r * 1.4);
+                if (dist < (0.68 + wobble) && dist >= (0.50 + wobble)) {
+                    grid[r][c] = 'stone'; // Mondrand aus Gestein
+                }
+            }
+        }
+
+        // Krater: Ringe aus Stein (3 Krater)
+        const craters = [
+            [cy - Math.floor(ry * 0.3), cx - Math.floor(rx * 0.25)],
+            [cy + Math.floor(ry * 0.2), cx + Math.floor(rx * 0.3)],
+            [cy - Math.floor(ry * 0.1), cx + Math.floor(rx * 0.15)],
+        ];
+        for (const [cr, cc] of craters) {
+            for (const [dr, dc] of [[-1,0],[1,0],[0,-1],[0,1],[-1,-1],[-1,1],[1,-1],[1,1]]) {
+                const nr = cr + dr, nc = cc + dc;
+                if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && !grid[nr][nc]) {
+                    grid[nr][nc] = 'stone';
+                }
+            }
+        }
+
+        // Sterne (über den Boden verteilt — Monde haben keinen Himmel, man sieht sie direkt)
+        if (MATERIALS['star']) {
+            let starsPlaced = 0;
+            for (let attempt = 0; attempt < 200 && starsPlaced < 8; attempt++) {
+                const r = Math.floor(rng() * ROWS);
+                const c = Math.floor(rng() * COLS);
+                const dx = (c - cx) / rx, dy = (r - cy) / ry;
+                if (dx * dx + dy * dy < 0.38 && !grid[r][c]) {
+                    grid[r][c] = 'star';
+                    starsPlaced++;
+                }
+            }
+        }
+
+        // Meteoriteneinschläge
+        if (MATERIALS['meteor']) {
+            const meteorR = cy - Math.floor(ry * 0.15), meteorC = cx - Math.floor(rx * 0.1);
+            if (meteorR >= 0 && meteorR < ROWS && meteorC >= 0 && meteorC < COLS) {
+                grid[meteorR][meteorC] = 'meteor';
+            }
+        }
+
+        // Mondkäse — Easter Egg (natürlich ist der Mond aus Käse!)
+        if (MATERIALS['mooncheese']) {
+            const cheeseR = cy + Math.floor(ry * 0.15), cheeseC = cx - Math.floor(rx * 0.2);
+            if (cheeseR >= 0 && cheeseR < ROWS && cheeseC >= 0 && cheeseC < COLS && !grid[cheeseR][cheeseC]) {
+                grid[cheeseR][cheeseC] = 'mooncheese';
+            }
+        }
+
+        // Rakete — steht auf dem Mond
+        if (MATERIALS['rocket']) {
+            const rocketR = cy + Math.floor(ry * 0.25), rocketC = cx;
+            if (rocketR >= 0 && rocketR < ROWS && rocketC >= 0 && rocketC < COLS) {
+                grid[rocketR][rocketC] = 'rocket';
+                // Landebeine aus Stein
+                for (const [dr, dc] of [[0,-1],[0,1],[1,-1],[1,0],[1,1]]) {
+                    const nr = rocketR + dr, nc = rocketC + dc;
+                    if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && !grid[nr][nc]) {
+                        grid[nr][nc] = 'stone';
+                    }
+                }
+            }
+        }
+
+        // Alien — Bewohner des Mondes (mitten auf der Insel)
+        if (MATERIALS['alien']) {
+            const alienR = cy - Math.floor(ry * 0.1), alienC = cx - Math.floor(rx * 0.05);
+            if (alienR >= 0 && alienR < ROWS && alienC >= 0 && alienC < COLS && !grid[alienR][alienC]) {
+                grid[alienR][alienC] = 'alien';
+            }
+        }
+
+        window.grid = grid;
+    }
+
+    window.INSEL_GENERATORS = { generateStarterIsland, generateLummerland, generateDinoIsland, generateMoonIsland };
 })();
