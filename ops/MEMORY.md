@@ -24,6 +24,8 @@ Persistent team log. Append-only. Read by all agents.
 | 2026-04-04 | Smoke Test Netzwerk blockiert (Sandbox-Proxy) — extern nicht erreichbar | CI-Umgebung hat keinen Outbound-Zugang zu schatzinsel.app oder workers.dev | Smoke Tests lokal durch Playwright in CI ersetzen, nicht via curl im Agent. |
 | 2026-04-04 | S27-3 PR #233 veraltet — base 15 Commits hinter main, CI-Failure | Parallele Session hat main weiterentwickelt während PR offen lag | Vor Merge: `git log --oneline HEAD..origin/main` — wenn > 3 Commits, neu aufsetzen statt rebasen. |
 | 2026-04-04 | #100 auf falschem Branch committed (feat/s27-3-donation-modal) | Zwei Features auf einem Branch — CLAUDE.md: Ein Feature = ein Branch | Vor erstem Commit prüfen: bin ich auf dem richtigen Branch? `git branch` vor `git add`. |
+| 2026-04-05 | Sprint 29: 5 Phantom-Opens identifiziert (#33, #17, #19, #100, #101) | Backlog wurde nicht nach PRs/Commits aktualisiert | Code vor Sprint Planning lesen. `grep` schlägt Backlog-Lesen. |
+| 2026-04-05 | sailToIsland() löschte Grid ohne Save — Oscar verlor Heimatinsel beim Segeln | Kein Archipel-Konzept: alle Inseln teilen eine Zustandsvariable | saveIslandState/loadIslandState via localStorage. Jede Insel hat eigenen Key `insel-archipel-{id}`. |
 
 | Datum | Was | Warum | Lektion |
 |-------|-----|-------|---------|
