@@ -104,6 +104,7 @@ jobs:
           fetch-depth: 0
 
       - name: Version stempeln
+        id: version
         run: |
           COUNT=$(git rev-list --count HEAD)
           if git describe --tags --match 'v*' HEAD 2>/dev/null; then
@@ -114,21 +115,10 @@ jobs:
           fi
           DATE=$(date -u +%Y-%m-%d)
           STAMP="${VERSION} (${DATE})"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
           sed -i "s|<!--VERSION-->.*<!--/VERSION-->|<!--VERSION-->${STAMP}<!--/VERSION-->|g" index.html
           sed -i "s|const CACHE_VERSION = [0-9]*;|const CACHE_VERSION = ${COUNT};|g" sw.js
 
-      - name: butler installieren
-        run: |
-          curl -L -o butler.zip https://broth.itch.zone/butler/linux-amd64/LATEST/archive/default
-          unzip butler.zip
-          chmod +x butler
-          ./butler -V
-
-      - name: Auf itch.io pushen
-        env:
-          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-        run: |
-          ./butler push . crygonejim/schatzinsel-treasure-island-le-des-merveilles:html5 --userversion=$(git describe --tags --match 'v*' HEAD 2>/dev/null || echo "0.$(git rev-list --count HEAD)")
       - name: Build itch.io bundle
         run: |
           mkdir -p _itchio

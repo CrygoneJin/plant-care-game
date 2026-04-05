@@ -446,5 +446,73 @@
         window.grid = grid;
     }
 
-    window.INSEL_GENERATORS = { generateStarterIsland, generateLummerland, generateDinoIsland, generateMoonIsland };
+    function generateMarsIsland(grid, ROWS, COLS, MATERIALS) {
+        let seed = 225000; // Mars-Entfernung in km (ca. Minimum)
+        function rng() { seed = (seed * 16807 + 0) % 2147483647; return seed / 2147483647; }
+
+        const cx = Math.floor(COLS / 2), cy = Math.floor(ROWS / 2);
+        const rx = Math.floor(COLS * 0.42), ry = Math.floor(ROWS * 0.42);
+
+        // Rote Oberfläche: Stein als Mars-Staub (Basalt)
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                const dx = (c - cx) / rx, dy = (r - cy) / ry;
+                const dist = dx * dx + dy * dy;
+                const wobble = 0.1 * Math.sin(r * 2.7 + c * 1.9) + 0.07 * Math.cos(c * 2.3 - r * 1.1);
+                if (dist < (0.72 + wobble)) {
+                    // Mars-Oberfläche: Mischung aus Stone (Basalt) und Sand (Staubebene)
+                    grid[r][c] = rng() < 0.35 ? 'sand' : 'stone';
+                }
+            }
+        }
+
+        // Staubsturm-Muster: unregelmäßige Reihen (leere Streifen)
+        for (let attempt = 0; attempt < 60; attempt++) {
+            const r = Math.floor(rng() * ROWS);
+            const c = Math.floor(rng() * COLS);
+            const len = Math.floor(rng() * 4) + 2;
+            for (let i = 0; i < len; i++) {
+                const nc = c + i;
+                if (nc < COLS && grid[r] && grid[r][nc]) grid[r][nc] = null;
+            }
+        }
+
+        // Krater (größer als Mond)
+        const craters = [
+            [cy - Math.floor(ry * 0.35), cx + Math.floor(rx * 0.2)],
+            [cy + Math.floor(ry * 0.3), cx - Math.floor(rx * 0.35)],
+        ];
+        for (const [cr, cc] of craters) {
+            for (const [dr, dc] of [[-2,0],[2,0],[0,-2],[0,2],[-1,-1],[-1,1],[1,-1],[1,1],[-2,-1],[-2,1],[2,-1],[2,1]]) {
+                const nr = cr + dr, nc = cc + dc;
+                if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS) {
+                    grid[nr][nc] = 'stone';
+                }
+            }
+        }
+
+        // Mars-Material in der Mitte (Ressource für Oscar)
+        if (MATERIALS['mars']) {
+            if (grid[cy] && !grid[cy][cx]) grid[cy][cx] = 'mars';
+        }
+
+        // Meteor — Einschlag
+        if (MATERIALS['meteor']) {
+            const mR = cy - Math.floor(ry * 0.2), mC = cx + Math.floor(rx * 0.1);
+            if (mR >= 0 && mR < ROWS && mC >= 0 && mC < COLS) grid[mR][mC] = 'meteor';
+        }
+
+        // Rover — Easter Egg (🤖 = robot = Curiosity/Perseverance)
+        // Rover wird als 'alien' Block platziert (nächste sinnvolle Entsprechung)
+        // Der echte Rover-Dialog kommt vom NPC-System des Mondes nicht — hier ist nur Deko
+        const roverR = cy + Math.floor(ry * 0.2), roverC = cx + Math.floor(rx * 0.25);
+        if (roverR >= 0 && roverR < ROWS && roverC >= 0 && roverC < COLS && !grid[roverR][roverC]) {
+            // Kein Material für Rover — leeres Feld mit Stern als Markierung
+            if (MATERIALS['star']) grid[roverR][roverC] = 'star';
+        }
+
+        window.grid = grid;
+    }
+
+    window.INSEL_GENERATORS = { generateStarterIsland, generateLummerland, generateDinoIsland, generateMoonIsland, generateMarsIsland };
 })();
