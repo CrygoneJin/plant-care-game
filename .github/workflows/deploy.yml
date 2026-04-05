@@ -42,102 +42,11 @@ jobs:
           npm install typescript --no-save
           npx tsc --noEmit
 
-      - name: Smoke-Test -- Seite laedt ohne Fehler
+      - name: Smoke-Test (Playwright)
         run: |
-          npm install puppeteer --no-save
-          npx puppeteer browsers install chrome
-          # Lokalen HTTP-Server starten (verhindert CORS-Fehler bei file://)
-          npx serve . -p 8080 &
-          SERVER_PID=$!
-          # Warten bis der Server antwortet (max 30s)
-          for i in $(seq 1 30); do
-            curl -s http://localhost:8080 > /dev/null 2>&1 && break
-            sleep 1
-          done
-          node --input-type=module <<'SMOKE'
-          import puppeteer from 'puppeteer';
-
-          // CORS-bezogene Fehlermuster filtern (koennen bei lokalem Server noch auftreten
-          // z.B. durch externe Ressourcen oder Service Worker)
-          const CORS_PATTERNS = [
-            'CORS',
-            'cross-origin',
-            'Cross-Origin',
-            'Access-Control',
-            'Failed to fetch',
-            'net::ERR_FAILED',
-          ];
-
-          function isCorsError(msg) {
-            return CORS_PATTERNS.some(p => msg.includes(p));
-          }
-
-          const errors = [];
-          const browser = await puppeteer.launch({
-            headless: 'new',
-            args: ['--no-sandbox', '--disable-setuid-sandbox']
-          });
-          const page = await browser.newPage();
-
-          page.on('pageerror', err => {
-            // config.js ist optional -- der onerror-Handler im HTML faengt das ab
-            if (!err.message.includes('config.js') && !isCorsError(err.message)) {
-              errors.push(err.message);
-            }
-          });
-          page.on('console', msg => {
-            if (msg.type() === 'error') {
-              const text = msg.text();
-              // config.js optional, generische 404-Meldungen ignorieren (Dateiname fehlt im Text), CORS ignorieren
-              if (!text.includes('config.js') && !isCorsError(text) && !text.includes('Failed to load resource')) {
-                errors.push('console.error: ' + text);
-              }
-            }
-          });
-
-          // Lokaler HTTP-Server statt file:// (vermeidet CORS-Blockierung von ES-Modulen)
-          await page.goto('http://localhost:8080', { waitUntil: 'load', timeout: 15000 });
-
-          // Returning-Player simulieren: localStorage setzen + neu laden
-          // Deckt Bugs die nur im participant-Modus auftreten (conwayOverlay, drawPlayer etc.)
-          await page.evaluate(() => {
-            localStorage.setItem('insel-game-phase', 'participant');
-            localStorage.setItem('insel-player-name', 'CI-Spieler');
-            localStorage.setItem('insel-player-pos', JSON.stringify({ r: 10, c: 10 }));
-          });
-          await page.reload({ waitUntil: 'load', timeout: 15000 });
-
-          // Render-Loop 3s laufen lassen (deckt Runtime-Fehler in draw(), movePlayer() etc.)
-          await new Promise(r => setTimeout(r, 3000));
-
-          // Pruefe ob Canvas existiert und game.js geladen hat
-          const canvasExists = await page.$('#game-canvas');
-          if (!canvasExists) errors.push('Canvas #game-canvas nicht gefunden');
-
-          // ELIZA-Fallback testen: Chat oeffnen + Nachricht senden ohne API-Key
-          const chatBubble = await page.$('#chat-bubble');
-          if (chatBubble) {
-            await chatBubble.click();
-            const input = await page.$('#chat-input');
-            if (input) {
-              await input.type('Hallo');
-              const sendBtn = await page.$('#chat-send-btn');
-              if (sendBtn) await sendBtn.click();
-              await new Promise(r => setTimeout(r, 800));
-            }
-          }
-
-          await browser.close();
-
-          if (errors.length > 0) {
-            console.error('=== SMOKE-TEST FEHLGESCHLAGEN ===');
-            errors.forEach(e => console.error('  x', e));
-            process.exit(1);
-          }
-          console.log('=== Smoke-Test bestanden -- Seite laedt sauber ===');
-          SMOKE
-          # Server aufraeumen
-          kill $SERVER_PID 2>/dev/null || true
+          npm ci
+          npx playwright install chromium --with-deps
+          npx playwright test --config=ops/tests/playwright.config.js --project=chromium --reporter=line
 
   deploy:
     name: Deploy
@@ -220,3 +129,17 @@ jobs:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
         run: |
           ./butler push . crygonejin/schatzinsel:html5 --userversion=$(git describe --tags --match 'v*' HEAD 2>/dev/null || echo "0.$(git rev-list --count HEAD)")
+      - name: Build itch.io bundle
+        run: |
+          mkdir -p _itchio
+          cp index.html style.css sw.js manifest.json _itchio/
+          cp -r src/ _itchio/src/
+
+      - name: Deploy to itch.io via Butler
+        run: |
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          unzip butler.zip
+          chmod +x butler
+          ./butler push _itchio crygonejin/schatzinsel:web --userversion "${{ steps.version.outputs.version }}"
+        env:
+          BUTLER_API_KEY: ${{ secrets.itch_io_butler }}

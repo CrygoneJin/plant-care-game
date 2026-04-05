@@ -122,6 +122,7 @@
     }
 
     function speakLines(lines, onDone) {
+        if (!lines || !lines.length) { if (onDone) onDone(); return; }
         if (window.INSEL_SOUND && window.INSEL_SOUND.isMuted()) {
             if (onDone) onDone();
             return;

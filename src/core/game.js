@@ -587,11 +587,13 @@
     // 1 Muschel = 0.001 MMX (Nerd-Ebene, Easter Egg). Kinder sehen 🐚.
     const SHELL_TO_MMX = 0.001;
 
-    // Krabbs-Vorrat: endlich pro Session (Ricardo #101)
+    // Krabbs-Vorrat: endlich, max 20 pro Material (Ricardo #101 S28-2)
     // Wenn Krabbs kein Holz hat, kann er keins verkaufen.
+    // Angebot und Nachfrage ohne Erklärung — Oscar sieht es, lernt es.
+    const KRABS_STOCK_MAX = 20;
     const KRABS_STOCK_INIT = {
-        wood: 5, stone: 3, sand: 10, planks: 2, glass: 2,
-        flower: 3, fish: 3, diamond: 1, crystal: 1, honey: 2, apple: 3
+        wood: 8, stone: 6, sand: 12, planks: 4, glass: 3,
+        flower: 5, fish: 5, diamond: 2, crystal: 2, honey: 4, apple: 6
     };
     const krabsStock = JSON.parse(localStorage.getItem('insel-krabs-stock') || 'null') || { ...KRABS_STOCK_INIT };
     function saveKrabsStock() { localStorage.setItem('insel-krabs-stock', JSON.stringify(krabsStock)); }
@@ -629,8 +631,13 @@
             if (!info) return '';
             const have = getInventoryCount(mat);
             const stock = krabsStock[mat] || 0;
-            return `<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0;border-bottom:1px solid #333;">
-                <span>${info.emoji} ${info.label} (${have}x) <span style="color:#888;font-size:0.8em;">Lager:${stock}</span></span>
+            const stockFull = stock >= KRABS_STOCK_MAX;
+            // Lager-Indikator: 🔴 leer, 🟡 wenig (1-3), 🟢 gut (4+)
+            const stockDot = stock === 0 ? '🔴' : stock <= 3 ? '🟡' : '🟢';
+            const stockLabel = stock === 0 ? 'Ausverkauft!' : `Lager: ${stock}`;
+            const stockColor = stock === 0 ? '#c33' : stock <= 3 ? '#e6a800' : '#4caf50';
+            return `<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0;border-bottom:1px solid #333;${stock === 0 ? 'opacity:0.7;' : ''}">
+                <span>${info.emoji} ${info.label} (${have}x) <span style="color:${stockColor};font-size:0.8em;">${stockDot} ${stockLabel}</span></span>
                 <span>
                     <button class="krabs-buy" data-mat="${mat}" data-cost="${price.buy}"
                         style="background:#2E7D32;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"
@@ -638,7 +645,7 @@
                         Kauf ${price.buy}🐚</button>
                     <button class="krabs-sell" data-mat="${mat}" data-earn="${price.sell}"
                         style="background:#C62828;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"
-                        ${have <= 0 ? 'disabled style="opacity:0.4;background:#C62828;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;"' : ''}>
+                        ${have <= 0 || stockFull ? `disabled style="opacity:0.4;background:#C62828;color:white;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin:0 2px;" title="${stockFull ? 'Krabbs hat genug!' : ''}"` : ''}>
                         Verkauf ${price.sell}🐚</button>
                 </span>
             </div>`;
@@ -685,11 +692,15 @@
             btn.addEventListener('click', () => {
                 const mat = btn.dataset.mat;
                 const earn = parseInt(btn.dataset.earn);
+                if ((krabsStock[mat] || 0) >= KRABS_STOCK_MAX) {
+                    showToast(`🦀 Krabbs: "Ich hab schon genug ${MATERIALS[mat]?.emoji}! Komm wenn ich leer bin!"`, 2500);
+                    return;
+                }
                 if (getInventoryCount(mat) > 0) {
                     removeFromInventory(mat, 1);
                     addToInventory('shell', earn);
                     unlockMaterial('shell');
-                    krabsStock[mat] = (krabsStock[mat] || 0) + 1;
+                    krabsStock[mat] = Math.min((krabsStock[mat] || 0) + 1, KRABS_STOCK_MAX);
                     saveKrabsStock();
                     showToast(`🦀 VERKAUFT! 1x ${MATERIALS[mat]?.emoji} für ${earn} 🐚! Ahahaha!`, 2000);
                     modal.remove();
@@ -1140,7 +1151,19 @@
             container.innerHTML = '<p class="inv-empty">Ernte Bäume für Holz! ⛏️</p>';
             return;
         }
-        container.innerHTML = items.map(([mat, count]) => {
+        // Muscheln = Handelswährung → eigener prominenter Block oben
+        const shells = inventory['shell'] || 0;
+        const shellHeader = shells > 0
+            ? `<div class="inv-shell-summary" title="Muscheln — deine Handelswährung bei Mr. Krabs">
+                <span class="inv-shell-label">💰 Dein Vermögen</span>
+                <span class="inv-shell-amount">🐚 ${shells} Muscheln</span>
+               </div>`
+            : '';
+
+        // Alle Items außer Muscheln (Muscheln werden im Header angezeigt)
+        const otherItems = items.filter(([mat]) => mat !== 'shell');
+
+        container.innerHTML = shellHeader + otherItems.map(([mat, count]) => {
             const info = MATERIALS[mat];
             if (!info) return '';
             return `<div class="inv-item" data-material="${mat}" title="${info.label}: ${count}" draggable="true">
@@ -2067,31 +2090,6 @@
             }
         }
 
-        // Spielfigur zeichnen (nur als Teilnehmer — nach Symmetriebrechung)
-        if (playerName && isParticipant()) {
-            const px = (playerPos.c + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
-            const py = (playerPos.r + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
-            // Schatten
-            ctx.globalAlpha = 0.25;
-            ctx.fillStyle = '#000';
-            ctx.beginPath();
-            ctx.ellipse(px, py + CELL_SIZE * 0.35, CELL_SIZE * 0.25, CELL_SIZE * 0.1, 0, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.globalAlpha = 1;
-            // Figur
-            ctx.font = `${CELL_SIZE * 0.65}px serif`;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('🧒', px, py);
-            // Name
-            ctx.font = `bold ${Math.max(10, CELL_SIZE * 0.3)}px sans-serif`;
-            ctx.fillStyle = '#fff';
-            ctx.strokeStyle = 'rgba(0,0,0,0.7)';
-            ctx.lineWidth = 3;
-            ctx.strokeText(playerName, px, py - CELL_SIZE * 0.52);
-            ctx.fillText(playerName, px, py - CELL_SIZE * 0.52);
-        }
-
         // NPCs zeichnen
         for (const [id, pos] of Object.entries(npcPositions)) {
             const npc = NPC_DEFS[id];
@@ -2317,6 +2315,11 @@
     ]; // 16 Teilchen + Qi(Gluon) + Tao(Higgs) + Grid(Graviton) = Standardmodell komplett
     let gameWorld = localStorage.getItem('insel-game-world') || 'universe';
     let gamePhase = localStorage.getItem('insel-game-phase') || 'observer';
+    // Auto-Participant: Spieler mit Namen auf der Insel sind immer sichtbar
+    if (gamePhase === 'observer' && playerName && localStorage.getItem('insel-grid')) {
+        gamePhase = 'participant';
+        localStorage.setItem('insel-game-phase', 'participant');
+    }
 
     function checkParticleProgress() {
         const discovered = STANDARD_PARTICLES.filter(p => unlockedMaterials.has(p));
@@ -2498,7 +2501,7 @@
 
         // Spielfigur (nur als Teilnehmer)
         if (playerName && isParticipant()) {
-            ISO.drawIsoEntity(ctx, playerPos.r, playerPos.c, '\uD83E\uDDD2', playerName,
+            ISO.drawIsoEntity(ctx, playerPos.r, playerPos.c, playerEmoji, playerName,
                 WATER_BORDER, COLS, CELL_SIZE, time, { shadow: true, fontSize: 0.65 });
         }
 
@@ -3521,6 +3524,8 @@
             // Tutorial-Onboarding nur für Erstbesucher
             if (isFirstVisit) showTutorialOnboarding();
         }, 300);
+        // Spieler ist nach Intro immer Teilnehmer — Figur sichtbar machen
+        breakSymmetry();
         window.startSessionClock();
     }
 
@@ -3624,7 +3629,7 @@
         const hasAntimatter = unlockedMaterials.has('antimatter');
         let label, tip;
         if (!_genesisYinYangShown) {
-            label = '道'; tip = 'Singularität (t=0) — Lege ☯️ auf die Insel';
+            label = '道'; tip = 'Am Anfang war ein Punkt... — Lege ☯️ auf die Insel';
         } else if (!_genesisQiShown) {
             label = '⚫⚪'; tip = 'Symmetriebrechung (t=10⁻³⁶s) — Yin + Yang';
         } else if (!hasQuarks && crafted < 10) {

@@ -55,7 +55,7 @@
         panel.innerHTML = [
             '<div style="padding:16px;border-bottom:1px solid #333;">',
             '  <div style="display:flex;justify-content:space-between;align-items:center;">',
-            '    <span style="font-size:16px;font-weight:bold;">🏪 Schwarzmarkt</span>',
+            '    <span style="font-size:16px;font-weight:bold;">🏪 Tauschbörse</span>',
             '    <button id="market-close" style="background:none;border:none;color:#888;font-size:20px;cursor:pointer;">&times;</button>',
             '  </div>',
             '  <div style="font-size:10px;color:#666;margin-top:4px;">Rare Items tauschen. Pseudonym. Kein Account.</div>',
@@ -141,7 +141,7 @@
                 });
             }
         }).catch(function () {
-            container.innerHTML = '<div style="text-align:center;color:#c33;padding:20px;">Keine Verbindung zum Schwarzmarkt.</div>';
+            container.innerHTML = '<div style="text-align:center;color:#c33;padding:20px;">Keine Verbindung zur Tauschbörse.</div>';
         });
     }
 

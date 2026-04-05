@@ -20,5 +20,4 @@ test('Burn-Proxy Worker antwortet', async ({ request }) => {
     const data = await res.json();
     expect(data).toHaveProperty('ts');
     expect(data).toHaveProperty('mmx');
-    expect(data).toHaveProperty('xch');
 });

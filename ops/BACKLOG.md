@@ -11,6 +11,7 @@ Alles was nicht in eine dieser Kategorien fällt → `ARCHIVE.md`.
 
 | # | Item | Owner | Status |
 |---|------|-------|--------|
+| 103 | **Live Launch** — Playwright Tests + Stripe Donation + itch.io Upload | alle | 🔄 In Progress |
 | 78 | **Tesla-Nutzertest auswerten** — 1h Video von Oscar im Tesla. Echte Nutzerdaten. Da ist Gold drin. | Scientist + Leader | 🔲 Offen |
 | 27 | **Cloudflare Worker CORS** — User muss worker.js im Dashboard deployen | User | 🔲 Human Input |
 | 92 | **Requesty Key rotieren** — Alter Key im Git-Verlauf. Sicherheitsrisiko. | Engineer | 🔲 Human Input |
@@ -43,6 +44,7 @@ Alles was nicht in eine dieser Kategorien fällt → `ARCHIVE.md`.
 | 23 | **Programmier-Tutorial** — NPCs bringen JavaScript bei | Scientist + Engineer | 🔲 Offen | Oscar lernt coden durch Spielen. |
 | 19 | **Conway→Gameplay** — Lebende Zellen → Blumen, Glider → Wolken | Engineer + Scientist | 🔲 Offen | Die Insel lebt auch wenn Oscar nicht baut. |
 | 32 | **Code-Ebenen per Touch** — Swipe statt Rechtsklick | Engineer | ✅ Done |
+| 103 | **Insel-Archipel** — Heimatinsel bleibt erhalten wenn Oscar segelt. Jede neue Insel ist ein Kapitel. Wissen (Rezepte, NPCs, Materialien) wird mitgenommen. Schatzkarte mit drei Worten = Adresse jeder Insel. Tommy erzählt abends davon. | alle | 🔲 Offen | Oscar entdeckt mit dem Gelernten immer neue Welten — und findet immer den Weg nach Hause. |
 
 ---
 

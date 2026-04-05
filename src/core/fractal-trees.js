@@ -80,8 +80,9 @@
         var h3 = cellHash(r, c, 3);
         var h4 = cellHash(r, c, 4);
 
-        var rules    = RULE_VARIANTS[treeType];
-        var angles   = ANGLE_VARIANTS[treeType];
+        var resolvedType = RULE_VARIANTS[treeType] ? treeType : 'tree';
+        var rules    = RULE_VARIANTS[resolvedType];
+        var angles   = ANGLE_VARIANTS[resolvedType];
         var palette  = LEAF_PALETTES[Math.floor(h3 * LEAF_PALETTES.length)];
         var trunk    = TRUNK_COLORS[Math.floor(h4 * TRUNK_COLORS.length)];
 
@@ -117,6 +118,7 @@
     // --- Draw L-System tree on canvas ---
     function drawTree(ctx, x, y, cellSize, treeType, r, c) {
         var def = getTreeConfig(treeType, r, c);
+        if (!def || !def.rules) return;
         var lStr = generateLSystem(def.axiom, def.rules, def.iterations);
         var len = cellSize * def.baseLength;
         var angleRad = def.angle * Math.PI / 180;
