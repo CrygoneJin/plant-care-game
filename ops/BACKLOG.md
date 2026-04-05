@@ -39,12 +39,12 @@ Alles was nicht in eine dieser Kategorien fällt → `ARCHIVE.md`.
 | 34 | **NPCs in User-Sprache** — Eingabe Englisch → Antwort Englisch | Scientist | ✅ Done (S30-2, PR #243) | Oscars englischsprachige Freunde können mitspielen. |
 | 37 | **Schöpfungsgeschichte als Tutorial** — 7 Level, Insel beginnt als Wasser | Leader | 🔄 Phase 1 Done (S31-2: Genesis-Toasts beim Ankommen) | Oscar erlebt wie seine Insel entsteht. |
 | 42 | **Werkbank als Canvas-Drag** — Infinite Craft Pattern | Engineer | ✅ Done (Palette→Canvas drag + Inventar drag-drop existieren) | Oscar zieht Feuer auf Wasser statt Modal. |
-| 62 | **Mehrsprachige NPCs** | Scientist | 🔲 Offen | Spielplatz-Phase mit nicht-deutschen Kindern. |
+| 62 | **Mehrsprachige NPCs** | Scientist | ✅ Done (S30-2 + S32-3: 5 Sprachen DE/EN/FR/ES/IT + englische NPC-Greetings) | Spielplatz-Phase mit nicht-deutschen Kindern. |
 | 18 | **Musik on demand** | Artist + Engineer | ✅ Done (genre-btn + setGenre() existieren) | Oscar wählt seinen Soundtrack. |
 | 23 | **Programmier-Tutorial** — NPCs bringen JavaScript bei | Scientist + Engineer | ✅ Done (PR #149 — 5 Lektionen, sandboxed Code-Editor, NPC-Guides) | Oscar lernt coden durch Spielen. |
 | 19 | **Conway→Gameplay** — Lebende Zellen → Blumen, Glider → Wolken | Engineer + Scientist | ✅ Done (conway.js: bloom/stone/glider Events → Blöcke auf Grid) | Die Insel lebt auch wenn Oscar nicht baut. |
 | 32 | **Code-Ebenen per Touch** — Swipe statt Rechtsklick | Engineer | ✅ Done |
-| 103 | **Insel-Archipel** — Phase 1 (S29): Save/Load. Phase 2 (S31): Dino-Bucht als neue Insel. Noch offen: Schatzkarte mit drei Worten = Adresse. | alle | 🔄 Phase 2 Done (S31-1) | Oscar entdeckt mit dem Gelernten immer neue Welten — und findet immer den Weg nach Hause. |
+| 103 | **Insel-Archipel** — Phase 1 (S29): Save/Load. Phase 2 (S31): Dino-Bucht. Phase 3 (S32): Schatzkarte mit 3-Wort-Adressen + Entdeckt-Badge. | alle | ✅ Done (S32-1, PR #245) | Oscar entdeckt mit dem Gelernten immer neue Welten — und findet immer den Weg nach Hause. |
 
 ---
 

@@ -1,3 +1,41 @@
+# Sprint 33 — "Oscar sieht wie alles beginnt"
+
+**Sprint Goal:** Heimatinsel-Genesis + Genesis-Bug fix + Backlog sauber.
+**Start:** 2026-04-05
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S33-1 | **Genesis-Fix + Heimatinsel-Genesis** — `_showIslandGenesis()` prüft localStorage nie (Bug). Fix + `home`-Eintrag. Beim allerersten Start: "🌊 Das Wasser weicht zurück... 🏝️ Eine Insel entsteht! 🌳 Der erste Baum wächst." | Engineer | 🔲 Offen |
+| S33-2 | **Backlog-Audit** — BACKLOG.md: #34, #62, #37 Phase 1, #18, #42, #23 als Done markieren. #103 Archipel-Status dokumentieren. | Leader | 🔲 Offen |
+| S33-3 | **MEMORY.md update** — Learnings aus Sprint 30–32 und dieser Session festhalten. | Scientist | 🔲 Offen |
+
+---
+
+## Standup Log
+
+### 2026-04-05 (Sprint 33 Planning)
+
+**Kontext:** Sprint 30–32 gemergt (PRs #243, #244, #245). Review + Retro dokumentiert. Genesis-Bug identifiziert: `_showIslandGenesis()` definiert `key` aber prüft ihn nie — Genesis zeigt sich jedes Mal. Heimatinsel hat keine Genesis.
+
+**Fokus:** Bug fix zuerst (Oscar-sichtbar), dann Housekeeping.
+
+**Blocker:** Keine.
+
+### 2026-04-05 (Daily Scrum)
+
+**Heute:** Alle 3 Sprint 33 Items implementiert.
+- S33-1: Genesis-Bug fix — `localStorage.getItem(key)` Check + `setItem` eingebaut. `home`-Eintrag in `_ISLAND_GENESIS`. `finishIntro()` ruft `_showIslandGenesis('home')` auf. Nur beim allerersten Spiel.
+- S33-2: BACKLOG.md — #62 und #103 als Done markiert. #37 Status auf "Phase 1 Done" korrigiert.
+- S33-3: MEMORY.md — Genesis-Bug, gestapelte PRs, Session-Akkumulation als Lernpunkte eingetragen.
+
+**Blocker:** Keine.
+
+---
+
 # Sprint 32 — "Oscar erkundet den Weltraum"
 
 **Sprint Goal:** Weltraum-Pfad (Rakete→Mond→Mars→Alien) + Schatzkarte im Sail-Dialog + NPC-Texte auf Englisch.
@@ -587,68 +625,6 @@
 ### Was verbessern wir?
 1. **Jeden Sprint direkt auf main mergen.** Keine gestapelten Branches.
 2. **Genesis für Heimatinsel** — Oscar sieht noch keine Genesis auf seiner Heimatinsel (Phase 2).
-
----
-
-# Sprint 32 — "Oscar erkundet den Weltraum"
-
-**Sprint Goal:** Weltraum-Pfad (Mars) + Schatzkarte im Sail-Dialog + NPC-Texte auf Englisch.
-**Start:** 2026-04-05
-
----
-
-## Sprint Backlog
-
-| # | Item | Owner(s) | Status |
-|---|------|----------|--------|
-| S32-1 | **Schatzkarte im Sail-Dialog** — 3-Wort-Adressen (`wellen.sand.zuhause` etc.), Entdeckt-Badge, Fortschrittszähler. `showSailDialog()` rebuild. | Engineer | ✅ Done (PR #245) |
-| S32-2 | **Weltraum-Pfad** — Mars 🪐 als neues Material. Mond+Eis=Mars, Mars+Rakete=Alien. Dinos→Weltraum-Progression. | Engineer | ✅ Done (PR #245) |
-| S32-3 | **#62 NPC-Texte auf Englisch** — `detectedLang` nach erster Nachricht in localStorage. Englische Greetings wenn `insel-player-lang === 'en'`. | Engineer | ✅ Done (PR #245) |
-
----
-
-## Standup Log
-
-### 2026-04-05 (Sprint 32 Planning)
-
-**Kontext:** Sprint 31 vollständig. Archipel braucht Orientierung (Schatzkarte). Weltraum als natürliche Progression nach Dinos. #62 Englisch fertigstellen.
-
-**Blocker:** Keine.
-
-### 2026-04-05 (Daily Scrum)
-
-**Heute:** Alle 3 Sprint 32 Items implementiert (PR #245, basiert auf feat/sprint-31). Schatzkarte rebuild, Weltraum-Pfad, englische Greetings.
-
-**Blocker:** PR #245 wartet auf Merge #243→#244 zuerst.
-
----
-
-## Sprint Review — 2026-04-05
-
-**Sprint Goal erreicht:** ✅ Ja — alle 3 Items Done.
-
-**Was geliefert wurde:**
-- S32-1: Schatzkarte — `showSailDialog()` rebuild. 3-Wort-Adressen pro Insel. Entdeckt-Badge via localStorage. "2 von 3 Inseln entdeckt". Oscar sieht sein Archipel auf einen Blick.
-- S32-2: Weltraum-Pfad — Mars 🪐 (#FFCCBC). Mond+Eis=Mars, Mars+Rakete=Alien. Natürliche Progression Dinos→Weltraum.
-- S32-3: #62 NPC-Englisch — `detectedLang` gespeichert. Englische Greetings ("Hey! Last time you built a lot with Wood."). Oscars englischer Spielplatz-Freund wird erkannt.
-
-**Oscar-Check:** Sail-Dialog: "2 von 3 Inseln entdeckt". Englischer Freund schreibt "hello" → Bernd antwortet auf Englisch.
-
----
-
-## Sprint Retrospective — 2026-04-05
-
-### Was lief gut?
-- **Drei Sprints in Kaskade.** 30→31→32 sauber aufeinandergestapelt, kein Konflikt im Code.
-- **Schatzkarte rebuild > patch.** Cleaner Code, besseres UX in einem Schritt.
-- **#62 komplett.** Mehrsprachigkeit war seit S30-2 angefangen — jetzt mit englischen NPC-Greetings fertig.
-
-### Was lief schlecht?
-- **Gestapelte PRs.** #243→#244→#245 in Reihenfolge mergebar. Risiko wenn einer failt.
-
-### Was verbessern wir?
-1. **Direkt auf main.** Jeder Sprint in eigenem Atomic-PR, nicht auf vorigen Sprint basierend.
-2. **Sprint Planning am Anfang, nicht am Ende.** Nächster Sprint 33 im Planning-Meeting definieren.
 
 ---
 

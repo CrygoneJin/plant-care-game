@@ -2059,15 +2059,18 @@
     // Zeigt beim ersten Betreten einer neuen Insel 3 kurze Toasts die die Insel "erschaffen".
     // Nur einmal pro Insel (localStorage-Flag).
     const _ISLAND_GENESIS = {
+        home:       ['🌊 Das Wasser weicht zurück...', '🏝️ Eine Insel entsteht!', '🌳 Der erste Baum wächst.'],
         lummerland: ['🌊 Das Meer trennt sich...', '🏝️ Eine kleine Insel erscheint!', '🏔️ Zwei Berge wachsen in den Himmel.'],
         dinobucht:  ['🌊 Das Urmeer weicht zurück...', '🦴 Fossilien tauchen aus dem Sand!', '🦕 Die Dinosaurier sind noch hier!'],
     };
 
     function _showIslandGenesis(dest) {
         const key = 'insel-genesis-' + dest;
+        if (localStorage.getItem(key)) return;
+        localStorage.setItem(key, '1');
         const msgs = _ISLAND_GENESIS[dest];
         if (!msgs) {
-            showToast('⛵ Angekomm!', 2000);
+            showToast('⛵ Angekommen!', 2000);
             return;
         }
         msgs.forEach((msg, i) => setTimeout(() => showToast(msg, 2200), i * 1400));
@@ -3636,6 +3639,8 @@
             if (!hasBlocks) startTutorialPulse();
             // Tutorial-Onboarding nur für Erstbesucher
             if (isFirstVisit) showTutorialOnboarding();
+            // Heimatinsel-Genesis: nur beim allerersten Start
+            _showIslandGenesis('home');
         }, 300);
         // Spieler ist nach Intro immer Teilnehmer — Figur sichtbar machen
         breakSymmetry();

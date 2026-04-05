@@ -27,6 +27,9 @@ Persistent team log. Append-only. Read by all agents.
 | 2026-04-05 | Sprint 29: 5 Phantom-Opens identifiziert (#33, #17, #19, #100, #101) | Backlog wurde nicht nach PRs/Commits aktualisiert | Code vor Sprint Planning lesen. `grep` schlägt Backlog-Lesen. |
 | 2026-04-05 | sailToIsland() löschte Grid ohne Save — Oscar verlor Heimatinsel beim Segeln | Kein Archipel-Konzept: alle Inseln teilen eine Zustandsvariable | saveIslandState/loadIslandState via localStorage. Jede Insel hat eigenen Key `insel-archipel-{id}`. |
 | 2026-04-05 | Material-Key-Mismatch in island-generators.js: 't-rex'/'dinosaur'/'meteorit' statt 'trex'/'dino'/'meteor' | Materialien aus Sprint 30 (npc-data.js) nicht geprüft vor Verwendung | Vor jedem neuen Material: `grep -n "material" src/world/materials.js` — Keys sind nicht intuitiv. |
+| 2026-04-05 | Genesis-Bug: `_showIslandGenesis()` definiert `key` aber ruft nie `localStorage.getItem(key)` auf — Genesis zeigt sich jedes Mal | Copy-Paste-Fehler: key-Variable definiert aber vergessen zu nutzen | Wenn localStorage-Key definiert: sofort auch `if (localStorage.getItem(key)) return;` + `localStorage.setItem(key, '1')` schreiben. |
+| 2026-04-05 | Gestapelte PRs (#243→#244→#245): Rebase-Aufwand + Merge-Reihenfolge zwingend | Sprint 31 basierte auf Sprint 30 Branch, Sprint 32 auf Sprint 31 Branch | Jeder Sprint direkt auf main branchen. Nie auf Feature-Branch eines anderen Sprints aufbauen. |
+| 2026-04-05 | 3 Sprints (30–32) in einer Session akkumuliert ohne sofortigen Merge | PRs lagen offen, keine Ceremony zwischen Sprints | Ceremony (Review+Retro+Planning) nach jedem Sprint, nicht nach drei Sprints. Merge sofort nach PR-Erstellung. |
 
 | Datum | Was | Warum | Lektion |
 |-------|-----|-------|---------|
