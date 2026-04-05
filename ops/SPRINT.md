@@ -40,6 +40,45 @@
 
 ---
 
+## Sprint Review — 2026-04-05
+
+**Sprint Goal erreicht:** ✅ Ja — alle 3 Items Done.
+
+**Was geliefert wurde:**
+- S36-1: FR/ES/IT NPC-Gedächtnis — `getNpcMemoryComment()` kennt jetzt 5 Sprachen (DE/EN/FR/ES/IT). Sprint-32-Schuld getilgt. Alexis, Pablo und Luca werden auf ihrer Muttersprache begrüßt.
+- S36-2: 5 Weltraum-Quests — Progression Raketenstart-Pad → Mondstation → Weltraum-Observatorium → Botschaft der Sterne → Weltraum-Forscher. Alien als neuer Quest-NPC. Letzte Quest erfordert alle 4 Weltraum-Materialien.
+- S36-3: Archipel-Toast — Wenn Oscar alle 5 Inseln entdeckt hat, erscheint ein Celebration-Toast. `insel-all-discovered`-Flag verhindert Wiederholung.
+
+**Oscar-Check:** Oscar chattet auf Englisch → englische Kommentare. Freund Alexis chattet auf Französisch → französische Kommentare. Alle 5 Inseln entdeckt → "🏴‍☠️ Schatzinsel vollständig!" Oscar sieht seinen Fortschritt.
+
+---
+
+## Sprint Retrospective — 2026-04-05
+
+### Was lief gut?
+- **Sprint-32-Schuld endgültig getilgt.** 4 Sprints lang aufgeschoben, jetzt sauber: alle 4 Kommentar-Typen × 5 Sprachen. Kein Ternary-Hack mehr.
+- **Content + UX-Feedback in einem Sprint.** Quests geben Orientierung, Toast gibt Abschluss-Gefühl. Oscar hat einen klaren Weg durch den Weltraum.
+- **Archipel-Toast elegant.** Kein neues System — `_showIslandGenesis()` war die richtige Stelle. Minimal invasiv.
+
+### Was lief schlecht?
+- **PR-Chain wird immer länger.** #246 → #247 → #248 → ... Jeder Sprint baut auf dem vorherigen auf, weil Till die PRs nicht merged. Das ist kein Code-Problem — es ist ein Prozess-Problem.
+- **S35-3 Stripe bleibt blockiert.** Kein Update von Till. Keine autonome Lösung möglich.
+
+### Was verbessern wir?
+1. **Till ansprechen.** PR-Chain #246→#247→#248 hat Merging-Risiko. Till muss mindestens Sprint 33 mergen damit die Chain kürzer wird.
+2. **Nächster Fokus: Polishing.** 5 Inseln sind fertig. Weltraum-Content ist fertig. Jetzt: Was macht die Erfahrung runder? Onboarding, Leistung, oder Tesla-Nutzertest auswerten (#78).
+3. **Tesla-Nutzertest (#78) ist Gold.** 1h echte Oscar-Daten. Vorher mehr Features bauen ohne das auszuwerten ist Verschwendung.
+
+### Sprint 37 — Empfehlung
+
+| Kandidat | Prio | Warum jetzt |
+|----------|------|-------------|
+| **#78 Tesla-Nutzertest auswerten** — Oscar-Video analysieren | P0 | Echte Daten vor mehr Features. Feynman-Regel. |
+| **#37 Genesis-Tutorial Phase 2** — 7-Stufen-Progression vollständig | P1 | Oscar erlebt Schöpfung von Anfang an. Tutorial ohne Text. |
+| **Sound-Polishing** — Weltraum-Materialien haben keine eigenen Töne | P2 | Rakete klingt wie Stein. Alien klingt wie Wasser. Das fühlt sich falsch an. |
+
+---
+
 # Sprint 35 — "Oscar trifft den Alien"
 
 **Sprint Goal:** Alien-NPC mit Dialog + Mars-Insel + #103 Live Launch Vorbereitung.
