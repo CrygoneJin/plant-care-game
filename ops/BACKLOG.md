@@ -15,6 +15,10 @@ Alles was nicht in eine dieser Kategorien fällt → `ARCHIVE.md`.
 | 78 | **Tesla-Nutzertest auswerten** — 1h Video von Oscar im Tesla. Echte Nutzerdaten. Da ist Gold drin. | Scientist + Leader | 🔲 Offen |
 | 27 | **Cloudflare Worker CORS** — User muss worker.js im Dashboard deployen | User | 🔲 Human Input |
 | 92 | **Requesty Key rotieren** — Alter Key im Git-Verlauf. Sicherheitsrisiko. | Engineer | 🔲 Human Input |
+| 104 | **Onboarding "Wo spielen?"** — Neuer User versteht nicht was zu tun ist. Erster Satz muss zeigen wo die Insel ist + was man macht. Oscars Bruder: Erstbesuch, kein Einstieg gefunden. | Designer + Artist | 🔲 Offen |
+| 105 | **Long-Press = Fill, Mausrad = Tool-Wechsel** — Oscars Bruder-Feedback: Fill versteckt, Tool-Wechsel unklar. Long-press auf Canvas = Füllen. Mausrad = nächstes Material. | Engineer | 🔲 Offen |
+| 106 | **Palette-Duplikat entfernen** — Element links in Palette + nochmal rechts mit Counter = redundant. Nur Counter + Element links. | Designer | 🔲 Offen |
+| 107 | **Tetris + Snake als Easter Egg** — Oscars Bruder hat Tetris auf Apple TV entdeckt, konnte es nicht kaufen (Parental Controls). Zwei klassische Spiele als verstecktes Easter Egg (Konami-Code o.ä.). | Engineer | 🔲 Offen |
 
 ## 🟡 P1 — Vor Spielplatz-Phase (10 Kinder)
 

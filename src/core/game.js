@@ -3425,8 +3425,7 @@
     }
 
     // Toast verschwindet sofort bei Canvas-Interaktion
-    canvas.addEventListener('mousedown', dismissToast);
-    canvas.addEventListener('touchstart', dismissToast);
+    canvas.addEventListener('pointerdown', dismissToast);
 
     // --- Hilfsfunktionen ---
     function escapeHtml(str) {
@@ -3818,7 +3817,7 @@
     updateRecentBar();
 
     // Canvas Maus-Events
-    canvas.addEventListener('mousedown', (e) => {
+    canvas.addEventListener('pointerdown', (e) => {
         if (window.resetIdleTimer) window.resetIdleTimer();
         // TTS Hörspiel stoppen bei Canvas-Interaktion (Backlog #87)
         if (window.INSEL_TTS && window.INSEL_TTS.hoerspielSpeaking) stopHoerspiel();
@@ -3847,7 +3846,7 @@
         }
     });
 
-    canvas.addEventListener('mousemove', (e) => {
+    canvas.addEventListener('pointermove', (e) => {
         hoverCell = getGridCell(e);
         requestRedraw();
         if (isMouseDown && hoverCell && currentTool !== 'fill') {
@@ -3855,11 +3854,11 @@
         }
     });
 
-    canvas.addEventListener('mouseup', () => {
+    canvas.addEventListener('pointerup', () => {
         isMouseDown = false;
     });
 
-    canvas.addEventListener('mouseleave', () => {
+    canvas.addEventListener('pointerleave', () => {
         isMouseDown = false;
         hoverCell = null;
         requestRedraw();
