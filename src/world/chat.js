@@ -948,6 +948,22 @@ ${budgetInfo}${florianePreisHint}`;
                 tokenUsage[charId] += data.usage.completion_tokens || data.usage.output_tokens || 0;
             }
 
+            // Stromzähler: geschätzte Tokens für Eltern-Dashboard
+            // Teiler 3.5 ≈ Mittelwert zwischen Deutsch (÷3) und Englisch (÷4)
+            (function () {
+                var inputLen = systemPrompt.length + chatHistory.reduce(function (acc, m) { return acc + m.content.length; }, 0);
+                var outputLen = reply.length;
+                var estIn = Math.ceil(inputLen / 3.5);
+                var estOut = Math.ceil(outputLen / 3.5);
+                var prev = JSON.parse(localStorage.getItem('insel-token-counter') || '{"input":0,"output":0,"calls":0}');
+                localStorage.setItem('insel-token-counter', JSON.stringify({
+                    input: (prev.input || 0) + estIn,
+                    output: (prev.output || 0) + estOut,
+                    calls: (prev.calls || 0) + 1,
+                    lastUpdate: Date.now()
+                }));
+            })();
+
             chatHistory.push({ role: 'assistant', content: reply });
             addMessage(`${char.emoji} ${reply}`, 'npc');
             updateTokenDisplay(charId);

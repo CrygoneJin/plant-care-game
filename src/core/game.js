@@ -5364,6 +5364,44 @@
             }
         }
 
+        // Token-Kosten (Stromzähler) — DOM-sicher, kein innerHTML
+        const tokenStatsEl = document.getElementById('dash-token-stats');
+        if (tokenStatsEl) {
+            const tc = JSON.parse(localStorage.getItem('insel-token-counter') || '{"input":0,"output":0,"calls":0}');
+            tokenStatsEl.textContent = '';
+            if (!tc.calls || tc.calls === 0) {
+                var noTokenP = document.createElement('p');
+                noTokenP.className = 'dashboard-empty';
+                noTokenP.textContent = 'Noch keine NPC-Chats in dieser Sitzung.';
+                tokenStatsEl.appendChild(noTokenP);
+            } else {
+                // Requesty-Preise: $0.002/1k input, $0.006/1k output (Claude Haiku)
+                var costUsd = (tc.input / 1000 * 0.002) + (tc.output / 1000 * 0.006);
+                var costStr = costUsd < 0.01 ? '< $0.01' : '$' + costUsd.toFixed(2);
+                var tokenRows = [
+                    ['\uD83D\uDCAC NPC-Antworten', tc.calls + ' Calls'],
+                    ['\u2B06\uFE0F Input', '~' + tc.input.toLocaleString('de-DE') + ' Tokens'],
+                    ['\u2B07\uFE0F Output', '~' + tc.output.toLocaleString('de-DE') + ' Tokens'],
+                    ['\uD83D\uDCB0 Kosten (Requesty)', costStr],
+                ];
+                tokenRows.forEach(function (pair) {
+                    var row = document.createElement('div');
+                    row.className = 'dashboard-session-row';
+                    var label = document.createElement('span');
+                    label.className = 'dashboard-session-date';
+                    label.textContent = pair[0];
+                    var meta = document.createElement('span');
+                    meta.className = 'dashboard-session-meta';
+                    var val = document.createElement('span');
+                    val.textContent = pair[1];
+                    meta.appendChild(val);
+                    row.appendChild(label);
+                    row.appendChild(meta);
+                    tokenStatsEl.appendChild(row);
+                });
+            }
+        }
+
         overlay.classList.remove('hidden');
         document.getElementById('dashboard-close-btn')?.focus();
     }

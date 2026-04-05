@@ -54,16 +54,40 @@
 
     // --- Session-Uhr (Feynman-Messpunkte) ---
     const sessionClock = {
-        start: null,
+        start: null,          // Unix-ms (lokal) — für Milestones
+        startUnix: null,      // Unix-s  (NTP wenn online) — für duration_s
         firstBlock: null,
         firstChat: null,
         firstCodeView: null,
         firstEasterEgg: null,
     };
 
+    // NTP-Timestamp holen (worldtimeapi.org), Timeout 2s, Fallback: Date.now()
+    async function fetchNtpUnixtime() {
+        try {
+            const controller = new AbortController();
+            const tid = setTimeout(() => controller.abort(), 2000);
+            const r = await fetch('https://worldtimeapi.org/api/timezone/UTC', { signal: controller.signal });
+            clearTimeout(tid);
+            if (!r.ok) throw new Error('http ' + r.status);
+            const j = await r.json();
+            return j.unixtime; // integer, Sekunden seit Epoch
+        } catch (_) {
+            return Math.floor(Date.now() / 1000);
+        }
+    }
+
     function startSessionClock() {
         sessionClock.start = Date.now();
         trackEvent('clock_start', {});
+        // NTP-Timestamp async — speichern sobald verfügbar, Fallback bereits gesetzt
+        const fallbackUnix = Math.floor(Date.now() / 1000);
+        sessionClock.startUnix = fallbackUnix;
+        localStorage.setItem('insel-session-start-ts', String(fallbackUnix));
+        fetchNtpUnixtime().then(function (unix) {
+            sessionClock.startUnix = unix;
+            localStorage.setItem('insel-session-start-ts', String(unix));
+        });
     }
 
     function recordMilestone(key) {
@@ -107,7 +131,7 @@
             session: analytics.sessions || 1,
             theme: analytics.theme || null,
             abGroup: analytics.abGroup || null,
-            duration_s: s.start ? Math.round((Date.now() - s.start) / 1000) : 0,
+            duration_s: s.startUnix ? Math.round(Date.now() / 1000 - s.startUnix) : (s.start ? Math.round((Date.now() - s.start) / 1000) : 0),
             ms_firstBlock: elapsed('firstBlock'),
             ms_firstChat: elapsed('firstChat'),
             ms_firstCodeView: elapsed('firstCodeView'),
