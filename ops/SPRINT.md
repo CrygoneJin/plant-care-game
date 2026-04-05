@@ -330,9 +330,9 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S29-1 | **#102 MMX = Nerd-Easter-Egg** — Tooltip "Goldstandard" entfernen → "nerd easter egg · mmx.network". Kein Goldstandard-Anspruch. | Designer + Engineer | 🔲 Offen |
-| S29-2 | **#103 Insel-Archipel Phase 1** — Heimatinsel vor dem Segeln in localStorage speichern. Bei Rückkehr wiederherstellen. `sailToIsland()` löscht aktuell das Grid ohne Save. Oscar verliert seine Insel. | Engineer | 🔲 Offen |
-| S29-3 | **Bernd "zeig mama" Chat-Command** — Im Chat: "zeig mama" / "mama" / "dashboard" → `_openDashboardFromBernd()`. Oscar kann Mama direkt das Dashboard zeigen. Kein separates UI. | Engineer | 🔲 Offen |
+| S29-1 | **#102 MMX = Nerd-Easter-Egg** — Tooltip "Goldstandard" entfernen → "nerd easter egg · mmx.network". Kein Goldstandard-Anspruch. | Designer + Engineer | ✅ Done (PR #241) |
+| S29-2 | **#103 Insel-Archipel Phase 1** — Heimatinsel vor dem Segeln in localStorage speichern. Bei Rückkehr wiederherstellen. `sailToIsland()` löscht aktuell das Grid ohne Save. Oscar verliert seine Insel. | Engineer | ✅ Done (PR #241) |
+| S29-3 | **Bernd "zeig mama" Chat-Command** — Im Chat: "zeig mama" / "mama" / "dashboard" → `_openDashboardFromBernd()`. Oscar kann Mama direkt das Dashboard zeigen. Kein separates UI. | Engineer | ✅ Done (PR #241) |
 
 ---
 
@@ -345,6 +345,48 @@
 **Sprint 29 Fokus:** Quick-Win (#102 tooltip), dann echter Feature-Gap (#103 Heimatinsel), dann Convenience (Bernd Dashboard-Trigger aus Chat).
 
 **Blocker:** Keine.
+
+### 2026-04-05 (Daily Scrum)
+
+**Heute:** Alle 3 Sprint 29 Items implementiert + gemergt (PR #241). Zusätzlich: Cartesia TTS als primärer TTS (PR #242), Save/Load/New immer sichtbar, Progressive Disclosure, Voice-Worker repariert. Sprint 29 vollständig.
+
+**Blocker:** Keine.
+
+---
+
+## Sprint Review — 2026-04-05
+
+**Sprint Goal erreicht:** ✅ Ja — alle 3 Items Done.
+
+**Was geliefert wurde:**
+- S29-1: MMX Tooltip — "Goldstandard" → "nerd easter egg · mmx.network". Ehrlich.
+- S29-2: Archipel Phase 1 — `saveIslandState()` + `loadIslandState()` in localStorage. Heimatinsel-Button im Sail-Dialog. Oscar verliert seine Insel nicht mehr beim Segeln.
+- S29-3: Bernd "zeig mama" — Chat erkennt "mama"/"papa"/"dashboard"/"statistik"/"zeig mama". Dashboard öffnet nach 600ms.
+
+**Bonus (außerhalb Sprint Goal):**
+- Cartesia TTS als primärer TTS (WebSpeech/OpenAI tot). 4 deutsche Stimmen. Bernd klingt wie Bernd.
+- Save/Load/New immer sichtbar (auch für neue Spieler, Tag 1).
+- Progressive Disclosure: Toolbar/Sidebar erscheinen stufenweise.
+- Voice-Worker SQLite-Migration gefixt + deployed.
+- Alle offenen PRs gemergt, 20+ alte Branches gelöscht.
+
+**Oscar-Check:** Insel bleibt beim Segeln. Mama sieht die Statistiken. Bernd klingt endlich wie Bernd.
+
+---
+
+## Sprint Retrospective — 2026-04-05
+
+### Was lief gut?
+- **Cartesia TTS in einer Session.** Von "WebSpeech ist grausam" zu Bernd-Stimme deployed.
+- **Branch-Hygiene.** 20+ tote Branches + 2 Worktrees gelöscht. Repo sauber.
+- **Alle PRs gemergt.** Keine offenen PRs zum Abschluss.
+
+### Was lief schlecht?
+- **CARTESIA_API_KEY zweimal gesetzt** (einmal korrekt, einmal als roher Key als Secret-Name). Dashboard-Check vor dem Test spart Zeit.
+
+### Was verbessern wir?
+1. **Nach Secret-Set: `wrangler secret list` prüfen** bevor deployed wird.
+2. **TTS testen bevor committed wird** — Playwright-Test für `/tts-cartesia`.
 
 ---
 
