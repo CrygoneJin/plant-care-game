@@ -9,7 +9,7 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S34-1 | **Weltraum-Insel** — Vierte Insel im Archipel. Thema: Rakete/Mond/Mars/Alien. Genesis: "🚀 Eine Rakete landet auf dem Mond..." Sail-Dialog: `mond.staub.stille`. NPCs: Alien 👽 begrüßt Oscar. Kein Segel-Button bis Rakete 🚀 im Inventar. | Engineer + Artist | 🔲 Offen |
+| S34-1 | **Weltraum-Insel** — Vierte Insel im Archipel. Thema: Rakete/Mond/Mars/Alien. Genesis: "🚀 Eine Rakete landet auf dem Mond..." Sail-Dialog: `mond.staub.stille`. NPCs: Alien 👽 begrüßt Oscar. Kein Segel-Button bis Rakete 🚀 im Inventar. | Engineer + Artist | ✅ Done |
 | S34-2 | **Backlog vollständig auditieren** — git log prüfen für #34, #18, #42, #23. Done-Status korrekt setzen. Keine offenen Items die eigentlich fertig sind. | Leader | 🔲 Offen |
 | S34-3 | **Playwright Smoke Test in CI** — ops/tests/smoke.spec.js als echten CI-Job registrieren (deploy.yml). Baseline: Seite lädt, Canvas existiert, kein JS-Fehler. (#103 partial) | Engineer | 🔲 Offen |
 
@@ -24,6 +24,17 @@
 **Sprint 34 Fokus:** Weltraum-Insel zuerst — Oscar-sichtbar, max Impact. Dann Backlog sauber. Dann CI stabiler.
 
 **Blocker:** PR #246 (Sprint 33) noch offen — feat/sprint-34 basiert auf feat/sprint-33.
+
+### 2026-04-05 (Daily Scrum)
+
+**Heute:** S34-1 implementiert — Mondlandschaft live.
+- `generateMoonIsland()` in island-generators.js: Mondstaub-Oberfläche aus Stein, 3 Krater-Ringe, 8 Sterne, Meteorit, Mondkäse (Easter Egg), Rakete mit Landepodest, Alien in der Mitte.
+- Sail-Dialog: Moon-Button erscheint nur wenn `getInventoryCount('rocket') > 0`. Ohne Rakete: grauer gestrichelter Hinweis "Baue erst eine 🚀 Rakete!".
+- Genesis beim ersten Betreten: "🚀 Die Rakete landet auf dem Mond..." → "🌙 Mondstaub wirbelt auf!" → "👽 Ein Alien schaut zu."
+- 3-Wort-Adresse: `mond.staub.stille`
+- Schatzkarte: 4 von 4 Inseln entdeckbar. Zähler dynamisch.
+
+**Blocker:** Keine.
 
 ---
 
