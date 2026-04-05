@@ -95,6 +95,8 @@ Persistent team log. Append-only. Read by all agents.
 | 2026-03-27 | Automatischer Agent-Collector | Alle Repos dynamisch einsammeln, Claude CLI sortiert |
 | 2026-03-27 | Feynman-Sprüche als Doku | Best-of aus echten Sessions — Team-Kultur die sich selbst dokumentiert |
 
+| 2026-04-04 | itch.io Deploy als CI-Job | butler push im GitHub Actions Workflow, parallel zu GitHub Pages | BUTLER_API_KEY als Secret nötig. Projekt muss auf itch.io als HTML5-Game angelegt sein. |
+
 ---
 
 ## Learnings (Muster die wir erkannt haben)
