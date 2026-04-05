@@ -19,6 +19,8 @@
         lua:        { emoji: '🌙', prefix: 'Lua:', ticks: ['Schnell und leicht!', 'Tables!', '-- Ein Kommentar genügt'], style: 'cute' },
         sql:        { emoji: '🗃️', prefix: 'SQL:', ticks: ['SELECT * FROM Insel', 'JOIN!', 'NULL... ist auch ein Wert.'], style: 'grumpy' },
         scratch:    { emoji: '🐱', prefix: 'Scratch:', ticks: ['Wenn grüne Flagge angeklickt...', '10 Schritte gehen!', 'Katze sagt: Miau!'], style: 'caps' },
+        // Mond-Bewohner
+        alien:      { emoji: '👽', prefix: 'Alien:', ticks: ['*bloop*', 'Interessant!', '...wir sind nicht allein.'], style: 'alien' },
     };
 
     const MAT_ADJECTIVES = {
@@ -46,6 +48,10 @@
         dino:     ['riesiger', 'urzeitlicher', 'majestätischer', 'brüllender', 'gewaltiger'],
         trex:     ['gefürchteter', 'mächtiger', 'riesiger', 'knochenbrechender', 'legendärer'],
         meteor:   ['glühender', 'kosmischer', 'rasender', 'verherender', 'galaktischer'],
+        alien:    ['seltsamer', 'leuchtender', 'außerirdischer', 'merkwürdiger', 'galaktischer'],
+        star:     ['funkelnder', 'ferner', 'ewiger', 'stiller', 'strahlender'],
+        rocket:   ['schnelle', 'mutige', 'silberne', 'dampfende', 'fliegende'],
+        mars:     ['roter', 'staubiger', 'kalter', 'einsamer', 'karger'],
     };
 
     const REACTIONS = {
@@ -61,6 +67,7 @@
         magic:     ['✨ Wunderschön!', 'Ein Wunsch wird wahr!', 'So magisch!', 'Bezaubernd!', 'Das ist Magie!'],
         warm:      ['Herzlich willkommen!', 'Das macht Freude!', 'Wunderschön!', 'So gemütlich!', 'Schön dass du da bist!'],
         adventure: ['Auf in die Welt!', 'Ein neues Abenteuer!', 'Volldampf voraus!', 'Herrlich!', 'Ab in die Ferne!'],
+        alien:     ['*bloop bloop*', '...faszinierend.', 'Signal empfangen!', '...wir haben euch beobachtet.', 'Willkommen im Kosmos!'],
     };
 
     const TEMPLATES = [

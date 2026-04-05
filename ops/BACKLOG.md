@@ -20,6 +20,8 @@ Alles was nicht in eine dieser Kategorien fällt → `ARCHIVE.md`.
 | 106 | **Palette-Duplikat entfernen** — Element links in Palette + nochmal rechts mit Counter = redundant. Nur Counter + Element links. | Designer | 🔲 Offen |
 | 107 | **Tetris + Snake als Easter Egg** — Oscars Bruder hat Tetris auf Apple TV entdeckt, konnte es nicht kaufen (Parental Controls). Zwei klassische Spiele als verstecktes Easter Egg (Konami-Code o.ä.). | Engineer | 🔲 Offen |
 
+| 108 | **Native Speaker Review FR/ES/IT** — Alle nicht-DE/EN Strings von Muttersprachlern prüfen lassen. Risiko: falsche Grammatik (gefunden: IT Plural "missionei"). | Artist | 🔲 Human Input |
+
 ## 🟡 P1 — Vor Spielplatz-Phase (10 Kinder)
 
 | # | Item | Owner | Status | Oscar-Outcome |
@@ -127,6 +129,16 @@ Alles was nicht in eine dieser Kategorien fällt → `ARCHIVE.md`.
 Ja → bleibt. Nein → `ARCHIVE.md`.
 Bei Gleichstand: Zugänglichkeit vor Features (Mandela).
 Feynman misst ob es sich gelohnt hat.
+
+---
+
+---
+
+## ❄️ Icebox — bewusst zurückgestellt
+
+| # | Item | Grund |
+|---|------|-------|
+| 108 | **ES/IT NPC-Strings** — Spanische + Italienische NPC-Gedächtnis-Texte | Kein Native Speaker Review. ES/IT aus Code entfernt bis Qualität gesichert. Supported: DE/EN/FR/AR/HE. |
 
 ---
 

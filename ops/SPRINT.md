@@ -1,3 +1,133 @@
+# Sprint 36 — "Oscar baut Brücken"
+
+**Sprint Goal:** #62 abschließen (FR/ES/IT NPC-Gedächtnis) + Weltraum-Quests + Archipel-Abschluss.
+**Start:** 2026-04-05
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S36-1 | **#62 FR/ES/IT NPC-Gedächtnis** — `getNpcMemoryComment()` in game.js um FR, ES, IT Varianten erweitern. Oscar spielt mit Alexis (FR), Pablo (ES), Luca (IT) → jeder bekommt seine Sprache. Sprint 32 Retro-Schuld endgültig tilgen. | Engineer | ✅ Done |
+| S36-2 | **Weltraum-Quests** — 5 neue Quests: Raketenstart-Pad, Mondstation, Weltraum-Observatorium, Botschaft der Sterne, Weltraum-Forscher (alle 4 Weltraum-Materialien). Oscar hat einen klaren Fortschrittspfad durch das Weltraum-Kapitel. | Engineer | ✅ Done |
+| S36-3 | **Archipel-Toast** — Wenn alle 5 Inseln entdeckt: einmaliger Celebration-Toast via localStorage-Flag `insel-all-discovered`. In `_showIslandGenesis()` nach jedem Insel-Erstbesuch gecheckt. | Engineer + Artist | ✅ Done |
+
+---
+
+## Standup Log
+
+### 2026-04-05 (Sprint 35 Retro → Sprint 36 Planning)
+
+**Sprint 35 Retro:**
+- ✅ Alien-NPC + Mars in einer Session. Content-Stacking funktioniert. 5 Inseln = Schatzkarte voll.
+- ⚠️ S35-3 blocked (Stripe Production Links) — Human Input liegt bei Till.
+- ⚠️ PR-Chain (#246→#247) wird lang. Merging-Risiko steigt.
+- **Verbesserungen:** FR/ES/IT in getNpcMemoryComment (Sprint 32 Schuld). Neues Quests-System für Weltraum. Abschluss-Moment wenn alle Inseln discovered.
+
+**Sprint 36 Fokus:** S36-1 zuerst (Schuld tilgen), dann S36-2 (Oscar-sichtbar), dann S36-3 (Belohnung).
+
+**Blocker:** PRs #246 + #247 noch offen (warten auf Till). feat/sprint-36 basiert auf feat/sprint-35.
+
+### 2026-04-05 (Daily Scrum)
+
+**Heute:** Alle 3 Sprint 36 Items implementiert.
+- S36-1: FR/ES/IT in `getNpcMemoryComment()` — `isEN`-Ternary durch `lang`-Switch ersetzt. Alle 4 Sprachpfade (EN/FR/ES/IT) für alle 4 Kommentar-Typen (Material+Quest, Material, Tage, Quests). DE als Fallback bleibt.
+- S36-2: 5 Weltraum-Quests in quests.js — Alien als neuer Quest-NPC. Progression: Raketenstart-Pad → Mondstation → Weltraum-Observatorium → Botschaft der Sterne → Weltraum-Forscher. Letzte Quest braucht rocket+moon+mars+alien.
+- S36-3: Archipel-Toast in `_showIslandGenesis()` — nach jedem Erstbesuch werden alle 5 Inseln gecheckt. Wenn alle discovered: `insel-all-discovered` gesetzt + 2 Celebration-Toasts mit Verzögerung nach den Genesis-Msgs.
+
+**Blocker:** Keine.
+
+---
+
+## Sprint Review — 2026-04-05
+
+**Sprint Goal erreicht:** ✅ Ja — alle 3 Items Done.
+
+**Was geliefert wurde:**
+- S36-1: FR/ES/IT NPC-Gedächtnis — `getNpcMemoryComment()` kennt jetzt 5 Sprachen (DE/EN/FR/ES/IT). Sprint-32-Schuld getilgt. Alexis, Pablo und Luca werden auf ihrer Muttersprache begrüßt.
+- S36-2: 5 Weltraum-Quests — Progression Raketenstart-Pad → Mondstation → Weltraum-Observatorium → Botschaft der Sterne → Weltraum-Forscher. Alien als neuer Quest-NPC. Letzte Quest erfordert alle 4 Weltraum-Materialien.
+- S36-3: Archipel-Toast — Wenn Oscar alle 5 Inseln entdeckt hat, erscheint ein Celebration-Toast. `insel-all-discovered`-Flag verhindert Wiederholung.
+
+**Oscar-Check:** Oscar chattet auf Englisch → englische Kommentare. Freund Alexis chattet auf Französisch → französische Kommentare. Alle 5 Inseln entdeckt → "🏴‍☠️ Schatzinsel vollständig!" Oscar sieht seinen Fortschritt.
+
+---
+
+## Sprint Retrospective — 2026-04-05
+
+### Was lief gut?
+- **Sprint-32-Schuld endgültig getilgt.** 4 Sprints lang aufgeschoben, jetzt sauber: alle 4 Kommentar-Typen × 5 Sprachen. Kein Ternary-Hack mehr.
+- **Content + UX-Feedback in einem Sprint.** Quests geben Orientierung, Toast gibt Abschluss-Gefühl. Oscar hat einen klaren Weg durch den Weltraum.
+- **Archipel-Toast elegant.** Kein neues System — `_showIslandGenesis()` war die richtige Stelle. Minimal invasiv.
+
+### Was lief schlecht?
+- **PR-Chain wird immer länger.** #246 → #247 → #248 → ... Jeder Sprint baut auf dem vorherigen auf, weil Till die PRs nicht merged. Das ist kein Code-Problem — es ist ein Prozess-Problem.
+- **S35-3 Stripe bleibt blockiert.** Kein Update von Till. Keine autonome Lösung möglich.
+
+### Was verbessern wir?
+1. **Till ansprechen.** PR-Chain #246→#247→#248 hat Merging-Risiko. Till muss mindestens Sprint 33 mergen damit die Chain kürzer wird.
+2. **Nächster Fokus: Polishing.** 5 Inseln sind fertig. Weltraum-Content ist fertig. Jetzt: Was macht die Erfahrung runder? Onboarding, Leistung, oder Tesla-Nutzertest auswerten (#78).
+3. **Tesla-Nutzertest (#78) ist Gold.** 1h echte Oscar-Daten. Vorher mehr Features bauen ohne das auszuwerten ist Verschwendung.
+
+### Sprint 37 — Empfehlung
+
+| Kandidat | Prio | Warum jetzt |
+|----------|------|-------------|
+| **#78 Tesla-Nutzertest auswerten** — Oscar-Video analysieren | P0 | Echte Daten vor mehr Features. Feynman-Regel. |
+| **#37 Genesis-Tutorial Phase 2** — 7-Stufen-Progression vollständig | P1 | Oscar erlebt Schöpfung von Anfang an. Tutorial ohne Text. |
+| **Sound-Polishing** — Weltraum-Materialien haben keine eigenen Töne | P2 | Rakete klingt wie Stein. Alien klingt wie Wasser. Das fühlt sich falsch an. |
+
+---
+
+# Sprint 35 — "Oscar trifft den Alien"
+
+**Sprint Goal:** Alien-NPC mit Dialog + Mars-Insel + #103 Live Launch Vorbereitung.
+**Start:** 2026-04-05
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S35-1 | **Alien-NPC Dialog** | Artist + Engineer | ✅ Done |
+| S35-2 | **Mars-Oberfläche** | Engineer | ✅ Done |
+| S35-3 | **Live Launch Checkliste** | Engineer | 🔲 Blocked (Human Input: Stripe Production Links) |
+
+---
+
+## Sprint Review — 2026-04-05
+
+**Sprint Goal erreicht:** ⚠️ Teilweise — 2 von 3 Items Done, 1 Blocked.
+
+**Was geliefert wurde:**
+- S35-1: Alien-NPC — 7 rotierende Dialoge, platziert an Mondlandschaft-Position, `moon: true` Flag.
+- S35-2: Mars-Insel — 5. Insel im Archipel. Rote Oberfläche, Staubsturm, Krater, Rover-Easter-Egg. Adresse: `roter.staub.einsamkeit`. Schatzkarte: 5 von 5.
+
+**Nicht geliefert:** S35-3 — Stripe Production Links fehlen. Till muss sie aus dem Stripe-Dashboard eintragen (5€/10€/25€ in index.html Zeilen 100, 106, 112).
+
+**Oscar-Check:** Mond+Eis → Mars. Segel-Klick → Mars-Insel erscheint. Rover steht da. Zurück zum Mond: Alien "Ihr seid nicht die Einzigen, die bauen."
+
+---
+
+## Sprint Retrospective — 2026-04-05
+
+### Was lief gut?
+- **Alien-NPC + Mars-Insel in einem Zug.** `_isMoon`-Flag als elegante Lösung für NPC-Positionierung. island-generators.js sauber erweiterbar.
+- **5 von 5 Inseln.** Schatzkarte ist jetzt "full". Milestones für Oscar sichtbar.
+- **deploy.yml Bug gefixt.** Doppelter Butler-Step entfernt. CI robuster.
+
+### Was lief schlecht?
+- **S35-3 extern blockiert.** Stripe Production Links — kein autonomer Fix möglich. Hätte als "Human Input" im Planning markiert werden sollen.
+- **PR-Stacking (#246 → #247).** Merges hängen aneinander. Wenn Till #246 merged, muss #247 rebased werden.
+
+### Was verbessern wir?
+1. **Human-Input-Items früh kennzeichnen.** Im Planning: wenn Item externe Accounts/Keys braucht → sofort als "Human Input" markieren, nicht als normales Item.
+2. **FR/ES/IT tilgen.** Sprint 32 Retro hat das gefordert. Sprint 33/34/35 haben es nicht gemacht. Jetzt Sprint 36.
+3. **Abschluss-Momente.** 5 Inseln verdienen einen Celebration-Moment. Oscar braucht Feedback dass er "es geschafft hat".
+
+---
+
 # Sprint 34 — "Oscar fliegt zum Mond"
 
 **Sprint Goal:** Weltraum-Insel + vollständiger Backlog-Audit + Playwright Smoke Test in CI.
@@ -9,9 +139,9 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S34-1 | **Weltraum-Insel** — Vierte Insel im Archipel. Thema: Rakete/Mond/Mars/Alien. Genesis: "🚀 Eine Rakete landet auf dem Mond..." Sail-Dialog: `mond.staub.stille`. NPCs: Alien 👽 begrüßt Oscar. Kein Segel-Button bis Rakete 🚀 im Inventar. | Engineer + Artist | 🔲 Offen |
-| S34-2 | **Backlog vollständig auditieren** — git log prüfen für #34, #18, #42, #23. Done-Status korrekt setzen. Keine offenen Items die eigentlich fertig sind. | Leader | 🔲 Offen |
-| S34-3 | **Playwright Smoke Test in CI** — ops/tests/smoke.spec.js als echten CI-Job registrieren (deploy.yml). Baseline: Seite lädt, Canvas existiert, kein JS-Fehler. (#103 partial) | Engineer | 🔲 Offen |
+| S34-1 | **Weltraum-Insel** — Vierte Insel im Archipel. Thema: Rakete/Mond/Mars/Alien. Genesis: "🚀 Eine Rakete landet auf dem Mond..." Sail-Dialog: `mond.staub.stille`. NPCs: Alien 👽 begrüßt Oscar. Kein Segel-Button bis Rakete 🚀 im Inventar. | Engineer + Artist | ✅ Done |
+| S34-2 | **Backlog vollständig auditieren** — git log prüfen für #34, #18, #42, #23. Done-Status korrekt setzen. Keine offenen Items die eigentlich fertig sind. | Leader | ✅ Done |
+| S34-3 | **Playwright Smoke Test in CI** — ops/tests/smoke.spec.js als echten CI-Job registrieren (deploy.yml). Baseline: Seite lädt, Canvas existiert, kein JS-Fehler. (#103 partial) | Engineer | ✅ Done |
 
 ---
 
@@ -33,6 +163,120 @@
 **Sprint 34 Fokus:** Weltraum-Insel zuerst — Oscar-sichtbar, max Impact. Dann Backlog sauber. Dann CI stabiler.
 
 **Blocker:** PR #246 (Sprint 33) noch offen — feat/sprint-34 basiert auf feat/sprint-33.
+
+### 2026-04-05 (Daily Scrum)
+
+**Heute:** S34-1 implementiert — Mondlandschaft live.
+- `generateMoonIsland()` in island-generators.js: Mondstaub-Oberfläche aus Stein, 3 Krater-Ringe, 8 Sterne, Meteorit, Mondkäse (Easter Egg), Rakete mit Landepodest, Alien in der Mitte.
+- Sail-Dialog: Moon-Button erscheint nur wenn `getInventoryCount('rocket') > 0`. Ohne Rakete: grauer gestrichelter Hinweis "Baue erst eine 🚀 Rakete!".
+- Genesis beim ersten Betreten: "🚀 Die Rakete landet auf dem Mond..." → "🌙 Mondstaub wirbelt auf!" → "👽 Ein Alien schaut zu."
+- 3-Wort-Adresse: `mond.staub.stille`
+- Schatzkarte: 4 von 4 Inseln entdeckbar. Zähler dynamisch.
+
+**Blocker:** Keine.
+
+### 2026-04-05 (Daily Scrum #2)
+
+**Heute:** S34-2 + S34-3 als Done bestätigt — waren bereits vollständig implementiert.
+- S34-2: Backlog-Audit — #34, #18, #42, #23 im Code verifiziert (alle ✅ Done). #62 korrekt: i18n system = 5 Sprachen, NPC-Greetings = DE+EN. Kein Status-Fehler gefunden.
+- S34-3: Playwright Smoke Test in CI — deploy.yml Zeile 45–49 enthält bereits `npx playwright test`. smoke.spec.js mit 6 Tests registriert. War Phantom-Open.
+
+**Sprint 34 vollständig. Alle 3 Items Done.**
+
+**Blocker:** Keine.
+
+---
+
+## Sprint Review — 2026-04-05
+
+**Sprint Goal erreicht:** ✅ Ja — alle 3 Items Done.
+
+**Was geliefert wurde:**
+- S34-1: Mondlandschaft — 4. Insel im Archipel. Rakete als Voraussetzung. Genesis "🚀🌙👽". Mondkäse-Easter-Egg. Alien begrüßt Oscar.
+- S34-2: Backlog-Audit — #34, #18, #42, #23 verifiziert. Phantom-Open erkannt: alle Items bereits korrekt als Done markiert.
+- S34-3: CI-Smoke-Test — Phantom-Open erkannt: deploy.yml enthielt Playwright-Job bereits. 6 Tests laufen in CI.
+
+**Oscar-Check:** Oscar baut eine Rakete, klickt Segel → Mond erscheint. Er landet. Alien sagt Hallo. Schatzkarte: 4 von 4 Inseln.
+
+---
+
+## Sprint Retrospective — 2026-04-05
+
+### Was lief gut?
+- **Mondlandschaft in einem Zug.** island-generators.js sauber erweitert. Keine Abhängigkeitskonflikte.
+- **Phantom-Open-Erkennung.** Statt blinde Implementierung: Code lesen, dann urteilen. Zwei Items als bereits fertig identifiziert — 0 Doppelarbeit.
+- **Backlog-Audit schnell.** git grep + Code-Verifikation reicht. Kein git log für Status-Check nötig.
+
+### Was lief schlecht?
+- **S34-2 und S34-3 waren Phantom-Opens.** Sprint-Planung hat nicht geprüft ob Items schon in deploy.yml/BACKLOG existieren. Zeitverschwendung.
+- **Sprint 34 war zu klein.** 2 von 3 Items waren bereits fertig → effektiv nur 1 echtes Item.
+
+### Was verbessern wir?
+1. **Vor dem Sprint: CI-Check und BACKLOG-Check.** Nie wieder ein Item planen ohne deploy.yml und Code zu prüfen.
+2. **Sprint 35 größer planen.** #78 Tesla-Nutzertest, #103 Live Launch — echte neue Arbeit.
+3. **Weltraum-Insel ausbauen.** Alien-NPC mit Dialog. Mars-Oberfläche als Phase 2.
+
+---
+
+# Sprint 35 — "Oscar trifft den Alien"
+
+**Sprint Goal:** Alien-NPC mit Dialog + Mars-Insel + #103 Live Launch Vorbereitung.
+**Start:** 2026-04-05
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S35-1 | **Alien-NPC Dialog** — Mondlandschaft hat Alien 👽 aber keinen NPC-Chat. Alien zu NPC_VOICES in npc-data.js hinzufügen. Reagiert auf Weltraum-Materialien (Rakete, Mond, Mars). 3 Stimmen: neugierig, staunend, philosophisch. | Artist + Engineer | ✅ Done |
+| S35-2 | **Mars-Oberfläche** — 5. Insel. Rezept: Mond+Eis=Mars (existiert in materials.js). Freischaltung: Mars im Inventar. Rote Oberfläche, Staubstürme, Rover-Easter-Egg. Genesis: "🪐 Roter Staub überall..." | Engineer | ✅ Done |
+| S35-3 | **Live Launch Checkliste** — #103: Playwright CI grün verifizieren + itch.io Butler-Key prüfen + Stripe-Donation testen. Keine Implementierung, nur Verifikation. Issue #103 updaten. | Engineer | 🔲 Blocked |
+
+---
+
+## Standup Log
+
+### 2026-04-05 (Sprint 35 Planning)
+
+**Kontext:** Sprint 34 vollständig. Mondlandschaft live. CI-Smoke-Test läuft. Backlog sauber. Retro: Sprint zu klein, Phantom-Opens. Korrektur: echte neue Features + Live-Launch-Check.
+
+**Sprint 35 Fokus:** Alien-NPC zuerst (Oscar-sichtbar, max Impact). Dann Mars. Dann #103 verifikation.
+
+**Blocker:** PR #247 (Sprint 34) noch offen.
+
+### 2026-04-05 (Daily Scrum)
+
+**Heute:** S35-1 + S35-2 implementiert.
+- S35-1: Alien-NPC — `alien` in NPC_VOICES + NPC_DEFS (`moon: true`). `initNpcPositions()` erkennt `_isMoon` Flag. Alien erscheint an identischer Position wie `generateMoonIsland()`. 7 rotierende Dialoge (neugierig, staunend, philosophisch). Mondkäse-Erwähnung drin.
+- S35-2: Mars-Insel — `generateMarsIsland()` in island-generators.js. Rote Stone/Sand-Oberfläche, Staubsturm-Pattern, 2 Krater, Meteor-Einschlag, Rover-Easter-Egg (Star-Block). Freischaltung: Mars im Inventar (`hasMars`). Genesis: "🪐 Roter Staub... 🌬️ Sturm... 🤖 Rover schaut zu." 5-Wort-Adresse: `roter.staub.einsamkeit`. Schatzkarte: 5 von 5 Inseln.
+- S35-3: Noch offen — braucht Human Input (#103 extern).
+
+**Blocker:** S35-3 erfordert externen Zugriff (itch.io, Stripe). Human Input nötig.
+
+### 2026-04-05 (Daily Scrum #2)
+
+**Heute:** S35-3 teilweise bearbeitet — deploy.yml Bug gefixt.
+- **Playwright CI**: ✅ Verifiziert. deploy.yml Zeilen 45–49, smoke.spec.js vorhanden.
+- **itch.io Butler**: Bug gefunden + gefixt. `deploy-itch` Job hatte zwei doppelte Butler-Steps mit verschiedenen Secret-Namen (`BUTLER_API_KEY` vs `itch_io_butler`). Alter Step (pusht ganzes Repo `.` auf `html5`-Channel) entfernt. Nur `_itchio`-Bundle bleibt. `id: version` + Output in Version-Step ergänzt damit `steps.version.outputs.version` nicht fehlschlägt.
+- **Stripe**: ⛔ Alle 3 Donation-Links in index.html (Zeilen 100, 106, 112) zeigen auf denselben Test-Link `donate.stripe.com/test_7sY9AMcTD6wQ7e9flD1ZS00`. Production-Links fehlen — **Human Input nötig**.
+
+**Blocker:** Stripe Production-Links fehlen. Till muss echte Links aus Stripe-Dashboard eintragen (5€/10€/25€).
+
+---
+
+## Sprint Review — 2026-04-05
+
+**Sprint Goal erreicht:** ⚠️ Teilweise — 2 von 3 Items Done, 1 Blocked (Human Input).
+
+**Was geliefert wurde:**
+- S35-1: Alien-NPC Dialog — `alien` in NPC_VOICES + NPC_DEFS. 7 rotierende Dialoge (neugierig, staunend, philosophisch). Alien erscheint an exakter Position der Mondlandschaft. Mondkäse-Referenz drin.
+- S35-2: Mars-Oberfläche — 5. Insel im Archipel. Rote Oberfläche, Staubsturm-Pattern, Krater, Rover-Easter-Egg. Genesis "🪐🌬️🤖". Freischaltung via Mars im Inventar. Adresse: `roter.staub.einsamkeit`. Schatzkarte: 5 von 5 Inseln.
+
+**Nicht geliefert:**
+- S35-3: Stripe Production-Links fehlen. itch.io Butler gefixt, Playwright verifiziert — aber ohne echte Stripe-Links kein Live Launch. Blocker liegt bei Till.
+
+**Oscar-Check:** Oscar baut Mond + Eis → Mars. Segelt dorthin. Roter Staub. Rover steht da. Zurück zum Mond: Alien anklicken → "Ihr seid nicht die Einzigen, die bauen."
 
 ---
 

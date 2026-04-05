@@ -327,6 +327,8 @@
         // Bonusfamilie (nur auf Startinsel sichtbar, Spieler benennt sie selbst)
         kraemerin: { emoji: '👩‍🍳', name: 'Krämerin', lummerland: true },
         lokfuehrer:{ emoji: '🚂', name: 'Lokführer', lummerland: true },
+        // Mond-Bewohner
+        alien:     { emoji: '👽', name: 'Alien', moon: true },
     };
 
     // NPCs im Kreis um die Inselmitte verteilen
@@ -340,12 +342,28 @@
         const cy = Math.floor(ROWS / 2);
         const rx = Math.floor(COLS * 0.3);
         const ry = Math.floor(ROWS * 0.3);
+        const _currentIsland = localStorage.getItem('insel-current-island') || 'home';
+        const _isMoon = _currentIsland === 'moon';
         const ids = Object.keys(NPC_DEFS).filter(id => {
             // Lummerland-NPCs nur auf Lummerland
             if (NPC_DEFS[id].lummerland && !_isLummerland) return false;
+            // Mond-NPCs nur auf dem Mond
+            if (NPC_DEFS[id].moon && !_isMoon) return false;
             return true;
         });
         npcPositions = {};
+
+        // Mond-NPCs bekommen feste Position (identisch mit generateMoonIsland)
+        if (_isMoon) {
+            const moonRx = Math.floor(COLS * 0.44), moonRy = Math.floor(ROWS * 0.44);
+            const alienR = cy - Math.floor(moonRy * 0.1);
+            const alienC = cx - Math.floor(moonRx * 0.05);
+            if (alienR >= 0 && alienR < ROWS && alienC >= 0 && alienC < COLS) {
+                npcPositions['alien'] = { r: alienR, c: alienC };
+                // Alien-Block entfernen — NPC ersetzt den Block
+                if (grid[alienR] && grid[alienR][alienC] === 'alien') grid[alienR][alienC] = null;
+            }
+        }
 
         // Lummerland-NPCs bekommen feste Positionen bei ihren Gebäuden
         if (_isLummerland) {
@@ -479,6 +497,23 @@
             } else {
                 showToast(story, 5000);
             }
+        } else if (npcId === 'alien') {
+            const alienStories = [
+                '👽 Alien: *bloop bloop* Wir beobachten eure Insel schon seit... langer Zeit.',
+                '👽 Alien: Interessant. Ihr baut mit Holz und Stein. Wir bauen mit Licht und Zeit.',
+                '👽 Alien: Euer Raketen-Design ist... charmant. Funktioniert aber!',
+                '👽 Alien: Habt ihr gewusst dass der Mondkäse von uns stammt? Lecker, oder?',
+                '👽 Alien: Auf meinem Planeten gibt es auch Kinder. Die bauen auch. Aber in 7 Dimensionen.',
+                '👽 Alien: *scannt Oscar* ...Kreativitätswert: außerordentlich hoch. Gut.',
+                '👽 Alien: Willkommen im Kosmos. Ihr seid nicht die Einzigen, die bauen.',
+            ];
+            const alienMsg = alienStories[Math.floor(Math.random() * alienStories.length)];
+            if (sessionGreeting) {
+                showToast(sessionGreeting, 3000);
+                setTimeout(() => showToast(alienMsg, 5000), 3200);
+            } else {
+                showToast(alienMsg, 5000);
+            }
         } else {
             if (sessionGreeting) {
                 showToast(sessionGreeting, 3000);
@@ -527,6 +562,8 @@
         home:      'wellen.sand.zuhause',
         lummerland: 'zwei.berge.abenteuer',
         dinobucht:  'knochen.urzeit.staunen',
+        moon:       'mond.staub.stille',
+        mars:       'roter.staub.einsamkeit',
     };
 
     function showSailDialog() {
@@ -539,7 +576,11 @@
             home:       true,
             lummerland: !!localStorage.getItem('insel-archipel-lummerland'),
             dinobucht:  !!localStorage.getItem('insel-archipel-dinobucht'),
+            moon:       !!localStorage.getItem('insel-archipel-moon'),
+            mars:       !!localStorage.getItem('insel-archipel-mars'),
         };
+        const hasRocket = typeof getInventoryCount === 'function' && getInventoryCount('rocket') > 0;
+        const hasMars = typeof getInventoryCount === 'function' && getInventoryCount('mars') > 0;
 
         function islandBtn(dest, emoji, label, desc, borderColor, bgColor) {
             const addr = _ISLAND_ADDRESSES[dest] || '';
@@ -572,6 +613,20 @@
                     ${islandBtn('home',      '🏠', 'Heimatinsel', 'Deine Insel wartet auf dich',                '#27AE60', '#EAFAF1')}
                     ${islandBtn('lummerland','🏝️', 'Lummerland',  'Eine kleine Insel mit zwei Bergen',          '#2E86C1', '#EBF5FB')}
                     ${islandBtn('dinobucht', '🦕', 'Dino-Bucht',  'Vor 66 Millionen Jahren lebten hier Dinos', '#8E44AD', '#F5EEF8')}
+                    ${hasRocket
+                        ? islandBtn('moon', '🌙', 'Mondlandschaft', 'Staub, Stille, und ein Alien wartet', '#7F8C8D', '#F2F3F4')
+                        : `<div style="padding:10px 12px;font-size:15px;border-radius:8px;border:2px dashed #BDC3C7;background:#FDFEFE;color:#95A5A6;text-align:left;display:flex;align-items:center;gap:10px;">
+                            <span style="font-size:22px;">🌙</span>
+                            <span><strong>Mondlandschaft</strong><br><small>Baue erst eine 🚀 Rakete!</small></span>
+                           </div>`
+                    }
+                    ${hasMars
+                        ? islandBtn('mars', '🪐', 'Mars', 'Roter Staub, Staubstürme, und ein Rover', '#C0392B', '#FDEDEC')
+                        : `<div style="padding:10px 12px;font-size:15px;border-radius:8px;border:2px dashed #BDC3C7;background:#FDFEFE;color:#95A5A6;text-align:left;display:flex;align-items:center;gap:10px;">
+                            <span style="font-size:22px;">🪐</span>
+                            <span><strong>Mars</strong><br><small>Crafte erst 🪐 Mars (Mond + Eis)!</small></span>
+                           </div>`
+                    }
                 </div>
                 <button id="sail-cancel" style="padding:8px 16px;border:none;background:#eee;border-radius:6px;cursor:pointer;">Noch nicht</button>
             </div>
@@ -637,6 +692,16 @@
                         window.INSEL_GENERATORS.generateDinoIsland(grid, ROWS, COLS, MATERIALS);
                     }
                     _showIslandGenesis('dinobucht');
+                } else if (dest === 'moon') {
+                    if (window.INSEL_GENERATORS && window.INSEL_GENERATORS.generateMoonIsland) {
+                        window.INSEL_GENERATORS.generateMoonIsland(grid, ROWS, COLS, MATERIALS);
+                    }
+                    _showIslandGenesis('moon');
+                } else if (dest === 'mars') {
+                    if (window.INSEL_GENERATORS && window.INSEL_GENERATORS.generateMarsIsland) {
+                        window.INSEL_GENERATORS.generateMarsIsland(grid, ROWS, COLS, MATERIALS);
+                    }
+                    _showIslandGenesis('mars');
                 } else if (dest === 'home') {
                     showToast('🏠 Du bist wieder zuhause!', 3000);
                 }
@@ -644,7 +709,9 @@
                 const label = dest === 'home' ? '🏠 Du bist wieder zuhause — deine Insel wartet!' :
                               dest === 'lummerland' ? '🏝️ Lummerland — wieder da!' :
                               dest === 'dinobucht' ? '🦕 Die Dino-Bucht — du kennst dich hier schon aus!' :
-                              '⛵ Angekomm!';
+                              dest === 'moon' ? '🌙 Der Mond — du kennst dich hier schon aus!' :
+                              dest === 'mars' ? '🪐 Der Mars — roter Staub, soweit das Auge reicht!' :
+                              '⛵ Angekommen!';
                 showToast(label, 3000);
             }
 
@@ -1055,30 +1122,35 @@
         const daysSince = m.lastVisit ? Math.floor((Date.now() - m.lastVisit) / 86400000) : null;
         // #62 Mehrsprachige NPCs: gespeicherte Spielersprache nutzen
         const lang = localStorage.getItem('insel-player-lang') || 'de';
-        const isEN = lang === 'en';
+        const p = `${npc.emoji} ${npc.prefix}`;
+        const q = m.questsDone ? m.questsDone.length : 0;
+        const qs = q === 1;
 
-        if (m.lastMaterial && m.questsDone && m.questsDone.length > 0) {
-            return isEN
-                ? `${npc.emoji} ${npc.prefix} Hey${nameStr}! Last time you built a lot with ${m.lastMaterial}. And you finished ${m.questsDone.length} quest${m.questsDone.length > 1 ? 's' : ''}!`
-                : `${npc.emoji} ${npc.prefix} Hey${nameStr}! Letztes Mal hast du viel mit ${m.lastMaterial} gebaut. Und ${m.questsDone.length} Quest${m.questsDone.length > 1 ? 's' : ''} geschafft!`;
+        // Supported langs: DE, EN, FR, AR, HE — ES/IT icebox
+        if (m.lastMaterial && q > 0) {
+            if (lang === 'en') return `${p} Hey${nameStr}! Last time you built a lot with ${m.lastMaterial}. And you finished ${q} quest${qs ? '' : 's'}!`;
+            if (lang === 'fr') return `${p} Hey${nameStr}! La dernière fois tu as beaucoup construit avec ${m.lastMaterial}. Et tu as fini ${q} quête${qs ? '' : 's'}!`;
+            return `${p} Hey${nameStr}! Letztes Mal hast du viel mit ${m.lastMaterial} gebaut. Und ${q} Quest${qs ? '' : 's'} geschafft!`;
         }
         if (m.lastMaterial) {
-            return isEN
-                ? `${npc.emoji} ${npc.prefix} Hey${nameStr}! Last time you built a lot with ${m.lastMaterial}...`
-                : `${npc.emoji} ${npc.prefix} Hey${nameStr}! Letztes Mal hast du viel mit ${m.lastMaterial} gebaut...`;
+            if (lang === 'en') return `${p} Hey${nameStr}! Last time you built a lot with ${m.lastMaterial}...`;
+            if (lang === 'fr') return `${p} Hey${nameStr}! La dernière fois tu as beaucoup construit avec ${m.lastMaterial}...`;
+            return `${p} Hey${nameStr}! Letztes Mal hast du viel mit ${m.lastMaterial} gebaut...`;
         }
         if (daysSince !== null && daysSince >= 1) {
-            const dayText = isEN
-                ? (daysSince === 1 ? 'yesterday' : `${daysSince} days ago`)
-                : (daysSince === 1 ? 'gestern' : `vor ${daysSince} Tagen`);
-            return isEN
-                ? `${npc.emoji} ${npc.prefix} You were last here ${dayText}${nameStr}!`
-                : `${npc.emoji} ${npc.prefix} Schon ${dayText} warst du zuletzt hier${nameStr}!`;
+            const dayText = {
+                en: daysSince === 1 ? 'yesterday' : `${daysSince} days ago`,
+                fr: daysSince === 1 ? 'hier' : `il y a ${daysSince} jours`,
+                de: daysSince === 1 ? 'gestern' : `vor ${daysSince} Tagen`,
+            }[lang] || (daysSince === 1 ? 'gestern' : `vor ${daysSince} Tagen`);
+            if (lang === 'en') return `${p} You were last here ${dayText}${nameStr}!`;
+            if (lang === 'fr') return `${p} Tu étais ici ${dayText}${nameStr}!`;
+            return `${p} Schon ${dayText} warst du zuletzt hier${nameStr}!`;
         }
-        if (m.questsDone && m.questsDone.length > 0) {
-            return isEN
-                ? `${npc.emoji} ${npc.prefix} Remember${nameStr}? We already did ${m.questsDone.length} quest${m.questsDone.length > 1 ? 's' : ''} together!`
-                : `${npc.emoji} ${npc.prefix} Erinnerst du dich${nameStr}? Wir haben schon ${m.questsDone.length} Quest${m.questsDone.length > 1 ? 's' : ''} zusammen gemacht!`;
+        if (q > 0) {
+            if (lang === 'en') return `${p} Remember${nameStr}? We already did ${q} quest${qs ? '' : 's'} together!`;
+            if (lang === 'fr') return `${p} Tu te souviens${nameStr}? On a déjà fait ${q} quête${qs ? '' : 's'} ensemble!`;
+            return `${p} Erinnerst du dich${nameStr}? Wir haben schon ${q} Quest${qs ? '' : 's'} zusammen gemacht!`;
         }
         return null;
     }
@@ -2058,6 +2130,8 @@
         home:       ['🌊 Das Wasser weicht zurück...', '🏝️ Eine Insel entsteht!', '🌳 Der erste Baum wächst.'],
         lummerland: ['🌊 Das Meer trennt sich...', '🏝️ Eine kleine Insel erscheint!', '🏔️ Zwei Berge wachsen in den Himmel.'],
         dinobucht:  ['🌊 Das Urmeer weicht zurück...', '🦴 Fossilien tauchen aus dem Sand!', '🦕 Die Dinosaurier sind noch hier!'],
+        moon:       ['🚀 Die Rakete landet auf dem Mond...', '🌙 Mondstaub wirbelt auf!', '👽 Ein Alien schaut zu.'],
+        mars:       ['🪐 Roter Staub überall...', '🌬️ Ein Sturm fegt über die Ebene!', '🤖 Ein alter Rover schaut zu.'],
     };
 
     function _showIslandGenesis(dest) {
@@ -2070,6 +2144,18 @@
             return;
         }
         msgs.forEach((msg, i) => setTimeout(() => showToast(msg, 2200), i * 1400));
+        // S36-3: Archipel-Abschluss — alle 5 Inseln entdeckt?
+        const allKey = 'insel-all-discovered';
+        if (!localStorage.getItem(allKey)) {
+            const allIslands = ['home', 'lummerland', 'dinobucht', 'moon', 'mars'];
+            const allDone = allIslands.every(k => localStorage.getItem('insel-genesis-' + k));
+            if (allDone) {
+                localStorage.setItem(allKey, '1');
+                const delay = msgs.length * 1400 + 800;
+                setTimeout(() => showToast('🌌 Du hast das ganze Archipel entdeckt!', 3000), delay);
+                setTimeout(() => showToast('🚀 Echter Weltraum-Forscher. Oscar wäre stolz.', 3000), delay + 1600);
+            }
+        }
     }
 
     // --- Zeichnen ---
