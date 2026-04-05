@@ -1,3 +1,74 @@
+# Sprint 32 — "Oscar erkundet den Weltraum"
+
+**Sprint Goal:** Weltraum-Pfad (Rakete→Mond→Mars→Alien) + Schatzkarte im Sail-Dialog + NPC-Texte auf Englisch.
+**Start:** 2026-04-05
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S32-1 | **Schatzkarte im Sail-Dialog** — Entdeckte Inseln mit Besucht-Badge + 3-Wort-Adresse. Oscar sieht sein Archipel auf einem Blick. | Designer + Engineer | 🔲 Offen |
+| S32-2 | **Weltraum-Pfad** — 4 neue Materialien: Rakete 🚀, Mond 🌙, Mars 🪐, Alien 👽. Rezepte: Metall+Feuer=Rakete, Rakete+Wolke=Mond, Mond+Eis=Mars, Mars+Stern=Alien. Natürliche Progression nach Dinos. | Engineer | 🔲 Offen |
+| S32-3 | **#62 NPC-Texte auf Englisch** — NPC-Begrüßungen + Kommentare auf Englisch wenn Sprache EN erkannt. npc-data.js um EN-Varianten erweitern. Spielplatz-Phase. | Engineer + Artist | 🔲 Offen |
+
+---
+
+## Standup Log
+
+### 2026-04-05 (Sprint 32 Planning)
+
+**Kontext:** Sprint 31 vollständig (alle 3 Items Done, PR #244 offen). Dino-Bucht als dritte Insel. Genesis-Toasts live. NPCs reagieren auf Dinos. Logische Nächste: Weltraum-Expansion + Schatzkarte damit Oscar seinen Fortschritt sieht.
+
+**Sprint 32 Fokus:** Weltraum-Pfad (Oscar-sichtbar, max Impact). Dann Schatzkarte (Oscar sieht sein Archipel). Dann NPC-Englisch (#62 abschließen).
+
+**Blocker:** PRs #243 + #244 noch offen (warten auf Till-Merge). feat/sprint-32 basiert auf feat/sprint-31.
+
+### 2026-04-05 (Daily Scrum)
+
+**Heute:** Alle 3 Sprint 32 Items implementiert.
+- S32-1: Schatzkarte im Sail-Dialog — `showSailDialog()` neu gebaut. 3-Wort-Adressen pro Insel (`wellen.sand.zuhause`, `zwei.berge.abenteuer`, `knochen.urzeit.staunen`). "✓ entdeckt" Badge für besuchte Inseln via localStorage. Zähler "X von 3 Inseln entdeckt".
+- S32-2: Weltraum-Pfad — `mars` als neues Material (🪐) in materials.js. 2 neue Rezepte: Mond+Eis=Mars, Mars+Rakete=Marslandung→Alien. Entdeckung: rocket/moon/alien existierten bereits. Nur mars war echtes Gap. `grep materials.js` war richtig (Retro S31 bestätigt).
+- S32-3: #62 Mehrsprachige NPCs — `insel-player-lang` in localStorage gespeichert nach erster Chat-Nachricht. `getNpcMemoryComment()` gibt EN-Texte zurück wenn lang='en'. "Hey! Last time you built a lot with..." — Oscars englische Freunde werden jetzt erkannt.
+
+**Blocker:** Keine.
+
+---
+
+## Sprint Review — 2026-04-05
+
+**Sprint Goal erreicht:** ✅ Ja — alle 3 Items Done.
+
+**Was geliefert wurde:**
+- S32-1: Schatzkarte — Sail-Dialog zeigt entdeckte Inseln mit Badge + 3-Wort-Adresse + Fortschrittszähler. Oscar sieht sein Archipel auf einen Blick.
+- S32-2: Weltraum-Pfad — Mars 🪐 + 2 Rezepte. Dinos → Weltraum. Natürliche Progression.
+- S32-3: #62 NPC-Englisch — Sprache wird in localStorage persistiert. NPC-Begrüßungen auf EN wenn Spieler auf Englisch chattet.
+
+**Bonus:** TypeScript-Fix: Keine Duplikate in materials.js (rocket/moon/alien existierten schon). `grep materials.js` als Retro-Verbesserung sofort angewandt.
+
+**Oscar-Check:** Sail-Dialog zeigt "2 von 3 Inseln entdeckt". Dino-Bucht: entdeckt. Lummerland: entdeckt. Heimatinsel: Du bist hier. Oscars englischer Freund vom Spielplatz bekommt "Hey! Last time you built a lot with Wood!"
+
+---
+
+## Sprint Retrospective — 2026-04-05
+
+### Was lief gut?
+- **S31-Retro-Tipp sofort umgesetzt.** `grep materials.js` vor jedem neuen Material — hat Duplikat-Keys sofort aufgedeckt. 3 Keys (rocket, moon, alien) bereits vorhanden. Fehler verhindert.
+- **Schatzkarte elegant.** Sail-Dialog rebuild statt patch — sauberer Code. 3-Wort-Adressen geben jedem Ort eine Seele.
+- **#62 mit minimalem Overhead.** localStorage als Sprachbrücke zwischen Chat und Greeting. Kein Framework. Vanilla.
+
+### Was lief schlecht?
+- **Weltraum-Pfad kleiner als geplant.** Nur Mars + 2 Rezepte statt 4 neue Materialien. rocket/moon/alien existierten schon — Planung hat Bestand nicht geprüft. Retro-Tipp hätte vorher kommen müssen.
+- **EN-only für NPC-Greetings.** FR/ES/IT noch ohne Übersetzung in getNpcMemoryComment. #62 nur zu 50% erledigt.
+
+### Was verbessern wir?
+1. **Backlog-Audit vor Materialien.** Vor jedem neuen Material/Feature: bestehende Keys prüfen. `grep` ist jetzt Pflicht.
+2. **#62 Phase 2.** FR/ES/IT Übersetzungen für getNpcMemoryComment. Sprint 33.
+3. **Mehr Weltraum-Inhalt.** Weltraum-Insel als Phase 2 (wie Dino-Bucht). Sprint 33 Kandidat.
+
+---
+
 # Sprint 25 — "Oscar spielt und entdeckt"
 
 **Sprint Goal:** Palette wird Instrument (Oscar spielt Melodien) + Höhle als neue Welt + game.js Zellteilung.

@@ -132,4 +132,8 @@ window.INSEL_CRAFTING_RECIPES = [
     { name: 'Dinosaurier',  result: 'dino',    resultCount: 1, ingredients: { fossil: 1, fire: 1 },          desc: 'Fossil + Feuer = Dinosaurier (Jurassic Park lässt grüßen!)' },
     { name: 'T-Rex',        result: 'trex',    resultCount: 1, ingredients: { dino: 1, earth: 1 },           desc: 'Dinosaurier + Erde = T-Rex (König der Urzeit!)' },
     { name: 'Massenaussterben', result: 'fossil', resultCount: 3, ingredients: { trex: 1, meteor: 1 },       desc: 'T-Rex + Meteorit = 3 Fossilien (66 Millionen Jahre her — und doch hier!)' },
+    // === WELTRAUM-PFAD (S32-2 — Oscar erkundet den Weltraum) ===
+    // rocket/moon/alien hatten schon Rezepte — Mars ist das neue Glied im Weltraum-Pfad
+    { name: 'Mars',  result: 'mars', resultCount: 1, ingredients: { moon: 1, ice: 1 }, desc: 'Mond + Eis = Mars (Der rote Planet ist eisig kalt — und der nächste Schritt nach dem Mond!)' },
+    { name: 'Marslandung', result: 'alien', resultCount: 1, ingredients: { mars: 1, rocket: 1 }, desc: 'Mars + Rakete = Alien (Eine Rakete auf dem Mars — und plötzlich: Besuch!)' },
 ];

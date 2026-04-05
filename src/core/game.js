@@ -524,30 +524,60 @@
         if (closeBtn) closeBtn.focus();
     }
 
-    // === SEGELBOOT → INSEL-AUSWAHL (#54 Jim Knopfs Welt) ===
+    // === SEGELBOOT → INSEL-AUSWAHL (#54 Jim Knopfs Welt + S32-1 Schatzkarte) ===
+
+    // 3-Wort-Adressen für jede Insel (Schatzkarte — poetic, einprägsam)
+    const _ISLAND_ADDRESSES = {
+        home:      'wellen.sand.zuhause',
+        lummerland: 'zwei.berge.abenteuer',
+        dinobucht:  'knochen.urzeit.staunen',
+    };
+
     function showSailDialog() {
         const existingDlg = document.getElementById('sail-dialog');
-        if (existingDlg) { existingDlg.classList.remove('hidden'); return; }
+        if (existingDlg) { existingDlg.remove(); } // Neu bauen damit discovered-State stimmt
+
+        // Welche Inseln wurden schon besucht?
+        const currentIsland = localStorage.getItem('insel-current-island') || 'home';
+        const visited = {
+            home:       true,
+            lummerland: !!localStorage.getItem('insel-archipel-lummerland'),
+            dinobucht:  !!localStorage.getItem('insel-archipel-dinobucht'),
+        };
+
+        function islandBtn(dest, emoji, label, desc, borderColor, bgColor) {
+            const addr = _ISLAND_ADDRESSES[dest] || '';
+            const isCurrent = dest === currentIsland;
+            const hasVisited = visited[dest];
+            const badge = isCurrent
+                ? `<span style="font-size:10px;background:#27AE60;color:#fff;border-radius:4px;padding:1px 5px;margin-left:6px;">Du bist hier</span>`
+                : hasVisited
+                    ? `<span style="font-size:10px;background:#F39C12;color:#fff;border-radius:4px;padding:1px 5px;margin-left:6px;">✓ entdeckt</span>`
+                    : '';
+            return `
+                <button class="sail-dest" data-dest="${dest}" style="padding:10px 12px;font-size:15px;border-radius:8px;border:2px solid ${borderColor};background:${bgColor};cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px;">
+                    <span style="font-size:22px;">${emoji}</span>
+                    <span>
+                        <strong>${label}</strong>${badge}<br>
+                        <small style="color:#666;">${desc}</small><br>
+                        <small style="color:#aaa;font-family:monospace;">${addr}</small>
+                    </span>
+                </button>`;
+        }
 
         const dlg = document.createElement('div');
         dlg.id = 'sail-dialog';
         dlg.className = 'dialog-overlay';
         dlg.innerHTML = `
-            <div class="dialog-content" style="max-width:340px;text-align:center;">
+            <div class="dialog-content" style="max-width:380px;text-align:center;">
                 <h3>⛵ Wohin segeln?</h3>
-                <p style="margin:12px 0;font-size:14px;">Dein Segelboot ist bereit!</p>
-                <div style="display:flex;flex-direction:column;gap:8px;margin:16px 0;">
-                    <button class="sail-dest" data-dest="lummerland" style="padding:12px;font-size:16px;border-radius:8px;border:2px solid #2E86C1;background:#EBF5FB;cursor:pointer;">
-                        🏝️ Lummerland<br><small>Eine kleine Insel mit zwei Bergen</small>
-                    </button>
-                    <button class="sail-dest" data-dest="dinobucht" style="padding:12px;font-size:16px;border-radius:8px;border:2px solid #8E44AD;background:#F5EEF8;cursor:pointer;">
-                        🦕 Dino-Bucht<br><small>Vor 66 Millionen Jahren lebten hier Dinosaurier</small>
-                    </button>
-                    <button class="sail-dest" data-dest="home" style="padding:12px;font-size:16px;border-radius:8px;border:2px solid #27AE60;background:#EAFAF1;cursor:pointer;">
-                        🏠 Heimatinsel<br><small>Deine Insel wartet auf dich</small>
-                    </button>
+                <p style="margin:8px 0 14px;font-size:13px;color:#666;">Dein Archipel — ${Object.values(visited).filter(Boolean).length} von ${Object.keys(visited).length} Inseln entdeckt</p>
+                <div style="display:flex;flex-direction:column;gap:8px;margin:0 0 16px;">
+                    ${islandBtn('home',      '🏠', 'Heimatinsel', 'Deine Insel wartet auf dich',                '#27AE60', '#EAFAF1')}
+                    ${islandBtn('lummerland','🏝️', 'Lummerland',  'Eine kleine Insel mit zwei Bergen',          '#2E86C1', '#EBF5FB')}
+                    ${islandBtn('dinobucht', '🦕', 'Dino-Bucht',  'Vor 66 Millionen Jahren lebten hier Dinos', '#8E44AD', '#F5EEF8')}
                 </div>
-                <button id="sail-cancel" style="margin-top:8px;padding:8px 16px;border:none;background:#eee;border-radius:6px;cursor:pointer;">Noch nicht</button>
+                <button id="sail-cancel" style="padding:8px 16px;border:none;background:#eee;border-radius:6px;cursor:pointer;">Noch nicht</button>
             </div>
         `;
         document.body.appendChild(dlg);
@@ -1027,19 +1057,32 @@
         const hasName = playerName && playerName !== 'Spieler' && playerName !== 'Anonym';
         const nameStr = hasName ? ` ${playerName}` : '';
         const daysSince = m.lastVisit ? Math.floor((Date.now() - m.lastVisit) / 86400000) : null;
+        // #62 Mehrsprachige NPCs: gespeicherte Spielersprache nutzen
+        const lang = localStorage.getItem('insel-player-lang') || 'de';
+        const isEN = lang === 'en';
 
         if (m.lastMaterial && m.questsDone && m.questsDone.length > 0) {
-            return `${npc.emoji} ${npc.prefix} Hey${nameStr}! Letztes Mal hast du viel mit ${m.lastMaterial} gebaut. Und ${m.questsDone.length} Quest${m.questsDone.length > 1 ? 's' : ''} geschafft!`;
+            return isEN
+                ? `${npc.emoji} ${npc.prefix} Hey${nameStr}! Last time you built a lot with ${m.lastMaterial}. And you finished ${m.questsDone.length} quest${m.questsDone.length > 1 ? 's' : ''}!`
+                : `${npc.emoji} ${npc.prefix} Hey${nameStr}! Letztes Mal hast du viel mit ${m.lastMaterial} gebaut. Und ${m.questsDone.length} Quest${m.questsDone.length > 1 ? 's' : ''} geschafft!`;
         }
         if (m.lastMaterial) {
-            return `${npc.emoji} ${npc.prefix} Hey${nameStr}! Letztes Mal hast du viel mit ${m.lastMaterial} gebaut...`;
+            return isEN
+                ? `${npc.emoji} ${npc.prefix} Hey${nameStr}! Last time you built a lot with ${m.lastMaterial}...`
+                : `${npc.emoji} ${npc.prefix} Hey${nameStr}! Letztes Mal hast du viel mit ${m.lastMaterial} gebaut...`;
         }
         if (daysSince !== null && daysSince >= 1) {
-            const dayText = daysSince === 1 ? 'gestern' : `vor ${daysSince} Tagen`;
-            return `${npc.emoji} ${npc.prefix} Schon ${dayText} warst du zuletzt hier${nameStr}!`;
+            const dayText = isEN
+                ? (daysSince === 1 ? 'yesterday' : `${daysSince} days ago`)
+                : (daysSince === 1 ? 'gestern' : `vor ${daysSince} Tagen`);
+            return isEN
+                ? `${npc.emoji} ${npc.prefix} You were last here ${dayText}${nameStr}!`
+                : `${npc.emoji} ${npc.prefix} Schon ${dayText} warst du zuletzt hier${nameStr}!`;
         }
         if (m.questsDone && m.questsDone.length > 0) {
-            return `${npc.emoji} ${npc.prefix} Erinnerst du dich${nameStr}? Wir haben schon ${m.questsDone.length} Quest${m.questsDone.length > 1 ? 's' : ''} zusammen gemacht!`;
+            return isEN
+                ? `${npc.emoji} ${npc.prefix} Remember${nameStr}? We already did ${m.questsDone.length} quest${m.questsDone.length > 1 ? 's' : ''} together!`
+                : `${npc.emoji} ${npc.prefix} Erinnerst du dich${nameStr}? Wir haben schon ${m.questsDone.length} Quest${m.questsDone.length > 1 ? 's' : ''} zusammen gemacht!`;
         }
         return null;
     }

@@ -184,6 +184,9 @@ window.INSEL_MATERIALS = {
     dino:     { emoji: '🦕', label: 'Dinosaurier',   color: '#4CAF50', border: '#388E3C' },
     trex:     { emoji: '🦖', label: 'T-Rex',         color: '#E65100', border: '#BF360C' },
     meteor:   { emoji: '☄️', label: 'Meteorit',      color: '#5D4037', border: '#3E2723' },
+    // === WELTRAUM-PFAD (S32-2 — Oscar erkundet den Weltraum) ===
+    // rocket, moon, alien existieren bereits — nur Mars ist neu
+    mars:     { emoji: '🪐', label: 'Mars',            color: '#FFCCBC', border: '#E64A19' },
 };
 
 // === SCHRIFTROLLEN DER BIBLIOTHEK — Easter Eggs für Neugierige ===
