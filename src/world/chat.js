@@ -820,12 +820,19 @@ Du: "HOLZ! Lok, hörst du das? HOLZ! *tschuff tschuff* Das ist wie Weihnachten u
         const energyPercent = Math.round(((totalBudget - tokenUsage[charId]) / totalBudget) * 100);
         const budgetInfo = `Dein Energie-Level: ${energyPercent}%. ${energyPercent < 30 ? 'Du wirst bald müde — halte dich kurz!' : ''}`;
 
-        // Spracherkennung: wenn das Kind Englisch schreibt, antworte auf Englisch
+        // Spracherkennung: NPC antwortet in der Sprache des Kindes (#34)
         var lastUserMsg = chatHistory.length > 0 ? chatHistory[chatHistory.length - 1].content : '';
-        var englishWords = /\b(the|is|are|my|I|you|what|how|can|do|have|this|that|with|for|was|were|would|could|should|will|want|need|like|hello|hi|yes|no|please|thank|thanks|help|where|when|why|who)\b/i;
-        var langHint = englishWords.test(lastUserMsg)
-            ? 'Antworte in der Sprache des Kindes. Das Kind schreibt auf Englisch — antworte auf Englisch.'
-            : 'Antworte auf Deutsch.';
+        var langHint = (function detectLang(msg) {
+            if (/\b(the|is|are|my|you|what|how|can|do|have|this|that|with|for|was|were|would|could|should|will|want|need|like|hello|hi|yes|no|please|thank|thanks|help|where|when|why|who|build|make|create|play)\b/i.test(msg))
+                return 'The child is writing in English — reply in English.';
+            if (/\b(le|la|les|je|tu|il|elle|nous|vous|ils|elles|est|sont|avec|pour|dans|sur|c'est|qu'est|bonjour|merci|oui|non|comment|quoi|pourquoi)\b/i.test(msg))
+                return "L'enfant écrit en français — réponds en français.";
+            if (/\b(el|la|los|las|yo|tú|él|ella|es|son|con|para|en|como|qué|por|hola|gracias|sí|no|dónde|cuándo|jugar|hacer|crear)\b/i.test(msg))
+                return 'El niño escribe en español — responde en español.';
+            if (/\b(il|la|gli|le|io|tu|lui|lei|è|sono|con|per|in|come|cosa|perché|ciao|grazie|sì|no|dove|quando|giocare|fare|costruire)\b/i.test(msg))
+                return "Il bambino scrive in italiano — rispondi in italiano.";
+            return 'Antworte auf Deutsch.';
+        })(lastUserMsg);
 
         // System-Prompt: Persönlichkeit FIRST, Regeln kurz
         const safetyRule = charId === 'bernd'

@@ -126,4 +126,10 @@ window.INSEL_CRAFTING_RECIPES = [
     // === BIBLIOTHEK VON ALEXANDRIA ===
     { name: 'Schriftrolle', result: 'scroll',  resultCount: 1, ingredients: { wood: 1, water: 1, fire: 1 }, desc: 'Holz + Wasser + Feuer = Schriftrolle (Papyrus!)' },
     { name: 'Bibliothek', result: 'library',   resultCount: 1, ingredients: { stone: 3, scroll: 3, crown: 1 }, desc: '3 Stein + 3 Schriftrollen + Krone = Bibliothek von Alexandria' },
+    // === DINOSAURIER-PFAD (S30-3 — Oscar entdeckt die Urzeit) ===
+    { name: 'Fossil',       result: 'fossil',  resultCount: 1, ingredients: { cave: 1, stone: 1 },           desc: 'Höhle + Stein = Fossil (Knochenfund in der Höhle!)' },
+    { name: 'Meteorit',     result: 'meteor',  resultCount: 1, ingredients: { star: 1, stone: 1 },           desc: 'Stern + Stein = Meteorit (Stein vom Himmel!)' },
+    { name: 'Dinosaurier',  result: 'dino',    resultCount: 1, ingredients: { fossil: 1, fire: 1 },          desc: 'Fossil + Feuer = Dinosaurier (Jurassic Park lässt grüßen!)' },
+    { name: 'T-Rex',        result: 'trex',    resultCount: 1, ingredients: { dino: 1, earth: 1 },           desc: 'Dinosaurier + Erde = T-Rex (König der Urzeit!)' },
+    { name: 'Massenaussterben', result: 'fossil', resultCount: 3, ingredients: { trex: 1, meteor: 1 },       desc: 'T-Rex + Meteorit = 3 Fossilien (66 Millionen Jahre her — und doch hier!)' },
 ];

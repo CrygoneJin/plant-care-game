@@ -42,6 +42,10 @@
         sand:     ['goldener', 'weicher', 'warmer', 'endloser'],
         path:     ['verschlungener', 'einladender', 'spannender', 'neuer'],
         cactus:   ['stacheliger', 'zäher', 'trotziger', 'cooler'],
+        fossil:   ['uraltes', 'verstinertes', 'geheimisvolles', 'kostbares', 'seltenes'],
+        dino:     ['riesiger', 'urzeitlicher', 'majestätischer', 'brüllender', 'gewaltiger'],
+        trex:     ['gefürchteter', 'mächtiger', 'riesiger', 'knochenbrechender', 'legendärer'],
+        meteor:   ['glühender', 'kosmischer', 'rasender', 'verherender', 'galaktischer'],
     };
 
     const REACTIONS = {

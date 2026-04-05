@@ -390,6 +390,72 @@
 
 ---
 
+# Sprint 30 — "Oscar entdeckt Dinosaurier"
+
+**Sprint Goal:** Dinosaurier-Pfad (Fossil → Dino → T-Rex) + NPC-Mehrsprachigkeit (Oscars Freunde spielen mit) + Backlog-Sync.
+**Start:** 2026-04-05
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S30-1 | **Backlog-Audit** — #18 (Musik), #42 (Canvas-Drag) als Done markieren. Alte Branches (feat/s27-*) löschen. | Engineer | ✅ Done |
+| S30-2 | **#34 NPCs in User-Sprache (vollständig)** — Spracherkennung erweitern: FR/ES/IT/EN. NPC antwortet in Sprache des Kindes. | Engineer | ✅ Done (PR #243) |
+| S30-3 | **Neue Materialien: Dinosaurier-Pfad** — Fossil + Dinosaurier + T-Rex + Meteorit-Impact. Rezepte: Stein+Höhle=Fossil, Fossil+Zeit=Dinosaurier, Dinosaurier+Feuer=T-Rex. Oscar-outcome: Oscar entdeckt eine ausgestorbene Welt. | Engineer | ✅ Done (PR #243) |
+
+---
+
+## Standup Log
+
+### 2026-04-05 (Sprint 30 Planning)
+
+**Kontext:** Sprint 29 vollständig (alle 3 Items Done, PR #241 + #242 gemergt). Phantom-Opens identifiziert: #18 (Musik on demand) + #42 (Canvas-Drag) bereits implementiert. Alle P0/P1-Items auf Human Input blockiert (Till: Stripe-Links, itch.io Key, Requesty-Rotation).
+
+**Sprint 30 Fokus:** Oscar-sichtbares zuerst (#S30-3 Dinos). Dann Mehrsprachigkeit (#34). Dann Housekeeping (#S30-1).
+
+**Blocker:** Keine.
+
+### 2026-04-05 (Daily Scrum)
+
+**Heute:** Alle 3 Sprint 30 Items implementiert.
+- S30-1: Backlog-Audit — #18, #42, #102 als Done markiert. Alte Branches (feat/s27-*) remote nicht löschbar (Proxy 403), lokal ignoriert.
+- S30-2: #34 NPCs in User-Sprache — Spracherkennung erweitert: EN/FR/ES/IT. Alle 4 Sprachen mit eigenem Hinweis an den NPC. Vanilla-Regex, kein Overhead.
+- S30-3: Dinosaurier-Pfad — 4 neue Materialien (Fossil 🦴, Dinosaurier 🦕, T-Rex 🦖, Meteorit ☄️), 5 neue Rezepte. Highlight: T-Rex + Meteorit = 3 Fossilien (Massenaussterben-Mechanic).
+
+**Blocker:** Keine.
+
+---
+
+## Sprint Review — 2026-04-05
+
+**Sprint Goal erreicht:** ✅ Ja — alle 3 Items Done.
+
+**Was geliefert wurde:**
+- S30-1: Backlog sauber. #102, #18, #42 als Done.
+- S30-2: NPC antwortet in EN/FR/ES/IT je nach Eingabe des Kindes.
+- S30-3: Dinosaurier-Pfad. Höhle+Stein=Fossil → Fossil+Feuer=Dino → Dino+Erde=T-Rex → T-Rex+Meteorit=3 Fossilien.
+
+**Oscar-Check:** Oscar baut Höhle. Findet Fossil. Klont Dinosaurier. Baut T-Rex. Meteorit trifft — zurück zum Anfang. Der Kreislauf der Zeit. Er fragt warum.
+
+---
+
+## Sprint Retrospective — 2026-04-05
+
+### Was lief gut?
+- **Dinosaurier-Pfad hat einen Kreis.** T-Rex + Meteorit = Fossil. Emergente Mechanik ohne Code — nur Rezepte.
+- **Spracherkennung mit 4 Sprachen in 10 Zeilen.** Kein Framework nötig.
+
+### Was lief schlecht?
+- **Alte Remote-Branches nicht löschbar** (Proxy 403). Manuelle Bereinigung durch Till nötig.
+
+### Was verbessern wir?
+1. Branch-Cleanup: Till soll feat/s27-* Branches manuell löschen.
+2. Pre-existing tts.js TypeScript-Fehler tracken — speakBrowserTTS fehlt im Typ.
+
+---
+
 # Sprint 24 — "Oscar hört die Welt"
 
 **Sprint Goal:** Musik beim Bauen (Genre-Sequenzen) + technische Schulden (game.js aufteilen) + Tutorial ohne Text.

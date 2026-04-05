@@ -179,6 +179,11 @@ window.INSEL_MATERIALS = {
     // === BIBLIOTHEK VON ALEXANDRIA ===
     library:  { emoji: '🏛️', label: 'Bibliothek', color: '#F5E6CA', border: '#D4C5A9' },
     scroll:   { emoji: '📜', label: 'Schriftrolle', color: '#FDEBD0', border: '#FAD7A0' },
+    // === DINOSAURIER-PFAD (S30-3 — Oscar entdeckt die Urzeit) ===
+    fossil:   { emoji: '🦴', label: 'Fossil',        color: '#D2B48C', border: '#A0896A' },
+    dino:     { emoji: '🦕', label: 'Dinosaurier',   color: '#4CAF50', border: '#388E3C' },
+    trex:     { emoji: '🦖', label: 'T-Rex',         color: '#E65100', border: '#BF360C' },
+    meteor:   { emoji: '☄️', label: 'Meteorit',      color: '#5D4037', border: '#3E2723' },
 };
 
 // === SCHRIFTROLLEN DER BIBLIOTHEK — Easter Eggs für Neugierige ===
