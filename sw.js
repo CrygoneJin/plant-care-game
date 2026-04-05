@@ -1,6 +1,6 @@
 // Service Worker for Schatzinsel — offline play support
 // Stale-While-Revalidate: zeigt Cache sofort, lädt im Hintergrund neu
-const CACHE_VERSION = 8;
+const CACHE_VERSION = 9;
 const CACHE_NAME = `schatzinsel-v${CACHE_VERSION}`;
 
 // Muss exakt mit index.html <script>-Tags übereinstimmen
@@ -60,16 +60,17 @@ function isApiRequest(url) {
     return API_HOSTS.some(host => url.hostname.includes(host));
 }
 
-// Install: pre-cache static assets, activate immediately
+// Install: pre-cache static assets, dann warten (Apple-Ansatz: kein skipWaiting)
+// SW aktiviert sich erst wenn alle Tabs geschlossen + neu geöffnet werden.
+// Kein mid-game Reload. Oscar spielt durch.
 self.addEventListener('install', event => {
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(cache => cache.addAll(STATIC_ASSETS))
-            .then(() => self.skipWaiting())
     );
 });
 
-// Activate: clean up ALL old caches, claim clients, notify about update
+// Activate: alte Caches löschen, Clients übernehmen, Version melden
 self.addEventListener('activate', event => {
     event.waitUntil(
         caches.keys()
@@ -80,17 +81,20 @@ self.addEventListener('activate', event => {
             .then(() => self.clients.claim())
             .then(() => self.clients.matchAll().then(clients => {
                 clients.forEach(c => c.postMessage({
-                    type: 'cache-update',
+                    type: 'sw-version',
                     version: CACHE_VERSION
                 }));
             }))
     );
 });
 
-// Version-Abfrage: Client kann aktuelle Cache-Version anfragen
+// Message-Handler: Version-Abfrage + SKIP_WAITING (für manuelles Update)
 self.addEventListener('message', event => {
     if (event.data?.type === 'version') {
         event.source.postMessage({ type: 'cache-version', version: CACHE_VERSION });
+    }
+    if (event.data?.type === 'SKIP_WAITING') {
+        self.skipWaiting();
     }
 });
 

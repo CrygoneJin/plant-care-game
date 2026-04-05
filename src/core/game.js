@@ -4,15 +4,11 @@
 (function () {
     'use strict';
 
-    // SW Cache-Update: automatisch neu laden wenn neue Version verfügbar
+    // SW Version-Tracking: kein auto-reload (Apple-Ansatz — Update bei nächstem Start)
     if (navigator.serviceWorker) {
         navigator.serviceWorker.addEventListener('message', function(e) {
-            if (e.data?.type === 'cache-update') {
-                // Einmal neu laden damit neue Assets aktiv werden
-                if (!sessionStorage.getItem('sw-reloaded')) {
-                    sessionStorage.setItem('sw-reloaded', '1');
-                    location.reload();
-                }
+            if (e.data?.type === 'sw-version') {
+                localStorage.setItem('insel-sw-version', String(e.data.version));
             }
         });
     }
@@ -3821,8 +3817,9 @@
     // Beim Start die Leiste füllen
     updateRecentBar();
 
-    // Canvas Maus-Events
+    // Canvas Maus-Events (nur Maus — Touch läuft über touchstart unten)
     canvas.addEventListener('pointerdown', (e) => {
+        if (e.pointerType !== 'mouse') return;
         if (window.resetIdleTimer) window.resetIdleTimer();
         // TTS Hörspiel stoppen bei Canvas-Interaktion (Backlog #87)
         if (window.INSEL_TTS && window.INSEL_TTS.hoerspielSpeaking) stopHoerspiel();
@@ -3852,6 +3849,7 @@
     });
 
     canvas.addEventListener('pointermove', (e) => {
+        if (e.pointerType !== 'mouse') return;
         hoverCell = getGridCell(e);
         requestRedraw();
         if (isMouseDown && hoverCell && currentTool !== 'fill') {
@@ -3859,11 +3857,13 @@
         }
     });
 
-    canvas.addEventListener('pointerup', () => {
+    canvas.addEventListener('pointerup', (e) => {
+        if (e.pointerType !== 'mouse') return;
         isMouseDown = false;
     });
 
-    canvas.addEventListener('pointerleave', () => {
+    canvas.addEventListener('pointerleave', (e) => {
+        if (e.pointerType !== 'mouse') return;
         isMouseDown = false;
         hoverCell = null;
         requestRedraw();
