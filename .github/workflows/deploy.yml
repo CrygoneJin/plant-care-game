@@ -128,7 +128,7 @@ jobs:
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
         run: |
-          ./butler push . crygonejim/schatzinsel:html5 --userversion=$(git describe --tags --match 'v*' HEAD 2>/dev/null || echo "0.$(git rev-list --count HEAD)")
+          ./butler push . crygonejim/schatzinsel-treasure-island-le-des-merveilles:html5 --userversion=$(git describe --tags --match 'v*' HEAD 2>/dev/null || echo "0.$(git rev-list --count HEAD)")
       - name: Build itch.io bundle
         run: |
           mkdir -p _itchio
@@ -140,6 +140,6 @@ jobs:
           curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
           unzip butler.zip
           chmod +x butler
-          ./butler push _itchio crygonejim/schatzinsel:web --userversion "${{ steps.version.outputs.version }}"
+          ./butler push _itchio crygonejim/schatzinsel-treasure-island-le-des-merveilles:web --userversion "${{ steps.version.outputs.version }}"
         env:
           BUTLER_API_KEY: ${{ secrets.itch_io_butler }}
