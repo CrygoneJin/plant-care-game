@@ -97,7 +97,7 @@ window.INSEL_QUEST_TEMPLATES = [
     // === WELTRAUM — Space Quests (Alien: 5 Schritte vom Raketenstart bis zum Weltraum-Forscher) ===
     { npc: 'alien', title: 'Raketenstart-Pad', desc: '...Ihr baut eine Rakete? *bloop* Wir beobachten das schon lange. Baut mir ein Start-Pad damit wir genauer zuschauen können!', needs: { rocket: 1, metal: 6, stone: 4, fire: 2 }, reward: '🚀🚀' },
     { npc: 'alien', title: 'Mondstation', desc: '*bloop* Der Mond ist nicht so einsam wie er aussieht. Baut eine Station — wir schauen manchmal vorbei!', needs: { moon: 1, metal: 4, glass: 3, stone: 4 }, reward: '🌙🌙🌙' },
-    { npc: 'spongebob', title: 'Weltraum-Observatorium', desc: 'SUCHERGEBNIS: Mars! Planet! ROT! Ich brauche ein Observatorium um den MARS zu beobachten! MIT GLAS! RIESIG!', needs: { mars: 1, glass: 5, stone: 6, lamp: 3 }, reward: '⭐⭐⭐⭐' },
+    { npc: 'alien', title: 'Weltraum-Observatorium', desc: '*bloop* Wir brauchen ein Observatorium — um euren blauen Planeten von hier oben zu beobachten. Mit Glas. Riesig.', needs: { mars: 1, glass: 5, stone: 6, lamp: 3 }, reward: '⭐⭐⭐⭐' },
     { npc: 'alien', title: 'Botschaft der Sterne', desc: 'Interessant... *bloop* ...Ihr seid die ersten die eine Botschaft für uns bauen. Das wird notiert. Überall.', needs: { alien: 1, stone: 6, lamp: 4, door: 2, flag: 2 }, reward: '👽👽👽👽' },
     { npc: 'alien', title: 'Weltraum-Forscher', desc: '...Ihr habt Rakete, Mond, Mars und uns besucht. *bloop* Wir sind beeindruckt. Das kam selten vor. Baut das Museum.', needs: { rocket: 1, moon: 1, mars: 1, alien: 1, glass: 4, stone: 4 }, reward: '🌌🌌🌌🌌🌌' },
 ];

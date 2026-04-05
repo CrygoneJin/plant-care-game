@@ -16,6 +16,8 @@ Alles was nicht in eine dieser Kategorien fällt → `ARCHIVE.md`.
 | 27 | **Cloudflare Worker CORS** — User muss worker.js im Dashboard deployen | User | 🔲 Human Input |
 | 92 | **Requesty Key rotieren** — Alter Key im Git-Verlauf. Sicherheitsrisiko. | Engineer | 🔲 Human Input |
 
+| 108 | **Native Speaker Review FR/ES/IT** — Alle nicht-DE/EN Strings von Muttersprachlern prüfen lassen. Risiko: falsche Grammatik (gefunden: IT Plural "missionei"). | Artist | 🔲 Human Input |
+
 ## 🟡 P1 — Vor Spielplatz-Phase (10 Kinder)
 
 | # | Item | Owner | Status | Oscar-Outcome |

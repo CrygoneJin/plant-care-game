@@ -1134,7 +1134,7 @@
             if (lang === 'en') return `${p} Hey${nameStr}! Last time you built a lot with ${m.lastMaterial}. And you finished ${q} quest${qs ? '' : 's'}!`;
             if (lang === 'fr') return `${p} Hey${nameStr}! La dernière fois tu as beaucoup construit avec ${m.lastMaterial}. Et tu as fini ${q} quête${qs ? '' : 's'}!`;
             if (lang === 'es') return `${p} ¡Hola${nameStr}! La última vez construiste mucho con ${m.lastMaterial}. ¡Y terminaste ${q} misión${qs ? '' : 'es'}!`;
-            if (lang === 'it') return `${p} Ciao${nameStr}! L'ultima volta hai costruito tanto con ${m.lastMaterial}. E hai completato ${q} missione${qs ? '' : 'i'}!`;
+            if (lang === 'it') return `${p} Ciao${nameStr}! L'ultima volta hai costruito tanto con ${m.lastMaterial}. E hai completato ${q} ${qs ? 'missione' : 'missioni'}!`;
             return `${p} Hey${nameStr}! Letztes Mal hast du viel mit ${m.lastMaterial} gebaut. Und ${q} Quest${qs ? '' : 's'} geschafft!`;
         }
         if (m.lastMaterial) {
@@ -1162,7 +1162,7 @@
             if (lang === 'en') return `${p} Remember${nameStr}? We already did ${q} quest${qs ? '' : 's'} together!`;
             if (lang === 'fr') return `${p} Tu te souviens${nameStr}? On a déjà fait ${q} quête${qs ? '' : 's'} ensemble!`;
             if (lang === 'es') return `${p} ¿Recuerdas${nameStr}? ¡Ya hicimos ${q} misión${qs ? '' : 'es'} juntos!`;
-            if (lang === 'it') return `${p} Ti ricordi${nameStr}? Abbiamo già fatto ${q} missione${qs ? '' : 'i'} insieme!`;
+            if (lang === 'it') return `${p} Ti ricordi${nameStr}? Abbiamo già fatto ${q} ${qs ? 'missione' : 'missioni'} insieme!`;
             return `${p} Erinnerst du dich${nameStr}? Wir haben schon ${q} Quest${qs ? '' : 's'} zusammen gemacht!`;
         }
         return null;
