@@ -103,6 +103,12 @@
             <div class="toolbar-group" id="craft-group">
                 <button class="tool-btn craft-open-btn" id="craft-btn" title="Werkbank" data-i18n-title="tool.craft">⚒️</button>
             </div>
+            <div class="toolbar-group" id="save-group">
+                <input type="text" id="project-name" placeholder="Meine Insel" data-i18n-placeholder="project.name_placeholder" maxlength="30" aria-label="Projektname">
+                <button class="tool-btn" id="save-btn" title="Speichern" data-i18n-title="tool.save">💾</button>
+                <button class="tool-btn" id="load-btn" title="Laden" data-i18n-title="tool.load">📂</button>
+                <button class="tool-btn" id="new-btn" title="Neu" data-i18n-title="tool.new">🆕</button>
+            </div>
             <div class="toolbar-group" id="overflow-group" style="position:relative">
                 <button class="tool-btn" id="toolbar-more-btn" title="Mehr Werkzeuge" onclick="document.getElementById('toolbar-overflow').classList.toggle('open')">⋯</button>
                 <div class="toolbar-overflow" id="toolbar-overflow">
@@ -113,10 +119,6 @@
                     <button class="tool-btn" id="replay-btn" title="Bauwerk als Song abspielen" data-i18n-title="tool.replay">🎵</button>
                     <button class="tool-btn" id="rewind-btn" title="Zeitreise: Baugeschichte rückwärts" data-i18n-title="tool.rewind">⏪</button>
                     <button class="tool-btn" id="bedtime-btn" title="Gute-Nacht-Geschichte von Tommy Krab" data-i18n-title="tool.bedtime">📖</button>
-                    <input type="text" id="project-name" placeholder="Meine Insel" data-i18n-placeholder="project.name_placeholder" maxlength="30" aria-label="Projektname">
-                    <button class="tool-btn" id="save-btn" title="Speichern" data-i18n-title="tool.save">💾</button>
-                    <button class="tool-btn" id="load-btn" title="Laden" data-i18n-title="tool.load">📂</button>
-                    <button class="tool-btn" id="new-btn" title="Neu" data-i18n-title="tool.new">🆕</button>
                     <button class="tool-btn" id="postcard-btn" title="Postkarte" data-i18n-title="tool.postcard">📸</button>
                     <button class="tool-btn" id="share-btn" title="Insel-Link kopieren" data-i18n-title="tool.share">🔗</button>
                     <button class="tool-btn" id="karte-btn" title="Schatzkarte für Eltern 🗺️" data-i18n-title="tool.map">🗺️</button>

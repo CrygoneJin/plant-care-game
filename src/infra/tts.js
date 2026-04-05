@@ -81,43 +81,25 @@
         });
     }
 
-    // Fallback: Web Speech API
-    var _cachedVoices = {};
-
-    function getBestVoice(langCode) {
-        if (_cachedVoices[langCode]) return _cachedVoices[langCode];
-        var voices = window.speechSynthesis.getVoices();
-        if (!voices.length) return null;
-        // Bevorzuge lokale (nicht-Remote) Stimmen, dann nach Sprache filtern
-        var matching = voices.filter(function (v) { return v.lang.indexOf(langCode.substring(0, 2)) === 0; });
-        var best = matching.find(function (v) { return v.localService; }) || matching[0];
-        if (best) _cachedVoices[langCode] = best;
-        return best || null;
-    }
-
-    // Voices vorladen (Chrome liefert sie asynchron)
-    if (window.speechSynthesis) {
-        window.speechSynthesis.getVoices();
-        if (window.speechSynthesis.onvoiceschanged !== undefined) {
-            window.speechSynthesis.onvoiceschanged = function () {
-                _cachedVoices = {};
-            };
-        }
-    }
-
-    function speakBrowserTTS(text, lang) {
-        return new Promise(function (resolve) {
-            if (!window.speechSynthesis) { resolve(); return; }
-            var utter = new SpeechSynthesisUtterance(text);
-            var langCode = (lang === 'en') ? 'en-US' : (lang === 'fr') ? 'fr-FR' : (lang === 'it') ? 'it-IT' : 'de-DE';
-            utter.lang = langCode;
-            var voice = getBestVoice(langCode);
-            if (voice) utter.voice = voice;
-            utter.rate = 0.92;
-            utter.pitch = 1.05;
-            utter.onend = function () { resolve(); };
-            utter.onerror = function () { resolve(); };
-            window.speechSynthesis.speak(utter);
+    // Fallback: Gemini TTS via Worker
+    function speakGeminiTTS(text, voiceInfo) {
+        var proxy = (window.INSEL_CONFIG && window.INSEL_CONFIG.proxy) || 'https://schatzinsel.hoffmeyer-zlotnik.workers.dev';
+        return fetch(proxy + '/tts-gemini', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: text, voice: voiceInfo.voice, lang: voiceInfo.lang }),
+        }).then(function (r) {
+            if (!r.ok) throw new Error('Gemini TTS ' + r.status);
+            return r.blob();
+        }).then(function (blob) {
+            return new Promise(function (resolve, reject) {
+                var url = URL.createObjectURL(blob);
+                var audio = new Audio(url);
+                hoerspielAudio = audio;
+                audio.onended = function () { URL.revokeObjectURL(url); hoerspielAudio = null; resolve(); };
+                audio.onerror = function () { URL.revokeObjectURL(url); hoerspielAudio = null; reject(); };
+                audio.play().catch(reject);
+            });
         });
     }
 
@@ -151,7 +133,7 @@
             if (!text || (window.INSEL_SOUND && window.INSEL_SOUND.isMuted())) { setTimeout(speakNext, 500); return; }
 
             speakCloudTTS(text, voice).catch(function () {
-                return speakBrowserTTS(text, voice.lang);
+                return speakGeminiTTS(text, voice);
             }).then(function () {
                 setTimeout(speakNext, 400);
             });
@@ -194,7 +176,7 @@
         stopHoerspiel: stopHoerspiel,
         detectVoice: detectVoice,
         speakCloudTTS: speakCloudTTS,
-        speakBrowserTTS: speakBrowserTTS,
+        speakGeminiTTS: speakGeminiTTS,
         speakLines: speakLines,
         maybeHoerspiel: maybeHoerspiel,
     };
@@ -204,7 +186,7 @@
     window.stopHoerspiel = stopHoerspiel;
     window.detectVoice = detectVoice;
     window.speakCloudTTS = speakCloudTTS;
-    window.speakBrowserTTS = speakBrowserTTS;
+    window.speakGeminiTTS = speakGeminiTTS;
     window.speakLines = speakLines;
     window.maybeHoerspiel = maybeHoerspiel;
 
