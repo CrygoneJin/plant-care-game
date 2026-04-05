@@ -2292,6 +2292,11 @@
     ]; // 16 Teilchen + Qi(Gluon) + Tao(Higgs) + Grid(Graviton) = Standardmodell komplett
     let gameWorld = localStorage.getItem('insel-game-world') || 'universe';
     let gamePhase = localStorage.getItem('insel-game-phase') || 'observer';
+    // Auto-Participant: Spieler mit Namen auf der Insel sind immer sichtbar
+    if (gamePhase === 'observer' && playerName && localStorage.getItem('insel-grid')) {
+        gamePhase = 'participant';
+        localStorage.setItem('insel-game-phase', 'participant');
+    }
 
     function checkParticleProgress() {
         const discovered = STANDARD_PARTICLES.filter(p => unlockedMaterials.has(p));

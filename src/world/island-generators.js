@@ -35,21 +35,21 @@
             }
         }
 
-        // Palmen am Strand
+        // Palmen am Strand (nur auf Sand, innerhalb Inselrand)
         const palmCount = Math.max(6, Math.floor((ROWS + COLS) * 0.3));
         let palmsPlaced = 0;
         for (let attempt = 0; attempt < 200 && palmsPlaced < palmCount; attempt++) {
-            const r = Math.floor(rng() * ROWS);
-            const c = Math.floor(rng() * COLS);
+            const r = WE + Math.floor(rng() * innerRows);
+            const c = WE + Math.floor(rng() * innerCols);
             if (grid[r][c] === 'sand') { grid[r][c] = 'palm'; palmsPlaced++; }
         }
 
-        // Bäume im Insel-Inneren
+        // Bäume im Insel-Inneren (nie im Ozean)
         const treeCount = Math.max(4, Math.floor((ROWS + COLS) * 0.2));
         let treesPlaced = 0;
         for (let attempt = 0; attempt < 200 && treesPlaced < treeCount; attempt++) {
-            const r = Math.floor(rng() * ROWS);
-            const c = Math.floor(rng() * COLS);
+            const r = WE + Math.floor(rng() * innerRows);
+            const c = WE + Math.floor(rng() * innerCols);
             const dx = (c - cx) / rx, dy = (r - cy) / ry;
             if (dx * dx + dy * dy < 0.4 && !grid[r][c]) {
                 grid[r][c] = rng() < 0.5 ? 'tree' : 'small_tree';
@@ -57,12 +57,12 @@
             }
         }
 
-        // Blumen und Pflanzen
+        // Blumen und Pflanzen (nie im Ozean)
         const floraCount = Math.max(3, Math.floor((ROWS + COLS) * 0.15));
         let floraPlaced = 0;
         for (let attempt = 0; attempt < 200 && floraPlaced < floraCount; attempt++) {
-            const r = Math.floor(rng() * ROWS);
-            const c = Math.floor(rng() * COLS);
+            const r = WE + Math.floor(rng() * innerRows);
+            const c = WE + Math.floor(rng() * innerCols);
             const dx = (c - cx) / rx, dy = (r - cy) / ry;
             if (dx * dx + dy * dy < 0.45 && !grid[r][c]) {
                 grid[r][c] = rng() < 0.6 ? 'flower' : 'plant';
@@ -92,7 +92,7 @@
         for (let attempt = 0; attempt < 200 && stonesPlaced < stoneCount; attempt++) {
             const r = Math.floor(stoneCy + (rng() - 0.5) * ry * 0.4);
             const c = Math.floor(cx + (rng() - 0.5) * rx * 0.5);
-            if (r >= 0 && r < ROWS && c >= 0 && c < COLS && !grid[r][c]) {
+            if (r >= WE && r < ROWS - WE && c >= WE && c < COLS - WE && !grid[r][c]) {
                 const dx = (c - cx) / rx, dy = (r - cy) / ry;
                 if (dx * dx + dy * dy < 0.35) { grid[r][c] = 'stone'; stonesPlaced++; }
             }
@@ -105,19 +105,19 @@
             for (let attempt = 0; attempt < 100 && mountainsPlaced < mountainCount; attempt++) {
                 const r = Math.floor(cy - ry * 0.2 + rng() * ry * 0.3);
                 const c = Math.floor(cx + (rng() - 0.5) * rx * 0.4);
-                if (r >= 0 && r < ROWS && c >= 0 && c < COLS && !grid[r][c]) {
+                if (r >= WE && r < ROWS - WE && c >= WE && c < COLS - WE && !grid[r][c]) {
                     grid[r][c] = 'mountain';
                     mountainsPlaced++;
                 }
             }
         }
 
-        // Dichter Wald im Zentrum
+        // Dichter Wald im Zentrum (nie im Ozean)
         const extraTrees = Math.max(4, Math.floor((ROWS + COLS) * 0.15));
         let extraPlaced = 0;
         for (let attempt = 0; attempt < 300 && extraPlaced < extraTrees; attempt++) {
-            const r = Math.floor(rng() * ROWS);
-            const c = Math.floor(rng() * COLS);
+            const r = WE + Math.floor(rng() * innerRows);
+            const c = WE + Math.floor(rng() * innerCols);
             const dx = (c - cx) / rx, dy = (r - cy) / ry;
             if (dx * dx + dy * dy < 0.3 && !grid[r][c]) {
                 grid[r][c] = rng() < 0.3 ? 'tree' : rng() < 0.6 ? 'small_tree' : 'plant';
