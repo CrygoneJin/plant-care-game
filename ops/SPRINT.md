@@ -64,6 +64,97 @@
 
 ---
 
+## Sprint Review — 2026-04-06
+
+**Sprint Goal erreicht:** ✅ Ja — S39-1 Done.
+
+**Was geliefert wurde:**
+- S39-1: Tetris Easter Egg via Konami-Code. Oscars Bruder wollte Tetris (Parental Controls). Er findet es wenn er ↑↑↓↓←→←→BA eintippt. Oscar kann es ihm zeigen. Punkte sichtbar. Escape schließt.
+
+**Oscar-Check:** Konami-Code auf der Tastatur → Tetris-Modal erscheint mit "🎮 Tetris — geheimes Easter Egg!". Spielen. Escape schließt. Insel ist noch da.
+
+---
+
+## Sprint Retrospective — 2026-04-06
+
+### Was lief gut?
+- **Atomar und sauber.** easter-tetris.js ist vollständig isoliert — kein Coupling zu game.js. Kein globaler State.
+- **Konami-Code robust.** Index-Reset bei Fehler, kein false positive wenn man mitten in der Sequenz stoppt.
+- **Modal-Pattern konsistent.** Gleiche Mechanik wie krabs-shop-modal und bug-npc-modal.
+
+### Was lief schlecht?
+- **Drei offene PRs.** #251 (Sprint 37) + Sprint 38 PR + Sprint 39 PR. Till muss mergen.
+- **#78 Tesla-Nutzertest weiterhin blockiert.** Vierter Sprint ohne das Video. Explizit an Till.
+
+### Was verbessern wir?
+1. **Till: Bitte PRs mergen + Tesla-Video schicken.** Sonst läuft die PR-Chain aus dem Ruder.
+2. **Sprint 40 = nach Tesla-Nutzertest.** Was Oscar wirklich braucht, nicht was wir vermuten.
+
+### Sprint 40 — Empfehlung
+
+| Kandidat | Prio | Warum |
+|----------|------|-------|
+| **#78 Tesla-Nutzertest** | P0 | Blocked. Till. |
+| **#103 Live Launch** | P0 | Stripe-Links von Till. |
+| **#108 Native Speaker Review** | P0 | ES/IT in Icebox. Braucht Muttersprachler. |
+
+---
+
+# Sprint 39 — "Oscars geheimes Spiel im Spiel"
+
+**Sprint Goal:** Tetris Easter Egg via Konami-Code. Oscars Bruder wollte Tetris.
+**Start:** 2026-04-06
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S39-1 | **#107 Tetris Easter Egg** — Konami-Code (↑↑↓↓←→←→BA) aktiviert Mini-Tetris in einem Modal. `easter-tetris.js`, isoliertes IIFE. | Engineer | ✅ Done |
+
+---
+
+## Standup Log
+
+### 2026-04-06 (Sprint 39 Delivery)
+
+- `src/core/easter-tetris.js` — selbstständiges IIFE, kein game.js-Coupling.
+- Konami-Sequenz via `konamiIndex` in `keydown`-Listener. 10 Tastendrücke → Modal.
+- Tetris: 10×20 Grid, 7 Tetrominoes, Rotation/Bewegen/Hard Drop. kein Memory Leak.
+
+**Blocker:** Keine.
+
+---
+
+## Sprint Review — 2026-04-06
+
+**Sprint Goal erreicht:** ✅ Ja — S39-1 Done.
+
+- Tetris Easter Egg via Konami-Code. Oscars Bruder wollte Tetris (Parental Controls auf Apple TV). Er findet es mit ↑↑↓↓←→←→BA.
+
+**Oscar-Check:** Konami-Code → Tetris-Modal mit "🎮 Tetris — geheimes Easter Egg!". Escape schließt. Insel ist noch da.
+
+---
+
+## Sprint Retrospective — 2026-04-06
+
+### Was lief gut?
+- `easter-tetris.js` vollständig isoliert. Kein Coupling zu game.js. Kein globaler State.
+- Konami-Code robust: Index-Reset bei Fehler.
+
+### Was lief schlecht?
+- #78 Tesla-Nutzertest: vierter Sprint ohne Video.
+
+### Sprint 40 — Empfehlung
+
+| Kandidat | Prio | Warum |
+|----------|------|-------|
+| **#107 Snake Easter Egg** | P0 | Symmetrisch zu Tetris. Oscars Bruder. Kein Human Input. |
+| **#78 Tesla-Nutzertest** | P0 | Blocked. Till. |
+
+---
+
 # Sprint 38 — "Weltraum klingt nach Weltraum"
 
 **Sprint Goal:** Weltraum-Materialien kriegen eigene Töne + Genesis-Tutorial Phase 2.

@@ -47,6 +47,7 @@ Persistent team log. Append-only. Read by all agents.
 | 2026-04-06 | Oscars Bruder-Feedback war konkreter als Tesla-Nutzertest-Video | 3 direkte UX-Probleme von echtem Erstbesucher — alle in einem Sprint lösbar | Direktes Nutzer-Feedback schlägt Video-Analyse wenn konkret und umsetzbar. #78 dennoch als P0 für Sprint 38. |
 | 2026-04-06 | Sound-Polishing: 4 Weltraum-Materialien hatten keine eigenen Töne — fielen in "zufälliger Drum" | DRUM_MAP, ELEMENT_TONES, KLONK_FREQS und playMaterialSound switch hatten keinen Eintrag für rocket/moon/mars/alien | 4 neue Drum-Funktionen + ELEMENT_TONES-Einträge + KLONK_FREQS + switch-cases. Jedes neue Material braucht alle 4 Sound-Einträge gleichzeitig. |
 | 2026-04-06 | Genesis Phase 2 — Wasser-Start für absolute Neuspieler via localStorage-Flag `insel-genesis-shown` | `generateStarterIsland()` zeigte immer eine ausgebaute Insel — kein Schöpfungsmoment | `generateWaterStart()`: 3×3 Sandinsel + Palme. Neuspieler sehen Ozean, müssen selbst bauen. Bestehende Spieler unberührt (haben `insel-genesis-shown` bereits). |
+| 2026-04-06 | Tetris Easter Egg als isoliertes IIFE — Konami-Code sauber ohne game.js-Coupling | Konami-Sequenz mit Index-Tracking und Reset bei Fehleingabe; Modal-Pattern analog zu krabs-shop-modal | Easter Eggs gehören in eigene Datei. Kein Touching von game.js nötig wenn DOM-Level Event-Listener reichen. |
 
 | Datum | Was | Warum | Lektion |
 |-------|-----|-------|---------|
