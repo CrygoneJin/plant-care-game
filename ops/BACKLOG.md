@@ -15,10 +15,10 @@ Alles was nicht in eine dieser Kategorien fällt → `ARCHIVE.md`.
 | 78 | **Tesla-Nutzertest auswerten** — 1h Video von Oscar im Tesla. Echte Nutzerdaten. Da ist Gold drin. | Scientist + Leader | 🔲 Offen |
 | 27 | **Cloudflare Worker CORS** — User muss worker.js im Dashboard deployen | User | 🔲 Human Input |
 | 92 | **Requesty Key rotieren** — Alter Key im Git-Verlauf. Sicherheitsrisiko. | Engineer | 🔲 Human Input |
-| 104 | **Onboarding "Wo spielen?"** — Neuer User versteht nicht was zu tun ist. Erster Satz muss zeigen wo die Insel ist + was man macht. Oscars Bruder: Erstbesuch, kein Einstieg gefunden. | Designer + Artist | 🔲 Offen |
-| 105 | **Long-Press = Fill, Mausrad = Tool-Wechsel** — Oscars Bruder-Feedback: Fill versteckt, Tool-Wechsel unklar. Long-press auf Canvas = Füllen. Mausrad = nächstes Material. | Engineer | 🔲 Offen |
-| 106 | **Palette-Duplikat entfernen** — Element links in Palette + nochmal rechts mit Counter = redundant. Nur Counter + Element links. | Designer | 🔲 Offen |
-| 107 | **Tetris + Snake als Easter Egg** — Oscars Bruder hat Tetris auf Apple TV entdeckt, konnte es nicht kaufen (Parental Controls). Zwei klassische Spiele als verstecktes Easter Egg (Konami-Code o.ä.). | Engineer | 🔲 Offen |
+| 104 | **Onboarding "Wo spielen?"** — Neuer User versteht nicht was zu tun ist. Erster Satz muss zeigen wo die Insel ist + was man macht. Oscars Bruder: Erstbesuch, kein Einstieg gefunden. | Designer + Artist | ✅ Done (S37-1, PR #251) |
+| 105 | **Long-Press = Fill, Mausrad = Tool-Wechsel** — Oscars Bruder-Feedback: Fill versteckt, Tool-Wechsel unklar. Long-press auf Canvas = Füllen. Mausrad = nächstes Material. | Engineer | ✅ Done (S37-2, PR #251) |
+| 106 | **Palette-Duplikat entfernen** — Inventar-Anzahl als Badge auf Palette-Buttons. | Designer | ✅ Done (S37-3, PR #251) |
+| 107 | **Tetris + Snake als Easter Egg** — Oscars Bruder hat Tetris auf Apple TV entdeckt, konnte es nicht kaufen (Parental Controls). Zwei klassische Spiele als verstecktes Easter Egg (Konami-Code o.ä.). | Engineer | ✅ Done (S39+S40, PR #253+#254) |
 
 | 108 | **Native Speaker Review FR/ES/IT** — Alle nicht-DE/EN Strings von Muttersprachlern prüfen lassen. Risiko: falsche Grammatik (gefunden: IT Plural "missionei"). | Artist | 🔲 Human Input |
 
@@ -43,7 +43,7 @@ Alles was nicht in eine dieser Kategorien fällt → `ARCHIVE.md`.
 | 17 | **Eltern-Dashboard** — Bernd zeigt Spielstatistiken für Eltern | Engineer | ✅ Done (📊-Button + Bernd-NPC-Klick + Schatzkarte 🗺️) | Mama sieht was Oscar gebaut hat. |
 | 33 | **Header-Title "Schatzinsel"** | Designer | ✅ Done (h1 + title-Tag existieren) | Kosmetik. 5 Minuten. |
 | 34 | **NPCs in User-Sprache** — Eingabe Englisch → Antwort Englisch | Scientist | ✅ Done (S30-2, PR #243) | Oscars englischsprachige Freunde können mitspielen. |
-| 37 | **Schöpfungsgeschichte als Tutorial** — 7 Level, Insel beginnt als Wasser | Leader | 🔄 Phase 1 Done (S31-2: Genesis-Toasts beim Ankommen) | Oscar erlebt wie seine Insel entsteht. |
+| 37 | **Schöpfungsgeschichte als Tutorial** — 7 Level, Insel beginnt als Wasser | Leader | ✅ Done (S31-2 Phase 1 + S38-3 Phase 2: Wasser-Start + 7 Genesis-Stufen, PR #252) | Oscar erlebt wie seine Insel entsteht. |
 | 42 | **Werkbank als Canvas-Drag** — Infinite Craft Pattern | Engineer | ✅ Done (Palette→Canvas drag + Inventar drag-drop existieren) | Oscar zieht Feuer auf Wasser statt Modal. |
 | 62 | **Mehrsprachige NPCs** | Scientist | ✅ Done (S30-2 + S32-3: 5 Sprachen DE/EN/FR/ES/IT + englische NPC-Greetings) | Spielplatz-Phase mit nicht-deutschen Kindern. |
 | 18 | **Musik on demand** | Artist + Engineer | ✅ Done (genre-btn + setGenre() existieren) | Oscar wählt seinen Soundtrack. |
