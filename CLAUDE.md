@@ -83,6 +83,9 @@ Ordnerstruktur: 1·3·5·10000 + Isidor-Modell.
 - `docs/` = Dokumentation, Essays, Padawans, Stories
 - `ops/` = Operations, Backlog, Sprint, Tests, Scripts
 
+**Ordner-Regel:** Max 5 Unterordner pro Ordner. Einer davon ist **immer** `archive/`.
+Kein Ordner ohne `archive/`. Nie mehr als 4 aktive + 1 `archive/`.
+
 If none of these files exist, ask the user:
 > "Can you give me a one-line description of this project and who the primary
 > user is? I'll work from that until the docs are in place."
