@@ -39,6 +39,21 @@
 
 ## Standup Log
 
+### 2026-04-06 — Daily Scrum (Session 2)
+
+**Status:** Unverändert blocked. 7 PRs (#251–#257) warten auf Till.
+
+**Smoke Tests:** Container-Proxy blockiert externe Verbindungen (bekanntes Muster). Kein echter Ausfall.
+
+**Keine autonome Arbeit möglich.** Nächste Aktion liegt bei Till:
+1. PR #257 in main mergen (CI-Fix, unabhängig — sofort möglich)
+2. PR #251 in main mergen (Sprint 37 — Onboarding + Long-Press + Palette)
+3. Dann #252 → #253 → #254 → #255 → #256 in Reihenfolge
+
+Oscar sieht heute nichts Neues. Oscar sieht nach #251: neues Onboarding, Long-Press-Fill, Tetris, Snake.
+
+---
+
 ### 2026-04-06 — Sprint 44 Planning
 
 **Kontext:** Sprints 37–43 vollständig implementiert (7 offene PRs). Sprint 43 Retro war klar:
