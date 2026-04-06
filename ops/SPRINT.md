@@ -1,3 +1,47 @@
+# Sprint 44 — Blocked: Warten auf Till
+
+**Sprint Goal:** PR-Chain mergen → Oscar sieht Tetris, Snake, neue Töne, neues Onboarding.
+**Start:** 2026-04-06
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner | Status |
+|---|------|-------|--------|
+| S44-1 | **#78 Tesla-Nutzertest auswerten** — Oscar-Video analysieren | Scientist + Leader | 🔲 Blocked (Till schickt Video) |
+| S44-2 | **#103 Stripe Production Links** — Donation-Button live schalten | Engineer | 🔲 Blocked (Till trägt Links ein) |
+| S44-3 | **#108 Native Speaker Review FR/ES/IT** — Strings prüfen | Artist | 🔲 Blocked (Muttersprachler nötig) |
+
+---
+
+## Standup Log
+
+### 2026-04-06 — Daily Scrum
+
+**Status:** Alle autonomen P0/P1-Items fertig (Sprints 37–43). PR-Chain offen.
+
+**Was fertig ist (wartet auf Till):**
+| PR | Inhalt | Status |
+|----|--------|--------|
+| **#251** | S37: Onboarding-Toast + Long-Press = Fill + Palette-Counter-Badge | ✅ Offen → main |
+| #252 | S38: Weltraum-Töne (Rakete/Mond/Mars/Alien) + Genesis Phase 2 (7 Stufen) | ✅ Offen → feat/sprint-37 |
+| #253 | S39: Tetris Easter Egg via Konami-Code | ✅ Offen → feat/sprint-38 |
+| #254 | S40: Snake Easter Egg ("snake" tippen) | ✅ Offen → feat/sprint-39 |
+| #255 | S41: Blocked-Sprint Docs | ✅ Offen → feat/sprint-40 |
+| #256 | S42: Playwright E2E Critical Path Tests | ✅ Offen → feat/sprint-41 |
+| #257 | S43: CI für alle PRs + Backlog auf Stand | ✅ Offen → main |
+
+**Till muss tun:**
+1. **PR #251 mergen** (feat/sprint-37 → main) ← entsperrt alles
+2. Dann #252 → #253 → #254 → #255 → #256 in Reihenfolge
+3. PR #257 kann unabhängig jederzeit gemergt werden (CI-Fix)
+4. Optional: Tesla-Video schicken → #78 auswertbar
+
+**Blocker:** Alle 3 Sprint-Items = Human Input. Kein autonomer Fortschritt möglich.
+
+---
+
 # Sprint 36 — "Oscar baut Brücken"
 
 **Sprint Goal:** #62 abschließen (FR/ES/IT NPC-Gedächtnis) + Weltraum-Quests + Archipel-Abschluss.
