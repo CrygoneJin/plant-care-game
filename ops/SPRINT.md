@@ -39,6 +39,16 @@
 
 ## Standup Log
 
+### 2026-04-07 — Daily Scrum (Session 21)
+
+**Status:** Blocked. PRs (#251–#257) warten auf Till. Stand unverändert seit Session 20 — kein Merge festgestellt.
+
+**Smoke Tests:** Container-Proxy blockiert externe Verbindungen — kein App-Fehler, bekanntes Sandbox-Muster.
+
+**Keine autonome Arbeit möglich.** Till: #257 ist unabhängig und sofort in main mergbar. Dann #251 → #252 → #253 → #254 → #255 → #256. Oscar sieht Tetris, Snake, Weltraum-Töne und das neue Onboarding — sobald du #251 mergst.
+
+---
+
 ### 2026-04-07 — Daily Scrum (Session 20)
 
 **Status:** Blocked. PRs (#251–#257) warten auf Till. Stand unverändert seit Session 19 — kein Merge festgestellt.
