@@ -17,6 +17,32 @@
 
 ## Standup Log
 
+### 2026-04-07 — Session-Start: Warten auf Till
+
+**Status:** 8 offene PRs. Alles fertig. Kein neues Coding.
+
+| PR | Inhalt | Merge-Ziel |
+|----|--------|------------|
+| **#251** | Sprint 37 — Onboarding + Long-Press + Palette-Counter | → **main** (zuerst!) |
+| #252 | Sprint 38 — Weltraum-Töne + Genesis Phase 2 | → feat/sprint-37 |
+| #253 | Sprint 39 — Tetris Easter Egg (Konami-Code) | → feat/sprint-38 |
+| #254 | Sprint 40 — Snake Easter Egg ("snake" tippen) | → feat/sprint-39 |
+| #255 | Sprint 41 — Blocked-Sprint Docs | → feat/sprint-40 |
+| #256 | Sprint 42 — Playwright E2E Critical Path | → feat/sprint-41 |
+| **#257** | Sprint 43 — CI für alle PRs + Backlog aktuell | → **main** (unabhängig) |
+| #258 | Sprint 44 — Planning-Docs (Blocked) | → main |
+
+**Till: Eine Aktion entsperrt alles.**
+1. PR #257 mergen (CI-Fix, unabhängig von der Chain)
+2. PR #251 mergen (Sprint 37 → main)
+3. Danach #252 → #253 → #254 → #255 → #256 in Reihenfolge
+
+Oscar sieht dann: neues Onboarding, Weltraum-Töne, Tetris, Snake.
+
+**Nächste autonome Arbeit:** Tesla-Nutzertest #78 — sobald Till das Video schickt.
+
+---
+
 ### 2026-04-06 — Nacht-Session-Merge ✅
 
 **Kontext:** Till hat während der Nacht geschlafen. Nacht-Session (2026-04-05 nach 22 Uhr) hat Sprints 34+35+36 vollständig implementiert. PRs #247 und #248 wurden in feat/sprint-34-Branch gemergt aber nicht in main. Heute morgen: PR #250 (feat/sprint-34 → main) erstellt und gemergt.
