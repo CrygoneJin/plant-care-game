@@ -39,6 +39,18 @@
 
 ## Standup Log
 
+### 2026-04-07 — Daily Scrum (Session 26)
+
+**Status:** Blocked. PRs (#251–#257) warten auf Till.
+
+**Merge-Versuch #257:** GitHub meldet "not mergeable" — wahrscheinlich Merge-Konflikt nach Commit `1705254` (MEMORY-Update) auf main. #257 braucht Rebase bevor es gemergt werden kann.
+
+**Smoke Tests:** Container-Proxy blockiert externe Verbindungen — kein App-Fehler, bekanntes Sandbox-Muster.
+
+**Keine autonome Arbeit möglich.** Till: #257 muss erst rebased werden (oder du mergst direkt via GitHub-UI mit "Update branch"). Dann #251 → #252 → #253 → #254 → #255 → #256.
+
+---
+
 ### 2026-04-07 — Daily Scrum (Session 25)
 
 **Status:** Blocked. PRs (#251–#257) warten auf Till. Stand unverändert seit Session 24 — kein Merge festgestellt.
