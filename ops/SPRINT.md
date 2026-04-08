@@ -17,6 +17,28 @@
 
 ## Standup Log
 
+### 2026-04-08 — Daily Scrum
+
+**Status:** Tag 3. Unverändert. 9 offene PRs (#251–#259). Kein neues Coding, kein Merge von Till.
+
+**PR-Chain — Till: Eine Aktion entsperrt alles:**
+
+| PR | Inhalt | Merge-Ziel |
+|----|--------|------------|
+| **#257** | Sprint 43 — CI für alle PRs + Backlog aktuell | → **main** (unabhängig, sofort) |
+| **#251** | Sprint 37 — Onboarding + Long-Press + Palette-Counter | → **main** (danach zuerst) |
+| #252 | Sprint 38 — Weltraum-Töne + Genesis Phase 2 | → feat/sprint-37 |
+| #253 | Sprint 39 — Tetris Easter Egg (Konami-Code) | → feat/sprint-38 |
+| #254 | Sprint 40 — Snake Easter Egg ("snake" tippen) | → feat/sprint-39 |
+| #255 | Sprint 41 — Blocked-Sprint Docs | → feat/sprint-40 |
+| #256 | Sprint 42 — Playwright E2E Tests | → feat/sprint-41 |
+
+**Oscar sieht nach dem Merge:** neues Onboarding, Weltraum-Töne, Tetris, Snake.
+
+**Nächste autonome Arbeit:** Tesla-Nutzertest #78 — sobald Till Video schickt.
+
+---
+
 ### 2026-04-07 — Daily Scrum
 
 **Status:** Unverändert. 8 offene PRs. Alles fertig. Kein neues Coding.
