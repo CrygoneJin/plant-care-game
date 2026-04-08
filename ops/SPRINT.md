@@ -39,6 +39,18 @@
 
 ## Standup Log
 
+### 2026-04-08 — Daily Scrum (Session 33)
+
+**Status:** Blocked. PRs (#251–#259) warten auf Till. Unverändert seit Session 32.
+
+**Smoke Tests:** Container-Proxy blockiert externe Verbindungen — kein App-Fehler, bekanntes Sandbox-Muster.
+
+**GitHub-Check:** 9 offene PRs (#251–#259) unverändert. Kein Merge durch Till seit Session 32.
+
+**Keine autonome Arbeit möglich.** Till: #257 sofort mergbar (unabhängig), dann #251 → Rest der Chain.
+
+---
+
 ### 2026-04-08 — Daily Scrum (Session 32)
 
 **Status:** Blocked. PRs (#251–#259) warten auf Till. Unverändert seit Session 31.
