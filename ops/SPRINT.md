@@ -15,6 +15,55 @@
 
 ---
 
+---
+
+## Sprint Review — 2026-04-08
+
+**Sprint Goal erreicht:** ❌ Nein — alle 3 Items von Anfang an blocked.
+
+| Item | Status | Grund |
+|------|--------|-------|
+| S44-1 #78 Tesla-Nutzertest | 🔲 Blocked | Till schickt Oscar-Video nicht |
+| S44-2 #103 Stripe Links | 🔲 Blocked | Till trägt Production-Links nicht ein |
+| S44-3 #92 Requesty Key | 🔲 Blocked | Till rotiert Key nicht |
+
+**Was tatsächlich getan wurde:** 3 Daily Standups dokumentiert. PR-Chain erklärt und priorisiert.
+
+**Was auf Till wartet (PR-Chain — Reihenfolge zwingend):**
+
+| PR | Inhalt | Merge-Ziel |
+|----|--------|------------|
+| **#257** | Sprint 43 — CI für alle PRs + Backlog aktuell | → **main** (unabhängig, sofort) |
+| **#251** | Sprint 37 — Onboarding + Long-Press + Palette-Counter | → **main** (danach zuerst) |
+| #252 | Sprint 38 — Weltraum-Töne + Genesis Phase 2 | → feat/sprint-37 |
+| #253 | Sprint 39 — Tetris Easter Egg (Konami-Code) | → feat/sprint-38 |
+| #254 | Sprint 40 — Snake Easter Egg ("snake" tippen) | → feat/sprint-39 |
+| #255 | Sprint 41 — Blocked-Sprint Docs | → feat/sprint-40 |
+| #256 | Sprint 42 — Playwright E2E Tests | → feat/sprint-41 |
+
+**Oscar-Check:** Oscar sieht noch immer Stand Sprint 36. Tetris, Snake, Weltraum-Töne, neues Onboarding — alles fertig, nichts sichtbar. Wartet auf Merge.
+
+---
+
+## Sprint Retrospective — 2026-04-08
+
+### Was lief gut?
+- **7 Sprints (37–43) autonom in 1–2 Tagen implementiert.** Ohne Human Input. Alle PRs Ready.
+- **Sprint 43 CI-Fix** ist das wichtigste unsichtbare Feature — ab jetzt laufen Tests auf allen PRs.
+- **Klare PR-Chain dokumentiert.** Till hat eine einzige Anweisung: #257 mergen, dann #251, dann der Rest.
+
+### Was lief schlecht?
+- **Backlog läuft leer.** Alle autonomen P0/P1 Items erledigt. Keine neuen implementierbaren Items ohne Human Input.
+- **PR-Stau: 9 offene PRs.** Till merged nicht → Oscar sieht nichts → Oscar demotiviert.
+- **Sprint 44 war Idle-Sprint.** 3 Daily Standups ohne Fortschritt. Reine Verwaltung.
+
+### Was verbessern wir?
+1. **Till ansprechen: Eine Stunde, eine Aktion.** PR #257 mergen (unabhängig, keine Reihenfolge) — dann #251 — dann 5 weitere in Folge. Das ist 1 Stunde Arbeit für 2 Wochen Oscars Freude.
+2. **Sprint 45 = Retro-Sprint.** Wenn keine implementierbaren Items: Ehrlich stoppen, nicht erfinden. Kein Gold-Plating.
+3. **#78 Tesla-Nutzertest aktiv einfordern.** Nicht passiv warten. Till fragen ob Oscar-Video-Session geplant werden kann.
+
+---
+
 ## Standup Log
 
 ### 2026-04-08 — Daily Scrum
