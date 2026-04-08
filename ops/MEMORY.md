@@ -6,6 +6,7 @@ Persistent team log. Append-only. Read by all agents.
 
 ## Learnings
 
+| 2026-04-08 | Blocked-Sprint-Feedback-Loop | 38 Sessions an einem Tag haben alle "blocked, warten auf Till" geschrieben. SPRINT.md = 1800 Zeilen, kein Mehrwert. Regel: Nach Sprint Review mit allen Items Human Input → **kein neuer Sprint**. Session endet mit klarer Meldung an Till. |
 | 2026-04-05 | NTP-Fetch im `beforeunload`-Handler funktioniert nicht zuverlässig | `beforeunload` gibt kein Promise-Warten — NTP-Fetch muss bei Session-Start passieren, nicht beim Ende. Ende nimmt `Date.now()` als approximativen Endpunkt (Drift <2s akzeptabel). |
 | 2026-04-05 | Token-Schätzung ohne API-Zugang | Client hat keinen Zugriff auf echte Usage-Daten außer wenn der Provider `data.usage` mitschickt. Schätzung via Zeichenlänge ÷ 3.5 ist reproduzierbar und ehrlich markiert ("~"). Requesty liefert `completion_tokens` — wenn vorhanden, für NPC-Budget weiter verwenden. |
 

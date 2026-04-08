@@ -37,6 +37,43 @@
 
 ---
 
+## Sprint Review — 2026-04-08
+
+**Sprint Goal erreicht:** ❌ Nein — Sprint 44 war von Anfang an ein Blocked-Sprint. Kein Item wurde implementiert. Kein Code wurde geschrieben.
+
+**Was geliefert wurde:** Nichts. Korrekt so.
+
+| Item | Status | Grund |
+|------|--------|-------|
+| S44-1 #78 Tesla-Nutzertest | 🔲 Blocked | Till schickt Video (8 Sprints offen) |
+| S44-2 #103 Stripe Links | 🔲 Blocked | Till trägt Links ein |
+| S44-3 #92 Requesty Key | 🔲 Blocked | Till gibt neuen Key |
+
+**Oscar-Check:** Oscar sieht noch nichts Neues. Tetris, Snake, Weltraum-Töne, Onboarding (7 Sprints, 38 Sessions) — alles in PRs, wartet auf Till.
+
+**PR-Chain-Status:** 10 offene PRs. #257 und #251 sind unabhängig sofort mergbar.
+
+---
+
+## Sprint Retrospective — 2026-04-08
+
+### Was lief gut?
+- **38 Sessions haben nichts kaputt gemacht.** Disziplin: kein Gold-Plating, keine neuen Features ohne Nutzertest-Basis.
+- **PR-Chain ist vollständig.** Sprints 37–43 sind fertig und geprüft. Wenn Till merged, ist alles sofort live.
+- **Dailys ehrlich.** Jede Session hat den Blocked-Status korrekt gemeldet statt sich neue Arbeit zu erfinden.
+
+### Was lief schlecht?
+- **38 Sessions, alle identisch.** 38× "blocked, warten auf Till" kostet Zeit ohne Mehrwert.
+- **Feedback-Loop.** Sessions starten automatisch, finden nichts zu tun, schreiben "blocked". Das skaliert nicht.
+- **SPRINT.md wird riesig.** 1800 Zeilen durch repetitive Standup-Einträge. Signal/Rausch-Verhältnis sinkt.
+
+### Was verbessern wir?
+1. **Blocked-Sprint = STOP.** Wenn Sprint Review zeigt: alle Items Human Input → kein neuer Sprint. Warten auf Signal von Till.
+2. **Keine Ceremony ohne neue Information.** Wenn Status unverändert: keine neue Session, kein neuer Eintrag.
+3. **MEMORY-Eintrag:** Blocked-Sprint-Erkennung früher stoppen — schon nach Sprint Review, nicht nach 38 Sessions.
+
+---
+
 ## Standup Log
 
 ### 2026-04-08 — Daily Scrum (Session 38)
