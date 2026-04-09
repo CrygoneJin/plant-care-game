@@ -3588,6 +3588,7 @@
             current++;
             if (current >= steps.length) {
                 overlay.style.display = 'none';
+                showOnboardingHints();
                 return;
             }
             showStep(current);
@@ -3602,7 +3603,14 @@
             overlay.removeEventListener('click', onTap);
             current = steps.length; // direkt beenden
             overlay.style.display = 'none';
+            showOnboardingHints();
         }, { once: true });
+    }
+
+    // #104 Onboarding-Hints: nur für Erstbesucher, nach Tutorial
+    function showOnboardingHints() {
+        setTimeout(() => showToast('👆 Tippe auf die Insel zum Bauen.', 3500), 400);
+        setTimeout(() => showToast('🤚 Gedrückt halten zum Füllen.', 3500), 4200);
     }
 
     // === EVENT LISTENERS ===
@@ -3765,47 +3773,12 @@
         });
     });
 
-    // --- Zuletzt benutzt: die 5 meistgenutzten Materialien oben ---
+    // Materialnutzung tracken — für NPC-Gedächtnis (flushNpcSessionMemory)
     let materialUsage = JSON.parse(localStorage.getItem('insel-mat-usage') || '{}');
 
     function trackMaterialUsage(mat) {
         materialUsage[mat] = (materialUsage[mat] || 0) + 1;
         localStorage.setItem('insel-mat-usage', JSON.stringify(materialUsage));
-        updateRecentBar();
-    }
-
-    function updateRecentBar() {
-        const bar = document.getElementById('recent-materials');
-        if (!bar) return;
-
-        // Top 5 nach Nutzung, nur freigeschaltete, keine Basis-Elemente (die sind eh da)
-        const sorted = Object.entries(materialUsage)
-            .filter(([mat]) => !BASE_MATERIALS.includes(mat) && MATERIALS[mat] && unlockedMaterials.has(mat))
-            .sort((a, b) => b[1] - a[1])
-            .slice(0, 5);
-
-        if (sorted.length === 0) {
-            bar.style.display = 'none';
-            return;
-        }
-
-        bar.style.display = '';
-        // Label behalten, Buttons neu bauen
-        bar.title = 'Zuletzt benutzt';
-        bar.innerHTML = '' +
-            sorted.map(([mat]) => {
-                const info = MATERIALS[mat];
-                return `<button class="material-btn recent-btn" data-material="${mat}" title="${info.label}">
-                    <span class="mat-emoji">${info.emoji}</span>
-                </button>`;
-            }).join('');
-
-        // Click-Handler für die neuen Buttons
-        bar.querySelectorAll('.material-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                selectMaterial(btn.dataset.material);
-            });
-        });
     }
 
     function updateDiscoveryCounter() {
@@ -3900,8 +3873,36 @@
         });
     });
 
-    // Beim Start die Leiste füllen
-    updateRecentBar();
+    // #105 Long-Press-Timer (Maus + Touch)
+    let _longPressTimer = null;
+    function _startLongPress(cell) {
+        _cancelLongPress();
+        if (!cell) return;
+        _longPressTimer = setTimeout(() => {
+            _longPressTimer = null;
+            if (!isMouseDown) return;
+            const prevTool = currentTool;
+            currentTool = 'fill';
+            applyTool(cell.r, cell.c);
+            currentTool = prevTool;
+            showToast('🪣 Gefüllt!', 1500);
+        }, 300);
+    }
+    function _cancelLongPress() {
+        if (_longPressTimer) { clearTimeout(_longPressTimer); _longPressTimer = null; }
+    }
+
+    // #105 Mausrad = nächstes Material
+    canvas.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const btns = [...document.querySelectorAll('#palette .material-btn')]
+            .filter(b => !b.classList.contains('craft-locked') && b.style.display !== 'none' && b.dataset.material);
+        if (btns.length < 2) return;
+        const mats = btns.map(b => b.dataset.material);
+        const idx = mats.indexOf(currentMaterial);
+        const next = (idx + (e.deltaY > 0 ? 1 : -1) + mats.length) % mats.length;
+        selectMaterial(mats[next]);
+    }, { passive: false });
 
     // Canvas Maus-Events (nur Maus — Touch läuft über touchstart unten)
     canvas.addEventListener('pointerdown', (e) => {
@@ -3931,6 +3932,7 @@
                 openDungeon(); isMouseDown = false; return;
             }
             applyTool(cell.r, cell.c);
+            _startLongPress(cell);
         }
     });
 
@@ -3945,11 +3947,13 @@
 
     canvas.addEventListener('pointerup', (e) => {
         if (e.pointerType !== 'mouse') return;
+        _cancelLongPress();
         isMouseDown = false;
     });
 
     canvas.addEventListener('pointerleave', (e) => {
         if (e.pointerType !== 'mouse') return;
+        _cancelLongPress();
         isMouseDown = false;
         hoverCell = null;
         requestRedraw();
@@ -3987,6 +3991,7 @@
         isMouseDown = true;
         touchWasPainting = true;
         applyTool(cell.r, cell.c);
+        _startLongPress(cell);
     });
 
     canvas.addEventListener('touchmove', (e) => {
@@ -4013,6 +4018,7 @@
     });
 
     canvas.addEventListener('touchend', () => {
+        _cancelLongPress();
         // Swipe → Code-Layer wechseln (nur wenn nicht gemalt und nicht Figur gezogen)
         if (!touchWasPainting && !playerDragging) {
             const dx = touchEndX - touchStartX;

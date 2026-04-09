@@ -64,6 +64,36 @@
 
 ---
 
+# Sprint 37 — "Oscar findet sich zurecht"
+
+**Sprint Goal:** Onboarding verbessern (#104) + Touch/Maus-UX (#105) + Palette aufräumen (#106). Oscars Bruder kann jetzt reinkommen.
+**Start:** 2026-04-06
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S37-1 | **#104 Onboarding "Wo spielen?"** — Erster Satz zeigt wo die Insel ist + was man macht. Toast beim allerersten Besuch (kein `schatzinsel-visited` Flag). Zwei Sätze max: "Tippe auf die Insel zum Bauen. Halte gedrückt zum Füllen." | Designer + Artist | ✅ Done |
+| S37-2 | **#105 Long-Press = Fill, Mausrad = Tool-Wechsel** — `pointerdown` + 300ms Timer → `fill`-Modus. Mausrad `wheel`-Event → nächstes Material in Palette. Oscars Bruder findet Fill ohne Menü. | Engineer | ✅ Done |
+| S37-3 | **#106 Palette-Duplikat entfernen** — `recent-materials`-Bar entfernt. Material erscheint nur einmal in der Palette. `trackMaterialUsage` bleibt für NPC-Gedächtnis. | Designer | ✅ Done |
+
+---
+
+## Standup Log
+
+### 2026-04-06 — Sprint Planning
+
+**Sprint 36 Retro → Sprint 37 Planning:**
+- Sprint 36 vollständig ✅ (FR/ES/IT, Weltraum-Quests, Archipel-Toast)
+- #78 Tesla-Nutzertest braucht menschliches Video-Watching — bleibt bei Till
+- Sprint 37 Fokus: UX-Polishing aus Oscars-Bruder-Feedback (Items #104, #105, #106)
+
+**Blocker:** Keine.
+
+---
+
 # Sprint 36 — "Oscar baut Brücken"
 
 **Sprint Goal:** #62 abschließen (FR/ES/IT NPC-Gedächtnis) + Weltraum-Quests + Archipel-Abschluss.
