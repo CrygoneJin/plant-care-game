@@ -1,3 +1,69 @@
+# Sprint 43 — "CI für alle"
+
+**Sprint Goal:** GitHub Actions check-Job auf alle PRs ausweiten — nicht nur main-PRs. PR-Chain #251-#256 bekommt CI-Schutz. Backlog auf Stand der Sprints 37-42 gebracht.
+**Start:** 2026-04-06
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S43-1 | **#103 CI-Check für alle PRs** — `deploy.yml` `pull_request`-Trigger ohne `branches: [main]`-Filter. Check-Job läuft bei jedem PR, egal ob Ziel main oder Feature-Branch. Deploy-Jobs bleiben auf main beschränkt. | Engineer | ✅ Done |
+| S43-2 | **BACKLOG.md auf Stand** — #104 ✅ (S37), #105 ✅ (S37), #106 ✅ (S37), #107 ✅ (S39+S40), #37 Phase 2 ✅ (S38) nachtragen. Sprints 37-42 sind fertig aber nicht gemergt — Backlog reflektiert das jetzt. | Engineer | ✅ Done |
+
+---
+
+## Standup Log
+
+### 2026-04-06 — Sprint 43 Planning + Implementierung
+
+**Kontext:** Sprints 37-42 vollständig implementiert und als PRs (#251-#256) offen — warten auf Till (Merge-Reihenfolge #251→#252→...→#256). Alle autonomen P0/P1-Items erledigt. Einzige autonomous Arbeit: CI-Infrastruktur + Backlog-Pflege.
+
+**Implementiert:**
+- `deploy.yml`: `pull_request` ohne `branches: [main]` — check-Job läuft jetzt bei jedem PR. Deploy-Jobs haben bereits `if: github.ref == 'refs/heads/main'`-Guards.
+- `BACKLOG.md`: #104, #105, #106, #107, #37 Phase 2 als Done markiert (basiert auf Sprints 37-42 in offenen PRs).
+
+**Blocker:** PRs #251-#256 warten auf Till. Keine autonome Code-Arbeit ohne Merge.
+
+---
+
+## Sprint Review — 2026-04-06
+
+**Sprint Goal erreicht:** ✅ Ja — CI läuft jetzt für alle PRs, Backlog aktuell.
+
+**Was geliefert wurde:**
+- S43-1: Jeder PR (auch die Chain-PRs #252-#256) löst jetzt den check-Job aus. Regressions-Schutz ohne Human Input.
+- S43-2: Backlog zeigt ehrlich was fertig ist — auch wenn die Merges noch ausstehen.
+
+**Oscar-Check:** Oscar sieht nichts Neues. Aber: Die Qualität aller zukünftigen Features wird höher, weil CI jeden Branch prüft.
+
+---
+
+## Sprint Retrospective — 2026-04-06
+
+### Was lief gut?
+- **Saubere Infrastruktur-Entscheidung.** Eine Zeile entfernt, CI-Schutz für die gesamte PR-Chain gewonnen.
+- **Backlog-Ehrlichkeit.** 5 Items als Done markiert die seit Wochen als Offen standen.
+
+### Was lief schlecht?
+- **PR-Chain ist 6 tief.** #251→#252→#253→#254→#255→#256. Jede Woche wächst sie um 1. Das ist nicht nachhaltig.
+- **#78 Tesla-Nutzertest seit 7 Sprints offen.** Das ist das wichtigste unbeantwortete Item. Echte Oscar-Daten fehlen.
+
+### Was verbessern wir?
+1. **Till: Eine Aktion.** PR #251 mergen (feat/sprint-37 → main). Danach lösen sich #252-#256 in Reihenfolge auf.
+2. **Sprint 44 Empfehlung:** Wenn Till merged → Tesla-Nutzertest auswerten (#78). Wenn nicht → kein autonomer Sprint sinnvoll. Pause besser als Gold-Plating.
+
+### Sprint 44 — Empfehlung
+
+| Kandidat | Prio | Warum |
+|----------|------|-------|
+| **#78 Tesla-Nutzertest auswerten** | P0 | 7 Sprints offen. Echte Oscar-Daten. Feynman-Pflicht. |
+| **#27 CORS Worker deployen** | P0 | Blocked. Till deployt. |
+| Pause | — | Wenn nichts davon kommt: kein Sprint besser als Fake-Sprint. |
+
+---
+
 # Sprint 37 — "Oscar findet sich zurecht"
 
 **Sprint Goal:** Onboarding verbessern (#104) + Touch/Maus-UX (#105) + Palette aufräumen (#106). Oscars Bruder kann jetzt reinkommen.
