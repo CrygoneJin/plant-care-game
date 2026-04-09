@@ -9,13 +9,18 @@ async function skipBigBang(page) {
     });
 }
 
-// Hilfsfunktion: Spiel starten und auf Canvas warten
+// Hilfsfunktion: Spiel starten und auf Canvas + questSystem warten
 async function startGame(page) {
     await skipBigBang(page);
     await page.goto('/');
     await page.fill('#player-name-input', 'Testpirat');
     await page.click('#start-button');
+    // Canvas sichtbar warten
     await expect(page.locator('#game-canvas')).toBeVisible({ timeout: 15000 });
+    // Intro-Overlay vollständig weg (300ms fade + Puffer)
+    await expect(page.locator('#intro-overlay')).not.toBeVisible({ timeout: 5000 });
+    // questSystem muss initialisiert sein
+    await page.waitForFunction(() => typeof window.questSystem === 'object', { timeout: 10000 });
 }
 
 test.describe('Critical Path — Block platzieren', () => {
