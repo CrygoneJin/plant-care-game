@@ -1156,9 +1156,10 @@ ${budgetInfo}${florianePreisHint}`;
         chatBubble.addEventListener('click', () => {
             // Bubble = immer Bernd (Support). Andere NPCs nur über Insel-Interaktion.
             if (panel.classList.contains('hidden')) {
-                window.openChat('bernd');
+                window.openChat('bernd'); // openChat entfernt 'hidden' bereits
+            } else {
+                toggleChat(); // Panel ist offen → schließen
             }
-            toggleChat();
         });
         chatBubble.addEventListener('keydown', e => {
             if (e.key === 'Enter' || e.key === ' ') chatBubble.click();
