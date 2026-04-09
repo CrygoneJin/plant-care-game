@@ -1,3 +1,39 @@
+# Sprint 47 — "Playwright auf main"
+
+**Sprint Goal:** PR #256 (Playwright E2E Critical Path Tests) mergen. Danach: Tesla-Nutzertest #78 auswerten wenn Till Video schickt.
+**Start:** 2026-04-09
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S47-1 | **#103 Playwright E2E Tests** — PR #256 ist rebased auf main. 9 Critical Path Tests + Smoke Tests. Till: einmal klicken. | Engineer | 🔲 Blocked (Till: PR #256 mergen) |
+| S47-2 | **#78 Tesla-Nutzertest auswerten** — Echte Oscar-Daten. Seit Sprint 38 offen. | Scientist + Leader | 🔲 Blocked (Till: Video schicken) |
+| S47-3 | **#92 Requesty Key rotieren** — Alter Key im Git-Verlauf. | Engineer | 🔲 Blocked (Till: Requesty Dashboard) |
+
+---
+
+## Standup Log
+
+### 2026-04-09 — Sprint 47 Planning
+
+**Kontext:** Sprint 46 Review + Retro done (PR #267). Alle autonomen Items seit Sprint 43 erledigt.
+
+**Was Oscar heute sieht:** Snake ("snake" tippen), Tetris (Konami-Code), neues Onboarding, Long-Press, Weltraum-Töne, Genesis Phase 2 — alles auf `origin/main` (42dbd9f), alle deployt.
+
+**Autonome Arbeit: erschöpft.** Keine neuen P0/P1-Items ohne Human Input.
+
+**Till: 2 Aktionen:**
+
+| Aktion | Was | Warum |
+|--------|-----|-------|
+| **PR #256 mergen** | Playwright E2E Tests → main | 9 Critical Path Tests im CI. Sofort mergbar (base = current main). |
+| **Video schicken** | Tesla-Nutzertest #78 | Echte Oscar-Daten. Seit Sprint 38 blockiert. |
+
+---
+
 # Sprint 43 — "CI für alle"
 
 **Sprint Goal:** GitHub Actions check-Job auf alle PRs ausweiten — nicht nur main-PRs. PR-Chain #251-#256 bekommt CI-Schutz. Backlog auf Stand der Sprints 37-42 gebracht.
