@@ -1,3 +1,43 @@
+# ⛔ Status 2026-04-09 — STOP (Warten auf Till)
+
+**Letztes Update:** 2026-04-09
+
+## Was implementiert ist (wartet auf Merge)
+
+Sprints 37–43 sind vollständig implementiert. Code existiert in GitHub PRs.
+Kein weiterer autonomer Sprint sinnvoll — Sprint 44 Retro hat STOP-Regel etabliert.
+
+### PR-Chain — Till: Eine Aktion entsperrt alles
+
+| PR | Sprint | Inhalt | Merge-Reihenfolge |
+|----|--------|--------|-------------------|
+| **#257** | Sprint 43 | CI für alle PRs + Backlog auf Stand | → **main zuerst** (unabhängig) |
+| **#251** | Sprint 37 | Onboarding + Long-Press + Palette-Counter | → **main danach** |
+| #252 | Sprint 38 | Weltraum-Töne + Genesis Phase 2 | → feat/sprint-37 |
+| #253 | Sprint 39 | Tetris Easter Egg (Konami-Code) | → feat/sprint-38 |
+| #254 | Sprint 40 | Snake Easter Egg ("snake" tippen) | → feat/sprint-39 |
+| #255 | Sprint 41 | Blocked-Sprint Docs | → feat/sprint-40 |
+| #256 | Sprint 42 | Playwright E2E Tests | → feat/sprint-41 |
+
+**Nach den Merges sieht Oscar:** Neues Onboarding, Weltraum-Töne, Tetris, Snake.
+
+## Was noch fehlt (Human Input — Till)
+
+| # | Item | Was Till tun muss |
+|---|------|-------------------|
+| #78 | Tesla-Nutzertest auswerten | Video schicken |
+| #103 | Stripe Production Links | 5€/10€/25€ in index.html Zeilen 100/106/112 eintragen |
+| #92 | Requesty Key rotieren | Neuen Key bereitstellen |
+| #27 | Cloudflare Worker CORS | Worker.js im Dashboard deployen |
+
+## STOP-Regel (Sprint 44 Retro 2026-04-08)
+
+> Wenn Sprint Review zeigt: alle Items Human Input → kein neuer Sprint.
+> Keine Ceremony ohne neue Information.
+> Nächster Sprint erst wenn Till gemergt hat ODER ein konkretes Item liefert.
+
+---
+
 # Sprint 36 — "Oscar baut Brücken"
 
 **Sprint Goal:** #62 abschließen (FR/ES/IT NPC-Gedächtnis) + Weltraum-Quests + Archipel-Abschluss.
