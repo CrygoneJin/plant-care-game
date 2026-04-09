@@ -41,6 +41,72 @@ Oscar sieht nach dem Merge: neues Onboarding, Weltraum-Töne, Tetris, Snake.
 
 ---
 
+## Sprint Review — 2026-04-09
+
+**Sprint Goal erreicht:** ❌ Nein — alle 3 Items blocked.
+
+| Item | Status | Blocker |
+|------|--------|---------|
+| S45-1 #78 Tesla-Nutzertest | 🔲 Blocked | Till schickt Video (offen seit Sprint 38) |
+| S45-2 #103 Stripe Links | 🔲 Blocked | Till trägt Production-Links ein |
+| S45-3 #92 Requesty Key | 🔲 Blocked | Till rotiert Key |
+
+**Oscar-Check:** Oscar sieht keine Änderung, weil kein neuer Code auf main ist. Aber 7 PRs (Sprints 37–43) sind fertig und warten.
+
+---
+
+## Sprint Retrospective — 2026-04-09
+
+### Was lief gut?
+- **Autonome Arbeit vollständig ausgeschöpft.** Sprints 37–43 sind implementiert: Onboarding, Long-Press, Palette-Fix, Weltraum-Töne, Genesis Phase 2, Tetris, Snake, CI-Fix. Das ist mehr als ein Monat sichtbarer Oscar-Content.
+- **PR-Chain klar dokumentiert.** Jede Session hat Till eine saubere Handlungsanweisung hinterlassen. Reihenfolge ist eindeutig.
+
+### Was lief schlecht?
+- **Merge-Stau seit 2026-04-06.** PR #251 liegt 3 Tage offen. Oscar sieht das neue Onboarding, Tetris und Snake noch nicht — obwohl alles fertig ist.
+- **7 Sessions haben dasselbe Blocking-Muster dokumentiert** ohne Änderung. Das ist Aufwand ohne Ergebnis.
+
+### Was verbessern wir?
+1. **Sprint 46 = Blocked-Sprint.** Kein neues Code-Sprint bis Till merged. Kein Gold-Plating.
+2. **Till: Eine Aktion** — PR #257 (unabhängig) und dann PR #251 mergen. Danach läuft die Chain automatisch.
+
+---
+
+# Sprint 46 — Blocked, warten auf Till
+
+**Sprint Goal:** Blocked — warten auf PR-Merge. Kein autonomer Code sinnvoll.
+**Start:** 2026-04-09
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S46-1 | **#78 Tesla-Nutzertest auswerten** — 1h Oscar-Video analysieren. Echte Nutzerdaten vor mehr Features. | Scientist + Leader | 🔲 Blocked (Till schickt Video) |
+| S46-2 | **#103 Stripe Production Links** — 5€/10€/25€ in index.html Zeilen 100, 106, 112 eintragen | Engineer | 🔲 Blocked (Till: Stripe Dashboard) |
+| S46-3 | **#92 Requesty Key rotieren** — Alter Key ist im Git-Verlauf sichtbar | Engineer | 🔲 Blocked (Till: Requesty Dashboard) |
+
+---
+
+## Till: Freie Bahn in 2 Schritten
+
+### Schritt 1 — Sofort (unabhängig)
+**PR #257 mergen** → main: CI läuft jetzt für alle PRs
+
+### Schritt 2 — Danach der Reihe nach
+| PR | Inhalt | Merge-Ziel |
+|----|--------|------------|
+| **#251** | Onboarding + Long-Press + Palette-Counter | → **main** |
+| #252 | Weltraum-Töne + Genesis Phase 2 | → feat/sprint-37 |
+| #253 | Tetris Easter Egg (Konami-Code) | → feat/sprint-38 |
+| #254 | Snake Easter Egg ("snake" tippen) | → feat/sprint-39 |
+| #255 | Blocked-Sprint Docs | → feat/sprint-40 |
+| #256 | Playwright E2E Tests | → feat/sprint-41 |
+
+**Oscar sieht danach:** neues Onboarding, Weltraum-Töne, Tetris, Snake.
+
+---
+
 # Sprint 36 — "Oscar baut Brücken"
 
 **Sprint Goal:** #62 abschließen (FR/ES/IT NPC-Gedächtnis) + Weltraum-Quests + Archipel-Abschluss.
