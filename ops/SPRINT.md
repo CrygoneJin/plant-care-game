@@ -53,6 +53,34 @@ Till hat PR #256 heute (18:45 UTC) gemergt. 9 Critical Path E2E Tests + Smoke Te
 
 ---
 
+## Sprint Retrospective — 2026-04-09
+
+### Was lief gut?
+- **Till hat gemergt.** PR #256 (Playwright) landete ohne Reibung auf main. 9 Tests im CI — ohne manuellen Eingriff von Claude.
+- **Sprint Goal war realistisch.** Genau eine Aktion für Till, klar formuliert. Wurde erfüllt.
+- **Keine falschen Smoke-Tests.** Die Proxy-Beschränkung der Claude-Code-Web-Umgebung wurde dokumentiert statt ignoriert.
+
+### Was lief schlecht?
+- **#78 Tesla-Nutzertest: Sprint 38–47 offen.** Das ist 9 Sprints. Kein Video, keine Daten, kein Feynman-Audit. Das ist die teuerste offene Frage im gesamten Backlog.
+- **#92 Requesty Key: Alt. Sicherheitsrisiko bleibt.** Jede Session ohne Rotation ist ein Risiko.
+- **Autonome Kapazität erschöpft.** Ohne Human Input gibt es nichts Sinnvolles mehr zu bauen. Das ist kein Fehler — aber ein Zeichen dass wir nah an einem echten Produktreife-Punkt sind.
+
+### Was verbessern wir?
+1. **Sprint 48 ist kein Sprint ohne Video oder Key-Zugang.** Pause ist besser als Fake-Fortschritt.
+2. **Till: Zwei konkrete Aktionen (priorisiert):**
+
+| Prio | Aktion | Warum jetzt |
+|------|--------|-------------|
+| 1 | **Video schicken** (#78) | 9 Sprints. Echte Oscar-Daten. Feynman braucht das. |
+| 2 | **Requesty Dashboard** (#92) | Sicherheit. Key aus Git-Verlauf ist Risiko. |
+
+### Sprint 48 — Empfehlung
+
+Kein autonomer Sprint bis mindestens eine dieser Aktionen passiert.
+Wenn Video kommt → Nutzertest auswerten (#78). Wenn Key-Zugang kommt → Key rotieren (#92).
+
+---
+
 # Sprint 43 — "CI für alle"
 
 **Sprint Goal:** GitHub Actions check-Job auf alle PRs ausweiten — nicht nur main-PRs. PR-Chain #251-#256 bekommt CI-Schutz. Backlog auf Stand der Sprints 37-42 gebracht.
