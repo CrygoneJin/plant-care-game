@@ -64,6 +64,42 @@
 
 ---
 
+## Sprint Review — 2026-04-09
+
+**Sprint Goal erreicht:** ❌ Nein — alle Items von Tag 1 an blocked.
+
+**Was geliefert:** Nichts Neues. Kein autonomer Code-Fortschritt.
+
+**Oscar sieht heute:** Unverändert. Snake (tippen), Tetris (Konami-Code), Genesis Phase 2, neues Onboarding — alles weiterhin auf `origin/main`.
+
+**Offene Blockers (unverändert):**
+| Item | Blocked auf |
+|------|-------------|
+| S47-1: PR #256 Playwright | Till: Merge-Klick |
+| S47-2: Tesla-Nutzertest #78 | Till: Video schicken |
+| S47-3: Requesty Key rotieren | Till: Dashboard-Zugang |
+
+---
+
+## Sprint Retrospective — 2026-04-09
+
+**Was lief gut:**
+- Keine Fake-Arbeit. Ehrliche Blockade statt Gold-Plating.
+- Drei Standups haben den Status klar kommuniziert.
+
+**Was lief schlecht:**
+- Sprint 47 war von Tag 1 blockiert. Ein Sprint ohne autonome Items ist kein Sprint — es ist Warten.
+- Smoke-Tests in dieser Umgebung nicht möglich (Sandbox-Proxy blockt externe URLs). Blind-Spot.
+
+**Was verbessern wir:**
+- Sprint 48 = Pause. Kein neues Sprint Planning bis Till eine Aktion macht.
+- Wenn Till PR #256 mergt: Tesla-Nutzertest (#78) sofort starten.
+- Wenn Till Video schickt: Scientist-Auswertung in einer Session.
+
+**Till: Eine Aktion reicht um Sprint 48 zu starten.**
+
+---
+
 # Sprint 43 — "CI für alle"
 
 **Sprint Goal:** GitHub Actions check-Job auf alle PRs ausweiten — nicht nur main-PRs. PR-Chain #251-#256 bekommt CI-Schutz. Backlog auf Stand der Sprints 37-42 gebracht.
