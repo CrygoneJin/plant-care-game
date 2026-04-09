@@ -64,6 +64,64 @@
 
 ---
 
+# Sprint 38 — "Weltraum klingt nach Weltraum"
+
+**Sprint Goal:** Weltraum-Materialien kriegen eigene Töne + Genesis-Tutorial Phase 2.
+**Start:** 2026-04-06
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S38-1 | **#78 Tesla-Nutzertest** — 1h Oscar-Video analysieren. | Scientist | 🔲 Blocked (Human Input) |
+| S38-2 | **Sound-Polishing Weltraum** — `rocket`/`moon`/`mars`/`alien` eigene Töne in `ELEMENT_TONES`, `KLONK_FREQS`, `DRUM_MAP`, `playMaterialSound`. | Engineer | ✅ Done |
+| S38-3 | **#37 Genesis-Tutorial Phase 2** — `generateWaterStart()` + Genesis-Stufen 4–7 (Natur/Zivilisation/Wetter/Weltraum). | Engineer | ✅ Done |
+
+---
+
+## Standup Log
+
+### 2026-04-06 (Sprint 38 Delivery)
+
+- S38-2: 4 neue Drum-Funktionen (drumRocket/Moon/Mars/Alien) + ELEMENT_TONES + KLONK_FREQS + playMaterialSound-Cases. Rakete gleidet aufwärts. Mond schwebt. Mars staubig. Alien beept.
+- S38-3: `generateWaterStart()` in island-generators.js. Genesis-Stufen 4–7 in `updateGenesisVisibility()`.
+
+**Blocker:** S38-1 wartet auf Till.
+
+---
+
+## Sprint Review — 2026-04-06
+
+**Sprint Goal erreicht:** ⚠️ Teilweise — 2 von 3 Done, 1 Blocked.
+
+- S38-2 ✅: Weltraum-Materialien klingen wie Weltraum.
+- S38-3 ✅: Neuspieler startet im Wasser, Insel wächst schrittweise.
+- S38-1 🔲: Tesla-Video liegt bei Till.
+
+**Oscar-Check:** Rakete bauen → hört Triebwerk. Neues Spiel → Ozean-Start, Insel wächst mit.
+
+---
+
+## Sprint Retrospective — 2026-04-06
+
+### Was lief gut?
+- Sound minimal-invasiv: bestehende Strukturen erweitert, kein neues System.
+- Genesis Phase 2 elegant: ein Einstiegspunkt in game.js.
+
+### Was lief schlecht?
+- **#78 dreimal übergangen.** Kein vierter Sprint ohne Tesla-Video.
+
+### Sprint 39 — Empfehlung
+
+| Kandidat | Prio | Warum |
+|----------|------|-------|
+| **#107 Tetris Easter Egg** | P0 | Oscars Bruder wollte Tetris. Konami-Code. Kein Human Input nötig. |
+| **#78 Tesla-Nutzertest** | P0 | Blocked. Till schickt Video. |
+
+---
+
 # Sprint 37 — "Oscar findet sich zurecht"
 
 **Sprint Goal:** Onboarding verbessern (#104) + Touch/Maus-UX (#105) + Palette aufräumen (#106). Oscars Bruder kann jetzt reinkommen.

@@ -1953,6 +1953,50 @@
             }
         }
 
+        // === Genesis-Stufen 4–7 (Phase 2, #37) ===
+        // Data-driven: jede Stufe prüft Inventar/Grid, zeigt einmaligen Toast.
+
+        // Stufe 4: Natur erwacht — wenn stone + plant irgendwo vorhanden
+        if (!localStorage.getItem('insel-genesis-4')) {
+            const hasStone = (inventory['stone'] || 0) > 0 || unlockedMaterials.has('stone');
+            const hasPlant = (inventory['plant'] || 0) > 0 || unlockedMaterials.has('plant') ||
+                             (inventory['flower'] || 0) > 0 || unlockedMaterials.has('flower');
+            if (hasStone && hasPlant) {
+                localStorage.setItem('insel-genesis-4', '1');
+                showToast('🌱 Die natürliche Welt erwacht! Stein und Pflanze — die Insel lebt.');
+            }
+        }
+
+        // Stufe 5: Erste Zivilisation — wenn Tür oder Dach gebaut wurde
+        if (!localStorage.getItem('insel-genesis-5')) {
+            const hasDoor = unlockedMaterials.has('door') || (inventory['door'] || 0) > 0;
+            const hasRoof = unlockedMaterials.has('roof') || (inventory['roof'] || 0) > 0;
+            if (hasDoor || hasRoof) {
+                localStorage.setItem('insel-genesis-5', '1');
+                showToast('🏠 Erste Zivilisation! Die Insel bekommt ein Zuhause.');
+            }
+        }
+
+        // Stufe 6: Wetter-System — wenn Wolke, Sonne oder Regen freigeschaltet
+        if (!localStorage.getItem('insel-genesis-6')) {
+            const hasWeather = ['cloud', 'sun', 'rain', 'rainbow', 'lightning'].some(
+                m => unlockedMaterials.has(m) || (inventory[m] || 0) > 0
+            );
+            if (hasWeather) {
+                localStorage.setItem('insel-genesis-6', '1');
+                showToast('☁️ Das Wetter erwacht! Regen, Sonne, Blitz — die Insel hat ein Klima.');
+            }
+        }
+
+        // Stufe 7: Weltraum-Pionier — wenn Rakete im Inventar
+        if (!localStorage.getItem('insel-genesis-7')) {
+            const hasRocket = (inventory['rocket'] || 0) > 0 || unlockedMaterials.has('rocket');
+            if (hasRocket) {
+                localStorage.setItem('insel-genesis-7', '1');
+                showToast('🚀 Die Insel reicht bis zu den Sternen! Weltraum-Pionier!');
+            }
+        }
+
         updateGenesisBadge();
     }
 
@@ -5060,6 +5104,12 @@
         if (new URLSearchParams(location.search).has('lummerland')) {
             generateLummerland();
             setTimeout(() => showToast('🏝️ Willkommen auf Lummerland! Eine kleine Insel mit zwei Bergen...', 4000), 1000);
+        } else if (window.INSEL_GENERATORS.generateWaterStart && !localStorage.getItem('insel-genesis-shown')) {
+            // Genesis Phase 2 (#37): absoluter Neuspieler → Wasser-Start
+            localStorage.setItem('insel-genesis-shown', '1');
+            window.INSEL_GENERATORS.generateWaterStart(grid, ROWS, COLS);
+            setTimeout(() => showToast('🌊 Am Anfang war das Wasser...', 3000), 800);
+            setTimeout(() => showToast('🏝️ Baue Erde auf das Wasser — deine Insel entsteht!', 4000), 3200);
         } else {
             generateStarterIsland();
             setTimeout(() => showToast('🏝️ Deine Insel wartet... Bau los!', 3500), 2000);

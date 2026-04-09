@@ -253,14 +253,99 @@
         src.start(t); src.stop(t + 0.35);
     }
 
+    // Triebwerk-Schub: aufsteigendes Rauschen (Rakete startet)
+    function drumRocket(ctx, t, vol) {
+        const buf = createNoiseBuffer(0.2);
+        const src = ctx.createBufferSource();
+        src.buffer = buf;
+        const hp = ctx.createBiquadFilter();
+        hp.type = 'highpass';
+        hp.frequency.value = 400;
+        const gain = ctx.createGain();
+        gain.gain.setValueAtTime(vol * 0.05, t);
+        gain.gain.linearRampToValueAtTime(vol * 0.22, t + 0.12);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+        src.connect(hp); hp.connect(gain); gain.connect(ctx.destination);
+        src.start(t); src.stop(t + 0.2);
+        // Tonaler Schub-Sweep obendrauf
+        const osc = ctx.createOscillator();
+        const g2 = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(80, t);
+        osc.frequency.exponentialRampToValueAtTime(400, t + 0.15);
+        g2.gain.setValueAtTime(vol * 0.12, t);
+        g2.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+        osc.connect(g2); g2.connect(ctx.destination);
+        osc.start(t); osc.stop(t + 0.18);
+    }
+
+    // Mondstille: fast kein Schall (im Weltraum hört niemand dich schreien)
+    function drumMoon(ctx, t, vol) {
+        const buf = createNoiseBuffer(0.15);
+        const src = ctx.createBufferSource();
+        src.buffer = buf;
+        const hp = ctx.createBiquadFilter();
+        hp.type = 'highpass';
+        hp.frequency.value = 10000;
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(vol * 0.04, t);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+        src.connect(hp); hp.connect(g); g.connect(ctx.destination);
+        src.start(t); src.stop(t + 0.15);
+    }
+
+    // Mars-Staubschlag: dumpf, trocken, rötlich
+    function drumMars(ctx, t, vol) {
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(100, t);
+        osc.frequency.exponentialRampToValueAtTime(45, t + 0.14);
+        g.gain.setValueAtTime(vol * 0.28, t);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+        osc.connect(g); g.connect(ctx.destination);
+        osc.start(t); osc.stop(t + 0.18);
+        // Staubwolke: kurzes bandpass-Rauschen
+        const buf = createNoiseBuffer(0.12);
+        const src = ctx.createBufferSource();
+        src.buffer = buf;
+        const bp = ctx.createBiquadFilter();
+        bp.type = 'bandpass';
+        bp.frequency.value = 800;
+        bp.Q.value = 1.5;
+        const g2 = ctx.createGain();
+        g2.gain.setValueAtTime(vol * 0.07, t);
+        g2.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+        src.connect(bp); bp.connect(g2); g2.connect(ctx.destination);
+        src.start(t); src.stop(t + 0.12);
+    }
+
+    // Alien-Beep: fremdartig, zwei schnelle Square-Pulse
+    function drumAlien(ctx, t, vol) {
+        for (let i = 0; i < 2; i++) {
+            const osc = ctx.createOscillator();
+            const g = ctx.createGain();
+            osc.type = 'square';
+            osc.frequency.value = i === 0 ? 1200 : 900;
+            g.gain.setValueAtTime(vol * 0.08, t + i * 0.04);
+            g.gain.exponentialRampToValueAtTime(0.001, t + i * 0.04 + 0.035);
+            osc.connect(g); g.connect(ctx.destination);
+            osc.start(t + i * 0.04); osc.stop(t + i * 0.04 + 0.035);
+        }
+    }
+
     const DRUM_MAP = {
-        wood:  drumWood,
-        earth: drumKick,
-        stone: drumKick,
-        metal: drumHiHat,
-        fire:  drumSnare,
-        water: drumSplash,
-        glass: drumRide,
+        wood:   drumWood,
+        earth:  drumKick,
+        stone:  drumKick,
+        metal:  drumHiHat,
+        fire:   drumSnare,
+        water:  drumSplash,
+        glass:  drumRide,
+        rocket: drumRocket,
+        moon:   drumMoon,
+        mars:   drumMars,
+        alien:  drumAlien,
     };
     const DRUM_FUNCS = [drumWood, drumKick, drumHiHat, drumSnare, drumSplash, drumRide];
 
@@ -307,6 +392,14 @@
         fire:   { freq: C4 * 3,     wave: 'sawtooth', dur: 0.06, vol: 0.06 },
         // 水 Wasser = 羽 Yǔ — fließend (glide: A4→A3, absteigende Energie)
         water:  { freq: C4 * 27/16, wave: 'sine',     dur: 0.30, vol: 0.09, glide: C3 * 27/16 },
+        // 🚀 Rakete = Triebwerk: aufsteigender Schub (tief→hoch, sawtooth)
+        rocket: { freq: 130,        wave: 'sawtooth',  dur: 0.20, vol: 0.07, glide: 520 },
+        // 🌙 Mond = Stille + Klang: C5 + Quinte (schwebend, rein)
+        moon:   { freq: C5,         wave: 'sine',      dur: 0.45, vol: 0.06, chord: C5 * 3/2 },
+        // 🪐 Mars = Staubig: trocken, tiefe Terz unter Feuer
+        mars:   { freq: C4 * 5/4,   wave: 'triangle',  dur: 0.22, vol: 0.08 },
+        // 👽 Alien = Fremd: übermäßige Septime, square-Welle
+        alien:  { freq: C4 * 7/4,   wave: 'square',    dur: 0.14, vol: 0.06 },
     };
 
     // Erster Sound = KLONK. Laut. Befriedigend. Minecraft-Niveau.
@@ -443,6 +536,10 @@
         yin:    80,
         yang:   330,
         qi:     165,
+        rocket: 196,   // G3 — aufsteigend, Schub
+        moon:   659,   // E5 — hell, klar, Mondlicht
+        mars:   174,   // F3 — trocken, rötlich
+        alien:  370,   // F#4 — zwischen den Tönen, fremd
     };
     function soundSelect(material) {
         if (isMuted()) return;
@@ -586,6 +683,68 @@
                     g2.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
                     osc2.connect(g2); g2.connect(ctx.destination);
                     osc2.start(t); osc2.stop(t + 0.3);
+                    break;
+                }
+                case 'rocket': {
+                    // Triebwerk-Sweep: aufsteigend 100→800 Hz, sawtooth
+                    const osc = ctx.createOscillator();
+                    const g = ctx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(100, t);
+                    osc.frequency.exponentialRampToValueAtTime(800, t + 0.18);
+                    g.gain.setValueAtTime(0.14 * masterVolume, t);
+                    g.gain.exponentialRampToValueAtTime(0.001, t + 0.22);
+                    osc.connect(g); g.connect(ctx.destination);
+                    osc.start(t); osc.stop(t + 0.22);
+                    break;
+                }
+                case 'moon': {
+                    // Schwebender Mondton: hoch, rein, lange nachhallend
+                    const osc1 = ctx.createOscillator();
+                    const g1 = ctx.createGain();
+                    osc1.type = 'sine';
+                    osc1.frequency.value = 1046;  // C6 — sehr hell
+                    g1.gain.setValueAtTime(0.10 * masterVolume, t);
+                    g1.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+                    osc1.connect(g1); g1.connect(ctx.destination);
+                    osc1.start(t); osc1.stop(t + 0.5);
+                    // Quinte dazu (G6) — schwebend
+                    const osc2 = ctx.createOscillator();
+                    const g2 = ctx.createGain();
+                    osc2.type = 'sine';
+                    osc2.frequency.value = 1046 * 3/2;
+                    g2.gain.setValueAtTime(0.05 * masterVolume, t + 0.02);
+                    g2.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
+                    osc2.connect(g2); g2.connect(ctx.destination);
+                    osc2.start(t + 0.02); osc2.stop(t + 0.45);
+                    break;
+                }
+                case 'mars': {
+                    // Staubiger Mars-Schlag: mittlere Tiefe, trocken
+                    const osc = ctx.createOscillator();
+                    const g = ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(160, t);
+                    osc.frequency.exponentialRampToValueAtTime(70, t + 0.15);
+                    g.gain.setValueAtTime(0.22 * masterVolume, t);
+                    g.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+                    osc.connect(g); g.connect(ctx.destination);
+                    osc.start(t); osc.stop(t + 0.2);
+                    break;
+                }
+                case 'alien': {
+                    // Alien-Wobble: zwei Square-Töne mit kleinem Versatz
+                    const freqs = [740, 622];
+                    freqs.forEach((freq, i) => {
+                        const osc = ctx.createOscillator();
+                        const g = ctx.createGain();
+                        osc.type = 'square';
+                        osc.frequency.value = freq;
+                        g.gain.setValueAtTime(0.07 * masterVolume, t + i * 0.06);
+                        g.gain.exponentialRampToValueAtTime(0.001, t + i * 0.06 + 0.12);
+                        osc.connect(g); g.connect(ctx.destination);
+                        osc.start(t + i * 0.06); osc.stop(t + i * 0.06 + 0.12);
+                    });
                     break;
                 }
                 default: {

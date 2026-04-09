@@ -514,5 +514,31 @@
         window.grid = grid;
     }
 
-    window.INSEL_GENERATORS = { generateStarterIsland, generateLummerland, generateDinoIsland, generateMoonIsland, generateMarsIsland };
+    // === GENESIS PHASE 2: Wasser-Start (#37) ===
+    // Für absolute Neuspieler: Insel beginnt als Ozean.
+    // Nur eine kleine Sandinsel in der Mitte — Oscar muss selbst bauen.
+    function generateWaterStart(grid, ROWS, COLS) {
+        const cx = Math.floor(COLS / 2);
+        const cy = Math.floor(ROWS / 2);
+        // Alles Wasser — null = leere Zelle (Ozean-Hintergrund)
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                grid[r][c] = null;
+            }
+        }
+        // Kleine Sandinsel: 3×3 in der Mitte, damit Oscar etwas unter den Füßen hat
+        for (let dr = -1; dr <= 1; dr++) {
+            for (let dc = -1; dc <= 1; dc++) {
+                const r = cy + dr, co = cx + dc;
+                if (r >= 0 && r < ROWS && co >= 0 && co < COLS) {
+                    grid[r][co] = 'sand';
+                }
+            }
+        }
+        // Eine Palme als Orientierungspunkt
+        if (cy - 1 >= 0) grid[cy - 1][cx] = 'palm';
+        window.grid = grid;
+    }
+
+    window.INSEL_GENERATORS = { generateStarterIsland, generateLummerland, generateDinoIsland, generateMoonIsland, generateMarsIsland, generateWaterStart };
 })();
