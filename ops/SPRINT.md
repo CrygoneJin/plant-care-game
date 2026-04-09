@@ -100,6 +100,109 @@
 
 ---
 
+# Sprint 41 — "Warten auf Till"
+
+**Sprint Goal:** Blocked. Alle P0-Items brauchen Human Input. Kein autonomer Fortschritt möglich bis Till #78 (Tesla-Video) oder #103 (Stripe-Links) freigibt.
+**Start:** 2026-04-06
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S41-1 | **#78 Tesla-Nutzertest auswerten** — Oscar-Video analysieren. Echte Nutzerdaten. | Scientist + Leader | 🔲 Blocked (Human Input: Till schickt Video) |
+| S41-2 | **#103 Live Launch** — Stripe Production Links in index.html Zeilen 100/106/112 eintragen. | Engineer | 🔲 Blocked (Human Input: Stripe-Links von Till) |
+| S41-3 | **#108 Native Speaker Review** — FR/ES/IT Strings von Muttersprachlern prüfen. | Artist | 🔲 Blocked (Human Input: Muttersprachler) |
+
+---
+
+## Standup Log
+
+### 2026-04-06 (Sprint 41 Planning)
+
+**Kontext:** Sprint 40 fertig (Snake ✅, PR #254). Alle autonomen P0-Items (#104 ✅ S37, #105 ✅ S37, #106 ✅ S37, #107 ✅ S39+S40, #37 ✅ S38) erledigt.
+
+**Blocked Items:** #78 Tesla-Video, #103 Stripe-Links, #27 CORS Worker, #92 Requesty Key, #108 Native Speaker.
+
+### 2026-04-06 — Daily Scrum
+
+Keine autonome Arbeit möglich. PRs #251–#254 warten auf Till.
+
+---
+
+## Sprint Review — 2026-04-06
+
+**Sprint Goal erreicht:** ❌ Nein — alle 3 Items von Anfang an blocked.
+
+**Oscar-Check:** 5 ungemergete PRs bereit. Sobald Till merged: Tetris, Snake, Weltraum-Töne, Genesis-Tutorial, neue UX sichtbar.
+
+---
+
+## Sprint Retrospective — 2026-04-06
+
+### Was lief gut?
+- Ehrlichkeit. Statt Gold-Plating: Blocked-State dokumentiert. Feynman-Regel gehalten.
+
+### Was lief schlecht?
+- PR-Chain von 5 PRs zu lang. Jede Chain über 3 ist ein Risiko.
+- #78 seit 6 Sprints offen — Signal-Problem, kein Prozess-Problem.
+
+### Was verbessern wir?
+- Till: Eine klare Aktion zuerst: **PR #251 mergen**.
+- Sprint 42: Playwright E2E-Tests (#103). Einziger autonomer Rest von Live Launch.
+
+---
+
+# Sprint 40 — "Oscar findet die Schlange"
+
+**Sprint Goal:** Snake Easter Egg — zweites verstecktes Spiel. Oscars Bruder hat Tetris. Jetzt kommt Snake.
+**Start:** 2026-04-06
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S40-1 | **#107 Snake Easter Egg** — Tippe "snake" auf der Tastatur (s-n-a-k-e). Mini-Snake öffnet in Modal. Canvas-basiert, Vanilla JS, `easter-snake.js`. Escape schließt. | Engineer | ✅ Done (PR #254) |
+
+---
+
+## Standup Log
+
+### 2026-04-06 (Sprint 40 Delivery)
+
+- `src/core/easter-snake.js` — IIFE, identisches Pattern wie easter-tetris.js.
+- Trigger: s-n-a-k-e tippen (case-insensitive). Index-Reset bei Fehleingabe.
+- Modal: `position:fixed`, z-index 20000. Click außerhalb = schließen.
+- Snake: 20×20 Grid, 20px Zellen (400×400 Canvas). Score +10 pro Apfel.
+- Steuerung: Pfeiltasten. Kein 180°-Umkehr. `setInterval` 150ms, `clearInterval` on close.
+
+---
+
+## Sprint Review — 2026-04-06
+
+**Sprint Goal erreicht:** ✅ Ja.
+
+| Item | Status |
+|------|--------|
+| S40-1 #107 Snake Easter Egg | ✅ Done — easter-snake.js, Trigger "snake", PR #254 |
+
+**#107 vollständig:** Tetris (Sprint 39, Konami-Code) + Snake (Sprint 40, "snake" tippen).
+
+---
+
+## Sprint Retrospective — 2026-04-06
+
+**Was lief gut?** Isoliertes IIFE-Pattern aus Sprint 39 direkt wiederverwendet. Kein game.js-Coupling.
+
+**Was lief schlecht?** Rebase-Konflikt: Easter-Tetris.js wurde versehentlich durch Easter-Snake.js ersetzt. Fix-Commit nötig.
+
+**Lektion:** Zwei Scripts in index.html = zwei `<script>`-Tags. Merge-Konflikt löst nie automatisch "beides behalten".
+
+---
+
 # Sprint 39 — "Oscars geheimes Spiel im Spiel"
 
 **Sprint Goal:** Tetris Easter Egg via Konami-Code. Oscars Bruder wollte Tetris.
