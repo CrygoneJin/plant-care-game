@@ -1,9 +1,10 @@
 const { test, expect } = require('@playwright/test');
 
-// Hilfsfunktion: Big-Bang-Countdown überspringen
+// Hilfsfunktion: Big-Bang-Countdown überspringen + Genesis-Start setzen
 async function skipBigBang(page) {
     await page.addInitScript(() => {
         localStorage.setItem('insel-grid', '[]');
+        localStorage.setItem('insel-genesis-shown', '1'); // water-start überspringen
         localStorage.removeItem('insel-player-name');
     });
 }
@@ -19,16 +20,16 @@ async function startGame(page) {
 
 test.describe('Critical Path — Block platzieren', () => {
 
-    test('Metall-Button aktiv, Canvas reagiert auf Klick ohne Fehler', async ({ page }) => {
+    test('Tao-Button aktiv, Canvas reagiert auf Klick ohne Fehler', async ({ page }) => {
         const errors = [];
         page.on('pageerror', err => errors.push(err.message));
 
         await startGame(page);
 
-        // Metall ist Basis-Material — kein Inventar nötig
-        const metalBtn = page.locator('.material-btn[data-material="metal"]');
-        await expect(metalBtn).toBeVisible({ timeout: 5000 });
-        await metalBtn.click();
+        // Tao ist das erste sichtbare Material — kein Inventar nötig
+        const taoBtn = page.locator('.material-btn[data-material="tao"]');
+        await expect(taoBtn).toBeVisible({ timeout: 5000 });
+        await taoBtn.click();
 
         // Canvas-Mitte klicken
         const canvas = page.locator('#game-canvas');
@@ -62,10 +63,10 @@ test.describe('Critical Path — Block platzieren', () => {
             window.INSEL_BUS.on('block:placed', () => { window._testBlockPlaced = true; });
         });
 
-        // Metall auswählen und Canvas-Mitte klicken
-        const metalBtn = page.locator('.material-btn[data-material="metal"]');
-        await expect(metalBtn).toBeVisible({ timeout: 5000 });
-        await metalBtn.click();
+        // Tao auswählen und Canvas-Mitte klicken
+        const taoBtn = page.locator('.material-btn[data-material="tao"]');
+        await expect(taoBtn).toBeVisible({ timeout: 5000 });
+        await taoBtn.click();
 
         const canvas = page.locator('#game-canvas');
         const box = await canvas.boundingBox();
