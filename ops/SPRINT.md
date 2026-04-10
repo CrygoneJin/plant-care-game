@@ -1,3 +1,198 @@
+# Sprint 48 — "Launch-Bereit"
+
+**Sprint Goal:** Tesla-Nutzertest auswerten, Requesty Key rotieren, Stripe Production-Links. Letzte Blockers vor Live Launch.
+**Start:** 2026-04-10
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S48-1 | **#78 Tesla-Nutzertest auswerten** — 1h Oscar-Video. Echte Nutzerdaten. Seit Sprint 38 offen. | Scientist + Leader | 🔲 Blocked (Till: Video schicken) |
+| S48-2 | **#92 Requesty Key rotieren** — Alter Key im Git-Verlauf. Sicherheitsrisiko. | Engineer | 🔲 Blocked (Till: Requesty Dashboard) |
+| S48-3 | **#103 Stripe Production-Links** — 3 Test-URLs durch echte ersetzen (5€/10€/25€). Donation-Button geht live. | Engineer | 🔲 Blocked (Till: Stripe Dashboard) |
+
+---
+
+## Standup Log
+
+### 2026-04-10 — Daily Scrum (Session 9)
+
+**Status:** PRs #270 + #271 weiterhin offen. Kein Merge auf main. Keine Änderung seit Session 8.
+
+**Smoke Test:** Sandbox-Proxy blockiert externe URLs — kein App-Problem, bekannte Einschränkung.
+
+**Alle 3 Items unverändert blocked:**
+- S48-1: Tesla-Nutzertest — Till: Video schicken
+- S48-2: Requesty Key — Till: Requesty Dashboard
+- S48-3: Stripe Links — Till: Stripe Dashboard (5€/10€/25€)
+
+**Autonome Arbeit:** Erschöpft. Kein implementierbares Item ohne Human Input.
+
+**Till: Zwei Klicks reichen:**
+1. PR #270 mergen (Sprint 47 Review → main)
+2. PR #271 mergen (Sprint 48 Planning → main)
+
+---
+
+### 2026-04-10 — Daily Scrum (Session 8)
+
+**Status:** PRs #270 + #271 weiterhin offen. Kein Merge auf main. Keine Änderung seit Session 7.
+
+**Smoke Test:** Sandbox-Proxy blockiert externe URLs — kein App-Problem, bekannte Einschränkung.
+
+**Alle 3 Items unverändert blocked:**
+- S48-1: Tesla-Nutzertest — Till: Video schicken
+- S48-2: Requesty Key — Till: Requesty Dashboard
+- S48-3: Stripe Links — Till: Stripe Dashboard (5€/10€/25€)
+
+**Autonome Arbeit:** Erschöpft. Kein implementierbares Item ohne Human Input.
+
+**Till: Zwei Klicks reichen:**
+1. PR #270 mergen (Sprint 47 Review → main)
+2. PR #271 mergen (Sprint 48 Planning → main)
+
+---
+
+### 2026-04-10 — Daily Scrum (Session 7)
+
+**Status:** PRs #270 + #271 weiterhin offen. Kein Merge auf main. Keine Änderung seit Session 6.
+
+**Smoke Test:** Sandbox-Proxy blockiert externe URLs — kein App-Problem, bekannte Einschränkung.
+
+**Alle 3 Items unverändert blocked:**
+- S48-1: Tesla-Nutzertest — Till: Video schicken
+- S48-2: Requesty Key — Till: Requesty Dashboard
+- S48-3: Stripe Links — Till: Stripe Dashboard (5€/10€/25€)
+
+**Autonome Arbeit:** Erschöpft. Kein implementierbares Item ohne Human Input.
+
+**Till: Zwei Klicks reichen:**
+1. PR #270 mergen (Sprint 47 Review → main)
+2. PR #271 mergen (Sprint 48 Planning → main)
+
+---
+
+### 2026-04-10 — Daily Scrum (Session 6)
+
+**Status:** PRs #270 + #271 weiterhin offen. Kein Merge auf main. Keine Änderung seit Session 5.
+
+**Smoke Test:** Sandbox-Proxy blockiert externe URLs — kein App-Problem, bekannte Einschränkung.
+
+**Alle 3 Items unverändert blocked:**
+- S48-1: Tesla-Nutzertest — Till: Video schicken
+- S48-2: Requesty Key — Till: Requesty Dashboard
+- S48-3: Stripe Links — Till: Stripe Dashboard (5€/10€/25€)
+
+**Autonome Arbeit:** Erschöpft. Kein implementierbares Item ohne Human Input.
+
+**Till: Zwei Klicks reichen:**
+1. PR #270 mergen (Sprint 47 Review → main)
+2. PR #271 mergen (Sprint 48 Planning → main)
+
+---
+
+### 2026-04-10 — Daily Scrum (Session 5)
+
+**Status:** PRs #270 + #271 weiterhin offen. Kein Merge auf main. Keine Änderung seit Session 4.
+
+**Smoke Test:** Sandbox-Proxy blockiert externe URLs — kein App-Problem, bekannte Einschränkung (seit Sprint 47 dokumentiert).
+
+**Alle 3 Items unverändert blocked:**
+- S48-1: Tesla-Nutzertest — Till: Video schicken
+- S48-2: Requesty Key — Till: Requesty Dashboard
+- S48-3: Stripe Links — Till: Stripe Dashboard (5€/10€/25€)
+
+**Autonome Arbeit:** Erschöpft. Kein implementierbares Item ohne Human Input.
+
+**Till: Zwei Klicks reichen:**
+1. PR #270 mergen (Sprint 47 Review → main)
+2. PR #271 mergen (Sprint 48 Planning → main)
+
+---
+
+### 2026-04-10 — Daily Scrum (Session 4)
+
+**Status:** PRs #270 + #271 weiterhin offen. Kein Merge auf main. Keine Änderung seit Session 3.
+
+**Smoke Test:** Sandbox-Proxy blockiert `schatzinsel.app` + `*.workers.dev` — kein App-Problem, bekannte Einschränkung.
+
+**Alle 3 Items unverändert blocked:**
+- S48-1: Tesla-Nutzertest — Till: Video schicken
+- S48-2: Requesty Key — Till: Requesty Dashboard
+- S48-3: Stripe Links — Till: Stripe Dashboard (5€/10€/25€)
+
+**Autonome Arbeit:** Erschöpft. Kein implementierbares Item ohne Human Input.
+
+**Till: Zwei Klicks reichen:**
+1. PR #270 mergen (Sprint 47 Review → main)
+2. PR #271 mergen (Sprint 48 Planning → main)
+
+---
+
+### 2026-04-10 — Daily Scrum (Session 3)
+
+**Status:** PRs #270 + #271 weiterhin offen. Kein Merge auf main. Keine Änderung seit Session 2.
+
+**Smoke Test:** Sandbox-Proxy blockiert externe URLs — kein App-Problem, bekannte Einschränkung.
+
+**Alle 3 Items unverändert blocked:**
+- S48-1: Tesla-Nutzertest — Till: Video schicken
+- S48-2: Requesty Key — Till: Requesty Dashboard
+- S48-3: Stripe Links — Till: Stripe Dashboard (5€/10€/25€)
+
+**Autonome Arbeit:** Erschöpft. Kein implementierbares Item ohne Human Input.
+
+**Till: Zwei Klicks = Sprint 48 startet:**
+1. PR #270 mergen (Sprint 47 Review → main)
+2. PR #271 mergen (Sprint 48 Planning → main)
+
+---
+
+### 2026-04-10 — Daily Scrum (Session 2)
+
+**Status:** Sprint 48 Planning fertig (PR #271 offen). PR #270 (Sprint 47 Review) offen. Kein Merge auf main — Till muss klicken.
+
+**Smoke Test:** Sandbox-Proxy (`host_not_allowed`) blockiert externe Verbindungen. Kein App-Problem. Bekannte Einschränkung.
+
+**Alle 3 Items unverändert blocked:**
+- S48-1: Tesla-Nutzertest — Till: Video schicken
+- S48-2: Requesty Key — Till: Requesty Dashboard
+- S48-3: Stripe Links — Till: Stripe Dashboard (5€/10€/25€)
+
+**Autonome Arbeit:** Erschöpft. Kein implementierbares Item ohne Human Input.
+
+**Till: Zwei Klicks reichen um Sprint 48 vollständig zu starten:**
+1. PR #270 mergen (Sprint 47 Review)
+2. PR #271 mergen (Sprint 48 Planning)
+Dann: Video / Requesty / Stripe → Sprint 48 läuft.
+
+---
+
+### 2026-04-10 — Sprint 48 Planning
+
+**Trigger:** Till hat PR #256 gemergt (2026-04-09 18:45 UTC). Retro-Bedingung erfüllt. Sprint 48 startet.
+
+**Sprint 47 abgeschlossen:**
+- S47-1: ✅ Playwright E2E Tests — auf main. CI grün bei jedem PR.
+- S47-2: 🔲 Tesla-Nutzertest — weiter blocked (Till: Video schicken)
+- S47-3: 🔲 Requesty Key — weiter blocked (Till: Dashboard-Zugang)
+
+**Sprint 48 — alle 3 Items blocked auf Till:**
+
+| Aktion | Was | Impact |
+|--------|-----|--------|
+| **Video schicken** | Tesla-Nutzertest #78 → auswerten | Echte Oscar-Daten → UX-Entscheidungen |
+| **Requesty Dashboard** | API Key rotieren #92 | Sicherheit: alter Key aus Git-Verlauf entfernen |
+| **Stripe Dashboard** | 3 Production Payment-Links #103 | Donation-Button geht live (index.html wartet seit Sprint 27) |
+
+**Autonome Arbeit:** Erschöpft. Kein P0/P1-Item ohne Human Input implementierbar.
+
+**Oscar sieht heute:** Snake (tippen), Tetris (Konami-Code), Genesis Phase 2, Playwright Tests im CI — alles auf main.
+
+---
+
 # Sprint 47 — "Playwright auf main"
 
 **Sprint Goal:** PR #256 (Playwright E2E Critical Path Tests) mergen. Danach: Tesla-Nutzertest #78 auswerten wenn Till Video schickt.
@@ -9,24 +204,13 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S47-1 | **#103 Playwright E2E Tests** — PR #256 ist rebased auf main. 9 Critical Path Tests + Smoke Tests. Till: einmal klicken. | Engineer | 🔲 Blocked (Till: PR #256 mergen) |
+| S47-1 | **#103 Playwright E2E Tests** — PR #256 gemergt (2026-04-09 18:45 UTC). 9 Critical Path Tests + Smoke Tests auf main. | Engineer | ✅ Done (PR #256) |
 | S47-2 | **#78 Tesla-Nutzertest auswerten** — Echte Oscar-Daten. Seit Sprint 38 offen. | Scientist + Leader | 🔲 Blocked (Till: Video schicken) |
 | S47-3 | **#92 Requesty Key rotieren** — Alter Key im Git-Verlauf. | Engineer | 🔲 Blocked (Till: Requesty Dashboard) |
 
 ---
 
 ## Standup Log
-
-### 2026-04-10 — Daily Scrum (Sprint 48 Pause)
-
-**Status:** Sprint 47 beendet. Sprint 48 in Pause (Retro-Beschluss: kein Planning bis Till eine Aktion macht).
-
-**Blocker (unverändert):**
-- S47-1 / PR #256: Playwright Tests — Till: Merge-Klick
-- S47-2 / #78: Tesla-Video — Till: Video schicken
-- S47-3 / #92: Requesty Key — Till: Dashboard-Zugang
-
-**Autonome Arbeit:** Erschöpft. Kein P0/P1-Item implementierbar ohne Human Input.
 
 **Till: Eine Aktion reicht um Sprint 48 zu starten.**
 
