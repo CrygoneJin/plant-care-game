@@ -17,6 +17,23 @@
 
 ## Standup Log
 
+### 2026-04-10 — Daily Scrum (Sprint 48 Pause, Session 8)
+
+**Status:** Unverändert. Sprint 47 beendet. Sprint 48 in Pause.
+
+**Blocker (unverändert):**
+- S47-1 / PR #256: Playwright Tests — Till: Merge-Klick
+- S47-2 / #78: Tesla-Video — Till: Video schicken
+- S47-3 / #92: Requesty Key — Till: Dashboard-Zugang
+
+**Autonome Arbeit:** Keine. Alle P0/P1-Items auf Human Input blockiert.
+
+**Smoke Tests:** Sandbox-Proxy blockt externe URLs (schatzinsel.app + workers.dev → 403). Bekanntes Problem, kein App-Fehler.
+
+**Till: Eine Aktion reicht um Sprint 48 zu starten.**
+
+---
+
 ### 2026-04-10 — Daily Scrum (Sprint 48 Pause, Session 7)
 
 **Status:** Unverändert. Sprint 47 beendet. Sprint 48 in Pause.
