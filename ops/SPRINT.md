@@ -17,6 +17,23 @@
 
 ## Standup Log
 
+### 2026-04-11 — Daily Scrum (Session 24) — HALT
+
+**Status:** Identisch zu Session 23. HALT bleibt aktiv.
+
+**Smoke Tests:** 403 auf schatzinsel.app + workers.dev → bekannte Sandbox-Einschränkung, kein App-Problem.
+
+**Alle 3 Items blockiert (seit 2026-04-09):**
+- S48-1: Tesla-Video — **Till: Video schicken**
+- S48-2: Requesty Key — **Till: Requesty Dashboard, Key rotieren** ⚠️ Sicherheitsrisiko
+- S48-3: Stripe Links — **Till: 3 echte Payment-Links (5€/10€/25€)**
+
+**PRs wartend:** #270 (Sprint 47 Review) + #271 (dieser Branch) — beide ungemergt.
+
+**Autonomous agent: HALT. Nächste Aktion liegt bei Till.**
+
+---
+
 ### 2026-04-11 — Daily Scrum (Session 23) — LOOP AKTIV
 
 **Status:** Unverändert. Loop-Eskalation aus Session 22 gilt weiterhin.
