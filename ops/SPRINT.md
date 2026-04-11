@@ -9,13 +9,22 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S47-1 | **#103 Playwright E2E Tests** — PR #256 ist rebased auf main. 9 Critical Path Tests + Smoke Tests. Till: einmal klicken. | Engineer | 🔲 Blocked (Till: PR #256 mergen) |
+| S47-1 | **#103 Playwright E2E Tests** — 9 Critical Path Tests + Smoke Tests. | Engineer | ✅ Done (PR #256, 2026-04-09 18:45 UTC) |
 | S47-2 | **#78 Tesla-Nutzertest auswerten** — Echte Oscar-Daten. Seit Sprint 38 offen. | Scientist + Leader | 🔲 Blocked (Till: Video schicken) |
 | S47-3 | **#92 Requesty Key rotieren** — Alter Key im Git-Verlauf. | Engineer | 🔲 Blocked (Till: Requesty Dashboard) |
 
 ---
 
 ## Standup Log
+
+### 2026-04-11 — Daily Scrum (Session 18)
+
+**S47-1:** ✅ Erledigt (PR #256 war bereits am 2026-04-09 gemergt — Backlog korrigiert).
+**S47-2 + S47-3:** Weiterhin blockiert.
+**PRs wartend:** #270 (Sprint 47 Review) + #271 (Sprint 48 Planning) — beide offen, beide brauchen Tills Merge.
+**Smoke Test:** Sandbox-Proxy blockt externe URLs — kein App-Problem.
+
+---
 
 ### 2026-04-11 — Daily Scrum (Sprint 48 Pause, Session 17)
 
