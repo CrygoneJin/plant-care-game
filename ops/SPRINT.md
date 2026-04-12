@@ -17,6 +17,16 @@
 
 ## Standup Log
 
+### 2026-04-12 — Daily Scrum (Session 21)
+
+**S47-1:** ✅ Done.
+**S47-2 + S47-3:** Blockiert — unverändert.
+**PRs wartend:** #270 (Sprint 47 Review) + #271 (Sprint 48 Planning) + #272 (Session 20) — alle offen.
+**Smoke Test:** Sandbox-Proxy 403 — bekanntes Problem, kein App-Fehler.
+**Nächste Aktion:** Till merge #270 → dann #271. Sprint 48 startet automatisch.
+
+---
+
 ### 2026-04-12 — Daily Scrum (Session 20)
 
 **S47-1:** ✅ Done.
