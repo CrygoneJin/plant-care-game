@@ -17,6 +17,17 @@
 
 ## Standup Log
 
+### 2026-04-12 — Daily Scrum (Session 24)
+
+**S47-1:** ✅ Done.
+**S47-2 + S47-3:** Blockiert — unverändert.
+**Offene PRs:** #270 (S47 Review) + #271 (S48 Planning) + #273 (S23 Standup) — alle warten auf Tills Merge. #272 ist veraltet und kann geschlossen werden.
+**PR-Hinweis:** 4 offene PRs sind zu viel für eine blockierte Lage. Bitte #270 + #271 mergen, #272 + #273 schließen.
+**Smoke Test:** Sandbox-Proxy 403 — bekanntes Problem.
+**Nächste Aktion:** Till merge #270 → dann #271. Sprint 48 startet. #272 + #273 schließen.
+
+---
+
 ### 2026-04-12 — Daily Scrum (Session 22)
 
 **S47-1:** ✅ Done.
