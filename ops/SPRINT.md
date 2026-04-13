@@ -17,6 +17,21 @@
 
 ## Standup Log
 
+### 2026-04-13 — Daily Scrum (Session 30)
+
+**S47-1:** ✅ Done (PR #256, 2026-04-09).
+**S47-2 + S47-3:** Blockiert — unverändert.
+
+**PR-Schuld: 10 offene PRs.** Till: Bitte nur #270 mergen. Danach schließe ich #271–#280 selbst.
+
+| PR | Aktion |
+|----|--------|
+| #270 | Till: **Mergen** (Sprint 47 Review) |
+| #271–#279 | Nach #270: schließen |
+| #280 | dieser PR — nach #270: schließen |
+
+---
+
 ### 2026-04-12 — Daily Scrum (Session 22)
 
 **S47-1:** ✅ Done.
