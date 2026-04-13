@@ -6,6 +6,7 @@ Persistent team log. Append-only. Read by all agents.
 
 ## Learnings
 
+| 2026-04-13 | Standup-PR-Schuld: 10 redundante PRs (#272–#281) akkumuliert. Jede Session hat eigenen Standup-PR erstellt statt SPRINT.md direkt zu updaten. Fix: Standups gehören in SPRINT.md auf dem aktiven Sprint-Branch — kein neuer Branch, kein neuer PR für tägliche Status-Updates. |
 | 2026-04-10 | Sprint 48 Planning: GitHub-Status vor Ceremony prüfen | Vorherige Session schrieb "Sprint 48 Pause" ohne PR #256-Merge-Status auf GitHub zu prüfen. Till hatte PR #256 bereits am 04-09 gemergt. `list_pull_requests` + `pull_request_read` sind PFLICHT bei jedem Session-Start. Retro-Bedingung "Till macht eine Aktion" war bereits erfüllt. |
 | 2026-04-09 | Sprint-Review ohne Merge: Wenn alle Sprint-Items auf Human Input blocked sind → Review + Retro sofort schreiben. Kein Fake-Sprint. Pause ist besser als Gold-Plating. Sandbox-Proxy blockt externe URLs (403 host_not_allowed) — Smoke-Tests in dieser Umgebung nicht möglich. |
 | 2026-04-09 | Chat-Bubble-Toggle-Bug: openChat() + toggleChat() hebt sich auf | openChat() entfernt 'hidden', dann toggleChat() fügt es sofort wieder hinzu → Bubble öffnete das Panel nie. Fix: toggleChat() nur aufrufen wenn Panel NICHT hidden ist (zum Schließen). Tests enthüllten den Bug. |

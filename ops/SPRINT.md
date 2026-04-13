@@ -17,6 +17,22 @@
 
 ## Standup Log
 
+### 2026-04-13 — Daily Scrum — HALT + Aufräumen
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Umgebungseinschränkung, kein App-Problem.
+
+**S48-1:** 🔲 Blocked (Till: Tesla-Video)
+**S48-2:** 🔲 Blocked (Till: Requesty Dashboard) ⚠️ Sicherheitsrisiko
+**S48-3:** 🔲 Blocked (Till: Stripe Payment-Links)
+
+**PR-Schuld bereinigt:** 10 redundante Standup-PRs (#272–#281) geschlossen. Standup-Einträge gehören in SPRINT.md, nicht als eigene PRs.
+
+**Offen:** #270 (Sprint 47 Review) + #271 (dieser Branch) — beide warten auf Tills Merge.
+
+**Till: #270 mergen → #271 mergen → Sprint 48 läuft.**
+
+---
+
 ### 2026-04-12 — Daily Scrum (Session 26) — HALT
 
 **Status:** Unverändert. HALT bleibt aktiv.
