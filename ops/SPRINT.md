@@ -17,6 +17,16 @@
 
 ## Standup Log
 
+### 2026-04-13 — Daily Scrum (Session 32)
+
+**S47-1:** ✅ Done.
+**S47-2 + S47-3:** Blockiert — unverändert.
+**PR-Lage:** 11 offene PRs (#270–#281) — alle warten auf #270. Kein weiterer Standup-PR wird erstellt.
+**Smoke Test:** Sandbox-Proxy 403 — bekanntes Problem, kein App-Fehler.
+**Nächste Aktion:** Till merge #270 → Claude schließt #272–#281 automatisch → #271 mergen → Sprint 48 startet.
+
+---
+
 ### 2026-04-13 — Daily Scrum (Session 23)
 
 **S47-1:** ✅ Done.
