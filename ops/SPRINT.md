@@ -26,9 +26,9 @@
 **S48-3:** 🔲 Blocked (Till: Stripe Payment-Links)
 
 **PR #288:** Offen. Wartet auf Tills Merge.
-**Autonome Arbeit:** Sprint 49 gestartet — P0-Items #104/105/106 sind implementierbar ohne Human Input.
+**Autonome Arbeit:** Keine. Alle P0/P1/P2-Backlog-Items Done. Kein Code-Item mehr autonom verfügbar.
 
-**Till: PR #288 mergen + Tesla-Video schicken → Sprint 48 startet + Requesty Key rotieren.**
+**Till: PR #288 mergen + Tesla-Video + Requesty Dashboard + Stripe Links → Sprint 48 startet.**
 
 ---
 
