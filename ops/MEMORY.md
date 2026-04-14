@@ -6,6 +6,9 @@ Persistent team log. Append-only. Read by all agents.
 
 ## Learnings
 
+| 2026-04-14 | PR-Konflikt-Reparatur: PRs #270 + #271 waren `dirty` (mergeable_state) wegen 35 identischer Standup-Commits direkt auf main. Fix: Sauberen Branch von origin/main, beide PRs in einem PR zusammengefasst. Lesson: Standups nie direkt auf main committen wenn offene PRs auf dieselbe Datei schreiben. |
+| 2026-04-10 | Sprint 48 Planning: GitHub-Status (`list_pull_requests` + `pull_request_read`) PFLICHT bei jedem Session-Start. Retro-Bedingungen können zwischen Sessions erfüllt werden — ohne Prüfung schreibt man "Pause" obwohl Till längst gemergt hat. |
+| 2026-04-09 | Sprint 47 Review: Till hat PR #256 selbstständig gemergt — Playwright auf main (18:45 UTC). Sprint Goal ✅ erreicht. Smoke Tests im Claude Code Web nicht verifizierbar (Proxy blockiert externe URLs via `host_not_allowed`) — kein Produktionsausfall, nur Sandbox-Einschränkung. |
 | 2026-04-14 | Sprint 47 bleibt eingefroren (Session 28). PRs #270 + #271 seit 5 Tagen offen. Systemzustand: vollständig blockiert auf Human Input. Keine autonome Arbeit möglich. |
 | 2026-04-13 | Standup-PRs werden von Till geschlossen (PR #282: "Standup gehört in SPRINT.md, nicht als PR"). Standups direkt auf main pushen — kein eigener PR. |
 | 2026-04-09 | Sprint-Review ohne Merge: Wenn alle Sprint-Items auf Human Input blocked sind → Review + Retro sofort schreiben. Kein Fake-Sprint. Pause ist besser als Gold-Plating. Sandbox-Proxy blockt externe URLs (403 host_not_allowed) — Smoke-Tests in dieser Umgebung nicht möglich. |

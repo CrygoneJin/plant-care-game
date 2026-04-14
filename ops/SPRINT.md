@@ -1,3 +1,36 @@
+# Sprint 48 — "Launch-Bereit"
+
+**Sprint Goal:** Tesla-Nutzertest auswerten, Requesty Key rotieren, Stripe Production-Links. Letzte Blockers vor Live Launch.
+**Start:** 2026-04-10
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S48-1 | **#78 Tesla-Nutzertest auswerten** — 1h Oscar-Video. Echte Nutzerdaten. Seit Sprint 38 offen. | Scientist + Leader | 🔲 Blocked (Till: Video schicken) |
+| S48-2 | **#92 Requesty Key rotieren** — Alter Key im Git-Verlauf. Sicherheitsrisiko. | Engineer | 🔲 Blocked (Till: Requesty Dashboard) |
+| S48-3 | **#103 Stripe Production-Links** — 3 Test-URLs durch echte ersetzen (5€/10€/25€). Donation-Button geht live. | Engineer | 🔲 Blocked (Till: Stripe Dashboard) |
+
+---
+
+## Standup Log
+
+### 2026-04-14 — Daily Scrum (Session 36)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Umgebungseinschränkung, kein App-Problem.
+
+**S48-1:** 🔲 Blocked (Till: Tesla-Video)
+**S48-2:** 🔲 Blocked (Till: Requesty Dashboard) ⚠️ Sicherheitsrisiko
+**S48-3:** 🔲 Blocked (Till: Stripe Payment-Links)
+
+**PR-Schuld bereinigt:** PRs #270 + #271 waren `dirty` (35 identische Standup-Commits auf main). Zusammengeführt in PR #272. Sprint 47 Review/Retro korrigiert (Goal war ✅ nicht ❌).
+
+**Till: PR #272 mergen → Sprint 48 läuft.**
+
+---
+
 # Sprint 47 — "Playwright auf main"
 
 **Sprint Goal:** PR #256 (Playwright E2E Critical Path Tests) mergen. Danach: Tesla-Nutzertest #78 auswerten wenn Till Video schickt.
@@ -553,37 +586,46 @@
 
 ## Sprint Review — 2026-04-09
 
-**Sprint Goal erreicht:** ❌ Nein — alle Items von Tag 1 an blocked.
+**Sprint Goal "Playwright auf main": ✅ Erreicht.**
 
-**Was geliefert:** Nichts Neues. Kein autonomer Code-Fortschritt.
+Till hat PR #256 heute (18:45 UTC) gemergt. 9 Critical Path E2E Tests + Smoke Tests laufen jetzt im CI bei jedem PR.
 
-**Oscar sieht heute:** Unverändert. Snake (tippen), Tetris (Konami-Code), Genesis Phase 2, neues Onboarding — alles weiterhin auf `origin/main`.
+**Geliefert:**
+- `ops/tests/critical-path.spec.js` — 9 Tests: Block platzieren, Quest annehmen, NPC-Chat
+- `ops/tests/smoke.spec.js` — ebenfalls auf main
+- `npm run test:e2e` läuft bei jedem PR
 
-**Offene Blockers (unverändert):**
-| Item | Blocked auf |
-|------|-------------|
-| S47-1: PR #256 Playwright | Till: Merge-Klick |
-| S47-2: Tesla-Nutzertest #78 | Till: Video schicken |
-| S47-3: Requesty Key rotieren | Till: Dashboard-Zugang |
+**Nicht geliefert (blocked):**
+- #78 Tesla-Nutzertest: wartet auf Video von Till
+- #92 Requesty Key: wartet auf Dashboard-Zugang
+
+**Was Oscar sieht:** unverändert — Playwright läuft im CI, nicht im Spiel.
+
+**Sprint 47: Done.**
 
 ---
 
 ## Sprint Retrospective — 2026-04-09
 
-**Was lief gut:**
-- Keine Fake-Arbeit. Ehrliche Blockade statt Gold-Plating.
-- Drei Standups haben den Status klar kommuniziert.
+### Was lief gut?
+- **Till hat gemergt.** PR #256 (Playwright) landete ohne Reibung auf main. 9 Tests im CI — ohne manuellen Eingriff von Claude.
+- **Sprint Goal war realistisch.** Genau eine Aktion für Till, klar formuliert. Wurde erfüllt.
+- **Keine falschen Smoke-Tests.** Die Proxy-Beschränkung der Claude-Code-Web-Umgebung wurde dokumentiert statt ignoriert.
 
-**Was lief schlecht:**
-- Sprint 47 war von Tag 1 blockiert. Ein Sprint ohne autonome Items ist kein Sprint — es ist Warten.
-- Smoke-Tests in dieser Umgebung nicht möglich (Sandbox-Proxy blockt externe URLs). Blind-Spot.
+### Was lief schlecht?
+- **#78 Tesla-Nutzertest: Sprint 38–47 offen.** Das ist 9 Sprints. Kein Video, keine Daten, kein Feynman-Audit. Das ist die teuerste offene Frage im gesamten Backlog.
+- **#92 Requesty Key: Alt. Sicherheitsrisiko bleibt.** Jede Session ohne Rotation ist ein Risiko.
+- **Autonome Kapazität erschöpft.** Ohne Human Input gibt es nichts Sinnvolles mehr zu bauen. Das ist kein Fehler — aber ein Zeichen dass wir nah an einem echten Produktreife-Punkt sind.
+- **PR-Schuld durch Loop:** 35 identische Standup-Commits auf main haben PRs #270 + #271 blockiert (`dirty`). PRs nie auf `dirty` laufen lassen — täglich resolven oder nicht erst entstehen lassen.
 
-**Was verbessern wir:**
-- Sprint 48 = Pause. Kein neues Sprint Planning bis Till eine Aktion macht.
-- Wenn Till PR #256 mergt: Tesla-Nutzertest (#78) sofort starten.
-- Wenn Till Video schickt: Scientist-Auswertung in einer Session.
+### Was verbessern wir?
+1. **Standups gehen auf den aktiven Sprint-Branch, nicht auf main.** Kein neuer PR pro Standup.
+2. **Till: Zwei konkrete Aktionen (priorisiert):**
 
-**Till: Eine Aktion reicht um Sprint 48 zu starten.**
+| Prio | Aktion | Warum jetzt |
+|------|--------|-------------|
+| 1 | **Video schicken** (#78) | 9 Sprints. Echte Oscar-Daten. Feynman braucht das. |
+| 2 | **Requesty Dashboard** (#92) | Sicherheit. Key aus Git-Verlauf ist Risiko. |
 
 ---
 
