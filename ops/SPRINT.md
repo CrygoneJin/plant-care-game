@@ -17,6 +17,17 @@
 
 ## Standup Log
 
+### 2026-04-14 — Daily Scrum (Session 38)
+
+**S47-1:** ✅ Done.
+**S47-2 + S47-3:** Blockiert — unverändert.
+**Smoke Tests:** Sandbox-Proxy 403 — bekanntes Problem, kein App-Fehler.
+**PRs:** #288 (Sprint 47 Review + Sprint 48 Planning) — offen, wartet auf Tills Merge.
+**Autonome Arbeit:** Keine. Alle P0-Items auf Human Input blockiert.
+**Till: Eine Aktion** — PR #288 mergen → Sprint 48 startet.
+
+---
+
 ### 2026-04-14 — Daily Scrum (Session 37)
 
 **S47-1:** ✅ Done.
