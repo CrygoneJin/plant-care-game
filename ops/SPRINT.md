@@ -17,6 +17,17 @@
 
 ## Standup Log
 
+### 2026-04-14 — Daily Scrum (Session 39)
+
+**S47-1:** ✅ Done.
+**S47-2 + S47-3:** Blockiert — unverändert.
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Containereinschränkung, kein App-Fehler.
+**PR #288:** Rebased auf current main. Jetzt konfliktfrei mergebar. Wartet auf Till.
+**Autonome Arbeit:** PR #288 Branch rebased + force-pushed. Lokale main-Divergenz bereinigt.
+**Till: Eine Aktion** — PR #288 mergen → Sprint 48 startet.
+
+---
+
 ### 2026-04-14 — Daily Scrum (Session 38)
 
 **S47-1:** ✅ Done.
