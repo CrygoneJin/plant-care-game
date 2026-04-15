@@ -31,6 +31,23 @@
 
 ## Standup Log
 
+### 2026-04-15 — Daily Scrum (Session 46)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**PR #289:** Rebase auf main durchgeführt — war `dirty` wegen 3 Standup-Commits auf main seit Branch-Erstellung. Force-Push erledigt. PR sollte jetzt mergeable sein.
+
+**PR #291:** `fix/ci-check-concurrency` — CI-Concurrency-Fix aus S45 offen, wartet auf Merge.
+
+**Alle S50-Items:** 🔄 In PR #289 — warten auf Till.
+
+**Till: Aktionen:**
+1. **PR #291 mergen** — CI-Fix (check-Job concurrency), klein, sicher
+2. **PR #289 mergen** — alle 6 S50-Items: CI, OG Tags, 10 Quests, Playwright
+3. **PR #290 schließen** — Inhalt bereits auf main
+
+---
+
 ### 2026-04-15 — Daily Scrum (Session 45)
 
 **Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
