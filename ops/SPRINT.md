@@ -15,6 +15,23 @@
 
 ---
 
+## Sprint 49 — Review (2026-04-15)
+
+**Sprint Goal:** itch.io-Seite live, Übersetzungs-Coverage geprüft, Codebase bereit für Launch.
+**Ergebnis:** ✅ Sprint Goal erreicht (alle autonomen Items abgeschlossen).
+
+| Item | Ergebnis |
+|------|----------|
+| S49-1 itch.io Page Copy | ✅ `docs/ITCH-IO-COPY.md` — bereit zum Upload |
+| S49-2 Translations Coverage | ✅ HE/AR 115/115 Keys vollständig, kein Fix nötig |
+| S49-3 Unit + Typecheck | ✅ 22/22 Tests grün, `tsc --noEmit` bestanden |
+
+**Value delivered:** Codebase ist launch-ready. itch.io-Copy wartet auf Tills Upload. HE/AR-Übersetzungen komplett. CI-Stand sauber.
+
+**Nächste Ceremony:** Sprint Retrospective → Sprint 50 Planning
+
+---
+
 ## Carry-Over aus S48 (auf Human Input blockiert)
 
 | # | Item | Blocker |
@@ -56,6 +73,21 @@
 ---
 
 ## Standup Log
+
+### 2026-04-15 — Sprint Review (Session 44)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Umgebungseinschränkung, kein App-Problem.
+
+**Sprint 49:** Alle 3 Items ✅ Done. Sprint Review abgeschlossen.
+
+**Carry-Over (Human Input):**
+- S48-1 Tesla-Nutzertest — ⏳ Till: Video schicken
+- S48-2 Requesty Key ⚠️ — ⏳ Till: Requesty Dashboard
+- S48-3 Stripe Links — ⏳ Till: Stripe Dashboard
+
+**Nächste Session:** Sprint Retrospective → Sprint 50 Planning.
+
+---
 
 ### 2026-04-15 — Daily Scrum (Session 43)
 
