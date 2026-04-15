@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a5276;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2980b9;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="ocean" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1abc9c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16a085;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Hintergrund: Himmel -->
+  <rect width="1200" height="630" fill="url(#sky)" />
+
+  <!-- Ozean -->
+  <ellipse cx="600" cy="520" rx="700" ry="200" fill="url(#ocean)" />
+
+  <!-- Sterne / Punkte -->
+  <circle cx="80" cy="60" r="3" fill="white" opacity="0.6"/>
+  <circle cx="160" cy="30" r="2" fill="white" opacity="0.4"/>
+  <circle cx="250" cy="80" r="2.5" fill="white" opacity="0.5"/>
+  <circle cx="950" cy="50" r="3" fill="white" opacity="0.6"/>
+  <circle cx="1050" cy="25" r="2" fill="white" opacity="0.4"/>
+  <circle cx="1130" cy="70" r="2.5" fill="white" opacity="0.5"/>
+  <circle cx="1180" cy="110" r="2" fill="white" opacity="0.3"/>
+
+  <!-- Insel Basis -->
+  <ellipse cx="600" cy="430" rx="280" ry="80" fill="#f39c12" />
+  <!-- Sand Highlight -->
+  <ellipse cx="600" cy="420" rx="260" ry="55" fill="#f5b942" />
+
+  <!-- Gras auf der Insel -->
+  <ellipse cx="600" cy="380" rx="220" ry="45" fill="#27ae60" />
+
+  <!-- Palme -->
+  <rect x="580" y="280" width="12" height="110" rx="4" fill="#8B5E3C" />
+  <!-- Palmenblätter -->
+  <ellipse cx="556" cy="280" rx="38" ry="12" fill="#2ecc71" transform="rotate(-30 556 280)"/>
+  <ellipse cx="644" cy="280" rx="38" ry="12" fill="#27ae60" transform="rotate(30 644 280)"/>
+  <ellipse cx="586" cy="265" rx="35" ry="11" fill="#2ecc71" transform="rotate(-10 586 265)"/>
+  <!-- Kokosnüsse -->
+  <circle cx="595" cy="293" r="8" fill="#6B3A2A"/>
+  <circle cx="610" cy="298" r="7" fill="#7D4A35"/>
+
+  <!-- Haus / Hütte -->
+  <rect x="470" y="350" width="60" height="45" rx="3" fill="#e67e22" />
+  <polygon points="465,353 500,315 535,353" fill="#c0392b" />
+  <!-- Tür -->
+  <rect x="487" y="368" width="16" height="27" rx="2" fill="#7f4a12" />
+  <!-- Fenster -->
+  <rect x="508" y="358" width="14" height="14" rx="2" fill="#f1c40f" />
+
+  <!-- Zweites Haus -->
+  <rect x="680" y="358" width="52" height="38" rx="3" fill="#3498db" />
+  <polygon points="675,360 706,328 737,360" fill="#2980b9" />
+  <rect x="693" y="374" width="14" height="22" rx="2" fill="#1a5276" />
+
+  <!-- Lagerfeuer / Feuer-Element -->
+  <ellipse cx="620" cy="402" rx="14" ry="6" fill="#7f4a12" opacity="0.7" />
+  <text x="620" y="390" font-size="24" text-anchor="middle" font-family="Arial">🔥</text>
+
+  <!-- Titel -->
+  <text x="600" y="120" font-family="'Comic Neue', 'Comic Sans MS', Arial Rounded MT Bold, Arial, sans-serif"
+        font-size="88" font-weight="bold" text-anchor="middle"
+        fill="white" stroke="#1a3a5c" stroke-width="4">Schatzinsel</text>
+
+  <!-- Tagline -->
+  <text x="600" y="175" font-family="'Comic Neue', 'Comic Sans MS', Arial, sans-serif"
+        font-size="32" text-anchor="middle"
+        fill="#f1c40f">Deine Insel. Deine Regeln. Kostenlos spielen.</text>
+
+  <!-- Emoji Reihe -->
+  <text x="360" y="235" font-size="42" text-anchor="middle" font-family="Arial">🏝️</text>
+  <text x="440" y="235" font-size="42" text-anchor="middle" font-family="Arial">🌊</text>
+  <text x="520" y="235" font-size="42" text-anchor="middle" font-family="Arial">🌳</text>
+  <text x="600" y="235" font-size="42" text-anchor="middle" font-family="Arial">⚒️</text>
+  <text x="680" y="235" font-size="42" text-anchor="middle" font-family="Arial">🗺️</text>
+  <text x="760" y="235" font-size="42" text-anchor="middle" font-family="Arial">🎮</text>
+  <text x="840" y="235" font-size="42" text-anchor="middle" font-family="Arial">🏆</text>
+
+  <!-- URL Badge -->
+  <rect x="450" y="565" width="300" height="48" rx="24" fill="white" opacity="0.15"/>
+  <text x="600" y="596" font-family="Arial, sans-serif" font-size="26"
+        text-anchor="middle" fill="white" font-weight="bold">schatzinsel.app</text>
+</svg>
