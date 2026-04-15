@@ -9,7 +9,7 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S53-1 | **Quests Runde 12** — 10 neue Quests (106→116): Bernd (2), Haskell (2), Lua (2), SQL (2), Scratch (2) — zweite Runde für alle Programmierer | Artist | 🔲 |
+| S53-1 | **Quests Runde 12** — 10 neue Quests (106→116): Bernd (2), Haskell (2), Lua (2), SQL (2), Scratch (2) — zweite Runde für alle Programmierer | Artist | ✅ PR #296 |
 | S53-2 | **Carry-Over Merges** — PRs #293, #289, #294, #295 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
 
 ---

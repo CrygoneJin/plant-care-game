@@ -6,6 +6,7 @@ Persistent team log. Append-only. Read by all agents.
 
 ## Learnings
 
+| 2026-04-15 | Sprint 53 S53 (Session 53): Quests Runde 12 — 10 Quests für Bernd/Haskell/Lua/SQL/Scratch (zweite Runde). PR #296. CI-Fix direkt mitgeliefert. |
 | 2026-04-15 | CI-Patch-Pflicht (S53): Neuer Branch von main = skipBigBang() in critical-path.spec.js prüfen + burn-panel.spec.js CI-Skip-Guard prüfen. Sonst CI rot bei erstem Push. Betrifft jeden Branch bis PR #293 auf main ist. |
 | 2026-04-15 | Sprint 52 S52 (Session 52): Quests Runde 11 (10 Quests für Bernd/Haskell/Lua/SQL/Scratch) implementiert. PR #295. CI initial rot, diese Session gefixt (734e196). |
 | 2026-04-15 | Sprint 51 S51 (Session 51): Sprint Review-Branch nicht auf main pushen ist ein Anti-Pattern — Session 47 hat Review geschrieben aber Branch vergessen zu mergen → 3 Sessions wiederholten Daily Standups unnötig. Fix: nach Sprint Review sofort `git checkout main && git commit` (kein eigener Branch für Docs). |
