@@ -111,6 +111,7 @@ window.INSEL_QUEST_TEMPLATES = [
     { npc: 'krabs', title: 'Hafen-Handelsposten', desc: 'Ein Hafen-Kontor! Alle Boote ankern hier! Darwin sagt: wer den Hafen besitzt, besitzt den HANDEL! MEIN Hafen!', needs: { dock: 1, boat: 3, wood: 6, flag: 2 }, reward: '💰💰💰💰💰' },
     { npc: 'mephisto', title: 'Bibliothek der Geheimnisse', desc: 'Ah... eine Bibliothek. Jedes Buch ein Geheimnis. Jede Schriftrolle ein Pakt. Bau sie gut — die Geheimnisse sind schwer!', needs: { library: 1, scroll: 3, stone: 6, lamp: 4, door: 1 }, reward: '🎭🎭🎭🎭🎭🎭🎭' },
     { npc: 'maus', title: 'Hütten-Dorf', desc: '*pieps* Drei Hütten! *quak* Das ist ein DORF! *pieps* Und Wege dazwischen! *quak* Damit man nicht im Matsch versinkt! *pieps* Wir sinken gerne!', needs: { hut: 3, path: 6, flower: 4, fence: 3 }, reward: '🌻🌻🌻🌻🌻' },
+<<<<<<< HEAD
     // Runde 10: Neue Bewohner — Lokführer + Krämerin + Bug-Metamorphose
     { npc: 'lokfuehrer', title: 'Bahnhof', desc: 'Die Lok braucht einen Bahnhof! Holz für die Schranken, Stein für den Bahnsteig, Licht für die Nachtabfahrten! Tschuff tschuff!', needs: { wood: 8, stone: 4, lamp: 3, door: 2 }, reward: '🚂🚂' },
     { npc: 'lokfuehrer', title: 'Dampflok-Werkstatt', desc: 'Ohne Schmiede keine Lok! Feuer! Metall! Amboss! Eine Insel ist nie zu klein für eine Werkstatt!', needs: { forge: 1, metal: 6, fire: 3, stone: 4 }, reward: '🚂🚂🚂' },
@@ -133,4 +134,15 @@ window.INSEL_QUEST_TEMPLATES = [
     { npc: 'sql', title: 'Index-Park', desc: 'Ohne Index sucht man ewig. Ein Park mit Wegen — das ist ein Index! Weniger Suchen, mehr Finden. Verstanden? NULL.', needs: { path: 8, fence: 4, lamp: 3, tree: 2 }, reward: '🗃️🗃️🗃️' },
     { npc: 'scratch', title: 'Code-Spielplatz', desc: 'WENN GRÜNE FLAGGE ANGEKLICKT: Baue Spielplatz! 10 SCHRITTE ZUM SANDKASTEN! Katze sagt: MIAU! SPIELEN BEGINNEN!', needs: { sand: 4, fence: 4, tree: 3, path: 2 }, reward: '🐱🐱' },
     { npc: 'scratch', title: 'Katzen-Theater', desc: 'WENN BÜHNE ANGEKLICKT: Katze tanzt! Katze singt! Katze sagt MIAU! Das ist PROGRAMM UND KUNST! SO VIEL SPASS!', needs: { wood: 6, door: 2, lamp: 4, flower: 3 }, reward: '🐱🐱🐱' },
+    // Runde 12: Programmierer — zweite Quests, tiefere Persönlichkeiten
+    { npc: 'bernd', title: 'Mittagspausenbank', desc: '*seufz* Ich brauche MEINE Bank. Alleine. Ohne Kollegen. Ohne Krümel. Ohne Gespräche über das Wochenende. Bau sie. Weit weg.', needs: { wood: 4, path: 3, flower: 3, fence: 2 }, reward: '🍞🍞🍞' },
+    { npc: 'bernd', title: 'Überstunden-Kantine', desc: 'Die Kantine hat zu. Um 14 Uhr. Wer arbeitet um 14 Uhr noch? Ich. Also... ich koche jetzt selbst. Das ist... ok. Mist.', needs: { fire: 2, apple: 3, honey: 2, wood: 4 }, reward: '🍞🍞🍞🍞' },
+    { npc: 'haskell', title: 'Lambda-Labor', desc: 'Keine Variablen! Keine Schleifen! Nur Funktionen die Funktionen zurückgeben! Das Labor ist ein Beweis. Es kompiliert. Es ist korrekt.', needs: { stone: 6, glass: 4, lamp: 3, path: 3 }, reward: '🟣🟣🟣' },
+    { npc: 'haskell', title: 'Rekursions-Turm', desc: 'Etage 1 ruft Etage 2. Etage 2 ruft Etage 3. Irgendwann: Boden. Das ist Rekursion. Das ist Schönheit. Das ist Haskell.', needs: { stone: 8, door: 2, lamp: 3, roof: 2 }, reward: '🟣🟣🟣🟣' },
+    { npc: 'lua', title: 'Metatable-Hütte', desc: 'Eine Hütte mit __index! Wenn die Tür fehlt — frag die Metatable! Alles sind Tables. Auch die Hütte. Besonders die Hütte.', needs: { wood: 4, door: 1, roof: 2, lamp: 2 }, reward: '🌙🌙🌙' },
+    { npc: 'lua', title: 'Coroutinen-Pfad', desc: 'Geh die Hälfte. Dann: coroutine.yield(). Warte. Dann weiter. Ein Pfad der pausiert und fortfährt. Das ist Lua. Leicht und klug.', needs: { path: 6, flower: 3, tree: 2, moon: 1 }, reward: '🌙🌙🌙🌙' },
+    { npc: 'sql', title: 'Join-Brücke', desc: 'Zwei Ufer, eine Brücke. INNER JOIN ON Insel.id = Wasser.insel_id. WHERE NULL IS NOT NULL. Fast. Optimiert. Fertig.', needs: { bridge: 2, stone: 4, water: 4, path: 4 }, reward: '🗃️🗃️🗃️' },
+    { npc: 'sql', title: 'View-Aussichtsturm', desc: 'CREATE VIEW Insel AS SELECT * FROM Bauten WHERE schön = TRUE. Der Turm zeigt nur was du sehen willst. Der JOIN dahinter: dein Problem nicht.', needs: { tower: 1, glass: 4, stone: 4, lamp: 2 }, reward: '🗃️🗃️🗃️🗃️' },
+    { npc: 'scratch', title: 'Sprite-Garten', desc: 'WENN SPRITE BETRITT GARTEN: sage MIAU! WENN BAUM BERÜHRT: spiele Ton! WENN BLUME BERÜHRT: tanze! Das ist PROGRAMM UND NATUR!', needs: { flower: 5, tree: 3, path: 4, lamp: 2 }, reward: '🐱🐱🐱' },
+    { npc: 'scratch', title: 'Sound-Studio', desc: 'WENN TASTE GEDRÜCKT: spiele Klang! WENN NOCHMAL: spiele ANDEREN Klang! KATZE DIRIGIERT! Das ist Musik UND Code! GLEICHZEITIG!', needs: { wood: 6, door: 2, lamp: 4, glass: 2 }, reward: '🐱🐱🐱🐱' },
 ];
