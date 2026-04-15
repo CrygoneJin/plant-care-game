@@ -6,6 +6,9 @@ Persistent team log. Append-only. Read by all agents.
 
 ## Learnings
 
+| 2026-04-15 | Sprint 48 Lesson: Kein Sprint planen wenn ALLE Items Human Input brauchen. S49 bewusst mit 100% autonomen Items geplant. Review+Retro sofort nach blocked-Sprint, nicht warten. |
+| 2026-04-15 | unit.test.js Pfadfehler: ROOT zeigte auf `ops/` statt `src/core/` + `src/infra/`. Fix: CORE + INFRA Konstanten. Gleiches Muster für künftige Tests merken. |
+| 2026-04-15 | package.json test:unit Pfad war `tests/unit.test.js` (falsch) statt `ops/tests/unit.test.js`. |
 | 2026-04-14 | Sprint 48 Planning als Doc-Commit direkt auf main: Kein PR für reine Docs wenn der PR nur einen Loop erzeugt. PR #288 hatte 30+ Sessions stale weil jeder Standup SPRINT.md veränderte. Fix: Inhalt direkt committen, PR schließen. |
 | 2026-04-14 | PR-Konflikt-Reparatur: PRs #270 + #271 waren dirty wegen 35 identischer Standup-Commits direkt auf main. Lesson: Sprint Planning gehört als Doc-Commit auf main — kein PR wenn keine anderen Dateien betroffen. |
 | 2026-04-10 | Sprint 48 Planning: GitHub-Status PFLICHT bei jedem Session-Start. Retro-Bedingungen können zwischen Sessions erfüllt werden — ohne Prüfung schreibt man "Pause" obwohl Till längst gemergt hat. |

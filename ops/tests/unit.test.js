@@ -4,7 +4,8 @@ const fs = require('fs');
 const vm = require('vm');
 const path = require('path');
 
-const ROOT = path.resolve(__dirname, '..');
+const CORE = path.resolve(__dirname, '../../src/core');
+const INFRA = path.resolve(__dirname, '../../src/infra');
 
 // Mock browser globals
 function createBrowserContext() {
@@ -60,7 +61,7 @@ describe('INSEL namespace', () => {
 
     beforeEach(() => {
         ctx = createBrowserContext();
-        loadScript(path.join(ROOT, 'insel.js'), ctx);
+        loadScript(path.join(CORE, 'insel.js'), ctx);
     });
 
     it('register() makes module accessible on INSEL', () => {
@@ -73,7 +74,7 @@ describe('INSEL namespace', () => {
         ctx.console = { ...console, warn: (...args) => warnings.push(args.join(' ')) };
         // reload with patched console
         ctx.window = ctx;
-        loadScript(path.join(ROOT, 'insel.js'), ctx);
+        loadScript(path.join(CORE, 'insel.js'), ctx);
 
         ctx.INSEL.register('dup', { v: 1 });
         ctx.INSEL.register('dup', { v: 2 });
@@ -123,7 +124,7 @@ describe('INSEL_STORAGE', () => {
 
     beforeEach(() => {
         ctx = createBrowserContext();
-        loadScript(path.join(ROOT, 'storage.js'), ctx);
+        loadScript(path.join(INFRA, 'storage.js'), ctx);
     });
 
     it('set() stores with insel- prefix', () => {
@@ -227,7 +228,7 @@ describe('INSEL_SOUND.isMuted', () => {
         // performance.now() stub
         ctx.performance = { now: () => Date.now() };
 
-        loadScript(path.join(ROOT, 'sound.js'), ctx);
+        loadScript(path.join(CORE, 'sound.js'), ctx);
     });
 
     it('isMuted() returns true when localStorage has insel-muted=true', () => {

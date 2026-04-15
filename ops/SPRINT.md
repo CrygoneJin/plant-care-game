@@ -1,7 +1,7 @@
-# Sprint 48 — "Launch-Bereit"
+# Sprint 49 — "itch.io + Autonomous Quality"
 
-**Sprint Goal:** Tesla-Nutzertest auswerten, Requesty Key rotieren, Stripe Production-Links. Letzte Blockers vor Live Launch.
-**Start:** 2026-04-10
+**Sprint Goal:** itch.io-Seite live, Übersetzungs-Coverage geprüft, Codebase bereit für Launch.
+**Start:** 2026-04-15
 
 ---
 
@@ -9,9 +9,49 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S48-1 | **#78 Tesla-Nutzertest auswerten** — 1h Oscar-Video. Echte Nutzerdaten. Seit Sprint 38 offen. | Scientist + Leader | 🔲 Blocked (Till: Video schicken) |
-| S48-2 | **#92 Requesty Key rotieren** — Alter Key im Git-Verlauf. Sicherheitsrisiko. | Engineer | 🔲 Blocked (Till: Requesty Dashboard) |
-| S48-3 | **#103 Stripe Production-Links** — 3 Test-URLs durch echte ersetzen (5€/10€/25€). Donation-Button geht live. | Engineer | 🔲 Blocked (Till: Stripe Dashboard) |
+| S49-1 | **itch.io Page Copy** — Vollständige Spielbeschreibung, Tags, Short/Long Description auf DE+EN. Ready-to-paste für Till. | Artist + Engineer | ✅ Done — `docs/ITCH-IO-COPY.md` |
+| S49-2 | **Translations Coverage Audit** — Script prüft ob HE/AR alle Keys aus DE haben. Missing keys automatisch auffüllen. | Engineer | ✅ Done — HE/AR 115/115 Keys vollständig, kein Fix nötig |
+| S49-3 | **Unit + Typecheck grün** — `tsc --noEmit` + `npm run test:unit` in CI-Stand prüfen, Regressions fixen. | Engineer | ✅ Done — Pfadfehler in `unit.test.js` + `package.json` gefixt, 22/22 Tests grün |
+
+---
+
+## Carry-Over aus S48 (auf Human Input blockiert)
+
+| # | Item | Blocker |
+|---|------|---------|
+| S48-1 | Tesla-Nutzertest auswerten | ⏳ Till: Video schicken |
+| S48-2 | Requesty Key rotieren ⚠️ | ⏳ Till: Requesty Dashboard |
+| S48-3 | Stripe Production-Links | ⏳ Till: Stripe Dashboard |
+
+---
+
+## Sprint 48 — Review + Retro (2026-04-15)
+
+### Review
+
+**Sprint Goal:** ❌ Nicht erreicht. Alle 3 Items seit 2026-04-10 auf Human Input blockiert.
+
+| Item | Ergebnis |
+|------|----------|
+| S48-1 Tesla-Nutzertest | 🔲 Blocked — kein Fortschritt |
+| S48-2 Requesty Key | 🔲 Blocked — Sicherheitsrisiko bleibt offen |
+| S48-3 Stripe Links | 🔲 Blocked — Donation-Button noch nicht live |
+
+**Value delivered:** 0. Sprint war ein reiner Holding-Pattern.
+
+### Retro
+
+**Was lief gut:** Blockers klar dokumentiert, kein Gold-Plating, Sprint-Grenze respektiert.
+
+**Was lief schlecht:** Sprint 48 war von Anfang an ein 100%-Human-Input-Sprint. Das sollte beim Planning erkannt und verhindert werden.
+
+**Learning:** Kein Sprint starten wenn alle Items "Human Input" sind. Entweder: (a) Human-Input-Items als "Pause" markieren und autonomen Sprint parallel führen, oder (b) Sprint erst planen wenn mindestens 1 Item autonom lösbar ist.
+
+**Action:** S49 enthält ausschließlich autonome Items. Carry-Over bleibt offen bis Till die Inputs liefert.
+
+---
+
+## Standup Log
 
 ---
 
