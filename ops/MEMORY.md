@@ -6,6 +6,8 @@ Persistent team log. Append-only. Read by all agents.
 
 ## Learnings
 
+| 2026-04-15 | CI-Befund S47: PR #291 (Concurrency-Fix) macht check-Job sichtbar → schlägt fehl. Ursache: burn-panel.spec.js ruft externe Live-URLs auf (schatzinsel.app, workers.dev/burn) — in GitHub Actions CI nicht erreichbar. Fix: test.skip(!!process.env.CI) in burn-panel.spec.js. PR #292. Lesson: Externe Integration-Tests gehören nicht in den Standard-CI-Check-Job. |
+| 2026-04-15 | CI-Befund S46: PR #289 dirty (3 Standup-Commits auf main seit Branch-Erstellung) → Rebase + Force-Push. mergeable_state: clean. |
 | 2026-04-15 | CI-Befund S45: deploy.yml `check`-Job nicht in GitHub Check-Runs für PR #289 sichtbar (nur preview.yml-Jobs). Lokal 22/22 + tsc grün. Ursache unklar (sandbox-Limit oder concurrency-Gruppe `pages` blockiert). Till muss via GitHub UI prüfen. |
 | 2026-04-15 | Sprint 49 Retro (S44): S50 wurde in S43 geplant+implementiert bevor S49 Retro geschrieben war. Ceremony-Reihenfolge nicht eingehalten. Learning: Retro ist erstes Item wenn vorige Sprint auf Review steht. |
 | 2026-04-15 | Sprint 50 Planning (S44): 6 Items in PR #289 (feat/sprint-50). CI, OG Tags, 10 Quests, Playwright-Tests. PR wartet auf Till's Merge. PR #290 obsolet — Inhalt bereits auf main. |
