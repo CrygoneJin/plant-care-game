@@ -6,6 +6,7 @@ Persistent team log. Append-only. Read by all agents.
 
 ## Learnings
 
+| 2026-04-15 | CI-Diagnose S48: PR #292 burn-panel-Fix korrekt verifiziert — test.skip(!!process.env.CI) im describe-Scope funktioniert (lokal: 2 skipped). Fehler liegt in smoke.spec.js oder critical-path.spec.js. Reproduktion blockiert: Browser 1208 nicht in Sandbox installierbar. Fix-Pfad: CI-Logs in GitHub Actions prüfen, spezifischen Test + Fehler identifizieren. |
 | 2026-04-15 | CI-Befund S45: deploy.yml `check`-Job nicht in GitHub Check-Runs für PR #289 sichtbar (nur preview.yml-Jobs). Lokal 22/22 + tsc grün. Ursache unklar (sandbox-Limit oder concurrency-Gruppe `pages` blockiert). Till muss via GitHub UI prüfen. |
 | 2026-04-15 | Sprint 49 Retro (S44): S50 wurde in S43 geplant+implementiert bevor S49 Retro geschrieben war. Ceremony-Reihenfolge nicht eingehalten. Learning: Retro ist erstes Item wenn vorige Sprint auf Review steht. |
 | 2026-04-15 | Sprint 50 Planning (S44): 6 Items in PR #289 (feat/sprint-50). CI, OG Tags, 10 Quests, Playwright-Tests. PR wartet auf Till's Merge. PR #290 obsolet — Inhalt bereits auf main. |

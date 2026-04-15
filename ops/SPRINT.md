@@ -31,6 +31,33 @@
 
 ## Standup Log
 
+### 2026-04-15 — Daily Scrum (Session 48)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**CI-Diagnose (S48 Tiefenanalyse):**
+
+PR #292 (`fix/ci-burn-panel-external-tests`) ist deployed, Check-Job läuft — aber: `conclusion: failure` nach 5 Min.
+
+Lokal verifiziert: `test.skip(!!process.env.CI, ...)` im describe-Scope **funktioniert korrekt** — mit `CI=true` werden burn-panel Tests geskippt (`2 skipped`, kein Fehler). Unit Tests 22/22 ✅, TypeScript ✅, JS Syntax ✅.
+
+**Folgerung:** Fehler liegt in `smoke.spec.js` oder `critical-path.spec.js`. Reproduktion lokal nicht möglich (Playwright-Browser 1208 nicht installierbar in Sandbox, Netz geblockt). Diagnoselücke: CI-Logs fehlen.
+
+**PR-Status:**
+- PR #292 (burn-panel CI-Fix): Check ❌ — Fehler unklar, aber burn-panel-Fix ist korrekt
+- PR #291 (concurrency Fix): Check ❌ — vermutlich selbe Ursache
+- PR #289 (feat/sprint-50): nur `deploy-preview` ✅, kein `check`-Job sichtbar (altes deploy.yml)
+- PR #290 (Sprint-49-Docs): kann geschlossen werden
+
+**Till: Aktionen:**
+1. **PR #292 CI-Logs prüfen** → GitHub Actions → Check-Job → welcher Test schlägt fehl + was ist die Fehlermeldung? (smoke.spec.js oder critical-path.spec.js, vermutlich Zeile 1)
+2. **PR #292 mergen wenn CI grün** — burn-panel Fix ist korrekt, der Fehler liegt woanders
+3. **PR #291 mergen** nach #292 → dann #289 → alle 6 S50-Items live
+4. **PR #290 schließen** — Inhalt bereits auf main
+5. **PR #288 schließen** — ebenfalls obsolet
+
+---
+
 ### 2026-04-15 — Daily Scrum (Session 46)
 
 **Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
