@@ -25,6 +25,43 @@
 
 ---
 
+## Sprint Review + Retro (2026-04-15 Session 54)
+
+### Review
+
+**Sprint Goal:** Bernd, Haskell, Lua, SQL und Scratch bekommen ihre zweiten Quests.
+**Ergebnis:** ✅ Sprint Goal erreicht — S53-1 implementiert, PR #296 erstellt.
+
+| Item | Ergebnis |
+|------|----------|
+| S53-1 Quests Runde 12 | ✅ 10 neue Quests: Bernd 2 + Haskell 2 + Lua 2 + SQL 2 + Scratch 2 (PR #296) |
+| S53-2 Carry-Over Merges | ⏳ Blocked — wartet auf Till |
+
+**Sprint Goal erreicht?** Ja — code-seitig 100%. Live-Gang blocked auf Till's Merge-Queue.
+
+**PR-Queue Übersicht (wartet auf Till):**
+- PR #293 → CI-Fix (merge-ready, CI ✅)
+- PR #289 → Sprint 50 (nach #293)
+- PR #294 → Sprint 51 (nach #289)
+- PR #295 → Sprint 52 (nach #294)
+- PR #296 → Sprint 53 (nach #295)
+
+### Retro
+
+**Was lief gut:**
+- Sprint-Rhythmus: Planning → Implementierung → PR in einer Session — funktioniert.
+- Quest-Content-Qualität: zweite Runde Programmierer-Quests hat eigenen Ton (Bernd grumpy, Haskell formal, Lua poetisch).
+
+**Was nicht lief:**
+- PR-Queue wächst. 5 PRs warten auf Till. Quests sind nie live für Oscar.
+- Kein neues spielbares Feature seit Sprint 49 auf main.
+
+**Lerning:**
+- Quest-Content ist fertig. Der Bottleneck ist nicht Entwicklung sondern Merges.
+- Nächster Sprint: kein reines Quest-Sprint wenn die Queue bereits voll ist.
+
+---
+
 ## Standup Log
 
 ### 2026-04-15 — Sprint Planning (Session 53)
