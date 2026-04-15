@@ -51,6 +51,22 @@
 
 ---
 
+## Sprint 49 — Review (2026-04-15, Session 44)
+
+### Review
+
+**Sprint Goal:** Teilweise erreicht. Autonome Anteile 3/3 — itch.io Upload wartet auf Till.
+
+| Item | Ergebnis |
+|------|----------|
+| S49-1 itch.io Copy | ✅ Done — `docs/ITCH-IO-COPY.md`, ready-to-paste für Till |
+| S49-2 Translations Coverage | ✅ Done — HE/AR 115/115 Keys vollständig, kein Fix nötig |
+| S49-3 Unit + Typecheck | ✅ Done — 22/22 Tests grün, CI-Stand sauber |
+
+**Value delivered:** Codebase ist launch-ready. itch.io-Text steht. Übersetzungen vollständig. Alles was autonom lösbar war ist erledigt. Der Rest liegt bei Till.
+
+---
+
 ## Standup Log
 
 ---
