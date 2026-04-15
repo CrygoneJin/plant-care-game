@@ -27,6 +27,9 @@ Persistent team log. Append-only. Read by all agents.
 | 2026-04-15 | Sprint 49 Review: 3/3 autonome Items Done. itch.io Copy ready, HE/AR 115/115, 22/22 Tests grün. Launch-Blocker liegen alle bei Till (Video, Requesty Key, Stripe). Codebase ist ship-ready. |
 | 2026-04-15 | S50: Unit Tests in CI — `npm run test:unit` war grün aber lief nicht in CI. CI-Integration ist immer ein eigener expliziter Schritt. "Tests grün" ≠ "Tests in CI". |
 | 2026-04-15 | Butler Secret-Guard: `if: secrets.X != ''` verhindert hartes CI-Fail wenn Secret nicht gesetzt. Pattern für alle optionalen Deploy-Steps. |
+| 2026-04-15 | S50: OG-Tags fehlten komplett. Social Preview ist Pre-Launch-Pflicht. preview.svg reicht für Discord/WhatsApp/itch.io; Twitter braucht PNG (Till). |
+| 2026-04-15 | S50: Quests Runde 9 — vor neuer Quest-Runde grep materials.js für valide Keys. cave/gem/fossil/dino/castle/dock/library/hut alle vorhanden. |
+| 2026-04-15 | S50: Playwright Easter-Egg-Tests: Konami via page.keyboard.press(), Snake via page.keyboard.type(). Modal-Prüfung: toHaveCount(0) für "nicht vorhanden". |
 | 2026-04-15 | Sprint 48 Lesson: Kein Sprint planen wenn ALLE Items Human Input brauchen. S49 bewusst mit 100% autonomen Items geplant. Review+Retro sofort nach blocked-Sprint, nicht warten. |
 | 2026-04-15 | unit.test.js Pfadfehler: ROOT zeigte auf `ops/` statt `src/core/` + `src/infra/`. Fix: CORE + INFRA Konstanten. Gleiches Muster für künftige Tests merken. |
 | 2026-04-15 | package.json test:unit Pfad war `tests/unit.test.js` (falsch) statt `ops/tests/unit.test.js`. |
