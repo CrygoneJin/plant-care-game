@@ -31,6 +31,22 @@
 
 ## Standup Log
 
+### 2026-04-15 — Daily Scrum (Session 45)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**PR #289:** Offen, alle S50-Items in Review — warten auf Till's Merge.
+
+**CI-Befund:** `check`-Job aus deploy.yml taucht in den Check-Runs für PR #289 nicht auf (nur `deploy-preview` + `cleanup-preview` aus preview.yml). Lokal: 22/22 Unit Tests ✅, `tsc --noEmit` ✅. **Till: bitte CI-Status via GitHub Actions-Tab prüfen vor Merge.**
+
+**Kein neues autonomes Item:** Alle Backlog-Items entweder Done oder Human-Input-blocked.
+
+**Till: Aktionen unverändert:**
+1. **PR #289 mergen** — nach CI-Verifikation
+2. **PR #290 schließen** — Inhalt bereits auf main
+
+---
+
 ### 2026-04-15 — Daily Scrum (Session 44)
 
 **Smoke Tests:** Sandbox-Proxy 403 — bekannte Umgebungseinschränkung, kein App-Problem.
