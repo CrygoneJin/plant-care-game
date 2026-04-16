@@ -6,6 +6,7 @@ Persistent team log. Append-only. Read by all agents.
 
 ## Learnings
 
+| 2026-04-16 | Sprint 62 S62 (Session 62): Sprint 61 Review+Retro + Sprint 62 Planning + S62-1 implementiert. Quests Runde 22 — Maus 4 (Windmühlen-Turm, Geheimnis-Keller, Dampfbad, Mondscheingarten) + Krabs 3 (Goldschmiede, Krabben-Akademie, Geheimtresor) + Spongebob 3 (Laternenfest, Strand-Café, Pilzwald-Forschung). PR #317 stacked auf #316. 236 Quests auf Branch. Sauberer Stack: #314→#315→#316→#317. |
 | 2026-04-16 | Sprint 61 S61 (Session 61): Sprint 60 Review+Retro + Sprint 61 Planning. Quests Runde 21 — Tommy 3 (Polarstern-Station, Dschungel-Lager, Sturmjäger-Turm) + Neinhorn 3 (Mondlicht-Bad, Geheime Grotte, Traumlabor) + Elefant 4 (Flöten-Wald, Großes Schweigen, Ernte-Konzert, Tier-Chor). 216→226 Quests. PR #316 stacked auf #315. |
 | 2026-04-16 | CI-Fix deploy.yml: `if: secrets.X` auf Step-Level ist illegal (GitHub Actions erlaubt secrets-Context dort nicht). Fix: Secret in Job-Level `env:` packen, dann `if: env.X`. actionlint hätte das sofort gefunden — ab jetzt vor jedem Workflow-Edit `actionlint` laufen lassen. |
 | 2026-04-16 | PR-Backlog-Cleanup: 17 offene PRs → 0. Strategie: obsolete schließen, Docs direkt committen, Features einzeln mergen, 7 Quest-PRs (#298-#305) zu einem kombinierten PR #307 zusammengefasst (70 Quests Runde 13-19). Conflict-Marker `<<<<<<< HEAD` in main:quests.js entdeckt und gefixt. Learning: Quest-PRs die alle am Array-Ende anfügen = immer Merge-Konflikte → Sammel-PR ist der richtige Weg. |

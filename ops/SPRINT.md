@@ -9,7 +9,7 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S62-1 | **Quests Runde 22** — 10 neue Quests (226→236): Maus (4), Krabs (3), Spongebob (3) — stacked auf #316 | Artist | 🔲 |
+| S62-1 | **Quests Runde 22** — 10 neue Quests (226→236): Maus (4), Krabs (3), Spongebob (3) — stacked auf #316 | Artist | ✅ PR #317 |
 | S62-2 | **Carry-Over Merges** — PRs #314, #315, #316 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
 
 ---
@@ -37,7 +37,7 @@
 
 **Sprint 61 Retro:** Sauberer Stack (#314→#315→#316) wächst ohne Konflikt. Alter Stack (#308–#313) bleibt problematisch. Quest-Count-Analyse: Maus/Krabs/Spongebob bei 14 (niedrigste reguläre NPCs nach Stack) → Runde 22 an der Reihe.
 
-**Sprint 62:** S62-1 🔲 (Quests Runde 22 — Maus/Krabs/Spongebob auf #316 stacked). S62-2 ⏳ (wartet auf Till).
+**Sprint 62:** S62-1 ✅ (PR #317, Runde 22 — Maus/Krabs/Spongebob, 236 Quests auf Branch). S62-2 ⏳ (wartet auf Till).
 
 ---
 
