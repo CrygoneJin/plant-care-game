@@ -1,7 +1,49 @@
+# Sprint 59 — "Mondmagie, Verwandlung, Ewiger Pakt, Sternenwunder"
+
+**Sprint Goal:** Floriane träumt größer, Bug verwandelt sich, Mephisto schließt ewige Deals, Alien forscht im Garten. Oscar entdeckt neue Seiten alter Freunde.
+**Start:** 2026-04-16
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S59-1 | **Quests Runde 18** — 10 neue Quests (106→116): Floriane (3), Bug (3), Mephisto (2), Alien (2) — Mondballett, Verwandlung, Ewiger Pakt, Forschung | Artist | ✅ PR #303 |
+| S59-2 | **Carry-Over Merges** — PRs #293, #289, #294–#303 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Carry-Over (Human Input blockiert)
+
+| # | Item | Blocker |
+|---|------|---------|
+| S48-1 | Tesla-Nutzertest auswerten | ⏳ Till: Video schicken |
+| S48-2 | Requesty Key rotieren ⚠️ | ⏳ Till: Requesty Dashboard |
+| S48-3 | Stripe Production-Links | ⏳ Till: Stripe Dashboard |
+| S49-itch | itch.io Upload | ⏳ Till: Butler-Deploy mit `docs/ITCH-IO-COPY.md` |
+
+---
+
+## Standup Log
+
+### 2026-04-16 — Sprint Review + Retro S58 + Planning S59 (Session 59)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 58 Review + Retro:** siehe Sprint-58-Block unten.
+
+**Sprint 59:** S59-1 (Quests Runde 18 — Floriane/Bug/Mephisto/Alien) implementiert, PR #303.
+
+---
+
+---
+
 # Sprint 58 — "Klick-klack, Nein-Ja, Törööö"
 
 **Sprint Goal:** Tommy taucht tiefer, Neinhorn schaut auf, Elefant dirigiert die Natur. Oscar entdeckt drei alte Freunde von einer neuen Seite.
 **Start:** 2026-04-16
+**Ende:** 2026-04-16
 
 ---
 
@@ -14,14 +56,27 @@
 
 ---
 
-## Carry-Over (Human Input blockiert)
+## Sprint Review + Retro (2026-04-16 Session 59)
 
-| # | Item | Blocker |
-|---|------|---------|
-| S48-1 | Tesla-Nutzertest auswerten | ⏳ Till: Video schicken |
-| S48-2 | Requesty Key rotieren ⚠️ | ⏳ Till: Requesty Dashboard |
-| S48-3 | Stripe Production-Links | ⏳ Till: Stripe Dashboard |
-| S49-itch | itch.io Upload | ⏳ Till: Butler-Deploy mit `docs/ITCH-IO-COPY.md` |
+### Review
+
+**Sprint Goal:** Tommy taucht tiefer, Neinhorn schaut auf, Elefant dirigiert die Natur.
+**Ergebnis:** ✅ Sprint Goal erreicht
+
+| Item | Ergebnis |
+|------|----------|
+| S58-1 | ✅ 10 Quests: Tommy 3 (Tiefsee-Station, Neptun-Tempel, Piraten-Akademie) + Neinhorn 3 (Mondstein-Altar, Wolken-Garten, Eispalast) + Elefant 4 (Bambus-Konzert, Mondlicht-Amphitheater, Echo-Schlucht, Große Sinfonie) — PR #302 |
+| S58-2 | ⏳ Blocked — wartet auf Till (10 PRs: #293→#302) |
+
+**Quest-Stack:** 10 PRs offen. Auf main: 96 Quests. Gestapelt: 116+ (nach S59).
+
+### Retro
+
+**Was lief gut:** Elefants Echo-Schlucht + Neinhorns Eispalast emotional stark. NPC-Rotation funktioniert.
+
+**Was besser laufen könnte:** PR-Stack wächst (10 PRs). Floriane/Bug/Alien nach S58 noch bei 4–5 Quests.
+
+**Learning:** S59 direkt mit Floriane/Bug/Mephisto/Alien — Lücke schließen.
 
 ---
 
