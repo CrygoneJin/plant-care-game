@@ -1,6 +1,6 @@
-# Sprint 60 — "Bernd schwitzt, Krämer feiert, Lokführer baut Imperium"
+# Sprint 60 — "Bernd findet Ruhe, Lokführer baut weiter, Floriane fliegt"
 
-**Sprint Goal:** Bernd findet private Rückzugsorte, die Krämer expandiert ihr Marktimperium, der Lokführer vollendet sein Schienennetz. Oscar entdeckt drei alte Bekannte von ihrer besten Seite.
+**Sprint Goal:** Bernd entdeckt seine geheimen Rückzugsorte, Lokführer erweitert das Schienennetz, Floriane hebt ab. Oscar trifft drei Freunde von ihrer stillen Seite.
 **Start:** 2026-04-16
 
 ---
@@ -9,19 +9,22 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S60-1 | **Quests Runde 19** — 10 neue Quests (116→126): Bernd (3), Kraemerin (3), Lokführer (4) — Sauna, Regenwetter, Bücher, Käse, Blumenwiese, Scheune, Rangierbahnhof, Museum, Nachtexpress, Schmalspurbahn | Artist | ✅ PR folgt |
-| S60-2 | **Carry-Over Merges** — PRs warten auf Till | Engineer | ⏳ wartet auf Till |
+| S60-1 | **Quests Runde 19** — 10 neue Quests (196→206): Bernd (3), Kraemerin (3), Lokführer (4) — Sauna, Käserei, Rangierbahnhof | Artist | ✅ PR #314 |
+| S60-2 | **Quests Runde 20** — 10 neue Quests (206→216): Floriane (3), Bug (3), Mephisto (2), Alien (2) — stacked auf Runde 19 | Artist | ✅ PR folgt |
+| S60-3 | **Carry-Over Merges** — PRs #314, #308–#313 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
 
 ---
 
-## Carry-Over (Human Input blockiert)
+## Sprint Review + Retro (2026-04-16 Session 60)
 
-| # | Item | Blocker |
-|---|------|---------|
-| S48-1 | Tesla-Nutzertest auswerten | ⏳ Till: Video schicken |
-| S48-2 | Requesty Key rotieren ⚠️ | ⏳ Till: Requesty Dashboard |
-| S48-3 | Stripe Production-Links | ⏳ Till: Stripe Dashboard |
-| S49-itch | itch.io Upload | ⏳ Till: Butler-Deploy mit `docs/ITCH-IO-COPY.md` |
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S59-1 | ✅ 10 Quests implementiert, PR #303 |
+| S59-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Alien/Bug-Quests emotional stark. Bernd/Kraemerin/Lokführer hatten niedrigste Quest-Counts → S60 schließt Lücke.
 
 ---
 
@@ -31,9 +34,11 @@
 
 **Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
 
-**Sprint 59 Review + Retro:** ✅ Sprint Goal erreicht. S59-1 (10 Quests: Floriane/Bug/Mephisto/Alien, PR #303) ✅. S59-2 ⏳ blocked.
+**Sprint 59 Review:** S59-1 ✅ (PR #303, via Mega-Merge PR #307: Runden 13–19, 70 Quests → main). S59-2 ⏳ (Carry-Over wartet auf Till). Sprint Goal erreicht.
 
-**Sprint 60:** S60-1 (Quests Runde 19 — Bernd/Kraemerin/Lokführer) implementiert. Bernd 9→12, Kraemerin 10→13, Lokführer 10→14. Gesamt: 126 Quests.
+**Sprint 59 Retro:** PR-Stack auf 7 offene PRs (#308–#314) gewachsen. PRs #308–#313 auf altem main (vor CI-Fix), nur #314 frisch auf aktuellem HEAD. MEMORY-Learning gilt: neue Branches von feat/quests-runde-N statt main um Stack-Konflikte zu vermeiden.
+
+**Sprint 60:** S60-1 ✅ (PR #314 offen). S60-2 ✅ (10 neue Quests: Floriane/Bug/Mephisto/Alien, PR folgt). 206 Quests auf Branch.
 
 ---
 
@@ -58,26 +63,25 @@
 
 ## Sprint Review + Retro (2026-04-16 Session 60)
 
-**Sprint Goal erreicht:** ✅
+### Review
+
+**Sprint Goal:** Floriane träumt größer, Bug verwandelt sich, Mephisto schließt ewige Deals, Alien forscht im Garten.
+**Ergebnis:** ✅ Sprint Goal erreicht
 
 | Item | Ergebnis |
 |------|----------|
-| S59-1 | ✅ 10 Quests implementiert, PR #303 |
-| S59-2 | ⏳ Blocked — wartet auf Till |
+| S59-1 | ✅ Quests Runde 18 implementiert, Teil des Mega-Merge PR #307 (Runden 13–19, 70 Quests). Main: 196 Quests. |
+| S59-2 | ⏳ Blocked — wartet auf Till (PRs #308–#313 offen, alle auf altem main) |
 
-**Retro:** Alien/Bug-Quests emotional stark. Bernd/Kraemerin/Lokführer hatten niedrigste Quest-Counts → S60 schließt Lücke.
+**Quest-Stack:** 7 PRs offen. Auf main: 196 Quests. PR-Bases: #314 auf aktuellem HEAD, #308–#313 auf altem main@54e8197.
 
----
+### Retro
 
-## Standup Log
+**Was lief gut:** Mega-Merge PR #307 hat den langen PR-Stack aufgelöst. 70 Quests auf einmal gemergt.
 
-### 2026-04-16 — Sprint Review + Retro S58 + Planning S59 (Session 59)
+**Was besser laufen könnte:** PRs #308–#313 wurden alle gegen alten main erstellt → werden beim Mergen Konflikte erzeugen. Nur #314 ist sauber gestackt.
 
-**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
-
-**Sprint 58 Review + Retro:** siehe Sprint-58-Block unten.
-
-**Sprint 59:** S59-1 (Quests Runde 18 — Floriane/Bug/Mephisto/Alien) implementiert, PR #303.
+**Learning:** Runde-20-Branch (S60-2) wird von feat/quests-runde-19 aus erstellt, nicht von main. MEMORY bleibt konsistent.
 
 ---
 
