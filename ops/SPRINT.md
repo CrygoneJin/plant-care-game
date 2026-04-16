@@ -1,3 +1,48 @@
+# Sprint 62 — "Maus werkelt, Krabs handelt, Spongebob erfindet"
+
+**Sprint Goal:** Maus baut ihre geheimsten Projekte, Krabs verhandelt hart am Pier, Spongebob erfindet das Unmögliche. Oscar trifft die Küstenbewohner seiner Insel von ihrer besten Seite.
+**Start:** 2026-04-16
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S62-1 | **Quests Runde 22** — 10 neue Quests (226→236): Maus (4), Krabs (3), Spongebob (3) — stacked auf #316 | Artist | 🔲 |
+| S62-2 | **Carry-Over Merges** — PRs #314, #315, #316 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro (2026-04-16 Session 62)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S61-1 | ✅ Runde 21 (Tommy/Neinhorn/Elefant): Polarstern-Station, Geheime Grotte, Flöten-Wald + 7 weitere — PR #316 |
+| S61-2 | ⏳ Blocked — wartet auf Till (PRs #314–#316) |
+
+**Retro:** Sauberer Stack wächst sauber: #314→#315→#316 alle offen, kein Konflikt. 9 offene PRs total (alter Stack #308–#313 + sauberer Stack #314–#316). Runde 22 wird auf #316 gestacked.
+
+---
+
+## Standup Log
+
+### 2026-04-16 — Sprint Review + Retro S61 + Planning S62 (Session 62)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 61 Review:** S61-1 ✅ (PR #316, Runde 21 — Tommy/Neinhorn/Elefant, 226 Quests auf Branch). S61-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 61 Retro:** Sauberer Stack (#314→#315→#316) wächst ohne Konflikt. Alter Stack (#308–#313) bleibt problematisch. Quest-Count-Analyse: Maus/Krabs/Spongebob bei 14 (niedrigste reguläre NPCs nach Stack) → Runde 22 an der Reihe.
+
+**Sprint 62:** S62-1 🔲 (Quests Runde 22 — Maus/Krabs/Spongebob auf #316 stacked). S62-2 ⏳ (wartet auf Till).
+
+---
+
+---
+
 # Sprint 61 — "Tommy entdeckt den Pol, Neinhorn findet seine Grotte, Elefant flötet"
 
 **Sprint Goal:** Tommy kämpft sich durch Eis und Dschungel, Neinhorn versteckt sich in seiner geheimen Grotte, Elefant dirigiert den Flötenwald. Oscar erlebt Abenteuer, Heimlichkeit und Natur-Musik.
