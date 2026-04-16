@@ -1,6 +1,6 @@
-# Sprint 59 — "Mondmagie, Verwandlung, Ewiger Pakt, Sternenwunder"
+# Sprint 60 — "Windmühle, Stille, Wasserfall"
 
-**Sprint Goal:** Floriane träumt größer, Bug verwandelt sich, Mephisto schließt ewige Deals, Alien forscht im Garten. Oscar entdeckt neue Seiten alter Freunde.
+**Sprint Goal:** Tommy konstruiert das Unmögliche, Neinhorn findet die perfekte Stille, Elefant entdeckt dass Wasser singt. Oscar erlebt heute drei Arten von Staunen.
 **Start:** 2026-04-16
 
 ---
@@ -9,8 +9,8 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S59-1 | **Quests Runde 18** — 10 neue Quests (106→116): Floriane (3), Bug (3), Mephisto (2), Alien (2) — Mondballett, Verwandlung, Ewiger Pakt, Forschung | Artist | ✅ PR #303 |
-| S59-2 | **Carry-Over Merges** — PRs #293, #289, #294–#303 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+| S60-1 | **Quests Runde 19** — 10 neue Quests (116→126): Tommy (3), Neinhorn (3), Elefant (4) — Windmühlenpark, Stiller Turm, Wasserfall-Orgel | Artist | ✅ PR #304 |
+| S60-2 | **Carry-Over Merges** — PRs #293, #289, #294–#304 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
 
 ---
 
@@ -26,6 +26,89 @@
 ---
 
 ## Standup Log
+
+### 2026-04-16 — Sprint Review + Retro S59 + Planning S60 (Session 60)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 59 Review + Retro:** siehe Sprint-59-Block unten.
+
+**Sprint 60:** S60-1 (Quests Runde 19 — Tommy/Neinhorn/Elefant) implementiert, PR #304.
+
+---
+
+---
+
+# Sprint 59 — "Mondmagie, Verwandlung, Ewiger Pakt, Sternenwunder"
+
+**Sprint Goal:** Floriane träumt größer, Bug verwandelt sich, Mephisto schließt ewige Deals, Alien forscht im Garten. Oscar entdeckt neue Seiten alter Freunde.
+**Start:** 2026-04-16
+**Ende:** 2026-04-16
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S59-1 | **Quests Runde 18** — 10 neue Quests (106→116): Floriane (3), Bug (3), Mephisto (2), Alien (2) — Mondballett, Verwandlung, Ewiger Pakt, Forschung | Artist | ✅ PR #303 |
+| S59-2 | **Carry-Over Merges** — PRs #293, #289, #294–#303 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro (2026-04-16 Session 60)
+
+### Review
+
+**Sprint Goal:** Floriane träumt größer, Bug verwandelt sich, Mephisto schließt ewige Deals, Alien forscht im Garten.
+**Ergebnis:** ✅ Sprint Goal erreicht
+
+| Item | Ergebnis |
+|------|----------|
+| S59-1 Quests Runde 18 | ✅ 10 neue Quests: Floriane 3 (Mondballett-Platz, Traumwolken-Fabrik, Sternenschnuppen-Garten) + Bug 3 (Verwandlungskammer II, Kokon-Palast, Raupen-Labor) + Mephisto 2 (Ewiger Pakt-Monument, Seelen-Basar) + Alien 2 (Xenobotanik-Garten, Erdbeoachtungs-Station) — PR #303 |
+| S59-2 Carry-Over Merges | ⏳ Blocked — wartet auf Till (11 PRs: #293→#303) |
+
+**Quest-Stack:** 11 PRs offen. Auf main: 96 Quests. Gestapelt: 116+ (nach S59).
+
+**Sprint Goal erreicht?** Ja — code-seitig 100%. Live-Gang blocked auf Till's Merge.
+
+### Retro
+
+**Was lief gut:**
+- Mephistos "Ewiger Pakt" ist der bisher dunkelste und emotional schwerste Quest — passt perfekt
+- Alien hat jetzt 7 Quests, nähert sich den etablierten NPCs an
+- NPC-Parität verbessert: floriane/bug/mephisto/alien je +2–3 Quests
+
+**Was besser laufen könnte:**
+- PR-Stack (#293 bis #303) wächst auf 11. Kein Code auf Live seit Sprint 49.
+- Tommy/Neinhorn/Elefant wurden zuletzt in S58 bedient — Lücke zu floriane-Gruppe wächst
+
+**Learning:** S60 zurück zu Tommy/Neinhorn/Elefant — ausgewogene NPC-Rotation halten.
+
+---
+
+## Carry-Over (Human Input blockiert)
+
+| # | Item | Blocker |
+|---|------|---------|
+| S48-1 | Tesla-Nutzertest auswerten | ⏳ Till: Video schicken |
+| S48-2 | Requesty Key rotieren ⚠️ | ⏳ Till: Requesty Dashboard |
+| S48-3 | Stripe Production-Links | ⏳ Till: Stripe Dashboard |
+| S49-itch | itch.io Upload | ⏳ Till: Butler-Deploy mit `docs/ITCH-IO-COPY.md` |
+
+---
+
+## Standup Log
+
+### 2026-04-16 — Sprint Review + Retro S59 + Planning S60 (Session 60)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 59 Review + Retro:** S59-1 ✅ PR #303. S59-2 ⏳ geblockt. Sprint Goal erreicht.
+
+**Sprint 60:** S60-1 (Quests Runde 19 — Tommy/Neinhorn/Elefant) implementiert, PR #304.
+
+---
 
 ### 2026-04-16 — Sprint Review + Retro S58 + Planning S59 (Session 59)
 
