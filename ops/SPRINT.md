@@ -1,3 +1,44 @@
+# Sprint 56 — "Zweite Runde"
+
+**Sprint Goal:** Lokführer bekommt seinen Hauptbahnhof, Krämerin eröffnet Saisonmärkte, Bernd entdeckt heimliche Freuden.
+**Start:** 2026-04-16
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S56-1 | **Quests Runde 15** — 10 neue Quests (106→116): Lokführer (3), Krämerin (4), Bernd (3) — Hauptbahnhof, Saisonmärkte, stille Hobbys | Artist | 🔲 Offen |
+| S56-2 | **Carry-Over Merges** — PRs #293, #289, #294, #295, #296, #298, #299 + S56-PR landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Carry-Over (Human Input blockiert)
+
+| # | Item | Blocker |
+|---|------|---------|
+| S48-1 | Tesla-Nutzertest auswerten | ⏳ Till: Video schicken |
+| S48-2 | Requesty Key rotieren ⚠️ | ⏳ Till: Requesty Dashboard |
+| S48-3 | Stripe Production-Links | ⏳ Till: Stripe Dashboard |
+| S49-itch | itch.io Upload | ⏳ Till: Butler-Deploy mit `docs/ITCH-IO-COPY.md` |
+
+---
+
+## Standup Log
+
+### 2026-04-16 — Sprint Planning (Session 56)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 55 abgeschlossen:** Review + Retro im Sprint-55-Block.
+
+**Sprint 56:** S56-1 (Quests Runde 15 — Lokführer/Krämerin/Bernd zweite Runde) wird implementiert.
+
+---
+
+---
+
 # Sprint 55 — "Werkstatt & Warenhaus"
 
 **Sprint Goal:** Lokführer baut Schienen, Krämerin öffnet neue Läden, Bernd muss arbeiten. Oscar entdeckt heute das ehrliche Handwerk.
@@ -54,6 +95,33 @@
 7. **PR #298 mergen** — S54 live (nach #296)
 8. **PR #299 mergen** — S55 live (nach #298)
 9. **PRs #292, #291, #290, #288 schließen**
+
+---
+
+## Sprint Review + Retro (2026-04-16 Session 56)
+
+### Review
+
+**Sprint Goal:** Lokführer baut Schienen, Krämerin öffnet neue Läden, Bernd muss arbeiten.
+**Ergebnis:** ✅ Sprint Goal erreicht
+
+| Item | Ergebnis |
+|------|----------|
+| S55-1 Quests Runde 14 | ✅ 10 neue Quests: Lokführer 4 (Güterwaggon, Signalanlage, Eisenbahnbrücke, Rundkurs Insel) + Krämerin 4 (Spezialitätenmarkt, Laternenfest, Backhaus, Marktbrunnen) + Bernd 2 (Pausenraum, Kleingarten) — PR #299 |
+| S55-2 Carry-Over Merges | ⏳ Blocked — wartet auf Till |
+
+**Sprint Goal erreicht?** Ja — code-seitig 100%. Live-Gang blocked auf Till's Merge.
+
+### Retro
+
+**Was lief gut:**
+- Quests bekommen spürbare Persönlichkeit: Lokführer stolz-technisch, Krämerin warm-gemeinschaftlich, Bernd grumpy-aber-heimlich-herzlich
+- Dokumentierter Fehler in Zahlen: SPRINT.md hatte 126→136 statt korrekt 96→106 (96 auf main, +10 = 106)
+
+**Was lief schlecht:**
+- Quest-Zähler in Planungs-Docs weicht ab weil PR-Stack noch offen — main hat andere Zahl als aktiver Branch
+
+**Learning:** Quest-Zähler immer vom Branch-Tip lesen (`git show origin/feat/sprint-N:src/world/quests.js | grep -c "{ npc:"`), nicht aus vorherigen Sprint-Docs hochrechnen.
 
 ---
 
