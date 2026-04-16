@@ -1,6 +1,6 @@
-# Sprint 63 — "Jahreszeiten, Weite, Schatten, Kosmos"
+# Sprint 64 — "Polareis, Mondschein-Bad, Tier-Chor"
 
-**Sprint Goal:** Floriane feiert alle Jahreszeiten, Bug erkundet die Welt als Schmetterling, Mephisto spielt mit Schatten, Alien wartet auf kosmische Antworten. Oscar entdeckt vier alte Freunde von ihrer weitesten Seite.
+**Sprint Goal:** Tommy forscht am Pol, Neinhorn findet die geheime Grotte, Elefant dirigiert den größten Tier-Chor der Insel. Oscar entdeckt drei alte Freunde von einer neuen Seite.
 **Start:** 2026-04-16
 
 ---
@@ -9,8 +9,8 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S63-1 | **Quests Runde 23** — 10 neue Quests (226→236): Floriane (3), Bug (3), Mephisto (2), Alien (2) — Frühlingserwachen, Wanderflug, Schattentheater, Sternenkarte | Artist | ✅ PR #311 |
-| S63-2 | **Carry-Over Merges** — PRs #308, #309, #310 + ältere landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+| S64-1 | **Quests Runde 24** — 10 neue Quests (226→236): Tommy (3), Neinhorn (3), Elefant (4) — Polarstation, Dschungel-Camp, Geheime Grotte, Flötenwald, Tier-Chor | Artist | ✅ feat/sprint-64 |
+| S64-2 | **Carry-Over Merges** — feat/sprint-64 landet auf main wenn Till mergt | Engineer | 🔲 PR erstellen |
 
 ---
 
@@ -22,6 +22,59 @@
 | S48-2 | Requesty Key rotieren ⚠️ | ⏳ Till: Requesty Dashboard |
 | S48-3 | Stripe Production-Links | ⏳ Till: Stripe Dashboard |
 | S49-itch | itch.io Upload | ⏳ Till: Butler-Deploy mit `docs/ITCH-IO-COPY.md` |
+
+---
+
+## Standup Log
+
+### 2026-04-16 — Sprint Review + Retro S63 + Planning S64 (Session 64)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 63 Review + Retro:** siehe Sprint-63-Block unten.
+
+**Sprint 64:** S64-1 (Quests Runde 24 — Tommy/Neinhorn/Elefant) implementiert. PR folgt.
+
+---
+
+---
+
+# Sprint 63 — "Jahreszeiten, Weite, Schatten, Kosmos"
+
+**Sprint Goal:** Floriane feiert alle Jahreszeiten, Bug erkundet die Welt als Schmetterling, Mephisto spielt mit Schatten, Alien wartet auf kosmische Antworten. Oscar entdeckt vier alte Freunde von ihrer weitesten Seite.
+**Start:** 2026-04-16
+**Ende:** 2026-04-16
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S63-1 | **Quests Runde 23** — 10 neue Quests: Floriane (3), Bug (3), Mephisto (2), Alien (2) — Frühlingserwachen, Wanderflug, Schattentheater, Sternenkarte | Artist | ✅ PR #311 |
+| S63-2 | **Carry-Over Merges** | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro (2026-04-16 Session 64)
+
+### Review
+
+**Sprint Goal:** Floriane feiert alle Jahreszeiten, Bug erkundet die Welt als Schmetterling, Mephisto spielt mit Schatten, Alien wartet auf kosmische Antworten.
+**Ergebnis:** ✅ Sprint Goal erreicht
+
+| Item | Ergebnis |
+|------|----------|
+| S63-1 | ✅ 10 Quests: Floriane 3 (Frühlingsbote-Garten, Sommernacht-Terrasse, Herbstzauber-Hain) + Bug 3 (Wanderflug-Station, Regenbogen-Rastplatz, Schmetterlings-Palast) + Mephisto 2 (Schattentheater, Labyrinth der Entscheidungen) + Alien 2 (Sternenkarte-Archiv, Kosmischer Warteplatz) — PR #311 |
+| S63-2 | ⏳ Blocked — wartet auf Till (PRs #308-#311) |
+
+### Retro
+
+**Was lief gut:** Bug-Quest "Schmetterlings-Palast" ist der emotionale Höhepunkt seiner Charakter-Reise. Alien-Quests mit konkreter Zeitangabe ("847 Milliarden Sterne") machen den Charakter greifbarer.
+
+**Was besser laufen könnte:** Mehrere Sessions laufen täglich parallel — jede Session muss `git show origin/feat/sprint-N:ops/SPRINT.md` prüfen bevor sie plant.
+
+**Learning:** Vor Sprint Planning immer `git ls-remote origin | grep feat/sprint` ausführen — dann weiß man was die letzte Session schon erledigt hat.
 
 ---
 
