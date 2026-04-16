@@ -1,3 +1,101 @@
+# Sprint 61 — "Vulkan, Stille, Festmusik"
+
+**Sprint Goal:** Tommy bewacht den Vulkan, Neinhorn entdeckt die Bibliothek, Elefant feiert mit allen. Oscar erlebt drei neue Seiten alter Freunde.
+**Start:** 2026-04-16
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S61-1 | **Quests Runde 21** — 10 neue Quests (206→216): Tommy (3), Neinhorn (3), Elefant (4) — Vulkan, Bibliothek, Festival | Artist | ✅ PR #309 |
+| S61-2 | **Carry-Over Merges** — PRs #308 + ältere landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Carry-Over (Human Input blockiert)
+
+| # | Item | Blocker |
+|---|------|---------|
+| S48-1 | Tesla-Nutzertest auswerten | ⏳ Till: Video schicken |
+| S48-2 | Requesty Key rotieren ⚠️ | ⏳ Till: Requesty Dashboard |
+| S48-3 | Stripe Production-Links | ⏳ Till: Stripe Dashboard |
+| S49-itch | itch.io Upload | ⏳ Till: Butler-Deploy mit `docs/ITCH-IO-COPY.md` |
+
+---
+
+## Standup Log
+
+### 2026-04-16 — Sprint Review + Retro S60 + Planning S61 (Session 61)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 60 Review + Retro:** siehe Sprint-60-Block unten.
+
+**Sprint 61:** S61-1 (Quests Runde 21 — Tommy/Neinhorn/Elefant) implementiert, PR #309.
+
+---
+
+---
+
+# Sprint 60 — "Mondthron, Schmetterling erwacht, Flüsternde Galerie, Wurmloch"
+
+**Sprint Goal:** Floriane erhält ihren Thron, Bug hebt ab, Mephisto flüstert Geheimnisse, Alien öffnet Wurmlöcher. Oscar trifft alte Freunde mit neuen Kräften.
+**Start:** 2026-04-16
+**Ende:** 2026-04-16
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S60-1 | **Quests Runde 20** — 10 neue Quests (196→206): Floriane (3), Bug (3), Mephisto (2), Alien (2) — Mondthron, Erster Flug, Flüsternde Galerie, Wurmloch | Artist | ✅ PR #308 |
+| S60-2 | **Carry-Over Merges** — PRs #308 + ältere landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro (2026-04-16 Session 61)
+
+### Review
+
+**Sprint Goal:** Floriane erhält ihren Thron, Bug hebt ab, Mephisto flüstert Geheimnisse, Alien öffnet Wurmlöcher.
+**Ergebnis:** ✅ Sprint Goal erreicht
+
+| Item | Ergebnis |
+|------|----------|
+| S60-1 | ✅ 10 Quests: Floriane 3 (Mondfee-Thron, Wunsch-Kaleidoskop, Traumweberin) + Bug 3 (Erster Flug, Blüten-Luftschiff, Schmetterlingsrat) + Mephisto 2 (Flüsternde Galerie, Dunkler Garten) + Alien 2 (Gedanken-Observatorium, Wurmloch-Bibliothek) — PR #308 |
+| S60-2 | ⏳ Blocked — wartet auf Till |
+
+**Quest-Stack:** PR #308 offen. Auf main: 196 Quests. Nach Merge: 206.
+
+**Sprint Goal erreicht?** Ja — code-seitig 100%. Live-Gang blocked auf Till.
+
+### Retro
+
+**Was lief gut:** Bug's Story-Arc ist vollständig — Verwandlungskammer → Kokon → Erster Flug → Schmetterlingsrat. Emotional der stärkste Charakter-Bogen bisher.
+
+**Was besser laufen könnte:** PR-Stack (#308) wartet. Nächste Runde wieder Tommy/Neinhorn/Elefant — Gleichgewicht halten.
+
+**Learning:** Bug's "Ich war immer schon ein Schmetterling!" — Kinder verstehen diesen Witz sofort. Mehr davon.
+
+---
+
+## Standup Log
+
+### 2026-04-16 — Sprint Review + Retro S59 + Planning S60 (Session 60)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 59 Review + Retro:** Sprint 59 Done. Quests Runde 18 implementiert.
+
+**Sprint 60:** S60-1 (Quests Runde 20 — Floriane/Bug/Mephisto/Alien) implementiert, PR #308.
+
+---
+
+---
+
 # Sprint 59 — "Mondmagie, Verwandlung, Ewiger Pakt, Sternenwunder"
 
 **Sprint Goal:** Floriane träumt größer, Bug verwandelt sich, Mephisto schließt ewige Deals, Alien forscht im Garten. Oscar entdeckt neue Seiten alter Freunde.
