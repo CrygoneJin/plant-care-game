@@ -1,3 +1,64 @@
+# Sprint 55 — "Werkstatt & Warenhaus"
+
+**Sprint Goal:** Lokführer baut Schienen, Krämerin öffnet neue Läden, Bernd muss arbeiten. Oscar entdeckt heute das ehrliche Handwerk.
+**Start:** 2026-04-16
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S55-1 | **Quests Runde 14** — 10 neue Quests (126→136): Lokführer (4), Krämerin (4), Bernd (2) — Infrastruktur, Handel, stille Herzlichkeit | Artist | ✅ PR #299 |
+| S55-2 | **Carry-Over Merges** — PRs #293, #289, #294, #295, #296, #298, #299 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Carry-Over (Human Input blockiert)
+
+| # | Item | Blocker |
+|---|------|---------|
+| S48-1 | Tesla-Nutzertest auswerten | ⏳ Till: Video schicken |
+| S48-2 | Requesty Key rotieren ⚠️ | ⏳ Till: Requesty Dashboard |
+| S48-3 | Stripe Production-Links | ⏳ Till: Stripe Dashboard |
+| S49-itch | itch.io Upload | ⏳ Till: Butler-Deploy mit `docs/ITCH-IO-COPY.md` |
+
+---
+
+## Standup Log
+
+### 2026-04-16 — Sprint Planning (Session 55)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**PR-Status:**
+- PR #293: CI ✅ grün — merge-ready
+- PR #289: merge-ready nach #293
+- PR #294 (S51): merge-ready nach #289
+- PR #295 (S52): merge-ready nach #294
+- PR #296 (S53): merge-ready nach #295
+- PR #298 (S54): merge-ready nach #296
+- PR #299 (S55): merge-ready nach #298
+
+**Sprint 54 abgeschlossen:** Review + Retro siehe unten.
+
+**Sprint 55:** S55-1 (Quests Runde 14 — Lokführer/Krämerin/Bernd) bereits implementiert, PR #299 erstellt.
+
+**Till: Aktionen:**
+1. **PR #297 schließen** — Docs-PR nicht nötig
+2. **PR #293 mergen** — CI ✅ grün
+3. **PR #289 mergen** — S50 live (nach #293)
+4. **PR #294 mergen** — S51 live (nach #289)
+5. **PR #295 mergen** — S52 live (nach #294)
+6. **PR #296 mergen** — S53 live (nach #295)
+7. **PR #298 mergen** — S54 live (nach #296)
+8. **PR #299 mergen** — S55 live (nach #298)
+9. **PRs #292, #291, #290, #288 schließen**
+
+---
+
+---
+
 # Sprint 54 — "Magie & Mysterien"
 
 **Sprint Goal:** Floriane, Mephisto, Alien und Bug bekommen neue Quests. Oscar taucht tiefer in die magische Seite der Insel ein.
@@ -52,6 +113,34 @@
 6. **PR #296 mergen** — S53 live (nach #295)
 7. **PR #298 mergen** — S54 live (nach #296)
 8. **PRs #292, #291, #290, #288 schließen**
+
+---
+
+## Sprint Review + Retro (2026-04-16 Session 55)
+
+### Review
+
+**Sprint Goal:** Floriane, Mephisto, Alien und Bug bekommen neue Quests.
+**Ergebnis:** ✅ Sprint Goal erreicht
+
+| Item | Ergebnis |
+|------|----------|
+| S54-1 Quests Runde 13 | ✅ 10 neue Quests: Floriane 3 (Traumpalast, Wunschbriefe, Glückssteinpfad) + Mephisto 3 (Höllenbibliothek, Ewige Flamme, Schuldbuch-Turm) + Alien 2 (Erstkontakt-Protokoll, Sternenkarte) + Bug 2 (Kokon-Kabinett, Wurm-Wanderweg) — PR #298 |
+| S54-2 Carry-Over Merges | ⏳ Blocked — wartet auf Till |
+
+**Sprint Goal erreicht?** Ja — code-seitig 100%. Live-Gang blocked auf Till's Merge.
+
+### Retro
+
+**Was lief gut:**
+- Floriane-Quests tiefgründig: Traumpalast + Wunschbriefe + Glückssteinpfad — emotionale Tiefe statt weiterer Dekorationen
+- Mephisto Post-Pakt: Höllenbibliothek + Ewige Flamme passen perfekt zur Figur
+- Sprint 55 sofort in gleicher Session geplant und implementiert — kein Leerstand
+
+**Was lief schlecht:**
+- Branch feat/sprint-54 wurde von main (86 Quests) statt von feat/sprint-53 (106 Quests) erstellt → Quest-Zähler in Branch-Realität weicht von logischer Merge-Reihenfolge ab
+
+**Learning:** Neue Sprint-Branches immer von `origin/feat/sprint-N` erstellen solange PR-Stack offen ist, nicht von main.
 
 ---
 
