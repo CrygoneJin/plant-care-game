@@ -100,4 +100,19 @@ window.INSEL_QUEST_TEMPLATES = [
     { npc: 'alien', title: 'Weltraum-Observatorium', desc: '*bloop* Wir brauchen ein Observatorium — um euren blauen Planeten von hier oben zu beobachten. Mit Glas. Riesig.', needs: { mars: 1, glass: 5, stone: 6, lamp: 3 }, reward: '⭐⭐⭐⭐' },
     { npc: 'alien', title: 'Botschaft der Sterne', desc: 'Interessant... *bloop* ...Ihr seid die ersten die eine Botschaft für uns bauen. Das wird notiert. Überall.', needs: { alien: 1, stone: 6, lamp: 4, door: 2, flag: 2 }, reward: '👽👽👽👽' },
     { npc: 'alien', title: 'Weltraum-Forscher', desc: '...Ihr habt Rakete, Mond, Mars und uns besucht. *bloop* Wir sind beeindruckt. Das kam selten vor. Baut das Museum.', needs: { rocket: 1, moon: 1, mars: 1, alien: 1, glass: 4, stone: 4 }, reward: '🌌🌌🌌🌌🌌' },
+    // === RUNDE 13 — Magie & Mysterien ===
+    // Floriane: tiefere Wünsche
+    { npc: 'floriane', title: 'Traumpalast', desc: '✨ Dieser Palast existiert nur im Traum — bis du ihn baust! Kristall fängt Mondlicht, Sterne geben ihm Namen!', needs: { crystal: 4, moon: 1, star: 2, glass: 4 }, reward: '✨✨✨✨✨✨' },
+    { npc: 'floriane', title: 'Wunschbriefe', desc: '✨ Jeder Brief trägt einen Wunsch! Die Schriftrolle, der Brunnen, die Blumen — alles muss PERFEKT sein. Wünsche sind ernst!', needs: { scroll: 2, fountain: 1, flower: 6, star: 1 }, reward: '✨✨✨✨' },
+    { npc: 'floriane', title: 'Glückssteinpfad', desc: '✨ Jeder Stein auf diesem Weg bringt Glück — aber nur wenn man langsam geht und an Wünsche denkt! Versprochen!', needs: { stone: 6, crystal: 2, rainbow: 1, path: 6 }, reward: '✨✨✨✨✨' },
+    // Mephisto: Post-Pakt
+    { npc: 'mephisto', title: 'Höllenbibliothek', desc: 'Bücher die brennen wenn man lügt... das sind meine Lieblingsbücher. Holz für die Regale. Glas damit man sieht was darin steht. Hehehehe...', needs: { wood: 6, glass: 4, lamp: 3, skull: 1 }, reward: '🎭🎭🎭🎭' },
+    { npc: 'mephisto', title: 'Ewige Flamme', desc: 'Feuer das nie erlischt. Der Phönix kennt das Geheimnis — er stirbt und lebt. Das ist kein Versprechen. Das ist ein Beweis. Hehehehe...', needs: { fire: 4, phoenix: 1, crystal: 2, stone: 6 }, reward: '🎭🎭🎭🎭🎭' },
+    { npc: 'mephisto', title: 'Schuldbuch-Turm', desc: 'Jede Abmachung wird notiert. Turm. Schriftrolle. Licht das nie schläft. Und ein Tor damit ich die RICHTIGEN rein lasse. Deal?', needs: { tower: 1, scroll: 3, lamp: 4, door: 2 }, reward: '🎭🎭🎭🎭🎭🎭' },
+    // Alien: Erstkontakt-Fortsetzung
+    { npc: 'alien', title: 'Erstkontakt-Protokoll', desc: '*bloop* Ihr seid die erste Insel die wir offiziell registriert haben. Ein Protokoll muss sein. Stein. Tafel. Licht. Flagge. Für die Aufzeichnungen.', needs: { stone: 6, lamp: 3, flag: 3, scroll: 1 }, reward: '👽👽👽' },
+    { npc: 'alien', title: 'Sternenkarte', desc: '...Diese Karte zeigt den Weg zu unserer Heimat. *bloop* Glas damit man hindurchschauen kann. Vielleicht besucht ihr uns eines Tages. Wir warten.', needs: { glass: 5, star: 3, moon: 1, stone: 4 }, reward: '🌌🌌🌌' },
+    // Bug: Vorbereitungen auf die Verwandlung
+    { npc: 'bug', title: 'Kokon-Kabinett', desc: '🐛 Eines Tages... EINES TAGES werde ich ein Schmetterling! Noch nicht. Aber das Kabinett ist BEREIT! Mit Glas! Und Blumen! Und Hoffnung!', needs: { glass: 4, flower: 6, plant: 4, tree: 2 }, reward: '🐛🐛🐛🐛' },
+    { npc: 'bug', title: 'Wurm-Wanderweg', desc: '🐛 ENDLICH ein Weg der auch für Raupen gebaut ist! Kein Wurm stolpert mehr! Breite Wege! Viele Pilze zum Snacken! Das ist DESIGN!', needs: { path: 8, mushroom: 4, plant: 3, fence: 2 }, reward: '🐛🐛🐛' },
 ];
