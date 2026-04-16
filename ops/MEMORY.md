@@ -6,6 +6,8 @@ Persistent team log. Append-only. Read by all agents.
 
 ## Learnings
 
+| 2026-04-16 | Sprint 56 S56 (Session 56): Sprint 55 Review+Retro + Sprint 56 Planning. Quests Runde 15 — Lokführer 3 (Hauptbahnhof, Depot, Bergbahn) + Krämerin 4 (Kräutermarkt, Wintermarkt, Erntefest, Lagerhaus) + Bernd 3 (Dachgarten, Angelteich, Modellbahn). PR #300. |
+| 2026-04-16 | Quest-Zähler-Fehler: SPRINT.md hatte 126→136 statt korrekt 96→106 weil Zahlen aus alten Docs hochgerechnet statt vom Branch-Tip gelesen. Fix: `git show origin/feat/sprint-N:src/world/quests.js \| grep -c "{ npc:"` vor jeder Planung. |
 | 2026-04-16 | Sprint 54 S54 (Session 54): Sprint 53 Review+Retro + Sprint 54 Planning. Quests Runde 13 bereits in vorheriger Session implementiert (PR #298 — Floriane 3 + Mephisto 3 + Alien 2 + Bug 2). Ceremony-Docs direkt auf main. |
 | 2026-04-16 | Docs-PR Anti-Pattern bestätigt: PR #297 (Sprint 53 Review) war ein Docs-PR — wurde nicht gemergt, SPRINT.md auf main nicht aktuell. Fix: Ceremony-Docs immer direkt committen auf main, NIE als PR. |
 | 2026-04-15 | Sprint 53 S53 (Session 53): Quests Runde 12 — 10 Quests für Bernd/Haskell/Lua/SQL/Scratch (zweite Runde). PR #296. CI-Fix direkt mitgeliefert. |

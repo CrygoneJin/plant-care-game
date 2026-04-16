@@ -9,8 +9,8 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S56-1 | **Quests Runde 15** — 10 neue Quests (106→116): Lokführer (3), Krämerin (4), Bernd (3) — Hauptbahnhof, Saisonmärkte, stille Hobbys | Artist | 🔲 Offen |
-| S56-2 | **Carry-Over Merges** — PRs #293, #289, #294, #295, #296, #298, #299 + S56-PR landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+| S56-1 | **Quests Runde 15** — 10 neue Quests (106→116): Lokführer (3), Krämerin (4), Bernd (3) — Hauptbahnhof, Saisonmärkte, stille Hobbys | Artist | ✅ PR #300 |
+| S56-2 | **Carry-Over Merges** — PRs #293, #289, #294, #295, #296, #298, #299, #300 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
 
 ---
 
