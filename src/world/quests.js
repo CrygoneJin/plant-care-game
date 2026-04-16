@@ -115,4 +115,18 @@ window.INSEL_QUEST_TEMPLATES = [
     // Bug: Vorbereitungen auf die Verwandlung
     { npc: 'bug', title: 'Kokon-Kabinett', desc: '🐛 Eines Tages... EINES TAGES werde ich ein Schmetterling! Noch nicht. Aber das Kabinett ist BEREIT! Mit Glas! Und Blumen! Und Hoffnung!', needs: { glass: 4, flower: 6, plant: 4, tree: 2 }, reward: '🐛🐛🐛🐛' },
     { npc: 'bug', title: 'Wurm-Wanderweg', desc: '🐛 ENDLICH ein Weg der auch für Raupen gebaut ist! Kein Wurm stolpert mehr! Breite Wege! Viele Pilze zum Snacken! Das ist DESIGN!', needs: { path: 8, mushroom: 4, plant: 3, fence: 2 }, reward: '🐛🐛🐛' },
+    // === RUNDE 14 — Werkstatt & Warenhaus ===
+    // Lokführer: Infrastruktur, Abenteuer, Schienen
+    { npc: 'lokfuehrer', title: 'Güterwaggon', desc: 'Fracht muss transportiert werden! Holz für den Waggon, Metall für die Achsen, Schienen damit er rollt! Tschuff tschuff!', needs: { wood: 6, metal: 4, path: 4 }, reward: '🚂🚂🚂' },
+    { npc: 'lokfuehrer', title: 'Signalanlage', desc: 'Rot heißt STOP! Grün heißt FAHRT! Eine Insel ohne Signale ist eine Insel mit Kollisionen! Lampen, Metall, Stein — sofort!', needs: { lamp: 4, metal: 3, stone: 4 }, reward: '🚂🚂🚂🚂' },
+    { npc: 'lokfuehrer', title: 'Eisenbahnbrücke', desc: 'Die Schlucht! Die tiefe, furchtbare Schlucht! Die Lok muss RÜBER! Drei Brücken! Metall! Und Stein damit es hält!', needs: { bridge: 3, metal: 6, stone: 4 }, reward: '🚂🚂🚂🚂🚂' },
+    { npc: 'lokfuehrer', title: 'Rundkurs Insel', desc: 'Die ganze Insel einmal! Berg hoch, Tal runter, am Strand entlang! Zwölf Schienen und zwei Brücken — EINMAL UM ALLES!', needs: { path: 12, bridge: 2, tree: 3, flag: 2 }, reward: '🚂🚂🚂🚂🚂🚂' },
+    // Krämerin: warme Handelswelt, Gemeinschaft
+    { npc: 'kraemerin', title: 'Spezialitätenmarkt', desc: 'Willkommen! Frischer Fisch! Knackige Äpfel! Honig vom Feinsten! Wege damit alle hinwollen, Lampen damit man abends noch kauft!', needs: { fish: 4, apple: 3, honey: 2, path: 4, lamp: 2 }, reward: '👩‍🍳👩‍🍳👩‍🍳' },
+    { npc: 'kraemerin', title: 'Laternenfest', desc: 'Wenn die Sonne untergeht, geht der Markt erst richtig los! Sechs Laternen! Blumen! Flaggen! Und Wege damit niemand im Dunkeln stolpert!', needs: { lamp: 6, flower: 4, flag: 3, path: 4 }, reward: '👩‍🍳👩‍🍳👩‍🍳👩‍🍳' },
+    { npc: 'kraemerin', title: 'Backhaus', desc: 'Frischgebackenes macht glücklich! Feuer! Holz! Stein für den Ofen! Eine Tür damit der Duft nicht entweicht — oh warte, er soll ja entweichen!', needs: { fire: 2, wood: 6, stone: 4, door: 2 }, reward: '👩‍🍳👩‍🍳👩‍🍳' },
+    { npc: 'kraemerin', title: 'Marktbrunnen', desc: 'Jeder gute Markt hat einen Brunnen! Da trifft man sich, da erzählt man Neuigkeiten! Stein, Wasser, Blumen rundum — herzlich willkommen!', needs: { fountain: 2, stone: 6, path: 4, flower: 3 }, reward: '👩‍🍳👩‍🍳👩‍🍳👩‍🍳👩‍🍳' },
+    // Bernd: grumpy aber heimlich herzlich
+    { npc: 'bernd', title: 'Pausenraum', desc: '*seufz* Endlich. EIN Raum. Nur für die Pause. Ohne Telefon. Ohne Kollegen. Tür zu. Augen zu. Stille. ...Danke.', needs: { wood: 6, door: 2, lamp: 2, roof: 2 }, reward: '🍞🍞🍞🍞🍞' },
+    { npc: 'bernd', title: 'Kleingarten', desc: '*seufz* Ein Garten. Klein. Drei Blumen. Vielleicht ein Baum. Nicht weil ich das MAG. Nur damit... ach. Zaun drum. Damit mich keiner fragt was ich hier mache.', needs: { flower: 3, tree: 2, fence: 3, path: 3 }, reward: '🍞🍞🍞🍞🍞🍞' },
 ];
