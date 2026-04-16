@@ -1,6 +1,6 @@
-# Sprint 57 — "Magie vertieft"
+# Sprint 58 — "Klick-klack, Nein-Ja, Törööö"
 
-**Sprint Goal:** Floriane wünscht tiefer, Bug träumt groß, Mephisto plant und Alien staunt. Oscar taucht tiefer in die magische Seite der Insel.
+**Sprint Goal:** Tommy taucht tiefer, Neinhorn schaut auf, Elefant dirigiert die Natur. Oscar entdeckt drei alte Freunde von einer neuen Seite.
 **Start:** 2026-04-16
 
 ---
@@ -9,8 +9,8 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S57-1 | **Quests Runde 16** — 10 neue Quests (96→106): Floriane (3), Bug (3), Mephisto (2), Alien (2) — Mondtanz, Verwandlung, Höllenküche, Weltraum-Post | Artist | ✅ PR #301 |
-| S57-2 | **Carry-Over Merges** — PRs #293, #289, #294, #295, #296, #298, #299, #300 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+| S58-1 | **Quests Runde 17** — 10 neue Quests (96→106): Tommy (3), Neinhorn (3), Elefant (4) — Tiefsee, Mondmagie, Weltmusik | Artist | 🔲 |
+| S58-2 | **Carry-Over Merges** — PRs #293, #289, #294, #295, #296, #298, #299, #300, #301 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
 
 ---
 
@@ -27,7 +27,68 @@
 
 ## Standup Log
 
-### 2026-04-16 — Sprint Review + Retro S56 + Planning S57 (Session 57)
+### 2026-04-16 — Sprint Review + Retro S57 + Planning S58 (Session 58)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 57 Review + Retro:** siehe Sprint-57-Block unten.
+
+**Sprint 58:** S58-1 (Quests Runde 17 — Tommy/Neinhorn/Elefant) wird implementiert.
+
+---
+
+---
+
+# Sprint 57 — "Magie vertieft"
+
+**Sprint Goal:** Floriane wünscht tiefer, Bug träumt groß, Mephisto plant und Alien staunt. Oscar taucht tiefer in die magische Seite der Insel.
+**Start:** 2026-04-16
+**Ende:** 2026-04-16
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S57-1 | **Quests Runde 16** — 10 neue Quests (96→106): Floriane (3), Bug (3), Mephisto (2), Alien (2) — Mondtanz, Verwandlung, Höllenküche, Weltraum-Post | Artist | ✅ PR #301 |
+| S57-2 | **Carry-Over Merges** — PRs #293, #289, #294, #295, #296, #298, #299, #300 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro (2026-04-16 Session 58)
+
+### Review
+
+**Sprint Goal:** Floriane wünscht tiefer, Bug träumt groß, Mephisto plant und Alien staunt.
+**Ergebnis:** ✅ Sprint Goal erreicht
+
+| Item | Ergebnis |
+|------|----------|
+| S57-1 Quests Runde 16 | ✅ 10 neue Quests: Floriane 3 (Mondtanzplatz, Wunschsternschnuppe, Feenschule) + Bug 3 (Seidenfaden-Werkstatt, Schmetterlings-Trainingsplatz, Verwandlungskammer) + Mephisto 2 (Höllenküche, Zeitkapsel-Turm) + Alien 2 (Weltraum-Schule, Interstellare Poststation) — PR #301 |
+| S57-2 Carry-Over Merges | ⏳ Blocked — wartet auf Till (9 PRs: #293→#301) |
+
+**Quest-Stack:** 9 PRs offen (#293→#301). Auf main: 96 Quests. Gestapelt: 106+.
+
+**Sprint Goal erreicht?** Ja — code-seitig 100%. Live-Gang blocked auf Till's Merge.
+
+### Retro
+
+**Was lief gut:**
+- Bugs Verwandlungskammer ("Die Verwandlungskammer — eines Tages EINES TAGES!") ist emotional der stärkste Quest bisher
+- Mephistos Höllenküche (fire + stone + skull + mushroom) passt perfekt zur Charakter-Logik
+
+**Was besser laufen könnte:**
+- PR-Stack (#293 bis #301) wächst auf 9. Kein Code auf Live seit Sprint 49.
+- Floriane/Bug/Alien haben nach Sprint 57 je 7 Quests vs. Tommy/Neinhorn/Elefant mit 12 — Lücke wächst
+
+**Learning:** Abwechslung zwischen NPC-Gruppen verhindert Quest-Monotonie. Sprint 58 zurück zu den Klassikern.
+
+---
+
+## Standup Log
+
+### 2026-04-16 — Sprint Planning (Session 57)
 
 **Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
 
