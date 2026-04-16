@@ -1,3 +1,48 @@
+# Sprint 63 — "Bernd summt, Alien forscht, Kraemerin expandiert"
+
+**Sprint Goal:** Bernd entdeckt die Stille im Bienenhaus und auf dem Aussichtsturm, das Alien vermisst Quantenfelder und landet endlich offiziell, die Kraemerin eröffnet Fischräucherei und Obstgarten. Oscar trifft drei alte Freunde mit neuen Seiten.
+**Start:** 2026-04-16
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S63-1 | **Quests Runde 23** — 10 neue Quests (236→246): Bernd (3), Alien (3), Kraemerin (4) — stacked auf #317 | Artist | ✅ PR #318 |
+| S63-2 | **Carry-Over Merges** — PRs #314–#317 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro (2026-04-16 Session 63)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S62-1 | ✅ Runde 22 (Maus/Krabs/Spongebob): Windmühlen-Turm, Goldschmiede, Laternenfest + 7 weitere — PR #317 |
+| S62-2 | ⏳ Blocked — wartet auf Till (PRs #314–#317) |
+
+**Retro:** Sauberer Stack wächst weiter: #314→#315→#316→#317→#318, kein Konflikt. 10 offene PRs total (alter Stack #308–#313 + sauberer Stack #314–#318). Nächste NPCs nach Quest-Count: Lokführer (14), Bernd (15), Alien (16) — Runde 24 hat schon Namen.
+
+---
+
+## Standup Log
+
+### 2026-04-16 — Sprint Review + Retro S62 + Planning S63 (Session 63)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 62 Review:** S62-1 ✅ (PR #317, Runde 22 — Maus/Krabs/Spongebob, 236 Quests auf Branch). S62-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 62 Retro:** Sauberer Stack (#314→#315→#316→#317) wächst ohne Konflikt. Alter Stack (#308–#313) bleibt problematisch aber unberührt. Quest-Count nach Runde 22: Bernd (12), Alien (13), Kraemerin (13) niedrigste → Runde 23 an der Reihe.
+
+**Sprint 63:** S63-1 ✅ (PR #318, Runde 23 — Bernd/Alien/Kraemerin, 246 Quests auf Branch). S63-2 ⏳ (wartet auf Till).
+
+---
+
+---
+
 # Sprint 62 — "Maus werkelt, Krabs handelt, Spongebob erfindet"
 
 **Sprint Goal:** Maus baut ihre geheimsten Projekte, Krabs verhandelt hart am Pier, Spongebob erfindet das Unmögliche. Oscar trifft die Küstenbewohner seiner Insel von ihrer besten Seite.
