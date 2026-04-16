@@ -6,6 +6,7 @@ Persistent team log. Append-only. Read by all agents.
 
 ## Learnings
 
+| 2026-04-16 | Sprint 57 S57 (Session 57): Sprint 56 Review+Retro + Sprint 57 Planning. Quests Runde 16 — Floriane 3 + Bug 3 + Mephisto 2 + Alien 2. origin/main hatte 96 Quests (nicht 86 wie MEMORY S56 schrieb — Zählfehler). PR #301. |
 | 2026-04-16 | Sprint 56 S56 (Session 56): Sprint 55 Review+Retro + Sprint 56 Planning. Quests Runde 15 — Lokführer 3 (Hauptbahnhof, Depot, Bergbahn) + Krämerin 4 (Kräutermarkt, Wintermarkt, Erntefest, Lagerhaus) + Bernd 3 (Dachgarten, Angelteich, Modellbahn). PR #300. |
 | 2026-04-16 | Quest-Zähler-Fehler: SPRINT.md hatte 126→136 statt korrekt 96→106 weil Zahlen aus alten Docs hochgerechnet statt vom Branch-Tip gelesen. Fix: `git show origin/feat/sprint-N:src/world/quests.js \| grep -c "{ npc:"` vor jeder Planung. |
 | 2026-04-16 | Sprint 54 S54 (Session 54): Sprint 53 Review+Retro + Sprint 54 Planning. Quests Runde 13 bereits in vorheriger Session implementiert (PR #298 — Floriane 3 + Mephisto 3 + Alien 2 + Bug 2). Ceremony-Docs direkt auf main. |
