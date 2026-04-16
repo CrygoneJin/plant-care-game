@@ -9,7 +9,7 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S58-1 | **Quests Runde 17** — 10 neue Quests (96→106): Tommy (3), Neinhorn (3), Elefant (4) — Tiefsee, Mondmagie, Weltmusik | Artist | 🔲 |
+| S58-1 | **Quests Runde 17** — 10 neue Quests (96→106): Tommy (3), Neinhorn (3), Elefant (4) — Tiefsee, Mondmagie, Weltmusik | Artist | ✅ PR #302 |
 | S58-2 | **Carry-Over Merges** — PRs #293, #289, #294, #295, #296, #298, #299, #300, #301 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
 
 ---
