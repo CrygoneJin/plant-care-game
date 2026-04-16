@@ -1,7 +1,49 @@
+# Sprint 57 — "Magie vertieft"
+
+**Sprint Goal:** Floriane wünscht tiefer, Bug träumt groß, Mephisto plant und Alien staunt. Oscar taucht tiefer in die magische Seite der Insel.
+**Start:** 2026-04-16
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S57-1 | **Quests Runde 16** — 10 neue Quests (86→96 auf main-Branch): Floriane (3), Bug (3), Mephisto (2), Alien (2) | Artist | 🔲 |
+| S57-2 | **Carry-Over Merges** — PRs #293, #289, #294, #295, #296, #298, #299, #300 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Carry-Over (Human Input blockiert)
+
+| # | Item | Blocker |
+|---|------|---------|
+| S48-1 | Tesla-Nutzertest auswerten | ⏳ Till: Video schicken |
+| S48-2 | Requesty Key rotieren ⚠️ | ⏳ Till: Requesty Dashboard |
+| S48-3 | Stripe Production-Links | ⏳ Till: Stripe Dashboard |
+| S49-itch | itch.io Upload | ⏳ Till: Butler-Deploy mit `docs/ITCH-IO-COPY.md` |
+
+---
+
+## Standup Log
+
+### 2026-04-16 — Sprint Review + Retro S56 + Planning S57 (Session 57)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 56 Review + Retro:** siehe Sprint-56-Block unten.
+
+**Sprint 57:** S57-1 (Quests Runde 16 — Floriane/Bug/Mephisto/Alien) wird implementiert.
+
+---
+
+---
+
 # Sprint 56 — "Zweite Runde"
 
 **Sprint Goal:** Lokführer bekommt seinen Hauptbahnhof, Krämerin eröffnet Saisonmärkte, Bernd entdeckt heimliche Freuden.
 **Start:** 2026-04-16
+**Ende:** 2026-04-16
 
 ---
 
@@ -14,14 +56,33 @@
 
 ---
 
-## Carry-Over (Human Input blockiert)
+## Sprint Review + Retro (2026-04-16 Session 57)
 
-| # | Item | Blocker |
-|---|------|---------|
-| S48-1 | Tesla-Nutzertest auswerten | ⏳ Till: Video schicken |
-| S48-2 | Requesty Key rotieren ⚠️ | ⏳ Till: Requesty Dashboard |
-| S48-3 | Stripe Production-Links | ⏳ Till: Stripe Dashboard |
-| S49-itch | itch.io Upload | ⏳ Till: Butler-Deploy mit `docs/ITCH-IO-COPY.md` |
+### Review
+
+**Sprint Goal:** Lokführer bekommt seinen Hauptbahnhof, Krämerin eröffnet Saisonmärkte, Bernd entdeckt heimliche Freuden.
+**Ergebnis:** ✅ Sprint Goal erreicht
+
+| Item | Ergebnis |
+|------|----------|
+| S56-1 Quests Runde 15 | ✅ 10 neue Quests: Lokführer 3 (Hauptbahnhof, Lokomotive-Depot, Bergbahn) + Krämerin 4 (Kräutermarkt, Wintermarkt, Erntefest, Lagerhaus) + Bernd 3 (Dachgarten, Angelteich, Modellbahnanlage) — PR #300 |
+| S56-2 Carry-Over Merges | ⏳ Blocked — wartet auf Till |
+
+**Quest-Stack:** 8 PRs offen (#293→#300), 116 Quests gesamt wenn gestapelt. Auf main: 86 Quests.
+
+**Sprint Goal erreicht?** Ja — code-seitig 100%. Live-Gang blocked auf Till's Merge.
+
+### Retro
+
+**Was lief gut:**
+- Lokführer/Krämerin/Bernd entwickeln echte Persönlichkeiten — Bernd's Modellbahnanlage ("das war der Wind") ist der bisherige Charakter-Höhepunkt
+- Quest-Chain über 3 Sprints (S51→S55→S56) gibt NPCs Tiefe und Wachstum
+
+**Was besser laufen könnte:**
+- PR-Stack (#293 bis #300) wächst. 8 PRs warten auf Till. Kein Code auf Live seit Sprint 49.
+- Divergierende Branches: feat/sprint-52 (Haskell/Lua/SQL/Scratch) ist NICHT in feat/sprint-56 enthalten — Merge-Konflikt bei Till's Action notwendig, aber trivial.
+
+**Learning:** Quest-Diversität fehlt — floriane/bug/mephisto/alien auf main haben weniger als die "Kinder-NPCs" (maus/krabs/spongebob). Sprint 57 gleicht das aus.
 
 ---
 
