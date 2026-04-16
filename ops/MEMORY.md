@@ -6,6 +6,7 @@ Persistent team log. Append-only. Read by all agents.
 
 ## Learnings
 
+| 2026-04-16 | Sprint 60 S60 (Session 60): Sprint 59 Review+Retro + Sprint 60 Planning. Quests Runde 19 — Bernd 3 (Sauna-Hütte, Regenwetter-Ecke, Bücher-Refugium) + Kraemerin 3 (Käserei, Blumenwiese, Festscheune) + Lokführer 4 (Rangierbahnhof, Dampflok-Museum, Nachtexpress, Schmalspurbahn). Bernd 9→12, Kraemerin 10→13, Lokführer 10→14. Gesamt 126 Quests. |
 | 2026-04-16 | CI-Fix deploy.yml: `if: secrets.X` auf Step-Level ist illegal (GitHub Actions erlaubt secrets-Context dort nicht). Fix: Secret in Job-Level `env:` packen, dann `if: env.X`. actionlint hätte das sofort gefunden — ab jetzt vor jedem Workflow-Edit `actionlint` laufen lassen. |
 | 2026-04-16 | PR-Backlog-Cleanup: 17 offene PRs → 0. Strategie: obsolete schließen, Docs direkt committen, Features einzeln mergen, 7 Quest-PRs (#298-#305) zu einem kombinierten PR #307 zusammengefasst (70 Quests Runde 13-19). Conflict-Marker `<<<<<<< HEAD` in main:quests.js entdeckt und gefixt. Learning: Quest-PRs die alle am Array-Ende anfügen = immer Merge-Konflikte → Sammel-PR ist der richtige Weg. |
 | 2026-04-16 | Sprint 59 S59 (Session 59): Sprint 58 Review+Retro + Sprint 59 Planning. Quests Runde 18 — Floriane 3 (Mondlicht-Ballett, Sternschnuppen-Werkstatt, Wolken-Palast) + Bug 3 (Blätter-Bibliothek, Spinnrad-Werkstatt, Große Verwandlung) + Mephisto 2 (Ewiger Vertrag, Orkus-Opernhaus) + Alien 2 (Schwarzes-Loch-Labor, Interstellarer Garten). PR #303. feat/sprint-59 basiert auf feat/sprint-58. |

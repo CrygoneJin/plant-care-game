@@ -1,7 +1,49 @@
+# Sprint 60 — "Bernd schwitzt, Krämer feiert, Lokführer baut Imperium"
+
+**Sprint Goal:** Bernd findet private Rückzugsorte, die Krämer expandiert ihr Marktimperium, der Lokführer vollendet sein Schienennetz. Oscar entdeckt drei alte Bekannte von ihrer besten Seite.
+**Start:** 2026-04-16
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S60-1 | **Quests Runde 19** — 10 neue Quests (116→126): Bernd (3), Kraemerin (3), Lokführer (4) — Sauna, Regenwetter, Bücher, Käse, Blumenwiese, Scheune, Rangierbahnhof, Museum, Nachtexpress, Schmalspurbahn | Artist | ✅ PR folgt |
+| S60-2 | **Carry-Over Merges** — PRs warten auf Till | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Carry-Over (Human Input blockiert)
+
+| # | Item | Blocker |
+|---|------|---------|
+| S48-1 | Tesla-Nutzertest auswerten | ⏳ Till: Video schicken |
+| S48-2 | Requesty Key rotieren ⚠️ | ⏳ Till: Requesty Dashboard |
+| S48-3 | Stripe Production-Links | ⏳ Till: Stripe Dashboard |
+| S49-itch | itch.io Upload | ⏳ Till: Butler-Deploy mit `docs/ITCH-IO-COPY.md` |
+
+---
+
+## Standup Log
+
+### 2026-04-16 — Sprint Review + Retro S59 + Planning S60 (Session 60)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 59 Review + Retro:** ✅ Sprint Goal erreicht. S59-1 (10 Quests: Floriane/Bug/Mephisto/Alien, PR #303) ✅. S59-2 ⏳ blocked.
+
+**Sprint 60:** S60-1 (Quests Runde 19 — Bernd/Kraemerin/Lokführer) implementiert. Bernd 9→12, Kraemerin 10→13, Lokführer 10→14. Gesamt: 126 Quests.
+
+---
+
+---
+
 # Sprint 59 — "Mondmagie, Verwandlung, Ewiger Pakt, Sternenwunder"
 
 **Sprint Goal:** Floriane träumt größer, Bug verwandelt sich, Mephisto schließt ewige Deals, Alien forscht im Garten. Oscar entdeckt neue Seiten alter Freunde.
 **Start:** 2026-04-16
+**Ende:** 2026-04-16
 
 ---
 
@@ -14,14 +56,16 @@
 
 ---
 
-## Carry-Over (Human Input blockiert)
+## Sprint Review + Retro (2026-04-16 Session 60)
 
-| # | Item | Blocker |
-|---|------|---------|
-| S48-1 | Tesla-Nutzertest auswerten | ⏳ Till: Video schicken |
-| S48-2 | Requesty Key rotieren ⚠️ | ⏳ Till: Requesty Dashboard |
-| S48-3 | Stripe Production-Links | ⏳ Till: Stripe Dashboard |
-| S49-itch | itch.io Upload | ⏳ Till: Butler-Deploy mit `docs/ITCH-IO-COPY.md` |
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S59-1 | ✅ 10 Quests implementiert, PR #303 |
+| S59-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Alien/Bug-Quests emotional stark. Bernd/Kraemerin/Lokführer hatten niedrigste Quest-Counts → S60 schließt Lücke.
 
 ---
 
