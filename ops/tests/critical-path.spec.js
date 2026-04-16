@@ -1,17 +1,23 @@
 const { test, expect } = require('@playwright/test');
 
 // Hilfsfunktion: Big-Bang-Countdown überspringen + Genesis-Start setzen
-async function skipBigBang(page) {
-    await page.addInitScript(() => {
+// stufe bestimmt den Progressions-State (default 1 = Erstbesuch)
+async function skipBigBang(page, stufe = 1) {
+    await page.addInitScript((s) => {
         localStorage.setItem('insel-grid', '[]');
         localStorage.setItem('insel-genesis-shown', '1'); // water-start überspringen
         localStorage.removeItem('insel-player-name');
-    });
+        // Progressive Disclosure braucht passenden State
+        if (s >= 2) localStorage.setItem('insel-blocks-placed', '5');
+        if (s >= 3) localStorage.setItem('insel-unlocked-materials', '["qi","feuer","wasser","erde","holz"]');
+        if (s >= 4) localStorage.setItem('insel-discovered-recipes', '["qi"]');
+        if (s >= 5) localStorage.setItem('insel-quests-done', '["Seed-Quest"]');
+    }, stufe);
 }
 
 // Hilfsfunktion: Spiel starten und auf Canvas + questSystem warten
-async function startGame(page) {
-    await skipBigBang(page);
+async function startGame(page, stufe = 1) {
+    await skipBigBang(page, stufe);
     await page.goto('/');
     await page.fill('#player-name-input', 'Testpirat');
     await page.click('#start-button');
@@ -117,7 +123,7 @@ test.describe('Critical Path — Quest annehmen', () => {
     });
 
     test('Angenommene Quest erscheint im Quest-Panel DOM', async ({ page }) => {
-        await startGame(page);
+        await startGame(page, 5);
 
         // Quest via API annehmen
         const questTitle = await page.evaluate(() => {
@@ -142,7 +148,7 @@ test.describe('Critical Path — Quest annehmen', () => {
 test.describe('Critical Path — NPC-Chat', () => {
 
     test('Chat-Bubble öffnet Chat-Panel', async ({ page }) => {
-        await startGame(page);
+        await startGame(page, 2);
 
         const chatBubble = page.locator('#chat-bubble');
         await expect(chatBubble).toBeVisible({ timeout: 5000 });
@@ -154,7 +160,7 @@ test.describe('Critical Path — NPC-Chat', () => {
     });
 
     test('Chat-Input ist beschreibbar und Send-Button ist aktiv', async ({ page }) => {
-        await startGame(page);
+        await startGame(page, 2);
 
         await page.locator('#chat-bubble').click();
         await expect(page.locator('#chat-panel')).toBeVisible({ timeout: 5000 });
@@ -172,7 +178,7 @@ test.describe('Critical Path — NPC-Chat', () => {
     });
 
     test('Chat-Charakter-Auswahl hat NPCs', async ({ page }) => {
-        await startGame(page);
+        await startGame(page, 2);
 
         await page.locator('#chat-bubble').click();
         await expect(page.locator('#chat-panel')).toBeVisible({ timeout: 5000 });
@@ -185,7 +191,7 @@ test.describe('Critical Path — NPC-Chat', () => {
     });
 
     test('Chat schließen via X-Button', async ({ page }) => {
-        await startGame(page);
+        await startGame(page, 2);
 
         await page.locator('#chat-bubble').click();
         await expect(page.locator('#chat-panel')).toBeVisible({ timeout: 5000 });
