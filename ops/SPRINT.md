@@ -1,3 +1,44 @@
+# Sprint 80 — "Mephisto eröffnet das Observatorium des Bedauerns, Bernd sitzt allein auf dem Abend-Steg, Maus errichtet das Baumhaus"
+
+**Sprint Goal:** Mephisto dokumentiert was Menschen wollten und was sie bereuten, Bernd misst Regen und sitzt auf dem Steg bis die letzte Biene weg ist, Maus baut hoch oben und wartet auf Stürme. Oscar trifft drei alte Freunde in sehr verschiedenen Stimmungen.
+**Start:** 2026-04-17
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S80-1 | **Quests Runde 40** — 10 neue Quests (406→416): Mephisto (3), Bernd (4), Maus (3) — stacked auf #336 | Artist | ✅ feat/quests-runde-40 |
+| S80-2 | **Carry-Over Merges** — PRs #314–#337 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S79 (2026-04-17 Session 81)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S79-1 | ✅ Runde 39 (Tommy/Neinhorn/Bug/Alien): Gezeiten-Messstation, Magnetfeld-Forschungsturm, Permafrost-Bohrstation, Nebelreich, Unterirdische Mondkammer, Tränen-Fontäne, Raupenpfad, Stille Hängematte, Gravitations-Anomalie-Feld, Frequenz-Archiv — PR #336 |
+| S79-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Mephisto/Bernd/Maus/Krabs/Floriane bei 29 (echte Zählung: Spongebob war 30, nicht 29 wie S79-Retro schrieb). Runde 40 wählt Mephisto 3 (Absichten-Bibliothek + Bedauerns-Observatorium + Schatten-Amphitheater), Bernd 4 (Barometer + Steg + Insektenhotel + Veranda), Maus 3 (Baumhaus + Wellenbrecher + Musik-Pavillon). Stack wächst sauber (#314→…→#336→#337). Krabs/Floriane bei 29 → nächste Kandidaten nach S80.
+
+---
+
+## Standup Log
+
+### 2026-04-17 — Sprint Review S79 + Planning S80 + S80-1 implementiert (Session 81)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 79 Review:** S79-1 ✅ (PR #336, Runde 39 — Tommy/Neinhorn/Bug/Alien, 406 Quests). S79-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 80:** S80-1 ✅ (feat/quests-runde-40, Runde 40 — Mephisto/Bernd/Maus, 416 Quests auf Branch). Stack: #314→…→#336→#337.
+
+---
+
 # Sprint 79 — "Tommy misst Gezeiten und bohrt durch Permafrost, Neinhorn findet sein Nebelreich, Bug baut den Raupenpfad, Alien archiviert Frequenzen"
 
 **Sprint Goal:** Tommy forscht an unsichtbaren Kräften (Gezeiten, Magnetfeld, Permafrost), Neinhorn entdeckt dass Nebel und Mond und Tränen auch schön sein dürfen, Bug legt den Weg für künftige Raupen aus, Alien archiviert was die Insel singt. Oscar trifft vier alte Freunde in neuen Welten.
@@ -9,7 +50,7 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S79-1 | **Quests Runde 39** — 10 neue Quests (396→406): Tommy (3), Neinhorn (3), Bug (2), Alien (2) — stacked auf #335 | Artist | ✅ feat/quests-runde-39 |
+| S79-1 | **Quests Runde 39** — 10 neue Quests (396→406): Tommy (3), Neinhorn (3), Bug (2), Alien (2) — stacked auf #335 | Artist | ✅ PR #336 |
 | S79-2 | **Carry-Over Merges** — PRs #314–#336 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
 
 ---
