@@ -1,3 +1,44 @@
+# Sprint 66 — "Bernd baut im Winter, Alien lernt Schwerkraft, Kraemerin eröffnet Auktion"
+
+**Sprint Goal:** Bernd pflegt seine Bienen durch den Winter, das Alien akzeptiert widerwillig die Erdgravitation, die Kraemerin lässt den Hammer fallen. Oscar trifft drei alte Freunde mit neuen Überraschungen.
+**Start:** 2026-04-17
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S66-1 | **Quests Runde 26** — 10 neue Quests (266→276): Bernd (3), Alien (3), Kraemerin (4) — stacked auf #321 | Artist | ✅ PR #322 |
+| S66-2 | **Carry-Over Merges** — PRs #314–#322 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S65 (2026-04-17 Session 67)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S65-1 | ✅ Runde 25 (Floriane/Bug/Mephisto/Lokführer): Sternenschmiede, Kokon-Museum, Schattenkabinett, Tunnelbahn + 6 weitere — PR #321 |
+| S65-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Stack wächst sauber weiter. Jede Session = ein Runde = ein PR. Bernd/Alien/Kraemerin zuletzt in Runde 23 — Zeit für Runde 26.
+
+---
+
+## Standup Log
+
+### 2026-04-17 — Sprint Review S65 + Planning S66 + S66-1 implementiert (Session 67)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 65 Review:** S65-1 ✅ (PR #321, Runde 25 — Floriane/Bug/Mephisto/Lokführer, 266 Quests). S65-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 66:** S66-1 ✅ (PR #322, Runde 26 — Bernd/Alien/Kraemerin, 276 Quests auf Branch). Sauberer Stack: #314→#315→#316→#317→#318→#320→#321→#322.
+
+---
+
 # Sprint 65 — "Floriane schmiedet Sterne, Bug forscht, Mephisto baut Dunkel, Lokführer tunnelt"
 
 **Sprint Goal:** Floriane erschafft neue Sterne und Mondblumen, Bug eröffnet ihr Kokon-Museum, Mephisto baut das Schattenkabinett, Lokführer bohrt durch den Berg. Oscar trifft vier alte Freunde von ihrer tiefsten Seite.
