@@ -1,3 +1,44 @@
+# Sprint 83 — "Tommy erkundet Geysire und baut Eisbrücken, Neinhorn findet seinen Mondpalast und seine stille Bibliothek"
+
+**Sprint Goal:** Tommy treibt fünf neue Expeditionen voran (Basislager, Eisbrücke, Wetternetz, Tiefsee-Labor, Geysir-Kraftwerk), Neinhorn entdeckt fünf Orte die nur für ihn existieren (Mondpalast, Stille Bibliothek, Unsichtbarer Pavillon, Traum-Gewächshaus, Erinnerungsstein). Oscar trifft zwei alte Freunde in ihrer tiefsten Eigenheit.
+**Start:** 2026-04-17
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S83-1 | **Quests Runde 43** — 10 neue Quests (436→446): Tommy (5), Neinhorn (5) — stacked auf feat/quests-runde-42 | Artist | ✅ feat/quests-runde-43 |
+| S83-2 | **Carry-Over Merges** — PRs #314–#340 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S82 (2026-04-17 Session 84)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S82-1 | ✅ Runde 42 (Spongebob/Lokführer/Kraemerin/Bug/Alien): Gelee-Fabrik, Meeres-Symphonie, Dampf-Hangar, Schienen-Akademie, Tee-Salon, Obstgarten-Depot, Blüten-Observatorium, Seidenweberei, Neutronenstern-Bibliothek, Dunkle-Materie-Detektor — feat/quests-runde-42 |
+| S82-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Tommy/Neinhorn bei 31 (niedrigste Zählung) → klar für Runde 43. Tommy 5 (Expedition-Basislager + Eis-Brücke + Wetterstation-Netz + Tiefenwasser-Labor + Geysir-Kraftwerk), Neinhorn 5 (Mondpalast + Stille Bibliothek + Unsichtbarer Pavillon + Traum-Gewächshaus + Erinnerungsstein). Stack wächst sauber (#314→…→#339→#340). Elefant/Bernd/Mephisto/Maus bei 32 → nächste Kandidaten nach S83.
+
+---
+
+## Standup Log
+
+### 2026-04-17 — Sprint Review S82 + Planning S83 + S83-1 implementiert (Session 84)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 82 Review:** S82-1 ✅ (feat/quests-runde-42, Runde 42 — 5 NPCs, 436 Quests). S82-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 83:** S83-1 ✅ (feat/quests-runde-43, Runde 43 — Tommy/Neinhorn, 446 Quests auf Branch). Stack: #314→…→#339→#340.
+
+---
+
 # Sprint 82 — "Spongebob kocht Gelee und findet das Unterwasser-Orchester, Lokführer baut den Dampf-Hangar und die Akademie, Kraemerin eröffnet den Tee-Salon und das Obstgarten-Depot, Bug beobachtet Schmetterlinge und spinnt Seide, Alien archiviert Sterne und misst das Unsichtbare"
 
 **Sprint Goal:** Spongebob entdeckt Fabrikation und Orchestermusik unter Wasser, Lokführer sorgt für Ruhe und Nachwuchs, Kraemerin öffnet Salon und Depot, Bug macht Berufsforschung (und ist ok), Alien sammelt Sterngeschichten und misst was 27% des Universums ausmacht. Oscar trifft fünf alte Freunde in neuen Rollen.
