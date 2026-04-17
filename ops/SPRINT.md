@@ -1,3 +1,44 @@
+# Sprint 76 — "Maus schickt Flaschenpost, Bug eröffnet die Akademie, Alien erforscht Plasma"
+
+**Sprint Goal:** Maus entdeckt Seesterne und winkt Piraten zu, Bug lehrt in der Schmetterlings-Akademie, Alien misst Zeitanomalien und beobachtet Parallelwelten. Oscar trifft drei Freunde in neuen Welten.
+**Start:** 2026-04-17
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S76-1 | **Quests Runde 36** — 10 neue Quests (366→376): Maus (4), Bug (3), Alien (3) — stacked auf #331 | Artist | ✅ PR #332 |
+| S76-2 | **Carry-Over Merges** — PRs #314–#332 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S75 (2026-04-17 Session 77)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S75-1 | ✅ Runde 35 (Lokführer/Kraemerin/Krabs/Floriane): Gebirgspass-Express, Bahnhofshotel, Stellwerksturm, Trüffelmarkt, Handelskontor, Hafenmarkt, Tiefsee-Investition, Krabben-Hauptquartier, Frühlings-Erweckung, Feenpost-Netz — PR #331 |
+| S75-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Maus/Bug/Alien bei 25 (niedrigste Zählung) → klar für Runde 36. Runde 36 liefert Flaschenpost-Abenteuer (Maus), Schmetterlings-Akademie (Bug), Plasma und Parallelwelten (Alien). Stack wächst sauber (#314→…→#331→#332). Spongebob/Mephisto/Bernd bei 26 → nächste Kandidaten nach S76.
+
+---
+
+## Standup Log
+
+### 2026-04-17 — Sprint Review S75 + Planning S76 + S76-1 implementiert (Session 77)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 75 Review:** S75-1 ✅ (PR #331, Runde 35 — Lokführer/Kraemerin/Krabs/Floriane, 366 Quests). S75-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 76:** S76-1 ✅ (PR #332, Runde 36 — Maus/Bug/Alien, 376 Quests auf Branch). Stack: #314→…→#331→#332.
+
+---
+
 # Sprint 75 — "Lokführer kämpft den Gebirgspass, Kraemerin eröffnet Trüffelmarkt und Kontor, Krabs gründet sein Imperium, Floriane erweckt den Frühling"
 
 **Sprint Goal:** Lokführer überwindet den Alpenpass mit Stahlwillen, Kraemerin baut ihr Handelskontor am Hafen, Krabs erklärt seine Tiefsee-Investition zum Statement, Floriane schickt Wünsche lichtschnell durch ihr Feenpost-Netz. Oscar trifft vier alte Freunde in neuen Abenteuern.
