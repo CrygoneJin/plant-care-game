@@ -1,3 +1,46 @@
+# Sprint 65 — "Floriane schmiedet Sterne, Bug forscht, Mephisto baut Dunkel, Lokführer tunnelt"
+
+**Sprint Goal:** Floriane erschafft neue Sterne und Mondblumen, Bug eröffnet ihr Kokon-Museum, Mephisto baut das Schattenkabinett, Lokführer bohrt durch den Berg. Oscar trifft vier alte Freunde von ihrer tiefsten Seite.
+**Start:** 2026-04-17
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S65-1 | **Quests Runde 25** — 10 neue Quests (256→266): Floriane (3), Bug (3), Mephisto (2), Lokführer (2) — stacked auf #320 | Artist | ✅ PR #321 |
+| S65-2 | **Carry-Over Merges** — PRs #314–#321 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S64 (2026-04-17 Session 66)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S64-1 | ✅ Runde 24 (Tommy/Neinhorn/Elefant): Polarlicht-Observatorium, Spiegelgrotte, Meeresorgel + 7 weitere — PR #320 |
+| S64-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Sauberer Stack wächst weiter (#314→…→#320→#321). Floriane/Bug/Mephisto/Lokführer 5 Runden pausiert → klar die nächsten. Lokführer kriegt Tunnelbahn + Seilbahn statt Schienen (mehr Abwechslung).
+
+---
+
+## Standup Log
+
+### 2026-04-17 — Sprint Review S64 + Planning S65 + S65-1 implementiert (Session 66)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 64 Review:** S64-1 ✅ (PR #320, Runde 24 — Tommy/Neinhorn/Elefant, 256 Quests). S64-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 65:** S65-1 ✅ (PR #321, Runde 25 — Floriane/Bug/Mephisto/Lokführer, 266 Quests auf Branch). Sauberer Stack: #314→#315→#316→#317→#318→#320→#321.
+
+---
+
+---
+
 # Sprint 64 — "Tommy forscht, Neinhorn zieht sich zurück, Elefant dirigiert das Meer"
 
 **Sprint Goal:** Tommy erkundet das Unmögliche, Neinhorn entdeckt Schönheit in der Stille, Elefant lässt das Meer singen. Oscar trifft drei alte Freunde von ihrer tiefsten Seite.
