@@ -1,3 +1,44 @@
+# Sprint 84 — "Elefant baut Konzerte aus Eis, Feuer und Morgenrot, Bernd archiviert Laub und Schnee und macht Mitternachts-Inventur, Mephisto eröffnet das Auktionshaus der Hoffnungen, Maus erforscht Vulkan und Tiefsee"
+
+**Sprint Goal:** Elefant findet drei neue Bühnen (Eisglocken, Vulkan-Sinfonie, Morgenchor), Bernd dokumentiert Herbst und Winter und schreibt nachts achtzehn Seiten, Mephisto eröffnet das erste Auktionshaus für Hoffnungen und legt sein erstes Labyrinth an, Maus beobachtet den Vulkan mit Doppelflagge und taucht in die Tiefsee. Oscar trifft vier alte Freunde in sehr verschiedenen Stimmungen.
+**Start:** 2026-04-17
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S84-1 | **Quests Runde 44** — 10 neue Quests (446→456): Elefant (3), Bernd (3), Mephisto (2), Maus (2) — stacked auf feat/quests-runde-43 | Artist | ✅ feat/quests-runde-44 |
+| S84-2 | **Carry-Over Merges** — PRs #314–#341 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S83 (2026-04-17 Session 85)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S83-1 | ✅ Runde 43 (Tommy/Neinhorn): Expedition-Basislager, Eis-Brücke, Wetterstation-Netz, Tiefenwasser-Labor, Geysir-Kraftwerk, Mondpalast, Stille Bibliothek, Unsichtbarer Pavillon, Traum-Gewächshaus, Erinnerungsstein — feat/quests-runde-43 |
+| S83-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Elefant/Bernd/Mephisto/Maus bei 32 (niedrigste Zählung) → klar für Runde 44. Elefant 3 (Eisglocken-Konzert + Vulkan-Sinfonie + Morgenchor-Station), Bernd 3 (Laubarchiv + Erste-Schnee-Station + Mitternachts-Inventur), Mephisto 2 (Auktionshaus der Hoffnungen + Vergessens-Labyrinth), Maus 2 (Vulkan-Forschungsposten + Tiefsee-Tauchkapsel). Stack wächst sauber (#314→…→#340→#341). Spongebob/Lokführer/Kraemerin/Bug/Alien bei 32 → nächste Kandidaten nach S84.
+
+---
+
+## Standup Log
+
+### 2026-04-17 — Sprint Review S83 + Planning S84 + S84-1 implementiert (Session 85)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 83 Review:** S83-1 ✅ (feat/quests-runde-43, Runde 43 — Tommy/Neinhorn, 446 Quests). S83-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 84:** S84-1 ✅ (feat/quests-runde-44, Runde 44 — Elefant/Bernd/Mephisto/Maus, 456 Quests auf Branch). Stack: #314→…→#340→#341.
+
+---
+
 # Sprint 83 — "Tommy erkundet Geysire und baut Eisbrücken, Neinhorn findet seinen Mondpalast und seine stille Bibliothek"
 
 **Sprint Goal:** Tommy treibt fünf neue Expeditionen voran (Basislager, Eisbrücke, Wetternetz, Tiefsee-Labor, Geysir-Kraftwerk), Neinhorn entdeckt fünf Orte die nur für ihn existieren (Mondpalast, Stille Bibliothek, Unsichtbarer Pavillon, Traum-Gewächshaus, Erinnerungsstein). Oscar trifft zwei alte Freunde in ihrer tiefsten Eigenheit.
