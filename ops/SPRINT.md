@@ -1,3 +1,44 @@
+# Sprint 72 — "Mephisto wägt Seelen, Lokführer baut das Viadukt, Bernd findet sein stilles Gewächshaus, Alien analysiert Meteore"
+
+**Sprint Goal:** Mephisto hält Gericht über Träume und Seelen, Lokführer baut das Viadukt des Jahrhunderts, Bernd pflanzt im Verborgenen, Alien analysiert was vom Himmel fällt. Oscar trifft vier alte Freunde in neuen Rollen.
+**Start:** 2026-04-17
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S72-1 | **Quests Runde 32** — 10 neue Quests (326→336): Mephisto (3), Lokführer (3), Bernd (2), Alien (2) — stacked auf #327 | Artist | ✅ PR #328 |
+| S72-2 | **Carry-Over Merges** — PRs #314–#328 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S71 (2026-04-17 Session 73)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S71-1 | ✅ Runde 31 (Spongebob/Kraemerin/Maus/Krabs): Biolumineszenz-Labor, Reisemarkt, Sanduhren-Turm, Fort Knox der Meere + 6 weitere — PR #327 |
+| S71-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Mephisto/Lokführer/Bernd/Alien alle bei 21 Quests nach R31 → niedrigste Zählung → klar die Nächsten. Floriane/Bug bei 22. Stack wächst sauber (#314→…→#327→#328).
+
+---
+
+## Standup Log
+
+### 2026-04-17 — Sprint Review S71 + Planning S72 + S72-1 implementiert (Session 73)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 71 Review:** S71-1 ✅ (PR #327, Runde 31 — Spongebob/Kraemerin/Maus/Krabs, 326 Quests). S71-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 72:** S72-1 ✅ (PR #328, Runde 32 — Mephisto/Lokführer/Bernd/Alien, 336 Quests auf Branch). Stack: #314→…→#327→#328.
+
+---
+
 # Sprint 71 — "Spongebob leuchtet, Kraemerin eröffnet die Markthalle, Maus und Ente messen die Zeit, Krabs baut Fort Knox"
 
 **Sprint Goal:** Spongebob entdeckt dass Nacht aus sich selbst leuchten kann, Kraemerin bringt Händler von überall zusammen, Maus und Ente philosophieren über Sand und Stille, Krabs sperrt alles ein was er liebt. Oscar trifft vier alte Freunde in neuen Rollen.
