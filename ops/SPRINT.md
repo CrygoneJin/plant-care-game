@@ -1,3 +1,44 @@
+# Sprint 74 — "Spongebob baut den Tiefsee-Zirkus, Bernd sitzt am Nebelteich, Alien wartet auf den Andock-Besuch, Mephisto archiviert gebrochene Versprechen"
+
+**Sprint Goal:** Spongebob entdeckt dass der Ozean ein Zirkus ist, Bernd findet Stille am Nebelteich, Alien wartet geduldig auf den Besuch der nie kommt, Mephisto baut ein Theater für Träume und ein Archiv für alles was man vergessen wollte. Oscar trifft vier alte Freunde in neuen Rollen.
+**Start:** 2026-04-17
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S74-1 | **Quests Runde 34** — 10 neue Quests (346→356): Spongebob (3), Bernd (3), Alien (2), Mephisto (2) — stacked auf #329 | Artist | ✅ PR #330 |
+| S74-2 | **Carry-Over Merges** — PRs #314–#330 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S73 (2026-04-17 Session 75)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S73-1 | ✅ Runde 33 (Floriane/Bug/Maus/Krabs): Wunsch-Laterne, Feenpost-Station, Nacht-Observatorium, Kokonseide-Atelier, Bug's Geheimgarten, Metamorphose-Monument, Nebelhorn-Turm, Mondschein-Café, Edelstein-Auktion, Museum für unveräußerlichen Besitz — PR #329 |
+| S73-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Spongebob/Bernd/Alien bei 23, Mephisto bei 24 → nächste Runde klar. Stack wächst sauber (#314→…→#329→#330). Runde-34-Quests: Tiefsee-Zirkus (Spongebob), Nebelteich/Vögel/Frühgarten (Bernd), Raumstation/Xenobotanik (Alien), Traumtheater/Versprechen-Archiv (Mephisto).
+
+---
+
+## Standup Log
+
+### 2026-04-17 — Sprint Review S73 + Planning S74 + S74-1 implementiert (Session 75)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 73 Review:** S73-1 ✅ (PR #329, Runde 33 — Floriane/Bug/Maus/Krabs, 346 Quests). S73-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 74:** S74-1 ✅ (PR #330, Runde 34 — Spongebob/Bernd/Alien/Mephisto, 356 Quests auf Branch). Stack: #314→…→#329→#330.
+
+---
+
 # Sprint 73 — "Floriane schickt Wünsche in den Himmel, Bug spinnt sein feinstes Netz, Maus baut den Bunker, Krabs eröffnet das Museum"
 
 **Sprint Goal:** Floriane schickt Wünsche mit Laternen in den Nachthimmel, Bug kommt seiner Verwandlung ein Stück näher, Maus sichert sich gegen das Unbekannte ab, Krabs zeigt seinen Schatz — aber nur durch Glas. Oscar trifft vier alte Freunde in neuen Rollen.
