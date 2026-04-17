@@ -1,7 +1,7 @@
-# Sprint 64 — "Tommy forscht, Neinhorn zieht sich zurück, Elefant dirigiert das Meer"
+# Sprint 77 — "Spongebob eröffnet die Unterwasser-Bibliothek, Mephisto kuratiert Stille, Bernd presst Blumen"
 
-**Sprint Goal:** Tommy erkundet das Unmögliche, Neinhorn entdeckt Schönheit in der Stille, Elefant lässt das Meer singen. Oscar trifft drei alte Freunde von ihrer tiefsten Seite.
-**Start:** 2026-04-16
+**Sprint Goal:** Spongebob tanzt unter dem Mond und kocht Krabbenburger, Mephisto bewahrt Versprechen und Schatten, Bernd misst Regen und spielt Klavier wenn keiner hört. Oscar trifft drei alte Freunde mit neuen Überraschungen.
+**Start:** 2026-04-17
 
 ---
 
@@ -9,8 +9,8 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S64-1 | **Quests Runde 24** — 10 neue Quests (246→256): Tommy (3), Neinhorn (3), Elefant (4) — Polarlicht, Spiegelgrotte, Meeresorgel | Artist | ✅ feat/quests-runde-24 |
-| S64-2 | **Carry-Over Merges** — feat/quests-runde-24 stacked auf #318. Till mergt clean stack | Engineer | ⏳ wartet auf Till |
+| S77-1 | **Quests Runde 37** — 10 neue Quests (376→386): Spongebob (4), Mephisto (3), Bernd (3) — stacked auf #332 | Artist | ✅ feat/quests-runde-37 |
+| S77-2 | **Carry-Over Merges** — PRs #314–#333 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
 
 ---
 
@@ -25,29 +25,57 @@
 
 ---
 
-## Standup Log
+## Sprint Review + Retro S76 (2026-04-17 Session 78)
 
-### 2026-04-16 — Sprint Review + Retro S63 + Planning S64 (Session 64)
-
-**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
-
-**Sprint 63 Review:**
+**Sprint Goal erreicht:** ✅
 
 | Item | Ergebnis |
 |------|----------|
-| S63-1 | ✅ 10 Quests: Bernd 3 (Bienenhaus, Aussichtsturm, Stille-Kammer) + Alien 3 (Quantenfeld-Labor, UFO-Landezone, Neutrinodetektor) + Kraemerin 4 (Fischräucherei, Imkerstand, Obstbaumgarten, Seeblick-Marktstand) — PR #318 |
-| S63-2 | ⏳ Blocked — wartet auf Till |
+| S76-1 | ✅ Runde 36 (Maus/Bug/Alien): Flaschenpost-Anker, Kompass-Station, Seestern-Teich, Piraten-Ausguck, Süd-Etappenstation, Blüten-Kartographie, Schmetterlings-Akademie, Plasma-Forschungsstation, Parallelwelten-Observatorium, Zeitanomalie-Monitor — PR #332 |
+| S76-2 | ⏳ Blocked — wartet auf Till |
 
-**Sprint Goal:** ✅ Bernd summt, Alien forscht, Kraemerin expandiert.
-
-**Sprint 63 Retro:**
-- Was gut lief: Alien-Quests mit echter Physik (Neutrinos, Quantenmechanik) — klingen wie echte Wissenschaft für Kinder.
-- Learning: Alte stale branches (feat/sprint-XX) ignorieren — nur feat/quests-runde-XX ist der clean stack.
-- Nächste NPCs: Tommy/Neinhorn/Elefant haben noch keine Quests im clean stack (Runde 21-23 war anderen NPCs).
-
-**Sprint 64 Planning:** S64-1 (Quests Runde 24 — Tommy/Neinhorn/Elefant) wird implementiert.
+**Retro:** Spongebob/Mephisto/Bernd bei 26 (niedrigste Zählung) → klar für Runde 37. Spongebob bekommt 4 Quests (Unterwasser-Bibliothek + Schnecken-Post + Kochakademie + Mondscheindisko), Mephisto 3 (Galerie + Vertragsmuseum + Schattengarten), Bernd 3 (Herbarium + Regenstation + Klavierzimmer). Stack wächst sauber (#314→…→#332→#333). Kraemerin/Lokführer/Floriane bei 27 → nächste Kandidaten nach S77.
 
 ---
+
+## Standup Log
+
+### 2026-04-17 — Sprint Review S76 + Planning S77 + S77-1 implementiert (Session 78)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 76 Review:** S76-1 ✅ (PR #332, Runde 36 — Maus/Bug/Alien, 376 Quests). S76-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 77:** S77-1 ✅ (feat/quests-runde-37, Runde 37 — Spongebob/Mephisto/Bernd, 386 Quests auf Branch). Stack: #314→…→#332→#333.
+
+---
+
+# Sprint 76 — "Maus schickt Flaschenpost, Bug eröffnet die Akademie, Alien erforscht Plasma"
+
+**Sprint Goal:** Maus entdeckt Seesterne und winkt Piraten zu, Bug lehrt in der Schmetterlings-Akademie, Alien misst Zeitanomalien und beobachtet Parallelwelten. Oscar trifft drei Freunde in neuen Welten.
+**Start:** 2026-04-17
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S76-1 | **Quests Runde 36** — 10 neue Quests (366→376): Maus (4), Bug (3), Alien (3) — stacked auf #331 | Artist | ✅ PR #332 |
+| S76-2 | **Carry-Over Merges** — PRs #314–#332 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S75 (2026-04-17 Session 77)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S75-1 | ✅ Runde 35 (Lokführer/Kraemerin/Krabs/Floriane): Gebirgspass-Express, Bahnhofshotel, Stellwerksturm, Trüffelmarkt, Handelskontor, Hafenmarkt, Tiefsee-Investition, Krabben-Hauptquartier, Frühlings-Erweckung, Feenpost-Netz — PR #331 |
+| S75-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Maus/Bug/Alien bei 25 (niedrigste Zählung) → klar für Runde 36. Runde 36 liefert Flaschenpost-Abenteuer (Maus), Schmetterlings-Akademie (Bug), Plasma und Parallelwelten (Alien). Stack wächst sauber (#314→…→#331→#332). Spongebob/Mephisto/Bernd bei 26 → nächste Kandidaten nach S76.
 
 ---
 
