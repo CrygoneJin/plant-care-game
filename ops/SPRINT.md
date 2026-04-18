@@ -1,3 +1,44 @@
+# Sprint 78 — "Lokführer fährt Nachtpost, Kraemerin eröffnet den Versammlungsplatz, Krabs versenkt seinen Tresor, Floriane schließt Abkommen mit dem Mond"
+
+**Sprint Goal:** Lokführer dreht die Drehscheibe und räumt Schnee bevor er fällt, Kraemerin betreibt Blumenmarkt und Dorf-Versammlungsplatz, Krabs versenkt seinen Tresor dreihundert Meter tief, Floriane schließt ein Abkommen mit dem Mond. Oscar trifft vier alte Freunde mit neuen Aufgaben.
+**Start:** 2026-04-18
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S78-1 | **Quests Runde 38** — 10 neue Quests (386→396): Lokführer (3), Kraemerin (3), Krabs (2), Floriane (2) — stacked auf #334 | Artist | ✅ PR #335 |
+| S78-2 | **Carry-Over Merges** — PRs #314–#335 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S77 (2026-04-18 Session 80)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S77-1 | ✅ Runde 37 (Spongebob/Mephisto/Bernd): Sandy's Kuppel, Gary's Schnecken-Rennen, Kelp-Wald-Kabine, Vergessens-Kammer, Vertragsstein-Galerie, Nacht-Basar der Geständnisse, Regen-Messpunkt, Mitternachts-Veranda, Pilz-Kartierung, Saatgut-Archiv — PR #334 |
+| S77-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Lokführer/Kraemerin/Krabs/Floriane bei 27 (niedrigste Zählung, bestätigt per Zählung) → klar für Runde 38. Tommy/Neinhorn/Bug/Alien bei 28. Hinweis: Retro S77 hatte "Elefant bei 28" falsch — Elefant ist bei 33. Stack wächst sauber (#314→…→#332→#334→#335).
+
+---
+
+## Standup Log
+
+### 2026-04-18 — Sprint Review S77 + Planning S78 + S78-1 implementiert (Session 80)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 77 Review:** S77-1 ✅ (PR #334, Runde 37 — Spongebob/Mephisto/Bernd, 386 Quests). S77-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 78:** S78-1 ✅ (PR #335, Runde 38 — Lokführer/Kraemerin/Krabs/Floriane, 396 Quests auf Branch). Stack: #314→…→#334→#335.
+
+---
+
 # Sprint 77 — "Spongebob baut Sandy's Kuppel, Mephisto öffnet den Nacht-Basar, Bernd kartiert seine Pilze"
 
 **Sprint Goal:** Spongebob entdeckt dass Kuppeln und Kelp-Wälder das beste Zuhause sind, Mephisto eröffnet einen Marktplatz für Geständnisse, Bernd archiviert Regen und Pilze und sitzt um Mitternacht auf seiner Veranda. Oscar trifft drei Freunde in sehr verschiedenen Stimmungen.
