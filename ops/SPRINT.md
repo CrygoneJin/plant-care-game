@@ -1,3 +1,44 @@
+# Sprint 86 — "Mephisto eröffnet das Wissens-Pfandhaus, Maus baut ihre Sternwarte, Krabs erfand die Lotterie, Floriane legt die Wunsch-Bibliothek an"
+
+**Sprint Goal:** Mephisto nimmt Wissen auf Pfand und hält den Letzten-Ausweg bereit, Maus entdeckt Sterne mit Werkzeug und reift Käse mit Geduld, Krabs findet zwei neue Einnahmequellen, Floriane archiviert alle Wünsche und empfängt solche aus anderen Welten. Oscar trifft vier alte Freunde in sehr verschiedenen Stimmungen.
+**Start:** 2026-04-18
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S86-1 | **Quests Runde 46** — 10 neue Quests (466→476): Mephisto (3), Maus (2), Krabs (2), Floriane (3) — stacked auf #342 | Artist | ✅ PR #343 |
+| S86-2 | **Carry-Over Merges** — PRs #314–#343 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S85 (2026-04-18 Session 87)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S85-1 | ✅ Runde 45 (Spongebob/Lokführer/Kraemerin/Bug/Alien): Unterwasser-Bäckerei, Quallen-Zucht-Station, Nacht-Weiche, Lokomotiv-Museum, Leinwand-Atelier, Saatgut-Kammer, Nektar-Kartographie, Windstille-Pavillon, Quantenverschränkungs-Station, Raumsonden-Leitzentrale — PR #342 |
+| S85-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Mephisto/Maus/Krabs/Floriane bei 34 (niedrigste Zählung) → klar für Runde 46. Mephisto 3 (Wissens-Pfandhaus + Letzter-Ausweg-Haus + Kristall-Beichtstuhl), Maus 2 (Mäuse-Sternwarte + Käse-Reifekeller), Krabs 2 (Muschel-Lotterie-Amt + Krabben-Versicherung), Floriane 3 (Wunsch-Bibliothek + Feen-Botschaft + Sternschnuppen-Warte). Stack wächst sauber (#314→…→#342→#343). Spongebob/Lokführer/Kraemerin/Bug/Alien bei 36 → nächste Kandidaten nach S86.
+
+---
+
+## Standup Log
+
+### 2026-04-18 — Sprint Review S85 + Planning S86 + S86-1 implementiert (Session 87)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 85 Review:** S85-1 ✅ (PR #342, Runde 45 — Spongebob/Lokführer/Kraemerin/Bug/Alien, 466 Quests). S85-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 86:** S86-1 ✅ (feat/quests-runde-46, Runde 46 — Mephisto/Maus/Krabs/Floriane, 476 Quests auf Branch). Stack: #314→…→#342→#343.
+
+---
+
 # Sprint 85 — "Spongebob backt Brot unter Wasser und züchtet Quallen, Lokführer baut das Nacht-Weichen-Netz und sein Museum, Kraemerin spinnt Leinen und legt den Saatgut-Tresor an, Bug kartiert alle Nektarpunkte, Alien verschränkt Quantenteilchen und empfängt 47 Jahre alte Bilder"
 
 **Sprint Goal:** Spongebob erschließt die Unterwasser-Kulinarik und hält seine Quallen in Schuss, Lokführer löst das Nacht-Routing und bewahrt Eisenbahngeschichte, Kraemerin gibt dem Dorf Stoff und Saatgut für den nächsten Winter, Bug legt die erste vollständige Nektar-Karte der Insel an, Alien öffnet die erste Quantenleitung ins All und bekommt Bilder von damals. Oscar trifft fünf alte Freunde mit neuen Projekten.
