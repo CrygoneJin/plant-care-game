@@ -1,3 +1,44 @@
+# Sprint 91 — "Tommy kartiert die Höhle und rettet Treibholz, Neinhorn versteckt was schön ist, Elefant baut was Wind und Meer spielen, Bernd kartiert Pilze und misst Tau, Maus forscht in der Erde"
+
+**Sprint Goal:** Tommy taucht in die Erde und sammelt was das Meer gebracht hat, Neinhorn versteckt Schönheit die er nicht zeigen kann aber trotzdem zeigt, Elefant baut Instrumente die Wind und Meer selbst spielen, Bernd dokumentiert was leise wächst und kommt, Maus forscht wo andere nicht hinschauen. Oscar trifft fünf Freunde die alle in der Stille große Dinge tun.
+**Start:** 2026-04-18
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S91-1 | **Quests Runde 51** — 10 neue Quests (516→526): Tommy (2), Neinhorn (2), Elefant (2), Bernd (2), Maus (2) — stacked auf #347 | Artist | ✅ PR #348 |
+| S91-2 | **Carry-Over Merges** — PRs #314–#348 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S90 (2026-04-18 Session 92)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S90-1 | ✅ Runde 50 (Krabs/Mephisto/Floriane): Zoll-Schranke, Krabben-Handelsflotte, Goldreserven-Kammer, Krabben-Börse, Ehrlichkeits-Labor, Zukunfts-Depot, Schweige-Brunnen, Nebelwunsch-Garten, Regenbogen-Empfangshalle, Feenschule der Sternenkunde — PR #347 |
+| S90-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Nach Runde 50: Krabs/Mephisto/Floriane auf 40 Quests, alle anderen 10 NPCs auf 38. Tommy/Neinhorn/Elefant/Bernd/Maus zuletzt in Runde 48 → klar für Runde 51. Runde 51 liefert Höhlen-Kartierung + Treibholz-Expedition (Tommy), Verbotene Galerie + Wolken-Observatorium (Neinhorn), Wind-Harfe + Gezeiten-Orgel (Elefant), Pilz-Kartierung + Tau-Messpunkt (Bernd), Ameisen-Observatorium + Fossil-Grabung (Maus). Stack wächst sauber (#314→…→#347→#348).
+
+---
+
+## Standup Log
+
+### 2026-04-18 — Sprint Review S90 + Planning S91 + S91-1 implementiert (Session 92)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 90 Review:** S90-1 ✅ (PR #347, Runde 50 — Krabs/Mephisto/Floriane, 516 Quests). S90-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 91:** S91-1 ✅ (feat/quests-runde-51, Runde 51 — Tommy/Neinhorn/Elefant/Bernd/Maus, 526 Quests auf Branch). Stack: #314→…→#347→#348.
+
+---
+
 # Sprint 90 — "Krabs baut die Zoll-Schranke und eröffnet die Krabben-Börse, Mephisto forscht im Ehrlichkeits-Labor und gräbt den Schweige-Brunnen, Floriane empfängt Regenbogen und unterrichtet kleine Feen"
 
 **Sprint Goal:** Krabs sichert mit Zoll und Handelsflotte den wirtschaftlichen Rand der Insel und öffnet die erste Krabben-Börse, Mephisto erforscht Ehrlichkeit aus sicherer Distanz und verwahrt Zukunfts-Möglichkeiten im Depot, Floriane fängt Morgennebel-Wünsche auf und baut die Schönste Empfangshalle für Regenbögen. Oscar trifft drei alte Freunde die alle auf ihre Art mit der Wahrheit ringen.
