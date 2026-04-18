@@ -1,3 +1,44 @@
+# Sprint 96 — "Krabs eröffnet die Muschelbank und das Patent-Amt und das Leihhaus, Mephisto baut die Entscheidungskammer und forscht an Vertrauen und verwahrt Erinnerungen, Floriane beobachtet das Morgenrot und baut das Elfentor und archiviert Sterne und schmiedet Wünsche in Feuer"
+
+**Sprint Goal:** Krabs entdeckt drei neue Wege Muscheln zu machen ohne zu arbeiten, Mephisto baut Räume die ehrlich machen ohne es zu merken, Floriane gibt jedem Wunsch eine Form und jeder Ankunft ein Tor. Oscar trifft drei alte Freunde die alle auf ihre Art Architekt sind.
+**Start:** 2026-04-18
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S96-1 | **Quests Runde 56** — 10 neue Quests (566→576): Krabs (3), Mephisto (3), Floriane (4) — stacked auf #352 | Artist | ✅ feat/quests-runde-56 |
+| S96-2 | **Carry-Over Merges** — PRs #314–#353 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S95 (2026-04-18 Session 97)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S95-1 | ✅ Runde 55 (Spongebob/Lokführer/Kraemerin/Bug/Alien): Korallen-Schule, Quallen-Schutzgebiet, Bahnhofs-Café, Eisenbahn-Brücke, Herbstmarkt, Salzhandel, Bestäubungs-Route, Winterquartier, Sonnenwind-Segel, Planetesimal-Studie — PR #352 |
+| S95-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Nach Runde 55: Spongebob/Lokführer/Kraemerin/Bug/Alien auf 42 · Tommy/Neinhorn/Elefant/Bernd/Maus auf 42 · Krabs/Mephisto/Floriane noch bei 40 → klar für Runde 56. Runde 56 liefert Muschelbank + Patent-Amt + Leihhaus (Krabs), Entscheidungs-Kammer + Vertrauen-Labor + Gedächtnis-Tresor (Mephisto), Morgenrot-Turm + Elfentor + Sternkarte + Feuer-Schmiede (Floriane). Stack wächst sauber (#314→…→#352→#353). Tommy/Neinhorn/Elefant/Bernd/Maus und Spongebob/Lokführer/Kraemerin/Bug/Alien bei 42 → nächste Kandidaten nach S96.
+
+---
+
+## Standup Log
+
+### 2026-04-18 — Sprint Review S95 + Planning S96 + S96-1 implementiert (Session 97)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 95 Review:** S95-1 ✅ (PR #352, Runde 55 — Spongebob/Lokführer/Kraemerin/Bug/Alien, 566 Quests). S95-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 96:** S96-1 ✅ (feat/quests-runde-56, Runde 56 — Krabs/Mephisto/Floriane, 576 Quests auf Branch). Stack: #314→…→#352→#353.
+
+---
+
 # Sprint 95 — "Spongebob schützt Quallen und forscht an Korallen, Lokführer baut ein Café und überquert das Tal, Kraemerin eröffnet den Herbstmarkt und destilliert Salz, Bug findet seinen Bestäubungsweg und bereitet Winterquartiere vor, Alien segelt auf Lichtdruck und studiert Planetesimale"
 
 **Sprint Goal:** Spongebob entdeckt dass er selbst Schutz bedeutet, Lokführer versorgt den Frühaufsteher mit Kaffee und überwindet das Tal mit Metall, Kraemerin erntet den Herbst und macht Salz sichtbar, Bug erkennt seinen Weg als unveränderbar und bereitet Wärme für andere vor, Alien reist per Lichtdruck und versteht wo die Insel herkommt. Oscar trifft fünf alte Freunde in unerwarteten Momenten.
