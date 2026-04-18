@@ -1,3 +1,44 @@
+# Sprint 99 — "Krabs eröffnet die Muschel-Börse, Mephisto baut die Schaukel der Entscheidungen, Floriane öffnet ihr Sternenstaub-Labor"
+
+**Sprint Goal:** Krabs macht Handel zur Wissenschaft und patentiert alles was er kann, Mephisto baut Räume für Wünsche und Entscheidungen die er selbst manchmal benutzt, Floriane forscht an Sternenstaub und eröffnet das größte Feenfest der Insel. Oscar trifft drei alte Freunde von einer Seite die er noch nicht kannte.
+**Start:** 2026-04-18
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S99-1 | **Quests Runde 59** — 10 neue Quests (596→606): Krabs (3), Mephisto (4), Floriane (3) — stacked auf #355 | Artist | ✅ feat/quests-runde-59 |
+| S99-2 | **Carry-Over Merges** — PRs #314–#356 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S98 (2026-04-18 Session 100)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S98-1 | ✅ Runde 58 (Spongebob/Lokführer/Kraemerin/Bug/Alien): Tintenfisch-Konzertgarten, Seegraswald-Erkundungsstation, Nebel-Signal-Station, Abstellgleis-Denkmal, Wintergewürz-Kammer, Frühlings-Marktplatz, Tagfalter-Labyrinth, Kokon-Gedenkstätte, Aurora-Messstation, Gravitationswellen-Detektor — PR #355 |
+| S98-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Krabs/Mephisto/Floriane bei 43 (niedrigste Zählung) → klar für Runde 59. Krabs 3 (Muschel-Börse + Unterwasser-Patentamt + Schatz-Kataster), Mephisto 4 (Tauschbörse der Wünsche + Kammer des Zwischen + Absichtsarchiv + Schaukel der Entscheidungen), Floriane 3 (Sternenstaub-Labor + Regenbogen-Brücke + Fee-Sommer-Fest). Stack wächst sauber (#314→…→#355→#356). Tommy/Neinhorn/Elefant/Bernd/Maus/Spongebob/Lokführer/Kraemerin/Bug/Alien bei 44 → nächste Kandidaten nach S99.
+
+---
+
+## Standup Log
+
+### 2026-04-18 — Sprint Review S98 + Planning S99 + S99-1 implementiert (Session 100)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 98 Review:** S98-1 ✅ (PR #355, Runde 58 — Spongebob/Lokführer/Kraemerin/Bug/Alien, 596 Quests). S98-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 99:** S99-1 ✅ (feat/quests-runde-59, Runde 59 — Krabs/Mephisto/Floriane, 606 Quests auf Branch). Stack: #314→…→#355→#356.
+
+---
+
 # Sprint 98 — "Spongebob dirigiert Tintenfische, Lokführer kämpft durch Nebel und ehrt alten Stahl, Kraemerin hütet Wintergewürze und eröffnet den Frühlingsmarkt, Bug erkundet sein Labyrinth, Alien misst Magnetfeld und Gravitationswellen"
 
 **Sprint Goal:** Spongebob entdeckt dass Tintenfische musikalisch sind wenn man sie respektiert, Lokführer meistert Nebel und ehrt ausgediente Loks, Kraemerin bewacht ihre Wintergewürze und eröffnet den ersten Frühlingstag, Bug erkundet seine eigene Natur durch Labyrinthe und Denkmäler, Alien kartiert das Magnetfeld und wartet auf Gravitationswellen. Oscar trifft fünf alte Freunde in neuen Rollen.
