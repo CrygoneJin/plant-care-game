@@ -1,6 +1,6 @@
-# Sprint 94 — "Tommy vermisst Meeresströmungen und baut ein Seezeichen-Netz, Neinhorn findet seinen verborgenen Weiher und ein stilles Turmzimmer, Elefant entdeckt Regen-Perkussion und Waldecho, Bernd beobachtet neunzehn Vögel und findet eine Bank unter klarem Himmel, Maus kartiert was unter der Erde liegt und lernt Wolkensprache"
+# Sprint 95 — "Spongebob schützt Quallen und forscht an Korallen, Lokführer baut ein Café und überquert das Tal, Kraemerin eröffnet den Herbstmarkt und destilliert Salz, Bug findet seinen Bestäubungsweg und bereitet Winterquartiere vor, Alien segelt auf Lichtdruck und studiert Planetesimale"
 
-**Sprint Goal:** Tommy misst Strömungen und markiert den Heimweg, Neinhorn entdeckt Stille auf zwei Arten (Wasser und Höhe), Elefant komponiert mit Regen und lässt den Wald antworten, Bernd beobachtet neunzehn Vogelarten und sitzt unter dem besten Himmel, Maus kartiert das Unsichtbare unter der Erde und liest Wolken wie Nachrichten. Oscar trifft fünf alte Freunde in ruhigeren Momenten.
+**Sprint Goal:** Spongebob entdeckt dass er selbst Schutz bedeutet, Lokführer versorgt den Frühaufsteher mit Kaffee und überwindet das Tal mit Metall, Kraemerin erntet den Herbst und macht Salz sichtbar, Bug erkennt seinen Weg als unveränderbar und bereitet Wärme für andere vor, Alien reist per Lichtdruck und versteht wo die Insel herkommt. Oscar trifft fünf alte Freunde in unerwarteten Momenten.
 **Start:** 2026-04-18
 
 ---
@@ -9,8 +9,33 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S94-1 | **Quests Runde 54** — 10 neue Quests (546→556): Tommy (2), Neinhorn (2), Elefant (2), Bernd (2), Maus (2) — stacked auf #350 | Artist | ✅ feat/quests-runde-54 |
-| S94-2 | **Carry-Over Merges** — PRs #314–#351 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+| S95-1 | **Quests Runde 55** — 10 neue Quests (556→566): Spongebob (2), Lokführer (2), Kraemerin (2), Bug (2), Alien (2) — stacked auf #351 | Artist | ✅ feat/quests-runde-55 |
+| S95-2 | **Carry-Over Merges** — PRs #314–#352 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S94 (2026-04-18 Session 96)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S94-1 | ✅ Runde 54 (Tommy/Neinhorn/Elefant/Bernd/Maus): Seezeichen-Netz, Verborgener Weiher, Stilles Turmzimmer, Regen-Perkussion, Waldecho-Halle, Vogel-Beobachtungsstand, Klarer-Himmel-Bank, Untergrund-Kartographie, Wolkenkunde-Station — feat/quests-runde-54 |
+| S94-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Nach Runde 54: Tommy/Neinhorn/Elefant/Bernd/Maus bei 42. Spongebob/Lokführer/Kraemerin/Bug/Alien/Krabs/Mephisto/Floriane noch bei 40. Nächste Gruppe: Spongebob/Lokführer/Kraemerin/Bug/Alien (je 2), 556→566. Stack wächst sauber (#314→…→#351→#352). Krabs/Mephisto/Floriane bei 40 → nächste Kandidaten nach S95.
+
+---
+
+## Standup Log
+
+### 2026-04-18 — Sprint Review S94 + Planning S95 + S95-1 implementiert (Session 96)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 94 Review:** S94-1 ✅ (feat/quests-runde-54, Runde 54 — Tommy/Neinhorn/Elefant/Bernd/Maus, 556 Quests). S94-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 95:** S95-1 ✅ (feat/quests-runde-55, Runde 55 — Spongebob/Lokführer/Kraemerin/Bug/Alien, 566 Quests auf Branch). Stack: #314→…→#351→#352.
 
 ---
 
