@@ -1,3 +1,44 @@
+# Sprint 88 — "Tommy forscht im Salzlabor, Neinhorn baut den Nebel-Garten und die Flüster-Brücke, Elefant hört den Regen als Sinfonie, Bernd schreibt das Frühmorgen-Protokoll, Maus misst die Gezeiten"
+
+**Sprint Goal:** Tommy entdeckt im Salzwasser-Labor dass Paradoxe schön sind, Neinhorn erschafft Orte die verschwinden oder leiser machen, Elefant beweist dass Regen eine Komposition ist, Bernd protokolliert die ehrlichste Stunde des Tages, Maus vermisst Ebbe und Flut und lernt Bienen-Sinn. Oscar trifft fünf alte Freunde in sehr verschiedenen Stimmungen.
+**Start:** 2026-04-18
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S88-1 | **Quests Runde 48** — 10 neue Quests (486→496): Tommy (2), Neinhorn (2), Elefant (2), Bernd (2), Maus (2) — stacked auf #344 | Artist | ✅ PR #345 |
+| S88-2 | **Carry-Over Merges** — PRs #314–#345 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S87 (2026-04-18 Session 89)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S87-1 | ✅ Runde 47 (Spongebob/Lokführer/Kraemerin/Bug/Alien): Schwamm-Kochschule, Seifenblasen-Park, Dampf-Werkstatt, Schienen-Brücke, Essig-Manufaktur, Trockenfrüchte-Galerie, Windmesser-Station, Blütenstaub-Labor, Magnetfeld-Observatorium, Erste-Kontakt-Station — PR #344 |
+| S87-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Nach Runde 47 alle NPCs auf 36 (Mephisto/Floriane bei 37). Tommy/Neinhorn/Elefant/Bernd/Maus bei 36 (niedrigste Zählung, nicht in S87) → klar für Runde 48. Runde 48 liefert Salzwasser-Labor + Windkanal-Prüfstand (Tommy), Nebel-Garten + Flüster-Brücke (Neinhorn), Steinschlag-Komposition + Regen-Sinfonie (Elefant), Frühmorgen-Protokoll + Winter-Depot (Bernd), Gezeiten-Messnetz + Bienenstock-Expedition (Maus). Stack wächst sauber (#314→…→#344→#345). Nach S88: Tommy/Neinhorn/Elefant/Bernd/Maus auf 38, alle anderen auf 36/37.
+
+---
+
+## Standup Log
+
+### 2026-04-18 — Sprint Review S87 + Planning S88 + S88-1 implementiert (Session 89)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 87 Review:** S87-1 ✅ (PR #344, Runde 47 — Spongebob/Lokführer/Kraemerin/Bug/Alien, 486 Quests). S87-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 88:** S88-1 ✅ (feat/quests-runde-48, Runde 48 — Tommy/Neinhorn/Elefant/Bernd/Maus, 496 Quests auf Branch). Stack: #314→…→#344→#345.
+
+---
+
 # Sprint 87 — "Spongebob eröffnet die Kochschule, Lokführer spannt die Schienen-Brücke, Kraemerin fermentiert und trocknet, Schmetterling misst den Wind, Alien sucht den ersten Kontakt"
 
 **Sprint Goal:** Spongebob gibt Kochkurse und bläst Seifenblasen bis ans Ende des Riffs, Lokführer repariert in der Dampf-Werkstatt und baut die große Schienen-Brücke, Kraemerin fermentiert Essig mit Geduld und hängt Früchte zum Trocknen aus, Bug misst den Wind wie ein Wissenschaftler und archiviert Blütenstaub, Alien beobachtet das Magnetfeld und bereitet den ersten Kontakt vor. Oscar trifft fünf alte Freunde mit neuen Projekten.
