@@ -1,3 +1,44 @@
+# Sprint 101 — "Spongebob bläst Seifenblasen für die Wissenschaft, Lokführer wartet seine Lok, Kraemerin öffnet die Bienenstöcke, Bug erinnert sich an seine Raupenzeit, Alien misst die Erde von außen"
+
+**Sprint Goal:** Spongebob beweist dass Blasen Physik sind, Lokführer hält seine Lok durch Disziplin pünktlich, Kraemerin erklärt Bienen-Demokratie, Bug erinnert sich an die Zeit vor der Verwandlung, Alien catalogisiert die Erde als Fremder. Oscar trifft fünf alte Freunde mit neuen Projekten.
+**Start:** 2026-04-18
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S101-1 | **Quests Runde 61** — 10 neue Quests (616→626): Spongebob (2), Lokführer (2), Kraemerin (2), Bug (2), Alien (2) — stacked auf #357 | Artist | ✅ feat/quests-runde-61 |
+| S101-2 | **Carry-Over Merges** — PRs #314–#358 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S100 (2026-04-18 Session 102)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S100-1 | ✅ Runde 60 (Tommy/Neinhorn/Elefant/Bernd/Maus): Eisenbahn-Aquädukt, Magnetbahn-Testfeld, Unterwasser-Aussichtsplattform, Geheimtunnel, Salzwasser-Orgel, Mondschein-Konzerthaus, Regenwetter-Pavillon, Stiller Aussichtsturm, Tauschladen, Windflöte — feat/quests-runde-60 |
+| S100-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Spongebob/Lokführer/Kraemerin/Bug/Alien bei 44 (niedrigste Zählung) → klar für Runde 61. Spongebob 2 (Seifenblasen-Labor + Sandburg-Festival), Lokführer 2 (Lok-Wartungsdepot + Streckenposten-Hütte), Kraemerin 2 (Bienenstöcke-Kooperative + Wintervorrat-Keller), Bug 2 (Raupengarten + Morgenau-Punkt), Alien 2 (Gravitationslinsen-Observatorium + Atmosphären-Analyse-Station). Stack wächst sauber (#314→…→#357→#358). Tommy/Neinhorn/Elefant/Bernd/Maus bei 46 → nächste Kandidaten nach S101.
+
+---
+
+## Standup Log
+
+### 2026-04-18 — Sprint Review S100 + Planning S101 + S101-1 implementiert (Session 102)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 100 Review:** S100-1 ✅ (feat/quests-runde-60, Runde 60 — Tommy/Neinhorn/Elefant/Bernd/Maus, 616 Quests). S100-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 101:** S101-1 ✅ (feat/quests-runde-61, Runde 61 — Spongebob/Lokführer/Kraemerin/Bug/Alien, 626 Quests auf Branch). Stack: #314→…→#357→#358.
+
+---
+
 # Sprint 100 — "Tommy baut den Aquädukt, Neinhorn gräbt seinen Geheimtunnel, Elefant eröffnet das Mondschein-Konzerthaus, Bernd sitzt im Regen, Maus baut Windflöte"
 
 **Sprint Goal:** Tommy verbindet Römer und Dampf, Neinhorn entdeckt dass Tunnel Geheimnisse brauchen, Elefant öffnet das Konzerthaus nur wenn der Mond stimmt, Bernd findet Ruhe im Regen und in Sternen, Maus lernt dass Stille auch Musik ist. Oscar trifft fünf alte Freunde mit neuen Einsichten.
