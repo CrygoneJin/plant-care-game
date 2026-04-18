@@ -1,3 +1,44 @@
+# Sprint 98 — "Spongebob dirigiert Tintenfische, Lokführer kämpft durch Nebel und ehrt alten Stahl, Kraemerin hütet Wintergewürze und eröffnet den Frühlingsmarkt, Bug erkundet sein Labyrinth, Alien misst Magnetfeld und Gravitationswellen"
+
+**Sprint Goal:** Spongebob entdeckt dass Tintenfische musikalisch sind wenn man sie respektiert, Lokführer meistert Nebel und ehrt ausgediente Loks, Kraemerin bewacht ihre Wintergewürze und eröffnet den ersten Frühlingstag, Bug erkundet seine eigene Natur durch Labyrinthe und Denkmäler, Alien kartiert das Magnetfeld und wartet auf Gravitationswellen. Oscar trifft fünf alte Freunde in neuen Rollen.
+**Start:** 2026-04-18
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S98-1 | **Quests Runde 58** — 10 neue Quests (586→596): Spongebob (2), Lokführer (2), Kraemerin (2), Bug (2), Alien (2) — stacked auf #354 | Artist | ✅ feat/quests-runde-58 |
+| S98-2 | **Carry-Over Merges** — PRs #314–#355 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S97 (2026-04-18 Session 99)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S97-1 | ✅ Runde 57 (Tommy/Neinhorn/Elefant/Bernd/Maus): Tidenkanal-Schleuse, Schwarm-Beobachtungsposten, Mondstein-Grotte, Stilles Quellhaus, Wasserfall-Konzerthalle, Nebelhorn-Station, Mondphasen-Logbuch, Herbst-Geruchs-Station, Regenwurm-Labor, Flut-Messnetz — PR #354 |
+| S97-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Nach Runde 57: Tommy/Neinhorn/Elefant/Bernd/Maus auf 44 · Spongebob/Lokführer/Kraemerin/Bug/Alien auf 42 · Krabs/Mephisto/Floriane auf 43 → Spongebob/Lokführer/Kraemerin/Bug/Alien (niedrigste Zählung, 42) klar für Runde 58. Runde 58 liefert Tintenfisch-Konzertgarten + Seegraswald-Erkundungsstation (Spongebob), Nebel-Signal-Station + Abstellgleis-Denkmal (Lokführer), Wintergewürz-Kammer + Frühlings-Marktplatz (Kraemerin), Tagfalter-Labyrinth + Kokon-Gedenkstätte (Bug), Aurora-Messstation + Gravitationswellen-Detektor (Alien). Stack wächst sauber (#314→…→#354→#355). Krabs/Mephisto/Floriane bei 43 → nächste Kandidaten nach S98.
+
+---
+
+## Standup Log
+
+### 2026-04-18 — Sprint Review S97 + Planning S98 + S98-1 implementiert (Session 99)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 97 Review:** S97-1 ✅ (PR #354, Runde 57 — Tommy/Neinhorn/Elefant/Bernd/Maus, 586 Quests). S97-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 98:** S98-1 ✅ (feat/quests-runde-58, Runde 58 — Spongebob/Lokführer/Kraemerin/Bug/Alien, 596 Quests auf Branch). Stack: #314→…→#354→#355.
+
+---
+
 # Sprint 96 — "Krabs eröffnet die Muschelbank und das Patent-Amt und das Leihhaus, Mephisto baut die Entscheidungskammer und forscht an Vertrauen und verwahrt Erinnerungen, Floriane beobachtet das Morgenrot und baut das Elfentor und archiviert Sterne und schmiedet Wünsche in Feuer"
 
 **Sprint Goal:** Krabs entdeckt drei neue Wege Muscheln zu machen ohne zu arbeiten, Mephisto baut Räume die ehrlich machen ohne es zu merken, Floriane gibt jedem Wunsch eine Form und jeder Ankunft ein Tor. Oscar trifft drei alte Freunde die alle auf ihre Art Architekt sind.
