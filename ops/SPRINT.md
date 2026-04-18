@@ -1,3 +1,44 @@
+# Sprint 90 — "Krabs baut die Zoll-Schranke und eröffnet die Krabben-Börse, Mephisto forscht im Ehrlichkeits-Labor und gräbt den Schweige-Brunnen, Floriane empfängt Regenbogen und unterrichtet kleine Feen"
+
+**Sprint Goal:** Krabs sichert mit Zoll und Handelsflotte den wirtschaftlichen Rand der Insel und öffnet die erste Krabben-Börse, Mephisto erforscht Ehrlichkeit aus sicherer Distanz und verwahrt Zukunfts-Möglichkeiten im Depot, Floriane fängt Morgennebel-Wünsche auf und baut die Schönste Empfangshalle für Regenbögen. Oscar trifft drei alte Freunde die alle auf ihre Art mit der Wahrheit ringen.
+**Start:** 2026-04-18
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S90-1 | **Quests Runde 50** — 10 neue Quests (506→516): Krabs (4), Mephisto (3), Floriane (3) — stacked auf #346 | Artist | ✅ PR #347 |
+| S90-2 | **Carry-Over Merges** — PRs #314–#347 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S89 (2026-04-18 Session 91)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S89-1 | ✅ Runde 49 (Spongebob/Lokführer/Kraemerin/Bug/Alien): Meeres-Leuchtturm-Wacht, Korallenriff-Theater, Wüsten-Express, Güterterminal, Gewürzgarten, Töpfer-Werkstatt, Mondfalter-Station, Regentropfen-Studie, Tachyon-Archiv, Exoplaneten-Karte — PR #346 |
+| S89-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Alle NPCs nach Runde 49 auf 38 außer Mephisto/Floriane (37) und Krabs (36). Krabs bei 36 (niedrigste Zählung) → klar für Runde 50. Runde 50 liefert Zoll-Schranke + Krabben-Handelsflotte + Goldreserven-Kammer + Krabben-Börse (Krabs), Ehrlichkeits-Labor + Zukunfts-Depot + Schweige-Brunnen (Mephisto), Nebelwunsch-Garten + Regenbogen-Empfangshalle + Feenschule der Sternenkunde (Floriane). Nach Runde 50: Krabs auf 40, Mephisto/Floriane auf 40 — alle NPCs gleichauf! Stack wächst sauber (#314→…→#346→#347).
+
+---
+
+## Standup Log
+
+### 2026-04-18 — Sprint Review S89 + Planning S90 + S90-1 implementiert (Session 91)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 89 Review:** S89-1 ✅ (PR #346, Runde 49 — Spongebob/Lokführer/Kraemerin/Bug/Alien, 506 Quests). S89-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 90:** S90-1 ✅ (feat/quests-runde-50, Runde 50 — Krabs/Mephisto/Floriane, 516 Quests auf Branch). Stack: #314→…→#346→#347.
+
+---
+
 # Sprint 89 — "Spongebob hält Leuchtturmwacht, Lokführer durchquert die Wüste, Kraemerin baut den Gewürzgarten, Bug beobachtet die Mondfalter, Alien kartiert die Nachbarschaft"
 
 **Sprint Goal:** Spongebob rettet Fische und Schiffe mit seinem Leuchtturm und eröffnet ein Korallenriff-Theater, Lokführer kämpft durch Sand und Hitze und baut das große Güterterminal, Kraemerin pflanzt was riecht und brennt Ton zu Gefäßen, Bug wartet auf die Mondfalter und hört dem Regen zu, Alien archiviert die Zukunft und kartiert 5.000 Nachbarn. Oscar trifft fünf alte Freunde mit neuen Projekten.
