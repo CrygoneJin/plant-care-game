@@ -1,3 +1,44 @@
+# Sprint 87 — "Spongebob eröffnet die Kochschule, Lokführer spannt die Schienen-Brücke, Kraemerin fermentiert und trocknet, Schmetterling misst den Wind, Alien sucht den ersten Kontakt"
+
+**Sprint Goal:** Spongebob gibt Kochkurse und bläst Seifenblasen bis ans Ende des Riffs, Lokführer repariert in der Dampf-Werkstatt und baut die große Schienen-Brücke, Kraemerin fermentiert Essig mit Geduld und hängt Früchte zum Trocknen aus, Bug misst den Wind wie ein Wissenschaftler und archiviert Blütenstaub, Alien beobachtet das Magnetfeld und bereitet den ersten Kontakt vor. Oscar trifft fünf alte Freunde mit neuen Projekten.
+**Start:** 2026-04-18
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S87-1 | **Quests Runde 47** — 10 neue Quests (476→486): Spongebob (2), Lokführer (2), Kraemerin (2), Bug (2), Alien (2) — stacked auf #343 | Artist | ✅ PR #344 |
+| S87-2 | **Carry-Over Merges** — PRs #314–#344 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S86 (2026-04-18 Session 88)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S86-1 | ✅ Runde 46 (Mephisto/Maus/Krabs/Floriane): Wissens-Pfandhaus, Letzter-Ausweg-Haus, Kristall-Beichtstuhl, Mäuse-Sternwarte, Käse-Reifekeller, Muschel-Lotterie-Amt, Krabben-Versicherung, Wunsch-Bibliothek, Feen-Botschaft, Sternschnuppen-Warte — PR #343 |
+| S86-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Spongebob/Lokführer/Kraemerin/Bug/Alien bei 34 (niedrigste Zählung) → klar für Runde 47. Runde 47 liefert Schwamm-Kochschule + Seifenblasen-Park (Spongebob), Dampf-Werkstatt + Schienen-Brücke (Lokführer), Essig-Manufaktur + Trockenfrüchte-Galerie (Kraemerin), Windmesser-Station + Blütenstaub-Labor (Bug/🦋), Magnetfeld-Observatorium + Erste-Kontakt-Station (Alien). Stack wächst sauber (#314→…→#343→#344). Nach S87 alle NPCs auf 36 (Mephisto/Floriane bei 37).
+
+---
+
+## Standup Log
+
+### 2026-04-18 — Sprint Review S86 + Planning S87 + S87-1 implementiert (Session 88)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 86 Review:** S86-1 ✅ (PR #343, Runde 46 — Mephisto/Maus/Krabs/Floriane, 476 Quests). S86-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 87:** S87-1 ✅ (PR #344, feat/quests-runde-47, Runde 47 — Spongebob/Lokführer/Kraemerin/Bug/Alien, 486 Quests auf Branch). Stack: #314→…→#343→#344.
+
+---
+
 # Sprint 86 — "Mephisto eröffnet das Wissens-Pfandhaus, Maus baut ihre Sternwarte, Krabs erfand die Lotterie, Floriane legt die Wunsch-Bibliothek an"
 
 **Sprint Goal:** Mephisto nimmt Wissen auf Pfand und hält den Letzten-Ausweg bereit, Maus entdeckt Sterne mit Werkzeug und reift Käse mit Geduld, Krabs findet zwei neue Einnahmequellen, Floriane archiviert alle Wünsche und empfängt solche aus anderen Welten. Oscar trifft vier alte Freunde in sehr verschiedenen Stimmungen.
