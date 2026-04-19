@@ -34,7 +34,9 @@
     let conwayFading   = false;
     let lastInteraction = Date.now();
     const CONWAY_IDLE_MS   = 120000; // 2 Minuten Idle → Screensaver
-    const AMBIENT_IDLE_MS  = 30000;  // Ambient-Sound nach 30s Idle
+    // Oscar-Feedback (2026-04-19): Insel-Musik vermisst. #57 Stille-Spec
+    // aufgeweicht — Ambient startet schon nach 3s und läuft durch.
+    const AMBIENT_IDLE_MS  = 3000;
 
     // Lazy-Accessor — game.js muss window.INSEL_DIMS gesetzt haben
     function dims() { return window.INSEL_DIMS || { ROWS: 18, COLS: 32 }; }
@@ -513,7 +515,8 @@
     function resetIdleTimer() {
         lastInteraction = Date.now();
         if (conwayOverlay) fadeConway(); // sanfter Abschied statt sofort weg
-        if (window.INSEL_SOUND) window.INSEL_SOUND.stopAmbient();
+        // Ambient bleibt — Oscar will durchgehende Insel-Musik (2026-04-19).
+        // Stoppen nur via Mute-Button.
         bus && bus.emit('idle:end');
     }
 
