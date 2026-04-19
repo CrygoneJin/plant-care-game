@@ -1,3 +1,44 @@
+# Sprint 87 — "Mephisto baut für die Ewigkeit, Spongebob träumt groß"
+
+**Sprint Goal:** Mephisto erschafft Orte die außerhalb der Zeit existieren — Asche, Versuchung, Nebel, Erinnerung, ewiges Feuer. Spongebob feiert Patrick, baut für Gary den ultimativen Badekurort und holt den Seifenblasen-Weltrekord. Oscar trifft zwei alte Freunde in neuen Kapiteln.
+**Start:** 2026-04-19
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S87-1 | **Quests Runde 47** — 10 neue Quests (476→486): Mephisto (5), Spongebob (5) — stacked auf #343, PR #369 | Artist | ✅ implementiert |
+| S87-2 | **Carry-Over Merges** — PRs #314–#369 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S86 (2026-04-19 Session 89)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|---------|
+| S86-1 | ✅ Runde 46 (Lokführer/Krämerin/Elefant): Nacht-Express, Stellwerk, Schneepflug-Depot, Tausend-Fahrten-Fest, Gewürzlager, Jahresmarkt-Bühne, Händler-Herberge, Regenwald-Trommel, Wind-Harfe, Gezeiten-Sinfonie — PR #343 |
+| S86-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro S86:** Mephisto/Spongebob beide bei 35 (niedrigste nach S86) → S87. Mephisto 5 Quests (→40), Spongebob 5 (→40). Stack: #314→…→#368→#343→#369. Nächste Kandidaten S88: Neinhorn/Alien/Tommy/Bernd bei ~33–34 — Feynman misst.
+
+---
+
+## Standup Log
+
+### 2026-04-19 — Sprint Review S86 + Planning S87 + S87-1 implementiert (Session 89)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 86 Review:** S86-1 ✅ (PR #343, Runde 46 — Lokführer/Krämerin/Elefant, 476 Quests). S86-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 87:** S87-1 ✅ (PR #369, Runde 47 — Mephisto/Spongebob, 486 Quests auf Branch). Mephisto: Asche-Archiv, Versuchungs-Galerie, Nebel-Theater, Seelen-Bibliothek, Ewige Flamme. Spongebob: Blasen-Meditationsgarten, Patricks Geburtstagsfest, Unterwasser-Lernstudio, Gary-Badekurort, Weltrekord-Seifenblase. Stack: #314→…→#343→#369.
+
+---
+
 # Sprint 85 — "Floriane misst Mondwünsche, Spongebob sichert das Geheimrezept, Mephisto baut ein Paradox"
 
 **Sprint Goal:** Floriane destilliert Mondphysik in Atelier, Teich, Protokoll und Resonanzkammer, Spongebob baut Gary eine Hochschule und sichert das heiligste Geheimnis der Unterwasserwelt, Mephisto schafft Orte wo Entscheidungen physisch werden. Oscar trifft drei Charaktere in neuen Kapiteln.
