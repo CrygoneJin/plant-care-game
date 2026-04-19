@@ -1,3 +1,44 @@
+# Sprint 108 — "Spongebob erforscht Seegurken und Unterwasser-Wetter, Lokführer testet Hochgeschwindigkeit und bildet aus, Kraemerin eröffnet den Sommermarkt und trocknet Kräuter, Bug baut den Kokon-Turm und kartiert Düfte, Alien modelliert Neutronensterne und lauscht dem All"
+
+**Sprint Goal:** Spongebob entdeckt dass Seegurken mit dem Hintern fressen und das Unterwasser eigenes Wetter hat, Lokführer bricht Geschwindigkeitsrekorde und gibt sein Wissen weiter, Kraemerin bringt den Markt ans Wasser und hängt Kräuter zum Trocknen, Bug baut hoch oben einen Ort für Verwandlungen und kartiert was er nur riecht, Alien versteht wie dicht das Universum ist und wartet auf ein Signal. Oscar trifft fünf Freunde mit fünf verschiedenen Arten von Staunen.
+**Start:** 2026-04-19
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S108-1 | **Quests Runde 68** — 10 neue Quests (686→696): Spongebob (2), Lokführer (2), Kraemerin (2), Bug (2), Alien (2) — stacked auf #364 | Artist | ✅ feat/quests-runde-68 |
+| S108-2 | **Carry-Over Merges** — PRs #314–#365 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S107 (2026-04-19 Session 109)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S107-1 | ✅ Runde 67 (Tommy/Neinhorn/Elefant/Bernd/Maus): Treibgut-Labor, Vulkan-Frühwarnsystem, Mondstein-Höhle, Eiszeit-Kammer, Regenwald-Orchester, Strandkonzert, Beobachtungsstand, Herbstfrüchte-Keller, Dachgarten, Unterwasser-Fenster — PR #364 |
+| S107-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Nach Runde 67: Gruppe A (Tommy/Neinhorn/Elefant/Bernd/Maus) auf 52, Gruppe B (Spongebob/Lokführer/Kraemerin/Bug/Alien) auf 50 → Gruppe B dran. Krabs 52, Mephisto 53, Floriane 55 weiterhin voraus. Stack: #314→…→#364→#365. Nach S108: Gruppe B auf 52, alle 10 Kern-NPCs auf 52.
+
+---
+
+## Standup Log
+
+### 2026-04-19 — Sprint Review S107 + Planning S108 + S108-1 implementiert (Session 109)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 107 Review:** S107-1 ✅ (PR #364, Runde 67 — Tommy/Neinhorn/Elefant/Bernd/Maus, 686 Quests). S107-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 108:** S108-1 ✅ (feat/quests-runde-68, Runde 68 — Spongebob/Lokführer/Kraemerin/Bug/Alien, 696 Quests auf Branch). Stack: #314→…→#364→#365.
+
+---
+
 # Sprint 107 — "Tommy erforscht Treibgut und Vulkane, Neinhorn entdeckt Mondsteine und Eis, Elefant dirigiert Regen und Strand, Bernd beobachtet Spatzen und lagert Äpfel, Maus baut Dachgarten und Unterwasser-Fenster"
 
 **Sprint Goal:** Tommy beweist dass der Ozean Post schickt und richtet ein Frühwarnsystem ein, Neinhorn misst Phosphoreszenz (keine Magie!) und konserviert alles in Eis (heizt es aber heimlich auf), Elefant entdeckt das Regenwald-Orchester und eröffnet das Strandkonzert, Bernd baut seinen ersten richtigen Beobachtungsstand und lagert Äpfel für das ganze Jahr, Maus baut einen Dachgarten und ein Fenster unter Wasser. Oscar trifft fünf alte Freunde mit neuen Abenteuern.
