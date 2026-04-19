@@ -371,35 +371,49 @@
     const C2 = 65.41;   // Tiefes C
     const C3 = 130.81;  // Tiefes Mittleres C
     const C5 = 523.25;  // Hohes C
+
+    // === Notenwerte (Oscar-Wunsch, 2026-04-19): jedes Element hat eigene Tonlänge ===
+    // BPM 180 → Viertelnote = 0.333s. Differenzierte Notenwerte machen die
+    // Insel zur Komposition statt zur Klang-Kette.
+    const BPM = 180;
+    const BEAT = 60 / BPM;
+    const NOTE_DURS = {
+        whole:     BEAT * 4,   // 1.33s — sehr lang, schwebend (Mond, Wasser)
+        half:      BEAT * 2,   // 0.67s — getragen (Yin, Qi, Rakete)
+        quarter:   BEAT,       // 0.33s — Standard (Erde, Mars, Yang)
+        eighth:    BEAT / 2,   // 0.17s — lebendig (Holz)
+        sixteenth: BEAT / 4,   // 0.08s — hart, kurz (Metall)
+        triplet:   BEAT / 3,   // 0.11s — flackernd (Feuer, Alien)
+    };
+
     const ELEMENT_TONES = {
         // 道 Tao = Stille. Kein Ton. Lindgren: "Manchmal ist Stille der schönste Moment."
         tao:    null,
-        // ⚫ Yin = tief, dunkel, empfangend
-        yin:    { freq: C2,         wave: 'sine',     dur: 0.5,  vol: 0.12 },
-        // ⚪ Yang = hoch, hell, gebend
-        yang:   { freq: C5,         wave: 'sine',     dur: 0.3,  vol: 0.08 },
-        // ✨ Qi = Yin+Yang Akkord (wird in soundBuild als Doppelton gespielt)
-        qi:     { freq: C2,         wave: 'sine',     dur: 0.4,  vol: 0.10, chord: C5 },
-        // === 五音 Wu Yin — Pentatonik: 宫商角徵羽 (Gōng Shāng Jué Zhǐ Yǔ) ===
-        // Pythagoräische Stimmung — Sprint 18: Erde tiefer, Feuer höher, Wasser fließend
-        // 土 Erde = 宫 Gōng — tief, geerdet, Fundament (eine Oktave tiefer als vorher)
-        earth:  { freq: C3,         wave: 'triangle', dur: 0.20, vol: 0.12 },
-        // 金 Metall = 商 Shāng — klar, glockenartig (Quinte über Erde)
-        metal:  { freq: C3 * 3/2,   wave: 'square',   dur: 0.10, vol: 0.08 },
-        // 木 Holz = 角 Jué — warm, wachsend (C4, Frühling)
-        wood:   { freq: C4,         wave: 'triangle', dur: 0.14, vol: 0.09 },
-        // 火 Feuer = 徵 Zhǐ — höchster Ton, aufsteigend, heiß (G5 = C4 * 3)
-        fire:   { freq: C4 * 3,     wave: 'sawtooth', dur: 0.06, vol: 0.06 },
-        // 水 Wasser = 羽 Yǔ — fließend (glide: A4→A3, absteigende Energie)
-        water:  { freq: C4 * 27/16, wave: 'sine',     dur: 0.30, vol: 0.09, glide: C3 * 27/16 },
-        // 🚀 Rakete = Triebwerk: aufsteigender Schub (tief→hoch, sawtooth)
-        rocket: { freq: 130,        wave: 'sawtooth',  dur: 0.20, vol: 0.07, glide: 520 },
-        // 🌙 Mond = Stille + Klang: C5 + Quinte (schwebend, rein)
-        moon:   { freq: C5,         wave: 'sine',      dur: 0.45, vol: 0.06, chord: C5 * 3/2 },
-        // 🪐 Mars = Staubig: trocken, tiefe Terz unter Feuer
-        mars:   { freq: C4 * 5/4,   wave: 'triangle',  dur: 0.22, vol: 0.08 },
-        // 👽 Alien = Fremd: übermäßige Septime, square-Welle
-        alien:  { freq: C4 * 7/4,   wave: 'square',    dur: 0.14, vol: 0.06 },
+        // ⚫ Yin = tief, dunkel, empfangend — halbe Note
+        yin:    { freq: C2,         wave: 'sine',     dur: NOTE_DURS.half,      vol: 0.12 },
+        // ⚪ Yang = hoch, hell, gebend — viertel Note
+        yang:   { freq: C5,         wave: 'sine',     dur: NOTE_DURS.quarter,   vol: 0.08 },
+        // ✨ Qi = Yin+Yang Akkord — halbe Note
+        qi:     { freq: C2,         wave: 'sine',     dur: NOTE_DURS.half,      vol: 0.10, chord: C5 },
+        // === 五音 Wu Yin — Pentatonik: 宫商角徵羽 ===
+        // 土 Erde = 宫 Gōng — geerdet, Fundament — viertel
+        earth:  { freq: C3,         wave: 'triangle', dur: NOTE_DURS.quarter,   vol: 0.12 },
+        // 金 Metall = 商 Shāng — klar, glockenartig — sechzehntel (hart)
+        metal:  { freq: C3 * 3/2,   wave: 'square',   dur: NOTE_DURS.sixteenth, vol: 0.08 },
+        // 木 Holz = 角 Jué — warm, wachsend — achtel (lebendig)
+        wood:   { freq: C4,         wave: 'triangle', dur: NOTE_DURS.eighth,    vol: 0.09 },
+        // 火 Feuer = 徵 Zhǐ — aufsteigend, heiß — triolen-achtel (flackernd)
+        fire:   { freq: C4 * 3,     wave: 'sawtooth', dur: NOTE_DURS.triplet,   vol: 0.06 },
+        // 水 Wasser = 羽 Yǔ — fließend — ganze Note (sehr lang, mit glide)
+        water:  { freq: C4 * 27/16, wave: 'sine',     dur: NOTE_DURS.whole,     vol: 0.09, glide: C3 * 27/16 },
+        // 🚀 Rakete = Triebwerk — halbe Note (Schub, lang aufsteigend)
+        rocket: { freq: 130,        wave: 'sawtooth', dur: NOTE_DURS.half,      vol: 0.07, glide: 520 },
+        // 🌙 Mond = schwebend, rein — ganze Note
+        moon:   { freq: C5,         wave: 'sine',     dur: NOTE_DURS.whole,     vol: 0.06, chord: C5 * 3/2 },
+        // 🪐 Mars = staubig, trocken — viertel
+        mars:   { freq: C4 * 5/4,   wave: 'triangle', dur: NOTE_DURS.quarter,   vol: 0.08 },
+        // 👽 Alien = fremd, übermäßige Septime — triolen-achtel
+        alien:  { freq: C4 * 7/4,   wave: 'square',   dur: NOTE_DURS.triplet,   vol: 0.06 },
     };
 
     // Erster Sound = KLONK. Laut. Befriedigend. Minecraft-Niveau.
