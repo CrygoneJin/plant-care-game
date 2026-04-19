@@ -1,3 +1,44 @@
+# Sprint 106 — "Spongebob verfolgt Quallen, Lokführer baut das Nacht-Signalwerk, Kraemerin trocknet Blumen und mahlt Gewürze, Bug beobachtet Kokons, Alien bohrt ins Eis und lauscht dem Universum"
+
+**Sprint Goal:** Spongebob dokumentiert Quallen-Navigation und baut eine Muschelkonzert-Station, Lokführer sichert das Nacht-Signalwerk und repariert das Gleisbett, Kraemerin eröffnet ihr Trockenblumen-Atelier und ihre Gewürzmühle, Bug baut einen Chrysaliden-Beobachtungsturm und kartiert Windströmungen, Alien entnimmt Eisproben aus 847.000 Jahren und richtet einen Quantenrauschen-Detektor ein. Oscar trifft fünf alte Freunde mit neuen Entdeckungen.
+**Start:** 2026-04-19
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S106-1 | **Quests Runde 66** — 10 neue Quests (666→676): Spongebob (2), Lokführer (2), Kraemerin (2), Bug (2), Alien (2) — stacked auf #362 | Artist | ✅ feat/quests-runde-66 |
+| S106-2 | **Carry-Over Merges** — PRs #314–#363 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S105 (2026-04-19 Session 107)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S105-1 | ✅ Runde 65 (Tommy/Neinhorn/Elefant/Bernd/Maus): Gezeiten-Messturm, Sonnen-Kompass, Frühlingsgarten (NEIN!), Verbotener Drachen, Frühlingsquartett, Gebirgs-Echo-Kammer, Morgen-Terrasse, Notfall-Schrank, Prisma-Turm, Wasser-Uhr — feat/quests-runde-65 |
+| S105-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Nach Runde 65: Gruppe A (Tommy/Neinhorn/Elefant/Bernd/Maus) jetzt bei 50, Gruppe B (Spongebob/Lokführer/Kraemerin/Bug/Alien) bei 48 → Gruppe B dran für Runde 66. Krabs ~52, Mephisto ~53, Floriane ~55 weiterhin voraus. Stack: #314→…→#362→#363.
+
+---
+
+## Standup Log
+
+### 2026-04-19 — Sprint Review S105 + Planning S106 + S106-1 implementiert (Session 107)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 105 Review:** S105-1 ✅ (feat/quests-runde-65, Runde 65 — Tommy/Neinhorn/Elefant/Bernd/Maus, 666 Quests). S105-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 106:** S106-1 ✅ (feat/quests-runde-66, Runde 66 — Spongebob/Lokführer/Kraemerin/Bug/Alien, 676 Quests auf Branch). Stack: #314→…→#362→#363.
+
+---
+
 # Sprint 105 — "Tommy misst Gezeiten und navigiert mit der Sonne, Neinhorn sagt NEIN zum Frühling (baut ihn trotzdem), Elefant hört das Vogelquartett und das Bergecho, Bernd findet seine Morgenruhe, Maus erklärt Licht und erfindet die Wasseruhr"
 
 **Sprint Goal:** Tommy beweist dass der Mond Wasser zieht und findet Süden ohne Gerät, Neinhorn baut einen Frühlingsgarten und einen verbotenen Drachen (NEIN!), Elefant erlebt das früheste Konzert des Jahres und entdeckt Stereo-Echo, Bernd sitzt alleine auf seiner Morgen-Terrasse und packt den Notfall-Schrank, Maus bricht Licht in Regenbögen und baut eine Uhr aus Wasser. Oscar trifft fünf alte Freunde mit neuen Abenteuern.
