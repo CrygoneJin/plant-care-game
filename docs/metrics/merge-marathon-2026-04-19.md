@@ -51,17 +51,52 @@
 | #375 | feat/quests-runde-48-canonical | MERGED | clean |
 | #379 | docs/nacht-sprint-metrics-2026-04-19 | MERGED | clean (Pull-Fail war local-only — Branch-Switch-Konflikt) |
 
+## ⚠️ KRITISCHER BEFUND — bitte morgen früh ZUERST lesen
+
+Die 29 "MERGED" Quest-PRs sind **STACKED PRs** mit `base != main`:
+
+- PR #313: base=`feat/sprint-63`, head=`feat/sprint-64` — wurde in feat/sprint-63 gemerged, NICHT in main
+- PR #374: base=`feat/quests-runde-51-s91`, head=`feat/quests-runde-52-s92`
+- usw. für alle 29 Quest-PRs
+
+**Konsequenz**: Die Merges sind technisch erfolgt, aber **Quest-Content ist NICHT auf main**.
+`src/world/quests.js` auf main ist immer noch bei **196 Quests, Runde 19**
+(letzter echter main-PR war #307 "Runde 13-19 (70 neue Quests)" vom April).
+
+**Nur diese 3 PRs landeten echt auf main:**
+- #377 (Audio: Insel-Musik durchgehend)
+- #378 (Audio: Element-Tonlängen)
+- #379 (Docs: Tracking-Docs)
+
 ## Endstand 2026-04-19 22:42 GMT
 
-- **31 PRs gemerged** (29 Quest-PRs + 2 Audio-PRs #377/#378 + Docs-PR #379)
-- **11 PRs DIRTY** (offen für Triage):
-  - #380 (neu, Runde 68 — gerade entstanden während Batch lief)
-  - #367 #345 #341 #340 #339 (Phantom-Branches mit Konflikten)
-  - #314 #312 #311 #310 #309 #308 (alte Sprint-Branches mit Konflikten)
-- **0 PRs FAILED** echt (der eine "FAIL" war local-only nach Branch-Switch)
+- **3 PRs echt auf main** (Audio + Docs)
+- **29 PRs in Stack-Branches gemerged** (Content liegt in Intermediate-Branches, nicht in main)
+- **11 PRs offen** (DIRTY — die "Bottom-of-Stack" PRs die main bräuchten)
+  - 6 mit `base=main` aber CONFLICTING: #380 #314 #312 #311 #310 #309 #308
+  - 5 mit `base=feat/quests-runde-XX` (Stack-Tip ohne Boden): #367 #345 #341 #340 #339
 
 ## Empfehlung Triage morgen
 
-1. Phantom-Branches (#314 #312 #311 #310 #309 #308) — wahrscheinlich obsolet (Quest-Inhalt durch andere Runden bereits eingebaut). Prüfen ob die Quest-IDs schon in main existieren, sonst Cherry-Pick.
-2. #380 ist neu und wahrscheinlich aktuell — rebasen + mergen.
-3. #367 #345 #341 #340 #339 — gleiche Runden-Nummer wie bereits gemergte → wahrscheinlich Duplikate, schließen.
+**Stop Merge-Cascading.** Die Stacked-PR-Strategie produziert Phantom-Merges
+ohne Effekt auf main. Stattdessen:
+
+1. **Cherry-Pick statt Stack-Merge.** Quest-Content aus den intermediären
+   Branches direkt in einen neuen `consolidate/quests-runde-20-68` Branch
+   gegen main cherry-picken. Eine konsolidierte PR.
+2. **Stack-PRs schließen.** Alle 29 "merged" PRs sind funktional dead-ends.
+   Ihre Branches existieren noch — können als Source für Cherry-Picks dienen.
+3. **Bottom-Stack-PRs (#308-#314)**: Inhalte vermutlich veraltet. Prüfen ob
+   die Quest-Strings schon im consolidate-Branch sind, sonst dazu nehmen.
+4. **#380 (Runde 68)**: Aktuell, base=main aber DIRTY → in den consolidate-
+   Branch ziehen.
+5. **Phantom-Duplikate (#339-#367)**: Gleiche Runden-Nummern wie andere PRs →
+   zu Vergleichszwecken behalten, in consolidate die ältere Version wählen
+   (oder die mit besserer Story).
+
+## Lessons learned (für ops/MEMORY.md)
+
+- `gh pr merge` macht keinen Check ob `base == main` — silent stack-merge.
+- Massen-Merge nur wenn alle PRs `base=main` haben. Vorher prüfen!
+- Stacked PRs brauchen Bottom-up Merge, nicht Top-down. Oder noch besser:
+  Konsolidieren statt Stacken.
