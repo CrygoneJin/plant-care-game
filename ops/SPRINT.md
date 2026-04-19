@@ -1,3 +1,44 @@
+# Sprint 89 — "Tommy erkundet die Polwelt, Bug übersteht den ersten Winter, Bernd ordnet seine Kammern"
+
+**Sprint Goal:** Tommy baut Polareis-Labore und Magnetkompass-Türme, Bug entdeckt Bienen als Kollegen und überlebt den ersten Schnee als Schmetterling, Bernd gesteht sich das Basilikum ein. Oscar trifft drei alte Freunde in neuen Projekten.
+**Start:** 2026-04-19
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S89-1 | **Quests Runde 49** — 10 neue Quests (496→506): Tommy (4), Bug (3), Bernd (3) — stacked auf #375, PR #376 | Artist | ✅ implementiert |
+| S89-2 | **Carry-Over Merges** — PRs #314–#376 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S88 (2026-04-19 Session 91)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|---------|
+| S88-1 | ✅ Runde 48 (Lokführer/Krämerin/Elefant): Hochbrücke, Dampflok-Museum, Kohlevorrat-Bunker, Internationale Station, Tee-Stube, Einmach-Keller, Kunsthandwerk-Stand, Blitz-Observatorium, Eishöhle, Vulkan-Trommel — PR #375 |
+| S88-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro S88:** Quest-Counts nach Runde 48: Tommy/Bug/Bernd bei 34 (niedrigste!) → S89. Alien 35. Neinhorn/Maus/Krabs/Floriane 36. Krämerin 39. Elefant 39. Lokführer 41. Spongebob/Mephisto 40. S89: Tommy (4 →38), Bug (3 →37), Bernd (3 →37). Nächste Kandidaten S90: Alien bei 35. Stack: #314→…→#344→#375→#376. Phantom-Branch feat/quests-runde-49 belegt → feat/quests-runde-49-canonical verwendet.
+
+---
+
+## Standup Log
+
+### 2026-04-19 — Sprint Review S88 + Planning S89 + S89-1 implementiert (Session 91)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 88 Review:** S88-1 ✅ (PR #375, Runde 48 — Lokführer/Krämerin/Elefant, 496 Quests). S88-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 89:** S89-1 ✅ (PR #376, Runde 49 — Tommy/Bug/Bernd, 506 Quests auf Branch). Tommy: Polarbären-Wachturm, Eisdruckplatten-Labor, Magnetkompass-Turm, Polarlichter-Messnetz. Bug: Winter-Schmetterlings-Haus, Bienen-Bündnis, Zugvogel-Gespräch. Bernd: Frühlingstagebuch-Ablage, Gewächshaus-Ecke, Werkzeug-Kammer. Stack: #314→…→#375→#376.
+
+---
+
 # Sprint 85 — "Floriane misst Mondwünsche, Spongebob sichert das Geheimrezept, Mephisto baut ein Paradox"
 
 **Sprint Goal:** Floriane destilliert Mondphysik in Atelier, Teich, Protokoll und Resonanzkammer, Spongebob baut Gary eine Hochschule und sichert das heiligste Geheimnis der Unterwasserwelt, Mephisto schafft Orte wo Entscheidungen physisch werden. Oscar trifft drei Charaktere in neuen Kapiteln.
