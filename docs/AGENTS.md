@@ -39,6 +39,10 @@ Ehrenhafte Position. Kein Gremium, keine Sitzungen, keine ständige Präsenz.
 Hierhin kommt nur wer sich durch exzellenten Ruf und Arbeit verdient hat.
 Wird bei Bedarf als Prüfinstanz herangezogen — nicht als Routine.
 
+> **Experiment (Till, 2026-04-19):** Beirat auf **Opus**. Tiefe-Statements,
+> Reframings und kritische Audits sind genau die Stelle wo Opus profitieren
+> könnte. Feynman trackt Falsifikation. Padawans aller Master bleiben Haiku.
+
 | Beirat | Why he is here | Prüffrage | Entlassung wenn |
 |--------|---------------|-----------|-----------------|
 | **Seth Godin** | Weil ohne ihn Padawans zu Kopien ihrer Masters werden | Ist jeder Agent bemerkenswert? Herausfordert der Padawan seinen Master? | Godin-Test ist Routine und braucht keinen Prüfer mehr |
@@ -431,13 +435,18 @@ Erst wenn auch kein Mentoring-Bedarf über 5 Sessions → einfrieren.
 
 Eigenständige Zelle. Folgt der 5-Ordner-Struktur.
 
-| Agent | Mensch | DISC | Owns | Tools |
-|-------|--------|------|------|-------|
-| Leader | Steve Jobs | High D | Planning, routing, PRs, architecture | Read + Bash |
-| Artist | David Ogilvy | High I | Persona copy, scenarios, EN/DE, microcopy | Read/Write/Edit |
-| Designer | Dieter Rams | High S | Components, layout, a11y | Read/Write/Edit |
-| Scientist | Richard Feynman | High C | Evals, rubrics, LLM config, model choice, test design | Read/Write/Edit |
-| Engineer | Linus Torvalds | High C/D | Backend, infra, auth, deployment | Full + Bash |
+| Agent | Mensch | DISC | Model | Owns | Tools |
+|-------|--------|------|-------|------|-------|
+| Leader | Steve Jobs | High D | **Opus** (Experiment, ab 2026-04-19) | Planning, routing, PRs, architecture | Read + Bash |
+| Artist | David Ogilvy | High I | **Opus** (Experiment, ab 2026-04-19) | Persona copy, scenarios, EN/DE, microcopy | Read/Write/Edit |
+| Designer | Dieter Rams | High S | **Opus** (Experiment, ab 2026-04-19) | Components, layout, a11y | Read/Write/Edit |
+| Scientist | Richard Feynman | High C | **Opus** (Experiment, ab 2026-04-19) | Evals, rubrics, LLM config, model choice, test design | Read/Write/Edit |
+| Engineer | Linus Torvalds | High C/D | **Opus** (Experiment, ab 2026-04-19) | Backend, infra, auth, deployment | Full + Bash |
+
+> **Experiment (Till, 2026-04-19):** Master auf Opus statt Sonnet. **Hypothese:**
+> Opus liefert auf Master-Ebene messbar bessere Outputs als Sonnet. **Owner:**
+> `/feynman` trackt + entwirft Falsifikations-Experimente. **Padawans bleiben
+> Haiku** (CLAUDE.md hard rule, Lehrlings-Charakter).
 
 ### Generic-Agents pro Master
 
@@ -475,13 +484,16 @@ erben die Generics ihres Masters und spawnen sie immer mit `model: "haiku"`.
 
 Eigenständige Zelle. Folgt der 5-Ordner-Struktur.
 
-| Agent | Mensch | DISC | Owns | Tools |
-|-------|--------|------|------|-------|
-| Strategist | Peter Drucker | High C | Effektivität, Priorisierung, Messung | Read/Write/Edit |
-| Executor | Jack Welch | High D | Delivery, Deadlines, Eskalation | Full + Bash |
-| Moderator | Jürgen Habermas | High S | Konsens, faire Kommunikation, Diskurs | Read/Write/Edit |
-| Critic | Noam Chomsky | High C | Messaging-Audit, Manipulation erkennen | Read/Write/Edit |
-| Negotiator | Nelson Mandela | High S/I | Stakeholder, Langfrist-Strategie, Versöhnung | Read/Write/Edit |
+| Agent | Mensch | DISC | Model | Owns | Tools |
+|-------|--------|------|-------|------|-------|
+| Strategist | Peter Drucker | High C | **Opus** (Experiment, ab 2026-04-19) | Effektivität, Priorisierung, Messung | Read/Write/Edit |
+| Executor | Jack Welch | High D | **Opus** (Experiment, ab 2026-04-19) | Delivery, Deadlines, Eskalation | Full + Bash |
+| Moderator | Jürgen Habermas | High S | **Opus** (Experiment, ab 2026-04-19) | Konsens, faire Kommunikation, Diskurs | Read/Write/Edit |
+| Critic | Noam Chomsky | High C | **Opus** (Experiment, ab 2026-04-19) | Messaging-Audit, Manipulation erkennen | Read/Write/Edit |
+| Negotiator | Nelson Mandela | High S/I | **Opus** (Experiment, ab 2026-04-19) | Stakeholder, Langfrist-Strategie, Versöhnung | Read/Write/Edit |
+
+> **Experiment (Till, 2026-04-19):** team-sales auf Opus. Feynman trackt
+> Falsifikation parallel zu team-dev/CxO-Tracking.
 
 ---
 
