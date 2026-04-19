@@ -1,3 +1,44 @@
+# Sprint 91 — "Bug baut vier Messstationen, Bernd findet Orte für stille Jahreszeiten, Lokführer rüstet die Strecke aus"
+
+**Sprint Goal:** Bug dokumentiert Wasserspiegel, Taufall, Pilzsporen und Vogelzug in vier Präzisionsstationen. Bernd baut drei Orte die den Jahresrhythmus fühlbar machen. Lokführer erweitert die Bahninfrastruktur mit Streckenwärter-Hütte, Waschhalle und Güterbahnhof. Oscar trifft drei alte Freunde in neuen Kapiteln.
+**Start:** 2026-04-19
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S91-1 | **Quests Runde 51** — 10 neue Quests (516→526): Bug (4), Bernd (3), Lokführer (3) — stacked auf #372, PR offen | Artist | ✅ implementiert |
+| S91-2 | **Carry-Over Merges** — PRs #314–#372+S91-1 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S90 (2026-04-19 Session 93)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|---------|
+| S90-1 | ✅ Runde 50 (Kraemerin/Krabs/Floriane/Elefant): Wintervorrat-Keller, Handelshaus, Saisonmarkt, Perlen-Börse, Schatz-Vermietung, Fluss-Maut, Sternenstaub-Labor, Wunsch-Verstärker-Turm, Morgenrot-Konzert, Savannen-Gedächtnis — PR #372 |
+| S90-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro S90:** Kraemerin 36→39 (+3), Krabs 36→39 (+3), Floriane 36→38 (+2), Elefant 36→38 (+2). NPC-Stand nach S90: Kraemerin=39, Krabs=39, Floriane=38, Elefant=38, Tommy=38. Niedrigste nach S90: Bug/Bernd/Lokführer bei 37 → S91 korrekt. Nächste Kandidaten S92: Tommy/Floriane/Elefant bei 38.
+
+---
+
+## Standup Log
+
+### 2026-04-19 — Sprint Review S90 + Planning S91 + S91-1 implementiert (Session 93)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 90 Review:** S90-1 ✅ (PR #372, Runde 50 — Kraemerin/Krabs/Floriane/Elefant, 516 Quests). S90-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 91:** S91-1 ✅ (Runde 51 — Bug/Bernd/Lokführer, 526 Quests auf Branch). Bug: Wasserspiegel-Messstation, Taufall-Beobachtungsstation, Pilzsporen-Labor, Vogelzug-Beobachtungsturm. Bernd: Abendspaziergang-Weg, Herbst-Kammer, Jahres-Protokoll-Ort. Lokführer: Streckenwärter-Hütte, Lok-Waschhalle, Güterbahnhof-Erweiterung. Stack: #314→…→#372→S91-PR.
+
+---
+
 # Sprint 90 — "Kraemerin öffnet Keller und Handelshaus, Krabs erfindet die Fluss-Maut, Floriane baut ein Sternenstaub-Labor"
 
 **Sprint Goal:** Kraemerin legt Wintervorräte an, eröffnet das Handelshaus und bringt den Saisonmarkt. Krabs erfindet Perlen-Börse, Schatz-Vermietung und die Fluss-Maut. Floriane destilliert Sternenstaub und baut einen Wunsch-Verstärker-Turm. Elefant gibt dem Morgenrot ein Konzert und spielt die Savannen-Gedächtnis-Noten. Oscar trifft vier alte Freunde in neuen Kapiteln.
@@ -9,8 +50,8 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S90-1 | **Quests Runde 50** — 10 neue Quests (506→516): Kraemerin (3), Krabs (3), Floriane (2), Elefant (2) — stacked auf #371, PR offen | Artist | ✅ implementiert |
-| S90-2 | **Carry-Over Merges** — PRs #314–#371+S90-1 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+| S90-1 | **Quests Runde 50** — 10 neue Quests (506→516): Kraemerin (3), Krabs (3), Floriane (2), Elefant (2) — stacked auf #371, PR #372 | Artist | ✅ implementiert |
+| S90-2 | **Carry-Over Merges** — PRs #314–#372 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
 
 ---
 
