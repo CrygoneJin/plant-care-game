@@ -1,3 +1,44 @@
+# Sprint 89 — "Spongebob hält Leuchtturmwacht, Lokführer durchquert die Wüste, Kraemerin baut den Gewürzgarten, Bug beobachtet die Mondfalter, Alien kartiert die Nachbarschaft"
+
+**Sprint Goal:** Spongebob rettet Fische und Schiffe mit seinem Leuchtturm und eröffnet ein Korallenriff-Theater, Lokführer kämpft durch Sand und Hitze und baut das große Güterterminal, Kraemerin pflanzt was riecht und brennt Ton zu Gefäßen, Bug wartet auf die Mondfalter und hört dem Regen zu, Alien archiviert die Zukunft und kartiert 5.000 Nachbarn. Oscar trifft fünf alte Freunde mit neuen Projekten.
+**Start:** 2026-04-18
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S89-1 | **Quests Runde 49** — 10 neue Quests (496→506): Spongebob (2), Lokführer (2), Kraemerin (2), Bug (2), Alien (2) — stacked auf #345 | Artist | ✅ PR #346 |
+| S89-2 | **Carry-Over Merges** — PRs #314–#346 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S88 (2026-04-18 Session 90)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S88-1 | ✅ Runde 48 (Tommy/Neinhorn/Elefant/Bernd/Maus): Salzwasser-Labor, Windkanal-Prüfstand, Nebel-Garten, Flüster-Brücke, Steinschlag-Komposition, Regen-Sinfonie, Frühmorgen-Protokoll, Winter-Depot, Gezeiten-Messnetz, Bienenstock-Expedition — PR #345 |
+| S88-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Nach Runde 48: Tommy/Neinhorn/Elefant/Bernd/Maus auf 38, alle anderen auf 36/37. Spongebob/Lokführer/Kraemerin/Bug/Alien bei 36 (niedrigste Zählung) → klar für Runde 49. Runde 49 liefert Meeres-Leuchtturm-Wacht + Korallenriff-Theater (Spongebob), Wüsten-Express + Güterterminal (Lokführer), Gewürzgarten + Töpfer-Werkstatt (Kraemerin), Mondfalter-Station + Regentropfen-Studie (Bug), Tachyon-Archiv + Exoplaneten-Karte (Alien). Stack wächst sauber (#314→…→#345→#346). Nach S89: Spongebob/Lokführer/Kraemerin/Bug/Alien auf 38, alle NPCs auf 38 (Mephisto/Floriane bei 37, Krabs bei 36 — Runde 50 wartet).
+
+---
+
+## Standup Log
+
+### 2026-04-18 — Sprint Review S88 + Planning S89 + S89-1 implementiert (Session 90)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 88 Review:** S88-1 ✅ (PR #345, Runde 48 — Tommy/Neinhorn/Elefant/Bernd/Maus, 496 Quests). S88-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 89:** S89-1 ✅ (feat/quests-runde-49, Runde 49 — Spongebob/Lokführer/Kraemerin/Bug/Alien, 506 Quests auf Branch). Stack: #314→…→#345→#346.
+
+---
+
 # Sprint 88 — "Tommy forscht im Salzlabor, Neinhorn baut den Nebel-Garten und die Flüster-Brücke, Elefant hört den Regen als Sinfonie, Bernd schreibt das Frühmorgen-Protokoll, Maus misst die Gezeiten"
 
 **Sprint Goal:** Tommy entdeckt im Salzwasser-Labor dass Paradoxe schön sind, Neinhorn erschafft Orte die verschwinden oder leiser machen, Elefant beweist dass Regen eine Komposition ist, Bernd protokolliert die ehrlichste Stunde des Tages, Maus vermisst Ebbe und Flut und lernt Bienen-Sinn. Oscar trifft fünf alte Freunde in sehr verschiedenen Stimmungen.
