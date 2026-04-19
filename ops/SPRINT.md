@@ -1,3 +1,44 @@
+# Sprint 81 — "Floriane baut Wunschkristalle, Tommy erforscht den Mond und den Vulkan, Neinhorn erklärt die Halbinsel für verboten, Alien kartiert die Galaxie"
+
+**Sprint Goal:** Floriane konserviert Wünsche und baut Infrastruktur für Feenkönigreich-Diplomatie, Tommy misst Mondgravitation und beobachtet Vulkane aus sicherer Entfernung, Neinhorn schafft verbotene Einsamkeit auf einer Halbinsel und einem Berggipfel, Alien entdeckt Dunkle Materie und kartiert 400 Milliarden Sterne. Oscar trifft vier alte Freunde mit neuen Projekten.
+**Start:** 2026-04-19
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S81-1 | **Quests Runde 41** — 10 neue Quests (416→426): Floriane (3), Tommy (3), Neinhorn (2), Alien (2) — stacked auf #337 | Artist | ✅ PR #338 |
+| S81-2 | **Carry-Over Merges** — PRs #314–#338 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S80 (2026-04-19 Session 83)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|----------|
+| S80-1 | ✅ Runde 40 (Spongebob/Mephisto/Maus/Krabs): Neptun-Tempel, Blasen-Forschungslabor, Quallen-Nationalpark, Ewige Bibliothek der Absichten, Observatorium des Bedauerns, Schatten-Amphitheater, Geheimes Baumhaus, Wellenbrecher-Posten, Kristall-Tresor, Schatz-Galerie — PR #337 |
+| S80-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro:** Floriane/Tommy/Neinhorn/Bug/Alien alle bei 29 nach Runde 40. Gewählt für Runde 41: Floriane (3), Tommy (3), Neinhorn (2), Alien (2) — Bug folgt S82. Nächste Kandidaten S82: Bug (29) + ggf. Neinhorn/Alien (dann 31). Stack: #314→…→#337→#338.
+
+---
+
+## Standup Log
+
+### 2026-04-19 — Sprint Review S80 + Planning S81 + S81-1 implementiert (Session 83)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 80 Review:** S80-1 ✅ (PR #337, Runde 40 — Spongebob/Mephisto/Maus/Krabs, 416 Quests). S80-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 81:** S81-1 ✅ (PR #338, Runde 41 — Floriane/Tommy/Neinhorn/Alien, 426 Quests auf Branch). Stack: #314→…→#337→#338. Keine neuen Materialien in Runde 41 — alle needs aus bekannten Typen.
+
+---
+
 # Sprint 80 — "Spongebob baut den Neptun-Tempel, Mephisto eröffnet die Bibliothek der Absichten, Maus bezieht das Baumhaus, Krabs sichert seine Kristalle"
 
 **Sprint Goal:** Vier alte Bekannte, neue Projekte. Spongebob erforscht Blasen und empfängt König Neptun, Mephisto sammelt Absichten und zeigt Silhouetten, Maus wacht vom Baumhaus aus über den Horizont, Krabs versiegelt seinen Kristall-Tresor und eröffnet eine Galerie. Oscar trifft alte Freunde in neuen Ecken der Insel.
