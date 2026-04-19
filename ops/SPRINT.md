@@ -1,3 +1,23 @@
+# Sprint N0 (Nacht 2026-04-19/20) — "Audio + Backlog-Clearance"
+
+**Sprint Goal:** Oscar-Audio-Wünsche umgesetzt, 696 Quests auf main, alle non-Human-Input Items abgehakt, Backlog clean für Morgen-Triage.
+**Start:** 2026-04-19 22:00 GMT
+
+| # | Item | Owner | Status |
+|---|------|-------|--------|
+| N0 | Audio: Insel-Musik durchgehend (Oscar-Wunsch, Spec #57 aufgeweicht) | Engineer | ✅ PR #377 |
+| N0b | Audio: Element-Tonlängen (BPM 180 Notenwerte) | Engineer | ✅ PR #378 |
+| N1 | Merge-Marathon → 696 Quests via Konsolidierungs-PR (+500) | Leader | ✅ PR #381 |
+| N3 | Live-Launch Dry-Run Phase 1-5 Checkliste | Engineer | ✅ Doc |
+| F | Feynman-Tracking Setup (5 Falsifier für Opus-Experiment) | Scientist | ✅ Doc |
+| R | Railway Snapshot — läuft NICHT auf Railway | Engineer | ✅ Doc |
+| Sweep | Backlog Sweep — P0 clean, P1+P2 100% Done | Leader | ✅ Doc |
+| Triage | 12 Stack-PRs offen — Comments für Morgen-Triage gesetzt | Leader | ⏳ Till |
+
+**Critical Finding**: `gh pr merge` macht keinen Check ob `base == main`. 29 Stack-PRs hatten `base != main` und wurden silent in Intermediate-Branches gemergt. Lösung: Cherry-Pick aus Stack-Tip → 1 Konsolidierungs-PR (#381). Lessons in `ops/MEMORY.md` und `docs/metrics/merge-marathon-2026-04-19.md`.
+
+---
+
 # Sprint 88 — "Lokführer baut die Hochbrücke, Krämerin eröffnet Tee-Stube und Einmach-Keller, Elefant lauscht dem Donner"
 
 **Sprint Goal:** Lokführer überspannt die tiefste Schlucht, eröffnet sein Museum und sichert den Kohlevorrat, Krämerin lädt Händler zum Tee ein und füllt den Einmach-Keller, Elefant entdeckt Donner als Percussion und lauscht Eisresonanzen. Oscar trifft drei alte Freunde in neuen Projekten.
@@ -9,8 +29,8 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S88-1 | **Quests Runde 48** — 10 neue Quests (486→496): Lokführer (4), Krämerin (3), Elefant (3) — stacked auf #344, PR #375 | Artist | ✅ implementiert |
-| S88-2 | **Carry-Over Merges** — PRs #314–#375 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+| S88-1 | **Quests Runde 48** — 10 neue Quests (486→496): Lokführer (4), Krämerin (3), Elefant (3) — stacked auf #344, PR #375 | Artist | ✅ Inhalt via Konsolidierungs-PR #381 auf main |
+| S88-2 | **Carry-Over Merges** — PRs #314–#375 landen auf main | Engineer | ✅ Konsolidierungs-PR #381 |
 
 ---
 
