@@ -1,6 +1,6 @@
-# Sprint 83 — "Lokführer baut die Dampfpfeifen-Werkstatt, Kraemerin lagert Käse in der Dunkelheit, Bernd kartiert seine Würmer"
+# Sprint 85 — "Floriane misst Mondwünsche, Spongebob sichert das Geheimrezept, Mephisto baut ein Paradox"
 
-**Sprint Goal:** Lokführer sichert den Bahnbetrieb (Bahnwärter, Güter, Pfeife), Kraemerin erweitert das Sortiment in die Tiefe (Bäcker, Gewürze, Käse), Bernd fügt seiner Stille ein Herbarium, eine Wurmfarm, eine Windstation und ein Zimmer das er nicht erklärt. Oscar trifft drei alte Freunde in zehn neuen Kapiteln.
+**Sprint Goal:** Floriane destilliert Mondphysik in Atelier, Teich, Protokoll und Resonanzkammer, Spongebob baut Gary eine Hochschule und sichert das heiligste Geheimnis der Unterwasserwelt, Mephisto schafft Orte wo Entscheidungen physisch werden. Oscar trifft drei Charaktere in neuen Kapiteln.
 **Start:** 2026-04-19
 
 ---
@@ -9,7 +9,89 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S83-1 | **Quests Runde 43** — 10 neue Quests (436→446): Lokführer (3), Kraemerin (3), Bernd (4) — stacked auf #365 | Artist | ✅ PR #366 |
+| S85-1 | **Quests Runde 45** — 10 neue Quests (456→466): Floriane (4), Spongebob (3), Mephisto (3) — stacked auf #367 | Artist | ✅ implementiert |
+| S85-2 | **Carry-Over Merges** — PRs #314–#368 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S84 (2026-04-19 Session 87)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|---------|
+| S84-1 | ✅ Runde 44 (Maus/Krabs): Pilz-Dorf, Eiswunderland, Sternschnuppen-Aussicht, Drachen-Freundschaft, Regenbogen-Rutsche, Diamanten-Vitrine, Tiefsee-Expeditions-Deck, Krabben-Bank, Muschel-Markt, Fossil-Auktion — PR #367 |
+| S84-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro S84:** Floriane/Spongebob/Mephisto alle bei 32 (niedrigste nach S84) → S85. Floriane 4 Quests (→36), Spongebob 3 (→35), Mephisto 3 (→35). Stack: #314→…→#366→#367→#368. Nächste Kandidaten S86: Lokführer/Krämerin/Elefant bei 33.
+
+---
+
+## Standup Log
+
+### 2026-04-19 — Sprint Review S84 + Planning S85 + S85-1 implementiert (Session 87)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 84 Review:** S84-1 ✅ (PR #367, Runde 44 — Maus/Krabs, 456 Quests). S84-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 85:** S85-1 ✅ (Runde 45 — Floriane/Spongebob/Mephisto, 466 Quests auf Branch). Floriane: Mondspiegelteich, Feenflügel-Atelier, Sternschnuppen-Protokoll, Wunsch-Resonanz-Kammer. Spongebob: Gary-Hochschule, Krabby-Patty-Geheimrezept-Tresor, Sandburg-Weltmeisterschaft. Mephisto: Paradox-Garten, Schatten-Destillerie, Labyrinth der Entscheidungen. Stack: #314→…→#367→#368.
+
+---
+
+# Sprint 84 — "Maus baut das Pilz-Dorf, Krabs eröffnet seine Privatbank"
+
+**Sprint Goal:** Maus entdeckt Drachen-Freundschaft und Regenbogen-Rutschen, Krabs gründet seine eigene Bank und versteigert Fossilien. Oscar trifft zwei alte Freunde mit großen Plänen.
+**Start:** 2026-04-19
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S84-1 | **Quests Runde 44** — 10 neue Quests (446→456): Maus (5), Krabs (5) — stacked auf #366 | Artist | ✅ PR #367 |
+| S84-2 | **Carry-Over Merges** — PRs #314–#367 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S83 (2026-04-19 Session 86)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|---------|
+| S83-1 | ✅ Runde 43 (Bernd/Lokführer/Krämerin): Erster-Schnee-Protokoll, Kompost-Station, Mondphasen-Wartepunkt, Stilles Teichufer, Dampf-Werkstatt, Aussichtswagen, Rangier-Bahnhof, Gewürzmarkt, Buchhandlung, Kräutergarten-Apotheke — PR #366 |
+| S83-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro S83:** maus/krabs beide bei 31 (niedrigste nach S83) → S84. Maus 5 Quests, Krabs 5 Quests. Remote feat/quests-runde-44 war durch anderen Stack belegt → feat/quests-runde-44-s84 verwendet. Stack: #314→…→#365→#366→#367. Nächste Kandidaten S85: Floriane/Spongebob/Mephisto bei 32.
+
+---
+
+## Standup Log
+
+### 2026-04-19 — Sprint Review S83 + Planning S84 + S84-1 implementiert (Session 86)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 83 Review:** S83-1 ✅ (PR #366, Runde 43 — Bernd/Lokführer/Krämerin, 446 Quests). S83-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 84:** S84-1 ✅ (PR #367, Runde 44 — Maus/Krabs, 456 Quests auf Branch). Maus: Pilz-Dorf, Eiswunderland, Sternschnuppen-Aussicht, Drachen-Freundschaft, Regenbogen-Rutsche. Krabs: Diamanten-Vitrine, Tiefsee-Expeditions-Deck, Krabben-Bank, Muschel-Markt, Fossil-Auktion. Stack: #314→…→#366→#367.
+
+---
+
+# Sprint 83 — "Bernd protokolliert den ersten Schnee, Lokführer baut die ultimative Infrastruktur, Krämerin eröffnet drei neue Läden"
+
+**Sprint Goal:** Bernd dokumentiert stille Momente in der Natur mit neuer Sorgfalt, der Lokführer rüstet seine Eisenbahn mit Werkstatt, Aussichtswagen und Rangier-Bahnhof aus, die Krämerin eröffnet Gewürzmarkt, Buchhandlung und Kräuterapotheke. Oscar trifft drei alte Bekannte in neuen Projekten.
+**Start:** 2026-04-19
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S83-1 | **Quests Runde 43** — 10 neue Quests (436→446): Bernd (4), Lokführer (3), Krämerin (3) — stacked auf #365 | Artist | ✅ PR #366 |
 | S83-2 | **Carry-Over Merges** — PRs #314–#366 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
 
 ---
@@ -19,11 +101,11 @@
 **Sprint Goal erreicht:** ✅
 
 | Item | Ergebnis |
-|------|----------|
+|------|---------|
 | S82-1 | ✅ Runde 42 (Bug/Neinhorn/Alien): Blütenkartenwerk, Regentropfen-Dach, Raupen-Besuch, Zugvogel-Frage, Verbotenes Tor, Nein-Archiv, Heimliches Willkommen, Neutronenstern-Uhr, Erster-Kontakt-Botschaft, Paralleluniversum-Fenster — PR #365 |
 | S82-2 | ⏳ Blocked — wartet auf Till |
 
-**Retro S82:** Lokführer/Kraemerin/Bernd (je 30, niedrigste nach S82) → S83. Maus/Krabs (31) → S84. Stack: #314→…→#365→#366.
+**Retro S82:** bernd/lokfuehrer/kraemerin alle bei 30 (niedrigste nach S82) → S83. Bernd 4 Quests, Lokführer 3, Krämerin 3. Stack: #314→…→#338→#365→#366.
 
 ---
 
@@ -35,7 +117,7 @@
 
 **Sprint 82 Review:** S82-1 ✅ (PR #365, Runde 42 — Bug/Neinhorn/Alien, 436 Quests). S82-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
 
-**Sprint 83:** S83-1 ✅ (PR #366, Runde 43 — Lokführer/Kraemerin/Bernd, 446 Quests auf Branch). Lokführer: Bahnwärterhäuschen, Güterwaggon-Depot, Dampfpfeifen-Werkstatt. Kraemerin: Bäckerei-Stand, Gewürzlager, Käse-Keller. Bernd: Herbarium, Regenwurm-Farm, Windmessstation, Stilles Arbeitszimmer. Stack: #314→…→#365→#366.
+**Sprint 83:** S83-1 ✅ (PR #366, Runde 43 — Bernd/Lokführer/Krämerin, 446 Quests auf Branch). Bernd: Erster-Schnee-Protokoll, Kompost-Station, Mondphasen-Wartepunkt, Stilles Teichufer. Lokführer: Dampf-Werkstatt, Aussichtswagen, Rangier-Bahnhof. Krämerin: Gewürzmarkt, Buchhandlung, Kräuterapotheke. Stack: #314→…→#365→#366.
 
 ---
 
