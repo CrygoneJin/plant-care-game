@@ -1,3 +1,44 @@
+# Sprint 92 — "Tommy beweist Eratosthenes, Bernoulli und Archimedes, Floriane fängt Kometenaub, Elefant dirigiert den Dschungel-Chor"
+
+**Sprint Goal:** Tommy baut vier Präzisionsstationen für antike Physik. Floriane fängt Sternenstaub aus Kometen, baut einen Mondphasen-Tempel und einen Kristall-Resonanz-Pfad. Elefant lauscht dem Petrichor, dirigiert achtzehn Tiere und hört bis zum Horizont. Oscar trifft drei alte Freunde in neuen Kapiteln.
+**Start:** 2026-04-19
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S92-1 | **Quests Runde 52** — 10 neue Quests (526→536): Tommy (4), Floriane (3), Elefant (3) — stacked auf #373, PR #374 | Artist | ✅ implementiert |
+| S92-2 | **Carry-Over Merges** — PRs #314–#373+S92-1 landen auf main wenn Till mergt | Engineer | ⏳ wartet auf Till |
+
+---
+
+## Sprint Review + Retro S91 (2026-04-19 Session 94)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|---------|
+| S91-1 | ✅ Runde 51 (Bug/Bernd/Lokführer): Wasserspiegel-Messstation, Taufall-Beobachtungsstation, Pilzsporen-Labor, Vogelzug-Beobachtungsturm, Abendspaziergang-Weg, Herbst-Kammer, Jahres-Protokoll-Ort, Streckenwärter-Hütte, Lok-Waschhalle, Güterbahnhof-Erweiterung — PR #373 |
+| S91-2 | ⏳ Blocked — wartet auf Till |
+
+**Retro S91:** Bug 37→41 (+4), Bernd 37→40 (+3), Lokführer 37→40 (+3). NPC-Stand nach S91: Bug=41, Bernd=40, Lokführer=40. Niedrigste nach S91: Tommy/Floriane/Elefant bei 38 → S92 korrekt. Nächste Kandidaten S93: Neinhorn/Alien/Maus/Krabs bei 39.
+
+---
+
+## Standup Log
+
+### 2026-04-19 — Sprint Review S91 + Planning S92 + S92-1 implementiert (Session 94)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem. Worker "Host not in allowlist" — normale CORS-Restriktion, nur schatzinsel.app erlaubt.
+
+**Sprint 91 Review:** S91-1 ✅ (PR #373, Runde 51 — Bug/Bernd/Lokführer, 526 Quests). S91-2 ⏳ (wartet auf Till). Sprint Goal erreicht.
+
+**Sprint 92:** S92-1 ✅ (Runde 52 — Tommy/Floriane/Elefant, 536 Quests auf Branch). Tommy: Sonnenuhr-Observatorium (Eratosthenes), Windkanal-Station (Bernoulli), Galileo-Pendeluhr (Isochronie), Archimedisches Becken (Auftrieb). Floriane: Kometen-Staubfänger, Mondphasen-Tempel, Kristall-Resonanz-Pfad. Elefant: Regenpause-Lauschplatz (Petrichor), Dschungel-Chor-Arena, Horizont-Horchposten (Infrasound). Stack: #314→…→#373→#374.
+
+---
+
 # Sprint 91 — "Bug baut vier Messstationen, Bernd findet Orte für stille Jahreszeiten, Lokführer rüstet die Strecke aus"
 
 **Sprint Goal:** Bug dokumentiert Wasserspiegel, Taufall, Pilzsporen und Vogelzug in vier Präzisionsstationen. Bernd baut drei Orte die den Jahresrhythmus fühlbar machen. Lokführer erweitert die Bahninfrastruktur mit Streckenwärter-Hütte, Waschhalle und Güterbahnhof. Oscar trifft drei alte Freunde in neuen Kapiteln.
