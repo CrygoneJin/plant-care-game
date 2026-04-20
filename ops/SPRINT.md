@@ -30,6 +30,27 @@
 
 ## Standup Log
 
+### 2026-04-20 — Daily Scrum S89 (Session 96)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint-Status:** S89-1/S89-2/S89-3 unverändert blockiert. Till hat seit Session 95 nichts gemergt. Main bei `7a76fc4`.
+
+**Merge-Reihenfolge für Till (unverändert):**
+
+| PR | Aktion |
+|----|--------|
+| #382 | ⬅️ Zuerst — Tesla-Fix für Oscar |
+| #383 | Nach #382 |
+| #387 | Nach #383 rebasen + mergen |
+| #390 | Nach #387 rebasen + mergen |
+| #392 | Nach #390 — Mephisto/Floriane, conflict-free |
+| #384, #385, #386, #388, #389 | ❌ Schließen |
+
+**Kein neuer Code.** PR-Pile wächst nicht weiter bis Till gemergt hat.
+
+---
+
 ### 2026-04-20 — Daily Scrum S89 (Session 95)
 
 **Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung.
