@@ -125,6 +125,17 @@ Nach allen 5 Merges: **736 Quests**. Mephisto 58, Floriane 60, andere 54–56.
 
 Nach #382+#383+#387+#390: 726 Quests auf main. Floriane 55, Mephisto 53, Spongebob 56, alle anderen 54–56.
 
+### 2026-04-20 — Daily Scrum S89 (Session 94)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint-Status:** Alle 3 S89-Items warten auf Till (Human Input). Kein Fortschritt möglich ohne Merges.
+
+**Implementierung (konfliktfrei):** Runde 72 — Mephisto (+5, 53→58) + Floriane (+5, 55→60). PR #392.
+Begründung: Beide NPCs stecken in keinem offenen PR. Sofort mergebar ohne Rebase.
+
+**Quest-Stand nach PR #392 (wenn gemergt):** 706 auf main. Mephisto 58, Floriane 60.
+
 ---
 
 # Sprint N0 (Nacht 2026-04-19/20) — "Audio + Backlog-Clearance"
