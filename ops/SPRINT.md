@@ -28,6 +28,16 @@
 
 ## Standup Log
 
+### 2026-04-20 — Daily Scrum S89 (Session 92)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**S89-1:** ✅ PR #384 offen, wartet auf Till. Remote Branch `feat/quests-runde-69-tommy-bug-bernd` hat Tommy (56), Bug (55), Bernd (55). Gesamt: 706 Quests.
+
+**Nächste Session:** Wenn PR #384 gemergt ist → Sprint Review S89 + Planning S90 (Tommy/Bug/Bernd weiter oder nächste NPC-Runde).
+
+---
+
 ### 2026-04-19 — Sprint Review S88 + Planning S89 + S89-1 implementiert (Session 91)
 
 **Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
