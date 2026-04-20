@@ -11,7 +11,7 @@
 |---|------|----------|--------|
 | S89-1 | **ISO-Renderer Fix** (PR #382) — Insel verschwindet nicht mehr im Tesla | Engineer | 🔲 Human Input (Till mergt) |
 | S89-2 | **Quests Runde 69** (PR #383) — Tommy/Neinhorn/Elefant/Bernd/Maus (+2 je) | Artist | 🔲 Human Input (Till mergt) |
-| S89-3 | **PR-Triage** — Reihenfolge: #382 → #383 → #387 (rebase) → #390 (rebase). Schließen: #384, #385, #386, #388, #389 | Leader | 🔲 Human Input (Till) |
+| S89-3 | **PR-Triage** — Reihenfolge: #382 → #383 → #387 (rebase) → #390 (rebase). Schließen: #384, #385, #386, #388, #389 | Leader | 🔄 Teilweise: #384/#385/#386/#388/#389 geschlossen (Session 97). Merge-Reihenfolge wartet auf Till. |
 
 ---
 
@@ -29,6 +29,26 @@
 ---
 
 ## Standup Log
+
+### 2026-04-20 — Daily Scrum S89 (Session 97)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung.
+
+**S89-3 Fortschritt:** PRs #384, #385, #386, #388, #389 via GitHub MCP geschlossen. PR-Pile aufgeräumt.
+
+**Offene PRs (Merge-Reihenfolge für Till):**
+
+| PR | Aktion |
+|----|--------|
+| #382 | ⬅️ Zuerst — Tesla-Fix für Oscar |
+| #383 | Nach #382 |
+| #387 | Nach #383 rebasen + mergen |
+| #390 | Nach #387 rebasen + mergen |
+| #392 | Nach #390 — Mephisto/Floriane, conflict-free |
+
+**S89-1/S89-2:** Weiterhin blockiert auf Till.
+
+---
 
 ### 2026-04-20 — Daily Scrum S89 (Session 96)
 
