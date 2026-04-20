@@ -54,6 +54,30 @@
 
 Nach #382+#383+#387+#390: 726 Quests auf main. Floriane 55, Mephisto 53, Spongebob 56, alle anderen 54–56.
 
+### 2026-04-20 — Daily Scrum S89 (Session 93)
+
+**Smoke Tests:** 403 Sandbox-Proxy — bekannte Einschränkung, kein App-Problem.
+
+**Sprint-Status:** Alle 3 Items warten auf Till. Nichts zu implementieren.
+
+**PR-Übersicht (9 offene PRs, alle auf main@779b0fc):**
+
+| PR | Status | Aktion |
+|----|--------|--------|
+| #382 | Offen | ⬅️ Till: **zuerst mergen** (Tesla-Fix für Oscar) |
+| #383 | Offen | ⬅️ Till: nach #382 mergen |
+| #387 | Offen | ⬅️ Till: nach #383 rebasen + mergen |
+| #390 | Offen | ⬅️ Till: nach #387 rebasen + mergen |
+| #384 | Offen | ❌ Schließen (Tommy-Overlap mit #383) |
+| #385 | Offen | ❌ Schließen (Duplikat) |
+| #386 | Offen | ❌ Schließen (Ceremony schon auf main) |
+| #388 | Offen | ❌ Schließen (Docs schon auf main) |
+| #389 | Offen | ❌ Schließen (Duplikat) |
+
+**Neue Tags:** v0.3.0–v0.5.0 sind historische Milestones von Till (März 2026), kein aktueller Merge.
+
+**Nächste Schritte für Till:** #382 mergen → Oscar kann wieder ohne Flackern spielen.
+
 ---
 
 # Sprint N0 (Nacht 2026-04-19/20) — "Audio + Backlog-Clearance"
