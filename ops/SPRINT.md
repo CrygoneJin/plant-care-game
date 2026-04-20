@@ -1,3 +1,61 @@
+# Sprint 89 — "Triage: Tesla-Fix landet, Runde 69 auf main"
+
+**Sprint Goal:** PR #382 (Oscars Tesla-Fix) und PR #383 (Runde 69 — Tommy/Neinhorn/Elefant/Bernd/Maus) sind auf main. PR-Chaos ist sortiert.
+**Start:** 2026-04-20
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S89-1 | **ISO-Renderer Fix** (PR #382) — Insel verschwindet nicht mehr im Tesla | Engineer | 🔲 Human Input (Till mergt) |
+| S89-2 | **Quests Runde 69** (PR #383) — Tommy/Neinhorn/Elefant/Bernd/Maus (+2 je) | Artist | 🔲 Human Input (Till mergt) |
+| S89-3 | **PR-Triage** — Reihenfolge: #382 → #383 → #387 (rebase) → #390 (rebase). Schließen: #384, #385, #386, #388, #389 | Leader | 🔲 Human Input (Till) |
+
+---
+
+## Sprint Review S88 + Retro (2026-04-20 Session 92)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|---------|
+| S88-1 | ✅ Quests Runde 48 (Lokführer/Krämerin/Elefant, 10 Quests) — via Konsolidierungs-PR #381 auf main |
+| S88-2 | ✅ Carry-Over Merges → 696 Quests auf main — via Konsolidierungs-PR #381 |
+
+**Retro S88:** Merge-Marathon hat funktioniert, spawnt aber PR-Chaos wenn mehrere Nacht-Sessions parallel laufen. Alle Haupt-NPCs jetzt bei 52 (Floriane 55, Mephisto 53). Nächste Priorität: PR-Triage.
+
+---
+
+## Standup Log
+
+### 2026-04-20 — Sprint Review S88 + Retro + Planning S89 (Session 92)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 88 Review:** S88-1 ✅ (Runde 48 via #381). S88-2 ✅ (696 Quests auf main). Sprint Goal erreicht.
+
+**Quest-Verteilung nach Merge-Marathon:** Floriane 55, Mephisto 53, alle anderen 52 (gleichstand).
+
+**PR-Triage (9 offene PRs — Till entscheidet):**
+
+| PR | Inhalt | Empfehlung |
+|----|--------|------------|
+| #382 | ISO-Renderer Fix (Tesla-Bug) | ✅ Zuerst mergen — unabhängig, kritisch |
+| #383 | Runde 69: Tommy/Neinhorn/Elefant/Bernd/Maus (+2 je) | ✅ Nach #382 mergen |
+| #387 | Runde 70: Spongebob/Lokführer/Alien (+4/+3/+3) | ✅ Nach #383 rebasen + mergen |
+| #390 | Runde 71: Kraemerin/Krabs/Bug (+4/+3/+3) | ✅ Nach #387 rebasen + mergen |
+| #384 | Runde 69: Tommy/Bug/Bernd — Tommy-Overlap mit #383 | ❌ Schließen |
+| #385 | Runde 70: Tommy/Bug/Bernd — Duplikat-NPCs | ❌ Schließen |
+| #386 | Sprint 89 Ceremony + Playwright Test | ❌ Schließen — Ceremony jetzt auf main |
+| #388 | Docs: Sprint 89 Ceremony | ❌ Schließen — Ceremony jetzt auf main |
+| #389 | Runde 49: Tommy/Bug/Bernd — Duplikat | ❌ Schließen |
+
+Nach #382+#383+#387+#390: 726 Quests auf main. Floriane 55, Mephisto 53, Spongebob 56, alle anderen 54–56.
+
+---
+
 # Sprint N0 (Nacht 2026-04-19/20) — "Audio + Backlog-Clearance"
 
 **Sprint Goal:** Oscar-Audio-Wünsche umgesetzt, 696 Quests auf main, alle non-Human-Input Items abgehakt, Backlog clean für Morgen-Triage.
