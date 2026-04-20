@@ -1,3 +1,45 @@
+# Sprint 89 — "Oscar sieht wieder seine Insel, Tommy misst das Wetter, Bug findet die Wärme, Bernd schweigt beredt"
+
+**Sprint Goal:** Insel verschwindet nicht mehr wenn Oscar schnell baut (Tesla-Bug). Tommy/Bug/Bernd erzählen 10 neue Geschichten. Playwright-Test sichert gegen Rückfall.
+**Start:** 2026-04-20
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S89-1 | **ISO-Renderer Fix** — Insel verschwindet bei unbekanntem Material nicht mehr. Root Cause: iso-renderer.js hatte keinen Fallback bei ungültiger Material-ID → TypeError → leere Canvas. PR #382 | Engineer | ✅ PR #382 (wartet auf Merge) |
+| S89-2 | **Quests Runde 69** — 10 neue Quests (696→706): Tommy (4), Bug (3), Bernd (3). PR #384 (Tommy/Bug/Bernd). Achtung: #383 (Group A) + #385 (Runde 70) sind Duplikate → Till wählt Merge-Reihenfolge | Artist | ✅ PR #384 (wartet auf Merge) |
+| S89-3 | **Playwright ISO-Renderer Resilience Test** — `ops/tests/iso-renderer.spec.js`: Canvas bleibt sichtbar wenn unbekanntes Material ins Grid injiziert wird | Engineer | ✅ Implementiert |
+
+---
+
+## Sprint Review + Retro S88 (2026-04-20 Session 91)
+
+**Sprint Goal erreicht:** ✅
+
+| Item | Ergebnis |
+|------|---------|
+| S88-1 | ✅ Quests Runde 48 (Lokführer/Krämerin/Elefant): Hochbrücke, Dampflok-Museum, Kohlevorrat-Bunker, Internationale Station, Tee-Stube, Einmach-Keller, Kunsthandwerk-Stand, Blitz-Observatorium, Eishöhle, Vulkan-Trommel — via Konsolidierungs-PR #381 |
+| S88-2 | ✅ Carry-Over Merges (PRs #314–#375) → 696 Quests auf main — Konsolidierungs-PR #381 |
+
+**Retro S88:** Konsolidierungsansatz aus N0 hat Nacht gerettet — 500+ Quests aus Stack-Branches auf main gebracht. Quest-Counts auf main: Tommy/Bug/Bernd je ~52 (niedrigste → S89). Neuer kritischer Bug entdeckt: ISO-Renderer Flicker auf Tesla (PR #382 bereits offen). Drei parallele Quest-PRs für 696→706 (#383/#384/#385) — alle konkurrierend. Nächste Male: erst mergen, dann neuen Branch.
+
+---
+
+## Standup Log
+
+### 2026-04-20 — Sprint Review S88 + Planning S89 + S89-3 implementiert (Session 91)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem (Issue #304/#319/#333 offen, kein neues Issue).
+
+**Sprint 88 Review:** S88-1 ✅ + S88-2 ✅ via Konsolidierungs-PR #381. 696 Quests auf main. Typecheck ✅. Unit Tests ✅ (22/22).
+
+**Sprint 89:** S89-1 (PR #382 ✅) + S89-2 (PR #384 ✅, Duplikate #383/#385 warten auf Till) beide fertig. S89-3: `ops/tests/iso-renderer.spec.js` — Playwright Test dass Canvas bei unbekanntem Material sichtbar bleibt.
+
+---
+
 # Sprint N0 (Nacht 2026-04-19/20) — "Audio + Backlog-Clearance"
 
 **Sprint Goal:** Oscar-Audio-Wünsche umgesetzt, 696 Quests auf main, alle non-Human-Input Items abgehakt, Backlog clean für Morgen-Triage.
