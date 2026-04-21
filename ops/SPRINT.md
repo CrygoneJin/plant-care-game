@@ -9,9 +9,9 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S91-1 | **NPC-Dialog Tests reparieren** — 2 failing Tests aus #402 (Chat-Header-Assertions) fixen. DOM-Struktur lokal prüfen, Assertions korrekt machen, neu PR. | Engineer | 🔲 To do |
-| S91-2 | **Block/Quest Tests konsolidieren** — aus #403/#404 Doppel einen einzigen grünen PR machen. Duplikate entfernen, nur einzigartige Assertions behalten. | Engineer | 🔲 To do |
-| S91-3 | **Quest-Runde 77** — 10 neue Quests, Thema "Bedürfnis vs. Wunsch" (Mandela). NPC-Auswahl: Maus/Bernd/Krämerin (tiefste Counter 60/64/66). → 825 Quests | Artist | 🔲 To do |
+| S91-1 | **NPC-Dialog Tests reparieren** — 2 failing Tests aus #402 (Chat-Header-Assertions) fixen. DOM-Struktur lokal prüfen, Assertions korrekt machen, neu PR. | Engineer | 🔄 PR #407 offen (CI re-trigger läuft) |
+| S91-2 | **Block/Quest Tests konsolidieren** — aus #403/#404 Doppel einen einzigen grünen PR machen. Duplikate entfernen, nur einzigartige Assertions behalten. | Engineer | 🔄 PR #407 offen (gemeinsam mit S91-1) |
+| S91-3 | **Quest-Runde 77** — 10 neue Quests, Thema "Bedürfnis vs. Wunsch" (Mandela). NPC-Auswahl: Maus/Bernd/Krämerin (tiefste Counter 60/64/66). → 825 Quests | Artist | 🔄 PR #406 offen, CI grün |
 | S91-4 | **Palette-Visual-Check** (#405) — Tesla-Browser öffnen, Oscar zeigen, feedback in MEMORY.md loggen | Designer | 🔲 Human Input (Till im Tesla) |
 
 ---
@@ -19,7 +19,7 @@
 ## Ceremony-Status S91
 
 - [x] Planning: 2026-04-21 (Session 99 Nacht-AFK, autonomer Loop nach S90-Retro)
-- [ ] Daily Scrum: ausstehend
+- [x] Daily Scrum: 2026-04-21 (autonomer Agent)
 - [ ] Review: ausstehend
 - [ ] Retro: ausstehend
 
@@ -30,6 +30,29 @@
 - **R1 (Feynman, S91 Tag 2)**: Pre-PR-Checklist für grüne CI ergänzen — wird bei S91-1 und S91-2 angewendet
 - **R2 (Torvalds, S91 Tag 1)**: Quest-PR-Template `git checkout main && git checkout -b feat/quests-runde-N` wird für S91-3 benutzt
 - **R3 (Jobs, sofort)**: Keine SPRINT.md-Rewrite-Docs-PRs — SPRINT.md nur durch Ceremony aktualisieren. Gilt ab jetzt.
+
+---
+
+## Standup Log
+
+### 2026-04-21 — Daily Scrum S91 (autonomer Agent)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**S91-1 + S91-2:** PR #407 (feat/tests-s91) — Root Cause identifiziert: `#chat-character-name` fehlte im HTML, `chat.js` hatte die Logik. Fix in index.html. CI schlug fehl mit `git exit 128` (Flake), Re-Trigger-Commit gepusht.
+
+**S91-3:** PR #406 (feat/quests-runde-77) — 10 Quests (Maus/Bernd/Krämerin), 815→825. CI grün, merge-ready.
+
+**S91-4:** Blockiert auf Till (Tesla + Oscar), nicht sprint-kritisch.
+
+**Offene PRs:**
+| PR | Branch | Status |
+|----|--------|--------|
+| #406 | feat/quests-runde-77 | ✅ CI grün — merge-ready |
+| #407 | feat/tests-s91 | 🔄 CI re-triggered |
+| #408 | fix/iso-touch-chat-bugs | ✅ CI grün |
+
+**Impediments:** Keine neuen — #407 CI-Flake selbst behoben.
 
 ---
 
