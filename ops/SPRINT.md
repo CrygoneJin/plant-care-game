@@ -11,7 +11,7 @@
 |---|------|----------|--------|
 | S91-1 | **NPC-Dialog Tests reparieren** — 2 failing Tests aus #402 (Chat-Header-Assertions) fixen. DOM-Struktur lokal prüfen, Assertions korrekt machen, neu PR. | Engineer | 🔄 PR #407 offen (CI re-trigger läuft) |
 | S91-2 | **Block/Quest Tests konsolidieren** — aus #403/#404 Doppel einen einzigen grünen PR machen. Duplikate entfernen, nur einzigartige Assertions behalten. | Engineer | 🔄 PR #407 offen (gemeinsam mit S91-1) |
-| S91-3 | **Quest-Runde 77** — 10 neue Quests, Thema "Bedürfnis vs. Wunsch" (Mandela). NPC-Auswahl: Maus/Bernd/Krämerin (tiefste Counter 60/64/66). → 825 Quests | Artist | 🔄 PR #406 offen, CI grün |
+| S91-3 | **Quest-Runde 77** — 10 neue Quests, Thema "Bedürfnis vs. Wunsch" (Mandela). NPC-Auswahl: Maus/Bernd/Krämerin (tiefste Counter 60/64/66). → 825 Quests | Artist | ✅ PR #406 gemergt |
 | S91-4 | **Palette-Visual-Check** (#405) — Tesla-Browser öffnen, Oscar zeigen, feedback in MEMORY.md loggen | Designer | 🔲 Human Input (Till im Tesla) |
 
 ---
@@ -19,9 +19,35 @@
 ## Ceremony-Status S91
 
 - [x] Planning: 2026-04-21 (Session 99 Nacht-AFK, autonomer Loop nach S90-Retro)
-- [x] Daily Scrum: 2026-04-21 (autonomer Agent)
+- [x] Daily Scrum: 2026-04-21 (autonomer Agent, Session 100)
 - [ ] Review: ausstehend
 - [ ] Retro: ausstehend
+
+---
+
+## Standup Log
+
+### 2026-04-21 — Daily Scrum S91 (Session 100)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem (4 offene Issues #249/#304/#319/#333).
+
+**Analyse S91-1+S91-2:**
+- Root Cause #402 (2 failing Tests): `#chat-character-name` existiert im JS (chat.js:456), fehlt im HTML → `charNameDisplay` immer `null` → Header nie gesetzt → Test-Assertions gegen unsichtbares Element
+- Fix: `<span id="chat-character-name">` in index.html ergänzt (chat.js hatte Code dafür, HTML fehlte)
+- `npc-dialog.spec.js` (9 Tests) neu geschrieben — Assertions korrekt, HTML-Element vorhanden
+- `block-quest.spec.js` (18 Tests) aus #403/#404 konsolidiert — bestes aus beiden, kein Duplikat
+
+**In Arbeit:**
+| Item | Status |
+|------|--------|
+| S91-1 NPC-Dialog Tests | ✅ npc-dialog.spec.js + HTML-Fix in PR |
+| S91-2 Block/Quest Tests | ✅ block-quest.spec.js in PR |
+| S91-3 Quest-Runde 77 | PR #406 bereits offen (Nacht-Session), nur noch mergen |
+| S91-4 Palette-Check | 🔲 Till im Tesla |
+
+**Offene PRs:**
+- #406: Quest-Runde 77 (10 Quests, 815→825) — bereit zum Merge
+- neuer PR (S91-1+S91-2): npc-dialog.spec.js + block-quest.spec.js + HTML-Fix
 
 ---
 
