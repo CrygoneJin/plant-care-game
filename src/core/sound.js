@@ -870,7 +870,7 @@
     // === Stille-Momente: Navier-Stokes Wellenorchester (#57) ===
     // Das Meer als Orchester: jede Harmonische ist ein Instrument.
     //
-    //   n=1  Kontrabass    C2 (65 Hz)   — Grunddünung, 12s Periode
+    //   n=1  Kontrabass    C2 (65 Hz)   — Grunddünung
     //   n=2  Cello         C3 (131 Hz)  — mittlere Wellen
     //   n=3  Viola         G3 (196 Hz)  — Quinte, Brandungsrollen
     //   n=4  Violine I     C4 (262 Hz)  — Schaumkronen
@@ -878,9 +878,23 @@
     //   n=6  Flöte         G4 (392 Hz)  — Wind über Wasser
     //   turb Perkussion    <300 Hz      — Brownsche Brandung
     //
+    // Pythagoras' fünfter Hammer: der 7. Oberton (~458 Hz) liegt NICHT im
+    // ratio-basierten Quintensystem (5:4:3:2:1 = 12:9:8:6-Gewichte). Er ist
+    // der irrationale Hammer der aus der Schmiede entfernt wurde — und
+    // deshalb bringt er der sonst perfekten Naturtonreihe Leben zurück.
+    // Kommt als Poisson-Event alle 35-90s, leise, mit kurzem Pitch-Glide
+    // wie ein echter Schmiede-Hammer der auf Metall trifft und nachhallt.
+    //
+    // LFO-Phasen nutzen den goldenen Schnitt φ statt rationaler Vielfache.
+    // φ ist die irrationalste aller Zahlen (schlechteste rationale Näherung),
+    // deshalb laufen die Stimmen nie wieder phasengleich — kein hörbarer Loop.
+    //
     // Physik: Pierson-Moskowitz E(f) ∝ f⁻⁵·exp(-β/f⁴)
     // Musik: Harmonische Reihe auf C = Naturtonreihe
     // Beide sind dasselbe: Superposition stehender Wellen mit Energieabfall.
+    const PHI = 1.6180339887498949;
+    const C2_FUNDAMENTAL = 65.41;
+    const FIFTH_HAMMER_FREQ = C2_FUNDAMENTAL * 7; // 457.87 Hz — septimaler Naturton, out-of-ratio
     let ambientNodes = null;
 
     // Naturtonreihe auf C2 — die Obertöne die eine Saite von selbst erzeugt
@@ -903,17 +917,18 @@
             masterGain.gain.linearRampToValueAtTime(0.06 * masterVolume, ctx.currentTime + 3);
             masterGain.connect(ctx.destination);
 
-            const f0 = 0.08; // Grundfrequenz der Dünung (12s Wellenperiode)
+            const f0 = 0.08; // Grundfrequenz der Dünung
             const oscillators = [];
             const lfoNodes = [];
 
             for (let n = 0; n < OCEAN_ORCHESTRA.length; n++) {
                 const instr = OCEAN_ORCHESTRA[n];
 
-                // Instrument: tonale Harmonische
+                // Instrument: tonale Harmonische, Micro-Detune (±3 cents) wie ein Chor
                 const osc = ctx.createOscillator();
                 osc.type = instr.wave;
                 osc.frequency.value = instr.freq;
+                osc.detune.value = (Math.random() - 0.5) * 6;
 
                 // Leichtes Vibrato — kein Synthesizer, ein Orchester
                 const vibrato = ctx.createOscillator();
@@ -924,9 +939,9 @@
                 vibratoGain.connect(osc.frequency);
 
                 // Wellen-LFO: Amplitude pulsiert wie Dünung
-                // Jede Stimme hat eigene Phase — keine stehende Welle
+                // Phasen über goldenen Schnitt → inkommensurabel → kein Loop
                 const lfo = ctx.createOscillator();
-                lfo.frequency.value = f0 * (n + 1) + (Math.random() * 0.02 - 0.01);
+                lfo.frequency.value = f0 * Math.pow(PHI, n) + (Math.random() * 0.02 - 0.01);
                 const lfoGain = ctx.createGain();
                 lfoGain.gain.value = instr.vol * 0.5; // LFO-Tiefe
                 lfo.connect(lfoGain);
@@ -979,14 +994,60 @@
             turbSrc.start();
             oscillators.push(turbSrc);
 
-            ambientNodes = { oscillators, lfoNodes, masterGain, ctx };
+            ambientNodes = { oscillators, lfoNodes, masterGain, ctx, hammerTimer: null };
+
+            // Erster fünfter Hammer nach 20-45s Einschwing-Pause
+            ambientNodes.hammerTimer = setTimeout(
+                () => scheduleFifthHammer(ctx, masterGain),
+                20000 + Math.random() * 25000
+            );
         } catch (e) { /* Audio nicht verfügbar */ }
+    }
+
+    // Pythagoras' fünfter Hammer: ein einzelner, leiser Ton der NICHT in die
+    // harmonische Ratio-Reihe passt. Kurzer Pitch-Glide nach unten wie ein
+    // Hammer der auf Metall trifft und nachklingt. Plant sich selbst neu mit
+    // Poisson-Abstand 35-90s — unregelmäßig, deshalb lebendig.
+    function scheduleFifthHammer(ctx, masterGain) {
+        if (!ambientNodes) return;
+        try {
+            const now = ctx.currentTime;
+            const hammerOsc = ctx.createOscillator();
+            hammerOsc.type = 'triangle';
+            hammerOsc.frequency.setValueAtTime(FIFTH_HAMMER_FREQ * 1.015, now);
+            hammerOsc.frequency.exponentialRampToValueAtTime(FIFTH_HAMMER_FREQ, now + 0.4);
+
+            const hammerGain = ctx.createGain();
+            hammerGain.gain.setValueAtTime(0.0001, now);
+            hammerGain.gain.linearRampToValueAtTime(0.03, now + 0.08);
+            hammerGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.8);
+
+            const lp = ctx.createBiquadFilter();
+            lp.type = 'lowpass';
+            lp.frequency.value = 1400;
+            lp.Q.value = 0.6;
+
+            hammerOsc.connect(lp);
+            lp.connect(hammerGain);
+            hammerGain.connect(masterGain);
+
+            hammerOsc.start(now);
+            hammerOsc.stop(now + 3.0);
+            ambientNodes.oscillators.push(hammerOsc);
+        } catch (_) {}
+
+        const nextDelay = 35000 + Math.random() * 55000;
+        ambientNodes.hammerTimer = setTimeout(
+            () => scheduleFifthHammer(ctx, masterGain),
+            nextDelay
+        );
     }
 
     function stopAmbient() {
         if (!ambientNodes) return;
         try {
-            const { oscillators, lfoNodes, masterGain, ctx } = ambientNodes;
+            const { oscillators, lfoNodes, masterGain, ctx, hammerTimer } = ambientNodes;
+            if (hammerTimer) clearTimeout(hammerTimer);
             masterGain.gain.cancelScheduledValues(ctx.currentTime);
             masterGain.gain.setValueAtTime(masterGain.gain.value, ctx.currentTime);
             masterGain.gain.linearRampToValueAtTime(0.0, ctx.currentTime + 1.5);
