@@ -24,6 +24,12 @@
     }
 
     function drawHex(ctx, x, y, size, cell, materials) {
+        // Wenn Trixel gesetzt sind -> zeichne Trixel-Fill (6 Dreiecke)
+        if (cell.trixels && hasAnyTrixel(cell)) {
+            drawTrixelFill(ctx, x, y, size, cell, materials);
+            return;
+        }
+
         var mat = materials[cell.surface];
         if (!mat) return;
 
@@ -48,6 +54,58 @@
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillText(mat.emoji, x, y);
+        }
+    }
+
+    function hasAnyTrixel(cell) {
+        if (!cell || !cell.trixels) return false;
+        for (var i = 0; i < 6; i++) {
+            if (cell.trixels[i] && cell.trixels[i].material) return true;
+        }
+        return false;
+    }
+
+    // Trixel-Fill: zeichne 6 Dreiecke vom Zentrum zu den Kanten,
+    // jedes in seiner Material-Farbe. Ersetzt drawHex wenn Trixel gesetzt.
+    function drawTrixelFill(ctx, x, y, size, cell, materials) {
+        for (var i = 0; i < 6; i++) {
+            var tri = cell.trixels[i];
+            if (!tri) continue;
+            var a1 = Math.PI / 180 * (60 * i);
+            var a2 = Math.PI / 180 * (60 * (i + 1));
+            var x1 = x + size * Math.cos(a1);
+            var y1 = y + size * Math.sin(a1) * ISO_FACTOR;
+            var x2 = x + size * Math.cos(a2);
+            var y2 = y + size * Math.sin(a2) * ISO_FACTOR;
+
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.closePath();
+
+            if (tri.material && materials[tri.material]) {
+                var mat = materials[tri.material];
+                ctx.fillStyle = mat.color || '#666';
+                ctx.fill();
+                // Depth sichtbar machen: je höher depth, desto heller
+                if (tri.depth > 1) {
+                    ctx.fillStyle = 'rgba(255,255,255,' + Math.min(0.5, tri.depth * 0.1) + ')';
+                    ctx.fill();
+                }
+                // Dark-Shading
+                if (tri.dark > 0) {
+                    ctx.fillStyle = 'rgba(0,0,0,' + Math.min(0.7, tri.dark) + ')';
+                    ctx.fill();
+                }
+                ctx.strokeStyle = mat.border || '#222';
+            } else {
+                ctx.fillStyle = 'rgba(0,0,0,0.05)';
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(0,0,0,0.2)';
+            }
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
         }
     }
 
@@ -115,6 +173,7 @@
     window.INSEL_HEX_RENDERER = {
         drawHexGrid: drawHexGrid,
         drawHex: drawHex,
+        drawTrixelFill: drawTrixelFill,
         drawTrixelOverlay: drawTrixelOverlay,
         hitTest: hitTest,
         ISO_FACTOR: ISO_FACTOR,
