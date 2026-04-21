@@ -11,7 +11,7 @@
         var h = ((r * 7919 + c * 104729 + salt * 1013) ^ (r << 5) ^ (c << 3)) >>> 0;
         h = ((h ^ (h >>> 16)) * 0x45d9f3b) >>> 0;
         h = ((h ^ (h >>> 16)) * 0x45d9f3b) >>> 0;
-        return (h ^ (h >>> 16)) / 4294967296;
+        return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
     }
 
     // --- Stochastisches L-System: Regelauswahl per Zell-Seed ---
@@ -81,13 +81,18 @@
         var h4 = cellHash(r, c, 4);
 
         var resolvedType = RULE_VARIANTS[treeType] ? treeType : 'tree';
-        var rules    = RULE_VARIANTS[resolvedType];
-        var angles   = ANGLE_VARIANTS[resolvedType];
-        var palette  = LEAF_PALETTES[Math.floor(h3 * LEAF_PALETTES.length)];
-        var trunk    = TRUNK_COLORS[Math.floor(h4 * TRUNK_COLORS.length)];
+        var rules    = RULE_VARIANTS[resolvedType] || RULE_VARIANTS.tree;
+        var angles   = ANGLE_VARIANTS[resolvedType] || ANGLE_VARIANTS.tree;
+        // min(⌊h*n⌋, n-1) schützt vor Floating-Point-Rundung bei h≈1.0
+        var paletteIdx = Math.min(Math.floor(h3 * LEAF_PALETTES.length), LEAF_PALETTES.length - 1);
+        var trunkIdx   = Math.min(Math.floor(h4 * TRUNK_COLORS.length),  TRUNK_COLORS.length  - 1);
+        var ruleIdx    = Math.min(Math.floor(h0 * rules.length),         rules.length         - 1);
+        var angleIdx   = Math.min(Math.floor(h1 * angles.length),        angles.length        - 1);
+        var palette  = LEAF_PALETTES[paletteIdx];
+        var trunk    = TRUNK_COLORS[trunkIdx];
 
-        var chosenRule  = rules[Math.floor(h0 * rules.length)];
-        var chosenAngle = angles[Math.floor(h1 * angles.length)];
+        var chosenRule  = rules[ruleIdx];
+        var chosenAngle = angles[angleIdx];
 
         var iterations = treeType === 'sapling' ? 1 : (h2 < 0.3 ? 3 : 2);
         var baseLength = treeType === 'tree'
@@ -109,7 +114,7 @@
             baseLength:   baseLength,
             lineWidth:    treeType === 'tree' ? (2.5 + h3 * 1.5) : (1.5 + h4 * 1.0),
             trunkColor:   trunk,
-            leafColor:    palette[Math.floor(h4 * palette.length)],
+            leafColor:    palette[Math.min(Math.floor(h4 * palette.length), palette.length - 1)],
             leafColors:   palette,
             leafSize:     leafSize
         };
