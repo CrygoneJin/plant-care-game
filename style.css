@@ -766,7 +766,7 @@ header h1 {
     cursor: pointer;
     background: rgba(255, 255, 255, 0.85);
     transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
-    min-height: 58px;
+    min-height: 84px;
 }
 
 .material-btn:hover {
@@ -830,7 +830,8 @@ header h1 {
 }
 
 .mat-emoji {
-    font-size: 32px;
+    font-size: 64px;
+    line-height: 1;
 }
 
 
@@ -1182,13 +1183,14 @@ body.offline-whisper {
 
     /* Palette: kompakter */
     .material-btn {
-        min-height: 44px;
-        min-width: 44px;
+        min-height: 64px;
+        min-width: 64px;
         padding: 4px;
     }
 
     .mat-emoji {
-        font-size: 24px;
+        font-size: 48px;
+        line-height: 1;
     }
 
     /* Canvas: maximale Fläche */
@@ -1724,11 +1726,12 @@ body.code-view-active #chat-settings-btn {
     }
 
     #palette {
-        width: 160px;
+        width: 180px;
     }
 
     .mat-emoji {
-        font-size: 32px;
+        font-size: 72px;
+        line-height: 1;
     }
 
     #stats {
@@ -2117,10 +2120,10 @@ body.code-view-active #chat-settings-btn {
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    /* Palette-Buttons: 52x52px — touch-freundlich */
+    /* Palette-Buttons: 68x68px — touch-freundlich, doppelte Emoji-Größe */
     #palette .material-btn {
-        min-width: 52px;
-        min-height: 52px;
+        min-width: 68px;
+        min-height: 68px;
         flex-shrink: 0;
     }
 
