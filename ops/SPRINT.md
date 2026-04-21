@@ -9,8 +9,8 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S92-1 | **Merge-Stack** — #394, #395, #396, #397, #398, #399 alle auf main | Leader | 🔲 Human Input (Till mergt) |
-| S92-2 | **Quests Runde 76** — nächste 10 Quests für Bug/Krabs/Tommy (nach R73) oder Alien/Elefant | Artist | 🔲 In Planung |
+| S92-1 | **Merge-Stack** — #394, #395, #396, #397, #399, #401 alle auf main | Leader | 🔲 Human Input (Till mergt) |
+| S92-2 | **Quests Runde 76** — Floriane+4, Mephisto+3, Kraemerin+3 (775→785) | Artist | ✅ PR #401 |
 | S92-3 | **Playwright: NPC-Dialog Tests** — Coverage für NPC-Gespräche (#103 Live Launch) | Engineer | 🔲 Noch nicht begonnen |
 
 ---
@@ -47,6 +47,32 @@
 ---
 
 ## Standup Log
+
+### 2026-04-21 — Daily Scrum S92 Session 102
+
+**Smoke Tests:** 403 — bekannte Sandbox-Einschränkung, kein App-Problem.
+
+**S92-2 erledigt:** Quests Runde 76 — Floriane (60→64, +4), Mephisto (61→64, +3), Kraemerin (62→65, +3). 775→785 Quests. PR #401 erstellt, conflict-free mit #394–#399.
+
+**PR #398 geschlossen** (obsolet, durch PR #400 ersetzt).
+
+**Merge-Reihenfolge für Till (aktualisiert):**
+
+| PR | Inhalt | Aktion |
+|----|--------|--------|
+| #394 | Playwright Craft-Flow Tests | ✅ Mergen |
+| #395 | Playwright Sailing/Archipel Tests | ✅ Nach #394 |
+| #396 | Quests Runde 73 (Krabs/Bug/Tommy +10) | ✅ Nach #395 |
+| #397 | Quests Runde 74 (Maus/Neinhorn/Spongebob +10) | ✅ Nach #396 |
+| #399 | Quests Runde 75 (Alien/Elefant/Lokführer +10) | ✅ Nach #397 |
+| #401 | Quests Runde 76 (Floriane/Mephisto/Kraemerin +10) | ✅ Nach #399 |
+| #400 | SPRINT.md Sprint 92 + Daily Scrum | ✅ Jederzeit (docs-only) |
+
+Nach allen 6 Quest-Merges: **835 Quests** auf main.
+
+**S92-3:** Playwright NPC-Dialog Tests — nächste Session.
+
+---
 
 ### 2026-04-21 — Daily Scrum S92 Session 101
 
