@@ -165,6 +165,15 @@
                 ctx.lineWidth = 0.5;
                 ctx.stroke();
 
+                // Quad-Trixel-Bridge: wenn Sidecar-Trixels fuer diese Zelle
+                // existieren, rendere sie als 4 flache Dreiecke statt als Cube.
+                // (Ephemeral — keine Persistenz, kein Click-Hit-Test.)
+                var QT = typeof window !== 'undefined' ? window.INSEL_QUAD_TRIXEL : null;
+                if (QT && QT.hasAt(r, c)) {
+                    QT.drawQuadTrixels(ctx, pos.x, pos.y, tileW, tileH, QT.getAt(r, c), MATERIALS);
+                    continue;
+                }
+
                 // Material — isometric cube!
                 if (grid[r][c]) {
                     const mat = MATERIALS[grid[r][c]] || { emoji: '❓', label: grid[r][c], color: '#888', border: '#666' };

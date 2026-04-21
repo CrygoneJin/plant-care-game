@@ -376,9 +376,20 @@ interface HexGrid {
     forEach(fn: (cell: HexCell, q: number, r: number) => void): void;
 }
 
+interface Trixel {
+    material: string | null;
+    depth: number;
+    dark: number;
+}
+
 interface InselHex {
     createGrid(radius: number): HexGrid;
     migrateCell(value: string | HexCell | unknown): HexCell;
+    createTrixels(cell: { surface: string | null; height?: number; dark?: number } | null): Trixel[];
+    setTrixel(cell: HexCell, idx: number, material: string | null, depth: number, dark?: number): void;
+    mergeTrixels(cell: HexCell): { merged: boolean; count: number };
+    hasTrixels(cell: HexCell): boolean;
+    emptyTrixel(): Trixel;
     DIRECTIONS: Array<[number, number]>;
     hexKey(q: number, r: number): string;
 }
@@ -387,6 +398,7 @@ interface InselHex {
 interface InselHexRenderer {
     drawHexGrid(ctx: CanvasRenderingContext2D, grid: HexGrid, size: number, offsetX: number, offsetY: number, materials: MaterialMap): void;
     drawHex(ctx: CanvasRenderingContext2D, x: number, y: number, size: number, cell: HexCell, materials: MaterialMap): void;
+    drawTrixelFill(ctx: CanvasRenderingContext2D, x: number, y: number, size: number, cell: HexCell, materials: MaterialMap): void;
     drawTrixelOverlay(ctx: CanvasRenderingContext2D, x: number, y: number, size: number, cell: HexCell): void;
     hitTest(mouseX: number, mouseY: number, grid: HexGrid, size: number, offsetX: number, offsetY: number): { q: number; r: number };
     ISO_FACTOR: number;
@@ -408,6 +420,60 @@ interface InselMarble {
     tickMarble(marble: Marble, grid: HexGrid): void;
     animateMarble(marble: Marble, grid: HexGrid, onTick?: (marble: Marble) => void, onDone?: (marble: Marble) => void): ReturnType<typeof setInterval>;
     TICK_MS: number;
+}
+
+// --- QuadTrixel (Quad-Grid-Trixel-Bridge, Sidecar-Storage) ---
+interface QuadTrixel {
+    material: string | null;
+    depth: number;
+    dark: number;
+}
+
+interface InselQuadTrixel {
+    hasAt(r: number, c: number): boolean;
+    getAt(r: number, c: number): QuadTrixel[] | null;
+    initAt(r: number, c: number, material?: string | null, depth?: number): void;
+    setTrixel(r: number, c: number, idx: number, material: string | null, depth?: number, dark?: number): void;
+    mergeAt(r: number, c: number): { merged: boolean; count: number };
+    clearAt(r: number, c: number): void;
+    clear(): void;
+    count(): number;
+    drawQuadTrixels(ctx: CanvasRenderingContext2D, x: number, y: number, tileW: number, tileH: number, trixels: QuadTrixel[], materials: MaterialMap): void;
+    snapshot(): Array<{ r: number; c: number; trixels: QuadTrixel[] }>;
+}
+
+// --- ParticleSnap ---
+interface SnapParticle {
+    id: number;
+    material: MaterialId;
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    size: number;
+    baseSize: number;
+    born: number;
+    ttl: number;
+    dead: boolean;
+}
+
+interface SnapSpawnOpts {
+    vx?: number;
+    vy?: number;
+    size?: number;
+    ttl?: number;
+}
+
+interface InselParticleSnap {
+    spawn(material: MaterialId, x: number, y: number, opts?: SnapSpawnOpts): SnapParticle;
+    update(dtMs?: number): { moved: number; merged: number; dead: number };
+    draw(ctx: CanvasRenderingContext2D, materials?: MaterialMap): void;
+    clear(): void;
+    count(): number;
+    snapshot(): SnapParticle[];
+    _setGravity(g: number): void;
+    _setDamping(d: number): void;
+    _lookupMergeResult(a: MaterialId, b: MaterialId): MaterialId | null;
 }
 
 // --- Window Extensions ---
@@ -440,6 +506,8 @@ interface Window {
     INSEL_HEX: InselHex;
     INSEL_HEX_RENDERER: InselHexRenderer;
     INSEL_MARBLE: InselMarble;
+    INSEL_QUAD_TRIXEL: InselQuadTrixel;
+    INSEL_PARTICLE_SNAP: InselParticleSnap;
     INSEL_BUS: InselNamespace;
     INSEL_DIMS: { ROWS: number; COLS: number };
     startSessionClock?(): void;

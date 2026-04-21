@@ -3,7 +3,7 @@ const assert = require('node:assert');
 
 // hex-grid.js wird als IIFE geladen, wir simulieren window
 globalThis.window = globalThis;
-require('../hex-grid.js');
+require('../../src/core/hex-grid.js');
 
 describe('HexGrid', () => {
     it('erstellt ein Grid mit korrektem Radius', () => {
@@ -59,5 +59,61 @@ describe('HexGrid', () => {
         assert.strictEqual(cell.height, 0);
         assert.strictEqual(cell.dark, 0);
         assert.strictEqual(cell.trixels, null);
+    });
+});
+
+describe('Trixel', () => {
+    it('createTrixels liefert 6 leere Trixel bei leerer Cell', () => {
+        const trixels = INSEL_HEX.createTrixels({ surface: null, height: 0, dark: 0 });
+        assert.strictEqual(trixels.length, 6);
+        for (const t of trixels) {
+            assert.strictEqual(t.material, null);
+            assert.strictEqual(t.depth, 0);
+        }
+    });
+
+    it('createTrixels uebernimmt Surface+Height aus Cell', () => {
+        const trixels = INSEL_HEX.createTrixels({ surface: 'tree', height: 2, dark: 0 });
+        assert.strictEqual(trixels.length, 6);
+        for (const t of trixels) {
+            assert.strictEqual(t.material, 'tree');
+            assert.strictEqual(t.depth, 2);
+        }
+    });
+
+    it('setTrixel initialisiert trixels falls null', () => {
+        const cell = { surface: null, height: 0, dark: 0, trixels: null };
+        INSEL_HEX.setTrixel(cell, 0, 'fire', 1, 0);
+        assert.ok(Array.isArray(cell.trixels));
+        assert.strictEqual(cell.trixels.length, 6);
+        assert.strictEqual(cell.trixels[0].material, 'fire');
+        assert.strictEqual(cell.trixels[0].depth, 1);
+    });
+
+    it('mergeTrixels merged gleiche Materialien nebeneinander (2048-Snap)', () => {
+        const cell = { surface: null, height: 0, dark: 0, trixels: null };
+        INSEL_HEX.setTrixel(cell, 0, 'water', 1, 0);
+        INSEL_HEX.setTrixel(cell, 1, 'water', 1, 0);
+        const result = INSEL_HEX.mergeTrixels(cell);
+        assert.strictEqual(result.merged, true);
+        assert.strictEqual(result.count, 1);
+        assert.strictEqual(cell.trixels[0].material, 'water');
+        assert.strictEqual(cell.trixels[0].depth, 2);
+        assert.strictEqual(cell.trixels[1].material, null);
+    });
+
+    it('mergeTrixels merged NICHT wenn Depths unterschiedlich', () => {
+        const cell = { surface: null, height: 0, dark: 0, trixels: null };
+        INSEL_HEX.setTrixel(cell, 0, 'water', 1, 0);
+        INSEL_HEX.setTrixel(cell, 1, 'water', 2, 0);
+        const result = INSEL_HEX.mergeTrixels(cell);
+        assert.strictEqual(result.merged, false);
+    });
+
+    it('hasTrixels true wenn mindestens 1 Material gesetzt', () => {
+        const cell = { surface: null, height: 0, dark: 0, trixels: null };
+        assert.strictEqual(INSEL_HEX.hasTrixels(cell), false);
+        INSEL_HEX.setTrixel(cell, 3, 'fire', 1, 0);
+        assert.strictEqual(INSEL_HEX.hasTrixels(cell), true);
     });
 });
