@@ -2120,6 +2120,7 @@
 
     function resizeCanvas() {
         CELL_SIZE = calcCellSize();
+        document.body.classList.toggle('iso-mode', !!isoMode);
         if (isoMode && window.ISO_RENDERER) {
             const size = window.ISO_RENDERER.getIsoCanvasSize(CELL_SIZE, totalCols, totalRows);
             canvas.width = size.width;
@@ -2132,8 +2133,8 @@
             canvas.style.width = (totalCols * CELL_SIZE) + 'px';
             canvas.style.height = (totalRows * CELL_SIZE) + 'px';
         }
-        // Auf Mobilgeräten Canvas in den Container einpassen
-        if (window.innerWidth < 768) {
+        // Auf Mobilgeräten Canvas in den Container einpassen — NICHT im Iso-Modus, sonst kein Scrollen
+        if (window.innerWidth < 768 && !isoMode) {
             canvas.style.width = '100%';
             canvas.style.height = 'auto';
         }
@@ -4023,6 +4024,16 @@
         const touch = e.touches[0];
         touchStartX = touchEndX = touch.clientX;
         touchStartY = touchEndY = touch.clientY;
+        // Bernd-Wolke Tap (oben rechts) — war nur für Maus aktiv, jetzt auch Touch
+        const rect = canvas.getBoundingClientRect();
+        const mx = (touch.clientX - rect.left) * (canvas.width / rect.width);
+        const my = (touch.clientY - rect.top) * (canvas.height / rect.height);
+        const bwx = totalCols * CELL_SIZE - CELL_SIZE * 3;
+        const bwy = CELL_SIZE * 1.5;
+        if (!isoMode && Math.abs(mx - bwx) < CELL_SIZE * 1.4 && Math.abs(my - bwy) < CELL_SIZE * 0.7) {
+            if (window.openChat) window.openChat('bernd');
+            return;
+        }
         const cell = getGridCell(touch);
         if (!cell) return;
         // NPC antippen → Quest-Dialog
@@ -4480,6 +4491,17 @@
                 }
             }
             window.grid = grid;
+            // Spielerposition mit Grid mitverschieben, sonst verschwindet Oscar beim Toggle
+            if (playerPos) {
+                const newR = playerPos.r - srcOffR + offR;
+                const newC = playerPos.c - srcOffC + offC;
+                playerPos = {
+                    r: Math.max(2, Math.min(ROWS - 3, newR)),
+                    c: Math.max(2, Math.min(COLS - 3, newC)),
+                };
+                try { localStorage.setItem('insel-player-pos', JSON.stringify(playerPos)); } catch (_) {}
+                window.playerPos = playerPos;
+            }
             initNpcPositions();
             resizeCanvas();
             if (isoMode) {

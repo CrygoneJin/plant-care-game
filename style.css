@@ -846,6 +846,14 @@ header h1 {
     overflow: hidden;
 }
 
+/* Iso-Modus: Canvas größer als Viewport → Scrollen erlauben */
+body.iso-mode #canvas-wrapper {
+    overflow: auto;
+    align-items: flex-start;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+}
+
 #game-canvas {
     cursor: crosshair;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
@@ -1504,10 +1512,10 @@ body.chat-open #chat-bubble {
 
 #chat-panel {
     position: fixed;
-    top: 52px;
+    top: calc(52px + env(safe-area-inset-top, 0px));
     right: 0;
     width: 320px;
-    height: calc(100vh - 52px);
+    height: calc(100vh - 52px - env(safe-area-inset-top, 0px));
     background: white;
     border-radius: 16px 0 0 16px;
     box-shadow: -4px 0 24px rgba(0, 0, 0, 0.2);
@@ -1671,13 +1679,13 @@ body.code-view-active #chat-settings-btn {
     }
 
     #chat-panel {
-        top: 48px;
+        top: calc(48px + env(safe-area-inset-top, 0px));
         right: 0;
         left: auto;
         width: 92vw;
         max-width: 340px;
-        height: calc(100dvh - 48px);
-        max-height: 70vh;
+        height: calc(100dvh - 48px - env(safe-area-inset-top, 0px));
+        max-height: calc(70vh - env(safe-area-inset-top, 0px));
         border-radius: 16px 0 0 16px;
         padding-bottom: env(safe-area-inset-bottom, 0px);
     }
