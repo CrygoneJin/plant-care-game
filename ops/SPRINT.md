@@ -1,3 +1,92 @@
+# Sprint 93 — "Playwright Coverage: Block-Placement + Quest-Progress"
+
+**Sprint Goal:** E2E-Abdeckung für #103 (Live Launch) wächst: Block-Placement und Quest-Progress getestet. Merge-Stack wartet auf Till.
+**Start:** 2026-04-21
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S93-1 | **Playwright Block-Placement Tests** — Block setzen, Material wechseln, Inventar nach Block | Engineer | 🔲 |
+| S93-2 | **Playwright Quest-Progress Tests** — Quest annehmen, Fortschritt, Quest abschließen | Engineer | 🔲 |
+| S93-3 | **Merge-Stack** — #394→#395→#396→#397→#399→#401→#402 auf main | Leader | 🔲 Human Input (Till) |
+
+---
+
+## Sprint Review S92 + Retro (2026-04-21 Session 102)
+
+**Sprint Goal erreicht:** ✅ (S92-2 + S92-3 fertig als PRs; S92-1 Carry-Over)
+
+| Item | Ergebnis |
+|------|---------|
+| S92-1 | 🔲 Merge-Stack — blockiert auf Till. 7 offene PRs (#394–#402). Carry-Over → S93-3 |
+| S92-2 | ✅ Quests Runde 76 (Floriane/Mephisto/Kraemerin, 10 Quests) → PR #401 |
+| S92-3 | ✅ Playwright NPC-Dialog Tests (9 Tests: openChat, ELIZA, NPC-Wechsel) → PR #402 |
+
+**Retro S92:** Test-Reihe für #103 läuft gut — craft-flow, sailing, npc-dialog fertig. Merge-Stack wächst schneller als Till mergen kann. Quest-Runden pausieren bis Stack abgearbeitet ist — keine neue R77 bis R73–R76 auf main sind.
+
+---
+
+## Standup Log
+
+### 2026-04-21 — Daily Scrum S92 → Review → Planning S93 (Session 102)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Offene PRs (Merge-Reihenfolge für Till):**
+
+| PR | Inhalt | Priorität |
+|----|--------|-----------|
+| #394 | Playwright Craft-Flow (7 Tests) | 1. |
+| #395 | Playwright Sailing + Archipel (7 Tests) | 2. |
+| #396 | Quests R73 — Krabs/Bug/Tommy | 3. |
+| #397 | Quests R74 — Maus/Neinhorn/Spongebob | 4. |
+| #399 | Quests R75 — Alien/Elefant/Lokführer | 5. |
+| #401 | Quests R76 — Floriane/Mephisto/Kraemerin | 6. |
+| #402 | Playwright NPC-Dialog Tests (9 Tests) | 7. |
+
+**PR #400** (alte Sprint-Docs) ist mit diesem Commit obsolet → kann geschlossen werden.
+
+**Sprint 92 abgeschlossen.** Sprint 93 startet: Playwright Block-Placement + Quest-Progress Tests.
+
+---
+
+# Sprint 92 — "Playwright + Quests R76" [abgeschlossen]
+
+**Sprint Goal:** Playwright E2E Coverage wächst, Quests R76 fertig.
+**Start:** 2026-04-21
+
+## Sprint Backlog (final)
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S92-1 | **Merge-Stack** #394→#399 | Leader | 🔲 Blocked → Carry-Over S93-3 |
+| S92-2 | **Quests Runde 76** — Floriane/Mephisto/Kraemerin (+3-4 je) | Artist | ✅ PR #401 |
+| S92-3 | **Playwright NPC-Dialog Tests** — openChat, ELIZA, NPC-Wechsel | Engineer | ✅ PR #402 |
+
+### Standup Log S92
+
+#### 2026-04-21 — Daily Scrum S92 Session 101
+
+Quests R76 (PR #401) und Playwright NPC-Dialog (PR #402) fertiggestellt in Nacht-Session.
+
+---
+
+# Sprint 91 — "Playwright Craft/Sailing + Quests R73–R75" [abgeschlossen]
+
+**Sprint Goal:** Playwright Tests für Craft-Flow und Sailing, Quests Runden 73–75.
+**Ergebnis:** PRs #394, #395, #396, #397, #399 fertig.
+
+---
+
+# Sprint 90 — "Konsolidierung + Quests R70–R72" [abgeschlossen]
+
+**Ergebnis:** PRs #387, #390, #392, #393 — 775 Quests auf main.
+
+---
+
 # Sprint 89 — "Triage: Tesla-Fix landet, Runde 69 auf main"
 
 **Sprint Goal:** PR #382 (Oscars Tesla-Fix) und PR #383 (Runde 69 — Tommy/Neinhorn/Elefant/Bernd/Maus) sind auf main. PR-Chaos ist sortiert.
