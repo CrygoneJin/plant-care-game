@@ -422,6 +422,40 @@ interface InselMarble {
     TICK_MS: number;
 }
 
+// --- ParticleSnap ---
+interface SnapParticle {
+    id: number;
+    material: MaterialId;
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    size: number;
+    baseSize: number;
+    born: number;
+    ttl: number;
+    dead: boolean;
+}
+
+interface SnapSpawnOpts {
+    vx?: number;
+    vy?: number;
+    size?: number;
+    ttl?: number;
+}
+
+interface InselParticleSnap {
+    spawn(material: MaterialId, x: number, y: number, opts?: SnapSpawnOpts): SnapParticle;
+    update(dtMs?: number): { moved: number; merged: number; dead: number };
+    draw(ctx: CanvasRenderingContext2D, materials?: MaterialMap): void;
+    clear(): void;
+    count(): number;
+    snapshot(): SnapParticle[];
+    _setGravity(g: number): void;
+    _setDamping(d: number): void;
+    _lookupMergeResult(a: MaterialId, b: MaterialId): MaterialId | null;
+}
+
 // --- Window Extensions ---
 interface Window {
     INSEL: InselNamespace;
@@ -452,6 +486,7 @@ interface Window {
     INSEL_HEX: InselHex;
     INSEL_HEX_RENDERER: InselHexRenderer;
     INSEL_MARBLE: InselMarble;
+    INSEL_PARTICLE_SNAP: InselParticleSnap;
     INSEL_BUS: InselNamespace;
     INSEL_DIMS: { ROWS: number; COLS: number };
     startSessionClock?(): void;
