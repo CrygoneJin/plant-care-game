@@ -435,6 +435,23 @@
 
         const quest = window.questSystem.getAvailable(npcId);
         const active = window.questSystem.getActive().find(q => q.npc === npcId);
+        // Krabs-Sonderfall: Shop ist seine Kernfunktion — IMMER erreichbar.
+        // Quest-Info läuft als Toast nebenbei, Shop öffnet danach.
+        // Vorher: Krabs-Zweig wurde nie erreicht weil Krabs fast immer eine offene Quest hat → Shop war tot.
+        if (npcId === 'krabs') {
+            let delay = 0;
+            if (sessionGreeting) { showToast(sessionGreeting, 3000); delay = 3200; }
+            if (active) {
+                setTimeout(() => showToast(`🦀 Läuft noch: "${active.title}" — aber erstmal Geschäft! 💰`, 3000), delay);
+                delay += 3200;
+            } else if (quest) {
+                setTimeout(() => showToast(`🦀 Neue Quest: ${quest.desc}`, 4000), delay);
+                window.questSystem.accept(quest);
+                delay += 4200;
+            }
+            setTimeout(() => showKrabsShop(), delay);
+            return;
+        }
         if (active) {
             if (sessionGreeting) {
                 showToast(sessionGreeting, 3000);
@@ -453,13 +470,6 @@
         } else if (npcId === 'bug') {
             if (sessionGreeting) showToast(sessionGreeting, 3000);
             showBugDialog();
-        } else if (npcId === 'krabs') {
-            if (sessionGreeting) {
-                showToast(sessionGreeting, 3000);
-                setTimeout(() => showKrabsShop(), 3200);
-            } else {
-                showKrabsShop();
-            }
         } else if (npcId === 'kraemerin') {
             const shells = getInventoryCount('shell');
             if (sessionGreeting) {
@@ -5616,5 +5626,8 @@
 
     // Test-Hook: sail-dialog direkt öffnen ohne sailboat-Platzierung (Playwright E2E)
     window._showSailDialog = showSailDialog;
+
+    // Test-Hook: NPC-Dialog direkt triggern (Playwright E2E — z.B. Krabs-Shop)
+    window._showNpcQuestDialog = showNpcQuestDialog;
 
 })();
