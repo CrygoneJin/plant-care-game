@@ -1,6 +1,6 @@
 // Service Worker for Schatzinsel — offline play support
 // Stale-While-Revalidate: zeigt Cache sofort, lädt im Hintergrund neu
-const CACHE_VERSION = 9;
+const CACHE_VERSION = 10;
 const CACHE_NAME = `schatzinsel-v${CACHE_VERSION}`;
 
 // Muss exakt mit index.html <script>-Tags übereinstimmen
@@ -48,6 +48,7 @@ const STATIC_ASSETS = [
     '/src/infra/healthcheck.js',
     '/src/infra/tts.js',
     '/src/infra/save.js',
+    '/src/infra/supabase-sync.js',
     '/src/infra/tutorial.js',
     '/src/infra/bedtime.js',
     '/src/world/npc-data.js',

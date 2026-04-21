@@ -17,6 +17,8 @@
 //
 // Free Tier: 100k Requests/Tag. Reicht für Demos.
 
+import { handleSupabaseSave, handleSupabaseLoad } from './worker-supabase.js';
+
 const API_URL = 'https://router.requesty.ai/v1/chat/completions';
 
 // Rate Limit: max Requests pro IP pro Stunde
@@ -70,6 +72,12 @@ export default {
         }
         if (pathname === '/market/buy') {
             return handleMarketBuy(request, env);
+        }
+        // Cloud-Save (Supabase) — getrenntes Modul um Konflikte klein zu halten.
+        if (pathname === '/save' || pathname === '/save/list') {
+            if (request.method === 'GET') return handleSupabaseLoad(request, env);
+            if (request.method === 'POST') return handleSupabaseSave(request, env);
+            return json({ error: 'GET oder POST' }, 405);
         }
 
         // Nur POST

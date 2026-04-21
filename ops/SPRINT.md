@@ -9,8 +9,8 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S91-1 | **NPC-Dialog Tests reparieren** — 2 failing Tests aus #402 (Chat-Header-Assertions) fixen. DOM-Struktur lokal prüfen, Assertions korrekt machen, neu PR. | Engineer | 🔄 PR #407 offen (CI re-trigger läuft) |
-| S91-2 | **Block/Quest Tests konsolidieren** — aus #403/#404 Doppel einen einzigen grünen PR machen. Duplikate entfernen, nur einzigartige Assertions behalten. | Engineer | 🔄 PR #407 offen (gemeinsam mit S91-1) |
+| S91-1 | **NPC-Dialog Tests reparieren** — 2 failing Tests aus #402 (Chat-Header-Assertions) fixen. DOM-Struktur lokal prüfen, Assertions korrekt machen, neu PR. | Engineer | 🔄 PR #407 rebased + fractal-trees cellHash Vorzeichen-Fix, 27 Tests grün lokal |
+| S91-2 | **Block/Quest Tests konsolidieren** — aus #403/#404 Doppel einen einzigen grünen PR machen. Duplikate entfernen, nur einzigartige Assertions behalten. | Engineer | 🔄 PR #407 rebased + fractal-trees cellHash Vorzeichen-Fix, 27 Tests grün lokal |
 | S91-3 | **Quest-Runde 77** — 10 neue Quests, Thema "Bedürfnis vs. Wunsch" (Mandela). NPC-Auswahl: Maus/Bernd/Krämerin (tiefste Counter 60/64/66). → 825 Quests | Artist | ✅ PR #406 gemergt |
 | S91-4 | **Palette-Visual-Check** (#405) — Tesla-Browser öffnen, Oscar zeigen, feedback in MEMORY.md loggen | Designer | 🔲 Human Input (Till im Tesla) |
 
