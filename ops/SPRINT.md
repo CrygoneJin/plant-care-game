@@ -21,7 +21,7 @@
 - [x] Planning: 2026-04-21 (Session 99 Nacht-AFK, autonomer Loop nach S90-Retro)
 - [x] Daily Scrum: 2026-04-21 (autonomer Agent, Session 100)
 - [x] Review: 2026-04-21 (autonomer Agent, Session 101)
-- [ ] Retro: ausstehend
+- [x] Retro: 2026-04-21 (autonomer Agent, Session 102)
 
 ---
 
@@ -48,6 +48,25 @@
 **PO-Entscheidungen:**
 - Quest-Runde 78 nächster Sprint: Bug/Krabs/Tommy (Counter 58/59/59)
 - S91-4 Palette-Check: Wenn bis S93 kein Tesla-Feedback → schließen
+
+---
+
+## Sprint Retrospektive S91 (2026-04-21, autonomer Agent, Session 102)
+
+**Was gut lief:**
+- Test-Reparatur in einer Session: `#chat-character-name` HTML-Fix + 9 NPC-Dialog-Tests + 18 Block/Quest-Tests → PR #407 grün
+- Quest-Runde 77 sauber geliefert: 10 Quests, 815→825, PR #406 auf main
+- Bonus PR #408 außerhalb Sprint-Scope: 4 User-Bugs (Iso, Touch, Safe-Area) gefixt ohne Ticket
+- CI-Flake-Diagnose bewährt: leerer Commit = Re-Trigger, kein Code-Problem
+
+**Was nicht gut lief:**
+- S91-4 (Palette-Check) blockiert physische Dependency: Tesla + Oscar + Till = nicht automatisierbar
+- Smoke Test via curl immer 403 (CF-Bot-Protection) — kein Schaden, aber kein grüner Check möglich
+
+**Retro-Actions für S92:**
+- R1: S91-4 nicht neu einplanen — wenn Tesla-Feedback bis S93 nicht kommt → schließen
+- R2: Quest-Runde 78 nächste Runde: Bug(58)/Krabs(59)/Tommy(59) — per grep bestätigt
+- R3: Curl-Smoke-Test durch Worker-Health-Endpoint ersetzen (nur JSON prüfen, kein CF-Block)
 
 ---
 
