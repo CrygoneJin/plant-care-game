@@ -1,7 +1,7 @@
-# Sprint 89 — "Triage: Tesla-Fix landet, Runde 69 auf main"
+# Sprint 94 — "Block, Quest, Münze"
 
-**Sprint Goal:** PR #382 (Oscars Tesla-Fix) und PR #383 (Runde 69 — Tommy/Neinhorn/Elefant/Bernd/Maus) sind auf main. PR-Chaos ist sortiert.
-**Start:** 2026-04-20
+**Sprint Goal:** Playwright-Suite komplett (Block/Quest/Stripe-Donate), Live-Launch-Checkliste grün. Oscar sieht jeden Tag Fortschritt.
+**Start:** 2026-04-21
 
 ---
 
@@ -9,26 +9,53 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S89-1 | **ISO-Renderer Fix** (PR #382) — Insel verschwindet nicht mehr im Tesla | Engineer | 🔲 Human Input (Till mergt) |
-| S89-2 | **Quests Runde 69** (PR #383) — Tommy/Neinhorn/Elefant/Bernd/Maus (+2 je) | Artist | 🔲 Human Input (Till mergt) |
-| S89-3 | **PR-Triage** — Reihenfolge: #382 → #383 → #387 (rebase) → #390 (rebase). Schließen: #384, #385, #386, #388, #389 | Leader | 🔄 Teilweise: #384/#385/#386/#388/#389 geschlossen (Session 97). Merge-Reihenfolge wartet auf Till. |
+| S94-1 | **Playwright Block/Quest Tests** — 18 Tests: Block-Placement Tools (6), Counter (2), Undo (2), Quest-State (3), Quest-Accept+Persist (5) | Engineer | ✅ PR #404 |
+| S94-2 | **Stripe Donation Link** — Donate-Button öffnet Stripe-Checkout-Link. Kein SDK, kein Webhook. | Engineer | 🔲 |
+| S94-3 | **PR-Merge-Queue für Till** — #394→#395→#396→#397→#399→#401→#402 in richtiger Reihenfolge. #400+#403 schließen nach eigenem Merge. | Leader | 🔲 Human Input |
 
 ---
 
-## Sprint Review S88 + Retro (2026-04-20 Session 92)
+## Sprint Review S89 + Retro (2026-04-21 Session 102)
 
-**Sprint Goal erreicht:** ✅
+**Sprint Goal S89 erreicht:** ✅ (via Konsolidierungs-PR #393)
 
 | Item | Ergebnis |
 |------|---------|
-| S88-1 | ✅ Quests Runde 48 (Lokführer/Krämerin/Elefant, 10 Quests) — via Konsolidierungs-PR #381 auf main |
-| S88-2 | ✅ Carry-Over Merges → 696 Quests auf main — via Konsolidierungs-PR #381 |
+| S89-1 | ✅ ISO-Renderer Fix (Tesla-Bug) — auf main via #393 |
+| S89-2 | ✅ Quests R69-R72 + Konsolidierung — 775 Quests auf main (war 696) |
+| S89-3 | ✅ PR-Triage — 5 Duplikat-PRs geschlossen, Merge-Queue dokumentiert |
 
-**Retro S88:** Merge-Marathon hat funktioniert, spawnt aber PR-Chaos wenn mehrere Nacht-Sessions parallel laufen. Alle Haupt-NPCs jetzt bei 52 (Floriane 55, Mephisto 53). Nächste Priorität: PR-Triage.
+**Retro S89:** Nacht-Sessions 93-101 haben 4 weitere Sprints (90-93) generiert. Code voraus, Docs hintendran. 9 offene PRs (#394-#403), alle conflict-free auf `d85f9ed`. #400 schließen nach #403-Merge. Strategie: Weiterimplementieren statt warten.
 
 ---
 
 ## Standup Log
+
+### 2026-04-21 — Sprint Review S89 + Retro + Planning S94 (Session 102)
+
+**Smoke Tests:** Sandbox-Proxy 403 — bekannte Einschränkung, kein App-Problem.
+
+**Sprint 89 faktisch Done:** Tesla-Fix + 775 Quests auf main (via PRs #387/#390/#392/#393). SPRINT.md war 4 Sprints hinter der Realität.
+
+**PR-Queue für Till (9 PRs, conflict-free, alle auf `d85f9ed`):**
+
+| PR | Inhalt | Aktion |
+|----|--------|--------|
+| #394 | Playwright: Craft-Flow (7 Tests) | ✅ Mergen |
+| #395 | Playwright: Sailing + Archipel (7 Tests) | ✅ Mergen |
+| #396 | Quests R73: Krabs/Bug/Tommy (+10) | ✅ Mergen |
+| #397 | Quests R74: Maus/Neinhorn/Spongebob (+10) | ✅ Mergen |
+| #399 | Quests R75: Alien/Elefant/Lokführer (+10) | ✅ Mergen |
+| #400 | Docs: Sprint 91/92 | ❌ Schließen — #403 übernimmt |
+| #401 | Quests R76: Floriane/Mephisto/Kraemerin (+10) | ✅ Mergen |
+| #402 | Playwright: NPC-Dialog (9 Tests) | ✅ Mergen |
+| #403 | Docs: Sprint 92/93 Planning | ✅ Mergen |
+
+Nach allen Merges: **815 Quests, 23+ Playwright Tests in CI.**
+
+**S94-1 gestartet:** Playwright Block/Quest Tests — heute implementiert.
+
+---
 
 ### 2026-04-20 — Daily Scrum S89 (Session 97)
 
