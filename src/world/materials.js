@@ -203,6 +203,49 @@ window.INSEL_MATERIALS = {
     // Extreme Masse → Raumkrümmung-Delle maximiert, frisst Nachbarn,
     // gibt aber Yin/Yang zufällig zurück (Hawking-Analogon: nichts ist verloren).
     blackhole: { emoji: '🌑', label: 'Blackhole', color: '#0A0A1F', border: '#000000', charge: 0, mass: 9999 },
+
+    // === HAUPTGRUPPEN-ELEMENTE (Periodensystem Gruppen 1, 2, 13-18) ===
+    // Oscar craftet echte Chemie. Ladung=0 (neutrale Atome), atomicMass=A (Nukleonen),
+    // ordnungszahl=Z (Protonen).
+    //
+    // `atomicMass`/`ordnungszahl` sind Periodensystem-Felder — NICHT das
+    // Spielphysik-`mass` (Blackhole/Curvature). Daher getrennte Namen.
+    //
+    // Z ≤ 20: direktes Rezept Z·proton + N·neutron + Z·electron.
+    // Z > 20: Fusion aus nächstkleinerem Element + Δp + Δn + Δe.
+    // Alle Nukleonen-Summen und Ladungs-Summen sind physikalisch konsistent.
+    hydrogen:   { emoji: '💧', label: 'Wasserstoff', color: '#E3F2FD', border: '#90CAF9', charge: 0, ordnungszahl: 1,  atomicMass: 1   },
+    helium:     { emoji: '🎈', label: 'Helium',      color: '#FFF3E0', border: '#FFB74D', charge: 0, ordnungszahl: 2,  atomicMass: 4   },
+    lithium:    { emoji: '🔋', label: 'Lithium',     color: '#CFD8DC', border: '#78909C', charge: 0, ordnungszahl: 3,  atomicMass: 7   },
+    beryllium:  { emoji: '⚙️', label: 'Beryllium',   color: '#B0BEC5', border: '#78909C', charge: 0, ordnungszahl: 4,  atomicMass: 9   },
+    boron:      { emoji: '🧼', label: 'Bor',         color: '#E1BEE7', border: '#BA68C8', charge: 0, ordnungszahl: 5,  atomicMass: 11  },
+    carbon:     { emoji: '✏️', label: 'Kohlenstoff', color: '#212121', border: '#000000', charge: 0, ordnungszahl: 6,  atomicMass: 12  },
+    nitrogen:   { emoji: '🌬️', label: 'Stickstoff', color: '#B3E5FC', border: '#4FC3F7', charge: 0, ordnungszahl: 7,  atomicMass: 14  },
+    oxygen:     { emoji: '🫁', label: 'Sauerstoff',  color: '#FFCDD2', border: '#EF9A9A', charge: 0, ordnungszahl: 8,  atomicMass: 16  },
+    fluorine:   { emoji: '🦷', label: 'Fluor',       color: '#F0F4C3', border: '#C5CA58', charge: 0, ordnungszahl: 9,  atomicMass: 19  },
+    neon:       { emoji: '🏮', label: 'Neon',        color: '#FF6F00', border: '#E65100', charge: 0, ordnungszahl: 10, atomicMass: 20  },
+    sodium:     { emoji: '🧂', label: 'Natrium',     color: '#FAFAFA', border: '#BDBDBD', charge: 0, ordnungszahl: 11, atomicMass: 23  },
+    magnesium:  { emoji: '🎆', label: 'Magnesium',   color: '#FFF9C4', border: '#FFEB3B', charge: 0, ordnungszahl: 12, atomicMass: 24  },
+    aluminum:   { emoji: '🥫', label: 'Aluminium',   color: '#ECEFF1', border: '#B0BEC5', charge: 0, ordnungszahl: 13, atomicMass: 27  },
+    silicon:    { emoji: '💻', label: 'Silizium',    color: '#607D8B', border: '#455A64', charge: 0, ordnungszahl: 14, atomicMass: 28  },
+    phosphorus: { emoji: '🔆', label: 'Phosphor',    color: '#FFCC80', border: '#FB8C00', charge: 0, ordnungszahl: 15, atomicMass: 31  },
+    sulfur:     { emoji: '🟡', label: 'Schwefel',    color: '#FDD835', border: '#F9A825', charge: 0, ordnungszahl: 16, atomicMass: 32  },
+    chlorine:   { emoji: '🏊', label: 'Chlor',       color: '#C5E1A5', border: '#7CB342', charge: 0, ordnungszahl: 17, atomicMass: 35  },
+    argon:      { emoji: '🌫️', label: 'Argon',     color: '#CE93D8', border: '#AB47BC', charge: 0, ordnungszahl: 18, atomicMass: 40  },
+    potassium:  { emoji: '🍌', label: 'Kalium',      color: '#F9A825', border: '#E65100', charge: 0, ordnungszahl: 19, atomicMass: 39  },
+    calcium:    { emoji: '🥛', label: 'Calcium',     color: '#FAFAFA', border: '#E0E0E0', charge: 0, ordnungszahl: 20, atomicMass: 40  },
+    // Z > 20: Fusion-Chain (jedes braucht das vorherige Element als Basis)
+    gallium:    { emoji: '🌡️', label: 'Gallium',   color: '#B0BEC5', border: '#607D8B', charge: 0, ordnungszahl: 31, atomicMass: 70  },
+    bromine:    { emoji: '🟤', label: 'Brom',        color: '#6D4C41', border: '#3E2723', charge: 0, ordnungszahl: 35, atomicMass: 80  },
+    krypton:    { emoji: '🦸', label: 'Krypton',     color: '#81C784', border: '#43A047', charge: 0, ordnungszahl: 36, atomicMass: 84  },
+    rubidium:   { emoji: '🟣', label: 'Rubidium',    color: '#AB47BC', border: '#7B1FA2', charge: 0, ordnungszahl: 37, atomicMass: 85  },
+    strontium:  { emoji: '🎇', label: 'Strontium',   color: '#EF5350', border: '#C62828', charge: 0, ordnungszahl: 38, atomicMass: 88  },
+    tin:        { emoji: '🪙', label: 'Zinn',        color: '#B0BEC5', border: '#546E7A', charge: 0, ordnungszahl: 50, atomicMass: 120 },
+    iodine:     { emoji: '💊', label: 'Jod',         color: '#4A148C', border: '#12005E', charge: 0, ordnungszahl: 53, atomicMass: 127 },
+    xenon:      { emoji: '🔦', label: 'Xenon',       color: '#B39DDB', border: '#5E35B1', charge: 0, ordnungszahl: 54, atomicMass: 132 },
+    cesium:     { emoji: '⏰', label: 'Caesium',     color: '#FDD835', border: '#9E9D24', charge: 0, ordnungszahl: 55, atomicMass: 133 },
+    barium:     { emoji: '🩻', label: 'Barium',      color: '#EEEEEE', border: '#9E9E9E', charge: 0, ordnungszahl: 56, atomicMass: 138 },
+    radon:      { emoji: '☢️', label: 'Radon',      color: '#FFF59D', border: '#F9A825', charge: 0, ordnungszahl: 86, atomicMass: 222 },
 };
 
 // === SCHRIFTROLLEN DER BIBLIOTHEK — Easter Eggs für Neugierige ===

@@ -136,4 +136,45 @@ window.INSEL_CRAFTING_RECIPES = [
     // rocket/moon/alien hatten schon Rezepte — Mars ist das neue Glied im Weltraum-Pfad
     { name: 'Mars',  result: 'mars', resultCount: 1, ingredients: { moon: 1, ice: 1 }, desc: 'Mond + Eis = Mars (Der rote Planet ist eisig kalt — und der nächste Schritt nach dem Mond!)' },
     { name: 'Marslandung', result: 'alien', resultCount: 1, ingredients: { mars: 1, rocket: 1 }, desc: 'Mars + Rakete = Alien (Eine Rakete auf dem Mars — und plötzlich: Besuch!)' },
+
+    // === HAUPTGRUPPEN-ELEMENTE — echte Chemie zum Anfassen ===
+    // Direkte Rezepte für Z ≤ 20: Z·Proton + N·Neutron + Z·Elektron → Element
+    // Ladungs-Summe immer 0. Massen-Summe = atomicMass = Z+N (Periodensystem).
+    // Mendelejew würde nicken.
+    { name: 'Wasserstoff', result: 'hydrogen',   resultCount: 1, ingredients: { proton: 1, electron: 1 },                   desc: '1 Proton + 1 Elektron = Wasserstoff (H, Z=1, A=1) — das leichteste Atom!' },
+    { name: 'Helium',      result: 'helium',     resultCount: 1, ingredients: { proton: 2, neutron: 2, electron: 2 },       desc: '2p + 2n + 2e = Helium (He, Z=2, A=4) — Luftballon-Gas!' },
+    { name: 'Lithium',     result: 'lithium',    resultCount: 1, ingredients: { proton: 3, neutron: 4, electron: 3 },       desc: '3p + 4n + 3e = Lithium (Li, Z=3, A=7) — Akku-Metall!' },
+    { name: 'Beryllium',   result: 'beryllium',  resultCount: 1, ingredients: { proton: 4, neutron: 5, electron: 4 },       desc: '4p + 5n + 4e = Beryllium (Be, Z=4, A=9) — hart wie Stahl!' },
+    { name: 'Bor',         result: 'boron',      resultCount: 1, ingredients: { proton: 5, neutron: 6, electron: 5 },       desc: '5p + 6n + 5e = Bor (B, Z=5, A=11) — steckt in Seife!' },
+    { name: 'Kohlenstoff', result: 'carbon',     resultCount: 1, ingredients: { proton: 6, neutron: 6, electron: 6 },       desc: '6p + 6n + 6e = Kohlenstoff (C, Z=6, A=12) — das Element des Lebens!' },
+    { name: 'Stickstoff',  result: 'nitrogen',   resultCount: 1, ingredients: { proton: 7, neutron: 7, electron: 7 },       desc: '7p + 7n + 7e = Stickstoff (N, Z=7, A=14) — 78% der Luft!' },
+    { name: 'Sauerstoff',  result: 'oxygen',     resultCount: 1, ingredients: { proton: 8, neutron: 8, electron: 8 },       desc: '8p + 8n + 8e = Sauerstoff (O, Z=8, A=16) — zum Atmen!' },
+    { name: 'Fluor',       result: 'fluorine',   resultCount: 1, ingredients: { proton: 9, neutron: 10, electron: 9 },      desc: '9p + 10n + 9e = Fluor (F, Z=9, A=19) — macht Zähne hart!' },
+    { name: 'Neon',        result: 'neon',       resultCount: 1, ingredients: { proton: 10, neutron: 10, electron: 10 },    desc: '10p + 10n + 10e = Neon (Ne, Z=10, A=20) — leuchtet rot!' },
+    { name: 'Natrium',     result: 'sodium',     resultCount: 1, ingredients: { proton: 11, neutron: 12, electron: 11 },    desc: '11p + 12n + 11e = Natrium (Na, Z=11, A=23) — im Kochsalz!' },
+    { name: 'Magnesium',   result: 'magnesium',  resultCount: 1, ingredients: { proton: 12, neutron: 12, electron: 12 },    desc: '12p + 12n + 12e = Magnesium (Mg, Z=12, A=24) — brennt weiß und hell!' },
+    { name: 'Aluminium',   result: 'aluminum',   resultCount: 1, ingredients: { proton: 13, neutron: 14, electron: 13 },    desc: '13p + 14n + 13e = Aluminium (Al, Z=13, A=27) — Dosen-Metall!' },
+    { name: 'Silizium',    result: 'silicon',    resultCount: 1, ingredients: { proton: 14, neutron: 14, electron: 14 },    desc: '14p + 14n + 14e = Silizium (Si, Z=14, A=28) — in jedem Computer-Chip!' },
+    { name: 'Phosphor',    result: 'phosphorus', resultCount: 1, ingredients: { proton: 15, neutron: 16, electron: 15 },    desc: '15p + 16n + 15e = Phosphor (P, Z=15, A=31) — leuchtet im Dunkeln!' },
+    { name: 'Schwefel',    result: 'sulfur',     resultCount: 1, ingredients: { proton: 16, neutron: 16, electron: 16 },    desc: '16p + 16n + 16e = Schwefel (S, Z=16, A=32) — knallgelb und stinkig!' },
+    { name: 'Chlor',       result: 'chlorine',   resultCount: 1, ingredients: { proton: 17, neutron: 18, electron: 17 },    desc: '17p + 18n + 17e = Chlor (Cl, Z=17, A=35) — im Schwimmbad!' },
+    { name: 'Argon',       result: 'argon',      resultCount: 1, ingredients: { proton: 18, neutron: 22, electron: 18 },    desc: '18p + 22n + 18e = Argon (Ar, Z=18, A=40) — 1% der Luft, reagiert mit niemandem!' },
+    { name: 'Kalium',      result: 'potassium',  resultCount: 1, ingredients: { proton: 19, neutron: 20, electron: 19 },    desc: '19p + 20n + 19e = Kalium (K, Z=19, A=39) — in Bananen!' },
+    { name: 'Calcium',     result: 'calcium',    resultCount: 1, ingredients: { proton: 20, neutron: 20, electron: 20 },    desc: '20p + 20n + 20e = Calcium (Ca, Z=20, A=40) — macht Knochen stark!' },
+
+    // Z > 20: Fusion-Kette — jedes Element braucht den Vorgänger als Basis.
+    // Formel: neuesElement = vorherigesElement + Δp·proton + Δn·neutron + Δp·electron.
+    // Ladungssumme: (Vorgänger=0) + Δp·1 + Δn·0 + Δp·(-1) = 0 ✓
+    // Massensumme: (Vorgänger.A) + Δp·1 + Δn·1 + Δp·0 = A(neu) ✓
+    { name: 'Gallium',    result: 'gallium',    resultCount: 1, ingredients: { calcium: 1,   proton: 11, neutron: 19, electron: 11 }, desc: 'Calcium + 11p + 19n + 11e = Gallium (Ga, Z=31, A=70) — schmilzt in der Hand!' },
+    { name: 'Brom',       result: 'bromine',    resultCount: 1, ingredients: { gallium: 1,   proton: 4,  neutron: 6,  electron: 4  }, desc: 'Gallium + 4p + 6n + 4e = Brom (Br, Z=35, A=80) — eine der wenigen Flüssigkeiten unter den Elementen!' },
+    { name: 'Krypton',    result: 'krypton',    resultCount: 1, ingredients: { bromine: 1,   proton: 1,  neutron: 3,  electron: 1  }, desc: 'Brom + 1p + 3n + 1e = Krypton (Kr, Z=36, A=84) — Supermans Schwäche!' },
+    { name: 'Rubidium',   result: 'rubidium',   resultCount: 1, ingredients: { krypton: 1,   proton: 1,  neutron: 0,  electron: 1  }, desc: 'Krypton + 1p + 1e = Rubidium (Rb, Z=37, A=85) — reagiert heftig mit Wasser!' },
+    { name: 'Strontium',  result: 'strontium',  resultCount: 1, ingredients: { rubidium: 1,  proton: 1,  neutron: 2,  electron: 1  }, desc: 'Rubidium + 1p + 2n + 1e = Strontium (Sr, Z=38, A=88) — rote Feuerwerksfarbe!' },
+    { name: 'Zinn',       result: 'tin',        resultCount: 1, ingredients: { strontium: 1, proton: 12, neutron: 20, electron: 12 }, desc: 'Strontium + 12p + 20n + 12e = Zinn (Sn, Z=50, A=120) — Bronze-Zutat!' },
+    { name: 'Jod',        result: 'iodine',     resultCount: 1, ingredients: { tin: 1,       proton: 3,  neutron: 4,  electron: 3  }, desc: 'Zinn + 3p + 4n + 3e = Jod (I, Z=53, A=127) — die lila Tinktur beim Arzt!' },
+    { name: 'Xenon',      result: 'xenon',      resultCount: 1, ingredients: { iodine: 1,    proton: 1,  neutron: 4,  electron: 1  }, desc: 'Jod + 1p + 4n + 1e = Xenon (Xe, Z=54, A=132) — Auto-Scheinwerfer-Gas!' },
+    { name: 'Caesium',    result: 'cesium',     resultCount: 1, ingredients: { xenon: 1,     proton: 1,  neutron: 0,  electron: 1  }, desc: 'Xenon + 1p + 1e = Caesium (Cs, Z=55, A=133) — tickt 9.192.631.770-mal pro Sekunde (Atomuhr)!' },
+    { name: 'Barium',     result: 'barium',     resultCount: 1, ingredients: { cesium: 1,    proton: 1,  neutron: 4,  electron: 1  }, desc: 'Caesium + 1p + 4n + 1e = Barium (Ba, Z=56, A=138) — Röntgen-Kontrastmittel!' },
+    { name: 'Radon',      result: 'radon',      resultCount: 1, ingredients: { barium: 1,    proton: 30, neutron: 54, electron: 30 }, desc: 'Barium + 30p + 54n + 30e = Radon (Rn, Z=86, A=222) — radioaktives Edelgas, legendär selten!' },
 ];

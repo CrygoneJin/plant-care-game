@@ -8,8 +8,11 @@ interface Material {
     color: string;
     border: string;
     charge?: number;
-    mass?: number;
+    mass?: number;            // Spielphysik-Masse (Blackhole/Curvature) — NICHT Atommasse
+    spin?: number;            // Bosonen
     unbaubar?: boolean;
+    ordnungszahl?: number;    // Periodensystem Z (Anzahl Protonen)
+    atomicMass?: number;      // Periodensystem A (Nukleonen = Z + N)
 }
 
 type MaterialId = string;
