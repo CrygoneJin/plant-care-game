@@ -3384,6 +3384,7 @@
     // Ecke  = schwache Kopplung ans Higgs (leichte Teilchen, √2 Distanz)
     const EDGE_DIRS = [[0,1],[0,-1],[1,0],[-1,0]];
     const CORNER_DIRS = [[1,1],[1,-1],[-1,1],[-1,-1]];
+    const ALL_8_DIRS = [...EDGE_DIRS, ...CORNER_DIRS];
 
     function findFreeNeighbor(r, c, dirsPool) {
         const dirs = [...dirsPool];
@@ -3400,8 +3401,9 @@
         return null; // Kein Platz — Pauli sagt: warten
     }
 
-    // Spontaner Zerfall: ~5% pro Sekunde → mittlere Wartezeit ~20s
-    const TAO_DECAY_CHANCE = 0.05;
+    // Spontaner Zerfall: 1/√42 ≈ 15.4% pro Sekunde → mittlere Wartezeit ~6.5s
+    // 42 = The Answer. Wurzel ist Heisenberg-Relation: Unschärfe ~ 1/√N.
+    const TAO_DECAY_CHANCE = 1 / Math.sqrt(42);
 
     function tickTaoDecay() {
         let hasTao = false;
@@ -3411,25 +3413,24 @@
                 hasTao = true;
                 if (Math.random() > TAO_DECAY_CHANCE) continue;
 
-                // Kante (50%) = starke Higgs-Kopplung → schwere Teilchen
-                // Ecke  (50%) = schwache Higgs-Kopplung → leichte Teilchen (√2 Distanz)
-                const isEdge = Math.random() < 0.5;
-                const free = findFreeNeighbor(r, c, isEdge ? EDGE_DIRS : CORNER_DIRS)
-                          || findFreeNeighbor(r, c, isEdge ? CORNER_DIRS : EDGE_DIRS);
-                if (!free) continue; // Kein Platz → kein Zerfall
+                // Zerfall emergent: zufällige Richtung aus allen 8 Nachbarn.
+                // Edge/Corner ergibt sich von selbst (4 Edge / 4 Corner),
+                // Automerge unten klärt Yin+Yang → Qi (bei Edge) bzw. stabil (bei Corner).
+                const free = findFreeNeighbor(r, c, ALL_8_DIRS);
+                if (!free) continue;
 
-                // ZERFALL! Symmetriebrechung.
-                const coupling = isEdge ? 'stark' : 'schwach';
                 const [yr, yc] = free;
+                const isEdgeAdjacent = (Math.abs(yr - r) + Math.abs(yc - c)) === 1;
+                const coupling = isEdgeAdjacent ? 'strong' : 'weak';
+
                 grid[r][c] = 'yin';
                 grid[yr][yc] = 'yang';
 
                 logGenesis({ type: 'decay', from: 'tao', results: ['yin', 'yang'], cells: [[r,c],[yr,yc]], coupling });
 
-                const couplingMsg = isEdge
-                    ? '☯️ → ⚫⚪ Kante! Schwere Teilchen!'
-                    : '☯️ → ⚫⚪ Ecke! Leichte Teilchen!';
-                showToast(couplingMsg);
+                showToast(isEdgeAdjacent
+                    ? '☯️ → ⚫⚪ Kante! Annihilation kommt...'
+                    : '☯️ → ⚫⚪ Ecke! Stabil.');
                 soundCraft();
                 EFFECTS.addPlaceAnimation(r, c);
                 EFFECTS.addPlaceAnimation(yr, yc);
