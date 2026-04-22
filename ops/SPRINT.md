@@ -1,3 +1,34 @@
+# Sprint 97 — "Bug lauscht, Neinhorn wächst, Spongebob entdeckt"
+
+**Sprint Goal:** Oscar sieht 10 neue Quests — Bug findet was ohne Anleitung wächst, Neinhorn entdeckt was trotz Widerspruch gedeiht, Spongebob forscht wie das Meer sich selbst organisiert. 885 Quests gesamt.
+**Start:** 2026-04-22
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S97-1 | **Quest-Runde 83** — Bug(65)/Neinhorn(65)/Spongebob(65) → +10 Quests, 875→885. Thema: "Wachsen ohne Anleitung". | Artist | ✅ 885 Quests |
+
+---
+
+## Ceremony-Status S97
+
+- [x] Planning: 2026-04-22 (autonomer Agent)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Retro-Actions aus S96 (in S97 umgesetzt)
+
+- **R1**: Quest-Runde 83: Bug(65)/Neinhorn(65)/Spongebob(65) → S97-1
+- **R2**: HITL #27 bleibt offen — kein Druck
+
+---
+
 # Sprint 96 — "Mephisto erkennt, Elefant fühlt, Floriane sammelt"
 
 **Sprint Goal:** Oscar sieht 10 neue Quests — Mephisto reflektiert was man nicht kaufen kann, Elefant forscht was die Erde fühlt, Floriane entdeckt wo Wünsche sich sammeln. 875 Quests gesamt.
@@ -16,9 +47,45 @@
 ## Ceremony-Status S96
 
 - [x] Planning: 2026-04-22 (autonomer Agent)
-- [ ] Daily Scrum
-- [ ] Review
-- [ ] Retro
+- [x] Review: 2026-04-22 (autonomer Agent)
+- [x] Retro: 2026-04-22 (autonomer Agent)
+
+---
+
+## Sprint Review S96 (2026-04-22, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Items Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S96-1 Quest-Runde 82 | ✅ 875 Quests — Mephisto +4 / Elefant +3 / Floriane +3 |
+
+**Oscar-Outcome:** 10 neue Quests live. Mephisto: Zeit-Kontor, Würde-Denkmal, Stille-Zeugnis-Kammer, Vertrauens-Archiv. Elefant: Erdbeben-Frühwarnsystem, Mantelkonvektions-Station, Grundwasser-Findungs-Station. Floriane: Wunsch-Echo-Turm, Vergessene-Träume-Garten, Nacht-Wunsch-Labor.
+
+**Stand nach S96:**
+- **875 Quests** auf feat/sprint-96
+- NPC-Counter (niedrigste): Bug 65 · Krabs 65 · Neinhorn 65 · Spongebob 65 · Tommy 66 · Alien 66 · Lokführer 66
+- Smoke Test: CF 403 bekannte Sandbox-Limitation (HITL #27 offen)
+
+**PO-Entscheidung:**
+- Nächste Quest-Runde S97: Bug(65)/Neinhorn(65)/Spongebob(65) — Thema: "Wachsen ohne Anleitung"
+
+---
+
+## Sprint Retrospektive S96 (2026-04-22, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Runde 82 sauber: Mephisto/Elefant/Floriane +10, 865→875
+- Themen-Vielfalt stark: "Was man nicht kaufen kann" + "Was die Erde fühlt" + "Wo Wünsche sich sammeln"
+- Floriane-Quests besonders kindgerecht: Echo-Wünsche, vergessene Träume, Nacht-Wünsche
+
+**Was nicht gut lief:**
+- Mehrere PRs gleichzeitig offen — Till muss häufen mergen
+- HITL #27 bleibt der einzige echte Blocker
+
+**Retro-Actions für S97:**
+- **R1**: Quest-Runde 83: Bug(65)/Neinhorn(65)/Spongebob(65) → S97-1, Thema "Wachsen ohne Anleitung"
+- **R2**: HITL #27 bleibt offen — kein Druck
 
 ---
 
