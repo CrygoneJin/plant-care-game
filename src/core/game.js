@@ -2564,6 +2564,9 @@
         // Code-View Overlay (zeigt Quellcode statt Emojis)
         drawCodeOverlay();
 
+        // Atom-Cluster (Orbital-Ring + Label) über dem Material, unter dem Player
+        drawAtomClusters();
+
         // Spielfigur zuletzt zeichnen (immer sichtbar über allem)
         drawPlayer();
 
@@ -3193,7 +3196,15 @@
         const AM = window.INSEL_AUTOMERGE;
         if (!AM) return;
         const merge = AM.checkMerge(grid, r, c, ROWS, COLS);
-        if (!merge) return;
+        if (!merge) {
+            // Auch ohne Merge: wenn ein Atom-Part platziert wurde, Cluster neu scannen.
+            // (Beispiel: Proton neben Electron legen, ohne dass eine Merge-Regel greift.)
+            const AR = window.INSEL_ATOM_RECOGNIZER;
+            if (AR && AR.ATOM_PARTS.has(grid[r] && grid[r][c])) {
+                scheduleAtomScan();
+            }
+            return;
+        }
 
         // Apply merge
         const fromMats = merge.cells.map(([mr, mc]) => grid[mr][mc]);
@@ -3225,6 +3236,131 @@
                 checkAutomerge(mr, mc);
             }
         }, 500);
+
+        // Atom-Cluster nach Merge neu scannen (Proton/Neutron/Electron könnten
+        // gerade entstanden sein — H soll sofort sichtbar werden).
+        scheduleAtomScan();
+    }
+
+    // ============================================================
+    // === ATOM-CLUSTER-RECOGNIZER — S100 (H, He-3, He-4) ===
+    // ============================================================
+    // Scannt das Grid periodisch (≥500ms) nach zusammenhängenden Atom-Clustern
+    // und rendert Orbital-Ring + Label. Photon-Blitz bei neuer H-Bildung.
+    let atomClusters = [];
+    let _lastAtomScan = 0;
+    let _atomScanPending = false;
+    const ATOM_SCAN_INTERVAL = 500; // ms
+    let _lastClusterKeys = new Set();
+
+    function scheduleAtomScan() {
+        // Throttle: höchstens alle ATOM_SCAN_INTERVAL ms.
+        const now = Date.now();
+        if (now - _lastAtomScan < ATOM_SCAN_INTERVAL) {
+            if (!_atomScanPending) {
+                _atomScanPending = true;
+                setTimeout(function() {
+                    _atomScanPending = false;
+                    runAtomScan();
+                }, ATOM_SCAN_INTERVAL - (now - _lastAtomScan));
+            }
+            return;
+        }
+        runAtomScan();
+    }
+
+    function runAtomScan() {
+        const AR = window.INSEL_ATOM_RECOGNIZER;
+        if (!AR) return;
+        _lastAtomScan = Date.now();
+        atomClusters = AR.scanForAtoms(grid, ROWS, COLS);
+
+        // Diff: welche Cluster sind NEU seit letztem Scan?
+        const currentKeys = new Set(atomClusters.map(function(a) { return AR.clusterKey(a); }));
+        const newAtoms = atomClusters.filter(function(a) {
+            return !_lastClusterKeys.has(AR.clusterKey(a));
+        });
+        _lastClusterKeys = currentKeys;
+
+        // Photon-Blitz nur bei neuen H (MVP — Einstein-Zitat: H als Aha-Moment)
+        for (var i = 0; i < newAtoms.length; i++) {
+            if (newAtoms[i].type === 'H') {
+                EFFECTS.spawnMergeSparks(newAtoms[i].cells, {
+                    canvas: canvas,
+                    COLS: COLS,
+                    WATER_BORDER: WATER_BORDER,
+                    extraClass: 'atom-photon',
+                    duration: 800,
+                });
+                showToast('💛 ' + newAtoms[i].label + ' gebildet! (Photon-Blitz)');
+            }
+        }
+
+        if (newAtoms.length > 0 || atomClusters.length !== _lastClusterKeys.size) {
+            requestRedraw();
+        }
+    }
+
+    // Zeichnet Orbital-Ringe + Label um alle erkannten Atom-Cluster.
+    // Canvas-basiert (konsistent mit Rest der Engine, keine SVG-Extra-Komplexität).
+    // Nur 2D-Pfad — Iso-Rendering bleibt für S101.
+    function drawAtomClusters() {
+        if (!atomClusters || atomClusters.length === 0) return;
+        for (var i = 0; i < atomClusters.length; i++) {
+            var atom = atomClusters[i];
+            // Zentroid + Bounding-Box der Cluster-Zellen
+            var minR = Infinity, maxR = -Infinity, minC = Infinity, maxC = -Infinity;
+            var sumR = 0, sumC = 0;
+            for (var j = 0; j < atom.cells.length; j++) {
+                var cr = atom.cells[j][0], cc = atom.cells[j][1];
+                if (cr < minR) minR = cr;
+                if (cr > maxR) maxR = cr;
+                if (cc < minC) minC = cc;
+                if (cc > maxC) maxC = cc;
+                sumR += cr;
+                sumC += cc;
+            }
+            var centerR = sumR / atom.cells.length;
+            var centerC = sumC / atom.cells.length;
+            var centerX = (centerC + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
+            var centerY = (centerR + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
+
+            // Radius: umfasst alle Cluster-Zellen + 10% Padding
+            var spanR = (maxR - minR + 1) * CELL_SIZE;
+            var spanC = (maxC - minC + 1) * CELL_SIZE;
+            var radius = Math.max(spanR, spanC) / 2 * 1.1 + CELL_SIZE * 0.1;
+
+            // Ladungs-Farbe: neutral=Gold, +Ion=Rot, -Ion=Blau
+            var ringColor;
+            if (atom.charge > 0) ringColor = '#E74C3C';
+            else if (atom.charge < 0) ringColor = '#3498DB';
+            else ringColor = '#F9E79F'; // Gold-Weiß für neutral
+
+            ctx.save();
+            // Orbital-Ring (animiertes Glühen)
+            var pulse = prefersReducedMotion ? 1 : (0.7 + Math.sin(Date.now() / 400) * 0.3);
+            ctx.strokeStyle = ringColor;
+            ctx.globalAlpha = pulse;
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Label über dem Cluster
+            ctx.globalAlpha = 1;
+            var fontSize = Math.max(14, Math.floor(CELL_SIZE * 0.55));
+            ctx.font = 'bold ' + fontSize + 'px system-ui, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'bottom';
+            var labelY = centerY - radius - 4;
+            // Schatten für Lesbarkeit
+            ctx.fillStyle = 'rgba(0,0,0,0.6)';
+            ctx.fillText(atom.label, centerX + 1, labelY + 1);
+            ctx.fillStyle = ringColor;
+            ctx.fillText(atom.label, centerX, labelY);
+
+            ctx.restore();
+        }
     }
 
     // spawnCraftSparks → effects.js

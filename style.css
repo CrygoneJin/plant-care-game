@@ -2226,6 +2226,29 @@ body.code-view-active #chat-settings-btn {
     animation: mergeSparkTriplet 0.8s ease-out forwards;
 }
 
+/* S100: Photon-Blitz bei H-Bildung — gelber Lichtblitz */
+.merge-spark.atom-photon {
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle, rgba(255,255,100,1) 0%, rgba(255,215,0,0.7) 30%, rgba(255,180,0,0) 70%);
+    animation: atomPhoton 0.8s ease-out forwards;
+}
+
+@keyframes atomPhoton {
+    0% {
+        transform: scale(0.2);
+        opacity: 1;
+    }
+    30% {
+        transform: scale(1.8);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(2.8);
+        opacity: 0;
+    }
+}
+
 @keyframes mergeSparkTriplet {
     0% {
         transform: scale(0.3) rotate(0deg);
