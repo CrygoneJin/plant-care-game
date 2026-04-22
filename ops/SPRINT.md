@@ -1,3 +1,34 @@
+# Sprint 96 — "Mephisto erkennt, Elefant fühlt, Floriane sammelt"
+
+**Sprint Goal:** Oscar sieht 10 neue Quests — Mephisto reflektiert was man nicht kaufen kann, Elefant forscht was die Erde fühlt, Floriane entdeckt wo Wünsche sich sammeln. 875 Quests gesamt.
+**Start:** 2026-04-22
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S96-1 | **Quest-Runde 82** — Mephisto(64)/Elefant(64)/Floriane(64) → +10 Quests, 865→875. Thema: "Was man nicht kaufen kann" / "Was die Erde fühlt" / "Wo Wünsche sich sammeln". | Artist | 🔲 |
+
+---
+
+## Ceremony-Status S96
+
+- [x] Planning: 2026-04-22 (autonomer Agent)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Retro-Actions aus S95 (in S96 umgesetzt)
+
+- **R1**: Quest-Runde 82: Mephisto(64)/Elefant(64)/Floriane(64) → S96-1
+- **R2**: HITL #27 (CF Worker Deploy) bleibt offen — kein Druck
+
+---
+
 # Sprint 95 — "Alien staunt, Lokführer hält an, Tommy findet"
 
 **Sprint Goal:** Oscar sieht 10 neue Quests — Alien entdeckt was Menschen seltsam finden, Lokführer lernt wo Züge wirklich hinfahren, Tommy findet was er nicht gesucht hat. 865 Quests gesamt.
@@ -16,9 +47,43 @@
 ## Ceremony-Status S95
 
 - [x] Planning: 2026-04-22 (autonomer Agent)
-- [ ] Daily Scrum
-- [ ] Review
-- [ ] Retro
+- [x] Review: 2026-04-22 (autonomer Agent)
+- [x] Retro: 2026-04-22 (autonomer Agent)
+
+---
+
+## Sprint Review S95 (2026-04-22, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Items Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S95-1 Quest-Runde 81 | ✅ PR #424 offen — Alien +4 / Lokführer +3 / Tommy +3, 855→865 Quests |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Alien: Erinnerungs-Depot, Schlaf-Regenerations-Kammer, Lach-Resonanz-Labor, Entstehungstag-Observatorium. Lokführer: Wendeschleife-Bahnhof, Geisterbahnhof-Denkmal, Zahnrad-Bergbahn-Station. Tommy: Zufall-Kristall-Garten, Schimmel-Entdeckungs-Labor, Regenbogen-Prisma-Station.
+
+**Stand nach S95:**
+- **865 Quests** auf feat/sprint-95 (PR #424 offen)
+- NPC-Counter (niedrigste): Mephisto 64 · Elefant 64 · Floriane 64 · Bug/Krabs/Neinhorn/Spongebob 65
+- Smoke Test: CF 403 bekannte Sandbox-Limitation (HITL #27 offen)
+
+**PO-Entscheidung:**
+- Nächste Quest-Runde S96: Mephisto(64)/Elefant(64)/Floriane(64) — Thema frei wählbar
+
+---
+
+## Sprint Retrospektive S95 (2026-04-22, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Runde 81 sauber in einem Commit: Alien/Lokführer/Tommy +10 Quests, 855→865
+- Themen-Wahl stark: Alien-Staunen über Menschliches funktioniert gut für Kinder
+
+**Was verbessert werden kann:**
+- Drei PRs (#422/#423/#424) offen gleichzeitig — Till muss mergen bevor Arbeit auf main landet
+
+**Retro-Actions S96:**
+- **R1**: Quest-Runde 82: Mephisto(64)/Elefant(64)/Floriane(64) → S96-1
+- **R2**: HITL #27 (CF Worker Deploy) bleibt offen — kein Druck
 
 ---
 
