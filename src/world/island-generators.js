@@ -199,8 +199,12 @@
         for (let c = railStart; c <= railEnd && c >= 0 && c < COLS; c++) {
             if (railR >= 0 && railR < ROWS && !grid[railR][c]) grid[railR][c] = 'rail';
         }
-        if (railR + 1 >= 0 && railR + 1 < ROWS) grid[railR + 1][stationC] = 'rail';
+        // Senkrechter Übergang nur wenn Zelle frei (station/shop nicht überschreiben)
+        if (railR + 1 >= 0 && railR + 1 < ROWS && !grid[railR + 1][stationC]) {
+            grid[railR + 1][stationC] = 'rail';
+        }
 
+        // Emma steht auf den Gleisen — überschreibt rail bewusst
         const trainC = stationC - 2;
         if (trainC >= 0 && railR >= 0 && railR < ROWS) grid[railR][trainC] = 'train';
 
