@@ -34,6 +34,9 @@ export default {
 
         // URL-basiertes Routing (vor POST-Guard, da /discoveries auch GET erlaubt)
         const { pathname } = new URL(request.url);
+        if (pathname === '/health') {
+            return json({ status: 'ok', ts: Date.now() });
+        }
         if (pathname === '/discoveries') {
             return handleDiscoveries(env);
         }
