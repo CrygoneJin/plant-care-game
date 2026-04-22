@@ -14,6 +14,7 @@
         bug:        { emoji: '🐛', prefix: 'Bug:', ticks: ['*mampf*', 'Was ist kaputt?', 'Zeig mal!'], style: 'bug' },
         kraemerin:  { emoji: '👩‍🍳', prefix: 'Krämerin:', ticks: ['Willkommen im Laden!', 'Muscheln? Immer her damit!', 'Schön dass du da bist!'], style: 'warm' },
         lokfuehrer: { emoji: '🚂', prefix: 'Lokführer:', ticks: ['Die Lok braucht Kohle!', 'Tschuff tschuff!', 'Eine Insel ist nie zu klein!'], style: 'adventure' },
+        der_ratlose:{ emoji: '🤷', prefix: 'Der Ratlose:', ticks: ['Hmm.', 'Weiß ich nicht.', 'Vielleicht weißt du\'s?'], style: 'clueless' },
         // #13: Programmiersprachen-Bewohner
         haskell:    { emoji: '🟣', prefix: 'Haskell:', ticks: ['Rein funktional!', 'Keine Seiteneffekte!', 'Typen lösen alles!'], style: 'careful' },
         lua:        { emoji: '🌙', prefix: 'Lua:', ticks: ['Schnell und leicht!', 'Tables!', '-- Ein Kommentar genügt'], style: 'cute' },
@@ -68,6 +69,7 @@
         warm:      ['Herzlich willkommen!', 'Das macht Freude!', 'Wunderschön!', 'So gemütlich!', 'Schön dass du da bist!'],
         adventure: ['Auf in die Welt!', 'Ein neues Abenteuer!', 'Volldampf voraus!', 'Herrlich!', 'Ab in die Ferne!'],
         alien:     ['*bloop bloop*', '...faszinierend.', 'Signal empfangen!', '...wir haben euch beobachtet.', 'Willkommen im Kosmos!'],
+        clueless:  ['Hmm.', 'Keine Ahnung.', 'Weiß ich nicht.', 'Oh. Okay.', 'Schön dass du da bist.'],
     };
 
     const TEMPLATES = [

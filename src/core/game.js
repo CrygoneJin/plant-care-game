@@ -327,6 +327,8 @@
         // Bonusfamilie (nur auf Startinsel sichtbar, Spieler benennt sie selbst)
         kraemerin: { emoji: '👩‍🍳', name: 'Krämerin', lummerland: true },
         lokfuehrer:{ emoji: '🚂', name: 'Lokführer', lummerland: true },
+        // Der Ratlose — der NPC der nichts weiß. Sitzt am Süd-Strand. Siehe docs/personas/der-ratlose.md
+        der_ratlose: { emoji: '🤷', name: 'Der Ratlose', lummerland: true },
         // Mond-Bewohner
         alien:     { emoji: '👽', name: 'Alien', moon: true },
     };
@@ -387,6 +389,15 @@
             if (waasR >= 0 && waasR < ROWS && waasC < COLS) {
                 npcPositions['kraemerin'] = { r: waasR, c: waasC };
                 if (grid[waasR] && grid[waasR][waasC]) grid[waasR][waasC] = null;
+            }
+
+            // Der Ratlose: sitzt am Süd-Strand auf Sand, schaut aufs Meer.
+            // Lummerland-Generator setzt dort 'sand' (dist 0.55..0.72) — wir leeren die Zelle.
+            const ratloseR = cy + Math.floor(lummerRy * 0.35);
+            const ratloseC = cx;
+            if (ratloseR >= 0 && ratloseR < ROWS && ratloseC >= 0 && ratloseC < COLS) {
+                npcPositions['der_ratlose'] = { r: ratloseR, c: ratloseC };
+                if (grid[ratloseR] && grid[ratloseR][ratloseC]) grid[ratloseR][ratloseC] = null;
             }
         }
 
@@ -516,6 +527,13 @@
                 setTimeout(() => showToast(story, 5000), 3200);
             } else {
                 showToast(story, 5000);
+            }
+        } else if (npcId === 'der_ratlose') {
+            // Der Ratlose: öffnet direkt den Chat. Keine Quest, kein Shop, keine Toast-Story.
+            // Er sitzt da und spricht nur wenn jemand ihn anspricht — im Chat.
+            if (sessionGreeting) showToast(sessionGreeting, 3000);
+            if (window.openChat) {
+                setTimeout(() => window.openChat('der_ratlose'), sessionGreeting ? 3200 : 0);
             }
         } else if (npcId === 'alien') {
             const alienStories = [
