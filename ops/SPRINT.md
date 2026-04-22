@@ -10,8 +10,8 @@
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
 | S92-1 | **Worker-Health-Endpoint** — `GET /health` in worker.js → JSON `{status:"ok",ts:<epoch>}` ohne D1-Call. Ersetzt curl-Smoke-Test auf schatzinsel.app (CF blockt bots). (R3 aus S91) | Engineer | ✅ PR #418 CI grün |
-| S92-2 | **Quest-Runde 78** — Bug(58)/Krabs(59)/Tommy(59) → +10 Quests, 825→835. Thema: "Was ich noch nicht kenne". | Artist | 🔄 PR #419 CI läuft |
-| S92-3 | **S91-4 Palette-Check** — Noch 1 Sprint warten (R1: "bis S93 kein Tesla-Feedback → schließen"). | Human (Till) | 🔲 Blocked |
+| S92-2 | **Quest-Runde 78** — Bug(58)/Krabs(59)/Tommy(59) → +10 Quests, 825→835. Thema: "Was ich noch nicht kenne". | Artist | ✅ PR #419 gemergt |
+| S92-3 | **S91-4 Palette-Check** — Noch 1 Sprint warten (R1: "bis S93 kein Tesla-Feedback → schließen"). | Human (Till) | ✅ Closed (S93 ohne Feedback, R1 umgesetzt) |
 
 ---
 
@@ -19,7 +19,7 @@
 
 - [x] Planning: 2026-04-22 (autonomer Agent)
 - [x] Daily Scrum: 2026-04-22 (autonomer Agent)
-- [ ] Review
+- [x] Review: 2026-04-22 (autonomer Agent)
 - [ ] Retro
 
 ---
@@ -29,6 +29,18 @@
 - **R1**: S91-4 Palette-Check nicht neu einplanen — wenn bis S93 kein Tesla-Feedback → schließen
 - **R2**: Quest-Runde 78: Bug(58)/Krabs(59)/Tommy(59) → S92-2
 - **R3**: Curl-Smoke-Test → Worker-Health-Endpoint → S92-1
+
+---
+
+## Sprint Review S92
+
+**Sprint Goal erfüllt: 2/2 lieferbar, 1 bewusst geschlossen.**
+
+- ✅ **S92-1**: Worker-Health-Endpoint Code auf main (PR #418). CF-Deploy blockiert auf Till (HITL #27) — sobald deployed, ist curl-Smoke-Test möglich.
+- ✅ **S92-2**: Quest-Runde 78 live (PR #419). 835 Quests. Bug 61 · Krabs 62 · Tommy 63.
+- ✅ **S92-3**: Palette-Check formal geschlossen. Kein Tesla-Feedback bis S93 → R1 aus S91 umgesetzt.
+
+**Oscar-Outcome**: 10 neue Quests sichtbar (Pilzmyzel, Mystery-Box, Seismograph etc). Nächste Quest-Runde S93: Neinhorn/Spongebob (Counter je 60, tiefste im Team).
 
 ---
 
