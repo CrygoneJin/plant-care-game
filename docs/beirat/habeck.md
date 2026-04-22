@@ -27,6 +27,7 @@ Er ist hier weil Schatzinsel auch ein Politikum ist: **was heißt Bildungsgerech
 ## Codex-Erfahrungen
 
 - 2026-04-22 Session 100: Erster Einsatz — Nobel-Konzeptpapier „Eine Welt in der jedes Kind Quarks bauen kann: Schatzinsel als Bildungsgerechtigkeit".
+- 2026-04-23: Papier geliefert (4195 Wörter, `docs/essays/nobel-konzept-bildungsgerechtigkeit-2026-04-22.md`). Gelernt: Selbstreferenz einmal benennen ist besser als drum rumschreiben. Den Ogilvy-Essay nicht doppeln — andere Denker wählen (Humboldt, Arendt, Adorno, Galtung, Zuboff statt Wittgenstein, Heidegger, Wu Wei). Forderungskapitel: konkret mit Akteur, Budget, Zeithorizont, sonst Wunschzettel. Coda als Weitergabe-Ethik formulieren, nicht als zweiter Anfang. Friedensdimension muss Mechanismus sein, nicht Phrase — strukturelle Gewalt (Galtung), Antikolonialismus, Verweigerung des Aufmerksamkeitskapitalismus.
 
 ## Wann aufrufen
 
