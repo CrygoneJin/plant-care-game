@@ -193,6 +193,11 @@ window.INSEL_MATERIALS = {
     shop:    { emoji: '🏪', label: 'Laden',   color: '#E8A020', border: '#C07010', charge: 0, mass: 10 },
     ocean:   { emoji: '🌊', label: 'Meer',    color: '#0D2B6E', border: '#071848', charge: 0, mass: 0, unbaubar: true },
     train:   { emoji: '🚂', label: 'Emma',    color: '#8B0000', border: '#660000', charge: 0, mass: 30 },
+    // === BARYONEN — gebundene Quark-Tripletts (Farbneutral: R+G+B) ===
+    // Proton  = uud (Yang+Yang+Yin), Ladung +1, stabil — Kern der Materie
+    // Neutron = udd (Yang+Yin+Yin),  Ladung  0, frei instabil (~15min β⁻)
+    proton:  { emoji: '🔴', label: 'Proton',  color: '#E74C3C', border: '#C0392B', charge: 1, mass: 20 },
+    neutron: { emoji: '⭕', label: 'Neutron', color: '#ECF0F1', border: '#BDC3C7', charge: 0, mass: 20 },
 };
 
 // === SCHRIFTROLLEN DER BIBLIOTHEK — Easter Eggs für Neugierige ===
