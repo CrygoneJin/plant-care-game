@@ -33,6 +33,28 @@
         { a: 'electron', b: 'electron', result: 'muon', msg: '🔸 Elektron × Elektron → Myon! (Pauli-Druck: Gen1→2)' },
         { a: 'muon', b: 'muon', result: 'tau', msg: '🔻 Myon × Myon → Tau! (Pauli-Druck: Gen2→3)' },
 
+        // === Higgs-Boson: Top+Bottom-Fusion (Gen3-Quark-Paar, 125 GeV) ===
+        // Der LHC entdeckt Higgs u.a. durch Top-Quark-Loops (gg → H).
+        // Im Spiel: Berg (Top) + Höhle (Bottom) → Higgs-Boson.
+        // Kollisionsfrei: mountain×mountain und cave×cave haben keine Pair-Regel.
+        { a: 'mountain', b: 'cave', result: 'higgs_boson', msg: '🫧 Berg + Höhle → Higgs-Boson! (Top+Bottom-Fusion, 125 GeV)' },
+
+        // === Mesonen: Quark + Lepton-Proxy (Annihilations-Spielmechanik) ===
+        // Echte Mesonen sind Quark-Antiquark-Paare. Im Spiel ist das Elektron
+        // der Stellvertreter für ein Antiquark — negative Ladung, leicht, genau ein Partner.
+        // Pion (π): up + anti-down → yang + electron
+        // Kaon (K): up + anti-strange → strange + electron
+        // Hinweis Rule-Order: electron+yin → neutrino steht WEITER UNTEN und bleibt
+        // unverändert. yang+electron und strange+electron waren vorher kollisionsfrei.
+        { a: 'yang', b: 'electron', result: 'pion', msg: '🎯 Yang + Elektron → Pion! (Leichtestes Meson)' },
+        { a: 'strange', b: 'electron', result: 'kaon', msg: '🪩 Strange + Elektron → Kaon! (Seltsames Meson)' },
+
+        // === Positron: Anti-Elektron ===
+        // Antimaterie trifft Elektron → Positron (Paar-Vernichtungs-Proxy).
+        // Kollisionsfrei: antimatter+electron hatte vorher keine Regel.
+        // Bestehende Regel antimatter+yang → electron bleibt unverändert.
+        { a: 'antimatter', b: 'electron', result: 'positron', msg: '🟠 Antimaterie + Elektron → Positron! (Dirac 1928)' },
+
         // === Neutrinos: Geister-Teilchen (schwache Wechselwirkung) ===
         // Elektron-Einfang: Elektron + Down-Quark → Neutrino (β⁺-Zerfall)
         { a: 'electron', b: 'yin', result: 'neutrino', msg: '👻 Elektron + Yin → Neutrino! (Geist-Teilchen!)' },
