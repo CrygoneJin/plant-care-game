@@ -1,3 +1,234 @@
+# Sprint 97 — "Bug lauscht, Neinhorn wächst, Spongebob entdeckt"
+
+**Sprint Goal:** Oscar sieht 10 neue Quests — Bug findet was ohne Anleitung wächst, Neinhorn entdeckt was trotz Widerspruch gedeiht, Spongebob forscht wie das Meer sich selbst organisiert. 885 Quests gesamt.
+**Start:** 2026-04-22
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S97-1 | **Quest-Runde 83** — Bug(65)/Neinhorn(65)/Spongebob(65) → +10 Quests, 875→885. Thema: "Wachsen ohne Anleitung". | Artist | ✅ 885 Quests |
+
+---
+
+## Ceremony-Status S97
+
+- [x] Planning: 2026-04-22 (autonomer Agent)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Retro-Actions aus S96 (in S97 umgesetzt)
+
+- **R1**: Quest-Runde 83: Bug(65)/Neinhorn(65)/Spongebob(65) → S97-1
+- **R2**: HITL #27 bleibt offen — kein Druck
+
+---
+
+# Sprint 96 — "Mephisto erkennt, Elefant fühlt, Floriane sammelt"
+
+**Sprint Goal:** Oscar sieht 10 neue Quests — Mephisto reflektiert was man nicht kaufen kann, Elefant forscht was die Erde fühlt, Floriane entdeckt wo Wünsche sich sammeln. 875 Quests gesamt.
+**Start:** 2026-04-22
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S96-1 | **Quest-Runde 82** — Mephisto(64)/Elefant(64)/Floriane(64) → +10 Quests, 865→875. Thema: "Was man nicht kaufen kann" / "Was die Erde fühlt" / "Wo Wünsche sich sammeln". | Artist | ✅ 875 Quests |
+
+---
+
+## Ceremony-Status S96
+
+- [x] Planning: 2026-04-22 (autonomer Agent)
+- [x] Review: 2026-04-22 (autonomer Agent)
+- [x] Retro: 2026-04-22 (autonomer Agent)
+
+---
+
+## Sprint Review S96 (2026-04-22, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Items Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S96-1 Quest-Runde 82 | ✅ 875 Quests — Mephisto +4 / Elefant +3 / Floriane +3 |
+
+**Oscar-Outcome:** 10 neue Quests live. Mephisto: Zeit-Kontor, Würde-Denkmal, Stille-Zeugnis-Kammer, Vertrauens-Archiv. Elefant: Erdbeben-Frühwarnsystem, Mantelkonvektions-Station, Grundwasser-Findungs-Station. Floriane: Wunsch-Echo-Turm, Vergessene-Träume-Garten, Nacht-Wunsch-Labor.
+
+**Stand nach S96:**
+- **875 Quests** auf feat/sprint-96
+- NPC-Counter (niedrigste): Bug 65 · Krabs 65 · Neinhorn 65 · Spongebob 65 · Tommy 66 · Alien 66 · Lokführer 66
+- Smoke Test: CF 403 bekannte Sandbox-Limitation (HITL #27 offen)
+
+**PO-Entscheidung:**
+- Nächste Quest-Runde S97: Bug(65)/Neinhorn(65)/Spongebob(65) — Thema: "Wachsen ohne Anleitung"
+
+---
+
+## Sprint Retrospektive S96 (2026-04-22, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Runde 82 sauber: Mephisto/Elefant/Floriane +10, 865→875
+- Themen-Vielfalt stark: "Was man nicht kaufen kann" + "Was die Erde fühlt" + "Wo Wünsche sich sammeln"
+- Floriane-Quests besonders kindgerecht: Echo-Wünsche, vergessene Träume, Nacht-Wünsche
+
+**Was nicht gut lief:**
+- Mehrere PRs gleichzeitig offen — Till muss häufen mergen
+- HITL #27 bleibt der einzige echte Blocker
+
+**Retro-Actions für S97:**
+- **R1**: Quest-Runde 83: Bug(65)/Neinhorn(65)/Spongebob(65) → S97-1, Thema "Wachsen ohne Anleitung"
+- **R2**: HITL #27 bleibt offen — kein Druck
+
+---
+
+## Retro-Actions aus S95 (in S96 umgesetzt)
+
+- **R1**: Quest-Runde 82: Mephisto(64)/Elefant(64)/Floriane(64) → S96-1
+- **R2**: HITL #27 (CF Worker Deploy) bleibt offen — kein Druck
+
+---
+
+# Sprint 95 — "Alien staunt, Lokführer hält an, Tommy findet"
+
+**Sprint Goal:** Oscar sieht 10 neue Quests — Alien entdeckt was Menschen seltsam finden, Lokführer lernt wo Züge wirklich hinfahren, Tommy findet was er nicht gesucht hat. 865 Quests gesamt.
+**Start:** 2026-04-22
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S95-1 | **Quest-Runde 81** — Alien(62)/Lokführer(63)/Tommy(63) → +10 Quests, 855→865. | Artist | ✅ 865 Quests |
+
+---
+
+## Ceremony-Status S95
+
+- [x] Planning: 2026-04-22 (autonomer Agent)
+- [x] Review: 2026-04-22 (autonomer Agent)
+- [x] Retro: 2026-04-22 (autonomer Agent)
+
+---
+
+## Sprint Review S95 (2026-04-22, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Items Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S95-1 Quest-Runde 81 | ✅ PR #424 offen — Alien +4 / Lokführer +3 / Tommy +3, 855→865 Quests |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Alien: Erinnerungs-Depot, Schlaf-Regenerations-Kammer, Lach-Resonanz-Labor, Entstehungstag-Observatorium. Lokführer: Wendeschleife-Bahnhof, Geisterbahnhof-Denkmal, Zahnrad-Bergbahn-Station. Tommy: Zufall-Kristall-Garten, Schimmel-Entdeckungs-Labor, Regenbogen-Prisma-Station.
+
+**Stand nach S95:**
+- **865 Quests** auf feat/sprint-95 (PR #424 offen)
+- NPC-Counter (niedrigste): Mephisto 64 · Elefant 64 · Floriane 64 · Bug/Krabs/Neinhorn/Spongebob 65
+- Smoke Test: CF 403 bekannte Sandbox-Limitation (HITL #27 offen)
+
+**PO-Entscheidung:**
+- Nächste Quest-Runde S96: Mephisto(64)/Elefant(64)/Floriane(64) — Thema frei wählbar
+
+---
+
+## Sprint Retrospektive S95 (2026-04-22, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Runde 81 sauber in einem Commit: Alien/Lokführer/Tommy +10 Quests, 855→865
+- Themen-Wahl stark: Alien-Staunen über Menschliches funktioniert gut für Kinder
+
+**Was verbessert werden kann:**
+- Drei PRs (#422/#423/#424) offen gleichzeitig — Till muss mergen bevor Arbeit auf main landet
+
+**Retro-Actions S96:**
+- **R1**: Quest-Runde 82: Mephisto(64)/Elefant(64)/Floriane(64) → S96-1
+- **R2**: HITL #27 (CF Worker Deploy) bleibt offen — kein Druck
+
+---
+
+## Retro-Actions aus S94 (in S95 umgesetzt)
+
+- **R1**: Quest-Runde 81: Alien(62)/Lokführer(63)/Tommy(63) → S95-1
+- **R2**: HITL #27 (CF Worker Deploy) bleibt offen — kein Druck
+
+---
+
+# Sprint 94 — "Bug lauscht, Elefant erinnert, Krabs begreift"
+
+**Sprint Goal:** Oscar sieht 10 neue Quests — Bug entdeckt verborgene Naturwunder, Elefant teilt unvergessliche Erinnerungen, Krabs lernt was mehr wert ist als Gold. 855 Quests gesamt.
+**Start:** 2026-04-22
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S94-1 | **Quest-Runde 80** — Bug(61)/Elefant(61)/Krabs(62) → +10 Quests, 845→855. Thema: "Was wirklich zählt". | Artist | ✅ 855 Quests |
+
+---
+
+## Ceremony-Status S94
+
+- [x] Planning: 2026-04-22 (autonomer Agent)
+- [x] Daily Scrum: 2026-04-22 (autonomer Agent)
+- [x] Review: 2026-04-22 (autonomer Agent)
+- [x] Retro: 2026-04-22 (autonomer Agent)
+
+---
+
+## Sprint Review S94 (2026-04-22, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Items Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S94-1 Quest-Runde 80 | ✅ PR #422 offen — Bug +4 / Elefant +3 / Krabs +3, 845→855 Quests |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Bug: Leuchtkäfer-Laterne, Stille-Weide-Station, Spinnennetz-Observatorium, Pilzmyzel-Netzwerk. Elefant: Gedächtnis-Turm, Wasserloch-Begegnungsplatz, Echo-Tal-Horchposten. Krabs: Freundschafts-Tresor, Tiefsee-Wunderkammer, Muschelmarkt-Begegnungsplatz.
+
+**Stand nach S94:**
+- **855 Quests** auf feat/sprint-94 (PR #422 offen)
+- NPC-Counter (niedrigste): Alien 62 · Lokfuehrer 63 · Tommy 63 · Elefant 64 · Floriane 64
+- Smoke Test: CF 403 bekannte Sandbox-Limitation (HITL #27 offen)
+
+**PO-Entscheidung:**
+- Nächste Quest-Runde S95: Alien(62)/Lokführer(63)/Tommy(63) — Thema frei wählbar
+
+---
+
+## Sprint Retrospektive S94 (2026-04-22, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Runde 80 sauber in einem Commit: Bug/Elefant/Krabs +10 Quests, 845→855
+- Thema "Was wirklich zählt" hat gute Tiefe: Naturwunder, Gedächtnis, Wert-Reflexion
+- PR #422 schnell erstellt, CI läuft
+
+**Was nicht gut lief:**
+- HITL #27 (CF Worker Deploy) weiterhin blockiert — /health Endpoint Code auf main, kein Live-Smoke-Test möglich
+- PR #422 hat Merge-Konflikt-Risiko wegen base vor 761b9f5 (S93 Review-Commit)
+
+**Retro-Actions für S95:**
+- **R1**: Quest-Runde 81: Alien(62)/Lokführer(63)/Tommy(63) → S95-1
+- **R2**: HITL #27 bleibt offen — kein Druck auf Till
+
+---
+
+## Retro-Actions aus S93 (in S94 umgesetzt)
+
+- **R1**: Quest-Runde 80: Bug(61)/Elefant(61)/Krabs(62) → S94-1
+- **R2**: HITL #27 (CF Worker Deploy) bleibt offen — kein Druck
+
+---
+
 # Sprint 93 — "Neinhorn sagt ja, Spongebob leuchtet"
 
 **Sprint Goal:** Oscar sieht 10 neue Quests — Neinhorn entdeckt was man nicht aufhalten kann, Spongebob erforscht Licht und Energie im Meer. 845 Quests gesamt.
@@ -16,8 +247,25 @@
 ## Ceremony-Status S93
 
 - [x] Planning: 2026-04-22 (autonomer Agent)
+- [x] Daily Scrum: 2026-04-22 (autonomer Agent)
 - [x] Review: 2026-04-22 (autonomer Agent)
-- [ ] Retro
+- [x] Retro: 2026-04-22 (autonomer Agent)
+
+---
+
+## Sprint Retrospektive S93 (2026-04-22, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Runde 79 sauber geliefert — 10 Quests mit starken Themen ("Was man nicht aufhalten kann", "Licht und Energie im Meer")
+- Moos-Labor / Gezeiten-Messposten / Wellenenergie-Konverter: wissenschaftlich fundiert, kindgerecht formuliert
+
+**Was nicht gut lief:**
+- CF-Worker-Deploy (HITL #27) weiterhin blockiert — Smoke-Test nicht automatisierbar
+- Sprint hatte nur 1 Item — zu wenig Substanz wenn Item klein ist
+
+**Retro-Actions für S94:**
+- R1: Quest-Runde 80: Bug(61)/Elefant(61)/Krabs(62) → S94-1, Thema "Was wirklich zählt" → 855 Quests
+- R2: HITL #27 bleibt offen — kein Druck, Till weiß Bescheid
 
 ---
 
