@@ -2249,6 +2249,48 @@ body.code-view-active #chat-settings-btn {
     }
 }
 
+/* S101: Blackhole-Einsaug — dunkler Strudel zur Mitte */
+.merge-spark.blackhole-eat {
+    width: 44px;
+    height: 44px;
+    background: radial-gradient(circle, rgba(10,10,40,0.9) 0%, rgba(40,20,80,0.5) 40%, rgba(80,40,140,0) 75%);
+    animation: blackholeEat 0.9s ease-in forwards;
+}
+
+@keyframes blackholeEat {
+    0% {
+        transform: scale(1.8) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.1) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* S101: Hawking-Rückgabe — weißer Blitz */
+.merge-spark.hawking-flash {
+    width: 46px;
+    height: 46px;
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(220,220,255,0.8) 30%, rgba(180,180,255,0) 70%);
+    animation: hawkingFlash 0.6s ease-out forwards;
+}
+
+@keyframes hawkingFlash {
+    0% {
+        transform: scale(0.3);
+        opacity: 1;
+    }
+    40% {
+        transform: scale(2.2);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
 @keyframes mergeSparkTriplet {
     0% {
         transform: scale(0.3) rotate(0deg);

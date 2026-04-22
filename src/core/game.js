@@ -2374,6 +2374,16 @@
             }
         }
 
+        // === TAO-CURVATURE — Raumkrümmung-Layer (S101) ===
+        // Higgs-Masse krümmt den Raum. Der Berg ist schwer, deshalb ist da eine Mulde.
+        // Liegt ÜBER Sand aber UNTER Bäumen/NPCs/Spielfigur — wie eine Gravitations-Aura.
+        if (window.INSEL_TAO_CURVATURE && getMassMap()) {
+            window.INSEL_TAO_CURVATURE.drawCurvature(
+                ctx, getMassMap(), ROWS, COLS, CELL_SIZE, WATER_BORDER,
+                { pulseTime: time, reducedMotion: prefersReducedMotion }
+            );
+        }
+
         // Fraktale Bäume (L-System) über die Zellen rendern
         if (window.FRACTAL_TREES) {
             window.FRACTAL_TREES.drawAllTrees(ctx, grid, ROWS, COLS, CELL_SIZE, WATER_BORDER, false);
@@ -3038,11 +3048,13 @@
                 if (info) showToast(`⛏️ ${yield_.count}x ${info.emoji} ${info.label} geerntet! → Im 🎒 Inventar`, 3000);
                 flashInventoryTab();
                 trackEvent('harvest', { source: cell, result: yield_.material, count: yield_.count });
+                invalidateMassMap();
             }
         } else if (currentTool === 'fill') {
             pushUndo();
             floodFill(r, c, grid[r][c], currentMaterial);
             soundBuild(currentMaterial);
+            invalidateMassMap();
         }
         // Teure Checks nur alle 200ms (nicht bei jedem Pixel beim Drag)
         requestStatsUpdate();
@@ -3203,6 +3215,8 @@
             if (AR && AR.ATOM_PARTS.has(grid[r] && grid[r][c])) {
                 scheduleAtomScan();
             }
+            // Mass-Map invalidieren — Platzierung ohne Merge kann trotzdem Masse ändern
+            invalidateMassMap();
             return;
         }
 
@@ -3240,6 +3254,9 @@
         // Atom-Cluster nach Merge neu scannen (Proton/Neutron/Electron könnten
         // gerade entstanden sein — H soll sofort sichtbar werden).
         scheduleAtomScan();
+
+        // Mass-Map invalidieren — Material-Änderung kann Masse-Verteilung ändern.
+        invalidateMassMap();
     }
 
     // ============================================================
@@ -3364,6 +3381,78 @@
     }
 
     // spawnCraftSparks → effects.js
+
+    // ============================================================
+    // === MASS-MAP + TAO-CURVATURE — Higgs-Feld / Raumkrümmung (S101) ===
+    // ============================================================
+    // Cache: nur neu berechnen wenn Grid sich ändert. invalidateMassMap()
+    // wird aus checkAutomerge und placeBlock gerufen.
+    let _massMapCache = null;
+    let _massMapDirty = true;
+
+    function invalidateMassMap() {
+        _massMapDirty = true;
+    }
+
+    function getMassMap() {
+        const MM = window.INSEL_MASS_MAP;
+        if (!MM) return null;
+        if (_massMapDirty || !_massMapCache) {
+            _massMapCache = MM.computeMassMap(grid, ROWS, COLS, MATERIALS);
+            _massMapDirty = false;
+        }
+        return _massMapCache;
+    }
+
+    // ============================================================
+    // === BLACKHOLE — Einsauger + Hawking-Rückgabe (S101) ===
+    // ============================================================
+    // Tick läuft alle 3s. Greift auf gleiche grid + ROWS/COLS zu.
+    // Events → Animationen + Grid invalidieren.
+    const BLACKHOLE_TICK_MS = 3000;
+
+    function runBlackholeTick() {
+        const BH = window.INSEL_BLACKHOLE;
+        if (!BH) return;
+        // Nur wenn mindestens eine Blackhole im Grid ist — sonst sparen wir den Scan
+        let hasBlackhole = false;
+        for (let r = 0; r < ROWS && !hasBlackhole; r++) {
+            if (!grid[r]) continue;
+            for (let c = 0; c < COLS; c++) {
+                if (grid[r][c] === 'blackhole') { hasBlackhole = true; break; }
+            }
+        }
+        if (!hasBlackhole) return;
+
+        const events = BH.tickBlackhole(grid, ROWS, COLS, Math.random);
+        if (events.length === 0) return;
+
+        // Einsaug-Partikel + Hawking-Blitze animieren
+        for (let i = 0; i < events.length; i++) {
+            const ev = events[i];
+            const cssClass = ev.type === 'hawking' ? 'hawking-flash' : 'blackhole-eat';
+            // Reuse spawnMergeSparks via single-cell — einfach, kein neues Partikelsystem nötig
+            if (EFFECTS && EFFECTS.spawnMergeSparks) {
+                EFFECTS.spawnMergeSparks([[ev.r, ev.c]], {
+                    canvas: canvas,
+                    COLS: COLS,
+                    WATER_BORDER: WATER_BORDER,
+                    extraClass: cssClass,
+                    duration: ev.type === 'hawking' ? 600 : 900,
+                });
+            }
+            if (ev.type === 'hawking') {
+                showToast('🌑 Hawking-Strahlung: ' + (ev.result === 'yang' ? '⚪ Yang' : '⚫ Yin') + ' zurück!');
+                // Neue Atom-Parts — Scan triggern
+                scheduleAtomScan();
+            }
+        }
+
+        invalidateMassMap();
+        requestRedraw();
+    }
+
+    setInterval(runBlackholeTick, BLACKHOLE_TICK_MS);
 
     // ============================================================
     // === BLUEPRINTS — 4×4 Bauplan-Erkennung ===

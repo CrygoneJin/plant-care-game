@@ -198,6 +198,11 @@ window.INSEL_MATERIALS = {
     // Neutron = udd (Yang+Yin+Yin),  Ladung  0, frei instabil (~15min β⁻)
     proton:  { emoji: '🔴', label: 'Proton',  color: '#E74C3C', border: '#C0392B', charge: 1, mass: 20 },
     neutron: { emoji: '⭕', label: 'Neutron', color: '#ECF0F1', border: '#BDC3C7', charge: 0, mass: 20 },
+    // === BLACKHOLE — Einsauger + Hawking-Rückgabe (S101) ===
+    // Emoji 🌑 (New Moon) statt 🕳️ (Cave) — Kollision mit Höhle vermieden.
+    // Extreme Masse → Raumkrümmung-Delle maximiert, frisst Nachbarn,
+    // gibt aber Yin/Yang zufällig zurück (Hawking-Analogon: nichts ist verloren).
+    blackhole: { emoji: '🌑', label: 'Blackhole', color: '#0A0A1F', border: '#000000', charge: 0, mass: 9999 },
 };
 
 // === SCHRIFTROLLEN DER BIBLIOTHEK — Easter Eggs für Neugierige ===
