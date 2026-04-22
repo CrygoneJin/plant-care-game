@@ -10,3 +10,4 @@ test-results/
 *.png
 package-lock.json
 ops/mcp/whatsapp/node_modules/
+.DS_Store
