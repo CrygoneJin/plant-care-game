@@ -14,11 +14,12 @@ Alles andere ist delegiert oder im Eis.
 
 | # | Item | Warum HITL | Zeitbudget |
 |---|------|------------|-----------|
-| 92 | **Requesty Key rotieren** — Alter Key im Git-Verlauf, neuer Key setzen | Credentials-Zugang | 5 Min |
-| 27 | **Cloudflare Worker CORS deployen** — worker.js im CF Dashboard | CF-Dashboard-Login | 5 Min |
-| 108 | **Native Speaker Review FR/ES/IT** — 3 Leute anschreiben, NPC-Strings prüfen lassen | Outreach an echte Menschen | 15 Min |
+| 27 | **Cloudflare Worker deployen** — `cd src/infra && npx wrangler deploy` (siehe Chat 2026-04-22 für How-To) | CF-Login | 5 Min |
+| 108 | **Native Speaker Review ES/IT** — 2 Leute anschreiben, NPC-Strings prüfen lassen (FR macht Till selbst) | Outreach an echte Menschen | 10 Min |
 
-**Wenn alle 3 erledigt:** Backlog ist HITL-frei. Agenten können autonom weitermachen.
+**Wenn beide erledigt:** Backlog ist HITL-frei. Agenten können autonom weitermachen.
+
+*Erledigt 2026-04-22:* #92 Requesty-Key-Rotation — Till-Entscheidung: Key darf im Verlauf bleiben.
 
 ---
 
