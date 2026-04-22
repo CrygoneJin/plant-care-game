@@ -27,8 +27,24 @@ Alles andere ist delegiert oder im Eis.
 
 | # | Item | Owner | Status |
 |---|------|-------|--------|
+| 110 | **PR #430 Lummerland-Reboot Fundament** — Seed, Tao-Only, Decay-Fix, Lummerland-Kanon | Engineer done, Leader reviewt | 🟡 PR offen auf `feat/lummerland-seed-tao-only` |
 | 103 | **Live Launch** — Playwright Tests + Stripe Donation + itch.io Upload | Leader | 🤖 In Nacht-Session (2026-04-20) |
 | 78 | **Tesla-Nutzertest auswerten** — 1h Video von Oscar im Tesla | Scientist | 🔲 Wartet auf Video-Upload von Till |
+
+---
+
+## 🔥 Epic: Physik-Vollausbau (S98–S101, Einstein-Prio 2026-04-22)
+
+Ein Feature pro Sprint. Kette bricht wenn Oscar S98 nicht anfasst.
+
+| # | Sprint | Item | Owner | Status |
+|---|--------|------|-------|--------|
+| 110 | S98 | PR #430 Merge + NPC „Der Ratlose" (Krapweis-Hinweis) + Oscar-Smoke | Leader/Artist/Till | 🤖 S98 läuft |
+| 117 | S99 | Baryon-Triplet: Proton (Yang+Yang+Yin), Neutron (Yang+Yin+Yin) — Infrastruktur für Atome | Engineer + Scientist (Rule-Order) | 🔲 |
+| 118 | S100 | Atom-Cluster-Pattern-Recognizer: H→Ca, Orbital-Ring-Rendering, Ladung emergiert implizit | Engineer + Designer | 🔲 |
+| 119 | S101 | Higgs + Raumkrümmung + Blackhole-Einsauger (gebündelt) | Engineer + Designer + Scientist (Perf) | 🔲 |
+
+**Killed (Einstein 2026-04-22):** Ladung als eigenständiger Sprint — emergiert in S100. ~~#112~~
 
 ---
 

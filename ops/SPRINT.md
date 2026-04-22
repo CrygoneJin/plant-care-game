@@ -1,3 +1,63 @@
+# Sprint 98 — "Tao lebt. Ein NPC kann nichts. Oscar spielt."
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar öffnet `schatzinsel.app?seed=Lummerland` → sieht Lummerland-Kanon (2 Berge, Gleise, Emma, Schloss, Bahnhof) → hat nur Tao (∞) im Inventar → drückt Tao → Tao zerfällt zu Yang/Yin → Oscar staunt. Zusätzlich trifft er einen NPC der freundlich „Ich weiß nicht. Frag jemand anderen" sagt.
+
+**Start:** 2026-04-22 (nach /ceo-Prio-Audit)
+**Sprint-Prinzip (Einstein):** Foundation zuerst, Politur nie. Erkenntnis vor Ausbau.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S98-1 | **PR #430 Review + Merge** — Lummerland-Reboot Fundament (Seed-System, Tao-Only, Decay-Fix 1/√42, Kanon-Insel) | Leader + Engineer (code-reviewer agent) | 🔲 PR offen |
+| S98-2 | **NPC „Der Ratlose"** — neuer NPC der bei jeder Frage sagt „Ich weiß nicht. Frag Oscar." Krapweis-Hinweis aus Beirat-Podcast. Ein Nachmittag, kein Quest-Generator. Position auf Lummerland tbd. | Artist + Engineer | 🔲 |
+| S98-3 | **Oscar-Smoke** — Till legt das iPad morgen früh hin, schaut weg (Paluten-Test). 1 Satz als Ergebnis (Heidegger-Regel: „Was hat das Kind gerade getan?") | Till manuell | 🔲 |
+
+---
+
+## Explizit nicht im Sprint (CEO-Entscheidung 2026-04-22)
+
+- **Blackhole-Gravitations-Delle** — auf S101 verschoben (zusammen mit Higgs)
+- **Ladung + EM als eigener Sprint** — gekillt, emergiert in S100 implizit (Orbital-Ring-Farbe im Atom-Cluster)
+- **Quest-Runde 84** — läuft autonom im Quest-Track, nicht Teil dieses Sprints
+
+---
+
+## Sprint-Kette (vom /ceo priorisiert)
+
+```
+S98  → PR #430 + NPC + Oscar-Smoke           (Foundation + Erkenntnis)
+S99  → Baryon-Triplet: Proton/Neutron       (Infrastruktur)
+S100 → Atom-Cluster-Pattern-Recognizer      (AHA-MOMENT — sichtbare Auszahlung)
+S101 → Higgs + Curvature gebündelt           (Politur auf Sichtbarem)
+```
+
+**Sprint-Kette bricht ab wenn Oscar S98 nicht anfasst.** S99 ist dann „Tao-Only-Polish" statt Baryon-Triplet. Feynman misst das nach S98.
+
+---
+
+## Ceremony-Status S98
+
+- [x] Planning: 2026-04-22 (Leader + /meeting 5-Stimmen + /ceo Prio-Audit)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Retro-Actions aus S97 (in S98 umgesetzt)
+
+- **R1 (S97):** HITL #27 offen — bleibt HITL (Till manuell)
+- **R2 (S97):** Quest-Runde 83 → abgeschlossen, 885 Quests. Quest-Track entkoppelt.
+- **R3 (neu aus Beirat-Podcast 2026-04-22):** Krapweis: „Macht einen NPC der nichts kann. Donnerstag." → S98-2
+
+---
+
+---
+
 # Sprint 97 — "Bug lauscht, Neinhorn wächst, Spongebob entdeckt"
 
 **Sprint Goal:** Oscar sieht 10 neue Quests — Bug findet was ohne Anleitung wächst, Neinhorn entdeckt was trotz Widerspruch gedeiht, Spongebob forscht wie das Meer sich selbst organisiert. 885 Quests gesamt.
