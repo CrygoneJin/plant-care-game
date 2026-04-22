@@ -7,6 +7,9 @@ interface Material {
     label: string;
     color: string;
     border: string;
+    charge?: number;
+    mass?: number;
+    unbaubar?: boolean;
 }
 
 type MaterialId = string;
@@ -557,5 +560,25 @@ interface Window {
     newProject(): void;
     encodeGridToURL(): string;
     decodeGridFromURL(encoded: string): boolean;
+
+    // Seed system (seed.js)
+    INSEL_SEED?: {
+        cyrb53(str: string, seed?: number): number;
+        mulberry32(seed: number): () => number;
+        seedToRng(seedText: string): () => number;
+        getSeedFromURL(): string | null;
+        getLastSeed(): string;
+        saveSeedWorld(seedText: string, snapshot: Record<string, unknown>): void;
+        loadSeedWorld(seedText: string): Record<string, unknown> | null;
+    };
+    currentSeed?: string;
+    INSEL_GENERATORS: {
+        generateStarterIsland(grid: Grid, ROWS: number, COLS: number, MATERIALS: MaterialMap): void;
+        generateLummerland(grid: Grid, ROWS: number, COLS: number, MATERIALS: MaterialMap, rng?: () => number): void;
+        generateDinoIsland(grid: Grid, ROWS: number, COLS: number, MATERIALS: MaterialMap): void;
+        generateMoonIsland(grid: Grid, ROWS: number, COLS: number, MATERIALS: MaterialMap): void;
+        generateMarsIsland(grid: Grid, ROWS: number, COLS: number, MATERIALS: MaterialMap): void;
+        generateWaterStart(grid: Grid, ROWS: number, COLS: number): void;
+    };
 
 }

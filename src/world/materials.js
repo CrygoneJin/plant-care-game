@@ -114,7 +114,7 @@ window.INSEL_MATERIALS = {
     moon:     { emoji: '🌙', label: 'Mond',     color: '#F7DC6F', border: '#F1C40F' },
     lightning:{ emoji: '⚡', label: 'Blitz',    color: '#F7DC6F', border: '#F4D03F' },
     volcano:  { emoji: '🌋', label: 'Vulkan',   color: '#E74C3C', border: '#C0392B' },
-    mountain: { emoji: '🏔️', label: 'Berg',    color: '#95A5A6', border: '#7F8C8D' },
+    mountain: { emoji: '🏔️', label: 'Berg',    color: '#95A5A6', border: '#7F8C8D', charge: 0, mass: 20 },
     diamond:  { emoji: '💎', label: 'Diamant',  color: '#AED6F1', border: '#85C1E9' },
     sword:    { emoji: '⚔️', label: 'Schwert',  color: '#BDC3C7', border: '#95A5A6' },
     shield:   { emoji: '🛡️', label: 'Schild',  color: '#F0B27A', border: '#E59866' },
@@ -171,7 +171,7 @@ window.INSEL_MATERIALS = {
     garden:   { emoji: '🏡', label: 'Garten',       color: '#52BE80', border: '#27AE60' },
     forge:    { emoji: '⚒️', label: 'Schmiede',     color: '#E74C3C', border: '#C0392B' },
     dock:     { emoji: '⚓', label: 'Hafen',         color: '#5DADE2', border: '#2E86C1' },
-    castle:   { emoji: '🏰', label: 'Burg',         color: '#95A5A6', border: '#7F8C8D' },
+    castle:   { emoji: '🏰', label: 'Schloss',      color: '#95A5A6', border: '#7F8C8D', charge: 0, mass: 25 },
     // === HÖHLEN & EDELSTEINE ===
     cave:     { emoji: '🕳️', label: 'Höhle',       color: '#4A4A4A', border: '#2C2C2C' },
     stalactite:{ emoji: '🪨', label: 'Tropfstein',  color: '#8B8589', border: '#696364' },
@@ -187,6 +187,12 @@ window.INSEL_MATERIALS = {
     // === WELTRAUM-PFAD (S32-2 — Oscar erkundet den Weltraum) ===
     // rocket, moon, alien existieren bereits — nur Mars ist neu
     mars:     { emoji: '🪐', label: 'Mars',            color: '#FFCCBC', border: '#E64A19' },
+    // === LUMMERLAND — Jim-Knopf-Kanon ===
+    rail:    { emoji: '🛤️', label: 'Gleis',   color: '#8B6914', border: '#6B5310', charge: 0, mass: 8 },
+    station: { emoji: '🏚️', label: 'Bahnhof', color: '#A0522D', border: '#8B4513', charge: 0, mass: 15 },
+    shop:    { emoji: '🏪', label: 'Laden',   color: '#E8A020', border: '#C07010', charge: 0, mass: 10 },
+    ocean:   { emoji: '🌊', label: 'Meer',    color: '#0D2B6E', border: '#071848', charge: 0, mass: 0, unbaubar: true },
+    train:   { emoji: '🚂', label: 'Emma',    color: '#8B0000', border: '#660000', charge: 0, mass: 30 },
 };
 
 // === SCHRIFTROLLEN DER BIBLIOTHEK — Easter Eggs für Neugierige ===

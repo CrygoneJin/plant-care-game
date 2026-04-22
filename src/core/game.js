@@ -335,7 +335,8 @@
     // Positionen werden nach Grid-Init berechnet (siehe unten)
     let npcPositions = {};
 
-    const _isLummerland = new URLSearchParams(location.search).has('lummerland');
+    const _isLummerland = new URLSearchParams(location.search).has('lummerland')
+        || ((window.INSEL_SEED && window.INSEL_SEED.getSeedFromURL() || '').toLowerCase() === 'lummerland');
 
     function initNpcPositions() {
         const cx = Math.floor(COLS / 2);
@@ -366,18 +367,27 @@
         }
 
         // Lummerland-NPCs bekommen feste Positionen bei ihren Gebäuden
+        // Positionen matchen generateLummerland: station bei (cy+0.05*ry, cx), shop bei (stationR, cx+0.20*rx)
         if (_isLummerland) {
-            // Lukas: vor dem Lokschuppen (1 Zeile darunter)
-            const schuppenR = cy + Math.floor(ry * 0.1) + 1;
-            const schuppenC = cx - Math.floor(rx * 0.1);
-            npcPositions['lokfuehrer'] = { r: schuppenR, c: schuppenC };
-            if (grid[schuppenR] && grid[schuppenR][schuppenC]) grid[schuppenR][schuppenC] = null;
+            const lummerRx = Math.floor(COLS * 0.40), lummerRy = Math.floor(ROWS * 0.40);
+            const stationR = cy + Math.floor(lummerRy * 0.05);
+            const stationC = cx;
 
-            // Frau Waas: vor dem Laden (1 Zeile darunter)
-            const ladenR = cy + 1;
-            const ladenC = cx + Math.floor(rx * 0.15);
-            npcPositions['kraemerin'] = { r: ladenR, c: ladenC };
-            if (grid[ladenR] && grid[ladenR][ladenC]) grid[ladenR][ladenC] = null;
+            // Lukas: 1 Zeile unter dem Bahnhof
+            const lukasR = stationR + 1;
+            const lukasC = stationC;
+            if (lukasR >= 0 && lukasR < ROWS) {
+                npcPositions['lokfuehrer'] = { r: lukasR, c: lukasC };
+                if (grid[lukasR] && grid[lukasR][lukasC]) grid[lukasR][lukasC] = null;
+            }
+
+            // Frau Waas: 1 Zeile unter dem Laden
+            const waasR = stationR + 1;
+            const waasC = stationC + Math.floor(lummerRx * 0.20);
+            if (waasR >= 0 && waasR < ROWS && waasC < COLS) {
+                npcPositions['kraemerin'] = { r: waasR, c: waasC };
+                if (grid[waasR] && grid[waasR][waasC]) grid[waasR][waasC] = null;
+            }
         }
 
         // Alle anderen NPCs im Kreis um die Inselmitte
@@ -1268,6 +1278,7 @@
     let inventory = {};
 
     const SHELL_CAP = 42; // The Answer. 42 🐚 = 0.042 MMX pro Spieler.
+    const INFINITY_SENTINEL = 999999; // inventory[mat] >= SENTINEL → UI zeigt ∞, removeFromInventory ist no-op
 
     function addToInventory(material, count) {
         count = count || 1;
@@ -1290,6 +1301,8 @@
 
     function removeFromInventory(material, count) {
         count = count || 1;
+        // Unendlich-Sentinel: Material ist unerschöpflich (z.B. Tao im Seed-Start)
+        if ((inventory[material] || 0) >= INFINITY_SENTINEL) return true;
         if ((inventory[material] || 0) < count) return false;
         inventory[material] -= count;
         if (inventory[material] <= 0) delete inventory[material];
@@ -1305,12 +1318,26 @@
     window.getInventoryCount = getInventoryCount;
     window.removeFromInventory = removeFromInventory;
 
+    // Seed-scoped localStorage keys: Wenn wir in einer Seed-Welt sind,
+    // speichern wir Inventar/Unlocks/Rezepte in einem eigenen Slot.
+    // Vorbild: save.js:79 (autoSave nutzt 'insel:' + currentSeed).
+    // Verhindert dass Seed-Spiele globale Autosaves überschreiben.
+    function inventoryKey() {
+        return window.currentSeed ? 'insel-inventar:' + window.currentSeed : 'insel-inventar';
+    }
+    function unlockedKey() {
+        return window.currentSeed ? 'insel-unlocked-materials:' + window.currentSeed : 'insel-unlocked-materials';
+    }
+    function discoveredKey() {
+        return window.currentSeed ? 'insel-discovered-recipes:' + window.currentSeed : 'insel-discovered-recipes';
+    }
+
     function saveInventory() {
-        localStorage.setItem('insel-inventar', JSON.stringify(inventory));
+        localStorage.setItem(inventoryKey(), JSON.stringify(inventory));
     }
 
     function loadInventory() {
-        inventory = JSON.parse(localStorage.getItem('insel-inventar') || '{}');
+        inventory = JSON.parse(localStorage.getItem(inventoryKey()) || '{}');
     }
 
     function updateInventoryDisplay() {
@@ -1336,9 +1363,10 @@
         container.innerHTML = shellHeader + otherItems.map(([mat, count]) => {
             const info = MATERIALS[mat];
             if (!info) return '';
-            return `<div class="inv-item" data-material="${mat}" title="${info.label}: ${count}" draggable="true">
+            const displayCount = count >= INFINITY_SENTINEL ? '∞' : count;
+            return `<div class="inv-item" data-material="${mat}" title="${info.label}: ${displayCount}" draggable="true">
                 <span class="inv-emoji">${info.emoji}</span>
-                <span class="inv-count">${count}</span>
+                <span class="inv-count">${displayCount}</span>
             </div>`;
         }).join('');
 
@@ -1500,11 +1528,18 @@
 
     let craftingGrid = Array(9).fill(null); // 3x3 = 9 Slots
 
-    // Entdeckte Rezepte — Spieler sieht nur was er schon gefunden hat
-    let discoveredRecipes = new Set(JSON.parse(localStorage.getItem('insel-discovered-recipes') || '[]'));
+    // Entdeckte Rezepte — Spieler sieht nur was er schon gefunden hat.
+    // Wird via loadDiscoveredRecipes() in der Init-Sequenz befüllt,
+    // erst NACHDEM window.currentSeed gesetzt ist (Seed-Scoped Key).
+    let discoveredRecipes = new Set();
 
     function saveDiscoveredRecipes() {
-        localStorage.setItem('insel-discovered-recipes', JSON.stringify([...discoveredRecipes]));
+        localStorage.setItem(discoveredKey(), JSON.stringify([...discoveredRecipes]));
+    }
+
+    function loadDiscoveredRecipes() {
+        const saved = JSON.parse(localStorage.getItem(discoveredKey()) || '[]');
+        discoveredRecipes = new Set(saved);
     }
 
     function getCraftingIngredients() {
@@ -1803,11 +1838,11 @@
     let playerEmoji = localStorage.getItem('insel-player-emoji') || '🧒';
 
     function saveUnlocked() {
-        localStorage.setItem('insel-unlocked-materials', JSON.stringify([...unlockedMaterials]));
+        localStorage.setItem(unlockedKey(), JSON.stringify([...unlockedMaterials]));
     }
 
     function loadUnlocked() {
-        const saved = JSON.parse(localStorage.getItem('insel-unlocked-materials') || '[]');
+        const saved = JSON.parse(localStorage.getItem(unlockedKey()) || '[]');
         unlockedMaterials = new Set(saved);
     }
 
@@ -2174,8 +2209,8 @@
     // === LUMMERLAND — handgebaute Tutorial-Insel ===
     // Aktivierung: ?lummerland in der URL oder localStorage
     // Delegiert an island-generators.js (#11)
-    function generateLummerland() {
-        window.INSEL_GENERATORS.generateLummerland(grid, ROWS, COLS, MATERIALS);
+    function generateLummerland(rng) {
+        window.INSEL_GENERATORS.generateLummerland(grid, ROWS, COLS, MATERIALS, rng);
     }
 
     // === GENESIS-TOASTS: Schöpfungsgeschichte Phase 1 (#37) ===
@@ -3371,6 +3406,7 @@
     // Ecke  = schwache Kopplung ans Higgs (leichte Teilchen, √2 Distanz)
     const EDGE_DIRS = [[0,1],[0,-1],[1,0],[-1,0]];
     const CORNER_DIRS = [[1,1],[1,-1],[-1,1],[-1,-1]];
+    const ALL_8_DIRS = [...EDGE_DIRS, ...CORNER_DIRS];
 
     function findFreeNeighbor(r, c, dirsPool) {
         const dirs = [...dirsPool];
@@ -3387,8 +3423,9 @@
         return null; // Kein Platz — Pauli sagt: warten
     }
 
-    // Spontaner Zerfall: ~5% pro Sekunde → mittlere Wartezeit ~20s
-    const TAO_DECAY_CHANCE = 0.05;
+    // Spontaner Zerfall: 1/√42 ≈ 15.4% pro Sekunde → mittlere Wartezeit ~6.5s
+    // 42 = The Answer. Wurzel ist Heisenberg-Relation: Unschärfe ~ 1/√N.
+    const TAO_DECAY_CHANCE = 1 / Math.sqrt(42);
 
     function tickTaoDecay() {
         let hasTao = false;
@@ -3398,25 +3435,24 @@
                 hasTao = true;
                 if (Math.random() > TAO_DECAY_CHANCE) continue;
 
-                // Kante (50%) = starke Higgs-Kopplung → schwere Teilchen
-                // Ecke  (50%) = schwache Higgs-Kopplung → leichte Teilchen (√2 Distanz)
-                const isEdge = Math.random() < 0.5;
-                const free = findFreeNeighbor(r, c, isEdge ? EDGE_DIRS : CORNER_DIRS)
-                          || findFreeNeighbor(r, c, isEdge ? CORNER_DIRS : EDGE_DIRS);
-                if (!free) continue; // Kein Platz → kein Zerfall
+                // Zerfall emergent: zufällige Richtung aus allen 8 Nachbarn.
+                // Edge/Corner ergibt sich von selbst (4 Edge / 4 Corner),
+                // Automerge unten klärt Yin+Yang → Qi (bei Edge) bzw. stabil (bei Corner).
+                const free = findFreeNeighbor(r, c, ALL_8_DIRS);
+                if (!free) continue;
 
-                // ZERFALL! Symmetriebrechung.
-                const coupling = isEdge ? 'stark' : 'schwach';
                 const [yr, yc] = free;
+                const isEdgeAdjacent = (Math.abs(yr - r) + Math.abs(yc - c)) === 1;
+                const coupling = isEdgeAdjacent ? 'strong' : 'weak';
+
                 grid[r][c] = 'yin';
                 grid[yr][yc] = 'yang';
 
                 logGenesis({ type: 'decay', from: 'tao', results: ['yin', 'yang'], cells: [[r,c],[yr,yc]], coupling });
 
-                const couplingMsg = isEdge
-                    ? '☯️ → ⚫⚪ Kante! Schwere Teilchen!'
-                    : '☯️ → ⚫⚪ Ecke! Leichte Teilchen!';
-                showToast(couplingMsg);
+                showToast(isEdgeAdjacent
+                    ? '☯️ → ⚫⚪ Kante! Annihilation kommt...'
+                    : '☯️ → ⚫⚪ Ecke! Stabil.');
                 soundCraft();
                 EFFECTS.addPlaceAnimation(r, c);
                 EFFECTS.addPlaceAnimation(yr, yc);
@@ -3760,6 +3796,17 @@
         if (activeAvatar) {
             playerEmoji = activeAvatar.dataset.avatar;
             localStorage.setItem('insel-player-emoji', playerEmoji);
+        }
+        // Seed aus dem Intro-Eingabefeld: URL setzen und reloaden, damit die
+        // Start-Sequenz den Seed-Pfad nimmt. Nur wenn nicht bereits ?seed= in URL.
+        const seedInput = document.getElementById('seed-input');
+        const seedValue = seedInput ? seedInput.value.trim() : '';
+        const alreadyHasSeed = new URLSearchParams(location.search).has('seed');
+        if (seedValue && !alreadyHasSeed && window.INSEL_SEED) {
+            const url = new URL(location.href);
+            url.searchParams.set('seed', seedValue);
+            location.href = url.toString();
+            return;
         }
 
         // Big Bang Countdown — nur für Erstbesucher
@@ -5092,13 +5139,71 @@
     // === START ===
     initGrid();
 
-    // Inventar + freigeschaltete Materialien laden
+    // Seed-Pfad: ?seed=X → eigener Welt-Slot. Sonst Auto-Save-Pfad.
+    // WICHTIG: window.currentSeed MUSS vor loadInventory/loadUnlocked/
+    // loadDiscoveredRecipes gesetzt sein, sonst werden die globalen
+    // Keys gelesen und anschließend vom Seed-Init überschrieben.
+    const _activeSeed = window.INSEL_SEED ? window.INSEL_SEED.getSeedFromURL() : null;
+    window.currentSeed = _activeSeed || null;
+
+    // Inventar + freigeschaltete Materialien + entdeckte Rezepte laden
+    // (aus Seed-Slot wenn currentSeed gesetzt, sonst global)
     loadInventory();
     loadUnlocked();
+    loadDiscoveredRecipes();
 
-    // Auto-Save wiederherstellen wenn vorhanden
     const savedProjects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
-    if (savedProjects[AUTOSAVE_KEY] && isValidGrid(savedProjects[AUTOSAVE_KEY].grid)) {
+
+    if (_activeSeed && window.INSEL_SEED) {
+        const _saved = window.INSEL_SEED.loadSeedWorld(_activeSeed);
+        if (_saved && isValidGrid(_saved.grid)) {
+            // --- geladene Seed-Welt wiederherstellen ---
+            const savedGrid = _saved.grid;
+            const sR = savedGrid.length, sC = (savedGrid[0] && savedGrid[0].length) || 0;
+            if (sR !== ROWS || sC !== COLS) {
+                for (let r = 0; r < Math.min(sR, ROWS); r++) {
+                    for (let c = 0; c < Math.min(sC, COLS); c++) {
+                        if (savedGrid[r] && savedGrid[r][c]) grid[r][c] = savedGrid[r][c];
+                    }
+                }
+            } else { grid = savedGrid; }
+            Object.keys(treeGrowth).forEach(function(k) { delete treeGrowth[k]; });
+            Object.assign(treeGrowth, _saved.treeGrowth || {});
+            inventory = _saved.inventory || inventory;
+            if (_saved.unlocked) unlockedMaterials = new Set(_saved.unlocked);
+            if (_saved.discovered) discoveredRecipes = new Set(_saved.discovered);
+            if (_saved.playerPos) playerPos = _saved.playerPos;
+            window.grid = grid;
+            migrateUnlocked();
+            setTimeout(function () {
+                showToast('🏝️ ' + _activeSeed + ' — Willkommen zurück!', 3000);
+            }, 500);
+        } else {
+            // --- neue Seed-Welt generieren ---
+            const _rng = window.INSEL_SEED.seedToRng(_activeSeed);
+            // Lummerland-Seed triggert Jim-Knopf-Insel, sonst Random-Starter mit RNG
+            if (_activeSeed.toLowerCase() === 'lummerland') {
+                window.INSEL_GENERATORS.generateLummerland(grid, ROWS, COLS, MATERIALS, _rng);
+            } else {
+                window.INSEL_GENERATORS.generateStarterIsland(grid, ROWS, COLS, MATERIALS);
+            }
+            inventory = { tao: INFINITY_SENTINEL };
+            saveInventory();
+            setTimeout(function () {
+                window.INSEL_SEED.saveSeedWorld(_activeSeed, {
+                    grid: grid,
+                    inventory: inventory,
+                    treeGrowth: {},
+                    unlocked: Array.from(unlockedMaterials || []),
+                    discovered: Array.from(discoveredRecipes || []),
+                    playerPos: playerPos,
+                });
+            }, 1000);
+            setTimeout(function () {
+                showToast('🌀 Nur Tao. Alles andere entsteht von selbst...', 4000);
+            }, 1500);
+        }
+    } else if (savedProjects[AUTOSAVE_KEY] && isValidGrid(savedProjects[AUTOSAVE_KEY].grid)) {
         const savedGrid = savedProjects[AUTOSAVE_KEY].grid;
         const savedRows = savedGrid.length;
         const savedCols = savedGrid[0] ? savedGrid[0].length : 0;

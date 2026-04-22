@@ -237,10 +237,12 @@
 
         // UI-Elemente ausblenden während Countdown
         const nameGroup = document.getElementById('player-name-group');
+        const seedGroup = document.getElementById('seed-group');
         const startBtn = document.getElementById('start-button');
         const title = document.querySelector('.intro-content h1');
         const subtitle = document.querySelector('.intro-subtitle');
         if (nameGroup) nameGroup.style.display = 'none';
+        if (seedGroup) seedGroup.style.display = 'none';
         if (startBtn) startBtn.style.display = 'none';
         if (title) title.style.display = 'none';
         if (subtitle) subtitle.style.display = 'none';

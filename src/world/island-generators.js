@@ -145,27 +145,34 @@
      * @param {number} COLS
      * @param {Record<string, {emoji:string, label:string}>} MATERIALS
      */
-    function generateLummerland(grid, ROWS, COLS, MATERIALS) {
-        const cx = Math.floor(COLS / 2), cy = Math.floor(ROWS / 2);
-        const rx = Math.floor(COLS * 0.38), ry = Math.floor(ROWS * 0.38);
+    function generateLummerland(grid, ROWS, COLS, MATERIALS, rng) {
+        rng = rng || Math.random;
 
-        // Inselform: ovaler Strand
+        const cx = Math.floor(COLS / 2), cy = Math.floor(ROWS / 2);
+        const rx = Math.floor(COLS * 0.40), ry = Math.floor(ROWS * 0.40);
+
+        for (let r = 0; r < ROWS; r++)
+            for (let c = 0; c < COLS; c++) grid[r][c] = null;
+
         for (let r = 0; r < ROWS; r++) {
             for (let c = 0; c < COLS; c++) {
                 const dx = (c - cx) / rx, dy = (r - cy) / ry;
                 const dist = dx * dx + dy * dy;
-                if (dist < 0.7 && dist >= 0.55) grid[r][c] = 'sand';
+                const wobble = 0.05 * Math.sin(r * 1.9 + c * 1.3);
+                if (dist >= (0.72 + wobble)) grid[r][c] = 'ocean';
+                else if (dist >= (0.55 + wobble)) grid[r][c] = 'sand';
             }
         }
 
-        // Zwei Berge
-        const berg1r = cy - Math.floor(ry * 0.3), berg1c = cx - Math.floor(rx * 0.2);
-        const berg2r = cy - Math.floor(ry * 0.2), berg2c = cx + Math.floor(rx * 0.25);
-        if (MATERIALS['mountain']) {
-            if (grid[berg1r]) grid[berg1r][berg1c] = 'mountain';
-            if (grid[berg2r]) grid[berg2r][berg2c] = 'mountain';
-            for (const [br, bc] of [[berg1r, berg1c], [berg2r, berg2c]]) {
-                for (const [dr, dc] of [[0,1],[0,-1],[1,0],[-1,0]]) {
+        const berg1r = cy - Math.floor(ry * 0.30);
+        const berg1c = cx - Math.floor(rx * 0.28);
+        const berg2r = cy - Math.floor(ry * 0.22);
+        const berg2c = cx + Math.floor(rx * 0.30);
+
+        for (const [br, bc] of [[berg1r, berg1c], [berg2r, berg2c]]) {
+            if (br >= 0 && br < ROWS && bc >= 0 && bc < COLS) {
+                grid[br][bc] = 'mountain';
+                for (const [dr, dc] of [[1,0],[-1,0],[0,1],[0,-1]]) {
                     const nr = br + dr, nc = bc + dc;
                     if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && !grid[nr][nc]) {
                         grid[nr][nc] = 'stone';
@@ -173,65 +180,45 @@
                 }
             }
         }
+        if (berg1r + 2 < ROWS) grid[berg1r + 2][berg1c] = 'cave';
+        if (berg2r + 2 < ROWS) grid[berg2r + 2][berg2c] = 'cave';
 
-        // Lokführer-Schuppen
-        const schuppenR = cy + Math.floor(ry * 0.1), schuppenC = cx - Math.floor(rx * 0.1);
-        const schuppen = [
-            [-1,-1,'wood'],[-1,0,'wood'],[-1,1,'wood'],
-            [0,-1,'wood'],[0,0,'door'],[0,1,'wood'],
-            [-2,-1,'roof'],[-2,0,'roof'],[-2,1,'roof'],
-        ];
-        for (const [dr, dc, mat] of schuppen) {
-            const r = schuppenR + dr, c = schuppenC + dc;
-            if (r >= 0 && r < ROWS && c >= 0 && c < COLS && MATERIALS[mat]) grid[r][c] = mat;
+        if (berg2r - 1 >= 0) grid[berg2r - 1][berg2c] = 'castle';
+
+        const stationR = cy + Math.floor(ry * 0.05);
+        const stationC = cx;
+        grid[stationR][stationC] = 'station';
+
+        const shopR = stationR;
+        const shopC = stationC + Math.floor(rx * 0.20);
+        if (shopC < COLS) grid[shopR][shopC] = 'shop';
+
+        const railR = stationR - 1;
+        const railStart = Math.min(berg1c, berg2c) - 1;
+        const railEnd = Math.max(berg1c, berg2c) + 1;
+        for (let c = railStart; c <= railEnd && c >= 0 && c < COLS; c++) {
+            if (railR >= 0 && railR < ROWS && !grid[railR][c]) grid[railR][c] = 'rail';
+        }
+        // Senkrechter Übergang nur wenn Zelle frei (station/shop nicht überschreiben)
+        if (railR + 1 >= 0 && railR + 1 < ROWS && !grid[railR + 1][stationC]) {
+            grid[railR + 1][stationC] = 'rail';
         }
 
-        // Krämerladen
-        const ladenR = cy, ladenC = cx + Math.floor(rx * 0.15);
-        const laden = [
-            [-1,-1,'stone'],[-1,0,'glass'],[-1,1,'stone'],
-            [0,-1,'stone'],[0,0,'door'],[0,1,'stone'],
-            [-2,-1,'roof'],[-2,0,'lamp'],[-2,1,'roof'],
-        ];
-        for (const [dr, dc, mat] of laden) {
-            const r = ladenR + dr, c = ladenC + dc;
-            if (r >= 0 && r < ROWS && c >= 0 && c < COLS && MATERIALS[mat]) grid[r][c] = mat;
-        }
+        // Emma steht auf den Gleisen — überschreibt rail bewusst
+        const trainC = stationC - 2;
+        if (trainC >= 0 && railR >= 0 && railR < ROWS) grid[railR][trainC] = 'train';
 
-        // Schienen
-        for (let c = schuppenC + 2; c < cx + Math.floor(rx * 0.4); c++) {
-            if (c >= 0 && c < COLS && schuppenR >= 0 && schuppenR < ROWS) {
-                if (!grid[schuppenR][c]) grid[schuppenR][c] = 'path';
+        const deko = [
+            [cy + Math.floor(ry * 0.28), cx - Math.floor(rx * 0.18), 'palm'],
+            [cy + Math.floor(ry * 0.32), cx + Math.floor(rx * 0.10), 'palm'],
+            [cy + Math.floor(ry * 0.18), cx - Math.floor(rx * 0.30), 'tree'],
+            [cy + Math.floor(ry * 0.22), cx + Math.floor(rx * 0.28), 'tree'],
+            [cy + Math.floor(ry * 0.08), cx - Math.floor(rx * 0.12), 'flower'],
+        ];
+        for (const [r, c, mat] of deko) {
+            if (r >= 0 && r < ROWS && c >= 0 && c < COLS && !grid[r][c] && MATERIALS[mat]) {
+                grid[r][c] = mat;
             }
-        }
-
-        // Bäume und Palmen
-        const spots = [
-            [cy - Math.floor(ry*0.1), cx - Math.floor(rx*0.35), 'palm'],
-            [cy + Math.floor(ry*0.3), cx - Math.floor(rx*0.15), 'palm'],
-            [cy + Math.floor(ry*0.35), cx + Math.floor(rx*0.1), 'palm'],
-            [cy + Math.floor(ry*0.2), cx + Math.floor(rx*0.3), 'palm'],
-            [cy - Math.floor(ry*0.15), cx + Math.floor(rx*0.35), 'tree'],
-            [cy + Math.floor(ry*0.05), cx - Math.floor(rx*0.3), 'tree'],
-            [cy - Math.floor(ry*0.35), cx, 'tree'],
-            [cy + Math.floor(ry*0.1), cx + Math.floor(rx*0.05), 'flower'],
-            [cy + Math.floor(ry*0.15), cx - Math.floor(rx*0.05), 'flower'],
-            [cy + Math.floor(ry*0.25), cx, 'plant'],
-        ];
-        for (const [r, c, mat] of spots) {
-            if (r >= 0 && r < ROWS && c >= 0 && c < COLS && !grid[r][c]) grid[r][c] = mat;
-        }
-
-        // Kleiner Hafen
-        const hafenR = cy + Math.floor(ry * 0.45);
-        const hafenC = cx;
-        for (let dc = -1; dc <= 1; dc++) {
-            const c = hafenC + dc;
-            if (hafenR >= 0 && hafenR < ROWS && c >= 0 && c < COLS) grid[hafenR][c] = 'water';
-            if (hafenR + 1 < ROWS && c >= 0 && c < COLS) grid[hafenR + 1][c] = 'water';
-        }
-        if (MATERIALS['boat'] && hafenR >= 0 && hafenR < ROWS && hafenC >= 0 && hafenC < COLS) {
-            grid[hafenR][hafenC] = 'boat';
         }
 
         window.grid = grid;

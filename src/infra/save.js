@@ -75,7 +75,9 @@
         if (hash === lastSaveHash) return;
         lastSaveHash = hash;
         var projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
-        projects[AUTOSAVE_KEY] = {
+        // Seed-Slot falls Welt unter ?seed= läuft, sonst Auto-Save-Key
+        var key = window.currentSeed ? ('insel:' + window.currentSeed) : AUTOSAVE_KEY;
+        projects[key] = {
             grid: grid,
             date: new Date().toLocaleDateString('de-DE'),
             auto: true,
@@ -84,6 +86,7 @@
             unlocked: Array.from(_ctx.getUnlockedMaterials()),
             discovered: Array.from(_ctx.getDiscoveredRecipes()),
             playerPos: _ctx.getPlayerPos(),
+            seedKey: window.currentSeed ? key : undefined,
         };
         localStorage.setItem('insel-projekte', JSON.stringify(projects));
         var saveBtn = document.getElementById('save-btn');
