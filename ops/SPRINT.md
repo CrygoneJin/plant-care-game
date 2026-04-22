@@ -9,8 +9,8 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S92-1 | **Worker-Health-Endpoint** — `GET /health` in worker.js → JSON `{status:"ok",ts:<epoch>}` ohne D1-Call. Ersetzt curl-Smoke-Test auf schatzinsel.app (CF blockt bots). (R3 aus S91) | Engineer | 🔲 |
-| S92-2 | **Quest-Runde 78** — Bug(58)/Krabs(59)/Tommy(59) → +10 Quests, 825→835. Thema: "Was ich noch nicht kenne". | Artist | 🔲 |
+| S92-1 | **Worker-Health-Endpoint** — `GET /health` in worker.js → JSON `{status:"ok",ts:<epoch>}` ohne D1-Call. Ersetzt curl-Smoke-Test auf schatzinsel.app (CF blockt bots). (R3 aus S91) | Engineer | ✅ PR #418 CI grün |
+| S92-2 | **Quest-Runde 78** — Bug(58)/Krabs(59)/Tommy(59) → +10 Quests, 825→835. Thema: "Was ich noch nicht kenne". | Artist | 🔄 PR #419 CI läuft |
 | S92-3 | **S91-4 Palette-Check** — Noch 1 Sprint warten (R1: "bis S93 kein Tesla-Feedback → schließen"). | Human (Till) | 🔲 Blocked |
 
 ---
@@ -18,7 +18,7 @@
 ## Ceremony-Status S92
 
 - [x] Planning: 2026-04-22 (autonomer Agent)
-- [ ] Daily Scrum
+- [x] Daily Scrum: 2026-04-22 (autonomer Agent)
 - [ ] Review
 - [ ] Retro
 
