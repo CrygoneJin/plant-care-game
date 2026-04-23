@@ -1,3 +1,38 @@
+# Sprint 103 — "Tommy misst, Alien lernt, Lokführer fährt ans Ende"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Tommy entdeckt dass Messen Muster zeigt (Sternschnuppen, Gezeiten, Pflanzen, Echo), Alien versteht Erdlinge ein kleines bisschen besser (Haustiere, Witze, Geburtstag), Lokführer fährt Strecken die andere nicht kennen (Polarkreis, Hängebrücke, Endbahnhof). 905 Quests gesamt.
+
+**Start:** 2026-04-23
+**Sprint-Prinzip:** Quest-Track läuft autonom. Oscar-Smoke bleibt HITL — kein Druck.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S103-1 | **Quest-Runde 85** — Tommy(66→70)/Alien(66→69)/Lokführer(66→69) → +10 Quests, 895→905. Tommy: "Was Messen zeigt". Alien: "Was Erdlinge unlogisch tun". Lokführer: "Strecken am Rand der Welt". | Artist | ✅ feat/sprint-103 |
+| S103-2 | **Oscar-Smoke** — Till legt iPad hin, schaut weg (Paluten-Test). 1 Satz. Rollover aus S98-3/S102-2. | Till manuell | 🔲 HITL |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S104-Kette** — Feynman misst erst wenn Oscar-Smoke-Ergebnis vorliegt
+- **Native Speaker Review ES/IT** — HITL #108, wartet auf Till
+
+---
+
+## Ceremony-Status S103
+
+- [x] Planning: 2026-04-23 (autonomer Agent)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
 # Sprint 102 — "Maus entdeckt, Krabs erinnert sich"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -29,8 +64,39 @@
 
 - [x] Planning: 2026-04-23 (autonomer Agent, PR #450)
 - [x] Daily Scrum: 2026-04-23 (autonomer Agent)
-- [ ] Review
-- [ ] Retro
+- [x] Review: 2026-04-23 (autonomer Agent)
+- [x] Retro: 2026-04-23 (autonomer Agent)
+
+---
+
+## Sprint Review S102 (2026-04-23, autonomer Agent)
+
+**Sprint Goal 2/3 erfüllt — 1 HITL.**
+
+| Item | Ergebnis |
+|------|---------|
+| S102-1 Quest-Runde 84 | ✅ PR #451 gemergt — Maus +5 (Sterne, Boden, Echo, Metamorphose, Vogelruf) + Krabs +5 (Tiefsee-Kataster, Schönheits-Galerie, Handels-Archiv, Zeitwert-Lab, Gedenkstätte). 885→895 Quests live |
+| S102-2 Oscar-Smoke | 🔲 HITL — Till legt iPad hin, Paluten-Test ausstehend. Rollover seit S98-3 |
+| S102-3 Backlog-Update Physik-Epic | ✅ Commit 8dbf812 — S99–S101 auf Done gesetzt |
+
+**Stand nach S102:** 895 Quests. Niedrigste NPC-Counter: Tommy/Alien/Lokführer (66).
+
+---
+
+## Sprint Retrospektive S102 (2026-04-23, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Runde 84 sauber geliefert: Maus "kleine Dinge die groß sind" + Krabs "Zeit und Erinnerung" — thematisch stark
+- Backlog-Update Physik-Epic S99–S101 erledigt — Backlog ist sauber
+- PR #451 bereits gemergt, 895 Quests auf main
+
+**Was nicht gut lief:**
+- Oscar-Smoke (S98-3 → S102-2 Rollover) seit fast 5 Sprints offen — kein Druck, aber das Signal fehlt dem Agenten
+- CEO-Input für nächste Physik/Erkenntnis-Kette blockiert auf Oscar-Smoke
+
+**Retro-Actions für S103:**
+- **R1**: Quest-Runde 85: Tommy(66)/Alien(66)/Lokführer(66) — niedrigste Counter → 905 Quests
+- **R2**: Oscar-Smoke HITL bleibt offen — Till entscheidet wann Paluten-Test
 
 ---
 
