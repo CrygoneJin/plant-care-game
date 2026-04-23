@@ -12,9 +12,9 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S98-1 | **PR #430 Review + Merge** — Lummerland-Reboot Fundament (Seed-System, Tao-Only, Decay-Fix 1/√42, Kanon-Insel) | Leader + Engineer (code-reviewer agent) | 🔲 PR offen |
-| S98-2 | **NPC „Der Ratlose"** — neuer NPC der bei jeder Frage sagt „Ich weiß nicht. Frag Oscar." Krapweis-Hinweis aus Beirat-Podcast. Ein Nachmittag, kein Quest-Generator. Position auf Lummerland tbd. | Artist + Engineer | 🔲 |
-| S98-3 | **Oscar-Smoke** — Till legt das iPad morgen früh hin, schaut weg (Paluten-Test). 1 Satz als Ergebnis (Heidegger-Regel: „Was hat das Kind gerade getan?") | Till manuell | 🔲 |
+| S98-1 | **PR #430 Review + Merge** — Lummerland-Reboot Fundament (Seed-System, Tao-Only, Decay-Fix 1/√42, Kanon-Insel) | Leader + Engineer (code-reviewer agent) | ✅ PR #430 gemergt |
+| S98-2 | **NPC „Der Ratlose"** — neuer NPC der bei jeder Frage sagt „Ich weiß nicht. Frag Oscar." Krapweis-Hinweis aus Beirat-Podcast. Ein Nachmittag, kein Quest-Generator. Position auf Lummerland tbd. | Artist + Engineer | ✅ PR #432 gemergt |
+| S98-3 | **Oscar-Smoke** — Till legt das iPad morgen früh hin, schaut weg (Paluten-Test). 1 Satz als Ergebnis (Heidegger-Regel: „Was hat das Kind gerade getan?") | Till manuell | 🔲 HITL pending |
 
 ---
 
@@ -42,9 +42,48 @@ S101 → Higgs + Curvature gebündelt           (Politur auf Sichtbarem)
 ## Ceremony-Status S98
 
 - [x] Planning: 2026-04-22 (Leader + /meeting 5-Stimmen + /ceo Prio-Audit)
-- [ ] Daily Scrum
-- [ ] Review
+- [x] Review: 2026-04-23 (autonomer Agent)
 - [ ] Retro
+
+---
+
+## Sprint Review S98 (2026-04-23, autonomer Agent)
+
+**Sprint Goal teilweise erfüllt: 2/3 Done, 1 HITL.**
+
+| Item | Ergebnis |
+|------|---------|
+| S98-1 PR #430 Lummerland-Reboot | ✅ Gemergt — Seed-System, Tao-only Inventar, Decay-Fix 1/√42, Lummerland-Kanon (2 Berge, Gleise, Emma, Schloss, Bahnhof) live |
+| S98-2 NPC „Der Ratlose" | ✅ PR #432 gemergt — sagt bei jeder Frage „Ich weiß nicht. Frag Oscar." Krapweis-Vision umgesetzt |
+| S98-3 Oscar-Smoke | 🔲 HITL — Till legt iPad hin, Paluten-Test ausstehend. 1 Satz (Heidegger-Regel) wenn gemacht |
+
+**Session 100 Bonus (AFK, autonomer Agent, 2026-04-22 Nacht):**
+S99–S101 und vier Side-Quests wurden in derselben Nacht durchgezogen:
+
+| Sprint | Item | PR | Status |
+|--------|------|----|--------|
+| S99 | Baryon-Triplet: Proton (YYY) + Neutron (YYY+n) | #434 | ✅ |
+| S100 | Atom-Cluster-Recognizer: H, He-3, He-4, Orbital-Ring | #435 | ✅ |
+| S101 | Higgs + Raumkrümmung + Blackhole-Einsauger | #436 | ✅ |
+| Side | fix(bernd): Requesty-Prefix anthropic/ | #429 | ✅ |
+| Side | CI: automatisches CF-Worker-Deploy (HITL #27 weg) | #438 | ✅ |
+| Side | i18n: ES + IT NPC-Strings (UNREVIEWED, HITL #108 reduziert) | #440 | ✅ |
+| Side | Hauptgruppen-Elemente als Rezepte (31 Elemente, H–Rn) | #441 | ✅ |
+| Side | Standardmodell komplett: Higgs-Boson, Pion, Kaon, Positron (17 Teilchen) | #442 | ✅ |
+
+**Oscar-Outcome (wenn Till den Paluten-Test macht):**
+Oscar sieht Lummerland, hat Tao, zerteilt es → Yin+Yang+Qi. Baut Proton, setzt neben Elektron → H-Atom mit Orbital-Ring. Legt Berg neben Höhle → Higgs-Boson. Sieht Raumkrümmung unter schweren Teilchen. Blackhole saugt ein, gibt Yin/Yang zurück: „nichts ist verloren, nur verwandelt." Trifft Den Ratlosen: „Ich weiß nicht. Frag Oscar."
+
+**Stand nach S98:**
+- **885 Quests** — maus 64 · krabs 65 (niedrigste)
+- **17 Standardmodell-Teilchen** als Materialien craftbar
+- **31 Hauptgruppen-Elemente** als Rezepte
+- HITL #27 (CF-Deploy) → geschlossen via CI #438
+- HITL #108 → reduziert auf Native-Speaker-Review
+
+**PO-Entscheidung:**
+- Oscar-Smoke (S98-3) bleibt offen bis Till Feedback gibt — 1 Satz genügt
+- Nächste Quest-Runde S102: Maus(64)/Krabs(65) — Thema frei
 
 ---
 
