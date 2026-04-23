@@ -48,21 +48,22 @@ window.INSEL_MATERIALS = {
     // === 1 — TAO (Singularität, alles in einem Punkt) ===
     tao:      { emoji: '☯️', label: 'Tao',       color: '#808080', border: '#606060' },
     // === 3 — Drei Quarks = ein Proton (Up-Up-Down) ===
-    yin:      { emoji: '⚫', label: 'Yin',       color: '#1A1A1A', border: '#000000' },  // Down-Quark
-    yang:     { emoji: '⚪', label: 'Yang',      color: '#F0F0F0', border: '#D0D0D0' },  // Up-Quark
-    qi:       { emoji: '✨', label: 'Qi',        color: '#FFD700', border: '#DAA520' },  // Starke Kernkraft
+    // Gen-1-Quarks: Fermionen, spin 1/2
+    yin:      { emoji: '⚫', label: 'Yin',       color: '#1A1A1A', border: '#000000', spin: 0.5 },  // Down-Quark
+    yang:     { emoji: '⚪', label: 'Yang',      color: '#F0F0F0', border: '#D0D0D0', spin: 0.5 },  // Up-Quark
+    qi:       { emoji: '✨', label: 'Qi',        color: '#FFD700', border: '#DAA520' },              // Starke Kernkraft (Gluon-Proxy)
     // === GENERATION 2 — Charm & Strange (schwere Quarks, brauchen Beschleuniger) ===
-    charm:    { emoji: '💫', label: 'Charm',     color: '#E8B4F8', border: '#C77DDB' },  // Charm-Quark: schweres Yang (Generation 2)
-    strange:  { emoji: '🌀', label: 'Strange',   color: '#7B2FBE', border: '#5B1F8E' },  // Strange-Quark: schweres Yin (Generation 2)
-    antimatter:{ emoji: '⚛️', label: 'Antimaterie', color: '#1A0033', border: '#0D001A' },  // Charm + Strange = gebundene Gegensätze
+    charm:    { emoji: '💫', label: 'Charm',     color: '#E8B4F8', border: '#C77DDB', spin: 0.5 },  // Charm-Quark: schweres Yang (Gen 2)
+    strange:  { emoji: '🌀', label: 'Strange',   color: '#7B2FBE', border: '#5B1F8E', spin: 0.5 },  // Strange-Quark: schweres Yin (Gen 2)
+    antimatter:{ emoji: '⚛️', label: 'Antimaterie', color: '#1A0033', border: '#0D001A' },          // Charm + Strange = gebundene Gegensätze
     // === LEPTONEN — die leichten Teilchen (spüren keine starke Kraft / kein Qi!) ===
-    electron: { emoji: '🔹', label: 'Elektron',  color: '#0080FF', border: '#0060CC' },  // Gen 1: leichtestes geladenes Lepton
-    muon:     { emoji: '🔸', label: 'Myon',      color: '#9B59B6', border: '#7D3C98' },  // Gen 2: schweres Elektron, kosmisch
-    tau:      { emoji: '🔻', label: 'Tau',       color: '#FF4500', border: '#CC3700' },  // Gen 3: schwerstes Lepton
+    electron: { emoji: '🔹', label: 'Elektron',  color: '#0080FF', border: '#0060CC', spin: 0.5 },  // Gen 1: leichtestes geladenes Lepton
+    muon:     { emoji: '🔸', label: 'Myon',      color: '#9B59B6', border: '#7D3C98', spin: 0.5 },  // Gen 2: schweres Elektron, kosmisch
+    tau:      { emoji: '🔻', label: 'Tau',       color: '#FF4500', border: '#CC3700', spin: 0.5 },  // Gen 3: schwerstes Lepton
     // === NEUTRINOS — Geister-Teilchen (durchdringen alles, fast masselos) ===
-    neutrino:    { emoji: '👻', label: 'Neutrino',       color: '#E8E8FF', border: '#C8C8E8' },  // Gen 1: Elektron-Neutrino
-    neutrino_mu: { emoji: '👻', label: 'Myon-Neutrino',  color: '#D0D0FF', border: '#B0B0E8' },  // Gen 2
-    neutrino_tau:{ emoji: '👻', label: 'Tau-Neutrino',   color: '#B8B8FF', border: '#9898E8' },  // Gen 3
+    neutrino:    { emoji: '👻', label: 'Neutrino',       color: '#E8E8FF', border: '#C8C8E8', spin: 0.5 },  // Gen 1: Elektron-Neutrino
+    neutrino_mu: { emoji: '👻', label: 'Myon-Neutrino',  color: '#D0D0FF', border: '#B0B0E8', spin: 0.5 },  // Gen 2
+    neutrino_tau:{ emoji: '👻', label: 'Tau-Neutrino',   color: '#B8B8FF', border: '#9898E8', spin: 0.5 },  // Gen 3
     // === BOSONEN — Kraftteilchen (Oscar liebt Bosonen) ===
     // Qi ✨ IST das Gluon (starke Kraft, spin 1, masselos) — Doppel-Name: Dao-Name + Physik-Name.
     // Tao ☯️ ist NICHT gleich Higgs — Tao = Singularität (Urzustand), Higgs = massives Skalar-Boson.
@@ -126,7 +127,7 @@ window.INSEL_MATERIALS = {
     moon:     { emoji: '🌙', label: 'Mond',     color: '#F7DC6F', border: '#F1C40F' },
     lightning:{ emoji: '⚡', label: 'Blitz',    color: '#F7DC6F', border: '#F4D03F' },
     volcano:  { emoji: '🌋', label: 'Vulkan',   color: '#E74C3C', border: '#C0392B' },
-    mountain: { emoji: '🏔️', label: 'Berg',    color: '#95A5A6', border: '#7F8C8D', charge: 0, mass: 20 },
+    mountain: { emoji: '🏔️', label: 'Berg',    color: '#95A5A6', border: '#7F8C8D', charge: 0, mass: 20, spin: 0.5 },  // Top-Quark (Gen 3, Fermion)
     diamond:  { emoji: '💎', label: 'Diamant',  color: '#AED6F1', border: '#85C1E9' },
     sword:    { emoji: '⚔️', label: 'Schwert',  color: '#BDC3C7', border: '#95A5A6' },
     shield:   { emoji: '🛡️', label: 'Schild',  color: '#F0B27A', border: '#E59866' },
@@ -185,7 +186,9 @@ window.INSEL_MATERIALS = {
     dock:     { emoji: '⚓', label: 'Hafen',         color: '#5DADE2', border: '#2E86C1' },
     castle:   { emoji: '🏰', label: 'Schloss',      color: '#95A5A6', border: '#7F8C8D', charge: 0, mass: 25 },
     // === HÖHLEN & EDELSTEINE ===
-    cave:     { emoji: '🕳️', label: 'Höhle',       color: '#4A4A4A', border: '#2C2C2C' },
+    // cave = Bottom-Quark (Gen 3, Fermion) — spin 1/2. Keine Curvature-Masse
+    // (Höhle hat im Spiel keine Mass-Delle), aber Spin physikalisch korrekt.
+    cave:     { emoji: '🕳️', label: 'Höhle',       color: '#4A4A4A', border: '#2C2C2C', spin: 0.5 },
     stalactite:{ emoji: '🪨', label: 'Tropfstein',  color: '#8B8589', border: '#696364' },
     gem:      { emoji: '💎', label: 'Edelstein',    color: '#E040FB', border: '#AB00D9' },
     // === BIBLIOTHEK VON ALEXANDRIA ===
@@ -212,8 +215,8 @@ window.INSEL_MATERIALS = {
     //   Neutron ist ~0.14% schwerer (down-Quark schwerer als up +
     //   EM-Selbstenergie). Im Spiel grob mit 20/21 abgebildet (+5%);
     //   minimal spürbar in der Curvature-Map, aber nicht verzerrend.
-    proton:  { emoji: '🔴', label: 'Proton',  color: '#E74C3C', border: '#C0392B', charge: 1, mass: 20 },
-    neutron: { emoji: '⭕', label: 'Neutron', color: '#ECF0F1', border: '#BDC3C7', charge: 0, mass: 21 },
+    proton:  { emoji: '🔴', label: 'Proton',  color: '#E74C3C', border: '#C0392B', charge: 1, mass: 20, spin: 0.5 },
+    neutron: { emoji: '⭕', label: 'Neutron', color: '#ECF0F1', border: '#BDC3C7', charge: 0, mass: 21, spin: 0.5 },
     // === BLACKHOLE — Einsauger + Hawking-Rückgabe (S101) ===
     // Emoji 🌑 (New Moon) statt 🕳️ (Cave) — Kollision mit Höhle vermieden.
     // Extreme Masse → Raumkrümmung-Delle maximiert, frisst Nachbarn,

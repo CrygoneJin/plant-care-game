@@ -338,3 +338,68 @@ describe('INSEL_AUTOMERGE — Standardmodell komplett', () => {
         assert.equal(result.result, 'qi');
     });
 });
+
+// === Baryon-Bauplan-Audit (Till, 2026-04-22) ===
+// Masse-Ordering, Spin-Konsistenz, Farbladungs-Dokumentation.
+describe('INSEL_MATERIALS — Baryon-Bauplan-Konsistenz', () => {
+    let ctx;
+    let materials;
+
+    beforeEach(() => {
+        ctx = createBrowserContext();
+        loadScript(path.join(WORLD, 'materials.js'), ctx);
+        materials = ctx.INSEL_MATERIALS;
+    });
+
+    // Fix 1: Neutron real leicht schwerer als Proton (+0.14% in der Natur).
+    it('neutron.mass > proton.mass (real: 939.565 > 938.272 MeV/c²)', () => {
+        assert.ok(typeof materials.proton.mass === 'number');
+        assert.ok(typeof materials.neutron.mass === 'number');
+        assert.ok(
+            materials.neutron.mass > materials.proton.mass,
+            `neutron.mass (${materials.neutron.mass}) muss > proton.mass (${materials.proton.mass}) sein`
+        );
+    });
+
+    // Fix 3: Alle Fermionen (Quarks, Leptonen, Baryonen) haben spin = 0.5.
+    it('alle Gen1-Quarks haben spin=0.5 (Fermionen)', () => {
+        assert.equal(materials.yin.spin, 0.5, 'yin (down-Quark) ist Fermion');
+        assert.equal(materials.yang.spin, 0.5, 'yang (up-Quark) ist Fermion');
+    });
+
+    it('alle Gen2-Quarks haben spin=0.5 (Fermionen)', () => {
+        assert.equal(materials.charm.spin, 0.5);
+        assert.equal(materials.strange.spin, 0.5);
+    });
+
+    it('alle Gen3-Quarks haben spin=0.5 (mountain=top, cave=bottom)', () => {
+        assert.equal(materials.mountain.spin, 0.5, 'mountain = Top-Quark');
+        assert.equal(materials.cave.spin, 0.5, 'cave = Bottom-Quark');
+    });
+
+    it('alle geladenen Leptonen haben spin=0.5', () => {
+        assert.equal(materials.electron.spin, 0.5);
+        assert.equal(materials.muon.spin, 0.5);
+        assert.equal(materials.tau.spin, 0.5);
+    });
+
+    it('alle Neutrinos haben spin=0.5', () => {
+        assert.equal(materials.neutrino.spin, 0.5);
+        assert.equal(materials.neutrino_mu.spin, 0.5);
+        assert.equal(materials.neutrino_tau.spin, 0.5);
+    });
+
+    it('Baryonen (Proton, Neutron) haben spin=0.5 (Drei-Quark-Fermionen)', () => {
+        assert.equal(materials.proton.spin, 0.5);
+        assert.equal(materials.neutron.spin, 0.5);
+    });
+
+    // Bosonen bleiben bei ihren Spins (Regression).
+    it('Bosonen-Spin intakt (Regression)', () => {
+        assert.equal(materials.photon.spin, 1,   'γ: Vektor-Boson');
+        assert.equal(materials.w_boson.spin, 1,  'W: schwaches Vektor-Boson');
+        assert.equal(materials.z_boson.spin, 1,  'Z: schwaches Vektor-Boson');
+        assert.equal(materials.higgs_boson.spin, 0, 'H: Skalar-Boson');
+    });
+});
+
