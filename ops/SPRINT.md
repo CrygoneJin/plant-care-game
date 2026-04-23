@@ -1,3 +1,38 @@
+# Sprint 103 — "Tommy misst, Alien staunt, Lokführer fährt ans Ende der Welt"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Tommy entdeckt was Messen zeigt, Alien staunt über Erdlinge die unlogisch handeln, Lokführer fährt Strecken am Rand der Welt. 905 Quests gesamt.
+
+**Start:** 2026-04-23
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke HITL — kein Druck. CEO-Input für Physik-Kette pausiert bis Paluten-Test.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S103-1 | **Quest-Runde 85** — Tommy(66→71)/Alien(66→71)/Lokführer(66→71) → +10 Quests, 895→905. Tommy: „Was Messen zeigt". Alien: „Was Erdlinge unlogisch tun". Lokführer: „Strecken am Rand der Welt". | Artist | ✅ PR #453 offen |
+| S103-2 | **Oscar-Smoke** — Paluten-Test mit iPad. 1 Satz. Rollover seit S98-3. | Till manuell | 🔲 HITL |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S104-Kette** — wartet auf Oscar-Smoke-Ergebnis
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S103
+
+- [x] Planning: 2026-04-23 (autonomer Agent)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
 # Sprint 102 — "Maus entdeckt, Krabs erinnert sich"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -30,7 +65,7 @@
 - [x] Planning: 2026-04-23 (autonomer Agent, PR #450)
 - [x] Daily Scrum: 2026-04-23 (autonomer Agent)
 - [x] Review: 2026-04-23 (autonomer Agent)
-- [ ] Retro
+- [x] Retro: 2026-04-23 (autonomer Agent)
 
 ---
 
@@ -56,6 +91,25 @@
 - Oscar-Smoke HITL bleibt offen — kein Druck auf Till
 - Nächste Quest-Runde S103: Tommy/Alien/Lokführer (~66) — Thema frei
 - CEO-Input S103-Kette: erst nach Oscar-Smoke-Ergebnis (Physik-Kette pausiert)
+
+---
+
+## Sprint Retrospektive S102 (2026-04-23, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Runde 84 sauber: Maus(64→69) + Krabs(65→70), 895 Quests auf main (PR #451 gemergt)
+- HITL #108 aufgelöst — Opus statt Native-Speaker-Review. ES/IT auf Native-Niveau (2 Grammatik-Bugs gefixt). Icebox jetzt leer.
+- PR #454 Baryon-Bauplan: 4 Physik-Fehler behoben (Masse, Spin, Farbladung, Pauli-Workaround) — Scientist gate bestanden
+- Quest-Track entkoppelt vom Physik-Epic: autonome Lieferung ohne CEO-Input möglich
+
+**Was nicht gut lief:**
+- Oscar-Smoke (S98-3/S102-2) Rollover nun 5 Sprints alt — kein Paluten-Test passiert
+- Sprint Backlog Status inkonsistent: S102-1 stand als "PR #451 offen" obwohl gemergt (kein Follow-up Commit)
+
+**Retro-Actions für S103:**
+- **R1**: Quest-Runde 85: Tommy(66)/Alien(66)/Lokführer(66) → S103-1 ✅ (bereits auf feat/sprint-103, PR #453)
+- **R2**: Oscar-Smoke — HITL, kein Druck. Till weiß Bescheid.
+- **R3**: CEO-Input für S104-Kette: wartet auf Oscar-Smoke-Ergebnis. Physik-Kette pausiert.
 
 ---
 
