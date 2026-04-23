@@ -480,6 +480,7 @@
             } else {
                 showToast(`${npc.emoji} ${npc.name}: Ich warte noch auf "${active.title}"!`, 3000);
             }
+            if (window.openChat) setTimeout(() => window.openChat(npcId), sessionGreeting ? 3200 : 400);
         } else if (quest) {
             if (sessionGreeting) {
                 showToast(sessionGreeting, 3000);
@@ -488,6 +489,7 @@
                 showToast(`${npc.emoji} ${quest.desc}`, 5000);
             }
             window.questSystem.accept(quest);
+            if (window.openChat) setTimeout(() => window.openChat(npcId), sessionGreeting ? 3200 : 400);
         } else if (npcId === 'bug') {
             if (sessionGreeting) showToast(sessionGreeting, 3000);
             showBugDialog();
@@ -558,6 +560,12 @@
             } else if (voice) {
                 const msg = `${npc.emoji} ${voice.prefix} ${voice.ticks[Math.floor(Math.random() * voice.ticks.length)]}`;
                 showToast(msg, 3000);
+            }
+            // Oscar-Feedback: Toasts reichen nicht. Wenn Oscar einen NPC
+            // antippt, will er REDEN. Chat öffnen, sobald möglich —
+            // unabhängig von Spieler-Position oder Proximity.
+            if (window.openChat) {
+                setTimeout(() => window.openChat(npcId), sessionGreeting ? 3200 : 400);
             }
         }
     }
@@ -2142,7 +2150,10 @@
     // animations[] → effects.js
 
     // --- Spielfigur ---
-    let playerName = localStorage.getItem('insel-player-name') || '';
+    // Default-Name 'du' sorgt dafür, dass der Avatar IMMER sichtbar ist —
+    // auch wenn Oscar den Intro-Overlay nie ausgefüllt hat. Der echte Name
+    // kommt beim ersten Start via Intro dazu und überschreibt 'du'.
+    let playerName = localStorage.getItem('insel-player-name') || 'du';
     let playerPos  = JSON.parse(localStorage.getItem('insel-player-pos') || 'null')
                      || { r: Math.floor(ROWS / 2), c: Math.floor(COLS / 2) };
     let playerDragging = false;
@@ -2154,15 +2165,17 @@
     const introOverlay = document.getElementById('intro-overlay');
     const startButton = document.getElementById('start-button');
 
-    // Name-Gruppe im Intro nur bei Erst-Besuch zeigen
+    // Name-Gruppe im Intro nur bei Erst-Besuch zeigen. 'du' ist der
+    // Default-Sentinel — der bedeutet "noch kein Name gesetzt".
+    const _hasRealName = playerName && playerName !== 'du';
     const nameGroup = document.getElementById('player-name-group');
-    if (nameGroup && playerName) {
+    if (nameGroup && _hasRealName) {
         nameGroup.style.display = 'none';
     }
 
     // Wiederkehrende Spieler: Intro wird NACH Canvas-Init ausgeblendet (siehe unten)
     // Hier nur merken, damit kein Flash of unready content auf dem iPhone entsteht
-    const isReturningPlayer = !!(playerName && (localStorage.getItem('insel-projekte') || localStorage.getItem('insel-grid')));
+    const isReturningPlayer = !!(_hasRealName && (localStorage.getItem('insel-projekte') || localStorage.getItem('insel-grid')));
     const statsContent = document.getElementById('stats-content');
     const projectNameInput = document.getElementById('project-name');
     const loadDialog = document.getElementById('load-dialog');
@@ -2604,28 +2617,50 @@
 
     // === SPIELFIGUR — Zeichnen + Bewegen ===
     function drawPlayer() {
-        if (!playerName || !isParticipant()) return;
+        // Früher: !playerName blockierte. Jetzt: Default 'du' im Init-Block.
+        // Gate entfernt, damit Oscar den Avatar IMMER sieht — auch bei Seed-Start.
+        if (!isParticipant()) return;
         const px = (playerPos.c + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
         const py = (playerPos.r + WATER_BORDER) * CELL_SIZE + CELL_SIZE / 2;
 
         ctx.save();
-        // Figur-Emoji
-        ctx.font = `${CELL_SIZE * 0.7}px serif`;
+
+        // Pulse-Ring: sanft pulsierender goldener Kreis, damit Oscar den
+        // Avatar im Chaos aus NPCs + Gebäuden + Material-Emojis findet.
+        const pulse = 0.5 + 0.5 * Math.sin(Date.now() / 500);
+        const ringRadius = CELL_SIZE * (0.55 + pulse * 0.08);
+        ctx.beginPath();
+        ctx.arc(px, py, ringRadius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(255, 215, 0, ${0.55 + pulse * 0.35})`;
+        ctx.lineWidth = 3;
+        ctx.stroke();
+        // Innerer Schatten für Kontrast auf hellen Untergründen
+        ctx.beginPath();
+        ctx.arc(px, py, ringRadius * 0.92, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(0, 0, 0, ${0.25 + pulse * 0.2})`;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Figur-Emoji (größer als vorher — 0.85× statt 0.7×)
+        ctx.font = `${CELL_SIZE * 0.85}px serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(playerEmoji, px, py);
 
         // Name-Label
-        const fontSize = Math.max(9, CELL_SIZE * 0.27);
+        const fontSize = Math.max(10, CELL_SIZE * 0.3);
         ctx.font = `bold ${fontSize}px sans-serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'bottom';
-        ctx.strokeStyle = 'rgba(0, 0, 0, 0.7)';
+        ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
         ctx.lineWidth = 3;
-        ctx.strokeText(playerName, px, py - CELL_SIZE * 0.35);
+        ctx.strokeText(playerName, px, py - CELL_SIZE * 0.4);
         ctx.fillStyle = 'white';
-        ctx.fillText(playerName, px, py - CELL_SIZE * 0.35);
+        ctx.fillText(playerName, px, py - CELL_SIZE * 0.4);
         ctx.restore();
+
+        // Pulse am Laufen halten — ohne das ist der Ring eingefroren
+        needsRedraw = true;
     }
 
     // === SPIELWELT + SPIELPHASEN ===
@@ -2656,8 +2691,12 @@
     ]; // 16 Teilchen + Qi(Gluon) + Tao(Higgs) + Grid(Graviton) = Standardmodell komplett
     let gameWorld = localStorage.getItem('insel-game-world') || 'universe';
     let gamePhase = localStorage.getItem('insel-game-phase') || 'observer';
-    // Auto-Participant: Spieler mit Namen auf der Insel sind immer sichtbar
-    if (gamePhase === 'observer' && playerName && localStorage.getItem('insel-grid')) {
+    // Auto-Participant: Spieler auf Insel-Welten sind IMMER sichtbar.
+    // Früher nur wenn playerName + insel-grid gesetzt war — damit blieb Spieler
+    // unsichtbar bei Seed-Welten (z.B. ?seed=Lummerland) und Oscar fand den
+    // Avatar nicht. Jetzt: Seed-Pfad, Auto-Save-Pfad oder Name gesetzt → participant.
+    const _hasSeedUrl = typeof location !== 'undefined' && new URLSearchParams(location.search).has('seed');
+    if (gamePhase === 'observer' && (playerName || localStorage.getItem('insel-grid') || localStorage.getItem('insel-projekte') || _hasSeedUrl)) {
         gamePhase = 'participant';
         localStorage.setItem('insel-game-phase', 'participant');
     }
@@ -2715,7 +2754,7 @@
     }
 
     function movePlayer(dr, dc) {
-        if (!playerName || !isParticipant()) return;
+        if (!isParticipant()) return;
         const nr = playerPos.r + dr;
         const nc = playerPos.c + dc;
         // Spieler bleibt auf bebaubarem Bereich (kein Wasser-Rand)
@@ -2840,8 +2879,9 @@
             }
         }
 
-        // Spielfigur (nur als Teilnehmer)
-        if (playerName && isParticipant()) {
+        // Spielfigur (nur als Teilnehmer) — Gate auf !isParticipant(),
+        // playerName hat jetzt immer einen Default ('du'), muss nicht gecheckt werden.
+        if (isParticipant()) {
             ISO.drawIsoEntity(ctx, playerPos.r, playerPos.c, playerEmoji, playerName,
                 WATER_BORDER, COLS, CELL_SIZE, time, { shadow: true, fontSize: 0.65 });
         }
@@ -4042,14 +4082,17 @@
 
     // Intro — Session-Uhr starten
     function startGame() {
-        // Spielernamen aus dem Intro-Eingabefeld übernehmen
+        // Spielernamen aus dem Intro-Eingabefeld übernehmen.
+        // Default 'du' (aus dem Init-Block) wird überschrieben wenn Oscar
+        // was tippt — oder auf 'Spieler' gehoben damit der Name wenigstens
+        // nicht "du" bleibt sobald jemand bewusst den Start-Button drückt.
         const nameInput = document.getElementById('player-name-input');
         if (nameInput) {
             const typed = nameInput.value.trim().slice(0, 8);
             if (typed) {
                 playerName = typed;
                 localStorage.setItem('insel-player-name', playerName);
-            } else if (!playerName) {
+            } else if (!playerName || playerName === 'du') {
                 playerName = 'Spieler';
                 localStorage.setItem('insel-player-name', playerName);
             }
@@ -4364,7 +4407,7 @@
             openDungeon(); return;
         }
         // Spielfigur-Drag: Berühre die Spieler-Zelle → Figur ziehen
-        if (playerName && isParticipant() && cell.r === playerPos.r && cell.c === playerPos.c) {
+        if (isParticipant() && cell.r === playerPos.r && cell.c === playerPos.c) {
             playerDragging = true;
             return;
         }
@@ -5498,8 +5541,9 @@
         }
         window.grid = grid;
         migrateUnlocked();
-        // Baustil-Erkennung beim Laden — Oscar als 7. Schicht
-        if (playerName) {
+        // Baustil-Erkennung beim Laden — Oscar als 7. Schicht. 'du' ist
+        // Sentinel "kein echter Name" — dann nur generischen Toast zeigen.
+        if (playerName && playerName !== 'du') {
             zeigeWillkommensToast(playerName);
         } else {
             showToast('🔄 Letzte Insel wiederhergestellt');
@@ -5523,6 +5567,39 @@
 
     // NPCs auf freie Zellen platzieren (nach Grid-Init + Auto-Save-Restore)
     initNpcPositions();
+
+    // Spieler auf eine sichere, begehbare Zelle setzen, wenn der aktuelle
+    // Default auf einem Gebäude/Berg/Wasser liegt. Auf Lummerland landet
+    // der Default (ROWS/2, COLS/2) genau auf dem Bahnhof ("station") — der
+    // Avatar war dann vom Bahnhof-Emoji verdeckt. Oscar hat ihn nie gesehen.
+    // Speichert ergebnis IMMER ins localStorage, damit Position stabil bleibt.
+    (function ensureSafePlayerSpawn() {
+        if (localStorage.getItem('insel-player-pos')) return; // Spieler hat bereits eine gespeicherte Position
+        const BLOCKED = new Set(['station', 'shop', 'train', 'rail', 'mountain', 'stone', 'castle', 'cave', 'ocean', 'water', 'lava']);
+        const isWalkable = (r, c) => {
+            if (r < 2 || r >= ROWS - 2 || c < 2 || c >= COLS - 2) return false;
+            if (getNpcAt(r, c)) return false;
+            const cell = grid[r] && grid[r][c];
+            if (!cell) return true; // leer = begehbar
+            return !BLOCKED.has(cell);
+        };
+        if (!isWalkable(playerPos.r, playerPos.c)) {
+            // Spiralsuche um die Mitte herum — finde die nächste begehbare Zelle
+            const cr = Math.floor(ROWS / 2), cc = Math.floor(COLS / 2);
+            outer: for (let radius = 1; radius < Math.max(ROWS, COLS); radius++) {
+                for (let dr = -radius; dr <= radius; dr++) {
+                    for (let dc = -radius; dc <= radius; dc++) {
+                        if (Math.max(Math.abs(dr), Math.abs(dc)) !== radius) continue;
+                        const r = cr + dr, c = cc + dc;
+                        if (isWalkable(r, c)) { playerPos = { r, c }; break outer; }
+                    }
+                }
+            }
+        }
+        // IMMER persistieren — auch wenn Default bereits walkable war. So
+        // steht der Spieler beim nächsten Laden garantiert an derselben Stelle.
+        localStorage.setItem('insel-player-pos', JSON.stringify(playerPos));
+    })();
 
     // Sammelbare Items spawnen (Schätze, Materialien zum Einsammeln)
     if (collectibles.length === 0) {
