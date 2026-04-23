@@ -1,3 +1,77 @@
+# Sprint 105 — "Neinhorn wächst, Spongebob taucht, Mephisto wartet"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn entdeckt was trotz Widerspruch wächst, Spongebob taucht in was das Meer lehrt, Mephisto zeigt was die Zeit mitbringt. 925 Quests gesamt.
+
+**Start:** 2026-04-23
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke HITL — kein Druck.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S105-1 | **Quest-Runde 87** — Neinhorn(68→72)/Spongebob(68→71)/Mephisto(68→71) → +10 Quests, 915→925. Neinhorn: „Was trotz Widerspruch wächst". Spongebob: „Was das Meer lehrt". Mephisto: „Was die Zeit mitbringt". | Artist | 🔲 |
+| S105-2 | **Oscar-Smoke** — Paluten-Test mit iPad. 1 Satz. Rollover seit S98-3. | Till manuell | 🔲 HITL |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S106-Kette** — wartet auf Oscar-Smoke-Ergebnis
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S105
+
+- [x] Planning: 2026-04-23 (autonomer Agent)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Sprint Review S104 (2026-04-23, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/2 Done, 1 HITL.**
+
+| Item | Ergebnis |
+|------|---------|
+| S104-1 Quest-Runde 86 | ✅ PR #456 offen — Bernd(67→71 +4) / Elefant(67→70 +3) / Floriane(67→70 +3), 905→915 Quests |
+| S104-2 Oscar-Smoke | 🔲 HITL — Paluten-Test wartet auf Till. Rollover seit S98-3 (8 Sprints). |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Bernd: Mondlicht-Garten, Pilzmyzel-Netzwerk-Horchposten, Tau-Beobachtungsposten, Winterschlaf-Forschungsstube. Elefant: Gedächtnis-Pfad, Trauerplatz-der-Herde, Wasserquellen-Karte. Floriane: Mondwunsch-Turm, Erster-Gedanken-Station, Vergessenes-Versprechen-Archiv.
+
+**Stand nach S104:**
+- **915 Quests** auf feat/sprint-104 (PR #456 offen)
+- NPC-Counter (niedrigste, alle 68): neinhorn · spongebob · mephisto · kraemerin
+- Smoke Test: CF 403 bekannte Sandbox-Limitation (HITL #27 offen)
+
+**PO-Entscheidung:**
+- Nächste Quest-Runde S105: Neinhorn(68)/Spongebob(68)/Mephisto(68) — Kraemerin folgt S106
+
+---
+
+## Sprint Retrospektive S104 (2026-04-23, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Runde 86 sauber: Bernd/Elefant/Floriane +10 Quests, 905→915
+- Themen-Wahl stark: Stille als Phänomen (Tau, Pilzmyzel, Mondlicht), Elefanten-Gedächtnis als Wissenschaft, Floriane-Wünsche mit psychologischer Tiefe
+- Bernd-Winterschlaf-Quest: wissenschaftlich präzise (3 Herzschläge/Min), kindgerecht humorvoll
+
+**Was nicht gut lief:**
+- Oscar-Smoke Rollover: seit S98-3 (8 Sprints) kein Paluten-Test. Sprint-Kette läuft ohne empirisches Feedback — längster Rollover bisher.
+- 4 offene PRs (#452/#453/#456/#457) warten auf Till-Merge — Content nicht live
+
+**Retro-Actions für S105:**
+- **R1**: Quest-Runde 87: Neinhorn(68)/Spongebob(68)/Mephisto(68) → S105-1
+- **R2**: Oscar-Smoke HITL bleibt offen — kein Druck, 1 Satz von Till wenn Paluten-Test passiert
+- **R3**: Kraemerin(68) → S106
+
+---
+
 # Sprint 104 — "Bernd lauscht, Elefant erinnert, Floriane flüstert"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -12,7 +86,7 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S104-1 | **Quest-Runde 86** — Bernd(67→71)/Elefant(67→70)/Floriane(67→70) → +10 Quests, 905→915. Bernd: „Was in der Stille wächst". Elefant: „Was nie vergessen wird". Floriane: „Was Wünsche leise sagen". | Artist | 🔲 |
+| S104-1 | **Quest-Runde 86** — Bernd(67→71)/Elefant(67→70)/Floriane(67→70) → +10 Quests, 905→915. Bernd: „Was in der Stille wächst". Elefant: „Was nie vergessen wird". Floriane: „Was Wünsche leise sagen". | Artist | ✅ PR #456 offen |
 | S104-2 | **Oscar-Smoke** — Paluten-Test mit iPad. 1 Satz. Rollover seit S98-3. | Till manuell | 🔲 HITL |
 
 ---
@@ -28,8 +102,8 @@
 
 - [x] Planning: 2026-04-23 (autonomer Agent)
 - [ ] Daily Scrum
-- [ ] Review
-- [ ] Retro
+- [x] Review: 2026-04-23 (autonomer Agent)
+- [x] Retro: 2026-04-23 (autonomer Agent)
 
 ---
 
