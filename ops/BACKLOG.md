@@ -15,11 +15,12 @@ Alles andere ist delegiert oder im Eis.
 | # | Item | Warum HITL | Zeitbudget |
 |---|------|------------|-----------|
 | 27 | **Cloudflare Worker deployen** — `cd src/infra && npx wrangler deploy` (siehe Chat 2026-04-22 für How-To) | CF-Login | 5 Min |
-| 108 | **Native Speaker Review ES/IT** — LLM-Basis existiert (markiert `UNREVIEWED`, siehe `src/core/game.js` `getNpcMemoryComment`), 2 Leute anschreiben zum **Review** der bestehenden Strings statt kompletter Übersetzung (FR macht Till selbst) | Outreach an echte Menschen | 10 Min |
 
-**Wenn beide erledigt:** Backlog ist HITL-frei. Agenten können autonom weitermachen.
+**Nur noch 1 HITL-Item offen.** Wenn #27 erledigt: Backlog ist HITL-frei.
+Agenten können autonom weitermachen.
 
 *Erledigt 2026-04-22:* #92 Requesty-Key-Rotation — Till-Entscheidung: Key darf im Verlauf bleiben.
+*Erledigt 2026-04-23:* HITL #108 aufgelöst — Till-Entscheidung Opus statt Native-Review. ES/IT durch Wittgenstein-Opus auf Native-Niveau poliert (zwei Grammatik-Bugs zusätzlich gefixt: IT-Plural `missionei`→`missioni`, ES-Lexikon `búsqueda`→`misión`). Restrisiko: keine menschliche Validierung.
 
 ---
 
@@ -60,7 +61,7 @@ Alles erledigt. Siehe Archiv unten.
 
 ## ❄️ Icebox — bewusst zurückgestellt
 
-_Leer — ES/IT NPC-Strings 2026-04-22 als LLM-Basis ergänzt (UNREVIEWED, HITL #108). AR/HE NPC-Memory-Strings sind nicht implementiert (nur i18n.js hat UI AR/HE), separates Ticket bei Bedarf._
+_Leer — ES/IT NPC-Strings 2026-04-23 durch Opus auf Native-Niveau poliert (HITL #108 aufgelöst). AR/HE NPC-Memory-Strings sind nicht implementiert (nur i18n.js hat UI AR/HE), separates Ticket bei Bedarf._
 
 ---
 

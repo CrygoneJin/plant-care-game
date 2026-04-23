@@ -8,8 +8,8 @@ const path = require('path');
 // Vollwert-Test ist schwer (game.js ist riesig und browser-bound). Daher: Regex-basiert.
 //
 // Supported langs:
-//   DE/EN/FR — native (markiert ohne UNREVIEWED-Kommentar)
-//   ES/IT    — LLM-Basis (markiert als UNREVIEWED, HITL #108)
+//   DE/EN/FR — native (Till)
+//   ES/IT    — Opus-Review 2026-04-23 (HITL #108 aufgelöst, kein UNREVIEWED mehr)
 //
 // Für DE: Fallback-Return ohne lang-Check, deswegen separate Detection.
 
@@ -41,33 +41,59 @@ describe('NPC-Memory language coverage (getNpcMemoryComment)', () => {
         });
     }
 
-    it('ES branches are marked UNREVIEWED (HITL #108)', () => {
-        const esBranches = src.split('\n')
-            .map((line, i) => ({ line, i }))
-            .filter(({ line }) => line.includes(`lang === 'es'`));
-        assert.ok(esBranches.length >= 4, 'ES branches must exist');
-        for (const { line, i } of esBranches) {
-            // Zeile direkt davor muss UNREVIEWED-Kommentar haben
-            const prev = src.split('\n')[i - 1] || '';
+    it('no UNREVIEWED markers remain in ES/IT strings (HITL #108 aufgelöst)', () => {
+        // Inversion: Nach Opus-Review 2026-04-23 darf KEIN UNREVIEWED-Marker mehr
+        // in ES- oder IT-Zweigen stehen. Wenn doch: HITL #108 ist zurück aus den Toten.
+        const lines = src.split('\n');
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            const isEsIt = line.includes(`lang === 'es'`) || line.includes(`lang === 'it'`);
+            if (!isEsIt) continue;
+            const prev = lines[i - 1] || '';
             assert.ok(
-                prev.includes('UNREVIEWED') && prev.includes('108'),
-                `ES branch at line ${i + 1} missing UNREVIEWED comment on line above. ` +
+                !prev.includes('UNREVIEWED'),
+                `Line ${i + 1}: ES/IT branch still marked UNREVIEWED. HITL #108 sollte aufgelöst sein. ` +
                 `Got: "${prev.trim()}"`
             );
         }
     });
 
-    it('IT branches are marked UNREVIEWED (HITL #108)', () => {
-        const itBranches = src.split('\n')
-            .map((line, i) => ({ line, i }))
-            .filter(({ line }) => line.includes(`lang === 'it'`));
-        assert.ok(itBranches.length >= 4, 'IT branches must exist');
-        for (const { line, i } of itBranches) {
-            const prev = src.split('\n')[i - 1] || '';
+    it('no UNREVIEWED markers in dayText object (ES/IT keys)', () => {
+        // Der dayText-Block hat inline Kommentare direkt vor "es:" und "it:" keys.
+        const lines = src.split('\n');
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (/^(es|it):\s/.test(line)) {
+                const prev = (lines[i - 1] || '').trim();
+                assert.ok(
+                    !prev.includes('UNREVIEWED'),
+                    `Line ${i + 1}: dayText ${line.slice(0, 3)} key still marked UNREVIEWED. ` +
+                    `Got: "${prev}"`
+                );
+            }
+        }
+    });
+
+    it('IT plural morphology is correct (missione/missioni, not missionei)', () => {
+        // Regression-Guard: alter Code hatte `missione${qs?'':'i'}` → "missionei" im Plural.
+        // Italienisch: finale -e wird durch -i ersetzt, nicht angehängt.
+        // Dieses Muster ist jetzt verboten.
+        assert.ok(
+            !/missione\$\{qs\s*\?\s*''\s*:\s*'i'\s*\}/.test(src),
+            `Legacy broken IT-plural pattern detected: missione${'${qs?\\\'\\\':\\\'i\\\'}'} produziert "missionei". ` +
+            `Use ternary: \${qs ? 'missione' : 'missioni'}`
+        );
+    });
+
+    it('ES uses "misión" (Standard für Quest), not "búsqueda" (LLM-Literal)', () => {
+        // Regression-Guard: "búsqueda" = "Suche" (Google-Translate-Tell).
+        // Standard-Spanisch für Quest: "misión". Kind in Madrid hört "búsqueda" als roboterhaft.
+        const esLines = src.split('\n').filter(l => l.includes(`lang === 'es'`));
+        for (const line of esLines) {
             assert.ok(
-                prev.includes('UNREVIEWED') && prev.includes('108'),
-                `IT branch at line ${i + 1} missing UNREVIEWED comment on line above. ` +
-                `Got: "${prev.trim()}"`
+                !/b[uú]squeda/i.test(line),
+                `ES string enthält "búsqueda" (LLM-Literal). Verwende "misión" (Standard). ` +
+                `Line: ${line.trim()}`
             );
         }
     });

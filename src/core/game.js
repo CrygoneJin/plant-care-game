@@ -1164,50 +1164,50 @@
         const q = m.questsDone ? m.questsDone.length : 0;
         const qs = q === 1;
 
-        // Supported langs: DE, EN, FR (native) — ES, IT (UNREVIEWED, HITL #108)
+        // Supported langs: DE, EN, FR (native) — ES, IT (OPUS-REVIEWED 2026-04-23, HITL #108 aufgelöst)
         if (m.lastMaterial && q > 0) {
             if (lang === 'en') return `${p} Hey${nameStr}! Last time you built a lot with ${m.lastMaterial}. And you finished ${q} quest${qs ? '' : 's'}!`;
             if (lang === 'fr') return `${p} Hey${nameStr}! La dernière fois tu as beaucoup construit avec ${m.lastMaterial}. Et tu as fini ${q} quête${qs ? '' : 's'}!`;
-            // UNREVIEWED — siehe HITL #108
-            if (lang === 'es') return `${p} ¡Hola${nameStr}! La última vez construiste mucho con ${m.lastMaterial}. ¡Y completaste ${q} búsqueda${qs ? '' : 's'}!`;
-            // UNREVIEWED — siehe HITL #108
-            if (lang === 'it') return `${p} Ciao${nameStr}! L'ultima volta hai costruito tanto con ${m.lastMaterial}. E hai finito ${q} missione${qs ? '' : 'i'}!`;
+            // OPUS-REVIEWED 2026-04-23 (ersetzt HITL #108 Native-Review per Till-Entscheidung)
+            if (lang === 'es') return `${p} ¡Hola${nameStr}! La última vez construiste un montón con ${m.lastMaterial}. ¡Y terminaste ${q} ${qs ? 'misión' : 'misiones'}!`;
+            // OPUS-REVIEWED 2026-04-23 (ersetzt HITL #108 Native-Review per Till-Entscheidung)
+            if (lang === 'it') return `${p} Ciao${nameStr}! L'ultima volta hai costruito un sacco con ${m.lastMaterial}. E hai finito ${q} ${qs ? 'missione' : 'missioni'}!`;
             return `${p} Hey${nameStr}! Letztes Mal hast du viel mit ${m.lastMaterial} gebaut. Und ${q} Quest${qs ? '' : 's'} geschafft!`;
         }
         if (m.lastMaterial) {
             if (lang === 'en') return `${p} Hey${nameStr}! Last time you built a lot with ${m.lastMaterial}...`;
             if (lang === 'fr') return `${p} Hey${nameStr}! La dernière fois tu as beaucoup construit avec ${m.lastMaterial}...`;
-            // UNREVIEWED — siehe HITL #108
-            if (lang === 'es') return `${p} ¡Hola${nameStr}! La última vez construiste mucho con ${m.lastMaterial}...`;
-            // UNREVIEWED — siehe HITL #108
-            if (lang === 'it') return `${p} Ciao${nameStr}! L'ultima volta hai costruito tanto con ${m.lastMaterial}...`;
+            // OPUS-REVIEWED 2026-04-23 (ersetzt HITL #108 Native-Review per Till-Entscheidung)
+            if (lang === 'es') return `${p} ¡Hola${nameStr}! La última vez construiste un montón con ${m.lastMaterial}...`;
+            // OPUS-REVIEWED 2026-04-23 (ersetzt HITL #108 Native-Review per Till-Entscheidung)
+            if (lang === 'it') return `${p} Ciao${nameStr}! L'ultima volta hai costruito un sacco con ${m.lastMaterial}...`;
             return `${p} Hey${nameStr}! Letztes Mal hast du viel mit ${m.lastMaterial} gebaut...`;
         }
         if (daysSince !== null && daysSince >= 1) {
             const dayText = {
                 en: daysSince === 1 ? 'yesterday' : `${daysSince} days ago`,
                 fr: daysSince === 1 ? 'hier' : `il y a ${daysSince} jours`,
-                // UNREVIEWED — siehe HITL #108
+                // OPUS-REVIEWED 2026-04-23 (ersetzt HITL #108 Native-Review per Till-Entscheidung)
                 es: daysSince === 1 ? 'ayer' : `hace ${daysSince} días`,
-                // UNREVIEWED — siehe HITL #108
+                // OPUS-REVIEWED 2026-04-23 (ersetzt HITL #108 Native-Review per Till-Entscheidung)
                 it: daysSince === 1 ? 'ieri' : `${daysSince} giorni fa`,
                 de: daysSince === 1 ? 'gestern' : `vor ${daysSince} Tagen`,
             }[lang] || (daysSince === 1 ? 'gestern' : `vor ${daysSince} Tagen`);
             if (lang === 'en') return `${p} You were last here ${dayText}${nameStr}!`;
             if (lang === 'fr') return `${p} Tu étais ici ${dayText}${nameStr}!`;
-            // UNREVIEWED — siehe HITL #108
-            if (lang === 'es') return `${p} ¡Estuviste aquí por última vez ${dayText}${nameStr}!`;
-            // UNREVIEWED — siehe HITL #108
-            if (lang === 'it') return `${p} Sei stato qui l'ultima volta ${dayText}${nameStr}!`;
+            // OPUS-REVIEWED 2026-04-23 (ersetzt HITL #108 Native-Review per Till-Entscheidung)
+            if (lang === 'es') return `${p} ¡Tu última visita fue ${dayText}${nameStr}!`;
+            // OPUS-REVIEWED 2026-04-23 (ersetzt HITL #108 Native-Review per Till-Entscheidung)
+            if (lang === 'it') return `${p} Ti ho visto l'ultima volta ${dayText}${nameStr}!`;
             return `${p} Schon ${dayText} warst du zuletzt hier${nameStr}!`;
         }
         if (q > 0) {
             if (lang === 'en') return `${p} Remember${nameStr}? We already did ${q} quest${qs ? '' : 's'} together!`;
             if (lang === 'fr') return `${p} Tu te souviens${nameStr}? On a déjà fait ${q} quête${qs ? '' : 's'} ensemble!`;
-            // UNREVIEWED — siehe HITL #108
-            if (lang === 'es') return `${p} ¿Te acuerdas${nameStr}? ¡Ya hicimos ${q} búsqueda${qs ? '' : 's'} juntos!`;
-            // UNREVIEWED — siehe HITL #108
-            if (lang === 'it') return `${p} Ti ricordi${nameStr}? Abbiamo già fatto ${q} missione${qs ? '' : 'i'} insieme!`;
+            // OPUS-REVIEWED 2026-04-23 (ersetzt HITL #108 Native-Review per Till-Entscheidung)
+            if (lang === 'es') return `${p} ¿Te acuerdas${nameStr}? ¡Ya hemos hecho ${q} ${qs ? 'misión' : 'misiones'} juntos!`;
+            // OPUS-REVIEWED 2026-04-23 (ersetzt HITL #108 Native-Review per Till-Entscheidung)
+            if (lang === 'it') return `${p} Ti ricordi${nameStr}? Abbiamo già fatto ${q} ${qs ? 'missione' : 'missioni'} insieme!`;
             return `${p} Erinnerst du dich${nameStr}? Wir haben schon ${q} Quest${qs ? '' : 's'} zusammen gemacht!`;
         }
         return null;
