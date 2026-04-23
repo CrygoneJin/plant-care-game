@@ -109,6 +109,13 @@ tippt.
 
 Der Vater hält den Kaffeebecher fest. Er will nicht hinsehen. Er hört.
 
+Unter dem Küchentisch liegt der Hund. Drei Jahre alt und schon dick.
+Er hebt einmal den Kopf, als das Kind das erste Mal tippt, und lässt
+ihn wieder sinken. Seufzt. Es ist ein Seufzen, das keiner Szene folgt
+außer seinem eigenen. Der Hund ist die einzige Person im Raum, die
+das iPad nicht interessiert, und das ist ein Segen, denn sonst wäre
+hier gerade jemand zu viel.
+
 Ein kleines, metallisches Geräusch. Ein Klicken aus den iPad-
 Lautsprechern, leise. Ein zweites. Ein drittes. Das Kind tippt jetzt
 in Serie, ohne nachzudenken. Es hat noch nicht einmal gefragt, was
@@ -1440,25 +1447,6 @@ Klick... klack...
 
 ---
 
-### Übergang zu Kapitel 3
-
-Tommy hat die Welt gezeigt. Er hat erzählt, wen das Kind auf der Insel
-gefunden hat, was es gebaut hat, wie es einmal nachts am Strand saß und mit
-zwei winzigen Würfeln Licht gemacht hat. Der Krebs hat nicht erklärt, warum
-das funktioniert. Er hat es beschrieben. Das war seine Aufgabe.
-
-Jetzt erklären zwei, die das können. Max Planck und Richard Feynman sitzen
-an einem kleinen Tisch, Oscar spielt zwischen ihnen, und die beiden Physiker
-kommentieren, was sie sehen. Der eine ruhig, methodisch, preußisch präzise;
-der andere laut, amerikanisch, aus der Hüfte. Beide nötig. Planck liefert
-die Buchhaltung — spontane Symmetriebrechung, Pauli-Prinzip, Massenskalierung.
-Feynman liefert die Übersetzung — *schau dir an, was er gerade gemacht hat*.
-
-Das Kapitel ist dichter als die beiden davor. Es hat Formeln in der Luft,
-ohne sie hinzuschreiben. Wer sie überliest, verliert nichts; wer hinschaut,
-sieht das Standardmodell der Teilchenphysik in einem Kinderspiel
-wiedererzählt. Beides ist legitim. Dieses Buch hat keine Prüfung am Ende.
-
 ---
 
 
@@ -2106,27 +2094,6 @@ Wasserstoff-Atom.*
 
 ---
 
-### Übergang zu Kapitel 4
-
-Wenn die Physik steht, fragt sich: wer hat das gebaut? Nicht wer die
-einzelnen Codezeilen geschrieben hat — das wissen wir, ein Vater und ein
-Mitarbeiter, den er *den Agenten* nennt. Sondern: wer hat den Prozess so
-eingerichtet, dass aus dem Prozess ein Standardmodell fällt, ohne dass die
-Person, die den Prozess betreibt, es einzeln gebaut hat?
-
-Das folgende Kapitel beschreibt die Organisation dahinter. Drei Zellen, fünf
-Rollen je Zelle, ein Beirat aus mehrheitlich toten Denkern, eine Regel namens
-Wu Wei — Arbeiten durch Nicht-Arbeiten. Der Erzähler ist Steve Jobs, oder
-genauer: die Stimme, die der Vater benutzt, wenn er in seiner Werkstatt die
-Rolle *Leader* aufruft. Das Kapitel ist länger als die vorherigen, und es
-hat Tempo, weil es viele Namen durchläuft, die nicht auf Anhieb zusammen
-gehören — Darwin, Ogilvy, Rams, Feynman, Torvalds, Habeck, Sokrates.
-
-Das ist nicht Personenkult. Es ist ein Denkwerkzeug: eine halbe A4-Seite
-Biografie liefert einem Sprachmodell das, was dreihundert Zeilen
-Prompt-Engineering nicht schaffen. Wer am Ende dieses Kapitels denkt,
-das sei Kinderei, hat die Pointe nicht gesehen. Die Kinderei ist die Methode.
-
 ---
 
 
@@ -2711,18 +2678,13 @@ Register, und zwar ein verdächtiges. Sondern die Bescheidenheit, die
 genau beschreibt, was sie tut, und gleichzeitig die Grenze dieser
 Beschreibung markiert.
 
-Diese Haltung lässt sich am besten an einem Satz aus dem zwölften
-Kapitel der Tommy-Krab-Reihe ablesen, das eine Figur namens Mona
-einführt, eine Frau in einer Hütte zwischen Eiswürfeln, die ein
-blaues Feuer hütet. Mona sagt: *Manche Sachen brennen nicht, weil
-sie nichts verbrauchen — sondern weil sie da sein dürfen.* Der Satz
-ist in der Geschichte auf ein Feuer gemünzt, aber er passt genauso
-auf das Gesamtprojekt. Die Schatzinsel ist, wenn man es scharf
-formuliert, ein Versuch, ein Werkzeug zu bauen, das leuchtet, ohne
-zu fressen. Kein Login, keine Werbung, keine variable Belohnung,
-keine Push-Benachrichtigung, kein Aufmerksamkeitsextraktiv. Ein
-Spiel, das nicht davon lebt, dass das Kind dabei bleibt. Ein Spiel,
-das davon lebt, dass es da sein darf.
+Diese Haltung lässt sich am besten an einem Bild aus dem zwölften
+Kapitel der Tommy-Krab-Reihe anknüpfen: Mona, die Frau mit dem
+blauen Feuer. Die Schatzinsel ist, wenn man es scharf formuliert,
+ein Versuch, ein Werkzeug zu bauen, das leuchtet, ohne zu fressen.
+Kein Login, keine Werbung, keine variable Belohnung, keine
+Push-Benachrichtigung, kein Aufmerksamkeitsextraktiv. Ein Spiel,
+das nicht davon lebt, dass das Kind dabei bleibt.
 
 Dieser Gedanke hat, sobald man ihn einmal gesehen hat, eine
 Konsequenz, die nicht in den drei Essays steht und die deshalb hier
@@ -3157,8 +3119,7 @@ verwendet, ohne von ihm verwendet zu werden. Das Spiel, das Oscar spielt,
 ist in diesem Sinn heiter: es hat keine Push-Benachrichtigung, keine
 variable Belohnung, keinen Engagement-Score, der über ihn urteilt. Es ist
 ein Werkzeug, das im Gebrauch verschwindet, wie Heidegger vom Hammer sagt,
-und wenn es nicht benutzt wird, leuchtet es wie das blaue Feuer, von dem
-Mona erzählt — *weil es da sein darf*, nicht weil es verbraucht.
+und das auch dann nicht unruhig wird, wenn es nicht benutzt wird.
 
 Das ist die kleinste Form, in der ein Werkzeug ästhetisch sein kann. Und
 ästhetisch ist, wenn Kant zuhört, dasjenige, was unserer Freiheit nicht
