@@ -1,3 +1,76 @@
+# Sprint 104 — "Bernd lauscht, Elefant erinnert, Floriane flüstert"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Bernd entdeckt was in der Stille wächst, Elefant zeigt was nie vergessen wird, Floriane flüstert was Wünsche leise sagen. 915 Quests gesamt.
+
+**Start:** 2026-04-23
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke HITL — kein Druck. CEO-Input Physik-Kette pausiert bis Paluten-Test.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S104-1 | **Quest-Runde 86** — Bernd(67→71)/Elefant(67→70)/Floriane(67→70) → +10 Quests, 905→915. Bernd: „Was in der Stille wächst". Elefant: „Was nie vergessen wird". Floriane: „Was Wünsche leise sagen". | Artist | 🔲 |
+| S104-2 | **Oscar-Smoke** — Paluten-Test mit iPad. 1 Satz. Rollover seit S98-3. | Till manuell | 🔲 HITL |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S105-Kette** — wartet auf Oscar-Smoke-Ergebnis
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S104
+
+- [x] Planning: 2026-04-23 (autonomer Agent)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Sprint Review S103 (2026-04-23, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/2 Done, 1 HITL.**
+
+| Item | Ergebnis |
+|------|---------|
+| S103-1 Quest-Runde 85 | ✅ PR #453 offen — Tommy(66→70 +4) / Alien(66→69 +3) / Lokführer(66→69 +3), 895→905 Quests |
+| S103-2 Oscar-Smoke | 🔲 HITL — Paluten-Test wartet auf Till. Rollover aus S98-3. |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Tommy: Sternschnuppen-Zählstation, Gezeiten-Messpfahl, Pflanzenwachstums-Labor, Echo-Distanz-Station. Alien: Haustier-Analyse-Labor, Witz-Datenbank, Geburtstags-Forschungsstation. Lokführer: Polarkreis-Express-Haltestelle, Hängebrücken-Überfahrt-Station, Endbahnhof-Wartehalle.
+
+**Stand nach S103:**
+- **905 Quests** auf feat/sprint-103 (PR #453 offen)
+- NPC-Counter (niedrigste): bernd 67 · elefant 67 · floriane 67
+- Smoke Test: CF 403 bekannte Sandbox-Limitation (HITL #27 via CI gelöst, aber Worker-Domain noch gesperrt)
+
+**PO-Entscheidung:**
+- Nächste Quest-Runde S104: Bernd(67)/Elefant(67)/Floriane(67) — Thema: "Stille, Erinnerung, Wünsche"
+
+---
+
+## Sprint Retrospektive S103 (2026-04-23, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Runde 85 sauber: Tommy/Alien/Lokführer +10 Quests, 895→905
+- Themen-Wahl stark: Messen als Abenteuer (Tommy), Erdling-Staunen von außen (Alien), Randstrecken als Poesie (Lokführer)
+- Endbahnhof-Wartehalle: konzeptuell stärkste Quest der Runde — "wo Ankünfte verarbeitet werden"
+
+**Was nicht gut lief:**
+- Oscar-Smoke Rollover: seit S98-3 (6 Sprints) kein Paluten-Test. Sprint-Kette läuft ohne empirisches Feedback.
+- PR #452 + #453 aus Vor-Session noch offen — Till muss mergen bevor Content live ist.
+
+**Retro-Actions für S104:**
+- **R1**: Quest-Runde 86: Bernd(67)/Elefant(67)/Floriane(67) → S104-1
+- **R2**: Oscar-Smoke HITL bleibt offen — kein Druck, 1 Satz von Till wenn Paluten-Test passiert
+
+---
+
 # Sprint 103 — "Tommy misst, Alien staunt, Lokführer fährt ans Ende der Welt"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -27,9 +100,8 @@
 ## Ceremony-Status S103
 
 - [x] Planning: 2026-04-23 (autonomer Agent)
-- [ ] Daily Scrum
-- [ ] Review
-- [ ] Retro
+- [x] Review: 2026-04-23 (autonomer Agent)
+- [x] Retro: 2026-04-23 (autonomer Agent)
 
 ---
 
