@@ -1,3 +1,39 @@
+# Sprint 102 — "Maus entdeckt, Krabs handelt, Oscar schaut"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Maus staunt über kleine Dinge die groß sind (Sterne, Echo, Raupen, Vögel, Erde), Krabs lernt dass Zeit Geld und Erinnerungen beide Wert haben. 895 Quests gesamt.
+
+**Start:** 2026-04-23
+**Sprint-Prinzip:** Quest-Track läuft autonom. Oscar-Smoke bleibt HITL — kein Druck.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S102-1 | **Quest-Runde 84** — Maus(64→69)/Krabs(65→70) → +10 Quests, 885→895. Thema Maus: "Kleine Dinge die groß sind" (Sterne, Echo, Boden, Raupen, Vögel). Thema Krabs: "Was Zeit wirklich ist" (Ressourcen, Schönheit, Archiv, Zinseszins, Erinnerung). | Artist | 🔲 |
+| S102-2 | **Oscar-Smoke** — Till legt iPad hin, schaut weg (Paluten-Test). 1 Satz. Rollover aus S98-3. | Till manuell | 🔲 HITL |
+| S102-3 | **Backlog-Update Physik-Epic** — S99–S101 auf ✅ Done setzen, Sprint-Kette für S102+ bei CEO anfragen. | autonomer Agent | 🔲 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S103-Kette** — Feynman misst erst wenn Oscar-Smoke-Ergebnis vorliegt
+- **Native Speaker Review ES/IT** — HITL #108, wartet auf Till
+
+---
+
+## Ceremony-Status S102
+
+- [x] Planning: 2026-04-23 (autonomer Agent)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
 # Sprint 98 — "Tao lebt. Ein NPC kann nichts. Oscar spielt."
 
 **Sprint Goal (Oscar-Perspektive):**
