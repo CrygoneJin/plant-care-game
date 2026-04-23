@@ -200,6 +200,47 @@ test.describe('Critical Path — NPC-Chat', () => {
         await expect(page.locator('#chat-panel')).toHaveClass(/hidden/, { timeout: 3000 });
     });
 
+    // Oscar-Bug: Auf Tesla-Landscape (1920x1200) war der Close-Button off-screen
+    // weil ein redundanter #chat-character-name span den Button aus dem 320px-Panel
+    // gedrückt hat. Regression-Guard.
+    test('Chat-Close-Button sichtbar + klickbar auf Tesla-Viewport (1920x1200) — Bernd', async ({ page }) => {
+        await page.setViewportSize({ width: 1920, height: 1200 });
+        await startGame(page, 2);
+
+        await page.locator('#chat-bubble').click();
+        await expect(page.locator('#chat-panel')).toBeVisible({ timeout: 5000 });
+
+        // Explizit Bernd wählen (längster NPC-Name: "🍞 Bernd (Support)")
+        await page.selectOption('#chat-character', 'bernd');
+        await page.waitForTimeout(200);
+
+        const panel = await page.locator('#chat-panel').boundingBox();
+        const closeBtn = await page.locator('#chat-close-btn').boundingBox();
+
+        // Close-Btn komplett im Panel
+        expect(closeBtn.x, 'close-btn links innerhalb Panel').toBeGreaterThanOrEqual(panel.x);
+        expect(closeBtn.x + closeBtn.width, 'close-btn rechts innerhalb Panel')
+            .toBeLessThanOrEqual(panel.x + panel.width);
+
+        // Touch-Target 44×44 (Apple HIG)
+        expect(closeBtn.width, 'close-btn Breite ≥ 44px').toBeGreaterThanOrEqual(44);
+        expect(closeBtn.height, 'close-btn Höhe ≥ 44px').toBeGreaterThanOrEqual(44);
+
+        // elementFromPoint an der Btn-Mitte muss wirklich der Close-Btn sein
+        // (nicht von anderem Element überdeckt)
+        const cx = closeBtn.x + closeBtn.width / 2;
+        const cy = closeBtn.y + closeBtn.height / 2;
+        const elAtPoint = await page.evaluate(({ x, y }) => {
+            const el = document.elementFromPoint(x, y);
+            return el ? el.id : null;
+        }, { x: cx, y: cy });
+        expect(elAtPoint, 'close-btn ist top-element in seiner Mitte').toBe('chat-close-btn');
+
+        // Click muss tatsächlich Chat schließen
+        await page.locator('#chat-close-btn').click();
+        await expect(page.locator('#chat-panel')).toHaveClass(/hidden/, { timeout: 3000 });
+    });
+
 });
 
 test.describe('Easter Eggs', () => {

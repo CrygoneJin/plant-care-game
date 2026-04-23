@@ -1540,7 +1540,8 @@ body.chat-open #chat-bubble {
 }
 
 #chat-character {
-    flex: 1;
+    flex: 1 1 auto;
+    min-width: 0; /* ohne das kann flex-item nicht unter min-content shrinken → drückt Close-Btn raus */
     padding: 6px 8px;
     border: none;
     border-radius: 8px;
@@ -1549,6 +1550,16 @@ body.chat-open #chat-bubble {
     background: rgba(255, 255, 255, 0.9);
     color: #2C3E50;
     cursor: pointer;
+}
+
+/* Doppelte Info: select zeigt schon Emoji+Namen. Span nur für Screen-Reader. */
+.chat-npc-name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
 }
 
 /* Settings button: nur im Code-View sichtbar */
@@ -1571,6 +1582,7 @@ body.code-view-active #chat-settings-btn {
     transition: opacity 0.2s;
     min-width: 44px;
     min-height: 44px;
+    flex-shrink: 0; /* Nie kleiner als 44px. Nie aus dem Panel gedrückt. */
     display: flex;
     align-items: center;
     justify-content: center;
