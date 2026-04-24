@@ -53,42 +53,44 @@ describe('INSEL_AUTOMERGE — Baryon-Triplets', () => {
 
     // === Baryon-Bildung ===
 
-    it('Yang+Yang+Yin (clustered) → Proton', () => {
-        // Yang an (2,2), Yang an (2,3), Yin an (3,2) — der platzierte Block ist Yin
+    // AUDIT 2026-04-24: Baryon-Grid-Triplet entfernt (Till-Bug „protons
+    // spawned everywhere"). Yang+Yang+Yin formt KEIN Proton mehr im
+    // Grid-Match — nur noch via Craft-Recipe (siehe recipes.test.js).
+    // Stattdessen: Pair-Merge Yang+Yin→Qi greift normal.
+
+    it('Yang+Yang+Yin (clustered) → Qi (Pair-Merge, NICHT Proton-Triplet)', () => {
         const grid = makeGrid(5, 5, [
             [2, 2, 'yang'],
             [2, 3, 'yang'],
             [3, 2, 'yin'],
         ]);
         const result = checkMerge(grid, 3, 2, 5, 5);
-        assert.ok(result, 'merge result expected');
-        assert.equal(result.result, 'proton', 'Yang+Yang+Yin should form Proton');
-        assert.equal(result.type, 'triplet');
+        assert.ok(result, 'Pair-Merge Yang+Yin→Qi erwartet');
+        assert.notEqual(result.result, 'proton', 'Grid-Triplet für Baryonen ist deaktiviert');
+        assert.equal(result.result, 'qi');
     });
 
-    it('Yang+Yin+Yin (clustered) → Neutron', () => {
+    it('Yang+Yin+Yin (clustered) → Qi oder Strange, aber NICHT Neutron', () => {
         const grid = makeGrid(5, 5, [
             [2, 2, 'yin'],
             [2, 3, 'yin'],
             [3, 2, 'yang'],
         ]);
         const result = checkMerge(grid, 3, 2, 5, 5);
-        assert.ok(result, 'merge result expected');
-        assert.equal(result.result, 'neutron', 'Yang+Yin+Yin should form Neutron');
-        assert.equal(result.type, 'triplet');
+        assert.ok(result);
+        assert.notEqual(result.result, 'neutron', 'Grid-Triplet für Baryonen ist deaktiviert');
     });
 
-    it('Permutations-Invarianz: Yang-Yin-Yang (different layout) → Proton', () => {
-        // diagonale Anordnung, Yin in der Mitte
+    it('Diagonale Yang-Yin-Yang: Pair-Merges erlaubt, aber NICHT Proton-Triplet', () => {
         const grid = makeGrid(5, 5, [
             [1, 1, 'yang'],
             [2, 2, 'yin'],
             [1, 3, 'yang'],
         ]);
-        // trigger beim Yin-Center
         const result = checkMerge(grid, 2, 2, 5, 5);
-        assert.ok(result, 'merge result expected');
-        assert.equal(result.result, 'proton');
+        if (result) {
+            assert.notEqual(result.result, 'proton');
+        }
     });
 
     // === Nicht-Kollision mit Wu-Xing-Metal ===
@@ -134,30 +136,30 @@ describe('INSEL_AUTOMERGE — Baryon-Triplets', () => {
         }
     });
 
-    // === Rule-Order: Triplet schlägt Pair-Merges ===
+    // === Rule-Order nach Baryon-Entfernung (2026-04-24) ===
+    // Pair-Merges greifen jetzt sofort, keine Triplet-Priorität mehr für Baryonen.
+    // Wu-Xing-Triplet (fire+wood+water→metal) hat weiterhin Priorität.
 
-    it('Yang+Yang+Yin: Triplet schlägt Yang+Yin→Qi Pair-Merge', () => {
-        // Wenn Yin zwischen 2 Yangs gesetzt wird: es gäbe Pair-Match (Yang+Yin→Qi)
-        // UND Triplet-Match (Proton). Triplet muss gewinnen.
+    it('Yang+Yang+Yin: Pair Yang+Yin→Qi greift (nicht mehr Proton)', () => {
         const grid = makeGrid(5, 5, [
             [2, 1, 'yang'],
             [2, 3, 'yang'],
-            [2, 2, 'yin'],   // Yin in der Mitte zwischen 2 Yangs
+            [2, 2, 'yin'],
         ]);
         const result = checkMerge(grid, 2, 2, 5, 5);
         assert.ok(result);
-        assert.equal(result.result, 'proton', 'Triplet must win over pair Yang+Yin→Qi');
+        assert.equal(result.result, 'qi', 'Yang+Yin→Qi greift normal');
     });
 
-    it('Yang+Yin+Yin: Triplet schlägt Yin×Yin→Strange Pair-Merge', () => {
+    it('Yang+Yin+Yin: Pair Yang+Yin→Qi oder Yin²→Strange, NICHT Neutron', () => {
         const grid = makeGrid(5, 5, [
             [2, 1, 'yin'],
             [2, 3, 'yin'],
-            [2, 2, 'yang'],  // Yang in der Mitte zwischen 2 Yins
+            [2, 2, 'yang'],
         ]);
         const result = checkMerge(grid, 2, 2, 5, 5);
         assert.ok(result);
-        assert.equal(result.result, 'neutron', 'Triplet must win over pair Yin×Yin→Strange');
+        assert.notEqual(result.result, 'neutron', 'Baryon-Triplet deaktiviert');
     });
 
     // === Einzel-Pair darf noch funktionieren ===
@@ -317,7 +319,7 @@ describe('INSEL_AUTOMERGE — Standardmodell komplett', () => {
         assert.equal(result.result, 'neutrino');
     });
 
-    it('Regression: Yang+Yang+Yin → Proton (Baryon-Triplet nicht gebrochen)', () => {
+    it('Regression 2026-04-24: Yang+Yang+Yin → Qi (NICHT Proton, Grid-Triplet entfernt)', () => {
         const grid = makeGrid(5, 5, [
             [2, 1, 'yang'],
             [2, 3, 'yang'],
@@ -325,7 +327,7 @@ describe('INSEL_AUTOMERGE — Standardmodell komplett', () => {
         ]);
         const result = checkMerge(grid, 2, 2, 5, 5);
         assert.ok(result);
-        assert.equal(result.result, 'proton');
+        assert.equal(result.result, 'qi', 'Yang+Yin→Qi greift; Baryon nur via Craft-Recipe');
     });
 
     it('Regression: Yang + Yin → Qi (allein, ohne drittes Quark)', () => {

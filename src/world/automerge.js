@@ -92,32 +92,17 @@
             msg: '⚪ Rot + Grün + Blau → Metall! Alle Farben zusammen!'
         },
         // Baryonen — gebundene Quark-Tripletts.
-        // Gen1-only: NUR yang/yin, NICHT charm/strange/mountain/cave.
+        // AUDIT 2026-04-24 (Till-Bug: „protons spawned everywhere"):
+        // Die Grid-Triplet-Regeln für Baryonen wurden entfernt. Begründung:
+        // Tao-Decay (passiv, 1/√42 pro Tick) spamt Yang+Yin über das Grid.
+        // Jede 3er-Konstellation in 8-Nachbarschaft wurde sofort zu
+        // Proton/Neutron — ohne Oscars Intention. Protonen überall.
         //
-        // Hauptweg für Oscar: Craft-Recipe (src/world/recipes.js) — 2 Yang + 1 Yin.
-        // Grund: der Pair-Merge Yang+Yang → Charm greift sofort auf Kanten-
-        // Nachbarschaft, bevor das dritte Quark platziert werden kann. Der
-        // Grid-Triplet-Match hier ist emergent bonus für diagonale Setups.
+        // HAUPTWEG (einziger Weg) ab jetzt: Craft-Recipe in recipes.js.
+        //   - 2 Yang + 1 Yin → Proton
+        //   - 1 Yang + 2 Yin → Neutron
         //
-        // FARBLADUNG — spielerisch abstrahiert.
-        // Reale Baryonen brauchen drei verschiedene Farbladungen (R/G/B),
-        // damit die Kombination farbneutral ist (QCD-Confinement: freie
-        // farbgeladene Teilchen existieren nicht). Yang/Yin haben im Spiel
-        // aber KEINE Farb-Varianten — wir modellieren die Dreiheit allein
-        // über die Flavor-Kombination (uud/udd). Eine Mechanik mit drei
-        // Farb-Yangs/Yins würde die Quark-Ladder (Yang² → Charm) komplett
-        // umbauen — aus Spielbarkeits-Gründen ausgespart. Abstraktion,
-        // nicht Korrektheit. Audit: Till, 2026-04-22.
-        {
-            materials: ['yang', 'yang', 'yin'],
-            result: 'proton',
-            msg: '🔴 Yang + Yang + Yin → Proton! (uud)'
-        },
-        {
-            materials: ['yang', 'yin', 'yin'],
-            result: 'neutron',
-            msg: '⭕ Yang + Yin + Yin → Neutron! (udd)'
-        },
+        // FARBLADUNG — spielerisch abstrahiert (via Flavor uud/udd).
     ];
 
     function getNeighbors(r, c, rows, cols) {
