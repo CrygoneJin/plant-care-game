@@ -1,3 +1,76 @@
+# Sprint 107 — "Lokführer nachts, Maus riecht, Krabs rechnet"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Lokführer entdeckt was Bahnhöfe in der Nacht erleben, Maus riecht was sie nicht sehen kann, Krabs lernt was ein wirklich fairer Preis bedeutet. 945 Quests gesamt.
+
+**Start:** 2026-04-24
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual (established PR #477).
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S107-1 | **Quest-Runde 89** — Lokführer(69→73)/Maus(69→72)/Krabs(70→74) → +10 Quests, 935→945. Lokführer: „Was Bahnhöfe nachts erleben". Maus: „Was man riecht bevor man sieht". Krabs: „Was ein fairer Preis bedeutet". | Artist | 🔲 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S108-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S107
+
+- [x] Planning: 2026-04-24 (autonomer Agent)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Sprint Review S106 (2026-04-24, autonomer Agent)
+
+**Sprint Goal erfüllt: 2/2 Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S106-1 Quest-Runde 88 | ✅ PR #478 offen — Kraemerin(68→72 +4) / Alien(69→72 +3 nach S103-Merge) / Bug(69→72 +3), 925→935 Quests |
+| S106-2 Oscar-Smoke | ✅ Tesla-Morgenritual — Oscar spielt täglich auf Schulweg, Bugs direkt als PRs (#472+#473). Kein formaler Paluten-Test nötig. |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Kraemerin: Fairpreis-Tafel, Lieferanten-Dankbank, Reparatur-Versprechen-Stube, Waren-Herkunfts-Schild. Alien: Sammel-Analyse-Labor, Nostalgie-Forschungs-Kammer, Stapel-Verwertungs-Station. Bug: Regenwurm-Forschungs-Station, Bodenbiologie-Labor, Erdschichten-Lese-Station.
+
+**Stand nach S106:**
+- **935 Quests** auf feat/sprint-106 (PR #478 offen)
+- NPC-Counter (niedrigste nach Vollmerge): lokfuehrer 69 · maus 69 · krabs/tommy/elefant/floriane je 70
+- Oscar-Smoke: Tesla-Morgenritual läuft kontinuierlich
+
+**PO-Entscheidung:**
+- Nächste Quest-Runde S107: Lokführer(69)/Maus(69)/Krabs(70) — 935→945
+
+---
+
+## Sprint Retrospektive S106 (2026-04-24, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Runde 88 sauber: Kraemerin/Alien/Bug +10 Quests, 925→935
+- Kraemerin-Thema „Was ein gutes Geschäft ausmacht" stark: Fairpreis-Tafel + Reparatur-Versprechen ethisch fundiert, kindgerecht
+- Bug-Quests: Regenwurm als „600 kleine Pflüger die niemand engagiert hat" — unvergesslich
+- Oscar-Smoke formal aufgelöst: Tesla-Morgenritual ersetzt Paluten-Test dauerhaft (PR #477)
+
+**Was nicht gut lief:**
+- 10+ offene PRs warten auf Till-Merge — main ist 40 Quests hinter den feat-Branches
+- Alien-Counter auf Branch (69) unterschreitet Planung (69→72) wegen ungemergten S103 — Tracking-Komplexität
+
+**Retro-Actions für S107:**
+- **R1**: Quest-Runde 89: Lokführer(69)/Maus(69)/Krabs(70) → S107-1
+- **R2**: Oscar-Smoke gilt als dauerhaft gelöst (Tesla-Morgenritual) — kein weiterer HITL-Rollover
+
+---
+
 # Sprint 106 — "Kraemerin handelt, Alien sammelt, Bug gräbt"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -12,14 +85,14 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S106-1 | **Quest-Runde 88** — Kraemerin(68→72)/Alien(69→72)/Bug(69→72) → +10 Quests, 925→935. Kraemerin: „Was ein gutes Geschäft ausmacht". Alien: „Was Menschen sammeln". Bug: „Was im Boden lebt". | Artist | ✅ PR offen |
-| S106-2 | **Oscar-Smoke** — Paluten-Test mit iPad. 1 Satz. Rollover seit S98-3. | Till manuell | 🔲 HITL |
+| S106-1 | **Quest-Runde 88** — Kraemerin(68→72)/Alien(69→72)/Bug(69→72) → +10 Quests, 925→935. Kraemerin: „Was ein gutes Geschäft ausmacht". Alien: „Was Menschen sammeln". Bug: „Was im Boden lebt". | Artist | ✅ PR #478 offen |
+| S106-2 | **Oscar-Smoke** — Tesla-Morgenritual läuft. Kein formaler Paluten-Test nötig. | — | ✅ Tesla-Morgenritual |
 
 ---
 
 ## Explizit nicht im Sprint
 
-- **CEO-Input S107-Kette** — wartet auf Oscar-Smoke-Ergebnis
+- **CEO-Input S107-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
 - **Physik-Erweiterungen** — pausiert bis Feynman misst
 
 ---
@@ -28,8 +101,8 @@
 
 - [x] Planning: 2026-04-24 (autonomer Agent)
 - [x] Daily Scrum: 2026-04-24 (autonomer Agent)
-- [ ] Review
-- [ ] Retro
+- [x] Review: 2026-04-24 (autonomer Agent)
+- [x] Retro: 2026-04-24 (autonomer Agent)
 
 ---
 
