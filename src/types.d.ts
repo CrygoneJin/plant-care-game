@@ -112,6 +112,8 @@ interface Recipe {
     resultCount: number;
     ingredients: Record<MaterialId, number>;
     desc: string;
+    /** Progressive Disclosure: Recipe nur sichtbar wenn alle Materialien in unlockedMaterials sind. */
+    requires?: MaterialId[];
 }
 
 // --- Blueprints ---
