@@ -147,8 +147,12 @@ window.INSEL_CRAFTING_RECIPES = [
     // emergent bonus für Physik-Nerds, die's mit diagonaler Platzierung
     // schaffen. Ladungs-Bilanz stimmt: 2·(+2/3) + 1·(-1/3) = +1 (Proton),
     // 1·(+2/3) + 2·(-1/3) = 0 (Neutron). Audit: Till, 2026-04-22.
-    { name: 'Proton',  result: 'proton',  resultCount: 1, ingredients: { yang: 2, yin: 1 }, desc: '2 Yang + 1 Yin = Proton (uud, Kernbaustein, Ladung +1)' },
-    { name: 'Neutron', result: 'neutron', resultCount: 1, ingredients: { yang: 1, yin: 2 }, desc: '1 Yang + 2 Yin = Neutron (udd, Kernbaustein, Ladung 0)' },
+    // Till-Audit 2026-04-24: „warum jetzt gleich Protonen? dafür brauchen
+    // wir doch erstmal Quarks." → Progressive Disclosure: Baryon-Rezept
+    // erst sichtbar, wenn Pauli-Druck-Erlebnis da ist. Lernweg:
+    // Tao → Yin/Yang → Qi → Charm/Strange (Pauli) → Baryon.
+    { name: 'Proton',  result: 'proton',  resultCount: 1, ingredients: { yang: 2, yin: 1 }, requires: ['charm'],   desc: '2 Yang + 1 Yin = Proton (uud, Kernbaustein, Ladung +1)' },
+    { name: 'Neutron', result: 'neutron', resultCount: 1, ingredients: { yang: 1, yin: 2 }, requires: ['strange'], desc: '1 Yang + 2 Yin = Neutron (udd, Kernbaustein, Ladung 0)' },
 
     // === HAUPTGRUPPEN-ELEMENTE — echte Chemie zum Anfassen ===
     // Direkte Rezepte für Z ≤ 20: Z·Proton + N·Neutron + Z·Elektron → Element
