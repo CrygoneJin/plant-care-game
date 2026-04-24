@@ -27,6 +27,78 @@
             analytics.events = analytics.events.slice(-500);
         }
         saveAnalytics(analytics);
+
+        // Crafting-Erfolge in den Buffer feeden (opt-in-gated innerhalb bufferCount)
+        if (event === 'craft' || event === 'quick-craft' || event === 'llm-craft') {
+            const recipe = (data && (data.recipe || data.name || data.result)) || 'unknown';
+            bufferCount('crafts', recipe);
+        }
+    }
+
+    // --- Opt-in-Gate für feingranulare Analytics ---
+    // Session-Grundstats (aggregiert, PII-frei) laufen wie gehabt.
+    // Material-/NPC-Granularität NUR wenn Till das Flag setzt.
+    function isAnalyticsOptIn() {
+        try {
+            return localStorage.getItem('insel-analytics-optin') === '1';
+        } catch (_) { return false; }
+    }
+
+    function setAnalyticsOptIn(on) {
+        try {
+            if (on) localStorage.setItem('insel-analytics-optin', '1');
+            else localStorage.removeItem('insel-analytics-optin');
+        } catch (_) {}
+    }
+
+    // --- Aggregations-Buffer (nur aktiv wenn Opt-in) ---
+    // In-Memory-Zähler. Werden beim Flush an /metrics/ingest gepusht (in pingWebhook
+    // eingebettet, kein separater Endpoint). Flush periodisch + beforeunload.
+    const buffer = {
+        placements: Object.create(null), // material -> count
+        npcTaps:    Object.create(null), // npcId   -> count
+        crafts:     Object.create(null), // recipe  -> count
+    };
+
+    function resetBuffer() {
+        for (const k in buffer.placements) delete buffer.placements[k];
+        for (const k in buffer.npcTaps)    delete buffer.npcTaps[k];
+        for (const k in buffer.crafts)     delete buffer.crafts[k];
+    }
+
+    function bufferCount(bucket, key) {
+        if (!isAnalyticsOptIn()) return;            // 0 Bytes verlassen den Browser
+        if (!key || typeof key !== 'string') return;
+        if (!buffer[bucket]) return;
+        // Key-Sanitizing: max 30 chars, nur Wortzeichen/Bindestrich/Unterstrich
+        const safe = String(key).slice(0, 30).replace(/[^\w\-]/g, '_');
+        if (!safe) return;
+        buffer[bucket][safe] = (buffer[bucket][safe] || 0) + 1;
+    }
+
+    function getBufferSnapshot() {
+        // Pure Snapshot, kein Reset — für Tests und Dashboard-Preview
+        return {
+            placements: Object.assign({}, buffer.placements),
+            npcTaps:    Object.assign({}, buffer.npcTaps),
+            crafts:     Object.assign({}, buffer.crafts),
+        };
+    }
+
+    // Automatische Buffer-Feeds via Event-Bus (wenn verfügbar)
+    function wireBufferFeeds() {
+        // block:placed → placements[material]++
+        if (window.INSEL_BUS && typeof window.INSEL_BUS.on === 'function') {
+            window.INSEL_BUS.on('block:placed', function (data) {
+                if (data && data.material) bufferCount('placements', data.material);
+            });
+        }
+        // openChat wrappen → npc_tap
+        const origOpenChat = window.openChat;
+        window.openChat = function (npcId) {
+            bufferCount('npcTaps', npcId);
+            if (typeof origOpenChat === 'function') return origOpenChat.apply(this, arguments);
+        };
     }
 
     // --- Session-Tracking ---
@@ -173,6 +245,9 @@
             var neutrinoScore = (crafts === 0 && totalChats === 0) ? 1.0
                 : (crafts < 3 && totalChats < 3) ? 0.5
                 : 0.0;
+            // Feingranulare Daten NUR wenn Opt-in gesetzt — sonst null lassen
+            const optIn = isAnalyticsOptIn();
+            const snap  = optIn ? getBufferSnapshot() : null;
             navigator.sendBeacon(proxy + '/metrics/ingest', JSON.stringify({
                 type: 'session',
                 player_name: localStorage.getItem('insel-spielername') || 'Anonym',
@@ -194,8 +269,36 @@
                 neutrino_score: neutrinoScore,
                 discovery_count: data.discovery_count || 0,
                 discovery_craft_ratio: crafts > 0 ? Math.round((data.discovery_count || 0) / crafts * 10) / 10 : null,
+                // Opt-in-only Granularität
+                session_id:            optIn ? data.id : null,
+                placements_by_material: snap ? snap.placements : null,
+                npc_taps:               snap ? snap.npcTaps    : null,
+                crafting_successes:     snap ? snap.crafts     : null,
             }));
         } catch (e) { /* kein Tracking > kaputtes Tracking */ }
+    }
+
+    // --- Periodischer Flush (30s) — nur wenn Opt-in ---
+    // Idempotenz: Worker UPSERTed per session_id (siehe handleMetricsIngest).
+    // Zwischen Flushes darf der Buffer NICHT resetten, sonst gehen Platzierungen
+    // verloren die schon gepingt wurden aber noch nicht aggregiert. Der Worker
+    // akzeptiert die immer-komplette Snapshot-View.
+    let _flushTimer = null;
+    function startPeriodicFlush(intervalMs) {
+        if (_flushTimer) return;
+        const ms = intervalMs || 30000;
+        _flushTimer = setInterval(function () {
+            if (!isAnalyticsOptIn()) return;
+            try { pingWebhook(); } catch (_) {}
+        }, ms);
+        // Node-Test-Kontext: unref() damit Node beenden kann. Browser ignoriert es.
+        if (_flushTimer && typeof _flushTimer.unref === 'function') {
+            _flushTimer.unref();
+        }
+    }
+
+    function stopPeriodicFlush() {
+        if (_flushTimer) { clearInterval(_flushTimer); _flushTimer = null; }
     }
 
     // --- Bug-Reporter ---
@@ -259,6 +362,14 @@
 
         // Ping bei Session-Ende
         window.addEventListener('beforeunload', pingWebhook);
+
+        // Granular-Analytics verdrahten (Opt-in-gated innerhalb bufferCount).
+        // Bus-Listener + openChat-Wrapper werden immer gesetzt — sie feeden aber
+        // nur Daten wenn das Opt-in-Flag aktiv ist. So kann Till im laufenden
+        // Spiel opt-in togglen ohne Reload.
+        try { wireBufferFeeds(); } catch (_) {}
+        // Periodischer Flush. Ist ein No-op ohne Opt-in.
+        try { startPeriodicFlush(30000); } catch (_) {}
     }
 
     // --- Exports ---
@@ -275,6 +386,15 @@
         reportBug: reportBug,
         initTestUI: initTestUI,
         setGameStatsFn: function (fn) { gameStatsFn = fn; },
+        // Opt-in-API + Buffer (für Tests und Dashboard)
+        isAnalyticsOptIn:   isAnalyticsOptIn,
+        setAnalyticsOptIn:  setAnalyticsOptIn,
+        bufferCount:        bufferCount,
+        getBufferSnapshot:  getBufferSnapshot,
+        resetBuffer:        resetBuffer,
+        wireBufferFeeds:    wireBufferFeeds,
+        startPeriodicFlush: startPeriodicFlush,
+        stopPeriodicFlush:  stopPeriodicFlush,
     };
 
     // INSEL-Namespace

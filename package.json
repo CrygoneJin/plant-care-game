@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test:unit": "node --test ops/tests/unit.test.js ops/tests/elemente-recipes.test.js ops/tests/automerge.test.js",
+    "test:unit": "node --test ops/tests/unit.test.js ops/tests/elemente-recipes.test.js ops/tests/automerge.test.js ops/tests/analytics-optin.test.js",
     "test:e2e": "npx playwright test --config ops/tests/playwright.config.js",
     "typecheck": "tsc --noEmit"
   },

@@ -510,24 +510,60 @@ async function handleMetricsIngest(request, env) {
     const { type } = body;
 
     if (type === 'session') {
-        // neutrino_score: Spalte wird per ALTER TABLE hinzugefügt wenn sie fehlt
-        // SQLite ignoriert doppeltes ALTER TABLE nicht, daher try/catch
-        try {
-            await env.METRICS_DB.prepare(
-                `ALTER TABLE sessions ADD COLUMN neutrino_score REAL DEFAULT NULL`
-            ).run();
-        } catch (e) { /* Spalte existiert bereits — OK */ }
+        // Spalten werden per ALTER TABLE hinzugefügt wenn sie fehlen.
+        // SQLite wirft bei doppeltem ADD — daher einzeln try/catch.
+        const migrations = [
+            `ALTER TABLE sessions ADD COLUMN neutrino_score REAL DEFAULT NULL`,
+            `ALTER TABLE sessions ADD COLUMN session_id TEXT DEFAULT NULL`,
+            `ALTER TABLE sessions ADD COLUMN placements_by_material TEXT DEFAULT NULL`,
+            `ALTER TABLE sessions ADD COLUMN npc_taps TEXT DEFAULT NULL`,
+            `ALTER TABLE sessions ADD COLUMN crafting_successes TEXT DEFAULT NULL`,
+        ];
+        for (const sql of migrations) {
+            try { await env.METRICS_DB.prepare(sql).run(); } catch (_) { /* existiert */ }
+        }
+
+        // Granular-JSON: nur serialisieren wenn Objekt vorhanden (Opt-in beim Client).
+        const placementsJson = body.placements_by_material ? JSON.stringify(body.placements_by_material) : null;
+        const npcTapsJson    = body.npc_taps               ? JSON.stringify(body.npc_taps)               : null;
+        const craftsJson     = body.crafting_successes     ? JSON.stringify(body.crafting_successes)     : null;
+
+        // Idempotenz: periodischer Flush sendet mehrfach pro Session. Mit session_id
+        // → UPDATE statt INSERT. Ohne session_id (kein Opt-in) klassisches INSERT.
+        if (body.session_id) {
+            const existing = await env.METRICS_DB.prepare(
+                `SELECT id FROM sessions WHERE session_id = ? LIMIT 1`
+            ).bind(body.session_id).first();
+            if (existing) {
+                await env.METRICS_DB.prepare(
+                    `UPDATE sessions SET duration_s = ?, blocks_placed = ?, blocks_harvested = ?,
+                     quests_completed = ?, crafts_total = ?, chat_messages = ?, unique_materials = ?,
+                     engagement_score = ?, neutrino_score = ?, placements_by_material = ?,
+                     npc_taps = ?, crafting_successes = ? WHERE session_id = ?`
+                ).bind(
+                    body.duration_s || 0, body.blocks_placed || 0, body.blocks_harvested || 0,
+                    body.quests_completed || 0, body.crafts_total || 0, body.chat_messages || 0,
+                    body.unique_materials || 0, body.engagement_score || 0,
+                    typeof body.neutrino_score === 'number' ? body.neutrino_score : null,
+                    placementsJson, npcTapsJson, craftsJson,
+                    body.session_id
+                ).run();
+                return json({ ok: true, type: 'session', upserted: true });
+            }
+        }
 
         await env.METRICS_DB.prepare(
             `INSERT INTO sessions (player_name, country, duration_s, blocks_placed, blocks_harvested,
-             quests_completed, crafts_total, crafts_llm, chat_messages, unique_materials, engagement_score, neutrino_score)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+             quests_completed, crafts_total, crafts_llm, chat_messages, unique_materials, engagement_score,
+             neutrino_score, session_id, placements_by_material, npc_taps, crafting_successes)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
         ).bind(
             body.player_name || 'Anonym', body.country || 'unknown',
             body.duration_s || 0, body.blocks_placed || 0, body.blocks_harvested || 0,
             body.quests_completed || 0, body.crafts_total || 0, body.crafts_llm || 0,
             body.chat_messages || 0, body.unique_materials || 0, body.engagement_score || 0,
-            typeof body.neutrino_score === 'number' ? body.neutrino_score : null
+            typeof body.neutrino_score === 'number' ? body.neutrino_score : null,
+            body.session_id || null, placementsJson, npcTapsJson, craftsJson
         ).run();
         return json({ ok: true, type: 'session' });
     }

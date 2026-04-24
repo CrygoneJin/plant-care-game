@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Schatzinsel · Till-Dashboard</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  :root {
+    --fg: #1b2a3a;
+    --muted: #6b7c90;
+    --bg: #fafbfc;
+    --card: #fff;
+    --line: #e4e9ef;
+    --bar: #2d7cd6;
+    --bar2: #4aa86b;
+    --warn: #d97742;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg);
+               font: 14px/1.5 -apple-system, "Segoe UI", sans-serif; }
+  header { padding: 16px 24px; border-bottom: 1px solid var(--line); background: var(--card);
+           display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+  h1 { margin: 0; font-size: 18px; font-weight: 600; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .5px;
+       color: var(--muted); margin: 0 0 10px 0; font-weight: 600; }
+  main { padding: 24px; max-width: 1200px; margin: 0 auto; display: grid;
+         grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+          padding: 16px; }
+  .card.wide { grid-column: 1 / -1; }
+  .kpi { display: flex; gap: 24px; flex-wrap: wrap; }
+  .kpi div { }
+  .kpi b { font-size: 22px; display: block; }
+  .kpi span { color: var(--muted); font-size: 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 500; font-size: 11px;
+       text-transform: uppercase; letter-spacing: .4px; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .bar-row { display: grid; grid-template-columns: 120px 1fr 60px;
+             gap: 8px; align-items: center; margin: 4px 0; font-size: 13px; }
+  .bar-row .label { color: var(--fg); white-space: nowrap; overflow: hidden;
+                    text-overflow: ellipsis; }
+  .bar-row .val { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .bar-bg { background: var(--line); height: 14px; border-radius: 2px; overflow: hidden; }
+  .bar-fg { background: var(--bar); height: 100%; }
+  .bar-fg.alt { background: var(--bar2); }
+  .empty { color: var(--muted); font-style: italic; padding: 12px 0; }
+  button, .btn { background: #2d7cd6; color: #fff; border: 0; padding: 8px 14px;
+                 border-radius: 6px; cursor: pointer; font-size: 13px; }
+  button.ghost { background: transparent; color: var(--fg); border: 1px solid var(--line); }
+  label { font-size: 12px; color: var(--muted); }
+  input[type=text] { padding: 6px 8px; border: 1px solid var(--line); border-radius: 4px;
+                     font-size: 13px; width: 320px; }
+  .note { color: var(--muted); font-size: 12px; margin-top: 8px; }
+  @media (max-width: 780px) {
+    main { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Schatzinsel · Dashboard</h1>
+  <div>
+    <label>Proxy</label>
+    <input id="proxy" type="text" value="https://schatzinsel.hoffmeyer-zlotnik.workers.dev">
+    <button id="reload">Neu laden</button>
+  </div>
+</header>
+
+<main>
+  <section class="card wide">
+    <h2>Überblick</h2>
+    <div class="kpi">
+      <div><b id="k-sessions">–</b><span>Sessions</span></div>
+      <div><b id="k-blocks">–</b><span>Platzierungen gesamt</span></div>
+      <div><b id="k-materials">–</b><span>Unterschiedliche Materialien</span></div>
+      <div><b id="k-taps">–</b><span>NPC-Taps gesamt</span></div>
+      <div><b id="k-crafts">–</b><span>Crafting-Erfolge</span></div>
+      <div><b id="k-median">–</b><span>Median-Session (Min)</span></div>
+    </div>
+    <p class="note" id="privacy-note"></p>
+  </section>
+
+  <section class="card">
+    <h2>Platzierungen pro Material</h2>
+    <div id="chart-materials"></div>
+  </section>
+
+  <section class="card">
+    <h2>NPC-Nutzung</h2>
+    <div id="chart-npcs"></div>
+  </section>
+
+  <section class="card">
+    <h2>Crafting-Erfolge (Top 10)</h2>
+    <div id="chart-crafts"></div>
+  </section>
+
+  <section class="card">
+    <h2>Session-Länge Histogramm</h2>
+    <div id="chart-sessions"></div>
+    <p class="note">Buckets: 0–1, 1–3, 3–5, 5–10, 10–20, 20+ Minuten</p>
+  </section>
+
+  <section class="card wide">
+    <h2>Letzte Sessions (20)</h2>
+    <table id="session-table">
+      <thead><tr><th>Wann</th><th>Spieler</th><th class="num">Dauer</th>
+        <th class="num">Blöcke</th><th class="num">Chats</th><th class="num">Crafts</th>
+        <th>Materialien (Top 3)</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+</main>
+
+<script>
+  // --- Aggregations-Logik (pur, testbar) ---
+  function aggregateSessions(rows) {
+    const materials = Object.create(null);
+    const npcs      = Object.create(null);
+    const crafts    = Object.create(null);
+    const buckets   = [0, 0, 0, 0, 0, 0]; // 0-1, 1-3, 3-5, 5-10, 10-20, 20+ min
+    let totalBlocks = 0, granularRows = 0;
+    const durations = [];
+
+    for (const row of rows) {
+      totalBlocks += (row.blocks_placed || 0);
+      const mins = (row.duration_s || 0) / 60;
+      durations.push(mins);
+      const b = mins < 1 ? 0 : mins < 3 ? 1 : mins < 5 ? 2 : mins < 10 ? 3 : mins < 20 ? 4 : 5;
+      buckets[b]++;
+
+      const pm = parseJson(row.placements_by_material);
+      const nt = parseJson(row.npc_taps);
+      const cs = parseJson(row.crafting_successes);
+      if (pm || nt || cs) granularRows++;
+
+      if (pm) for (const k in pm) materials[k] = (materials[k] || 0) + (pm[k] || 0);
+      if (nt) for (const k in nt) npcs[k]      = (npcs[k]      || 0) + (nt[k] || 0);
+      if (cs) for (const k in cs) crafts[k]    = (crafts[k]    || 0) + (cs[k] || 0);
+    }
+
+    durations.sort((a, b) => a - b);
+    const median = durations.length ? durations[Math.floor(durations.length / 2)] : 0;
+
+    return {
+      sessions: rows.length,
+      totalBlocks, granularRows, median, durations,
+      materials, npcs, crafts, buckets,
+      uniqueMaterials: Object.keys(materials).length,
+      totalTaps: sumValues(npcs),
+      totalCrafts: sumValues(crafts),
+    };
+  }
+
+  function parseJson(s) { try { return s ? JSON.parse(s) : null; } catch (_) { return null; } }
+  function sumValues(obj) { let n = 0; for (const k in obj) n += (obj[k] || 0); return n; }
+
+  // --- DOM-Hilfen (textContent, keine innerHTML-Konkatenation) ---
+  function el(tag, attrs, text) {
+    const node = document.createElement(tag);
+    if (attrs) for (const k in attrs) node.setAttribute(k, attrs[k]);
+    if (text != null) node.textContent = text;
+    return node;
+  }
+
+  function renderBar(container, key, value, max, alt) {
+    const row = el('div', { class: 'bar-row' });
+    row.appendChild(el('div', { class: 'label', title: String(key) }, String(key)));
+    const bg = el('div', { class: 'bar-bg' });
+    const fg = el('div', { class: 'bar-fg' + (alt ? ' alt' : '') });
+    const pct = max > 0 ? Math.round((value / max) * 100) : 0;
+    fg.style.width = pct + '%';
+    bg.appendChild(fg);
+    row.appendChild(bg);
+    row.appendChild(el('div', { class: 'val' }, String(value)));
+    container.appendChild(row);
+  }
+
+  function renderBarChart(containerId, obj, topN, alt) {
+    const target = document.getElementById(containerId);
+    target.textContent = '';
+    const entries = Object.entries(obj).sort((a, b) => b[1] - a[1]).slice(0, topN || 20);
+    if (!entries.length) {
+      target.appendChild(el('div', { class: 'empty' },
+        'Keine Daten (Opt-in erforderlich auf Oscars Gerät)'));
+      return;
+    }
+    const max = entries[0][1];
+    for (const [k, v] of entries) renderBar(target, k, v, max, !!alt);
+  }
+
+  function renderHistogram(containerId, buckets) {
+    const labels = ['0–1 Min', '1–3 Min', '3–5 Min', '5–10 Min', '10–20 Min', '20+ Min'];
+    const target = document.getElementById(containerId);
+    target.textContent = '';
+    const max = Math.max(1, ...buckets);
+    for (let i = 0; i < buckets.length; i++) renderBar(target, labels[i], buckets[i], max, true);
+  }
+
+  function renderKPIs(agg) {
+    setText('k-sessions',  agg.sessions);
+    setText('k-blocks',    agg.totalBlocks);
+    setText('k-materials', agg.uniqueMaterials);
+    setText('k-taps',      agg.totalTaps);
+    setText('k-crafts',    agg.totalCrafts);
+    setText('k-median',    agg.median ? agg.median.toFixed(1) : '0');
+    const note = document.getElementById('privacy-note');
+    note.textContent = '🔒 ' + agg.granularRows + ' von ' + agg.sessions +
+      ' Sessions mit feingranularen Daten (Opt-in). Ohne Opt-in: nur aggregierte ' +
+      'Session-Zähler, kein Tracking einzelner Materialien/NPCs.';
+  }
+
+  function renderSessionTable(rows) {
+    const tbody = document.querySelector('#session-table tbody');
+    tbody.textContent = '';
+    for (const row of rows.slice(0, 20)) {
+      const pm = parseJson(row.placements_by_material) || {};
+      const top3 = Object.entries(pm).sort((a, b) => b[1] - a[1]).slice(0, 3)
+                    .map(([k, v]) => k + ' ' + v).join(', ') || '—';
+      const tr = el('tr');
+      const mins = Math.round((row.duration_s || 0) / 60 * 10) / 10;
+      tr.appendChild(el('td', null, formatTs(row.ts)));
+      tr.appendChild(el('td', null, row.player_name || ''));
+      tr.appendChild(el('td', { class: 'num' }, mins + ' m'));
+      tr.appendChild(el('td', { class: 'num' }, String(row.blocks_placed || 0)));
+      tr.appendChild(el('td', { class: 'num' }, String(row.chat_messages || 0)));
+      tr.appendChild(el('td', { class: 'num' }, String(row.crafts_total || 0)));
+      tr.appendChild(el('td', null, top3));
+      tbody.appendChild(tr);
+    }
+  }
+
+  function formatTs(ts) {
+    if (!ts) return '';
+    const d = new Date(String(ts).replace(' ', 'T') + 'Z');
+    if (isNaN(d.getTime())) return String(ts);
+    return d.toLocaleString('de-DE',
+      { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+  }
+
+  function setText(id, v) { document.getElementById(id).textContent = v; }
+
+  async function load() {
+    const proxy = document.getElementById('proxy').value.trim().replace(/\/$/, '');
+    if (!proxy) return;
+    try {
+      const res = await fetch(proxy + '/metrics?table=sessions&limit=200');
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      const rows = data.rows || [];
+      const agg  = aggregateSessions(rows);
+      renderKPIs(agg);
+      renderBarChart('chart-materials', agg.materials, 20, false);
+      renderBarChart('chart-npcs',      agg.npcs,      20, true);
+      renderBarChart('chart-crafts',    agg.crafts,    10, false);
+      renderHistogram('chart-sessions', agg.buckets);
+      renderSessionTable(rows);
+    } catch (e) {
+      document.getElementById('privacy-note').textContent =
+        'Fehler beim Laden: ' + e.message + '. Proxy erreichbar?';
+    }
+  }
+
+  document.getElementById('reload').addEventListener('click', load);
+  load();
+
+  // Export für Tests (läuft im Browser wie im Node-Kontext)
+  window.DashboardAgg = { aggregateSessions, parseJson, sumValues };
+</script>
+</body>
+</html>
