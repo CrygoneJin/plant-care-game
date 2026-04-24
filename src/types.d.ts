@@ -505,6 +505,14 @@ interface Window {
 
     INSEL_TTS: InselTTS;
     INSEL_SAVE: InselSave;
+    INSEL_IDB: {
+        snapshot(): Promise<boolean>;
+        getSnapshot(): Promise<{ ts: number; data: Record<string, string>; persistGranted?: boolean } | undefined>;
+        clear(): Promise<void>;
+        ready: Promise<{ restored: boolean; reason?: string; keys?: number; ageDays?: number }>;
+        _constants: { DB_NAME: string; STORE: string; SNAPSHOT_KEY: string };
+    };
+    INSEL_IDB_READY: Promise<{ restored: boolean; reason?: string; keys?: number; ageDays?: number }>;
     INSEL_STORIES: Record<string, string[]> & {
         CODE_EASTER_EGGS: Record<string, string[]>;
         maybeCodeEasterEgg(material: string, showToast?: Function, recordMilestone?: Function, trackEvent?: Function): boolean;
