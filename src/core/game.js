@@ -5658,8 +5658,12 @@
         if (harvest) harvest.style.display = stufe >= 2 ? '' : 'none';
         if (fill) fill.style.display = stufe >= 3 ? '' : 'none';
         if (craftGroup) craftGroup.style.display = stufe >= 4 ? '' : 'none';
-        if (viewGroup) viewGroup.style.display = stufe >= 4 ? '' : 'none';
-        if (overflowGroup) overflowGroup.style.display = stufe >= 5 ? '' : 'none';
+        // view-group (Wetter, Theme, Mute) immer sichtbar — Mute ist Basic-Accessibility.
+        // Oscar-Tesla-Bug: hasRecipe-Gate verhinderte Mute-Zugriff obwohl er seit Wochen spielt.
+        if (viewGroup) viewGroup.style.display = '';
+        // overflow-group (⋯) ab Stufe 2: drei-Punkte-Menü ist selbst-versteckend,
+        // gibt Zugriff auf Code-View/Iso/Genre ohne den Screen zu überfrachten.
+        if (overflowGroup) overflowGroup.style.display = stufe >= 2 ? '' : 'none';
         if (discoveryGroup) discoveryGroup.style.display = stufe >= 3 ? '' : 'none';
 
         // Chat-Bubble
