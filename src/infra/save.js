@@ -89,6 +89,11 @@
             seedKey: window.currentSeed ? key : undefined,
         };
         localStorage.setItem('insel-projekte', JSON.stringify(projects));
+        // IDB-Backup: nach jedem Autosave auch IDB aktualisieren, falls Tesla
+        // beforeunload nicht feuert (QNX-Chromium-Eigenheit). Best-Effort.
+        if (window.INSEL_IDB && window.INSEL_IDB.snapshot) {
+            window.INSEL_IDB.snapshot();
+        }
         var saveBtn = document.getElementById('save-btn');
         if (saveBtn) {
             saveBtn.style.transition = 'opacity 0.3s';
@@ -194,6 +199,13 @@
         var projects = JSON.parse(localStorage.getItem('insel-projekte') || '{}');
         delete projects[AUTOSAVE_KEY];
         localStorage.setItem('insel-projekte', JSON.stringify(projects));
+        // IDB-Backup auch räumen. Sonst: Oscar klickt "Neue Insel", baut
+        // nichts, Tesla wiped LS → next morning kommt alte Insel via
+        // Restore zurück weil IDB-Snapshot noch da ist. Diskrepanz zum
+        // Nutzerwillen = hohe Frustration. 2 Zeilen verhindern das.
+        if (window.INSEL_IDB && window.INSEL_IDB.clear) {
+            window.INSEL_IDB.clear();
+        }
         _ctx.updateStats();
         _ctx.updateInventoryDisplay();
         _ctx.updatePaletteVisibility();
