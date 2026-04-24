@@ -1596,12 +1596,24 @@
         return counts;
     }
 
+    // Progressive Disclosure: prüft ob alle `requires` vom Spieler unlocked wurden
+    // (Material bereits erlebt → in unlockedMaterials). Till-Audit 2026-04-24:
+    // Baryon-Rezepte nur sichtbar nach Charm/Strange-Erlebnis.
+    function recipeUnlocked(recipe) {
+        if (!recipe.requires || recipe.requires.length === 0) return true;
+        for (const req of recipe.requires) {
+            if (!unlockedMaterials.has(req)) return false;
+        }
+        return true;
+    }
+
     function findMatchingRecipe() {
         const placed = getCraftingIngredients();
         const placedKeys = Object.keys(placed);
         if (placedKeys.length === 0) return null;
 
         for (const recipe of CRAFTING_RECIPES) {
+            if (!recipeUnlocked(recipe)) continue;
             const needed = recipe.ingredients;
             const neededKeys = Object.keys(needed);
             // Exact match: same ingredients, same counts
