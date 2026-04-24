@@ -4,7 +4,7 @@
 > Oscar findet 10 neue Quests — Maus staunt über kleine Dinge die groß sind (Sterne, Echo, Raupen, Vögel, Erde), Krabs lernt dass Zeit Geld und Erinnerungen beide Wert haben. 895 Quests gesamt.
 
 **Start:** 2026-04-23
-**Sprint-Prinzip:** Quest-Track läuft autonom. Oscar-Smoke bleibt HITL — kein Druck.
+**Sprint-Prinzip:** Quest-Track läuft autonom. Oscar-Smoke ✅ erfüllt — Tesla-Morgenritual.
 
 ---
 
@@ -12,8 +12,8 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S102-1 | **Quest-Runde 84** — Maus(64→69)/Krabs(65→70) → +10 Quests, 885→895. Maus: „Kleine Dinge die groß sind" (Sterne, Echo, Boden, Raupen, Vögel). Krabs: „Was Zeit wirklich ist" (Ressourcen, Schönheit, Archiv, Zinseszins, Erinnerung). | Artist | ✅ PR #451 offen |
-| S102-2 | **Oscar-Smoke** — Till legt iPad hin, schaut weg (Paluten-Test). 1 Satz. Rollover aus S98-3. | Till manuell | 🔲 HITL |
+| S102-1 | **Quest-Runde 84** — Maus(64→69)/Krabs(65→70) → +10 Quests, 885→895. Maus: „Kleine Dinge die groß sind" (Sterne, Echo, Boden, Raupen, Vögel). Krabs: „Was Zeit wirklich ist" (Ressourcen, Schönheit, Archiv, Zinseszins, Erinnerung). | Artist | ✅ PR #451 gemergt — 895 Quests |
+| S102-2 | **Oscar-Smoke** — Tesla-Morgenritual. Oscar baut täglich auf Schulweg. PRs #472+#473 aus Oscar-Bugs. | Till / Oscar | ✅ Tesla-Morgenritual |
 | S102-3 | **Backlog-Update Physik-Epic** — S99–S101 auf ✅ Done setzen. | autonomer Agent | ✅ Commit 8dbf812 |
 
 ---
@@ -29,8 +29,40 @@
 
 - [x] Planning: 2026-04-23 (autonomer Agent, PR #450)
 - [x] Daily Scrum: 2026-04-23 (autonomer Agent)
-- [ ] Review
+- [x] Review: 2026-04-24 (autonomer Agent)
 - [ ] Retro
+
+---
+
+## Sprint Review S102 (2026-04-24, autonomer Agent)
+
+**Sprint Goal erfüllt: 3/3 Items Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S102-1 Quest-Runde 84 | ✅ PR #451 gemergt — Maus +5 (Sternen-Kartographie, Bodenproben, Echo-Klanggarten, Metamorphose, Vogelruf-Archiv) + Krabs +5 (Tiefsee-Kataster, Schönheits-Galerie, Handels-Archiv, Zeitwert-Lab, Gedenkstätte). 885→895 Quests. |
+| S102-2 Oscar-Smoke | ✅ Tesla-Morgenritual — Oscar baut täglich auf dem Schulweg im Tesla. Bugs entdeckt: Spieler-Icon unsichtbar (PR #473), Bernd-Close-Button auf Landscape (PR #472). Paluten-Test ist das tägliche Tesla-Ritual. |
+| S102-3 Backlog-Update Physik-Epic | ✅ Commit 8dbf812 |
+
+**Bonus (außerhalb Sprint, 2026-04-23):**
+- Buch v1 (5 Kapitel, PRs #461/#463/#464) + Buch v2 Redaktion Ende/Dalai/Lindgren (PRs #468–#474)
+- Story Kapitel 13 (#467), Beirat-Codices (#468)
+- Fix Spieler-Icon + NPC-Touch (#473), Fix Bernd-Close-Landscape (#472)
+
+**Offene PRs (stacked, Merge-Reihenfolge für Till):**
+1. PR #452 — ops: S102 Retro + S103 Planning
+2. PR #453 — feat/sprint-103: Quest-Runde 85 (Tommy/Alien/Lokführer, 905 Quests)
+3. PR #457 — ops: S103 Review + Retro + S104 Planning
+4. PR #456 — feat/sprint-104: Quest-Runde 86 (Bernd/Elefant/Floriane, 915 Quests)
+5. PR #465 — ops: S104 Review + Retro + S105 Planning
+6. PR #466 — feat/sprint-105: Quest-Runde 87 (Neinhorn/Spongebob/Mephisto, 925 Quests)
+
+**Oscar-Outcome:** 895 Quests live. Oscar baut Inseln für die Bäume die am Fenster vorbeiziehen — täglich. Spieler-Icon sichtbar, NPC-Interaktion via Touch repariert.
+
+**Stand nach S102:**
+- **895 Quests** auf main
+- Oscar-Smoke: ✅ Tesla-Morgenritual (kein formaler Paluten-Test nötig)
+- Smoke Test: CF 403 bekannte Sandbox-Limitation (HITL #27 offen)
 
 ---
 
