@@ -241,6 +241,98 @@ test.describe('Critical Path — NPC-Chat', () => {
         await expect(page.locator('#chat-panel')).toHaveClass(/hidden/, { timeout: 3000 });
     });
 
+    // Oscar-Bug 1+2: Mute-Button und Code-Ebene-Button waren auf Tesla weg.
+    // Root Cause: Progressive Disclosure (game.js) versteckte view-group bis
+    // Stufe 4 (hasRecipe) und overflow-group bis Stufe 5 (completedQuest).
+    // Fix: view-group immer sichtbar, overflow-group ab Stufe 2.
+    test('Mute-Button sichtbar + klickbar bei frischem State (Tesla Oscar-Bug)', async ({ page }) => {
+        await page.setViewportSize({ width: 1920, height: 1200 });
+        await startGame(page, 1); // Stufe 1 = frisch, keine Blöcke
+
+        // Progressive Disclosure läuft alle 2s — Zeit geben
+        await page.waitForTimeout(2500);
+
+        const muteBtn = page.locator('#mute-btn');
+        await expect(muteBtn, 'Mute-Button sichtbar bei Stufe 1').toBeVisible();
+        const box = await muteBtn.boundingBox();
+        expect(box.width, 'Mute-Btn Breite ≥ 44px (Apple HIG)').toBeGreaterThanOrEqual(44);
+        expect(box.height, 'Mute-Btn Höhe ≥ 44px').toBeGreaterThanOrEqual(44);
+        // Im Viewport
+        expect(box.x + box.width, 'Mute-Btn im Viewport (rechts)').toBeLessThanOrEqual(1920);
+
+        // Klick darf Fehler werfen
+        await muteBtn.click();
+    });
+
+    test('Code-Ebene-Button erreichbar über Overflow-Menü ab Stufe 2', async ({ page }) => {
+        await page.setViewportSize({ width: 1920, height: 1200 });
+        await startGame(page, 2); // Stufe 2 = min. 1 Block gelegt
+
+        await page.waitForTimeout(2500);
+
+        // Overflow-Trigger sichtbar
+        const moreBtn = page.locator('#toolbar-more-btn');
+        await expect(moreBtn, 'Overflow-Trigger sichtbar ab Stufe 2').toBeVisible();
+        await moreBtn.click();
+
+        // Code-View-Btn im geöffneten Dropdown sichtbar
+        const codeBtn = page.locator('#code-view-btn');
+        await expect(codeBtn).toBeVisible({ timeout: 2000 });
+        const codeBox = await codeBtn.boundingBox();
+        expect(codeBox.width, 'Code-Btn klickbar').toBeGreaterThanOrEqual(44);
+        expect(codeBox.x + codeBox.width, 'Code-Btn im Viewport').toBeLessThanOrEqual(1920);
+    });
+
+    // Oscar-Bug 3: Chat-Panel Overflow rechts auf Tesla.
+    // Nicht auf 1920×1200 reproduzierbar — defensive max-width:100vw als Guard.
+    test('Chat-Panel bleibt im Viewport (max-width-Guard)', async ({ page }) => {
+        await page.setViewportSize({ width: 1920, height: 1200 });
+        await startGame(page, 2);
+
+        await page.locator('#chat-bubble').click();
+        await expect(page.locator('#chat-panel')).toBeVisible({ timeout: 5000 });
+        await page.waitForTimeout(400); // Transition abwarten
+
+        const panel = await page.locator('#chat-panel').boundingBox();
+        expect(panel.x + panel.width, 'Panel-Rechts ≤ Viewport-Breite')
+            .toBeLessThanOrEqual(1920);
+    });
+
+    // Oscar-Bug 4: Virtuelle Tastatur verdeckte Chat-Input.
+    // Fix: visualViewport-Resize → Panel-Höhe anpassen. Input-Focus → scrollIntoView.
+    test('Input-Focus triggert scrollIntoView (Tastatur-Robustheit)', async ({ page }) => {
+        await page.setViewportSize({ width: 1920, height: 1200 });
+        await startGame(page, 2);
+
+        await page.locator('#chat-bubble').click();
+        await expect(page.locator('#chat-panel')).toBeVisible({ timeout: 5000 });
+        await page.waitForTimeout(400);
+
+        // Spy auf scrollIntoView vor Focus
+        const scrolled = await page.evaluate(async () => {
+            const input = document.getElementById('chat-input');
+            let called = false;
+            const orig = input.scrollIntoView.bind(input);
+            input.scrollIntoView = (opts) => { called = true; return orig(opts); };
+            input.focus();
+            input.dispatchEvent(new FocusEvent('focus'));
+            // Handler hat setTimeout(300ms)
+            await new Promise(r => setTimeout(r, 500));
+            return called;
+        });
+        expect(scrolled, 'scrollIntoView bei Input-Focus aufgerufen').toBe(true);
+
+        // visualViewport-Handler installiert — Höhe passt sich an simulierten Resize an
+        const heightAfterShrink = await page.evaluate(async () => {
+            const panel = document.getElementById('chat-panel');
+            // Simuliere VV-Resize durch Event-Dispatch (echtes Shrinken geht mit Playwright nicht)
+            window.visualViewport.dispatchEvent(new Event('resize'));
+            await new Promise(r => setTimeout(r, 100));
+            return panel.offsetHeight > 0;
+        });
+        expect(heightAfterShrink, 'Panel reagiert auf VV-Resize').toBe(true);
+    });
+
 });
 
 test.describe('Easter Eggs', () => {

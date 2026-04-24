@@ -1207,6 +1207,42 @@ ${budgetInfo}${florianePreisHint}`;
         syncChatOpenClass();
     });
 
+    // === Virtuelle Tastatur nicht über Chat-Input legen ===
+    // Bug: Oscar tippt im Tesla, die Bildschirmtastatur überdeckt die untere
+    // Hälfte des Chat-Panels — Input-Feld + letzte Nachrichten weg.
+    // Fix: visualViewport API kürzt Panel-Höhe auf sichtbare Fläche, und
+    // scrollIntoView hält das Input-Feld im Blick.
+    if (window.visualViewport) {
+        const vv = window.visualViewport;
+        const adjustPanelForKeyboard = () => {
+            // Nur wenn Chat offen ist
+            if (panel.classList.contains('hidden')) {
+                panel.style.height = '';
+                return;
+            }
+            // Viewport-Höhe minus Header-Offset (52px) minus safe-area-top.
+            // vv.height = sichtbare Fläche nach Tastatur-Einblendung.
+            const top = parseFloat(getComputedStyle(panel).top) || 52;
+            const newHeight = Math.max(200, vv.height - top + vv.offsetTop);
+            panel.style.height = newHeight + 'px';
+        };
+        vv.addEventListener('resize', adjustPanelForKeyboard);
+        vv.addEventListener('scroll', adjustPanelForKeyboard);
+        // Auch bei Close zurücksetzen
+        closeBtn.addEventListener('click', () => {
+            panel.style.height = '';
+        });
+    }
+
+    // Input-Focus: scroll Input ins Sichtbare (Tastatur-Robustheit)
+    input.addEventListener('focus', () => {
+        // setTimeout gibt der virtuellen Tastatur Zeit zu erscheinen,
+        // bevor wir scrollen — sonst ist das Ziel schon wieder verdeckt.
+        setTimeout(() => {
+            input.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        }, 300);
+    });
+
     // Chat-Bubble (💬 FAB) öffnet den Chat
     const chatBubble = document.getElementById('chat-bubble');
     if (chatBubble) {
