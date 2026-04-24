@@ -1,3 +1,201 @@
+# Sprint 109 — "Alien begreift, Lokführer erinnert sich, Bernd liest den Boden"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Alien entdeckt was zwischen den Dingen ist (Spiegel, Musik, Jahreszeiten, Zufall), Lokführer lernt was Abschiede und Ankünfte wirklich bedeuten, Bernd liest was der Boden erzählt. 915 Quests auf Branch.
+
+**Start:** 2026-04-24
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S109-1 | **Quest-Runde 91** — Alien(66→70)/Lokführer(66→69)/Bernd(67→70) → +10 Quests, 905→915. Alien: „Was zwischen den Dingen ist". Lokführer: „Was Bahnhöfe für Menschen bedeuten". Bernd: „Was der Boden erzählt". | Artist | ✅ PR #485 offen |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S110-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S109
+
+- [x] Planning: 2026-04-24 (autonomer Agent)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+---
+
+# Sprint 108 — "Tommy wartet, Elefant erinnert, Floriane malt"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Tommy entdeckt was man erst durch Warten versteht, Elefant zeigt was Herde wirklich bedeutet, Floriane misst was Farben erzählen. 915 Quests nach Vollmerge.
+
+**Start:** 2026-04-24
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S108-1 | **Quest-Runde 90** — Tommy(66→70)/Elefant(67→70)/Floriane(67→70) → +10 Quests, 895→905 auf Branch. Tommy: „Was Geduld zeigt". Elefant: „Was Herde bedeutet". Floriane: „Was Farben erzählen". | Artist | ✅ PR #483 offen |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S109-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S108
+
+- [x] Planning: 2026-04-24 (autonomer Agent)
+- [x] Daily Scrum: 2026-04-24 (ops/sprint-review-s107)
+- [x] Review: 2026-04-24 (autonomer Agent)
+- [x] Retro: 2026-04-24 (autonomer Agent)
+
+---
+
+## Sprint Review S108 (2026-04-24, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S108-1 Quest-Runde 90 | ✅ PR #483 offen — Tommy(66→70 +4) / Elefant(67→70 +3) / Floriane(67→70 +3), 895→905 Quests auf Branch |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Tommy: Gedulds-Messturm (warten ist nicht nichts — warten ist vorbereiten), Stille-Zeugen-Kammer (manche Dinge brauchen Zeit und sonst nichts), Langzeit-Experiment-Station (was man nach einem Jahr wiederfindet), Reife-Observatorium (Früchte wissen wann sie fertig sind ohne Uhr). Elefant: Herdenwärme-Forschungsstation (Elefanten schlafen eingekuschelt — Wärme ist Vertrauen), Ruf-der-Herde-Archiv (das Trompeten das alle gleichzeitig tun), Gemeinsames-Gedächtnis-Feld (Elefanten erinnern gemeinsam). Floriane: Farb-Biographie-Labor (jede Farbe hat eine Geschichte), Morgenlicht-Qualitäts-Labor, Farb-Gedächtnis-Archiv.
+
+**Stand nach S108:**
+- **905 Quests** auf feat/sprint-108 (PR #483 offen)
+- **915 Quests** nach feat/sprint-109 (PR #485 offen, dieser Sprint)
+- NPC-Counter (nach Vollmerge S109): alien/bernd 70, tommy/elefant/floriane/krabs 70, lokfuehrer 69
+- Oscar-Smoke: Tesla-Morgenritual läuft kontinuierlich
+
+**PO-Entscheidung:**
+- Quest-Runde 91: Alien(66)/Lokführer(66)/Bernd(67) → S109-1
+
+---
+
+## Sprint Retrospektive S108 (2026-04-24, autonomer Agent)
+
+**Was gut lief:**
+- Tommy-Thema „Geduld zeigt sich durch Warten" kindgerecht und tiefsinnig — Oscar-Perspektive: warten ist Vorbereitung, nicht Leerlauf
+- Elefant-Thema „Was Herde bedeutet" — Wärme als Vertrauen, Erinnerung als kollektives Gut
+- Floriane: Farbe als Biographie — „jede Farbe hat eine Geschichte" ist ein starkes Konzept für Kinder
+- Quest-Track S103–S108: 6 Runden in 2 Tagen autonom geliefert, stabile Qualität
+
+**Was nicht gut lief:**
+- Quest-Zahlen im ops/sprint-review-s107 falsch propagiert: "955" war Vollmerge-Projektion, einzelne Branch hat 905. Korrigiert in dieser Review.
+- 14+ offene PRs — main ist 200+ Quests hinter feat-Branches; Tracking-Komplexität steigt mit jedem Sprint
+
+**Retro-Actions für S109:**
+- **R1**: Quest-Runde 91: Alien(66)/Lokführer(66)/Bernd(67) → S109-1 ✅ implementiert
+- **R2**: Quest-Zahlen-Kommentar in Commit-Message an tatsächliche Branch-Zahl anpassen (nicht Vollmerge-Projektion)
+
+---
+
+## Daily Scrum S107 (2026-04-24, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- Quest-Runde 89 implementiert: Lokführer(66→70 auf main) / Maus(69→72) / Krabs(70→73) +10 Quests, PR #482 offen
+- S107 Planning aus vorheriger Session (ops/sprint-review-s106, PR #480)
+
+**Was kommt als nächstes?**
+- S107 Review + Retro (diese Session)
+- S108 Planning: Tommy/Elefant/Floriane → Quest-Runde 90
+
+**Blocker?**
+- 13 autonome PRs warten auf Till-Merge-Block — main ist 50 Quests hinter den feat-Branches
+- HITL #27 (CF-Worker-Deploy): weiterhin offen
+
+---
+
+## Sprint Review S107 (2026-04-24, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S107-1 Quest-Runde 89 | ✅ PR #482 offen — Lokführer(66→70 +4) / Maus(69→72 +3) / Krabs(70→73 +3), 895→905 Quests auf Branch |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Lokführer: Bahnsteig-Laternenpfad (Würde um Mitternacht), Nacht-Wartesaal (kein Reisender wartet allein), Nachtsignal-Stellwerk (anonym, präzise, pflichtbewusst), Stille-Gleise-Kammer (bereit sein ist mehr als warten). Maus: Petrichor-Messstation (Nase weiß was kommt bevor man es weiß), Duft-Warnsystem-Station (Geruch ist der älteste Sinn), Pilz-Sporenkarte (riechen ist manchmal ehrlicher als sehen). Krabs: Marktwert-Waage (fair heißt beide Seiten stimmen zu), Tausch-Versprechen-Register (ein Versprechen ist mehr wert als Gold), Preis-Geschichte-Museum (Salz war wertvoller als Gold).
+
+**Stand nach S107:**
+- **905 Quests** auf feat/sprint-107 (PR #482 offen)
+- **955 Quests** nach Vollmerge aller 14 offenen Quest-PRs
+- NPC-Counter (niedrigste nach Vollmerge): tommy/elefant/floriane je 70
+- Oscar-Smoke: Tesla-Morgenritual läuft kontinuierlich
+
+**PO-Entscheidung:**
+- Nächste Quest-Runde S108: Tommy(70)/Elefant(70)/Floriane(70) — 945→955
+
+---
+
+## Sprint Retrospektive S107 (2026-04-24, autonomer Agent)
+
+**Was gut lief:**
+- Lokführer-Nacht-Thema stark: „Bahnhöfe schlafen nicht" — Würde, Kontinuität, anonyme Pflicht. Kindgerecht und tiefsinnig gleichzeitig
+- Maus-Geruchs-Quests: Petrichor + „Geruch ist der älteste Sinn" — wissenschaftlich präzise, emotional berührend
+- Krabs lernt fair: „beide Seiten stimmen zu" — Entwicklung einer Figur die normalerweise nur Profit denkt
+- Quest-Track läuft stabil: S103–S107 in 2 Tagen autonom geliefert (5 Runden, 50 Quests)
+
+**Was nicht gut lief:**
+- 13 offene PRs warten auf Till — main ist 50 Quests hinter feat-Branches; Tracking-Komplexität steigt
+- NPC-Counter-Tracking wird komplex durch parallele Branches
+
+**Retro-Actions für S108:**
+- **R1**: Quest-Runde 90: Tommy(70)/Elefant(70)/Floriane(70) → S108-1
+- **R2**: Merge-Block-Hinweis in PR-Description erneuern (14 PRs, Reihenfolge wichtig)
+
+---
+
+# Sprint 107 — "Lokführer nachts, Maus riecht, Krabs rechnet"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Lokführer entdeckt was Bahnhöfe in der Nacht erleben, Maus riecht was sie nicht sehen kann, Krabs lernt was ein wirklich fairer Preis bedeutet. 945 Quests gesamt.
+
+**Start:** 2026-04-24
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S107-1 | **Quest-Runde 89** — Lokführer(69→73)/Maus(69→72)/Krabs(70→74) → +10 Quests, 935→945. Lokführer: „Was Bahnhöfe nachts erleben". Maus: „Was man riecht bevor man sieht". Krabs: „Was ein fairer Preis bedeutet". | Artist | ✅ PR #482 offen |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S108-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S107
+
+- [x] Planning: 2026-04-24 (autonomer Agent)
+- [x] Daily Scrum: 2026-04-24 (autonomer Agent)
+- [x] Review: 2026-04-24 (autonomer Agent)
+- [x] Retro: 2026-04-24 (autonomer Agent)
+
+---
+
 # Sprint 102 — "Maus entdeckt, Krabs erinnert sich"
 
 **Sprint Goal (Oscar-Perspektive):**
