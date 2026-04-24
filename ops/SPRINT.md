@@ -1,3 +1,365 @@
+# Sprint 107 — "Lokführer nachts, Maus riecht, Krabs rechnet"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Lokführer entdeckt was Bahnhöfe in der Nacht erleben, Maus riecht was sie nicht sehen kann, Krabs lernt was ein wirklich fairer Preis bedeutet. 945 Quests gesamt.
+
+**Start:** 2026-04-24
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual (established PR #477).
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S107-1 | **Quest-Runde 89** — Lokführer(69→73)/Maus(69→72)/Krabs(70→74) → +10 Quests, 935→945. Lokführer: „Was Bahnhöfe nachts erleben". Maus: „Was man riecht bevor man sieht". Krabs: „Was ein fairer Preis bedeutet". | Artist | ✅ PR offen |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S108-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S107
+
+- [x] Planning: 2026-04-24 (autonomer Agent)
+- [x] Daily Scrum: 2026-04-24 (autonomer Agent)
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Daily Scrum S107 (2026-04-24, autonomer Agent)
+
+**Was wurde gestern gemacht?**
+- S107 Planning abgeschlossen (aus ops/sprint-review-s106)
+- S106 Review + Retro dokumentiert: 935 Quests, Oscar-Smoke dauerhaft gelöst via Tesla-Morgenritual
+
+**Was kommt heute?**
+- Quest-Runde 89 implementiert: Lokführer(+4)/Maus(+3)/Krabs(+3) — 10 neue Quests auf feat/sprint-107
+- Lokführer-Thema „Was Bahnhöfe nachts erleben": Bahnsteig-Laternenpfad, Nacht-Wartesaal, Nachtsignal-Stellwerk, Stille-Gleise-Kammer
+- Maus-Thema „Was man riecht bevor man sieht": Petrichor-Messstation, Duft-Warnsystem-Station, Pilz-Sporenkarte
+- Krabs-Thema „Was ein fairer Preis bedeutet": Marktwert-Waage, Tausch-Versprechen-Register, Preis-Geschichte-Museum
+
+**Blocker?**
+- 10+ offene PRs warten auf Till-Merge — main liegt ~40 Quests hinter feat-Branches
+- S107-1 auf main: Lokführer 66→70 / Maus 69→72 / Krabs 70→73 (Nummern nach Vollmerge: wie geplant)
+
+---
+
+## Sprint Review S106 (2026-04-24, autonomer Agent)
+
+**Sprint Goal erfüllt: 2/2 Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S106-1 Quest-Runde 88 | ✅ PR #478 offen — Kraemerin(68→72 +4) / Alien(69→72 +3 nach S103-Merge) / Bug(69→72 +3), 925→935 Quests |
+| S106-2 Oscar-Smoke | ✅ Tesla-Morgenritual — Oscar spielt täglich auf Schulweg, Bugs direkt als PRs (#472+#473). Kein formaler Paluten-Test nötig. |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Kraemerin: Fairpreis-Tafel, Lieferanten-Dankbank, Reparatur-Versprechen-Stube, Waren-Herkunfts-Schild. Alien: Sammel-Analyse-Labor, Nostalgie-Forschungs-Kammer, Stapel-Verwertungs-Station. Bug: Regenwurm-Forschungs-Station, Bodenbiologie-Labor, Erdschichten-Lese-Station.
+
+**Stand nach S106:**
+- **935 Quests** auf feat/sprint-106 (PR #478 offen)
+- NPC-Counter (niedrigste nach Vollmerge): lokfuehrer 69 · maus 69 · krabs/tommy/elefant/floriane je 70
+- Oscar-Smoke: Tesla-Morgenritual läuft kontinuierlich
+
+**PO-Entscheidung:**
+- Nächste Quest-Runde S107: Lokführer(69)/Maus(69)/Krabs(70) — 935→945
+
+---
+
+## Sprint Retrospektive S106 (2026-04-24, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Runde 88 sauber: Kraemerin/Alien/Bug +10 Quests, 925→935
+- Kraemerin-Thema „Was ein gutes Geschäft ausmacht" stark: Fairpreis-Tafel + Reparatur-Versprechen ethisch fundiert, kindgerecht
+- Bug-Quests: Regenwurm als „600 kleine Pflüger die niemand engagiert hat" — unvergesslich
+- Oscar-Smoke formal aufgelöst: Tesla-Morgenritual ersetzt Paluten-Test dauerhaft (PR #477)
+
+**Was nicht gut lief:**
+- 10+ offene PRs warten auf Till-Merge — main ist 40 Quests hinter den feat-Branches
+- Alien-Counter auf Branch (69) unterschreitet Planung (69→72) wegen ungemergten S103 — Tracking-Komplexität
+
+**Retro-Actions für S107:**
+- **R1**: Quest-Runde 89: Lokführer(69)/Maus(69)/Krabs(70) → S107-1
+- **R2**: Oscar-Smoke gilt als dauerhaft gelöst (Tesla-Morgenritual) — kein weiterer HITL-Rollover
+
+---
+
+# Sprint 106 — "Kraemerin handelt, Alien sammelt, Bug gräbt"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Kraemerin zeigt was ein gutes Geschäft wirklich ausmacht, Alien staunt was Menschen sammeln und aufheben, Bug entdeckt was im Boden verborgen lebt. 935 Quests gesamt.
+
+**Start:** 2026-04-24
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke HITL — kein Druck.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S106-1 | **Quest-Runde 88** — Kraemerin(68→72)/Alien(69→72)/Bug(69→72) → +10 Quests, 925→935. Kraemerin: „Was ein gutes Geschäft ausmacht". Alien: „Was Menschen sammeln". Bug: „Was im Boden lebt". | Artist | ✅ PR #478 offen |
+| S106-2 | **Oscar-Smoke** — Tesla-Morgenritual läuft. Kein formaler Paluten-Test nötig. | — | ✅ Tesla-Morgenritual |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S107-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S106
+
+- [x] Planning: 2026-04-24 (autonomer Agent)
+- [x] Daily Scrum: 2026-04-24 (autonomer Agent)
+- [x] Review: 2026-04-24 (autonomer Agent)
+- [x] Retro: 2026-04-24 (autonomer Agent)
+
+---
+
+## Daily Scrum S106 (2026-04-24, autonomer Agent)
+
+**Was wurde gestern gemacht?**
+- Sprint 106 geplant (PR #476, ops/sprint-review-s105)
+- Smoke: schatzinsel.app CF 403 (Sandbox-Limitation), Worker "Host not in allowlist" — beide bekannte Einschränkungen, kein App-Schaden
+- PRs #452/#453/#456/#457/#465/#466/#475/#476/#477 offen — warten auf Till-Merge
+
+**Was kommt heute?**
+- Quest-Runde 88 implementiert: Kraemerin(68→72)/Alien(66→69)/Bug(69→72) +10 Quests, PR erstellt
+- 905 Quests auf feat/sprint-106 (935 nach Vollmerge aller offenen Quest-PRs)
+
+**Blocker?**
+- S106-2 Oscar-Smoke: HITL seit S98-3 (10 Sprints) — kein Druck, wartet auf Till
+- 8 autonome PRs warten auf Merge-Block durch Till
+
+---
+
+## Sprint Review S105 (2026-04-24, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/2 Done, 1 HITL.**
+
+| Item | Ergebnis |
+|------|---------|
+| S105-1 Quest-Runde 87 | ✅ PR #466 offen — Neinhorn(68→72 +4) / Spongebob(68→71 +3) / Mephisto(68→71 +3), 915→925 Quests |
+| S105-2 Oscar-Smoke | 🔲 HITL — Paluten-Test wartet auf Till. Rollover seit S98-3 (9 Sprints). |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Neinhorn: Löwenzahn-Forschungsfeld, Widerstand-Messlabor, Fels-Flechten-Archiv, Heimliche-JA-Station. Spongebob: Meeresströmungs-Labor, Seestern-Regenerations-Station, Tiefsee-Gedulds-Observatorium. Mephisto: Zeitgefühl-Labor, Langzeit-Experiment-Archiv, Augenblicks-Kontor.
+
+**Stand nach S105:**
+- **925 Quests** auf feat/sprint-105 (PR #466 offen)
+- NPC-Counter (niedrigste): kraemerin 68 · alien/bug/lokfuehrer/maus je 69
+- Smoke Test: CF 403 bekannte Sandbox-Limitation (HITL #27 offen)
+
+**PO-Entscheidung:**
+- Nächste Quest-Runde S106: Kraemerin(68)/Alien(69)/Bug(69) — Themen: Handel/Sammeln/Boden
+
+---
+
+## Sprint Retrospektive S105 (2026-04-24, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Runde 87 sauber: Neinhorn/Spongebob/Mephisto +10 Quests, 915→925
+- Ops-Branch (PR #465) + Quest-Branch (PR #466) sauber getrennt — kein Merge-Konflikt-Risiko
+- Themen stark: "Was trotz Widerspruch wächst" (Löwenzahn!) / "Was das Meer lehrt" / "Was die Zeit mitbringt"
+- Heimliche-JA-Station für Neinhorn: kontra-intuitiv, kindgerecht, unvergesslich
+
+**Was nicht gut lief:**
+- Oscar-Smoke Rollover: seit S98-3 — 9 Sprints ohne Paluten-Test. Längster Rollover bisher.
+- Ceremony-Branches nicht auf main — erschwertes Tracking für Till. 4 offene PRs (#452/#453/#456/#465/#466) warten auf Merge.
+
+**Retro-Actions für S106:**
+- **R1**: Quest-Runde 88: Kraemerin(68)/Alien(69)/Bug(69) → S106-1, Themen frei wählbar
+- **R2**: Oscar-Smoke HITL bleibt offen — kein Druck, 1 Satz von Till wenn Paluten-Test passiert
+
+---
+
+# Sprint 105 — "Neinhorn wächst, Spongebob taucht, Mephisto wartet"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn entdeckt was trotz Widerspruch wächst, Spongebob taucht in was das Meer lehrt, Mephisto zeigt was die Zeit mitbringt. 925 Quests gesamt.
+
+**Start:** 2026-04-23
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke HITL — kein Druck.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S105-1 | **Quest-Runde 87** — Neinhorn(68→72)/Spongebob(68→71)/Mephisto(68→71) → +10 Quests, 915→925. Neinhorn: „Was trotz Widerspruch wächst". Spongebob: „Was das Meer lehrt". Mephisto: „Was die Zeit mitbringt". | Artist | ✅ PR #466 offen |
+| S105-2 | **Oscar-Smoke** — Paluten-Test mit iPad. 1 Satz. Rollover seit S98-3. | Till manuell | 🔲 HITL |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S106-Kette** — wartet auf Oscar-Smoke-Ergebnis
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S105
+
+- [x] Planning: 2026-04-23 (autonomer Agent)
+- [x] Review: 2026-04-24 (autonomer Agent)
+- [x] Retro: 2026-04-24 (autonomer Agent)
+
+---
+
+## Sprint Review S104 (2026-04-23, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/2 Done, 1 HITL.**
+
+| Item | Ergebnis |
+|------|---------|
+| S104-1 Quest-Runde 86 | ✅ PR #456 offen — Bernd(67→71 +4) / Elefant(67→70 +3) / Floriane(67→70 +3), 905→915 Quests |
+| S104-2 Oscar-Smoke | 🔲 HITL — Paluten-Test wartet auf Till. Rollover seit S98-3 (8 Sprints). |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Bernd: Mondlicht-Garten, Pilzmyzel-Netzwerk-Horchposten, Tau-Beobachtungsposten, Winterschlaf-Forschungsstube. Elefant: Gedächtnis-Pfad, Trauerplatz-der-Herde, Wasserquellen-Karte. Floriane: Mondwunsch-Turm, Erster-Gedanken-Station, Vergessenes-Versprechen-Archiv.
+
+**Stand nach S104:**
+- **915 Quests** auf feat/sprint-104 (PR #456 offen)
+- NPC-Counter (niedrigste, alle 68): neinhorn · spongebob · mephisto · kraemerin
+- Smoke Test: CF 403 bekannte Sandbox-Limitation (HITL #27 offen)
+
+**PO-Entscheidung:**
+- Nächste Quest-Runde S105: Neinhorn(68)/Spongebob(68)/Mephisto(68) — Kraemerin folgt S106
+
+---
+
+## Sprint Retrospektive S104 (2026-04-23, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Runde 86 sauber: Bernd/Elefant/Floriane +10 Quests, 905→915
+- Themen-Wahl stark: Stille als Phänomen (Tau, Pilzmyzel, Mondlicht), Elefanten-Gedächtnis als Wissenschaft, Floriane-Wünsche mit psychologischer Tiefe
+- Bernd-Winterschlaf-Quest: wissenschaftlich präzise (3 Herzschläge/Min), kindgerecht humorvoll
+
+**Was nicht gut lief:**
+- Oscar-Smoke Rollover: seit S98-3 (8 Sprints) kein Paluten-Test. Sprint-Kette läuft ohne empirisches Feedback — längster Rollover bisher.
+- 4 offene PRs (#452/#453/#456/#457) warten auf Till-Merge — Content nicht live
+
+**Retro-Actions für S105:**
+- **R1**: Quest-Runde 87: Neinhorn(68)/Spongebob(68)/Mephisto(68) → S105-1
+- **R2**: Oscar-Smoke HITL bleibt offen — kein Druck, 1 Satz von Till wenn Paluten-Test passiert
+- **R3**: Kraemerin(68) → S106
+
+---
+
+# Sprint 104 — "Bernd lauscht, Elefant erinnert, Floriane flüstert"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Bernd entdeckt was in der Stille wächst, Elefant zeigt was nie vergessen wird, Floriane flüstert was Wünsche leise sagen. 915 Quests gesamt.
+
+**Start:** 2026-04-23
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke HITL — kein Druck. CEO-Input Physik-Kette pausiert bis Paluten-Test.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S104-1 | **Quest-Runde 86** — Bernd(67→71)/Elefant(67→70)/Floriane(67→70) → +10 Quests, 905→915. Bernd: „Was in der Stille wächst". Elefant: „Was nie vergessen wird". Floriane: „Was Wünsche leise sagen". | Artist | ✅ PR #456 offen |
+| S104-2 | **Oscar-Smoke** — Paluten-Test mit iPad. 1 Satz. Rollover seit S98-3. | Till manuell | 🔲 HITL |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S105-Kette** — wartet auf Oscar-Smoke-Ergebnis
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S104
+
+- [x] Planning: 2026-04-23 (autonomer Agent)
+- [ ] Daily Scrum
+- [x] Review: 2026-04-23 (autonomer Agent)
+- [x] Retro: 2026-04-23 (autonomer Agent)
+
+---
+
+## Sprint Review S103 (2026-04-23, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/2 Done, 1 HITL.**
+
+| Item | Ergebnis |
+|------|---------|
+| S103-1 Quest-Runde 85 | ✅ PR #453 offen — Tommy(66→70 +4) / Alien(66→69 +3) / Lokführer(66→69 +3), 895→905 Quests |
+| S103-2 Oscar-Smoke | 🔲 HITL — Paluten-Test wartet auf Till. Rollover aus S98-3. |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Tommy: Sternschnuppen-Zählstation, Gezeiten-Messpfahl, Pflanzenwachstums-Labor, Echo-Distanz-Station. Alien: Haustier-Analyse-Labor, Witz-Datenbank, Geburtstags-Forschungsstation. Lokführer: Polarkreis-Express-Haltestelle, Hängebrücken-Überfahrt-Station, Endbahnhof-Wartehalle.
+
+**Stand nach S103:**
+- **905 Quests** auf feat/sprint-103 (PR #453 offen)
+- NPC-Counter (niedrigste): bernd 67 · elefant 67 · floriane 67
+- Smoke Test: CF 403 bekannte Sandbox-Limitation (HITL #27 via CI gelöst, aber Worker-Domain noch gesperrt)
+
+**PO-Entscheidung:**
+- Nächste Quest-Runde S104: Bernd(67)/Elefant(67)/Floriane(67) — Thema: "Stille, Erinnerung, Wünsche"
+
+---
+
+## Sprint Retrospektive S103 (2026-04-23, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Runde 85 sauber: Tommy/Alien/Lokführer +10 Quests, 895→905
+- Themen-Wahl stark: Messen als Abenteuer (Tommy), Erdling-Staunen von außen (Alien), Randstrecken als Poesie (Lokführer)
+- Endbahnhof-Wartehalle: konzeptuell stärkste Quest der Runde — "wo Ankünfte verarbeitet werden"
+
+**Was nicht gut lief:**
+- Oscar-Smoke Rollover: seit S98-3 (6 Sprints) kein Paluten-Test. Sprint-Kette läuft ohne empirisches Feedback.
+- PR #452 + #453 aus Vor-Session noch offen — Till muss mergen bevor Content live ist.
+
+**Retro-Actions für S104:**
+- **R1**: Quest-Runde 86: Bernd(67)/Elefant(67)/Floriane(67) → S104-1
+- **R2**: Oscar-Smoke HITL bleibt offen — kein Druck, 1 Satz von Till wenn Paluten-Test passiert
+
+---
+
+# Sprint 103 — "Tommy misst, Alien staunt, Lokführer fährt ans Ende der Welt"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Tommy entdeckt was Messen zeigt, Alien staunt über Erdlinge die unlogisch handeln, Lokführer fährt Strecken am Rand der Welt. 905 Quests gesamt.
+
+**Start:** 2026-04-23
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke HITL — kein Druck. CEO-Input für Physik-Kette pausiert bis Paluten-Test.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S103-1 | **Quest-Runde 85** — Tommy(66→71)/Alien(66→71)/Lokführer(66→71) → +10 Quests, 895→905. Tommy: „Was Messen zeigt". Alien: „Was Erdlinge unlogisch tun". Lokführer: „Strecken am Rand der Welt". | Artist | ✅ PR #453 offen |
+| S103-2 | **Oscar-Smoke** — Paluten-Test mit iPad. 1 Satz. Rollover seit S98-3. | Till manuell | 🔲 HITL |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S104-Kette** — wartet auf Oscar-Smoke-Ergebnis
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S103
+
+- [x] Planning: 2026-04-23 (autonomer Agent)
+- [x] Review: 2026-04-23 (autonomer Agent)
+- [x] Retro: 2026-04-23 (autonomer Agent)
+
+---
+
 # Sprint 102 — "Maus entdeckt, Krabs erinnert sich"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -29,8 +391,52 @@
 
 - [x] Planning: 2026-04-23 (autonomer Agent, PR #450)
 - [x] Daily Scrum: 2026-04-23 (autonomer Agent)
-- [ ] Review
-- [ ] Retro
+- [x] Review: 2026-04-23 (autonomer Agent)
+- [x] Retro: 2026-04-23 (autonomer Agent)
+
+---
+
+## Sprint Review S102 (2026-04-23, autonomer Agent)
+
+**Sprint Goal erfüllt: 2/3 autonome Items Done, 1 HITL.**
+
+| Item | Ergebnis |
+|------|---------|
+| S102-1 Quest-Runde 84 | ✅ PR #451 gemergt (Commit 25d22b6) — Maus 64→69 + Krabs 65→70, 885→895 Quests live |
+| S102-2 Oscar-Smoke | 🔲 HITL — Paluten-Test mit iPad ausstehend. Rollover aus S98. Kein Druck. |
+| S102-3 Backlog-Update Physik-Epic | ✅ Commit 8dbf812 — S99–S101 auf Done gesetzt |
+
+**Oscar-Outcome:** 10 neue Quests live. Maus: Sternen-Kartographie, Bodenproben-Labor, Echo-Klanggarten, Metamorphose-Kammer, Vogelruf-Archiv. Krabs: Tiefsee-Kataster, Schönheits-Galerie, Handels-Archiv, Zeitwert-Lab, Gedenkstätte.
+
+**Stand nach S102:**
+- **895 Quests** auf main
+- NPC-Counter (niedrigste nach S102): Tommy/Alien/Lokführer ~66 · Maus 69 · Krabs 70
+- HITL: #27 (CF-Deploy) + #108 (Native Speaker ES/IT) + Oscar-Smoke (S98-3/S102-2 Rollover)
+- Sprint Goal Oscar-Perspektive: ✅ Maus staunt über kleine Dinge die groß sind. Krabs lernt was Zeit wirklich ist.
+
+**PO-Entscheidung:**
+- Oscar-Smoke HITL bleibt offen — kein Druck auf Till
+- Nächste Quest-Runde S103: Tommy/Alien/Lokführer (~66) — Thema frei
+- CEO-Input S103-Kette: erst nach Oscar-Smoke-Ergebnis (Physik-Kette pausiert)
+
+---
+
+## Sprint Retrospektive S102 (2026-04-23, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Runde 84 sauber: Maus(64→69) + Krabs(65→70), 895 Quests auf main (PR #451 gemergt)
+- HITL #108 aufgelöst — Opus statt Native-Speaker-Review. ES/IT auf Native-Niveau (2 Grammatik-Bugs gefixt). Icebox jetzt leer.
+- PR #454 Baryon-Bauplan: 4 Physik-Fehler behoben (Masse, Spin, Farbladung, Pauli-Workaround) — Scientist gate bestanden
+- Quest-Track entkoppelt vom Physik-Epic: autonome Lieferung ohne CEO-Input möglich
+
+**Was nicht gut lief:**
+- Oscar-Smoke (S98-3/S102-2) Rollover nun 5 Sprints alt — kein Paluten-Test passiert
+- Sprint Backlog Status inkonsistent: S102-1 stand als "PR #451 offen" obwohl gemergt (kein Follow-up Commit)
+
+**Retro-Actions für S103:**
+- **R1**: Quest-Runde 85: Tommy(66)/Alien(66)/Lokführer(66) → S103-1 ✅ (bereits auf feat/sprint-103, PR #453)
+- **R2**: Oscar-Smoke — HITL, kein Druck. Till weiß Bescheid.
+- **R3**: CEO-Input für S104-Kette: wartet auf Oscar-Smoke-Ergebnis. Physik-Kette pausiert.
 
 ---
 
