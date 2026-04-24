@@ -7,20 +7,21 @@ Alles was nicht in eine dieser Kategorien fällt → `ARCHIVE.md`.
 
 ---
 
-## 🚨 HITL — Till, max 3
+## 🚨 HITL — Till
 
-Nur Items die **wirklich** Till brauchen (Credentials, Dashboards, Outreach).
-Alles andere ist delegiert oder im Eis.
+Nur Items die **wirklich** Till brauchen (sein Kind beobachten, Browser-Settings, Copyright-Entscheidungen).
 
 | # | Item | Warum HITL | Zeitbudget |
 |---|------|------------|-----------|
-| 27 | **Cloudflare Worker deployen** — `cd src/infra && npx wrangler deploy` (siehe Chat 2026-04-22 für How-To) | CF-Login | 5 Min |
+| 1 | **Oscar-Smoke nach Caves-Fix** — morgen früh iPad hinlegen, weggucken. 1 Satz. | Kind beobachten | 10 Min |
+| 2 | **Analytics-Opt-in aktivieren** auf Oscars Device: `localStorage.setItem('insel-analytics-optin', 'true')` + reload. | Privacy-by-default | 2 Min |
+| 3 | **IDB-Persistenz verifizieren** — Tesla-Browser Console-Log nach erstem Auto-Aus+An. Greift der Restore? | Nur im echten Tesla | 3 Min |
+| 4 | **Buch v2 skimmen** — `docs/buch/schatzinsel-v2-2026-04-23.md`, go/no-go für v3 | Autoren-Urteil | 30 Min |
+| 5 | **Michael-Ende-Copyright** — falls Buch publiziert: Namen generisch oder Rechte klären | Nur bei Publikation | 5 Min + evtl. Verlagsmail |
 
-**Nur noch 1 HITL-Item offen.** Wenn #27 erledigt: Backlog ist HITL-frei.
-Agenten können autonom weitermachen.
-
+*Erledigt 2026-04-22:* #27 CF-Worker-Deploy — **automatisiert** via PR #438 (GitHub Actions bei push:main).
 *Erledigt 2026-04-22:* #92 Requesty-Key-Rotation — Till-Entscheidung: Key darf im Verlauf bleiben.
-*Erledigt 2026-04-23:* HITL #108 aufgelöst — Till-Entscheidung Opus statt Native-Review. ES/IT durch Wittgenstein-Opus auf Native-Niveau poliert (zwei Grammatik-Bugs zusätzlich gefixt: IT-Plural `missionei`→`missioni`, ES-Lexikon `búsqueda`→`misión`). Restrisiko: keine menschliche Validierung.
+*Erledigt 2026-04-23:* HITL #108 — Wittgenstein-Opus-Review ersetzt Native-Speaker-Review (zwei IT/ES-Grammatik-Bugs nebenbei gefixt).
 
 ---
 
@@ -28,8 +29,12 @@ Agenten können autonom weitermachen.
 
 | # | Item | Owner | Status |
 |---|------|-------|--------|
-| 103 | **Live Launch** — Playwright Tests + Stripe Donation + itch.io Upload | Leader | 🤖 In Nacht-Session (2026-04-20) |
 | 78 | **Tesla-Nutzertest auswerten** — 1h Video von Oscar im Tesla | Scientist | 🔲 Wartet auf Video-Upload von Till |
+| K15 | **Hörspiel Kapitel 15 — Die Katze** (Lindgren-Anregung, Buch hat sie, Hörspiel nicht) | Artist → Tommy Krab | 🤖 Nacht-Spawn 2026-04-24 |
+| 120 | **Neutrino-Mu/Tau-Recipes** — nach Pauli-Selbstupgrade-Fix (PR #495) fehlen Gen-Upgrade-Pfade für Neutrino-Familie | Scientist/Planck | 🤖 Nacht-Spawn 2026-04-24 |
+| 121 | **Visuelle Regression-Tests erweitern** — Cave-Test existiert (PR #495), fehlt: Iso-Mode, Lummerland-Seed, andere Insel-Typen, Nacht/Tag | Engineer/Kernighan | 🤖 Nacht-Spawn 2026-04-24 |
+
+*Archiviert:* #103 Live Launch (alter Eintrag von 2026-04-20, Status überholt — itch.io-Deploy läuft via PR #438-Pattern automatisch über GitHub Actions).
 
 ---
 
