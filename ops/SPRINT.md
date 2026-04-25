@@ -14,17 +14,36 @@
 |---|------|-------|--------|
 | S103-1 | **Tesla-localStorage-Persistenz** — Oscar's `blocksPlaced=0` jeden Morgen. Root-Cause finden (Service-Worker? Tesla-Browser-Session?), Fix. Progress darf nicht verloren gehen. | Engineer (Kernighan-Learning #488) | 🔲 |
 | S103-2 | **Analytics-Minimal** — Was Oscar platziert, wie lange, welche NPCs getappt. Till-Dashboard (aggregiert, datenschutzkonform). Input für zukünftige Priorisierung. | Scientist (Feynman) | 🔲 |
-| S103-3 | **Quest-Runde 85** — niedrigste NPC-Counter finden, +10 Quests im gewohnten Pattern. | Artist (autonom) | 🔲 |
-| S103-4 | **Worktree-First im Engineer-Codex enforcen** — bereits dokumentiert, aber Parallel-Agent-Kollisionen häufen sich. Default-Pattern durchsetzen. | Engineer | 🔲 |
+| S103-3 | **Quest-Runde 85** — niedrigste NPC-Counter finden, +10 Quests im gewohnten Pattern. | Artist (autonom) | ✅ PR feat/quest-runde-85 — Alien×4/Lokführer×3/Tommy×3, 895→905 |
+| S103-4 | **Worktree-First im Engineer-Codex enforcen** — bereits dokumentiert, aber Parallel-Agent-Kollisionen häufen sich. Default-Pattern durchsetzen. | Engineer | ✅ PR #491 |
 
 ---
 
 ## Ceremony-Status S103
 
 - [x] Planning: 2026-04-24 (Sprint-Engine, nach Retro S102)
-- [ ] Daily Scrum
+- [x] Daily Scrum: 2026-04-25 (autonomer Agent)
 - [ ] Review
 - [ ] Retro
+
+---
+
+## Daily Scrum S103 (2026-04-25, autonomer Agent)
+
+**Was wurde gestern gemacht?**
+- S103-1 Tesla-localStorage-Persistenz: ✅ PR #494 IndexedDB-Fallback gemergt
+- S103-2 Analytics-Minimal: ✅ PR #492 Telemetrie + Till-Dashboard gemergt
+- S103-4 Worktree-First: ✅ PR #491 Engineer-Codex + Kernighan-Codex gemergt
+- Bonus-Sprints (Nacht-Spawns 2026-04-24): PR #495 Cave-Bug-Fix + Regression-Test, PR #498 Neutrino-Rezepte, PR #499 Visuelle Regression-Guards
+
+**Was kommt heute?**
+- S103-3 Quest-Runde 85: ✅ GERADE IMPLEMENTIERT — Alien(66→70)/Lokführer(66→69)/Tommy(66→69), 895→905 Quests (feat/quest-runde-85)
+
+**Blocker?**
+- Smoke Test (schatzinsel.app): CF-403 bekannte Sandbox-Limitation — kein echter Outage
+- HITL #1: Oscar-Smoke nach Caves-Fix — Till hinlegen, 1 Satz
+- HITL #2: Analytics-Opt-in auf Oscars Device aktivieren
+- HITL #3: IDB-Persistenz im echten Tesla verifizieren
 
 ---
 
