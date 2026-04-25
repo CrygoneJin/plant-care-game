@@ -28,7 +28,27 @@
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S112)
 - [x] Daily Scrum: übersprungen (alle Items Done vor erstem Standup)
 - [x] Review: 2026-04-25 (autonomer Agent)
-- [ ] Retro
+- [x] Retro: 2026-04-25 (autonomer Agent)
+
+---
+
+## Sprint Retrospektive S113 (2026-04-25, autonomer Agent)
+
+**Was gut lief:**
+- Kraemerin-Stimme ist die stärkste seit Bernd-Stille: "HANDEL OHNE VERTRAUEN IST KEIN HANDEL! Das ist Diebstahl mit Extra-Schritten!" — ein 8-Jähriger versteht das
+- Bug-Grenz-Thema: drei Grenzen, drei verschiedene Physiken (Ecotone/Taganbruch/Wasseroberfläche) — wissenschaftlich fundiert und gleichzeitig kindgerecht
+- Maus+Quak Wintervorbereitung: Humor ("ICH MUSS WISSEN OB NOCH ALLES DA IST") und Pädagogik in Balance
+- Quest-Track S103–S113: 11 Runden, stabile Qualität, Themen-Breite von Physik bis Handel bis Naturbeobachtung
+
+**Was nicht gut lief:**
+- main ist 40 Quests hinter Feature-Branches (895 vs 935) — Merge-Stapel wächst, 5+ PRs (#500–#504) warten auf Till
+- SPRINT.md auf main zeigt immer noch S103 — State-Drift seit 11 Sprints. Dieser PR schließt die Lücke (bis S113).
+- HITL-Items (Oscar-Smoke, IDB-Verifikation, Analytics-Opt-in) seit Wochen offen — kein Druck auf Till, aber dokumentiert
+
+**Retro-Actions für S114:**
+- **R1:** Quest-Runde 96: Alien(69)/Lokführer(69)/Tommy(70) → S114-1. Themen: Alien (menschliche Abschieds-Gewohnheiten), Lokführer (erste und letzte Reisen), Tommy (was geduldiges Beobachten zeigt). 935→945 Quests.
+- **R2:** Merge-Stapel-Hinweis für Till: PRs #500–#504 in Reihenfolge mergen (jeder baut auf dem vorherigen auf).
+- **R3:** SPRINT.md-Drift lösen — PR erstellen der main auf S113-Stand bringt (dieser PR).
 
 ---
 
