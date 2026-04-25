@@ -22,7 +22,7 @@
 ## Ceremony-Status S103
 
 - [x] Planning: 2026-04-24 (Sprint-Engine, nach Retro S102)
-- [ ] Daily Scrum
+- [x] Daily Scrum: 2026-04-25 (Sprint-Engine)
 - [ ] Review
 - [ ] Retro
 
