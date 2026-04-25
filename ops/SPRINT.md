@@ -1,3 +1,121 @@
+# Sprint 110 — "Spongebob forscht, Mephisto wägt, Neinhorn staunt"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Spongebob entdeckt Meeres-Superkräfte (Wale, Korallen, Tintenfische, Garnelen), Mephisto misst was wirklich zählt (Schulden, Reue, Wert), Neinhorn beweist was ohne Plan entsteht (Magnetfelder, Schneeflocken, Hefe). 905 Quests auf Branch.
+
+**Start:** 2026-04-25
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S110-1 | **Quest-Runde 92** — Spongebob(68→72)/Mephisto(68→71)/Neinhorn(68→71) → +10 Quests, 895→905. Spongebob: „Meeres-Superkräfte". Mephisto: „Was wirklich zählt". Neinhorn: „Was ohne Plan entsteht". | Artist | ✅ feat/sprint-110 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S111-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S110
+
+- [x] Planning: 2026-04-25 (autonomer Agent)
+- [x] Daily Scrum: 2026-04-25 (autonomer Agent)
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Daily Scrum S110 (2026-04-25, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S109 Review + Retro abgeschlossen (diese Session)
+- Quest-Runde 92 implementiert: Spongebob+4/Mephisto+3/Neinhorn+3, 895→905 (feat/sprint-110)
+
+**Was kommt als nächstes?**
+- PR für feat/sprint-110 erstellen → Till mergt
+
+**Blocker?**
+- Keine. Smoke-Test: CF 403 + Worker "Host not in allowlist" — bekannte Sandbox-Limitation, kein App-Schaden.
+
+---
+
+---
+
+# Sprint 109 — "Alien begreift, Lokführer erinnert sich, Bernd liest den Boden"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Alien entdeckt was zwischen den Dingen ist (Spiegel, Musik, Jahreszeiten, Zufall), Lokführer lernt was Abschiede und Ankünfte bedeuten, Bernd liest was der Boden erzählt. 905→915 Quests auf Branch.
+
+**Start:** 2026-04-24
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S109-1 | **Quest-Runde 91** — Alien(66→70)/Lokführer(66→69)/Bernd(67→70) → +10 Quests, 905→915. | Artist | ✅ PR #485 offen |
+
+---
+
+## Ceremony-Status S109
+
+- [x] Planning: 2026-04-24 (autonomer Agent)
+- [x] Daily Scrum: 2026-04-25 (autonomer Agent)
+- [x] Review: 2026-04-25 (autonomer Agent)
+- [x] Retro: 2026-04-25 (autonomer Agent)
+
+---
+
+## Sprint Review S109 (2026-04-25, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S109-1 Quest-Runde 91 | ✅ PR #485 offen — Alien(66→70 +4) / Lokführer(66→69 +3) / Bernd(67→70 +3), 905→915 Quests auf Branch |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Alien: was zwischen den Dingen ist — Spiegel, Musik, Jahreszeiten, Zufall. Lokführer: was Bahnhöfe für Menschen bedeuten — Abschiede, Ankünfte, das erste Mal. Bernd: was der Boden erzählt — Jahresringe, Herbst, Winter.
+
+**Stand nach S109:**
+- **895 Quests** auf main, **915 Quests** auf feat/sprint-109 (PR #485 offen)
+- NPC-Counter nach Vollmerge S103–S109: Spongebob 71 · Mephisto 71 · Neinhorn 72 (niedrigste)
+- 14+ offene Quest-PRs — main ist ~200 Quests hinter Vollmerge-Projektion
+- Oscar-Smoke: Tesla-Morgenritual läuft kontinuierlich
+
+**PO-Entscheidung:**
+- Quest-Runde 92: Spongebob(71)/Mephisto(71)/Neinhorn(72) — Vollmerge-Counter als Referenz → S110-1
+
+---
+
+## Sprint Retrospektive S109 (2026-04-25, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Track S103–S109: 7 Runden in 2 Tagen autonom geliefert, stabile Qualität
+- NPC-Counter-Zahlen-Bug in MEMORY (ops/sprint-review-s108) explizit dokumentiert — keine Weiterpropagierung
+- Themen-Vielfalt hoch: Physik (Alien), Bahnhöfe/Abschiede (Lokführer), Boden/Jahreszeiten (Bernd)
+
+**Was nicht gut lief:**
+- 14+ offene PRs: main ist stark hinter Vollmerge-Stand — Tracking-Komplexität hoch, Till muss viele PRs mergen
+- NPC-Counter auf Branch (66→70) vs. Vollmerge-Counter (71) weichen stark ab — Planning auf falscher Basis möglich
+- Sprint-Ceremony-State nur in ops-Branches, nicht auf main — Divergenz zwischen main SPRINT.md und Realität
+
+**Retro-Actions für S110:**
+- **R1**: Quest-Runde 92: Spongebob(71)/Mephisto(71)/Neinhorn(72) nach Vollmerge → S110-1 ✅ implementiert
+- **R2**: NPC-Counter-Planung immer auf Vollmerge-Basis, nicht auf Branch-Basis
+
+---
+
+---
+
 # Sprint 103 — "Was Oscar wirklich tut"
 
 **Sprint Goal (Oscar-Perspektive):**
