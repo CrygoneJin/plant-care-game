@@ -26,9 +26,30 @@
 ## Ceremony-Status S113
 
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S112)
-- [ ] Daily Scrum
-- [ ] Review
+- [x] Daily Scrum: übersprungen (alle Items Done vor erstem Standup)
+- [x] Review: 2026-04-25 (autonomer Agent)
 - [ ] Retro
+
+---
+
+## Sprint Review S113 (2026-04-25, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S113-1 Quest-Runde 95 | ✅ ops/sprint-review-s112 — Kraemerin(68→72 +4) / Bug(69→72 +3) / Maus(69→72 +3), 925→935 Quests |
+
+**Oscar-Outcome:** 10 neue Quests live auf Branch. Kraemerin lehrt den Unterschied zwischen echtem und unechtem Handel: Handschlag-Archiv ("HANDEL OHNE VERTRAUEN IST KEIN HANDEL! Das ist Diebstahl mit Extra-Schritten!"), Schulden-Kasse ("Wer verhungert kommt nicht wieder — das ist kein Mitleid, das ist Langzeitdenken"), Markt-der-zweiten-Chancen (Wert erkennen wo andere keinen sehen), Ehrlichkeits-Waage ("gleiche Waage für jeden — den reichen Händler, den armen Fischer, Oscar, mich selbst"). Bug beobachtet Grenzen: Waldrand-Grenz-Observatorium (Ecotone — 40% mehr Insektenarten als im Wald-Innern), Taganbruch-Protokoll-Station (Vögel 4 min vor Sonne, Bug immer zu spät: "Das entscheidet der Morgen für mich"), Wasseroberflächen-Grenz-Labor ("Das ist persönliche Wissenschaft" — Wasserläufer + Oberflächenspannung). Maus + Quak: Vorratskammer-Deluxe (Nr. 20, weil "ICH MUSS WISSEN OB NOCH ALLES DA IST"), Tunnel-Architektur-Büro (53 Tunnel, nur Maus kennt alle, Quak kennt nur die bekannten — "Du bist ein merkwürdiges Tier. DANKE!"), Wintervorbereitung-Akademie ("ICH BIN EIN SEHR GUTER LEHRER").
+
+**Stand nach S113:**
+- **895 Quests** auf main / **935 Quests** auf ops/sprint-review-s112
+- NPC-Counter (niedrigste nach S113): alien 69 · lokfuehrer 69 · tommy 70 · elefant 70 · floriane 70
+- Merge-Stapel: PRs #500–#504 + S113-Branch warten auf Till
+
+**PO-Entscheidung:**
+- Quest-Runde 96: Alien(69)/Lokführer(69)/Tommy(70) — niedrigste Counter → S114-1
+- Themen: Alien (menschliche Abschieds-Gewohnheiten), Lokführer (Erinnerungen an erste und letzte Reisen), Tommy (was geduldiges Beobachten zeigt)
 
 ---
 
