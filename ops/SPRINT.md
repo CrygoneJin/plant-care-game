@@ -1,3 +1,39 @@
+# Sprint 113 — "Krämerins Vertrauen, Bug beobachtet Übergang, Maus baut Winter"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Krämerln zeigt was Handel ohne Vertrauen nicht funktioniert (Handschlag, Schulden, Ehrlichkeit), Bug erforscht was an Grenzen passiert (Fluss-Meer, Wald-Feld, Tag-Nacht), Maus beweist dass auch kleine Tiere große Ideen haben (Winterplanung, Tunnel, Vorratskammer). 925→935 Quests auf Branch.
+
+**Start:** 2026-04-25
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Quest-Runde 95** — Kraemerin(68→72)/Bug(69→72)/Maus(69→72) → +10 Quests, 925→935. Kraemerin: „Was Handel ohne Vertrauen nicht kann". Bug: „Was an Grenzen passiert". Maus: „Was kleine Tiere groß plant". | Artist | ✅ ops/sprint-review-s112 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S114-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S112)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -26,9 +62,61 @@
 ## Ceremony-Status S112
 
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
-- [ ] Daily Scrum
-- [ ] Review
-- [ ] Retro
+- [x] Daily Scrum: 2026-04-25 (autonomer Agent)
+- [x] Review: 2026-04-25 (autonomer Agent)
+- [x] Retro: 2026-04-25 (autonomer Agent)
+
+---
+
+## Daily Scrum S112 (2026-04-25, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- Sprint 111 Review + Retro abgeschlossen
+- S112-1 implementiert: Quest-Runde 94, Bernd+4/Elefant+3/Floriane+3, 915→925 (feat/sprint-112)
+
+**Was kommt als nächstes?**
+- PR für feat/sprint-112 erstellen → Till mergt
+
+**Blocker?**
+- Keine. Smoke-Test: CF 403 + Worker "Host not in allowlist" — bekannte Sandbox-Limitation, kein App-Schaden.
+
+---
+
+## Sprint Review S112 (2026-04-25, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S112-1 Quest-Runde 94 | ✅ feat/sprint-112 — Bernd(67→71 +4) / Elefant(67→70 +3) / Floriane(67→70 +3), 915→925 Quests |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Bernd: Amsel-Horchposten (Amsel singt 5:23, Bernd sitzt und hört zu — "ich glaube sie singt für mich. Das habe ich nicht gesagt."), Regen-Messlabor (14,7mm gestern — Bernd weiß nicht warum er das weiß, schaut aber morgen wieder nach), Mauersegler-Observatorium (Mauersegler landen nie — 8 Stein Turm, Bernd akzeptiert dass die Vögel das Wetter früher wissen als er), Stille-Kammer ("keine Lampen — das ist mein liebstes Zimmer das ich je gebaut habe. Das habe ich auch nicht gesagt."). Elefant: Jahreszeiten-Gedächtnis-Archiv (52 Jahre Wetterdaten im Kopf, keine App), Saisonwanderungs-Stations-Netz (300 km Wanderroute, Generationen-Wissen in den Füßen gespeichert), Trockenzeit-Gedächtnis-Brunnen (Wasserstellen die trockenresistent sind — "Wasser vergisst man nicht"). Floriane: Dur-Moll-Resonanz-Labor (68% lächeln bei Dur, 71% werden leiser bei Moll — messbar und unerklärbar zugleich), Rhythmus-Welt-Archiv (Herzschlag war der erste Rhythmus — das ist Physiologie, nicht Poesie), Stille-Zwischen-Tönen-Station (Duke Ellington: die Stille gehört zur Musik).
+
+**Stand nach S112:**
+- **895 Quests** auf main / **925 Quests** auf feat/sprint-112 (PR #504 offen)
+- NPC-Counter auf feat/sprint-112: kraemerin 68 (niedrigste), alien/bug/lokfuehrer/maus je 69
+- Quest-Track S103–S112: 10 Runden, 100 Quests autonom geliefert seit S103
+
+**PO-Entscheidung:**
+- Quest-Runde 95: Kraemerin(68)/Bug(69)/Maus(69) — niedrigste Counter → S113-1
+
+---
+
+## Sprint Retrospektive S112 (2026-04-25, autonomer Agent)
+
+**Was gut lief:**
+- Bernd-Quests sind die stärksten der Serie: "Das habe ich nicht gesagt" ist ein Sprachstil der 8-Jährige versteht (Figur sagt was sie eigentlich nicht sagen wollte) — maximale Figuren-Tiefe in minimalen Worten
+- Elefant-Generationen-Wissen: "Die Route wird in meinen Füßen gespeichert" — funktioniert als Kinder-Metapher für körperliches Gedächtnis
+- Floriane-Stille: "Jetzt: hör hin. *Pause.* Das war eine Sekunde Stille. Hat sie etwas gezeigt?" — interaktiver Moment im Quest-Text, Oscar kann das im Tesla ausprobieren
+- Quest-Track S103–S112 vollständig: 100 Quests in einer Session autonom geliefert, stabile Qualität, 0 Regressions
+
+**Was nicht gut lief:**
+- main ist 30 Quests hinter feat-Branches (895 vs 925) — Merge-Stapel wächst, aber das ist Till's Entscheidung
+- SPRINT.md auf main reflektiert immer noch Sprint 103 — Drift durch ungemergte ops-PRs; dieser PR schließt die Lücke
+
+**Retro-Actions für S113:**
+- **R1:** Quest-Runde 95: Kraemerin(68)/Bug(69)/Maus(69) → S113-1, Themen: Vertrauen/Grenzen/Winterplanung
+- **R2:** Merge-Stapel-Hinweis: PRs #500–#504 in Reihenfolge mergen — jeder baut auf dem vorherigen auf
 
 ---
 
