@@ -1,3 +1,282 @@
+# Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Bernd entdeckt in der Stille was er nie gesucht hat (Amsel, Regen, Mauersegler, Stille), Elefant teilt was Generationen über Zeit wissen (Jahreszeiten, Wanderrouten, Trockenzeitwasser), Floriane misst was Musik mit Gefühlen macht (Dur/Moll, Rhythmus, Stille). 915→925 Quests auf Branch.
+
+**Start:** 2026-04-25
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S112-1 | **Quest-Runde 94** — Bernd(67→71)/Elefant(67→70)/Floriane(67→70) → +10 Quests, 915→925. Bernd: „Was Bernd in der Stille wahrnimmt". Elefant: „Was Elefanten über Zeit wissen". Floriane: „Was Musik an Gefühlen zeigt". | Artist | ✅ feat/sprint-112 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S113-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S112
+
+- [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+---
+
+# Sprint 111 — "Tommy zählt, Lokführer erinnert, Alien staunt"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Tommy misst was Beobachten zeigt (Gezeiten, Echo, Sternschnuppen, Wachstum), Lokführer erinnert sich was Reisen bedeutet (erste Male, Heimkehr, stille Gleise), Alien staunt über menschliche Tages-Gewohnheiten (Morgenritual, Feiern, Namenstage). 905→915 Quests auf Branch.
+
+**Start:** 2026-04-25
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S111-1 | **Quest-Runde 93** — Tommy(66→70)/Lokführer(66→69)/Alien(66→69) → +10 Quests, 905→915. Tommy: „Was Beobachten zeigt". Lokführer: „Was Reisen bedeutet". Alien: „Was Menschen täglich tun". | Artist | ✅ feat/sprint-111 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S112-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S111
+
+- [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S110)
+- [x] Daily Scrum: 2026-04-25 (autonomer Agent)
+- [x] Review: 2026-04-25 (autonomer Agent)
+- [x] Retro: 2026-04-25 (autonomer Agent)
+
+---
+
+## Daily Scrum S111 (2026-04-25, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- Sprint 110 Review + Retro abgeschlossen
+- S111-1 implementiert: Quest-Runde 93, Tommy+4/Lokführer+3/Alien+3, 905→915 (feat/sprint-111)
+
+**Was kommt als nächstes?**
+- PR für feat/sprint-111 erstellen → Till mergt
+
+**Blocker?**
+- Keine. Smoke-Test: CF 403 + Worker "Host not in allowlist" — bekannte Sandbox-Limitation.
+
+---
+
+## Sprint Review S111 (2026-04-25, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S111-1 Quest-Runde 93 | ✅ feat/sprint-111 — Tommy(66→70 +4) / Lokführer(66→69 +3) / Alien(66→69 +3), 905→915 Quests |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Tommy: Gezeiten-Messstation (Mond macht Ebbe und Flut — pünktlicher als ein Lokführer), Echo-Forschungs-Grotte (Reverb = Mehrfach-Echo gemessen), Sternschnuppen-Beobachtungsturm (Felsen aus dem Weltall verbrennen bei 70 km/s), Wachstums-Beobachtungs-Station (Phänologie selbst entdeckt — messen ist entdecken). Lokführer: Erste-Fahrt-Denkmal (Linie 7, Dienstag, perfekt), Heimkehr-Bahnhof (zweimal pfeifen — einmal für den Zug, einmal für die Wartenden), Stille-Gleise-Gedenkstätte (43 km letzter Zug 1987 — Gleise bleiben länger als Züge). Alien: Morgenritual-Archiv (73% beginnen mit Wasser-Kontakt — Routine erzeugt Mut), Feiertags-Analyse-Labor (Synchronisationspunkte für Menschen mit verschiedenen Zeiten), Namenstag-Observatorium (Schall bekommt einen Jahrestag, Jahrestag bekommt Kuchen).
+
+**Stand nach S111:**
+- **905 Quests** auf main / **915 Quests** auf feat/sprint-111
+- NPC-Counter nach S111: tommy 70 · lokfuehrer 69 · alien 69
+- Nächste niedrigste Counter: prüfen nach S111-Merge
+
+**PO-Entscheidung:**
+- Merge-Stapel wächst (S103–S111 alle offen) — Till entscheidet Reihenfolge, kein Druck
+- Quest-Runde 94: Counter nach Merge prüfen, niedrigste NPCs → S112-1
+
+---
+
+## Sprint Retrospektive S111 (2026-04-25, autonomer Agent)
+
+**Was gut lief:**
+- Tommy-Gezeiten: „Der Mond ist pünktlicher als ein Lokführer" — beste NPC-Querverbindung seit langem, Oscar-tauglich
+- Lokführer-Heimkehr: zweimal pfeifen (einmal für Zug, einmal für Wartende) — emotionaler Kern in einer Geste
+- Alien-Morgenritual: 73% Wasser-Kontakt + 47 Minuten vs. 8 Sekunden — Alien-Stimme bleibt konsistent: Daten + Sehnsucht
+- Quest-Track S103–S111 vollständig: 9 Runden, 90 Quests autonom geliefert seit S102
+
+**Was nicht gut lief:**
+- SPRINT.md-Drift: main reflektiert noch S103, obwohl S111 fertig — 16+ ungemergte PRs
+- Smoke-Test CF/Worker bleibt Sandbox-Limitation — kein Fortschritt seit S92
+
+**Retro-Actions für S112:**
+- **R1:** Quest-Runde 94: Counter nach S111-Merge prüfen → niedrigste NPCs → S112-1
+- **R2:** Merge-Hinweis in PR: Reihenfolge S103→S111 wichtig (Quest-Counter kumulieren)
+
+---
+
+---
+
+# Sprint 110 — "Spongebob forscht, Mephisto wägt, Neinhorn staunt"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Spongebob entdeckt Meeres-Superkräfte (Wale, Korallen, Tintenfische, Garnelen), Mephisto misst was wirklich zählt (Schulden, Reue, Wert), Neinhorn beweist was ohne Plan entsteht (Magnetfelder, Schneeflocken, Hefe). 905 Quests auf Branch.
+
+**Start:** 2026-04-25
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S110-1 | **Quest-Runde 92** — Spongebob(68→72)/Mephisto(68→71)/Neinhorn(68→71) → +10 Quests, 895→905. Spongebob: „Meeres-Superkräfte". Mephisto: „Was wirklich zählt". Neinhorn: „Was ohne Plan entsteht". | Artist | ✅ feat/sprint-110 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S111-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S110
+
+- [x] Planning: 2026-04-25 (autonomer Agent)
+- [x] Daily Scrum: 2026-04-25 (autonomer Agent)
+- [x] Review: 2026-04-25 (autonomer Agent)
+- [x] Retro: 2026-04-25 (autonomer Agent)
+
+---
+
+## Daily Scrum S110 (2026-04-25, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S109 Review + Retro abgeschlossen (diese Session)
+- Quest-Runde 92 implementiert: Spongebob+4/Mephisto+3/Neinhorn+3, 895→905 (feat/sprint-110)
+
+**Was kommt als nächstes?**
+- PR für feat/sprint-110 erstellen → Till mergt
+
+**Blocker?**
+- Keine. Smoke-Test: CF 403 + Worker "Host not in allowlist" — bekannte Sandbox-Limitation, kein App-Schaden.
+
+---
+
+## Sprint Review S110 (2026-04-25, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S110-1 Quest-Runde 92 | ✅ feat/sprint-110 — Spongebob(68→72 +4) / Mephisto(68→71 +3) / Neinhorn(68→71 +3), 895→905 Quests |
+
+**Oscar-Outcome:** 10 neue Quests. Spongebob: Wal-Sonar-Archiv (9000 km Reichweite), Korallenriff-Bioreaktor (1% Fläche, 25% aller Meerestiere), Tintenfisch-Tarn-Station (farbenblind aber alle Farben), Pistolengarnelen-Akustik-Labor (lautestes Lebewesen relativ zur Größe). Mephisto: Schulden-Bibliothek, Reue-Destillerie, Wert-Messturm. Neinhorn: Magnetfeld-Forschungs-Station, Schneeflocken-Klassifizierungs-Labor, Fermentations-Kammer.
+
+**Stand nach S110:**
+- **895 Quests** auf main / **905 Quests** auf feat/sprint-110 (PR offen)
+- NPC-Counter auf feat/sprint-110: tommy/lokfuehrer/alien je 66 (niedrigste)
+
+**PO-Entscheidung:**
+- Quest-Runde 93: Tommy(66)/Lokführer(66)/Alien(66) → S111-1
+
+---
+
+## Sprint Retrospektive S110 (2026-04-25, autonomer Agent)
+
+**Was gut lief:**
+- Pistolengarnelen: lautestes Lebewesen relativ zur Größe + U-Boot-Geschichte — stärkstes Kind-WTF seit Neinhorn-Kompost
+- Mephisto lernt Reue: Figur reift von „was nehme ich" zu „was hat es wirklich gekostet"
+- Neinhorn-ohne-Plan: Schneeflocken als NEIN-Beweis — eleganteste Figur-Thema-Verbindung
+
+**Was nicht gut lief:**
+- 16+ offene PRs — main ist 10 Quests hinter feat-Branches (Stapel wächst)
+- SPRINT.md auf main reflektiert nicht den echten Stand (103 statt 110)
+
+**Retro-Actions für S111:**
+- **R1:** Quest-Runde 93: Tommy(66)/Lokführer(66)/Alien(66) → S111-1
+- **R2:** Merge-Stapel bleibt Till-Decision — Hinweis in PR dass Reihenfolge wichtig ist
+
+---
+
+---
+
+# Sprint 109 — "Alien begreift, Lokführer erinnert sich, Bernd liest den Boden"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Alien entdeckt was zwischen den Dingen ist (Spiegel, Musik, Jahreszeiten, Zufall), Lokführer lernt was Abschiede und Ankünfte bedeuten, Bernd liest was der Boden erzählt. 905→915 Quests auf Branch.
+
+**Start:** 2026-04-24
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S109-1 | **Quest-Runde 91** — Alien(66→70)/Lokführer(66→69)/Bernd(67→70) → +10 Quests, 905→915. | Artist | ✅ PR #485 offen |
+
+---
+
+## Ceremony-Status S109
+
+- [x] Planning: 2026-04-24 (autonomer Agent)
+- [x] Daily Scrum: 2026-04-25 (autonomer Agent)
+- [x] Review: 2026-04-25 (autonomer Agent)
+- [x] Retro: 2026-04-25 (autonomer Agent)
+
+---
+
+## Sprint Review S109 (2026-04-25, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S109-1 Quest-Runde 91 | ✅ PR #485 offen — Alien(66→70 +4) / Lokführer(66→69 +3) / Bernd(67→70 +3), 905→915 Quests auf Branch |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Alien: was zwischen den Dingen ist — Spiegel, Musik, Jahreszeiten, Zufall. Lokführer: was Bahnhöfe für Menschen bedeuten — Abschiede, Ankünfte, das erste Mal. Bernd: was der Boden erzählt — Jahresringe, Herbst, Winter.
+
+**Stand nach S109:**
+- **895 Quests** auf main, **915 Quests** auf feat/sprint-109 (PR #485 offen)
+- NPC-Counter nach Vollmerge S103–S109: Spongebob 71 · Mephisto 71 · Neinhorn 72 (niedrigste)
+- 14+ offene Quest-PRs — main ist ~200 Quests hinter Vollmerge-Projektion
+- Oscar-Smoke: Tesla-Morgenritual läuft kontinuierlich
+
+**PO-Entscheidung:**
+- Quest-Runde 92: Spongebob(71)/Mephisto(71)/Neinhorn(72) — Vollmerge-Counter als Referenz → S110-1
+
+---
+
+## Sprint Retrospektive S109 (2026-04-25, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Track S103–S109: 7 Runden in 2 Tagen autonom geliefert, stabile Qualität
+- NPC-Counter-Zahlen-Bug in MEMORY (ops/sprint-review-s108) explizit dokumentiert — keine Weiterpropagierung
+- Themen-Vielfalt hoch: Physik (Alien), Bahnhöfe/Abschiede (Lokführer), Boden/Jahreszeiten (Bernd)
+
+**Was nicht gut lief:**
+- 14+ offene PRs: main ist stark hinter Vollmerge-Stand — Tracking-Komplexität hoch, Till muss viele PRs mergen
+- NPC-Counter auf Branch (66→70) vs. Vollmerge-Counter (71) weichen stark ab — Planning auf falscher Basis möglich
+- Sprint-Ceremony-State nur in ops-Branches, nicht auf main — Divergenz zwischen main SPRINT.md und Realität
+
+**Retro-Actions für S110:**
+- **R1**: Quest-Runde 92: Spongebob(71)/Mephisto(71)/Neinhorn(72) nach Vollmerge → S110-1 ✅ implementiert
+- **R2**: NPC-Counter-Planung immer auf Vollmerge-Basis, nicht auf Branch-Basis
+
+---
+
+---
+
 # Sprint 103 — "Was Oscar wirklich tut"
 
 **Sprint Goal (Oscar-Perspektive):**
