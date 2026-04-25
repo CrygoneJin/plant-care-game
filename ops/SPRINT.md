@@ -14,7 +14,7 @@
 |---|------|-------|--------|
 | S103-1 | **Tesla-localStorage-Persistenz** — Oscar's `blocksPlaced=0` jeden Morgen. Root-Cause finden (Service-Worker? Tesla-Browser-Session?), Fix. Progress darf nicht verloren gehen. | Engineer (Kernighan-Learning #488) | 🔲 |
 | S103-2 | **Analytics-Minimal** — Was Oscar platziert, wie lange, welche NPCs getappt. Till-Dashboard (aggregiert, datenschutzkonform). Input für zukünftige Priorisierung. | Scientist (Feynman) | 🔲 |
-| S103-3 | **Quest-Runde 85** — niedrigste NPC-Counter finden, +10 Quests im gewohnten Pattern. | Artist (autonom) | 🔲 |
+| S103-3 | **Quest-Runde 85** — niedrigste NPC-Counter finden, +10 Quests im gewohnten Pattern. | Artist (autonom) | ✅ PR #508 |
 | S103-4 | **Worktree-First im Engineer-Codex enforcen** — bereits dokumentiert, aber Parallel-Agent-Kollisionen häufen sich. Default-Pattern durchsetzen. | Engineer | 🔲 |
 
 ---
