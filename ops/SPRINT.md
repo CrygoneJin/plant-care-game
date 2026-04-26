@@ -142,7 +142,7 @@ Quest-Runde neu auf aktuellem main aufbauen — sauberer als 10 Merge-Schritte.
 
 | # | Item | Owner | Status |
 |---|------|-------|--------|
-| S104-1 | **Hörspiel Kapitel 15 — Die Katze** — Lindgren-Anregung aus Backlog-Item K15. Tommy Krab erzählt. Artist (autonom). Ins Hörspiel-System einfügen wie Kap. 13+14. | Artist (autonom) | 🔲 |
+| S104-1 | **Hörspiel Kapitel 15 — Die Katze** — Lindgren-Anregung aus Backlog-Item K15. Tommy Krab erzählt. Artist (autonom). Ins Hörspiel-System einfügen wie Kap. 13+14. | Artist (autonom) | ✅ PR #516 / #517 — Mephisto schweigt und lehrt |
 | S104-2 | **Quest-Track: PAUSE** — keine neue Quest-Runde bis PR #506 auf main. Dann prüfen ob Stack sinnvoll oder Neustart besser. | — | ⏸ wartet auf Till |
 
 ---
@@ -150,9 +150,31 @@ Quest-Runde neu auf aktuellem main aufbauen — sauberer als 10 Merge-Schritte.
 ## Ceremony-Status S104
 
 - [x] Planning: 2026-04-26 (autonomer Agent)
-- [ ] Daily Scrum
+- [x] Daily Scrum: 2026-04-26 (autonomer Agent)
 - [ ] Review
 - [ ] Retro
+
+---
+
+## Daily Scrum S104 (2026-04-26, autonomer Agent)
+
+**Was wurde gestern gemacht?**
+- S103 vollständig: IDB-Persistenz (#494), Analytics (#492), Quest-Runde 85 (#506), Worktree-Codex (#491) — alle auf main oder als PR offen
+
+**Was kommt heute?**
+- S104-1 Hörspiel K15 — Die Katze: ✅ durch parallele Agenten erledigt
+  - PR #513 (`feat/hoerspiel-kapitel-15`) — erste Version von Tommy Krab, ~8 Abschnitte
+  - PR #516 (`feat/s104-hoerspiel-kapitel-15`) — überarbeitete Version + Memory-Eintrag
+  - PR #517 (`ops/s104-complete`) — **Konsolidierung**: K15 + Daily + Review + Retro + S105 Planning → **empfohlener Merge**
+- S104-2 Quest-Track: ⏸ wartet auf Till (PR #506)
+
+**Blocker?**
+- Smoke Tests: schatzinsel.app CF-403 + Worker "Host not in allowlist" — bekannte Sandbox-Limitation, kein Outage
+- PR-Debt: 20+ offene PRs auf feat-Branches (Quest-Runden 86–96, S104–S114 Ceremonies)
+  - Empfehlung: **PR #517 mergen** (K15 + vollständige S104-Ceremonies + S105-Planning)
+  - Dann PR #506 mergen (Quest-Runde 85 auf main)
+  - Quest-Stack #500–#510 erst danach entscheiden
+- HITL offen: Oscar-Smoke, Analytics-Opt-in, IDB-Tesla-Verify (wartet auf Till)
 
 ---
 
