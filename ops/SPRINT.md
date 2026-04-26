@@ -142,7 +142,7 @@ Quest-Runde neu auf aktuellem main aufbauen — sauberer als 10 Merge-Schritte.
 
 | # | Item | Owner | Status |
 |---|------|-------|--------|
-| S104-1 | **Hörspiel Kapitel 15 — Die Katze** — Lindgren-Anregung aus Backlog-Item K15. Tommy Krab erzählt. Artist (autonom). Ins Hörspiel-System einfügen wie Kap. 13+14. | Artist (autonom) | 🔲 |
+| S104-1 | **Hörspiel Kapitel 15 — Die Katze** — Lindgren-Anregung aus Backlog-Item K15. Tommy Krab erzählt. Artist (autonom). Ins Hörspiel-System einfügen wie Kap. 13+14. | Artist (autonom) | ✅ `docs/stories/kapitel-15-die-katze.md` |
 | S104-2 | **Quest-Track: PAUSE** — keine neue Quest-Runde bis PR #506 auf main. Dann prüfen ob Stack sinnvoll oder Neustart besser. | — | ⏸ wartet auf Till |
 
 ---
@@ -150,9 +150,120 @@ Quest-Runde neu auf aktuellem main aufbauen — sauberer als 10 Merge-Schritte.
 ## Ceremony-Status S104
 
 - [x] Planning: 2026-04-26 (autonomer Agent)
+- [x] Daily Scrum: 2026-04-26 (autonomer Agent)
+- [x] Review: 2026-04-26 (autonomer Agent)
+- [x] Retro: 2026-04-26 (autonomer Agent)
+
+---
+
+## Daily Scrum S104 (2026-04-26, autonomer Agent)
+
+**Was wurde gestern gemacht?**
+- S103: alle 4 Items ✅ auf main (IDB-Persistenz, Analytics, Quest-Runde 85 PR offen, Worktree-Codex)
+- Nacht-Spawn: K15 „Die Katze" auf `feat/s104-hoerspiel-kapitel-15` fertiggestellt
+
+**Was kommt heute?**
+- S104-1 K15: ✅ bereits fertig — Konsolidierung auf main via diesem PR
+
+**Blocker?**
+- Smoke Test (schatzinsel.app): CF-403 bekannte Sandbox-Limitation — kein echter Outage
+- Worker `/discoveries`: "Host not in allowlist" — Sandbox-IP-Block, kein echter Outage
+- PR #506 (Quest-Runde 85): wartet auf Till-Merge — Quest-Track bleibt pausiert bis dahin
+
+---
+
+## Sprint Review S104 (2026-04-26, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 lieferbar ✅, 1 planmäßig pausiert ⏸**
+
+| Item | Ergebnis |
+|------|---------|
+| S104-1 Hörspiel K15 — Die Katze | ✅ `docs/stories/kapitel-15-die-katze.md` — Mephisto der schwarze Kater lehrt Tommy das Schweigen-als-Kunst. 7 Abschnitte + Gute-Nacht-Schluss. Lindgren-Stil. Anschluss an K14 (Mephisto taucht dort kurz auf, bekommt jetzt Tiefe). |
+| S104-2 Quest-Track PAUSE | ⏸ bewusst pausiert — kein neuer Quest-PR bis #506 auf main |
+
+**Oscar-Outcome:**
+- K15 fertig: Tommy lernt dass Schweigen eine Entscheidung ist und Dabeisein manchmal mehr als Reden hilft
+- Mephisto: der schwarze Kater der nichts sagt aber alles versteht — Lindgren-Anregung erfüllt
+- PR-Debt: konsolidiert auf diesen einen PR (ersetzt #513, #514, #515, #516)
+
+---
+
+## Sprint Retrospektive S104 (2026-04-26, autonomer Agent)
+
+**Was gut lief:**
+- K15 Nacht-Spawn: konsistente Qualität, klick-klack-Stimme, Kontinuität zu K14 (Mephisto-Einführung)
+- Quest-Track-Pause hat gehalten: S104 hat keine neuen Quest-PRs erzeugt
+- Konsolidierung: 4 bestehende PRs (#513, #514, #515, #516) durch einen ersetzt
+
+**Was nicht gut lief:**
+- PR #506 (Quest-Runde 85) weiterhin ungemergt — blockiert Quest-Track jetzt seit 2 Sprints
+- Stacked PRs (#500–#510): komplexe Merge-Reihenfolge, Till braucht mehr Führung
+- 20+ offene PRs insgesamt: PR-Debt ist strukturelles Problem, kein Sprint-Problem
+
+**Retro-Actions für S105:**
+- **R1:** K16 Hörspiel — Emma die Lokomotive erzählt Tommy was Dampf von Bergen lernt (Jim-Knopf-Anregung)
+- **R2:** Quest-Track Resume Check — falls #506 auf main: nächste Quest-Runde (NPCs mit niedrigstem Counter)
+- **R3:** PR-Merge-Guide aktualisieren — klare Reihenfolge für Till
+
+---
+
+## PR-Merge-Anleitung für Till (Stand 2026-04-26, aktualisiert)
+
+**Schritt 1 — Diesen PR mergen** (ops/s104-complete → main):
+- Enthält: K15 + Daily + Review + Retro + S105 Planning
+- Ersetzt: #513, #514, #515, #516 → diese danach schließen
+
+**Schritt 2 — Quest-Track (optional):**
+
+| PR | Was | Aktion |
+|----|-----|--------|
+| #506 | Quest-Runde 85: Alien/Lokführer/Tommy +10 (895→905) | Mergen |
+| #500 | Quest-Runde 92: Spongebob/Mephisto/Neinhorn (895→905) | **Schließen** — base != main, Duplikat von #506 |
+| #502, #504 | Quest-Runden 93, 94 | **Schließen** — stacked, veraltet |
+| Alle anderen Quest-PRs (#456, #466, #478, #482, #483, #485) | Quest-Runden 86–91 | **Schließen oder ignorieren** — nach #506 Neustart besser |
+
+**Empfehlung:** Nur #506 mergen. Rest schließen. Dann sauber Quest-Runde 86 neu bauen.
+
+**Ceremony-PRs zum Schließen:**
+- #452, #457, #465, #476, #480, #484, #486 — alle veraltet, Ceremonies auf veralteten Branches
+
+---
+
+---
+
+# Sprint 105 — "Emma und der Berg"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar hört Kapitel 16 — Emma die Lokomotive erklärt Tommy warum Dampf keine Angst vor Bergen hat. Tommy lernt: manchmal muss man Anlauf holen um anzukommen.
+
+**Start:** 2026-04-26
+**Sprint-Prinzip:** Hörspiel-Track läuft. Quest-Track nur wenn #506 auf main.
+
+---
+
+## Sprint Backlog S105
+
+| # | Item | Owner | Status |
+|---|------|-------|--------|
+| S105-1 | **Hörspiel Kapitel 16 — Emma und der Berg** — Jim-Knopf-Anregung. Emma die Lokomotive erzählt Tommy. Ins Hörspiel-System wie K13–K15. | Artist (autonom) | 🔲 |
+| S105-2 | **Quest-Track Resume Check** — falls PR #506 auf main: niedrigste NPC-Counter finden, Quest-Runde 86 starten. | Artist (autonom) | 🔲 (wartet auf #506-Merge) |
+
+---
+
+## Ceremony-Status S105
+
+- [x] Planning: 2026-04-26 (autonomer Agent)
 - [ ] Daily Scrum
 - [ ] Review
 - [ ] Retro
+
+---
+
+## Retro-Actions aus S104 (in S105 umgesetzt)
+
+- R1 → S105-1 (K16 Emma)
+- R2 → S105-2 (Quest-Track Resume)
+- R3 → PR-Guide aktualisiert (oben in S104-Retro)
 
 ---
 
