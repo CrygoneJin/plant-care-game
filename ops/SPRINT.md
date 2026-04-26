@@ -23,7 +23,7 @@
 
 - [x] Planning: 2026-04-24 (Sprint-Engine, nach Retro S102)
 - [x] Daily Scrum: 2026-04-25 (autonomer Agent)
-- [ ] Review
+- [x] Review: 2026-04-26 (autonomer Agent)
 - [ ] Retro
 
 ---
@@ -44,6 +44,40 @@
 - HITL #1: Oscar-Smoke nach Caves-Fix — Till: iPad hinlegen, 1 Satz
 - HITL #2: Analytics-Opt-in auf Oscars Device: `localStorage.setItem('insel-analytics-optin','true')` + reload
 - HITL #3: IDB-Persistenz im echten Tesla: Console-Log nach Auto-Aus+An checken
+
+---
+
+## Sprint Review S103 (2026-04-26, autonomer Agent)
+
+**Sprint Goal erfüllt: 4/4 Items ✅**
+
+| Item | Ergebnis |
+|------|---------|
+| S103-1 Tesla-localStorage-Persistenz | ✅ PR #494 — IndexedDB-Snapshot-Pattern + navigator.storage.persist(). Oscar's `blocksPlaced=0`-Problem gelöst. Progress überlebt Tesla-Session-Reset. |
+| S103-2 Analytics-Minimal | ✅ PR #492 — Opt-in Telemetrie + Till-Dashboard live. Privacy-by-default (kein Tracking ohne Consent). Till sieht jetzt aggregiert: Blöcke, Zeit, NPC-Taps, Engagement-Score. |
+| S103-3 Quest-Runde 85 | ✅ PR #506 — Alien(66→70 +4) / Lokführer(66→69 +3) / Tommy(66→69 +3), 895→905 Quests. |
+| S103-4 Worktree-First enforcen | ✅ PR #491 — Engineer-Codex + Kernighan-Codex aktualisiert. Parallel-Agent-Kollisionen strukturell adressiert. |
+
+**Oscar-Outcome:**
+- Progress geht nicht mehr verloren: IDB-Snapshot überlebt Tesla-Browser-Reset — Kernighan-Finding aus S102 behoben
+- Till kann jetzt sehen was Oscar wirklich tut: Blocks, Zeit, NPCs — datenschutzkonform, opt-in
+- 10 neue Quests sichtbar (905 gesamt): Alien-Staunen, Lokführer-Erinnerungen, Tommy-Entdeckungen
+- Bonus-PRs: Cave-Bug-Fix (#495), Neutrino-Rezepte (#498), Visuelle Regression-Guards (#499)
+
+**Merge-Stapel auf Remote:**
+- Autonome Agenten haben Quest-Runden 86–95 bereits vorgearbeitet: ops/sprint-review-s112 + ops/sprint-review-s113
+- 40 weitere Quests (905→935) warten auf Till's Merge (#500–#506)
+- SPRINT.md auf diesen Branches: S104–S113 komplett dokumentiert
+
+**HITL ausstehend (3 Items):**
+- **#1** Oscar-Smoke nach Caves-Fix: iPad hinlegen, weggucken, 1 Satz
+- **#2** Analytics-Opt-in auf Oscars Device: `localStorage.setItem('insel-analytics-optin','true')` + reload
+- **#3** IDB-Persistenz im Tesla: Console-Log nach Auto-Aus+An — greift der Restore?
+
+**PO-Entscheidung:**
+- Quest-Track läuft autonom weiter — nächste Runde 86 auf Branch ops/sprint-review-s112 bereits vorhanden
+- Neue Features pausiert bis Oscar-Daten durch Analytics einfließen (Einstein-Linie)
+- S104 Retro → dann S104 Planning
 
 ---
 
