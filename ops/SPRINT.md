@@ -142,7 +142,7 @@ Quest-Runde neu auf aktuellem main aufbauen — sauberer als 10 Merge-Schritte.
 
 | # | Item | Owner | Status |
 |---|------|-------|--------|
-| S104-1 | **Hörspiel Kapitel 15 — Die Katze** — Lindgren-Anregung aus Backlog-Item K15. Tommy Krab erzählt. Artist (autonom). Ins Hörspiel-System einfügen wie Kap. 13+14. | Artist (autonom) | 🔲 |
+| S104-1 | **Hörspiel Kapitel 15 — Die Katze** — Lindgren-Anregung aus Backlog-Item K15. Tommy Krab erzählt. Artist (autonom). Ins Hörspiel-System einfügen wie Kap. 13+14. | Artist (autonom) | ✅ docs/stories/kapitel-15-die-katze-hoert-zu.md |
 | S104-2 | **Quest-Track: PAUSE** — keine neue Quest-Runde bis PR #506 auf main. Dann prüfen ob Stack sinnvoll oder Neustart besser. | — | ⏸ wartet auf Till |
 
 ---
