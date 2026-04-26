@@ -23,8 +23,78 @@
 
 - [x] Planning: 2026-04-24 (Sprint-Engine, nach Retro S102)
 - [x] Daily Scrum: 2026-04-25 (autonomer Agent)
-- [ ] Review
-- [ ] Retro
+- [x] Review: 2026-04-26 (autonomer Agent)
+- [x] Retro: 2026-04-26 (autonomer Agent)
+
+---
+
+## Sprint Review S103 (2026-04-26, autonomer Agent)
+
+**Sprint Goal erfüllt: 4/4 ✅**
+
+| Item | Ergebnis |
+|------|---------|
+| S103-1 Tesla-localStorage-Persistenz | ✅ PR #494 — IDB-Snapshot-Pattern, `navigator.storage.persist()` auf main |
+| S103-2 Analytics-Minimal | ✅ PR #492 — Opt-in-Telemetrie + Till-Dashboard auf main |
+| S103-3 Quest-Runde 85 | ✅ PR #506 — Alien(66→70) / Lokführer(66→69) / Tommy(66→69), 895→905 Quests (offen, wartet auf Merge) |
+| S103-4 Worktree-First Codex | ✅ PR #491 — Engineer-Codex + Kernighan-Codex auf main |
+
+**Oscar-Outcome:**
+- Tesla-Morgenritual läuft: blocksPlaced überlebe Browser-Restart nun durch IndexedDB
+- Till-Dashboard live: aggregierte Daten datenschutzkonform, kein PII
+- 10 neue Quests bereit (Alien: was sich selbst erklärt, Lokführer: Bahnphysik, Tommy: Zufallsentdeckungen)
+- Worktree-Pattern enforced: kein weiterer Parallel-Agent-Clash möglich
+
+**Wichtiger Befund — PR-Debt:**
+Parallel-Agenten haben seit 2026-04-24 selbstständig die Sprints S104–S114 weitergebaut
+(Quest-Runden 86–96, Ceremonies, 20+ offene PRs). Main steht bei 895 Quests,
+feat-Branches kumuliert bei 945+. PRs warten auf Till-Merge-Block.
+
+---
+
+## Sprint Retrospektive S103 (2026-04-26, autonomer Agent)
+
+**Was gut lief:**
+- Tesla-IDB-Fix ist echter Progress: Oscar verliert nicht mehr seine Blöcke jeden Morgen
+- Analytics-Opt-in: datenschutzkonformes Pattern sauber etabliert (Privacy-by-default)
+- Worktree-Codex: nachhaltige Lösung für Parallel-Agent-Kollisionen
+- Quest-Themen: "Was sich selbst erklärt" funktioniert als roter Faden für 8-Jährige
+
+**Was nicht gut lief:**
+- Parallel-Agenten haben eigenständig S104–S114 weitergebaut ohne auf Merge zu warten.
+  20+ offene PRs, SPRINT.md auf main zeigt S103 obwohl feat-Branches bei S114 sind.
+  Dieses Auseinanderlaufen kostet Till Orientierung.
+- K15 Hörspiel (geplant als Nacht-Spawn 2026-04-24) wurde nie gestartet.
+- HITL-Items #1–#3 (Oscar-Smoke, Analytics-Opt-in, IDB-Tesla-Verifikation) weiterhin offen.
+
+**Retro-Actions für S104:**
+- **R1:** Quest-Track pausieren bis PR-Debt aufgelöst — kein neuer Quest-PR, bis #506 auf main ist
+- **R2:** K15 Hörspiel Kapitel 15 (Artist, autonom) — das offene Item aus dem Backlog
+- **R3:** PR-Merge-Anleitung für Till in SPRINT.md eintragen (unten)
+
+---
+
+## PR-Merge-Anleitung für Till (Stand 2026-04-26)
+
+PRs die direkt auf `main` basieren (mergebar ohne Stacking):
+
+| PR | Was | Abhängigkeit |
+|----|-----|-------------|
+| #506 | Quest-Runde 85: Alien/Lokführer/Tommy +10 (895→905) | keine (base: main) |
+| #508 | Quest-Runde 85 (Duplikat, anderer Branch) | **nach #506 schließen** |
+
+PRs die gestapelt sind (müssen in Reihenfolge, nach #506):
+
+```
+#500 → #501 → #502 → #503 → #504 → #505 → #507 → #509 → #510 → #511
+```
+
+Empfehlung: **Erst #506 mergen**, dann entscheiden ob der Stack sinnvoll ist.
+PR #511 (ops/sprint-review-s103-final) enthält Quest-Runde 86 + Ceremonies für S103/S104.
+PR #510 enthält Quest-Runde 96 (S114) — das ist 11 Runden voraus.
+
+**Wenn der Stack zu groß ist:** Alte Quest-PRs (#500–#504) schließen,
+Quest-Runde neu auf aktuellem main aufbauen — sauberer als 10 Merge-Schritte.
 
 ---
 
@@ -53,6 +123,36 @@
 - R2 → S103-2
 - R3 → S103-4
 - R4 → S103-3
+
+---
+
+---
+
+# Sprint 104 — "Die Katze hört zu"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar drückt auf Tommy und hört die Katze — Kapitel 15 des Hörspiels bringt ein Tier das nichts sagt aber alles versteht.
+
+**Start:** 2026-04-26
+**Sprint-Prinzip:** Qualität vor Quantität. Quest-Track pausiert bis PR-Debt aufgelöst.
+
+---
+
+## Sprint Backlog S104
+
+| # | Item | Owner | Status |
+|---|------|-------|--------|
+| S104-1 | **Hörspiel Kapitel 15 — Die Katze** — Lindgren-Anregung aus Backlog-Item K15. Tommy Krab erzählt. Artist (autonom). Ins Hörspiel-System einfügen wie Kap. 13+14. | Artist (autonom) | 🔲 |
+| S104-2 | **Quest-Track: PAUSE** — keine neue Quest-Runde bis PR #506 auf main. Dann prüfen ob Stack sinnvoll oder Neustart besser. | — | ⏸ wartet auf Till |
+
+---
+
+## Ceremony-Status S104
+
+- [x] Planning: 2026-04-26 (autonomer Agent)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
 
 ---
 
