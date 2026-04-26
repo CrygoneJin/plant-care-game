@@ -142,7 +142,7 @@ Quest-Runde neu auf aktuellem main aufbauen — sauberer als 10 Merge-Schritte.
 
 | # | Item | Owner | Status |
 |---|------|-------|--------|
-| S104-1 | **Hörspiel Kapitel 15 — Die Katze** — Lindgren-Anregung aus Backlog-Item K15. Tommy Krab erzählt. Artist (autonom). Ins Hörspiel-System einfügen wie Kap. 13+14. | Artist (autonom) | 🔲 |
+| S104-1 | **Hörspiel Kapitel 15 — Die Katze** — Lindgren-Anregung aus Backlog-Item K15. Tommy Krab erzählt. Artist (autonom). Ins Hörspiel-System einfügen wie Kap. 13+14. | Artist (autonom) | ✅ PR #513 — Mephisto lehrt Tommy das Zuhören |
 | S104-2 | **Quest-Track: PAUSE** — keine neue Quest-Runde bis PR #506 auf main. Dann prüfen ob Stack sinnvoll oder Neustart besser. | — | ⏸ wartet auf Till |
 
 ---
@@ -150,9 +150,31 @@ Quest-Runde neu auf aktuellem main aufbauen — sauberer als 10 Merge-Schritte.
 ## Ceremony-Status S104
 
 - [x] Planning: 2026-04-26 (autonomer Agent)
-- [ ] Daily Scrum
+- [x] Daily Scrum: 2026-04-26 (autonomer Agent)
 - [ ] Review
 - [ ] Retro
+
+---
+
+## Daily Scrum S104 (2026-04-26, autonomer Agent)
+
+**Was wurde gestern gemacht?**
+- S103 Review + Retro + S104 Planning abgeschlossen (ba7f17f)
+- S104-1 Hörspiel K15 als Nacht-Spawn bereits fertig: PR #513 offen (`feat/hoerspiel-kapitel-15`)
+  - Mephisto der schwarze Kater lehrt Tommy das Zuhören
+  - Exakt Kap-13/14-Stil: klick-klack, Mona-Hütte, blaues Feuer, Gute Nacht
+  - 8 Abschnitte, Lindgren-Anregung umgesetzt
+
+**Was kommt heute?**
+- S104-1 ist fertig — wartet auf Till-Merge (PR #513)
+- S104-2 bleibt ⏸ — Quest-Track pausiert bis PR #506 auf main
+- Sprint 104 ist faktisch deliverable-fertig, sobald Till PR #513 merged
+
+**Blocker?**
+- Smoke Test: schatzinsel.app CF-403 — bekannte Sandbox-Limitation, kein Outage
+- Worker /health: "Host not in allowlist" — idem, keine Aktion nötig
+- S104-2 wartet auf Till (PR #506 merge-Entscheidung)
+- HITL #1–#3 aus Backlog weiterhin offen (Oscar-Smoke, Analytics-Opt-in, IDB-Tesla)
 
 ---
 
