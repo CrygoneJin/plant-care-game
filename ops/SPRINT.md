@@ -1,3 +1,40 @@
+# Sprint 114 — "Alien beobachtet Abschiede, Lokführer erinnert sich, Tommy wartet"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Alien entdeckt das Rätsel menschlicher Abschiedsrituale (Bahnsteig-Wellen, Trauer, Wiedersehen), Lokführer erinnert sich an erste und letzte Fahrten (Pension, erste Strecke, Generationenweitergabe), Tommy entdeckt was geduldiges Beobachten zeigt (Tau, Metamorphose, Wind). 935→945 Quests auf Branch.
+
+**Start:** 2026-04-26
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog S114
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S114-1 | **Quest-Runde 96** — Alien(69→73 +4)/Lokführer(69→72 +3)/Tommy(70→73 +3) → +10 Quests, 935→945. Alien: „Menschliche Abschiedsrituale". Lokführer: „Erinnerungen an erste und letzte Reisen". Tommy: „Was geduldiges Beobachten zeigt". | Artist | ✅ feat/sprint-114 |
+
+---
+
+## Ceremony-Status S114
+
+- [x] Planning: 2026-04-26 (autonomer Agent)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Retro-Actions aus S113 (hier umgesetzt)
+
+- R1 → S114-1: Quest-Runde 96: Alien(69)/Lokführer(69)/Tommy(70) ✅
+- R2 → Merge-Stapel-Hinweis für Till (PRs #500–#504 in Reihenfolge)
+- R3 → SPRINT.md-Drift: PR #509 bringt SPRINT.md auf S113-Stand; dieser PR bringt S114
+
+---
+
+---
+
 # Sprint 113 — "Krämerins Vertrauen, Bug beobachtet Übergang, Maus baut Winter"
 
 **Sprint Goal (Oscar-Perspektive):**
