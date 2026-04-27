@@ -74,27 +74,31 @@ feat-Branches kumuliert bei 945+. PRs warten auf Till-Merge-Block.
 
 ---
 
-## PR-Merge-Anleitung für Till (Stand 2026-04-26)
+## PR-Merge-Anleitung für Till (Stand 2026-04-27)
 
-PRs die direkt auf `main` basieren (mergebar ohne Stacking):
+**Priorität 1 — Content für Oscar, mergebar ohne Stacking:**
 
 | PR | Was | Abhängigkeit |
 |----|-----|-------------|
+| #519 | Hörspiel Kapitel 14 — 🌙 macht eine Mulde | keine (base: main) |
+| #521 | Hörspiel Kapitel 15 — Die Katze (+ S104 Ceremonies) | keine (base: main) |
 | #506 | Quest-Runde 85: Alien/Lokführer/Tommy +10 (895→905) | keine (base: main) |
-| #508 | Quest-Runde 85 (Duplikat, anderer Branch) | **nach #506 schließen** |
 
-PRs die gestapelt sind (müssen in Reihenfolge, nach #506):
+**Priorität 2 — Bereinigung (schließen, nicht mergen):**
+
+| PR | Warum schließen |
+|----|----------------|
+| #508 | Duplikat von #506 |
+| #513, #514, #515, #516, #517, #518, #520, #522, #523, #524 | Ceremony-Duplikate oder gestapelt — inhalt in #521 bereits enthalten |
+
+**Quest-Stack (nach #506 entscheiden):**
 
 ```
 #500 → #501 → #502 → #503 → #504 → #505 → #507 → #509 → #510 → #511
 ```
 
-Empfehlung: **Erst #506 mergen**, dann entscheiden ob der Stack sinnvoll ist.
-PR #511 (ops/sprint-review-s103-final) enthält Quest-Runde 86 + Ceremonies für S103/S104.
-PR #510 enthält Quest-Runde 96 (S114) — das ist 11 Runden voraus.
-
-**Wenn der Stack zu groß ist:** Alte Quest-PRs (#500–#504) schließen,
-Quest-Runde neu auf aktuellem main aufbauen — sauberer als 10 Merge-Schritte.
+Empfehlung: Quest-Stack (#500–#505, #507–#511) **schließen** und frisch auf main aufbauen.
+Runden 86–96 existieren auf Branches — ein sauberer PR ist besser als 10 Merge-Schritte.
 
 ---
 
@@ -142,7 +146,7 @@ Quest-Runde neu auf aktuellem main aufbauen — sauberer als 10 Merge-Schritte.
 
 | # | Item | Owner | Status |
 |---|------|-------|--------|
-| S104-1 | **Hörspiel Kapitel 15 — Die Katze** — Lindgren-Anregung aus Backlog-Item K15. Tommy Krab erzählt. Artist (autonom). Ins Hörspiel-System einfügen wie Kap. 13+14. | Artist (autonom) | 🔲 |
+| S104-1 | **Hörspiel Kapitel 15 — Die Katze** — Lindgren-Anregung aus Backlog-Item K15. Tommy Krab erzählt. Artist (autonom). Ins Hörspiel-System einfügen wie Kap. 13+14. | Artist (autonom) | ✅ PR #521 — stories/kapitel-15-die-katze, wartet auf Merge |
 | S104-2 | **Quest-Track: PAUSE** — keine neue Quest-Runde bis PR #506 auf main. Dann prüfen ob Stack sinnvoll oder Neustart besser. | — | ⏸ wartet auf Till |
 
 ---
@@ -150,9 +154,27 @@ Quest-Runde neu auf aktuellem main aufbauen — sauberer als 10 Merge-Schritte.
 ## Ceremony-Status S104
 
 - [x] Planning: 2026-04-26 (autonomer Agent)
-- [ ] Daily Scrum
+- [x] Daily Scrum: 2026-04-27 (autonomer Agent)
 - [ ] Review
 - [ ] Retro
+
+---
+
+## Daily Scrum S104 (2026-04-27, autonomer Agent)
+
+**Was wurde gestern gemacht?**
+- S104-1 K15 — Die Katze: ✅ implementiert auf stories/kapitel-15-die-katze (PR #521)
+  Tommy Krab erzählt von Mephisto dem schwarzen Kater der auf den Blöcken sitzt und alles weiß ohne ein Wort zu sagen.
+- Mehrere Ceremony-PRs für S104 von parallelen Agenten erstellt (#513–#524)
+
+**Was kommt heute?**
+- S104 alle Items Done/Blocked — nächste Session: Sprint Review
+- PR #521 (K15 story) und PR #519 (K14 story) bereit für Till's Merge
+
+**Blocker?**
+- Smoke Test schatzinsel.app: CF-403 bekannte Sandbox-Limitation — kein echter Outage
+- PR-Debt: 28+ offene PRs — Till muss #506 und #519/#521 priorisieren
+- S104-2 Quest-Track: ⏸ bleibt bis #506 auf main
 
 ---
 
