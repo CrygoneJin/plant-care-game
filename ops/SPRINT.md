@@ -142,7 +142,7 @@ Quest-Runde neu auf aktuellem main aufbauen — sauberer als 10 Merge-Schritte.
 
 | # | Item | Owner | Status |
 |---|------|-------|--------|
-| S104-1 | **Hörspiel Kapitel 15 — Die Katze** — Lindgren-Anregung aus Backlog-Item K15. Tommy Krab erzählt. Artist (autonom). Ins Hörspiel-System einfügen wie Kap. 13+14. | Artist (autonom) | 🔲 |
+| S104-1 | **Hörspiel Kapitel 15 — Die Katze** — Lindgren-Anregung aus Backlog-Item K15. Tommy Krab erzählt. Artist (autonom). Ins Hörspiel-System einfügen wie Kap. 13+14. | Artist (autonom) | ✅ PR → stories/kapitel-15-die-katze |
 | S104-2 | **Quest-Track: PAUSE** — keine neue Quest-Runde bis PR #506 auf main. Dann prüfen ob Stack sinnvoll oder Neustart besser. | — | ⏸ wartet auf Till |
 
 ---
@@ -150,9 +150,27 @@ Quest-Runde neu auf aktuellem main aufbauen — sauberer als 10 Merge-Schritte.
 ## Ceremony-Status S104
 
 - [x] Planning: 2026-04-26 (autonomer Agent)
-- [ ] Daily Scrum
+- [x] Daily Scrum: 2026-04-27 (autonomer Agent)
 - [ ] Review
 - [ ] Retro
+
+---
+
+## Daily Scrum S104 (2026-04-27, autonomer Agent)
+
+**Was wurde gestern gemacht?**
+- S104 Planning abgeschlossen: Sprint Goal "Die Katze hört zu" definiert, S104-1 in Backlog
+- S103 Retro-Actions dokumentiert (R1: Quest-Track Pause, R2: K15, R3: PR-Merge-Anleitung)
+
+**Was kommt heute?**
+- S104-1: Hörspiel Kapitel 15 — Die Katze ✅ — `docs/stories/kapitel-15-die-katze.md` geschrieben
+  Tommy Krab erzählt: Mephisto sitzt nachts auf p+e-Blöcken und wärmt sie (Lindgren: "ohne zu wissen dass sie gerade Wasserstoff bebrütet"). Thema: Wissen ohne Worte.
+
+**Blocker?**
+- Smoke Test CF-403: bekannte Sandbox-Limitation, kein echter Outage
+- S104-2 Quest-Track Pause: wartet auf Till (PR #506 merge)
+
+---
 
 ---
 
