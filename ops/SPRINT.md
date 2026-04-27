@@ -1,3 +1,39 @@
+# Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Bernd entdeckt in der Stille was er nie gesucht hat (Amsel, Regen, Mauersegler, Stille), Elefant teilt was Generationen über Zeit wissen (Jahreszeiten, Wanderrouten, Trockenzeitwasser), Floriane misst was Musik mit Gefühlen macht (Dur/Moll, Rhythmus, Stille). 915→925 Quests auf Branch.
+
+**Start:** 2026-04-25
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S112-1 | **Quest-Runde 94** — Bernd(67→71)/Elefant(67→70)/Floriane(67→70) → +10 Quests, 915→925. Bernd: „Was Bernd in der Stille wahrnimmt". Elefant: „Was Elefanten über Zeit wissen". Floriane: „Was Musik an Gefühlen zeigt". | Artist | ✅ feat/sprint-112 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S113-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S112
+
+- [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+---
+
 # Sprint 111 — "Tommy zählt, Lokführer erinnert, Alien staunt"
 
 **Sprint Goal (Oscar-Perspektive):**
