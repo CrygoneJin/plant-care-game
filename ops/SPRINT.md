@@ -1,3 +1,132 @@
+# Sprint 105 — "Emma und der Berg"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar hört Emma — Kapitel 16 erklärt warum Dampf keine Angst vor Bergen hat und Anlauf holen Anfangen bedeutet.
+
+**Start:** 2026-04-27
+**Sprint-Prinzip:** Ein Kapitel. Kein neuer Quest-Stack bis PR #506 gemergt.
+
+---
+
+## Sprint Backlog S105
+
+| # | Item | Owner | Status |
+|---|------|-------|--------|
+| S105-1 | **Hörspiel Kapitel 16 — Emma und der Berg** — Jim-Knopf-Anregung. Tommy fährt mit Emma über den Berg. Emma: "Anlauf holen heißt anfangen." | Artist (autonom) | ✅ PR #522 |
+| S105-2 | **Quest-Track Resume** — sobald PR #506 auf main: nächste Runde bei niedrigsten NPC-Countern. | Artist (autonom) | ⏸ wartet auf Till (#506) |
+
+---
+
+## Ceremony-Status S105
+
+- [x] Planning: 2026-04-27 (aus S104-Retro)
+- [x] Daily Scrum: 2026-04-27 (autonomer Agent)
+- [x] Review: 2026-04-27 (autonomer Agent)
+- [ ] Retro
+
+---
+
+## Sprint Review S105 (2026-04-27, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅, 1 ⏸**
+
+| Item | Ergebnis |
+|------|---------|
+| S105-1 K16 — Emma und der Berg | ✅ PR #522 — Emma erklärt Tommy Dampfdruck. "Anlauf holen heißt anfangen — und zwar früh genug." 7 Abschnitte, Jim-Knopf-Stil. |
+| S105-2 Quest-Track Resume | ⏸ PR #506 wartet auf Till-Merge → dann S106 |
+
+**Oscar-Outcome:**
+- Kapitel 16 bereit: Tommy sitzt auf einem warmen Stein, Emma hält nach der Bergfahrt an, erklärt warum Dampf keine Angst hat
+- Hörspiel-Reihe K13–K16 vollständig verfügbar (auf Branches), 4 Kapitel warten auf Merge
+
+**PR-Merge-Anleitung für Till (Stand 2026-04-27):**
+
+Alle direkt auf main mergebar:
+
+| PR | Was | Aktion |
+|----|-----|--------|
+| **#521** | K15 Die Katze + S104 complete (Daily+Review+Retro+Planning S105) | **Zuerst mergen** |
+| **#519** | K14 Mond macht Mulde | Danach |
+| **#522** | K16 Emma und der Berg + S105 Daily | Danach |
+| **#506** | Quest-Runde 85 (895→905) | Danach — dann Quest-Track Resume |
+
+Nach #521: Duplikate #513, #514, #515, #516, #517, #518, #520 **schließen**.
+
+---
+
+## Daily Scrum S105 (2026-04-27, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S104 vollständig: K15 Die Katze → PR #521 (stories/kapitel-15-die-katze), base: main, direkt mergebar
+- S104 Daily + Review + Retro + S105 Planning in PR #521 dokumentiert
+
+**Was kommt heute?**
+- S105-1: K16 Emma und der Berg → PR #522 ✅ (stories/kapitel-16-emma-und-der-berg)
+
+**Blocker?**
+- PR #521 wartet auf Till-Merge (direkt mergebar)
+- PR #506 wartet auf Till-Merge → danach Quest-Track Resume
+- Smoke Test CF-403: bekannte Sandbox-Limitation, kein Outage
+
+---
+
+---
+
+# Sprint 104 — "Die Katze hört zu"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar drückt auf Tommy und hört die Katze — Kapitel 15 des Hörspiels bringt ein Tier das nichts sagt aber alles versteht.
+
+**Start:** 2026-04-26
+**Sprint-Prinzip:** Qualität vor Quantität. Quest-Track pausiert bis PR-Debt aufgelöst.
+
+---
+
+## Sprint Backlog S104
+
+| # | Item | Owner | Status |
+|---|------|-------|--------|
+| S104-1 | **Hörspiel Kapitel 15 — Die Katze** — Lindgren-Anregung aus Backlog-Item K15. Tommy Krab erzählt. Mephisto sitzt auf den H-Blöcken. "Ein Körper der nicht erklärt kann trotzdem Recht haben." | Artist (autonom) | ✅ PR #521 |
+| S104-2 | **Quest-Track: PAUSE** — keine neue Quest-Runde bis PR #506 auf main. | — | ⏸ wartet auf Till (#506) |
+
+---
+
+## Ceremony-Status S104
+
+- [x] Planning: 2026-04-26 (autonomer Agent)
+- [x] Daily Scrum: 2026-04-27 (autonomer Agent)
+- [x] Review: 2026-04-27 (autonomer Agent)
+- [x] Retro: 2026-04-27 (autonomer Agent)
+
+---
+
+## Sprint Review S104 (2026-04-27, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅, 1 ⏸**
+
+| Item | Ergebnis |
+|------|---------|
+| S104-1 K15 — Die Katze | ✅ PR #521 — Mephisto bebrütet die H-Blöcke ohne es zu wissen. Lindgren: ein Tier das nichts sagt aber alles versteht. |
+| S104-2 Quest-Track PAUSE | ⏸ PR #506 wartet auf Till |
+
+**Oscar-Outcome:** Kapitel 15 bereit. Quest-Track-Pause eingehalten. Kein neuer PR-Debt in S104.
+
+---
+
+## Sprint Retrospektive S104 (2026-04-27, autonomer Agent)
+
+**Was gut lief:** Lindgren-Treffer. Hörspiel-Stil K13/K14/K15 konsistent. Quest-Track-Pause gehalten.
+
+**Was nicht gut lief:** Parallel-Sessions haben 5+ K15-Versionen erstellt. PR-Debt unverändert.
+
+**Retro-Actions S105:**
+- R1: K16 Emma und der Berg (Jim-Knopf-Anregung) → S105-1 ✅
+- R2: Quest-Track Resume wenn #506 gemergt → S105-2
+
+---
+
+---
+
 # Sprint 103 — "Was Oscar wirklich tut"
 
 **Sprint Goal (Oscar-Perspektive):**
