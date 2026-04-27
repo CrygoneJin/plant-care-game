@@ -1,3 +1,135 @@
+# Sprint 105 — "Emma hält an"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar hört Kapitel 16 — Emma erklärt warum Dampf keine Angst vor Berge hat. Anlauf holen heißt anfangen.
+
+**Start:** 2026-04-27
+**Sprint-Prinzip:** Story-Kette läuft. Quest-Track Resume wenn #506 auf main.
+
+---
+
+## Sprint Backlog S105
+
+| # | Item | Owner | Status |
+|---|------|-------|--------|
+| S105-1 | **Hörspiel Kapitel 16 — Emma und der Berg** — Jim-Knopf-Anregung. Tommy sitzt auf warmem Stein, Emma hält nach der Bergfahrt an, erklärt Dampfdruck und Beharrlichkeit. Tommy lernt: Anlauf holen heißt anfangen. | Artist (autonom) | ✅ PR #522 |
+| S105-2 | **Quest-Track Resume** — #506 (Runde 85) auf main → dann Runde 86 sauber neu bauen (Stack #500–#510 schließen). | — | ⏸ wartet auf Till |
+
+---
+
+## Ceremony-Status S105
+
+- [x] Planning: 2026-04-27 (autonomer Agent)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+---
+
+# Sprint 104 — "Die Katze hört zu"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar drückt auf Tommy und hört die Katze — Kapitel 15 des Hörspiels bringt ein Tier das nichts sagt aber alles versteht.
+
+**Start:** 2026-04-26
+**Sprint-Prinzip:** Qualität vor Quantität. Quest-Track pausiert bis PR-Debt aufgelöst.
+
+---
+
+## Sprint Backlog S104
+
+| # | Item | Owner | Status |
+|---|------|-------|--------|
+| S104-1 | **Hörspiel Kapitel 15 — Die Katze** — Lindgren-Anregung. Tommy Krab erzählt. Mitten in der Nacht. Mephisto sitzt auf den p+e-Blöcken ohne zu wissen dass er Wasserstoff bebrütet. Thema: Wissen ohne Worte. | Artist (autonom) | ✅ PR #521 |
+| S104-2 | **Quest-Track: PAUSE** — keine neue Quest-Runde bis PR #506 auf main. | — | ⏸ wartet auf Till |
+
+---
+
+## Ceremony-Status S104
+
+- [x] Planning: 2026-04-26 (autonomer Agent)
+- [x] Daily Scrum: 2026-04-27 (autonomer Agent)
+- [x] Review: 2026-04-27 (autonomer Agent)
+- [x] Retro: 2026-04-27 (autonomer Agent)
+
+---
+
+## Daily Scrum S104 (2026-04-27, autonomer Agent)
+
+**Was wurde gestern gemacht?**
+- S104 Planning abgeschlossen (2026-04-26)
+- K15 — Die Katze durch mehrere parallele Agenten implementiert — kanonische Version: PR #521
+
+**Was kommt heute?**
+- S104 vollständig (beide Items erledigt oder ⏸) → Sprint abschließen
+- S105 gestartet: K16 Emma und der Berg (PR #522 bereit)
+
+**Blocker?**
+- PR-Debt: 20+ offene PRs — Till muss mergen, kein Implementierungs-Blocker
+- Quest-Track: ⏸ bis #506 auf main
+
+---
+
+## Sprint Review S104 (2026-04-27, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 lieferbar, 1 planmäßig ⏸**
+
+| Item | Ergebnis |
+|------|---------|
+| S104-1 K15 — Die Katze | ✅ PR #521 — Mephisto bebrütet Wasserstoff. Mona: „Ein Körper der nicht erklärt kann trotzdem Recht haben." |
+| S104-2 Quest-Track PAUSE | ⏸ PR #506 wartet auf Till — Pause gehalten wie geplant |
+
+**Oscar-Outcome:**
+- K14 (Mond+Mulde), K15 (Katze), K16 (Emma) in der Story-Pipeline — 3 Kapitel bereit zum Vorlesen
+- Lindgren-Anregung erfüllt: stille Katze die weiß ohne zu erklären
+
+**Auch bereit:**
+- K14 Mond macht Mulde: PR #519 (Anschluss an K13)
+
+---
+
+## Sprint Retrospektive S104 (2026-04-27, autonomer Agent)
+
+**Was gut lief:**
+- Lindgren-Treffer: Mephisto-Figur funktioniert als stilles Wissen ohne Worte
+- Quest-Track-Pause gehalten: kein neuer Stack trotz mehrerer Agent-Sessions
+- Story-Kette läuft: K13→K14→K15→K16 in einer Woche entstanden
+
+**Was nicht gut lief:**
+- Parallel-Agenten haben 12+ Ceremony-Duplikat-PRs erstellt — Till muss viele PRs schließen
+- PR-Debt ungelöst: main steht bei 895 Quests, Feature-Branches kumuliert bei 945+
+
+**Retro-Actions für S105:**
+- **R1:** Quest-Track Resume — #506 mergen, dann Runde 86 sauber neu bauen (Stack schließen)
+- **R2:** Nur noch EINE Story pro Kapitel — keine parallelen Implementierungen desselben Kapitels
+
+---
+
+## PR-Merge-Anleitung für Till (Stand 2026-04-27)
+
+**4 PRs die zählen (alle direkt auf main, kein Stacking):**
+
+| PR | Was | Reihenfolge |
+|----|-----|-------------|
+| **#521** | K15 Die Katze + S104 Complete + S105 Planning | 1. zuerst |
+| **#519** | K14 Mond macht Mulde | 2. |
+| **#522** | K16 Emma und der Berg | 3. |
+| **#506** | Quest-Runde 85 (895→905) | 4. |
+
+**Nach Merge von #521 bitte schließen (Duplikate):**
+#513 · #514 · #515 · #516 · #517 · #518 · #520 · #523 · #524 · #525
+
+**Quest-Stack schließen (nach #506):**
+PRs #500–#505, #507–#510 schließen → Runde 86 sauber neu bauen
+
+**Dieser PR (#526 oder höher):** nach #521 schließen — SPRINT.md ist in #521 enthalten.
+
+---
+
+---
+
 # Sprint 103 — "Was Oscar wirklich tut"
 
 **Sprint Goal (Oscar-Perspektive):**
