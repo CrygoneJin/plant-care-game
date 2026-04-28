@@ -1,3 +1,39 @@
+# Sprint 113 — "Neinhorn trotz NEIN, Mephisto in der Nacht, Spongebob leuchtet"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn entdeckt was trotz NEIN funktioniert (Vogelzug, Bambus, Schlaf, Fäulnis), Mephisto lernt was die Nacht weiß (Geduld, Reife, Loslassen), Spongebob forscht was im Dunkeln leuchtet (Anglerfisch, Dinoflagellaten, Tiefsee-Schwarzraucher). 965→975 Quests auf Branch.
+
+**Start:** 2026-04-28
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Quest-Runde 95** — Neinhorn(71→75)/Mephisto(71→74)/Spongebob(72→75) → +10 Quests, 965→975. Neinhorn: „Was trotz NEIN funktioniert". Mephisto: „Was die Nacht weiß". Spongebob: „Was im Dunkeln leuchtet". | Artist | 🔲 PR #531 offen → feat/sprint-113 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S114-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-04-28 (autonomer Agent, aus Retro S112)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -26,9 +62,61 @@
 ## Ceremony-Status S112
 
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
-- [ ] Daily Scrum
-- [ ] Review
-- [ ] Retro
+- [x] Daily Scrum: 2026-04-28 (autonomer Agent)
+- [x] Review: 2026-04-28 (autonomer Agent)
+- [x] Retro: 2026-04-28 (autonomer Agent)
+
+---
+
+## Daily Scrum S112 (2026-04-28, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- Sprint 111 Ceremonies abgeschlossen (auf main)
+- S112-1 implementiert: Quest-Runde 94, Bernd+4/Elefant+3/Floriane+3, 915→925 (main, via #504)
+- Zwischenzeitlich über Cleanup-Commit weitere Runden auf main gemergt → 965 Quests jetzt
+
+**Was kommt als nächstes?**
+- S113-1: Quest-Runde 95 — PR #531 offen (neinhorn/mephisto/spongebob)
+
+**Blocker?**
+- Keine. Smoke-Test: CF 403 + Worker "Host not in allowlist" — bekannte Sandbox-Limitation.
+
+---
+
+## Sprint Review S112 (2026-04-28, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S112-1 Quest-Runde 94 | ✅ main — Bernd(70→74 +4) / Elefant(70→73 +3) / Floriane(70→73 +3), 915→925 |
+
+**Oscar-Outcome:** 10 neue Quests. Bernd: was er in der Stille wahrnimmt (Amsel, Regen, Mauersegler, Stille). Elefant: was Generationen über Zeit wissen (Jahreszeiten, Wanderrouten, Trockenzeitwasser). Floriane: was Musik mit Gefühlen macht (Dur/Moll, Rhythmus, Stille).
+
+**Stand nach S112:**
+- **965 Quests** auf main (nach Cleanup-Merge mehrerer Runden)
+- NPC-Counter auf main: neinhorn 71 · mephisto 71 · spongebob 72 · maus 72 · kraemerin 72 · bug 72
+- Nächste niedrigste: neinhorn(71)/mephisto(71)/spongebob(72) → S113-1
+
+**PO-Entscheidung:**
+- Quest-Runde 95: Neinhorn(71)/Mephisto(71)/Spongebob(72) → S113-1 (PR #531 offen)
+
+---
+
+## Sprint Retrospektive S112 (2026-04-28, autonomer Agent)
+
+**Was gut lief:**
+- Bernd-Stille: „Was Bernd in der Stille wahrnimmt" — funktioniert für Kinder die auch mal nichts tun
+- Elefant-Zeit: Wanderrouten über Generationen + Trockenzeitwasser — emotionaler Kern in Fakten
+- Quest-Track S103–S112: 10 Runden autonom geliefert, stabile Qualität
+
+**Was nicht gut lief:**
+- SPRINT.md-Drift: Ceremonies fehlen auf main obwohl Items fertig (klassisches Parallel-Agent-Problem)
+- Mehrere Ceremony-Branches (ops/sprint-review-s112, ops/sprint-s113-ceremonies) ohne PR
+
+**Retro-Actions für S113:**
+- **R1:** Quest-Runde 95: neinhorn(71)/mephisto(71)/spongebob(72) → S113-1 (PR #531 offen)
+- **R2:** Ceremony-Drift beheben — SPRINT.md nach jedem Merge aktualisieren
 
 ---
 
@@ -507,17 +595,47 @@ Quest-Runde neu auf aktuellem main aufbauen — sauberer als 10 Merge-Schritte.
 
 | # | Item | Owner | Status |
 |---|------|-------|--------|
-| S105-1 | **Hörspiel Kapitel 16 — Emma und der Berg** — Jim-Knopf-Anregung aus Retro-Action R1 S104. Tommy fährt mit Emma über den Berg. Emma erklärt Dampfdruck und Beharrlichkeit. Tommy lernt: Anlauf holen heißt anfangen. | Artist (autonom) | 🔲 |
-| S105-2 | **Quest-Track Resume** — Falls PR #506 auf main: nächste Runde bei niedrigsten NPC-Countern (Maus/Krabs/Bug je 66 nach #506-Merge). | Artist (autonom) | ⏸ wartet auf Till (#506) |
+| S105-1 | **Hörspiel Kapitel 16 — Emma und der Berg** — Jim-Knopf-Anregung aus Retro-Action R1 S104. Tommy fährt mit Emma über den Berg. Emma erklärt Dampfdruck und Beharrlichkeit. Tommy lernt: Anlauf holen heißt anfangen. | Artist (autonom) | ✅ PR #522 — docs/stories/kapitel-16-emma-und-der-berg.md auf main |
+| S105-2 | **Quest-Track Resume** — Quest-Track läuft wieder (Cleanup-Merge). | Artist (autonom) | ✅ Quest-Track autonom wiederaufgenommen |
 
 ---
 
 ## Ceremony-Status S105
 
 - [x] Planning: 2026-04-27 (autonomer Agent)
-- [ ] Daily Scrum
-- [ ] Review
-- [ ] Retro
+- [x] Daily Scrum: 2026-04-27 (autonomer Agent, commit 51ff47c)
+- [x] Review: 2026-04-28 (autonomer Agent, retroaktiv)
+- [x] Retro: 2026-04-28 (autonomer Agent, retroaktiv)
+
+---
+
+## Sprint Review S105 (2026-04-28, autonomer Agent, retroaktiv)
+
+**Sprint Goal erfüllt: 2/2 Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S105-1 Hörspiel K16 — Emma und der Berg | ✅ PR #522 auf main — Emma erklärt Dampfdruck, Tommy lernt: Anlauf holen heißt anfangen |
+| S105-2 Quest-Track Resume | ✅ Quest-Track läuft wieder — Cleanup-Commit hat mehrere Runden auf main gemergt |
+
+**Oscar-Outcome:** K16 bereit zum Vorlesen. Emma-Stimme: „Ich bin eine Lokomotive. Ich mache keine Pause vor Bergen. Ich nehme Anlauf." Dampfdruck als Metapher für Beharrlichkeit — Jim-Knopf-Anregung präzise umgesetzt.
+
+---
+
+## Sprint Retrospektive S105 (2026-04-28, autonomer Agent, retroaktiv)
+
+**Was gut lief:**
+- Emma-Stimme stark: Dampfdruck = Mut sammeln, nicht warten — Oscar-tauglich
+- Stil-Kontinuität K13+K14+K15+K16 gehalten: Tommy-Stimme, klick-klack, Gute Nacht
+- Sprint-Disziplin (kein neuer Quest-Stack während Pause) hat sich gelohnt — saubere Cleanup-Merge
+
+**Was nicht gut lief:**
+- SPRINT.md-Drift: K16 war auf main aber Ceremony-Status nicht aktualisiert
+- Quest-Track-Pause länger als nötig (mehrere Sprints)
+
+**Retro-Actions (in Folge-Sprints umgesetzt):**
+- R1 umgesetzt: Quest-Track seit S106 wieder aktiv
+- R2 umgesetzt: Keine weiteren Parallel-K-Varianten mehr (K17+ wenn nötig)
 
 ---
 
