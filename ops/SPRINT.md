@@ -1,3 +1,93 @@
+# Sprint 116 — "Tommy wartet, Bernd lauscht dem Wald"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Tommy entdeckt was Geduld und Zufall bedeuten (Versehen die Weltgeschichte schrieben, still genug sein um eine Libelle zu landen, Irrtümer die zu Wahrheiten wurden), Bernd lauscht was der Wald nachts erzählt (Fledermaus-Echo, Nachtigallen-Revier, Fuchs-Pfade, Mondlicht, Myzel). 965→975 Quests auf Branch.
+
+**Start:** 2026-04-28
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S116-1 | **Quest-Runde 98** — Tommy(74→79 +5)/Bernd(74→79 +5) → +10 Quests, 965→975. Tommy: „Zufallsentdeckungen und Geduld". Bernd: „Was Wald nachts erzählt". | Artist | ✅ feat/sprint-116 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S117-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S116
+
+- [x] Planning: 2026-04-28 (autonomer Agent, aus Retro S115)
+- [x] Daily Scrum: 2026-04-28 (autonomer Agent)
+- [x] Review: 2026-04-28 (autonomer Agent)
+- [x] Retro: 2026-04-28 (autonomer Agent)
+
+---
+
+## Daily Scrum S116 (2026-04-28, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S115 Review + Retro abgeschlossen (vorherige Session auf feat/sprint-115)
+- S116-1 implementiert: Quest-Runde 98, Tommy+5/Bernd+5, 965→975 (feat/sprint-116)
+
+**Was kommt als nächstes?**
+- PR für feat/sprint-116 erstellen → Till mergt
+
+**Blocker?**
+- Keine. Smoke-Test: CF 403 + Worker "Host not in allowlist" — bekannte Sandbox-Limitation.
+- Merge-Stapel: PRs für S113, S114, S115 warten auf Till. S116 kommt obendrauf.
+
+---
+
+## Sprint Review S116 (2026-04-28, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S116-1 Quest-Runde 98 | ✅ feat/sprint-116 — Tommy(74→79 +5) / Bernd(74→79 +5), 965→975 Quests auf Branch |
+
+**Oscar-Outcome:** 10 neue Quests. Tommy: Zufall-Entdeckungs-Labor (Röntgen/Teflon/Mikrowelle — alle Versehen), Gedulds-Messposten (drei Stunden warten bis das Reh kommt — das zählt auch), Irrtums-Archiv (Aristoteles lag zweitausend Jahre falsch — und Galileo hat's in einem Experiment widerlegt), Wunder-Protokoll-Station (ein Wunder ist unwahrscheinlich plus du warst da — das ist Statistik), Stille-Warteposten (zehn Minuten still sein bis die Libelle landet — ich war ein Stein). Bernd: Fledermaus-Horchposten (40.000 Schwingungen pro Sekunde — das ist ihr Gespräch mit der Nacht), Nachtigallen-Bühne (er singt für sein Revier und ich sitze unten und es ist trotzdem für mich), Fuchs-Pfad-Laboratorium (er hat kein System — er hat Erfahrung; ich schreibe es auf, für ihn), Mondlicht-Waldlichtung (0,27 Lux Vollmond vs. 100.000 Lux Sonne — und ich habe trotzdem alles gesehen), Pilzmyzel-Nacht-Labor (der Indikator zeigt pH-Verschiebung 0,2 — was hat das Myzel übertragen? Ich schreibe: unbekannt. Und gehe schlafen).
+
+**Stand nach S116:**
+- **965 Quests** auf main / **975 Quests** auf feat/sprint-116 (PR offen)
+- NPC-Counter auf Branch nach S116: tommy 79 · bernd 79 · elefant 73 · floriane 73 · krabs 73
+- Nächste niedrigste nach Vollmerge S113+S114+S115+S116: mephisto(74) / neinhorn(75) / spongebob(75) → S117-1
+
+**PO-Entscheidung:**
+- Quest-Runde 99: Mephisto/Neinhorn/Spongebob nach vollständigem Merge → S117-1
+- Themen: Mephisto (was man nicht kaufen kann aber wirklich braucht), Neinhorn (was wächst wenn man aufhört zu kämpfen), Spongebob (was das Meer einem erzählt wenn man zuhört)
+
+---
+
+## Sprint Retrospektive S116 (2026-04-28, autonomer Agent)
+
+**Was gut lief:**
+- Tommy-Geduld: "drei Stunden warten bis das Reh kommt — das zählt auch" — bester Tommy-Satz seit dem Gezeiten-Mondlob. Geduld als aktive Wissenschaft, nicht als Warten.
+- Bernd-Nachtigalle: "er singt für sein Revier und ich sitze unten und es ist trotzdem für mich — wir teilen es uns ohne es zu wissen" — stärkster Bernd-Moment seit dem Amsel-Geheimnis.
+- Tommy-Irrtum: Aristoteles 2000 Jahre falsch, Galileo widerlegt in einem Experiment — funktioniert als Kindererzählung (Fehler erlaubt, Messungen klären) und als Wissensvermittlung
+- Bernd-Pilzmyzel: "ich schreibe: unbekannt. Und gehe schlafen." — Bernd auf dem Punkt. Wissenschaft ohne Auflösung ist auch Wissenschaft.
+
+**Was nicht gut lief:**
+- Merge-Stapel wächst: S113, S114, S115, S116 alle offen — main ist 10 Quests hinter Branch-Stand
+- NPC-Counting auf Vollmerge-Basis bleibt schwierig (S115 auf main-Basis, S113/S114 gestapelt)
+
+**Retro-Actions für S117:**
+- **R1:** Quest-Runde 99: Mephisto(74 nach Vollmerge)/Neinhorn(75)/Spongebob(75) → S117-1
+- **R2:** Themen: Mephisto (was man nicht kaufen kann), Neinhorn (was wächst wenn man aufhört zu kämpfen), Spongebob (was das Meer einem erzählt)
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
