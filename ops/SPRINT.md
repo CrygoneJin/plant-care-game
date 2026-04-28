@@ -1,3 +1,93 @@
+# Sprint 115 — "Krabs häutet sich, Elefant gedenkt, Floriane improvisiert"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Krabs entdeckt was Wachstum bedeutet (Häutung, Tiefsee, väterliches Erbe, 500 Mio. Jahre Evolution), Elefant weiß was Trauer und Freude in der Gemeinschaft sind (Gedenken, Geburten, fremde Knochen), Floriane zeigt was entsteht wenn man loslässt (Improvisation, Zufall, Synästhesie). 965→975 Quests auf Branch.
+
+**Start:** 2026-04-28
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S115-1 | **Quest-Runde 97** — Krabs(73→77 +4)/Elefant(73→76 +3)/Floriane(73→76 +3) → +10 Quests, 965→975 auf Branch. Krabs: „Was Wachstum bedeutet". Elefant: „Was Trauer und Freude in Gemeinschaft sind". Floriane: „Was entsteht wenn man loslässt". | Artist | ✅ feat/sprint-115 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S116-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S115
+
+- [x] Planning: 2026-04-28 (autonomer Agent, aus Retro S114)
+- [x] Daily Scrum: 2026-04-28 (autonomer Agent)
+- [x] Review: 2026-04-28 (autonomer Agent)
+- [x] Retro: 2026-04-28 (autonomer Agent)
+
+---
+
+## Daily Scrum S115 (2026-04-28, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S114 Review + Retro abgeschlossen (vorherige Session)
+- S115-1 implementiert: Quest-Runde 97, Krabs+4/Elefant+3/Floriane+3, 965→975 (feat/sprint-115)
+
+**Was kommt als nächstes?**
+- PR für feat/sprint-115 erstellen → Till mergt
+
+**Blocker?**
+- Keine. Smoke-Test: CF 403 + Worker "Host not in allowlist" — bekannte Sandbox-Limitation.
+- Merge-Stapel: PRs #531 (S113), #532 (S114), #540 (S112-Ceremonies) warten auf Till.
+
+---
+
+## Sprint Review S115 (2026-04-28, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S115-1 Quest-Runde 97 | ✅ feat/sprint-115 — Krabs(73→77 +4) / Elefant(73→76 +3) / Floriane(73→76 +3), 965→975 Quests auf Branch |
+
+**Oscar-Outcome:** 10 neue Quests. Krabs: Häutungs-Forschungs-Station (man kann nur wachsen wenn man bereit ist für kurze Zeit ohne Schutz zu sein — ARR, das hat mein Vater nie gesagt, ich hab's selbst rausgefunden), Tiefsee-Krabben-Observatorium (kein Licht = keine Augen = weniger Energiekosten — effizientestes Sparpaket der Natur), Väter-Gedenkstätte (mein Vater hatte nie viel Geld, er hatte ein Notizbuch — das ist jetzt mehr wert als alle Krabben-Taler), Schaltier-Evolutionschronik (500 Mio. Jahre, 6 Massenaussterben, 6x nicht ausgestorben — wegen der Schale). Elefant: Trauer-und-Gedenken-Platz (wir gehen zurück zu den Knochen — das ist Gedenken, auch wenn ich kein Wort dafür hatte), Geburts-Freuden-Platz (das Kleine gehört uns allen — Gemeinschaft ist der Plan, nicht die Nettigkeit), Fremde-Knochen-Stätte (fremde Elefanten, trotzdem bleiben und berühren — in jedem Knochen ist etwas das ich erkenne). Floriane: Improvisation-Labor (73% der schönsten Wunsch-Momente entstehen aus Ungeplantem — Improvisation = hören was entsteht), Zufall-Muster-Garten (Jean Arp wirft Papier aus dem Fenster, nennt den Landepunkt Kunst — Zufall antwortet nicht, Kunst immer), Synästhesie-Labor (F-Dur ist apricot für mich — ich dachte alle wissen das, niemand wusste das, ich war so überrascht).
+
+**Stand nach S115:**
+- **965 Quests** auf main / **975 Quests** auf feat/sprint-115 (PR offen)
+- NPC-Counter nach S115 auf Branch: krabs 77 · elefant 76 · floriane 76 · alien 76 · lokfuehrer 76
+- Nächste niedrigste nach Merge aller offenen PRs: tommy(74) / bernd(74) → S116-1
+
+**PO-Entscheidung:**
+- Quest-Runde 98: Tommy(74)/Bernd(74) nach vollständigem Merge → S116-1
+- Themen: Tommy (was Zufallsentdeckungen bedeuten), Bernd (was Wald in der Nacht erzählt)
+
+---
+
+## Sprint Retrospektive S115 (2026-04-28, autonomer Agent)
+
+**Was gut lief:**
+- Krabs-Häutung: "Man kann nur wachsen wenn man bereit ist für kurze Zeit ohne Schutz zu sein" — stärkster Krabs-Satz seit dem Krabben-Gedenkstein. Biologie als Geschäftsweisheit.
+- Elefant-Gedenken: "Törööö. Wir gehen zurück zu den Knochen." — kein Pathos, nur Tatsache. Stärkste Elefant-Stimme seit dem Wasser-Gedächtnis.
+- Floriane-Synästhesie: "F-Dur ist apricot für mich — ich dachte alle wissen das" — persönlichster Floriane-Moment bisher. Wissenschaft und Selbstoffenbarung in einem.
+- Krabs-Väter-Gedenkstätte: zweite Krabs-Quest die zeigt dass hinter dem Geld-Brüllen ein Mensch wartet.
+
+**Was nicht gut lief:**
+- Merge-Stapel wächst: #531, #532, #540 alle offen — main ist 30 Quests hinter Branch-Stand
+- S115 auf main-Basis gebaut, nicht auf Vollmerge-Basis — Counter könnten nach Merge abweichen
+
+**Retro-Actions für S116:**
+- **R1:** Quest-Runde 98: Tommy(74)/Bernd(74) → S116-1
+- **R2:** Themen: Tommy (Zufallsentdeckungen und Geduld), Bernd (was Wald nachts erzählt)
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
