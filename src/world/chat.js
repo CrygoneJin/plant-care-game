@@ -525,6 +525,11 @@ Du: "Nein. Ich weiß nur nichts. Das ist nicht dasselbe."`
     let currentNpcId = 'bernd'; // Chat-Bubble öffnet immer Bernd (Support)
     let chatHistory = [];
     let _pendingWish = null; // Floriane: ausstehender Wunsch wartet auf Bestätigung
+    // Bug Oscar: Chat schließt sich nicht. Root-Cause: game.js queuet
+    // setTimeout(openChat, 400-3200ms) bei NPC-Tap. Klickt Oscar ✕ bevor
+    // der Timeout feuert, reißt der das Panel sofort wieder auf.
+    // Fix: nach manuellem Close für 1.5s alle openChat-Aufrufe ignorieren.
+    let _userDismissedAt = 0;
 
     function updateChatHeader() {
         const char = CHARACTERS[currentNpcId];
@@ -537,6 +542,9 @@ Du: "Nein. Ich weiß nur nichts. Das ist nicht dasselbe."`
     // --- Öffnen von außen (game.js ruft das auf wenn man einen NPC-Block antippt) ---
     window.openChat = function(npcId) {
         if (!npcId || !CHARACTERS[npcId]) return;
+        // Manuell geschlossen vor < 1.5s? Dann ist das hier ein verspäteter
+        // setTimeout aus game.js (NPC-Tap). Ignorieren — Kind hat klar nein gesagt.
+        if (Date.now() - _userDismissedAt < 1500) return;
         const switching = currentNpcId !== npcId;
         currentNpcId = npcId;
         window._lastChatNpcId = npcId;
@@ -1157,6 +1165,8 @@ ${budgetInfo}${florianePreisHint}`;
     }
 
     function toggleChat() {
+        const wasOpen = !panel.classList.contains('hidden');
+        if (wasOpen) _userDismissedAt = Date.now(); // Schließen via Bubble = manueller Dismiss
         panel.classList.toggle('hidden');
         syncChatOpenClass();
         if (!panel.classList.contains('hidden')) {
@@ -1203,6 +1213,7 @@ ${budgetInfo}${florianePreisHint}`;
     function showToast(msg) { if (window.showToast) window.showToast(msg); }
 
     closeBtn.addEventListener('click', () => {
+        _userDismissedAt = Date.now(); // Sperrt openChat-Reopens für 1.5s
         panel.classList.add('hidden');
         syncChatOpenClass();
     });
@@ -1478,7 +1489,9 @@ ${budgetInfo}${florianePreisHint}`;
             if (!apiKeyDialog.classList.contains('hidden')) {
                 apiKeyDialog.classList.add('hidden');
             } else if (!panel.classList.contains('hidden')) {
+                _userDismissedAt = Date.now();
                 panel.classList.add('hidden');
+                syncChatOpenClass();
             }
         }
     });
