@@ -1,0 +1,34 @@
+name: Supabase Keepalive
+
+# Free-Tier-Supabase pausiert nach 7 Tagen Inaktivität.
+# Worker → /save trifft Postgres → reset des Inactivity-Timers.
+# Mo+Do 07:00 UTC = max 4 Tage Lücke, viel Puffer.
+# Push auf diese Datei = sofortiger Ping (z.B. nach Merge dieses PRs).
+on:
+  schedule:
+    - cron: '0 7 * * 1,4'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/supabase-keepalive.yml'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Worker → Supabase
+        run: |
+          set -euo pipefail
+          URL="https://schatzinsel.hoffmeyer-zlotnik.workers.dev/save?device_id=keepalive-gha&slot=autosave"
+          echo "→ GET $URL"
+          RESP=$(curl -sS -w "\n__HTTP__%{http_code}" "$URL")
+          BODY="${RESP%__HTTP__*}"
+          CODE="${RESP##*__HTTP__}"
+          echo "← HTTP $CODE"
+          echo "← $BODY"
+          if [ "$CODE" != "200" ]; then
+            echo "::error::Worker antwortet nicht mit 200 (got $CODE) — Supabase könnte schon dormant sein"
+            exit 1
+          fi
+          echo "✅ Supabase wach gehalten"
