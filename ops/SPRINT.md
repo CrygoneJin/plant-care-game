@@ -28,7 +28,27 @@
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S112)
 - [x] Daily Scrum: übersprungen (alle Items Done vor erstem Standup)
 - [x] Review: 2026-04-25 (autonomer Agent)
-- [ ] Retro
+- [x] Retro: 2026-04-28 (autonomer Agent)
+
+---
+
+## Sprint Retrospektive S113 (2026-04-28, autonomer Agent)
+
+**Was gut lief:**
+- Kraemerin-Stimme ist die schärfste im NPC-Pool: "HANDEL OHNE VERTRAUEN IST KEIN HANDEL! Das ist Diebstahl mit Extra-Schritten!" — Wirtschaftsethik auf 8-Jährig-Niveau, ohne zu vereinfachen
+- Bug-Grenzen: Ecotone (40% mehr Insektenarten als im Wald-Innern) + "Das entscheidet der Morgen für mich" — wissenschaftlich und persönlich gleichzeitig, das ist schwer
+- Maus+Quak-Dynamik: "Du bist ein merkwürdiges Tier. DANKE!" — emotionaler Kern in 5 Wörtern, Oscar-tauglich
+- Quest-Track S103–S113: 11 Runden autonom geliefert seit S102, stabile Qualität, NPC-Counter balanciert
+
+**Was nicht gut lief:**
+- Retro S113 einen Sprint übersprungen — Review war 2026-04-25, Retro erst 2026-04-28 (3 Tage Drift)
+- Merge-Stapel wächst: PRs #500–#504 + S113-Branch auf Till wartend — main (895 Quests) ist 40 Quests hinter Branch (935)
+- Sprint 105 (K16 Emma und der Berg, S105-1 🔲) wurde nie abgeschlossen — von Quest-Track-Momentum überholt, kein expliziter Abschluss
+
+**Retro-Actions für S114:**
+- **R1:** Quest-Runde 96: Alien(69)/Lokführer(69)/Tommy(70) → S114-1
+- **R2:** Themen: Alien (menschliche Abschieds-Gewohnheiten — was Menschen tun wenn jemand geht), Lokführer (Erinnerungen an erste und letzte Reisen — Anfänge und Enden), Tommy (was geduldiges Beobachten zeigt — Geduld als Wissenschafts-Werkzeug)
+- **R3:** Sprint 105 S105-1 (K16 Emma und der Berg) auf ⛔ Cancelled setzen — Quest-Track hat Priorität übernommen, K16 bei Bedarf neu aufnehmen
 
 ---
 
