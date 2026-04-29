@@ -12,7 +12,7 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S117-1 | **Quest-Runde 99** — Mephisto(74→78)/Neinhorn(75→78)/Spongebob(75→78) → +10 Quests, 1005→1015. Mephisto: „Was man nicht kaufen kann". Neinhorn: „Was sogar das NEIN aufhält". Spongebob: „Was der Ozean im Rhythmus tut". | Artist | 🔲 |
+| S117-1 | **Quest-Runde 99** — Mephisto(71→74)/Neinhorn(71→75)/Spongebob(72→75) → +10 Quests, 965→975. Mephisto: „Was man nicht kaufen kann". Neinhorn: „Was sogar das NEIN aufhält". Spongebob: „Was der Ozean im Rhythmus tut". | Artist | ✅ feat/sprint-s117-runde99 |
 
 ---
 
@@ -26,9 +26,24 @@
 ## Ceremony-Status S117
 
 - [x] Planning: 2026-04-29 (autonomer Agent, aus Retro S116)
-- [ ] Daily Scrum
+- [x] Daily Scrum: 2026-04-29 (autonomer Agent)
 - [ ] Review
 - [ ] Retro
+
+---
+
+## Daily Scrum S117 (2026-04-29, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S117 Planning abgeschlossen (ops/sprint-s117-planning)
+- S117-1 implementiert: Quest-Runde 99, Mephisto+3/Neinhorn+4/Spongebob+3, 965→975
+
+**Was kommt als nächstes?**
+- PR für feat/sprint-s117-runde99 erstellen → Till mergt
+
+**Blocker?**
+- Smoke Test CF-403 + Worker "Host not in allowlist": bekannte Sandbox-Limitation, kein echter Outage.
+- NPC-Counter-Drift: SPRINT.md plante auf Vollmerge-Basis (74/75/75), tatsächliche main-Counter waren 71/71/72. Korrigiert. Quests auf echter main-Basis implementiert.
 
 ---
 
