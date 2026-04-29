@@ -1,3 +1,53 @@
+# Sprint 117 — "Neinhorn kapituliert, Mephisto schweigt, Spongebob hört den Rhythmus"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn entdeckt was sogar das NEIN aufhält (Schlaf, Erschöpfung, Sehnsucht, Träume), Mephisto erkennt was man nicht kaufen und nicht verkaufen kann (Stille, das Morgen-Geheimnis, Verzeihen), Spongebob erforscht was der Ozean im Rhythmus tut (Gezeiten, Golfstrom, Walgesang). 965→975 Quests auf Branch.
+
+**Start:** 2026-04-29
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S117-1 | **Quest-Runde 99** — Neinhorn(71→75)/Mephisto(71→74)/Spongebob(72→75) → +10 Quests, 965→975. Neinhorn: „Was sogar das NEIN aufhält". Mephisto: „Was man nicht kaufen kann". Spongebob: „Was der Ozean im Rhythmus tut". | Artist | ✅ feat/sprint-117 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S118-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S117
+
+- [x] Planning: 2026-04-29 (autonomer Agent, aus Retro S116)
+- [x] Daily Scrum: 2026-04-29 (autonomer Agent)
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Daily Scrum S117 (2026-04-29, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S117-1 implementiert: Quest-Runde 99, Neinhorn+4/Mephisto+3/Spongebob+3, 965→975 (feat/sprint-117)
+- NPC-Counter nach S117: neinhorn 75 · mephisto 74 · spongebob 75
+
+**Was kommt als nächstes?**
+- PR für feat/sprint-117 erstellen → Till mergt
+
+**Blocker?**
+- Keine. Smoke-Test: CF 403 + Worker "Host not in allowlist" — bekannte Sandbox-Limitation, kein App-Schaden.
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
