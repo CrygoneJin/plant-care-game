@@ -1,3 +1,53 @@
+# Sprint 113 — "Neinhorn staunt, Mephisto schweigt, Spongebob forscht"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn entdeckt was trotz NEIN passiert (Vogelzug, Bambus, Pilzmyzel, Mondphasen), Mephisto erkennt was die Nacht enthüllt (Schulden, Vergänglichkeit, das Dunkle), Spongebob forscht was der Ozean als Chemielabor kann (pH, Korallen, Strömungen). 965→975 Quests auf Branch.
+
+**Start:** 2026-04-29
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Quest-Runde 95** — Neinhorn(71→75)/Mephisto(71→74)/Spongebob(72→75) → +10 Quests, 965→975. Neinhorn: „Was trotz NEIN passiert". Mephisto: „Was die Nacht weiß". Spongebob: „Was der Ozean chemisch kann". | Artist | ✅ ops/sprint-s112-review |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S114-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-04-29 (autonomer Agent, aus Retro S112)
+- [x] Daily Scrum: 2026-04-29 (autonomer Agent)
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Daily Scrum S113 (2026-04-29, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- Sprint 112 Review + Retro abgeschlossen (diese Session)
+- S113-1 implementiert: Quest-Runde 95, Neinhorn+4/Mephisto+3/Spongebob+3, 965→975 (ops/sprint-s112-review)
+
+**Was kommt als nächstes?**
+- PR für ops/sprint-s112-review erstellen → Till mergt
+
+**Blocker?**
+- Keine. Smoke-Test: CF 403 + Worker "Host not in allowlist" — bekannte Sandbox-Limitation, kein App-Schaden.
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -27,8 +77,47 @@
 
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
 - [ ] Daily Scrum
-- [ ] Review
-- [ ] Retro
+- [x] Review: 2026-04-29 (autonomer Agent)
+- [x] Retro: 2026-04-29 (autonomer Agent)
+
+---
+
+## Sprint Review S112 (2026-04-29, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S112-1 Quest-Runde 94 | ✅ Bernd(67→71 +4) / Elefant(67→70 +3) / Floriane(67→70 +3), 915→925 Quests |
+
+**Oscar-Outcome:** 10 neue Quests. Bernd: was in der Stille passiert — Amsel, Regen, Mauersegler, Stille selbst (Bernd hört was andere überhören). Elefant: was Generationen über Zeit wissen — Jahreszeiten, Wanderrouten, Trockenzeitwasser (Elefant erinnert was kein Kalender aufschreibt). Floriane: was Musik mit Gefühlen macht — Dur/Moll, Rhythmus, Stille als Musikelement (Floriane misst was nicht messbar scheint).
+
+**Stand nach S112 (main, nach Merges):**
+- **965 Quests** auf main
+- NPC-Counter (main, nach Folge-Merges): bernd=74 · elefant=73 · floriane=73 · tommy=74 · lokfuehrer=76 · alien=76
+- Niedrigste Counter: **neinhorn=71 · mephisto=71** · spongebob=72
+
+**PO-Entscheidung:**
+- Quest-Runde 95: neinhorn(71)/mephisto(71)/spongebob(72) → S113-1
+- Themen: Neinhorn (was trotz NEIN passiert), Mephisto (was die Nacht weiß), Spongebob (was der Ozean chemisch kann)
+
+---
+
+## Sprint Retrospektive S112 (2026-04-29, autonomer Agent)
+
+**Was gut lief:**
+- Bernd-Stille: Amsel/Regen/Mauersegler sind Kindheits-Sinneseindrücke — Oscar-tauglich und poetisch
+- Floriane-Stille-als-Musikelement: stärkste konzeptuelle Quest seit Langem — Stille ist nicht Pause sondern Instrument
+- Quest-Track-Kontinuität: S103–S112 = 10 Runden, 100 Quests autonom geliefert
+
+**Was nicht gut lief:**
+- Daily Scrum übersprungen — Sprint war so kurz (1 Item ✅) dass Review direkt folgte
+- SPRINT.md auf main ist 4+ Sprints hinter Realität (S113–S116 auf Branches, S117 geplant)
+- Merge-Stapel wächst: Till muss feat/sprint-113 bis feat/sprint-116 + ops-Branches mergen
+
+**Retro-Actions für S113:**
+- **R1:** Quest-Runde 95: neinhorn(71)/mephisto(71)/spongebob(72) → S113-1, 965→975
+- **R2:** Merge-Hinweis: feat/sprint-113 basiert auf main — direkt mergebar ohne Stacking
 
 ---
 
