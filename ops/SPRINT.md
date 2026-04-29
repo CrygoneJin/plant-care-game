@@ -1,3 +1,83 @@
+# Sprint 114 — "Maus entdeckt das Kleine, Kraemerin kennt die Zeit, Bug erinnert sich"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Maus entdeckt was man nur im Kleinen sieht (Tautropfen, Bodenlebewesen, Samen-Flug, Mondschatten), Kraemerin weiß was Zeit braucht (Planung, Tausch-Geschichte, Heilkräuter-Dunkel), Bug erinnert sich an Verwandlung und Herkunft (Kokon, Pollen, Monarchfalter). 975→985 Quests.
+
+**Start:** 2026-04-29
+**Sprint-Prinzip:** Quest-Track autonom. Ceremonies direkt im Feature-Commit.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S114-1 | **Quest-Runde 96** — Maus(72→76)/Kraemerin(72→75)/Bug(72→75) → +10 Quests, 975→985. Maus: „Was man nur im Kleinen sieht". Kraemerin: „Was Zeit braucht". Bug: „Was Verwandlung hinterlässt". | Artist | ✅ feat/sprint-114 |
+
+---
+
+## Ceremony-Status S114
+
+- [x] Planning: 2026-04-29 (autonomer Agent, aus Retro S113)
+- [x] Daily Scrum: 2026-04-29 (autonomer Agent)
+- [x] Review: 2026-04-29 (autonomer Agent)
+- [x] Retro: 2026-04-29 (autonomer Agent)
+
+---
+
+## Daily Scrum S114 (2026-04-29, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S113 abgeschlossen: Quest-Runde 95 ✅, alle Ceremonies ✅
+- S114 Planning: Maus/Kraemerin/Bug als nächste NPCs identifiziert (je 72 nach S113)
+
+**Was kommt als nächstes?**
+- S114-1: Quest-Runde 96 implementiert ✅
+
+**Blocker?**
+- Smoke Test CF-403 + Worker bekannte Sandbox-Limitation, kein echter Outage.
+
+---
+
+## Sprint Review S114 (2026-04-29, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S114-1 Quest-Runde 96 | ✅ feat/sprint-114 — Maus(72→76 +4) / Kraemerin(72→75 +3) / Bug(72→75 +3), 975→985 Quests |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Maus: Tautropfen-Linsen-Labor (Wassertropfen sind Lupen — Facetten-Augen des Käfers sichtbar!), Boden-Galerie (Milliarden Bakterien in einem Teelöffel Waldboden + Springschwänze mit Mini-Katapult), Samen-Flug-Station (Ente hat drei Bäume gepflanzt ohne es zu wissen — Kletten im Fell), Mondschatten-Messstation (scharfe Schatten bei 2 Uhr nachts gemessen). Kraemerin: Winter-Sommer-Planungs-Kammer (im Winter plant man den Sommer — das ist Kunst, nicht Logistik), Tausch-Gedächtnis-Archiv (jeder Tausch ist eine Beziehung in Warenform), Heilkräuter-Dunkel-Kammer (Baldrian braucht Dunkel — Geduld als kostenloses Medikament). Bug: Kokon-Erinnerungs-Station (Auflösung als Voraussetzung für Neuanfang), Pollen-Transfer-Kartierung (800 Meter Pollen-Transport ohne Plan), Monarchfalter-Navigations-Labor (4000 km zu Bäumen die man nie gesehen hat — das Ziel ist in der Art, nicht im Individuum).
+
+**Stand nach S114:**
+- **985 Quests** auf feat/sprint-114 (975 auf main + 10 neu)
+- NPC-Counter nach S114: maus 76 · kraemerin 75 · bug 75 · neinhorn 75 · spongebob 75 · mephisto 74
+- Nächste niedrigste Counter: mephisto(74) / neinhorn(75) / spongebob(75) / bug(75) / kraemerin(75)
+
+**PO-Entscheidung:**
+- Quest-Runde 97: mephisto(74)/neinhorn(75)/spongebob(75) → S115-1
+
+---
+
+## Sprint Retrospektive S114 (2026-04-29, autonomer Agent)
+
+**Was gut lief:**
+- Maus-Boden-Galerie: „Springschwanz ist schon weg bevor du schaust" — bestes Maus-Timing seit der Kletten-Entdeckung
+- Bug-Monarchfalter: „Das Ziel ist nicht in ihnen — es ist in ihrer Art" — Bug hat seit der Verwandlung eine philosophische Tiefe, die der Raupe fehlte
+- Kraemerin-Dunkel-Kammer: „Geduld verschreibe ich kostenlos. Manchmal nimmt es keiner" — funktioniert als Oscar-Weisheit
+
+**Was nicht gut lief:**
+- Smoke Test bleibt Sandbox-Limitation — kein echter Live-Check
+- Ceremony-Drift: S112/S113-Ceremonies lagen auf Branch, nicht auf main — verbessert sich mit Stacking-Merge
+
+**Retro-Actions für S115:**
+- **R1:** Quest-Runde 97: mephisto(74)/neinhorn(75)/spongebob(75) → S115-1
+- **R2:** Ceremonies immer im Feature-Commit (S114 ✅, Muster halten)
+
+---
+
+---
+
 # Sprint 113 — "Neinhorn scheitert schön, Mephisto lernt Geduld, Spongebob staunt über Dunkelheit"
 
 **Sprint Goal (Oscar-Perspektive):**
