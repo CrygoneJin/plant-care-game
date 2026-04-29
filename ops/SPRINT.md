@@ -12,7 +12,7 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S117-1 | **Quest-Runde 99** — Mephisto(74→78)/Neinhorn(75→78)/Spongebob(75→78) → +10 Quests, 1005→1015. Mephisto: „Was man nicht kaufen kann". Neinhorn: „Was sogar das NEIN aufhält". Spongebob: „Was der Ozean im Rhythmus tut". | Artist | 🔲 |
+| S117-1 | **Quest-Runde 99** — Mephisto(74→78)/Neinhorn(75→78)/Spongebob(75→78) → +10 Quests, 1005→1015. Mephisto: „Was man nicht kaufen kann". Neinhorn: „Was sogar das NEIN aufhält". Spongebob: „Was der Ozean im Rhythmus tut". | Artist | ✅ feat/sprint-117 (PR #550) |
 
 ---
 
@@ -26,9 +26,39 @@
 ## Ceremony-Status S117
 
 - [x] Planning: 2026-04-29 (autonomer Agent, aus Retro S116)
-- [ ] Daily Scrum
+- [x] Daily Scrum: 2026-04-29 (autonomer Agent)
 - [ ] Review
 - [ ] Retro
+
+---
+
+## Daily Scrum S117 (2026-04-29, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S117 Planning abgeschlossen (diese Session, aus Retro S116)
+- S117-1 implementiert: Quest-Runde 99, Mephisto+3/Neinhorn+4/Spongebob+3 → +10 Quests
+  - Kanonischer Branch: feat/sprint-117 (PR #550) — feat/sprint-118 stackt darauf
+  - Zweite Implementierung: feat/sprint-s117-runde99 (PR #552) — Duplikat, kann geschlossen werden nach Merge von #550
+- S118-1 implementiert: Quest-Runde 100 (Meilenstein), feat/sprint-118 (PR #551), stackt auf #550
+
+**Merge-Reihenfolge für Till:**
+
+| Priorität | PR | Was | Basis |
+|-----------|-----|-----|-------|
+| 1 | **#531** | Quest-Runde 95: Neinhorn/Mephisto/Spongebob | main |
+| 2 | **#532** | Quest-Runde 96: Maus/Kraemerin/Bug | feat/sprint-113 |
+| 3 | **#541** | Quest-Runde 97: Krabs/Elefant/Floriane | rebase auf #532 nötig |
+| 4 | **#543** | Quest-Runde 98: Tommy/Bernd | rebase auf #541 nötig |
+| 5 | **#550** | Quest-Runde 99: Neinhorn/Mephisto/Spongebob (S117) | rebase auf #543 nötig |
+| 6 | **#551** | Quest-Runde 100: Maus/Kraemerin/Bug (S118, Meilenstein) | feat/sprint-117 |
+| 7 | **#539** | Supabase-Keepalive CI | unabhängig |
+| 8 | **#538** | Chat-Close-Btn Fix | unabhängig |
+| Nach #550 | **#552** | Quest-Runde 99 Duplikat (S117) | schließen |
+
+**NPC-Counter nach vollständigem Merge (S113–S118):**
+mephisto 77 · neinhorn 79 · spongebob 78 · maus 76 · kraemerin 75 · bug 75 · tommy 79 · bernd 79
+
+**Blockers:** Keine. Nächste Ceremony: S117 Review.
 
 ---
 
