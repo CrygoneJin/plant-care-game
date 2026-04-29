@@ -27,8 +27,8 @@
 
 - [x] Planning: 2026-04-29 (autonomer Agent, aus Retro S116)
 - [x] Daily Scrum: 2026-04-29 (autonomer Agent)
-- [ ] Review
-- [ ] Retro
+- [x] Review: 2026-04-29 (autonomer Agent)
+- [x] Retro: 2026-04-29 (autonomer Agent)
 
 ---
 
@@ -40,6 +40,95 @@
 
 **Was kommt als nächstes?**
 - PR für feat/sprint-117 erstellen → Till mergt
+
+**Blocker?**
+- Keine. Smoke-Test: CF 403 + Worker "Host not in allowlist" — bekannte Sandbox-Limitation, kein App-Schaden.
+
+---
+
+## Sprint Review S117 (2026-04-29, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S117-1 Quest-Runde 99 | ✅ feat/sprint-117 — Neinhorn(71→75 +4) / Mephisto(71→74 +3) / Spongebob(72→75 +3), 965→975 Quests |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Neinhorn: Schlaf-Observatorium (Schlaf ignoriert jedes NEIN — dokumentiert), Erschöpfungs-Forschungsstation (Körper kapituliert bevor Neinhorn es merkt), Sehnsuchts-Turm (persistente Differenz zum hypothetischen Zustand), Träum-Archiv (Träume kommen ohne Genehmigung — bemerkenswert). Mephisto: Stille-Börse (Stille nicht kaufbar, nicht verkaufbar — dreimal versucht), Morgen-Geheimnis-Labor (der Moment vor der Identität — dreihundert Jahre nicht gefunden), Verzeihen-Archiv (das einzige das nie auf dem Tisch lag). Spongebob: Gezeiten-Rhythmus-Station (Herzschlag des Ozeans — seit Jahrmilliarden pünktlich), Golfstrom-Kartierlabor (Fluss im Meer, 30 Mio m³/s, sieht aus wie ein Lebewesen), Wal-Gesangs-Studio (Buckelwale haben Musikkultur — Ozean ist Konzertsaal).
+
+**Stand nach S117:**
+- **975 Quests** auf feat/sprint-117 (PR offen)
+- NPC-Counter: neinhorn 75 · mephisto 74 · spongebob 75
+- Niedrigste Counter: maus 72 · kraemerin 72 · bug 72
+
+**PO-Entscheidung:**
+- Quest-Runde 100: maus(72)/kraemerin(72)/bug(72) → S118-1
+
+---
+
+## Sprint Retrospektive S117 (2026-04-29, autonomer Agent)
+
+**Was gut lief:**
+- Neinhorn-Kapitulation vor Schlaf/Erschöpfung/Sehnsucht: stärkster Bogen seit S112 — das NEIN scheitert an Biologie, das ist ehrlich
+- Mephisto-Stille-Börse: "Alle drei Male: die Stille war da. Nur ich war noch nicht ruhig genug um sie zu hören" — beste Mephisto-Zeile seit Verzeihen-Archiv
+- Spongebob-Golfstrom: "sieht aus wie ein Lebewesen — ist keines — ist trotzdem lebendig" — Spongebob-Stimme konsistent gehalten
+- Quest-Track S112–S117 vollständig: 6 Runden in einer Session, stabile Qualität
+
+**Was nicht gut lief:**
+- NPC-Counter-Drift zwischen ops-Branch (Mephisto 74→78) und feat-Branch (71→74): ops-Planning hatte falsche Counter-Basis
+- SPRINT.md auf main reflektiert weiterhin nicht den echten Stand (S112 offen, feat bei S117)
+
+**Retro-Actions für S118:**
+- **R1:** Quest-Runde 100: maus(72)/kraemerin(72)/bug(72) → S118-1 (Meilenstein: 100. Runde)
+- **R2:** NPC-Counter immer aus dem feat-Branch zählen, nicht aus ops-Planning-Branch
+
+---
+
+---
+
+# Sprint 118 — "Maus wartet, Krämerin gibt, Bug baut"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Maus entdeckt was man findet wenn man einfach wartet (Mondlicht, stille Gärten, Fundstücke, Zufallsbegegnungen), Krämerin zeigt was Geben ohne Rechnung bedeutet (Gratis-Tee, Saatgut-Tausch, Jahresfest), Bug forscht was Insekten ohne Plan bauen (Termiten, Bienen-Tanz, Ameisenstraßen). 975→985 Quests auf Branch.
+
+**Start:** 2026-04-29
+**Sprint-Prinzip:** Quest-Track autonom. Quest-Runde 100 — Meilenstein.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S118-1 | **Quest-Runde 100** — Maus(72→76)/Kraemerin(72→75)/Bug(72→75) → +10 Quests, 975→985. Maus: „Was man findet wenn man wartet". Krämerin: „Was Geben ohne Rechnung bedeutet". Bug: „Was Insekten ohne Plan bauen". | Artist | ✅ feat/sprint-118 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S119-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S118
+
+- [x] Planning: 2026-04-29 (autonomer Agent, aus Retro S117)
+- [x] Daily Scrum: 2026-04-29 (autonomer Agent)
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Daily Scrum S118 (2026-04-29, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S117 Review + Retro abgeschlossen
+- S118-1 implementiert: Quest-Runde 100 (Meilenstein), Maus+4/Kraemerin+3/Bug+3, 975→985 (feat/sprint-118)
+- NPC-Counter nach S118: maus 76 · kraemerin 75 · bug 75
+
+**Was kommt als nächstes?**
+- PR für feat/sprint-118 erstellen → Till mergt
 
 **Blocker?**
 - Keine. Smoke-Test: CF 403 + Worker "Host not in allowlist" — bekannte Sandbox-Limitation, kein App-Schaden.
