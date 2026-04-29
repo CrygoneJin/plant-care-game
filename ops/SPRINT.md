@@ -26,26 +26,34 @@
 ## Ceremony-Status S112
 
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
-- [ ] Daily Scrum
-- [x] Review: 2026-04-28 (autonomer Agent)
+- [x] Daily Scrum: entfällt — alle Items Done bei Review-Zeitpunkt
+- [x] Review: 2026-04-29 (autonomer Agent) — siehe unten
 - [ ] Retro
 
 ---
 
-## Sprint Review S112 — 2026-04-28
+## Sprint Review S112 (2026-04-29, autonomer Agent)
 
-**Sprint Goal erreicht:** ✅
+**Sprint Goal erreicht?** ✅ Ja.
 
-**Was geliefert wurde:**
-- Quest-Runde 94: +10 neue Quests (PR #504, gemergt in main)
-  - Bernd: Stille-Thema → Amsel, Regen, Mauersegler, Stille (67→71, jetzt 74 inkl. späterer Sprints)
-  - Elefant: Zeit-Thema → Jahreszeiten, Wanderrouten, Trockenzeitwasser (67→70, jetzt 73)
-  - Floriane: Musik-Thema → Dur/Moll, Rhythmus, Stille (67→70, jetzt 73)
-- Gesamt-Quests auf main: 965 (inkl. S110–S112 + weitere)
+> Oscar findet 10 neue Quests — Bernd/Elefant/Floriane liefern Wissensthemen aus Stille, Zeit und Musik. 915→925 Quests live auf main.
 
-**Nicht geliefert:** nichts — Sprint war 1-Item, alles fertig.
+**Was wurde geliefert?**
 
-**Für Oscar:** 10 neue Quests in denen Bernd Vögel lauscht, Elefant von langen Reisen erzählt, und Floriane erklärt warum Moll-Musik manchmal schöner klingt als Dur.
+| Item | Ergebnis | PR |
+|------|----------|----|
+| S112-1: Quest-Runde 94 | Bernd +4 (Amsel, Regen, Mauersegler, Stille), Elefant +3 (Jahreszeiten, Wanderrouten, Trockenzeitwasser), Floriane +3 (Dur/Moll, Rhythmus, Stille). 10 Quests. 925 gesamt auf Branch (965 auf main inkl. Folge-Sprints). | #504 ✅ gemergt |
+
+**Qualität:**
+- Bernd hört in der Stille: Amsel, Regen, Mauersegler, Stille selbst — konkret, sinnlich, Kind-nah
+- Elefant erinnert Zeit: Jahreszeiten als Gedächtnis, Wanderrouten der Vorfahren, Wasser in der Trockenzeit — Generationswissen
+- Floriane misst Musik: Dur klingt hell, Moll klingt traurig, Rhythmus treibt an, Stille gehört zur Musik — Oscar kann das hören
+
+**Was fehlt noch / nicht geliefert?**
+- Oscar-Smoke (HITL bei Till) — bewusst nicht autonom
+- S113-Kette (CEO-Input) — explizit außerhalb dieses Sprints
+
+**Fazit:** Sprint 112 vollständig. Nächste Ceremony: Retro.
 
 ---
 
