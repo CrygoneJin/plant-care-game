@@ -4,6 +4,10 @@ Persistent team log. Append-only. Read by all agents.
 
 ---
 
+| 2026-04-30 | S119 Daily Scrum + Quest-Runde 101 (autonomer Agent, feat/sprint-119): S119 Planning (PR #554) hatte NPC-Counter-Drift — plante Krabs/Floriane/Elefant auf Vollmerge-Basis, aber auf main bereits durch PR #541 abgedeckt. Korrektur: alien(76)+lokfuehrer(76) gewählt — einzige NPCs in keinem offenen PR. Krabs(73) als dritter (niedrigste nicht-doppelt-abgedeckte). +10 Quests, 965→975 auf Branch. SPRINT.md auf main aktualisiert: S112 Review/Retro retroaktiv nachgetragen, S119 als aktiver Sprint dokumentiert. PR-Debt-Stand: 7 Quest-PRs offen (#531/#532/#541/#543/#550/#551/#?neu), main 965, nach vollständigem Merge 1035. Learning: vor NPC-Wahl immer `git branch -r | grep sprint` ausführen und offene PR-Liste checken — nicht nur main-Counter, sondern auch welche NPCs in wartenden PRs abgedeckt sind. |
+
+---
+
 ## Learnings
 
 | 2026-04-27 | S104-1 Hörspiel K15 "Die Katze" (Artist, PR #521, Branch stories/kapitel-15-die-katze): Lindgren-Anregung direkt umgesetzt — Mephisto sitzt nachts auf p+e-Blöcken, wärmt sie, sagt nichts, weiß alles. Thema: Wissen ohne Worte ("Ein Körper der nicht erklärt kann trotzdem Recht haben"). Tommy Krab, klick-klack Stil, 7 Abschnitte wie Kap. 13+14. Smoke-Test CF-403 weiterhin bekannte Sandbox-Limitation (nicht als Outage behandelt — SPRINT.md Kap. 14: "kein echter Outage"). Daily Scrum S104 eingetragen. |
