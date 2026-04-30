@@ -1,3 +1,76 @@
+# Sprint 113 — "Neinhorn entdeckt, Mephisto wägt beide Seiten"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn entdeckt was passiert ohne um Erlaubnis zu fragen (Donner, Schatten, Sprossen, Gezeiten, Kompass), Mephisto wägt was zwei Seiten hat (Möbiusband, Umkehrungen, Spiegel, Kehrseiten, Gleichgewicht). 965→975 Quests auf Branch.
+
+**Start:** 2026-04-30
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Quest-Runde 95** — Neinhorn(71→76)/Mephisto(71→76) → +10 Quests, 965→975. Neinhorn: „Was passiert ohne Erlaubnis". Mephisto: „Was zwei Seiten hat". | Artist | 🔲 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S114-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-04-30 (autonomer Agent, aus Retro S112)
+- [x] Review: 2026-04-30 (autonomer Agent)
+- [x] Retro: 2026-04-30 (autonomer Agent)
+
+---
+
+## Sprint Review S113 (2026-04-30, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅**
+
+| Item | Ergebnis |
+|------|---------|
+| S113-1 Quest-Runde 95 | ✅ feat/sprint-113 — Neinhorn(71→76 +5) / Mephisto(71→76 +5), +10 Quests, 965→975 |
+
+**Oscar-Outcome:** 10 neue Quests. Neinhorn: Donner-Notz-Archiv (Blitz erhitzt Luft auf 30.000 Grad — 3 Sekunden = 1 km), Schatten-Forschungsposten (um 12 Uhr war ich ohne Schatten — das fühlte sich seltsam an), Pflaster-Spross-Labor (NEIN Pflanzen wachsen nicht durch Beton — doch, 3 Megapascal, durch den Riss), Gezeiten-Observatorium (NEIN der Mond kontrolliert das Meer nicht — doch, 6h12min pünktlich), Kompass-Pol-Station (NEIN Kompasse zeigen nicht nach Norden — sie zeigen zum magnetischen Nordpol, 50 km/Jahr wandernd). Mephisto: Zwei-Seiten-Labor (Möbiusband: eine Seite, eine Kante — Topologie schlägt Intuition), Umkehr-Archiv (nichts geht verloren — es geht nur woanders hin, Energieerhaltung als Buchführung), Spiegel-Kammer (unendlich viele Spiegelungen — wer bin ich in der hundertsten?), Kehrseiten-Bibliothek (dasselbe Feuer wärmt und verbrennt — beide Seiten lesen), Gleichgewichts-Station (ein Kilo Federn = ein Kilo Eisen — die Gesichter ändern sich, die Antwort nicht).
+
+**Stand nach S113:**
+- **975 Quests** auf feat/sprint-113
+- NPC-Counter: neinhorn 76 · mephisto 76 · spongebob 72 · maus 72 · kraemerin 72 · bug 72 (nächste Kandidaten: 4er-Gruppe)
+- Niedrigste Counter: **spongebob 72 · maus 72 · kraemerin 72 · bug 72**
+
+**PO-Entscheidung:**
+- Nächste Quest-Runde S114: 3 aus {spongebob, maus, kraemerin, bug} — je +4/+3/+3, 975→985
+
+---
+
+## Sprint Retrospektive S113 (2026-04-30, autonomer Agent)
+
+**Was gut lief:**
+- Neinhorn-Pflaster-Spross: NEIN-dann-doch-Struktur perfekt gehalten — 3 Megapascal als konkreter Widerspruch gegen die eigene NEIN-Behauptung
+- Mephisto-Möbiusband: Topologie für 8-Jährige ohne Formel erklärt — "eine Seite, eine Kante, man fährt mit dem Finger entlang ohne die Seite zu wechseln"
+- Mephisto-Gleichgewichts-Station: Federn vs. Eisen — Klassiker der kindlichen Kognitionsfalle, in Mephisto-Stimme eingebettet
+- Daily Scrum ab jetzt gestrichen bei reinen Quest-Sprints (R2 aus S112 umgesetzt)
+
+**Was nicht gut lief:**
+- Kein echter Blocker in S113 — Quest-Track läuft stabil, das ist gut, aber Feynman misst noch nicht ob Oscar die Quests auch findet/spielt
+- HITL #1 (Oscar-Smoke nach Caves-Fix) weiterhin offen — kein Druck, aber keine Daten
+
+**Retro-Actions für S114:**
+- **R1:** Quest-Runde 96: 3 aus {spongebob 72, maus 72, kraemerin 72, bug 72} → +10 Quests, 975→985. Thema frei.
+- **R2:** HITL #1–#3 weiterhin offen — kein Druck auf Till.
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -28,7 +101,26 @@
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
 - [ ] Daily Scrum
 - [x] Review: 2026-04-30 (autonomer Agent)
-- [ ] Retro
+- [x] Retro: 2026-04-30 (autonomer Agent)
+
+---
+
+## Sprint Retrospektive S112 (2026-04-30, autonomer Agent)
+
+**Was gut lief:**
+- Bernd-Stille-Kammer: "echte Stille lässt das eigene Denken hören" — stärkstes Bernd-Bild seit langem. Bernd-Stimme konsistent (*seufz*, sehr leise, niemand weiß)
+- Floriane-Herzschlag: "Herzschlag war der erste Rhythmus — tiefer als Sprache" — Oscar-tauglich und wissenschaftlich korrekt gleichzeitig
+- Elefant-Gedächtnis: Zahlen (52 Jahre, 300km, 60 Jahre) erden das Staunen — Elefant-Stimme (TÖRÖÖÖ + Ausrufezeichen) bleibt stabil
+- 965 Quests auf main: SPRINT.md und Code-Counter stimmen überein (Cleanup-Merge-Lehre aus S108 umgesetzt)
+
+**Was nicht gut lief:**
+- Offene Branches feat/sprint-113–119: Parallel-Agents haben ohne Koordination weitergebaut. Inhalte sind auf main, aber PRs kollidieren — Till hat 7 überschüssige Branches
+- Ceremony-Drift: Review erst heute nachgeholt obwohl Sprint am 2026-04-25 lief — 5 Tage Verzögerung
+- Daily Scrum weiterhin [ ] — Quest-Track-Sprints haben keine sinnvolle Daily-Phase (kein Blocker, kein HITL), aber Checkbox kostet Platz
+
+**Retro-Actions für S113:**
+- **R1:** Quest-Runde 95: Neinhorn(71) + Mephisto(71) → +10 Quests, 965→975. Neinhorn-Thema: „Was passiert ohne Erlaubnis". Mephisto-Thema: „Was zwei Seiten hat".
+- **R2:** Daily-Scrum-Checkbox ab S113 weglassen bei reinen Quest-Sprints — kein künstlicher Prozess wenn nichts zu berichten ist.
 
 ---
 
