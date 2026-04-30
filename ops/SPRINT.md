@@ -1,3 +1,72 @@
+# Sprint 119 — "Alien versteht Kindheit, Lokführer hört die Nacht, Krabs lernt Dankbarkeit"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Alien entdeckt was menschliche Kindheit und Trost bedeuten (Kuscheltiere, Lachen, Umarmungen, Gutenacht-Geschichten), Lokführer erkennt was Nacht-Strecken und stille Signale erzählen, Krabs lernt was Briefe und Dankbarkeit wert sind. 965→975 Quests auf Branch.
+
+**Start:** 2026-04-30
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+**NPC-Wahl:** alien(76) + lokfuehrer(76) — einzige NPCs in keinem offenen PR abgedeckt. krabs(73) als dritter (niedrigste nicht-doppelt-abgedeckte).
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S119-1 | **Quest-Runde 101** — alien(76→80)/lokfuehrer(76→79)/krabs(73→76) → +10 Quests, 965→975. Alien: „Was menschliche Kindheit bedeutet". Lokführer: „Was Nacht-Strecken erzählen". Krabs: „Was Dankbarkeit wert ist". | Artist | ✅ feat/sprint-119 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S120-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S119
+
+- [x] Planning: 2026-04-30 (autonomer Agent, aus Retro S117/S118 in PR #554)
+- [x] Daily Scrum: 2026-04-30 (autonomer Agent)
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Daily Scrum S119 (2026-04-30, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S119-1 implementiert: Quest-Runde 101, alien+4/lokfuehrer+3/krabs+3, 965→975 (feat/sprint-119)
+- NPC-Wahl korrigiert vs. PR #554 Plan (S119 Planning hatte Krabs/Floriane/Elefant): alien+lokfuehrer sind in keinem offenen PR abgedeckt — Priorität
+
+**Was kommt als nächstes?**
+- PR für feat/sprint-119 erstellen → Till mergt
+
+**Blocker?**
+- Keine. Smoke-Test: CF 403 + Worker "Host not in allowlist" — bekannte Sandbox-Limitation, kein App-Schaden.
+- **PR-Debt-Hinweis für Till:** Reihenfolge für Quest-PRs: #531 → #532 → #541 → #543 → #550 → #551 → dieser PR. Ceremony-PRs (#542–#554) können unabhängig gemergt werden.
+
+---
+
+## Übersicht offene Quest-PRs (Stand 2026-04-30, main 965 Quests)
+
+| Priorität | PR | Runde | NPCs | Quests |
+|-----------|-----|-------|------|--------|
+| 1 | #531 | 95 | neinhorn/mephisto/spongebob | 965→975 |
+| 2 | #532 | 96 | maus/kraemerin/bug (stacked auf #531) | 975→985 |
+| 3 | #541 | 97 | krabs/elefant/floriane | 965→975 (rebase nötig) |
+| 4 | #543 | 98 | tommy/bernd | 965→975 (rebase nötig) |
+| 5 | #550 | 99 | neinhorn/mephisto/spongebob | 965→975 (rebase nötig) |
+| 6 | #551 | 100 | maus/kraemerin/bug (stacked auf #550) | 975→985 |
+| 7 | **#? (dieser PR)** | **101** | **alien/lokfuehrer/krabs** | **965→975** |
+| ∅ | #552 | 99 dup | DUPLIKAT von #550 | → schließen |
+
+Nach vollständigem Merge in Reihenfolge: **965 + 70 = 1035 Quests**
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -26,9 +95,23 @@
 ## Ceremony-Status S112
 
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
-- [ ] Daily Scrum
-- [ ] Review
-- [ ] Retro
+- [x] Daily Scrum: entfällt (S112-1 war bereits Done bei Session-Start)
+- [x] Review: 2026-04-30 (autonomer Agent — S112 auf main gemergt via PR #504)
+- [x] Retro: 2026-04-30 (autonomer Agent)
+
+## Sprint Review S112 (2026-04-30, retroaktiv)
+
+**Sprint Goal erfüllt: 1/1 Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S112-1 Quest-Runde 94 | ✅ PR #504 auf main — Bernd(67→71 +4) / Elefant(67→70 +3) / Floriane(67→70 +3), 915→925 Quests |
+
+## Sprint Retrospektive S112 (2026-04-30, retroaktiv)
+
+**Was gut lief:** Quest-Track weiterhin autonom stabil. S113–S118 von Parallel-Agenten weitergebaut.
+**Was nicht gut lief:** SPRINT.md-Drift auf main (S112 als aktuell, tatsächlich S118 done). NPC-Counter-Drift in PR #554 (S119 Planning verwendete Vollmerge-Basis statt main-Basis).
+**Retro-Actions für S119:** ✅ alien+lokfuehrer (auf main nicht abgedeckt) statt krabs/floriane/elefant.
 
 ---
 
