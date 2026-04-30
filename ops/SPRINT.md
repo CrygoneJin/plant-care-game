@@ -1,3 +1,71 @@
+# Sprint 119 — "Alien staunt über Kindheit, Lokführer lauscht der Nacht, Krabs lernt Dankbarkeit"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Alien entdeckt was menschliche Kindheit bedeutet (Kuscheltiere, Lachen, Trost, Vorlesen), Lokführer erkundet was Nacht-Strecken erzählen (Signal vertrauen, Brücken-Gedächtnis), Krabs lernt was Dankbarkeit wert ist (Großzügigkeit, Briefe, Register). 965→975 Quests auf Branch.
+
+**Start:** 2026-04-29 (geplant), 2026-04-30 (ausgeführt)
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S119-1 | **Quest-Runde 101** — Alien(76→80)/Lokführer(76→79)/Krabs(73→76) → +10 Quests, 965→975. Alien: „Was menschliche Kindheit bedeutet". Lokführer: „Was Nacht-Strecken erzählen". Krabs: „Was Dankbarkeit wert ist". | Artist | ✅ feat/sprint-119 (PR #555) |
+
+**NPC-Abweichung von S119-Plan:** Ursprünglich geplant für Krabs/Floriane/Elefant (aus S117-Retro auf Vollmerge-Basis). PR #555 wählte alien/lokfuehrer/krabs, da Krabs/Floriane/Elefant bereits durch PR #541 (S115) abgedeckt sind und alien/lokfuehrer in keinem offenen PR standen.
+
+---
+
+## Explizit nicht im Sprint
+
+- **Krabs/Floriane/Elefant (Vollmerge-Plan)** — bereits in PR #541 (S115)
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S119
+
+- [x] Planning: 2026-04-29 (autonomer Agent, aus Retro S117, PR #554)
+- [x] Daily Scrum: 2026-04-30 (autonomer Agent, embedded in PR #555)
+- [x] Review: 2026-04-30 (autonomer Agent)
+- [ ] Retro
+
+---
+
+## Sprint Review S119 (2026-04-30, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S119-1 Quest-Runde 101 | ✅ feat/sprint-119 (PR #555) — Alien(76→80 +4) / Lokführer(76→79 +3) / Krabs(73→76 +3), +10 Quests |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Alien: Kuscheltier-Forschungs-Station (Übergangsobjekte — etwas das immer da ist wenn jemand nicht immer da ist), Lachen-Ansteckungs-Labor (60% Übertragungsrate, aufgezeichnetes Lachen wirkt wie echtes), Trost-Forschungs-Station (Umarmung löst das Problem nicht, Oxytocin trotzdem — „Wir sind einfach dageblieben"), Vorlese-Stunden-Archiv (Kinder fragen dieselbe Geschichte nochmal wegen Komfort durch Vertrautheit — „Gute Nacht, Oscar"). Lokführer: Nacht-Strecken-Wacht (nur 20m Scheinwerfer-Horizont, was dahinter kommt erfährt man erst wenn man dort ist), Brücken-Gedächtnis-Posten (Brücke seit 1887, lässt alle durch ohne zu fragen wer sie sind), Signal-Wächter-Station (rotes Signal um drei Uhr nachts — vertrau dem Signal auch wenn du den Grund nicht siehst). Krabs: Großzügigkeits-Forschungs-Labor (SpongeBob hat einen Krabbenburger gegeben, einfach so — „Das macht keinen wirtschaftlichen Sinn. Vielleicht mache ich es auch einmal."), Brief-Archiv (Kunde schreibt: ersten Fisch für Sohn vor 12 Jahren, isst ihn noch jeden Freitag — „Das macht mich seltsam in der Brust"), Dankbarkeits-Register (47 Einträge, keiner macht reicher, er hört nicht auf).
+
+**Stand nach S119:**
+- **965 Quests** auf main / **975 Quests** auf feat/sprint-119 (PR #555)
+- NPC-Counter auf main (aktuell): neinhorn 71 · mephisto 71 · spongebob/maus/kraemerin/bug 72 · elefant/floriane/krabs 73 · tommy/bernd 74 · alien/lokfuehrer 76
+- NPC-Counter nach S119-Merge: alien 80 · lokfuehrer 79 · krabs 76
+
+**PR-Stack für Till (Reihenfolge):**
+- Unabhängig mergebar: **#538** (Chat-Fix) · **#539** (Supabase-CI)
+- Quest-Reihenfolge: **#531** → **#532** → **#541** → **#543** → **#550** → **#551** → **#555**
+- Ceremony-PRs: **#542** (S112/S113/S114 Docs) · **#554** (S117 Review/Retro/S119 Planning)
+- Schließen: **#552** (Duplikat von #550) · ältere Ceremony-PRs (#544–#549)
+
+**Vollmerge-Counter (nach allen Quest-PRs):**
+elefant 76 · floriane 76 · mephisto 77 · neinhorn 79 · spongebob 78 · bug/kraemerin 78 · tommy/bernd 79 · alien/krabs 80 · maus 80 · lokfuehrer 79
+
+**PO-Entscheidung:**
+- S120 Planning: elefant(76) + floriane(76) + mephisto(77) → niedrigste Vollmerge-Counter
+- Themen aus S119-Ursprungsplan übernehmen: Elefant über Freude, Floriane über Nachklingen der Musik
+
+---
+
+---
+
 # Sprint 103 — "Was Oscar wirklich tut"
 
 **Sprint Goal (Oscar-Perspektive):**
