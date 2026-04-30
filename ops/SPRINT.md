@@ -27,8 +27,31 @@
 
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
 - [ ] Daily Scrum
-- [ ] Review
+- [x] Review: 2026-04-30 (autonomer Agent)
 - [ ] Retro
+
+---
+
+## Sprint Review S112 (2026-04-30, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅**
+
+| Item | Ergebnis |
+|------|---------|
+| S112-1 Quest-Runde 94 | ✅ auf main — Bernd(67→71 +4) / Elefant(67→70 +3) / Floriane(67→70 +3), +10 Quests |
+
+**Oscar-Outcome:** 10 neue Quests auf main. Bernd: Amsel-Horchposten (singt um 5:23 — die besten zwei Sekunden danach), Regen-Messlabor (14,7mm gestern — er weiß nicht warum er das weiß), Mauersegler-Observatorium (landen nie, schlafen in der Luft, jahrelang), Stille-Kammer (echte Stille lässt das eigene Denken hören). Elefant: Jahreszeiten-Gedächtnis-Archiv (52 Jahre Wetterdaten, kein Wetterbericht nötig), Saisonwanderungs-Stations-Netz (300km Wanderroute in den Füßen gespeichert), Trockenzeit-Gedächtnis-Brunnen (60 Jahre Wasser-Gedächtnis, tiefer als Dürren). Floriane: Dur-Moll-Resonanz-Labor (68% lächeln bei Dur, 71% werden leiser bei Moll — messbar und unerklärbar), Rhythmus-Welt-Archiv (Herzschlag war der erste Rhythmus, tiefer als Sprache), Stille-Zwischen-Tönen-Station (die Sekunde nach dem letzten Ton — die reichste Sekunde in der Musik).
+
+**Stand nach S112:**
+- **965 Quests** auf main (S112-1 + S113–S116 durch parallele Agents vor dem Cleanup-Merge gemergt)
+- NPC-Counter auf main: lokfuehrer 76 · alien 76 · tommy 74 · bernd 74 · krabs 73 · floriane 73 · elefant 73 · spongebob 72 · maus 72 · kraemerin 72 · bug 72 · neinhorn 71 · mephisto 71
+- Niedrigste Counter: **neinhorn 71 · mephisto 71**
+- Hörspiel K16 (Emma und der Berg) auf main ✅
+- Offene Branches: feat/sprint-113 bis feat/sprint-119 — alle auf 965er-Basis, kollidieren beim Merge
+
+**PO-Entscheidung:**
+- Nächste Quest-Runde S113: Neinhorn(71) + Mephisto(71) — Thema frei
+- Offene Branches: Till entscheidet ob S113-S119 gemergt oder geschlossen werden (Quest-Inhalte bereits auf main via Cleanup)
 
 ---
 
