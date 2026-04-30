@@ -1,3 +1,140 @@
+# Sprint 120 — "Tommy erzählt die Nacht"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar hört Kapitel 17 — Tommy Krab erzählt was nachts auf der Insel passiert, wenn alle schlafen. Ein Kapitel über Stille, Leuchten, und das was Kinder nicht sehen dürfen.
+
+**Start:** 2026-04-30
+**Sprint-Prinzip:** Quest-Track pausiert (7 offene PRs, Till mergt wenn bereit). Hörspiel-Kapitel 17 stattdessen.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S120-1 | **Hörspiel Kapitel 17 — Die Nacht** — Tommy Krab erzählt. Was passiert wenn alle schlafen: Biolumineszenz, Mephisto auf Wanderschaft, das Neinhorn guckt heimlich in die Sterne. Thema: Vertrauen ohne Kontrolle. | Artist (autonom) | 🔲 |
+| S120-2 | **Quest-Track: PAUSE** — 7 offene PRs (#531/#532/#541/#543/#550/#551/S119). Kein neuer Quest-PR bis Till einen Merge-Block macht. | — | ⏸ wartet auf Till |
+
+---
+
+## Ceremony-Status S120
+
+- [x] Planning: 2026-04-30 (autonomer Agent, aus Retro S119)
+- [x] Daily Scrum: 2026-04-30 (autonomer Agent)
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Daily Scrum S120 (2026-04-30, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S119 Review + Retro abgeschlossen (Ceremony-Drift von S112 auf S119 aufgeholt)
+- S120 Planning: Quest-Track pausiert, K17 als einziges Item
+- S120-1: Hörspiel Kapitel 17 "Was die Nacht macht" ✅ — Tommy erzählt Biolumineszenz, Neinhorn und Sterne, Mephisto's Nacht-Runde. Thema: Vertrauen ohne Kontrolle.
+
+**Was kommt als nächstes?**
+- PR für ops/sprint-s120-planning (SPRINT.md + K17) erstellen → Till mergt
+
+**Blocker?**
+- Smoke-Test: CF 403 + Worker bekannte Sandbox-Limitation, kein App-Schaden
+- Quest-Track-Pause: 7 offene Quest-PRs (#531–S119) warten auf Till's Merge-Block
+
+---
+
+## PR-Merge-Reihenfolge für Till (Stand 2026-04-30)
+
+Quest-PRs müssen in Reihenfolge (jeder stacked auf main):
+
+| Priorität | PR | Runde | NPCs | Quests main→branch |
+|-----------|-----|-------|------|--------|
+| 1 | #531 | 95 | neinhorn/mephisto/spongebob | 965→975 |
+| 2 | #532 | 96 | maus/kraemerin/bug | 975→985 (nach #531) |
+| 3 | #541 | 97 | krabs/elefant/floriane | 965→975 (rebase nötig) |
+| 4 | #543 | 98 | tommy/bernd | 965→975 (rebase nötig) |
+| 5 | #550 | 99 | neinhorn/mephisto/spongebob | 965→975 (rebase nötig) |
+| 6 | #551 | 100 | maus/kraemerin/bug | 975→985 (nach #550) |
+| 7 | S119 PR | 101 | alien/lokfuehrer/krabs | 965→975 (rebase nötig) |
+| ∅ | #552 | 99 dup | DUPLIKAT von #550 | → schließen |
+
+Nach Vollmerge: **965 + 70 = 1035 Quests**
+
+Ceremony-PRs (#542–#554, ops/sprint-s117-planning, ops/sprint-s117-review) können unabhängig gemergt werden.
+
+---
+
+---
+
+# Sprint 119 — "Alien versteht Kindheit, Lokführer hört die Nacht, Krabs lernt Dankbarkeit"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Alien entdeckt was menschliche Kindheit und Trost bedeuten, Lokführer erkennt was Nacht-Strecken erzählen, Krabs lernt was Dankbarkeit wert ist. 965→975 auf Branch.
+
+**Start:** 2026-04-30
+**Sprint-Prinzip:** Quest-Track autonom. NPC-Wahl: alien+lokfuehrer in keinem offenen PR abgedeckt.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S119-1 | **Quest-Runde 101** — alien(76→80)/lokfuehrer(76→79)/krabs(73→76) → +10 Quests, 965→975. | Artist | ✅ feat/sprint-119 |
+
+---
+
+## Ceremony-Status S119
+
+- [x] Planning: 2026-04-30 (autonomer Agent)
+- [x] Daily Scrum: 2026-04-30 (autonomer Agent)
+- [x] Review: 2026-04-30 (autonomer Agent)
+- [x] Retro: 2026-04-30 (autonomer Agent)
+
+---
+
+## Sprint Review S119 (2026-04-30, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 Done.**
+
+| Item | Ergebnis |
+|------|---------|
+| S119-1 Quest-Runde 101 | ✅ feat/sprint-119 — alien(76→80 +4) / lokfuehrer(76→79 +3) / krabs(73→76 +3), 965→975 Quests auf Branch |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Alien: was Kuscheltiere bedeuten, warum Kinder lachen, was eine Umarmung misst, was Gutenacht-Geschichten machen. Lokführer: Nacht-Strecke in Stille, Signal-Feuer bei Kilometer 47, leere Gleise die erzählen. Krabs: Briefe die wertvoller sind als Gold, Dankbarkeit als Kapital.
+
+**Stand nach S119:**
+- **965 Quests** auf main / **975** auf feat/sprint-119 (PR offen)
+- NPC-Counter auf main: neinhorn 71 · mephisto 71 · spongebob 72 · maus 72 · kraemerin 72 · bug 72
+- 7 offene Quest-PRs (Runden 95–101) warten auf Till-Merge-Block
+- Ceremony-Drift: S113–S119 alle von parallelen Agenten abgearbeitet, main-SPRINT.md war bei S112
+
+**PO-Entscheidung:**
+- Quest-Track pausiert in S120 — kein neuer PR-Stack bis Till mergt
+- S120: Hörspiel Kapitel 17 stattdessen
+
+---
+
+## Sprint Retrospektive S119 (2026-04-30, autonomer Agent)
+
+**Was gut lief:**
+- alien+lokfuehrer Abdeckung: kluge NPC-Wahl — beide in keinem anderen offenen PR
+- Quest-Track S113–S119: 7 Runden autonom in wenigen Tagen, stabile Qualität
+- PR-Debt-Übersicht in S119-Daily sauber dokumentiert (#531→…→S119)
+
+**Was nicht gut lief:**
+- Ceremony-Drift: main-SPRINT.md war bei S112, Realität bei S119 — 7 Sprints auseinander
+- 7 offene Quest-PRs (Runden 95–101) — Till muss großen Merge-Block machen
+- NPC-Counter-Verwirrung: main 965, Vollmerge-Projektion 1035 — schwer zu tracken
+
+**Retro-Actions für S120:**
+- **R1:** Hörspiel Kapitel 17 — Tommy Krab erzählt die Nacht (Artist, autonom) → S120-1
+- **R2:** Quest-Track Pause — kein neuer PR bis #531 auf main (wie S104-Pattern)
+- **R3:** Ceremony-Drift beheben: SPRINT.md auf main spiegelt jetzt S120 (dieser Commit)
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
