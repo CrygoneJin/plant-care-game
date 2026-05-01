@@ -12,7 +12,7 @@
 
 | # | Item | Owner(s) | Status |
 |---|------|----------|--------|
-| S120-1 | **Hörspiel Kapitel 17 — Die Nacht** — Tommy Krab erzählt. Was passiert wenn alle schlafen: Biolumineszenz, Mephisto auf Wanderschaft, das Neinhorn guckt heimlich in die Sterne. Thema: Vertrauen ohne Kontrolle. | Artist (autonom) | 🔲 |
+| S120-1 | **Hörspiel Kapitel 17 — Die Nacht** — Tommy Krab erzählt. Was passiert wenn alle schlafen: Biolumineszenz, Mephisto auf Wanderschaft, das Neinhorn guckt heimlich in die Sterne. Thema: Vertrauen ohne Kontrolle. | Artist (autonom) | ✅ docs/stories/kapitel-17-was-die-nacht-macht.md |
 | S120-2 | **Quest-Track: PAUSE** — 7 offene PRs (#531/#532/#541/#543/#550/#551/S119). Kein neuer Quest-PR bis Till einen Merge-Block macht. | — | ⏸ wartet auf Till |
 
 ---
@@ -21,8 +21,8 @@
 
 - [x] Planning: 2026-04-30 (autonomer Agent, aus Retro S119)
 - [x] Daily Scrum: 2026-04-30 (autonomer Agent)
-- [ ] Review
-- [ ] Retro
+- [x] Review: 2026-05-01 (autonomer Agent)
+- [x] Retro: 2026-05-01 (autonomer Agent)
 
 ---
 
@@ -39,6 +39,29 @@
 **Blocker?**
 - Smoke-Test: CF 403 + Worker bekannte Sandbox-Limitation, kein App-Schaden
 - Quest-Track-Pause: 7 offene Quest-PRs (#531–S119) warten auf Till's Merge-Block
+
+---
+
+## Sprint Review S120 (2026-05-01, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 lieferbar ✅, 1 planmäßig pausiert ⏸**
+
+| Item | Ergebnis |
+|------|---------|
+| S120-1 Hörspiel K17 — Die Nacht | ✅ `docs/stories/kapitel-17-was-die-nacht-macht.md` — Tommy erzählt: Biolumineszenz (Dinoflagellaten leuchten weil das ihre Art zu leben ist), Neinhorn bei Sternen ("Morgen Nacht auch" — stärkstes Neinhorn-Geständnis je), Mephisto's Kontrollrunde (weiß selbst nicht warum er geht), Krabby schreibt "Vertrauen ist auch eine Form von Wissen". |
+| S120-2 Quest-Track PAUSE | ⏸ planmäßig — 7 offene PRs warten auf Till's Merge-Block |
+
+**Oscar-Outcome:** K17 bereit zum Vorlesen. Stärkstes Kapitel seit K13. Kernaussage: "Die Welt macht weiter, auch wenn ihr Pause macht." — Für 8-Jährige begreifbar, für Eltern weisheitstragend. Neinhorn schaut heimlich Sterne auf ("Morgen Nacht auch" = das höchste Lob das Neinhorn vergeben kann). Mephisto geht Kontrollrunde ohne Auftrag — emergentes Fürsorge-Verhalten als Figur-Tiefe.
+
+**Stand nach S120:**
+- **965 Quests** auf main (7 Quest-PRs stacken darauf, nach Vollmerge 1035)
+- K17 auf ops/sprint-s120-review, wartet auf PR → main
+- NPC-Counter main: lokfuehrer 76 · alien 76 · maus 76 · bernd 74 · tommy 74 · mephisto 74 (Vollmerge: krabs 76 · elefant 76 · floriane 76 · neinhorn 75)
+
+**PO-Entscheidung:**
+- S121: Retro → dann Planning
+- Quest-Track Resume wenn Till Merge-Block startet (7 PRs bereit)
+- K18 aus Retro oder Oscar-Feedback bestimmen
 
 ---
 
@@ -60,6 +83,72 @@ Quest-PRs müssen in Reihenfolge (jeder stacked auf main):
 Nach Vollmerge: **965 + 70 = 1035 Quests**
 
 Ceremony-PRs (#542–#554, ops/sprint-s117-planning, ops/sprint-s117-review) können unabhängig gemergt werden.
+
+---
+
+---
+
+## Sprint Retrospektive S120 (2026-05-01, autonomer Agent)
+
+**Was gut lief:**
+- K17 "Was die Nacht macht" ist das stärkste Kapitel seit K13: Neinhorn schaut heimlich Sterne ("Morgen Nacht auch") — Figur-Tiefe durch eine Geste
+- Mephisto's Kontrollrunde ohne Auftrag: emergentes Fürsorge-Verhalten — Figur wächst ohne Erklärung
+- Quest-Track-Pause gehalten: kein neuer Quest-PR-Debt in S120 aufgebaut
+- S119 Ceremony-Drift aufgeholt: alle Sprints S112–S120 vollständig dokumentiert
+
+**Was nicht gut lief:**
+- 7 offene Quest-PRs auf main (965 Quests) warten auf Till — Tracking-Overhead wächst
+- K17 hat Spongebob erwähnt ("pfeift") aber keinen eigenen Moment — Figur blieb Randnotiz
+- Keine PR für K17 in S120 erstellt (fehlt als Delivery an Till)
+
+**Retro-Actions für S121:**
+- **R1:** K18 — Bernd erzählt vom Mauersegler (schläft in der Luft, landet nie). Thema: Ruhe in Bewegung.
+- **R2:** Quest-Track Resume sobald Till einen PR aus dem Stack mergt (#531 zuerst)
+- **R3:** K18 in PR packen damit Till sieht was bereit ist
+
+---
+
+# Sprint 121 — "Bernd und der Mauersegler"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar hört Kapitel 18 — Bernd erzählt von einem Vogel der niemals landet. Und warum das nicht traurig ist, sondern das Mutigste was Bernd je gesehen hat.
+
+**Start:** 2026-05-01
+**Sprint-Prinzip:** Hörspiel-Track weiter. Quest-Track pausiert bis Till #531 mergt.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S121-1 | **Hörspiel Kapitel 18 — Bernd und der Mauersegler** — Bernd erzählt. Was er abends auf dem Mauersegler-Observatorium sieht: ein Vogel der 10 Monate in der Luft schläft, nie landet. Thema: Ruhe in Bewegung. Stille ohne Stillstand. | Artist (autonom) | 🔲 |
+| S121-2 | **Quest-Track: PAUSE** — bleibt bis Till #531 mergt. | — | ⏸ wartet auf Till |
+
+---
+
+## Ceremony-Status S121
+
+- [x] Planning: 2026-05-01 (autonomer Agent, aus Retro S120)
+- [x] Daily Scrum: 2026-05-01 (autonomer Agent)
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Daily Scrum S121 (2026-05-01, autonomer Agent)
+
+**Was wurde heute gemacht?**
+- Retro S120 abgeschlossen
+- S121 Planning: K18 "Bernd und der Mauersegler" definiert
+- S121-1 implementiert: `docs/stories/kapitel-18-bernd-und-der-mauersegler.md` ✅
+
+**Was kommt als nächstes?**
+- PR für ops/sprint-s120-review (inkl. K18) → Till mergt
+
+**Blocker?**
+- Smoke-Test: CF 403 + Worker bekannte Sandbox-Limitation
+- S121-2 Quest-Track PAUSE: wartet auf Till (#531 zuerst)
 
 ---
 
