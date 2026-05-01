@@ -1,3 +1,63 @@
+# Sprint 113 — "Quest-Runde 95 auf main"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests von Neinhorn und Mephisto — sobald Till PR #531 mergt. Quest-Track PAUSE bis dahin.
+
+**Start:** 2026-05-01
+**Sprint-Prinzip:** Keine neuen Quests von Agenten. Till mergt. Oscar sieht Fortschritt.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Quest-Runde 95** — Neinhorn(71→75)/Mephisto(71→74)/Spongebob(72→75) → +10 Quests, 965→975. | Artist | ✅ PR #531 (feat/sprint-113) |
+| S113-2 | **Quest-Track PAUSE** — Till mergt nach eigenem Tempo. Kein neuer Quest-Code von Agenten. | — | ⏸ wartet auf Till |
+
+---
+
+## Till's Merge-Queue S113
+
+### Quest-PRs (in Reihenfolge mergen — Counter kumulieren)
+
+| Prio | PR | Runde | NPCs | Basis |
+|------|-----|-------|------|-------|
+| 1 | **#531** | 95 | neinhorn/mephisto/spongebob | main ✅ direkt |
+| 2 | **#532** | 96 | maus/kraemerin/bug | nach #531 |
+| 3 | **#550** | 99 | neinhorn/mephisto/spongebob | main (rebase nötig) |
+| 4 | **#551** | 100 | maus/kraemerin/bug | nach #550 |
+| 5 | **#555** | 101 | alien/lokfuehrer/krabs | main ✅ direkt |
+| 6 | **#541** | 97 | krabs/elefant/floriane | main (rebase nötig) |
+| 7 | **#543** | 98 | tommy/bernd | main (rebase nötig) |
+
+**Nach Vollmerge: 1035 Quests**
+
+### Hörspiel-Stack (optional, gestacked — in Reihenfolge)
+
+**#568** (K17+K18, direkt auf main) → **#570** (K19) → **#571** → **#574** (K20)
+
+### Schließen — Quest-Runde-95-Duplikate
+
+`#558` · `#563` · `#564` · `#572` — alle Runde 95, überholt durch #531
+
+### Schließen — Ceremony-Duplikate
+
+`#547` · `#565` · `#566` · `#573` · `#575` · `#567` · `#569` — überholt durch diesen PR
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-05-01 (autonomer Agent)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -26,9 +86,9 @@
 ## Ceremony-Status S112
 
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
-- [ ] Daily Scrum
+- [x] Daily Scrum: 2026-04-30 (autonomer Agent, nachgeholt)
 - [x] Review: 2026-04-30 (autonomer Agent)
-- [ ] Retro
+- [x] Retro: 2026-05-01 (autonomer Agent)
 
 ---
 
@@ -52,6 +112,26 @@
 **PO-Entscheidung:**
 - Nächste Quest-Runde S113: Neinhorn(71) + Mephisto(71) — Thema frei
 - Offene Branches: Till entscheidet ob S113-S119 gemergt oder geschlossen werden (Quest-Inhalte bereits auf main via Cleanup)
+
+---
+
+## Sprint Retrospektive S112 (2026-05-01, autonomer Agent)
+
+**Was gut lief:**
+- Sprint Goal ✅: Bernd/Elefant/Floriane +10 Quests, 965 Quests gesamt auf main
+- Bernd-Stille: "Amsel 5:23 — die besten zwei Sekunden danach" — stärkstes Bernd-Bild seit Runde 1
+- Floriane: "Herzschlag war der erste Rhythmus, tiefer als Sprache" — Science + Emotion in einem Satz
+- Elefant-Generationsgedächtnis: 52 Jahre Wetterdaten in einem Körper — für Oscar tief ohne Erklärung
+
+**Was nicht gut lief:**
+- Ceremony-Drift: main bei S112, ops-Branches bei S123 — 11+ offene PRs, 6 Versionen dieser Retro
+- Parallel-Agenten haben Quest-Runden 95–101 + Hörspiel K17–K20 eigenständig gebaut: gut für Content, schlecht für Überblick
+- Cleanup-Commit bfc4055 hat Quest-Content ohne SPRINT.md-Update auf main gebracht → Review musste nachgeholt werden
+
+**Retro-Actions für S113:**
+- **R1:** Quest-Track PAUSE — kein neuer Quest-Code von Agenten bis PR #531 auf main ist
+- **R2:** Ceremony-Duplikate schließen (Liste in S113 Planning oben)
+- **R3:** Hörspiel-Stack #568–#574 ist fertig und wartet auf Till's Entscheidung
 
 ---
 
