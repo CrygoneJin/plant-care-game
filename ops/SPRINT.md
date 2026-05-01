@@ -1,3 +1,73 @@
+# Sprint 113 — "Was das Nein erschafft, was nach dem Tausch bleibt"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn entdeckt was das Nein erschafft (Membran, Rinde, Pupille, Immunsystem, Haut), Mephisto lernt was nach einem Tausch bleibt (Narben, leere Stühle, Stille, Beobachtung, Geheimnisse). 965→975 Quests auf Branch.
+
+**Start:** 2026-05-01
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Quest-Runde 95** — Neinhorn(71→76)/Mephisto(71→76) → +10 Quests, 965→975. Neinhorn: „Was das Nein erschafft". Mephisto: „Was nach einem Tausch bleibt". | Artist | ✅ feat/sprint-113 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **S113–S119 offene Branches** — Till entscheidet ob gemergt oder geschlossen werden (Quest-Inhalte bereits auf main via Cleanup-Commit bfc4055)
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-05-01 (autonomer Agent, aus Retro S112)
+- [x] Daily Scrum: 2026-05-01 (autonomer Agent)
+- [x] Review: 2026-05-01 (autonomer Agent)
+- [ ] Retro
+
+---
+
+## Daily Scrum S113 (2026-05-01, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S112 Retro abgeschlossen
+- S113-1 implementiert: Quest-Runde 95, Neinhorn+5/Mephisto+5, 965→975 (feat/sprint-113)
+
+**Was kommt als nächstes?**
+- PR für feat/sprint-113 erstellen → Till mergt
+
+**Blocker?**
+- Keine. Smoke-Test: CF 403 + Worker "Host not in allowlist" — bekannte Sandbox-Limitation.
+
+---
+
+## Sprint Review S113 (2026-05-01, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅**
+
+| Item | Ergebnis |
+|------|---------|
+| S113-1 Quest-Runde 95 | ✅ feat/sprint-113 — Neinhorn(71→76 +5) / Mephisto(71→76 +5), 965→975 Quests |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Neinhorn: Membran-Labor (das Nein der Zelle macht Leben möglich), Rinden-Schutz-Station (Eiche sagt täglich mehr Nein als Neinhorn), Pupillen-Dunkelkammer (1mm = 90% weniger Licht), Immunsystem-Festung (Fieber ist das Nein als Waffe), Haut-Beobachtungs-Station (400 Mio Jahre Landtier-Geschichte durch ein Nein). Mephisto: Narben-Archiv (Narben wissen was Erinnerung vergisst), Leerer-Stuhl-Galerie (Stühle erinnern sich länger als Menschen), Stille-nach-dem-Streit-Kammer (das Nicht-Gesagte ist lauter), Was-bleibt-Observatorium (das Lernen des Verlierers bleibt), Geteiltes-Geheimnis-Labor (ein geteiltes Geheimnis verdoppelt sich).
+
+**Stand nach S113:**
+- **975 Quests** auf feat/sprint-113
+- NPC-Counter: neinhorn 76 · mephisto 76 (gleichgezogen)
+- Nächste niedrigste Counter: prüfen nach S113-Merge
+
+**PO-Entscheidung:**
+- S113–S119 offene Branches: Till entscheidet Reihenfolge — Quest-Content von S113–S116 bereits via bfc4055 auf main, Ceremonies fehlen nur
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -28,7 +98,7 @@
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
 - [ ] Daily Scrum
 - [x] Review: 2026-04-30 (autonomer Agent)
-- [ ] Retro
+- [x] Retro: 2026-05-01 (autonomer Agent)
 
 ---
 
@@ -52,6 +122,26 @@
 **PO-Entscheidung:**
 - Nächste Quest-Runde S113: Neinhorn(71) + Mephisto(71) — Thema frei
 - Offene Branches: Till entscheidet ob S113-S119 gemergt oder geschlossen werden (Quest-Inhalte bereits auf main via Cleanup)
+
+---
+
+## Sprint Retrospektive S112 (2026-05-01, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Runde 94 qualitativ stark: Bernd-Stille / Elefant-Zeit / Floriane-Musik — drei thematisch kohärente, pädagogisch dichte Pakete
+- Bernd: "Amsel singt um 5:23 — die besten zwei Sekunden danach" ist die präziseste Naturbeobachtung seit Lokführer-Heimkehr
+- Elefant: 52 Jahre Wetterdaten in einem Individuum, 300km Wanderroute in den Füßen — Generationsgedächtnis als konkretes Wunder
+- Floriane: "Herzschlag war vor der Musik" — messbar und unerklärbar gleichzeitig, das stärkste Floriane-Thema bisher
+- Cleanup-Commit bfc4055 hat 40+ Quest-Content (S113–S116) gerettet der sonst in Branches vergammelt wäre
+
+**Was nicht gut lief:**
+- Daily Scrum S112 wurde nie geschrieben (Ceremony bleibt [ ])
+- 7 offene Branches (S113–S119) auf origin, alle auf 965-Basis — Till muss entscheiden ob merge oder close
+- Cleanup-Commit hat Quest-Content ohne SPRINT.md-Update gemergt → Drift zwischen Code (965 Quests) und Docs (zeigte S112 als letzten Stand)
+
+**Retro-Actions für S113:**
+- **R1:** Quest-Runde 95: Neinhorn(71→76) + Mephisto(71→76) — Themen: "Was das Nein erschafft" / "Was nach einem Tausch bleibt"
+- **R2:** S113–S119 Branches: Till entscheidet — kein weiterer Quest-Debt aufbauen bevor Merge-Block aufgelöst
 
 ---
 
