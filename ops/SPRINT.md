@@ -1,3 +1,55 @@
+# Sprint 124 — "Der Elefant erinnert sich"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar hört Kapitel 21 — Elefant erzählt was 300km Wanderung hinterlassen. Nicht Gewicht, nicht Gepäck — Wissen. Den Unterschied zwischen Fakten und Wissen erklärt kein Buch besser als dreiundfünfzig Jahre Regenaufzeichnungen.
+
+**Start:** 2026-05-01
+**Sprint-Prinzip:** Hörspiel-Track weiter. Quest-Track pausiert bis Till #531 mergt.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S124-1 | **Hörspiel Kapitel 21 — Elefant und die lange Wanderung** — Elefant erklärt Oscar den Unterschied zwischen Fakten und Wissen anhand von 300km Jahres-Wanderung. Was Füße wissen ohne Worte. Was Wandern kostet und was es hinterlässt. "Ich glaube, er wird ein guter Wanderer." | Artist (autonom) | ✅ docs/stories/kapitel-21-elefant-und-die-wanderung.md |
+| S124-2 | **Quest-Track: PAUSE** — bleibt bis Till #531 mergt. | — | ⏸ wartet auf Till |
+
+---
+
+## Explizit nicht im Sprint
+
+- **Quest-Track** — pausiert, 7 PRs (#531/#532/#541/#543/#550/#551/S119) warten auf Till
+
+---
+
+## Ceremony-Status S124
+
+- [x] Planning: 2026-05-01 (autonomer Agent, aus Retro S123)
+- [x] Daily Scrum: 2026-05-01 (autonomer Agent)
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Daily Scrum S124 (2026-05-01, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S123 vollständig abgeschlossen (Review + Retro)
+- S124 Planning: K21 Elefant-Kapitel als einziges Item, Quest-Track weiterhin pausiert
+- S124-1: Hörspiel Kapitel 21 "Elefant und die lange Wanderung" ✅ — Elefant erklärt dreihundert Kilometer, die goldene Stelle bei km 80, und warum ein 8-Jähriger morgens kurz die Augen aufmacht und einen Moment braucht bis er weiß wo er ist.
+
+**Was kommt als nächstes?**
+- Sprint Review S124 → Retro → Planning S125 (nächste Session)
+
+**Blocker?**
+- Smoke-Test: CF 403 + Worker bekannte Sandbox-Limitation, kein App-Schaden
+- Quest-Track-Pause: 7 offene Quest-PRs warten auf Till's Merge-Block
+
+---
+
+---
+
 # Sprint 120 — "Tommy erzählt die Nacht"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -225,9 +277,66 @@ Ceremony-PRs (#542–#554, ops/sprint-s117-planning, ops/sprint-s117-review) kö
 ## Ceremony-Status S123
 
 - [x] Planning: 2026-05-01 (autonomer Agent, aus Retro S122)
-- [ ] Daily Scrum
-- [ ] Review
-- [ ] Retro
+- [x] Daily Scrum: 2026-05-01 (autonomer Agent)
+- [x] Review: 2026-05-01 (autonomer Agent)
+- [x] Retro: 2026-05-01 (autonomer Agent)
+
+---
+
+## Daily Scrum S123 (2026-05-01, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S122 Review + Retro abgeschlossen, S123 Planning ✅
+- S123-1: Hörspiel Kapitel 20 "Floriane und das Schweigen" ✅ — Floriane sitzt still nach dem letzten Ton, Oscar hört seinen Herzschlag: "Der erste Rhythmus, der war vor der Musik."
+
+**Was kommt als nächstes?**
+- Sprint Review S123 → Retro → Planning S124
+
+**Blocker?**
+- Smoke-Test: CF 403 + Worker bekannte Sandbox-Limitation, kein App-Schaden
+- Quest-Track-Pause: 7 offene Quest-PRs warten auf Till's Merge-Block
+
+---
+
+## Sprint Review S123 (2026-05-01, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 lieferbar ✅, 1 planmäßig pausiert ⏸**
+
+| Item | Ergebnis |
+|------|---------|
+| S123-1 Hörspiel K20 — Floriane und das Schweigen | ✅ `docs/stories/kapitel-20-floriane-und-das-schweigen.md` — Floriane erklärt Nachklang im Fichtenholz, Atemstille nach dem letzten Konzert-Ton, Herzschlag als ersten Rhythmus der je war. Oscar legt die Hand auf seine Brust: "Immer?" — "Immer." Stärkstes Floriane-Kapitel bisher. |
+| S123-2 Quest-Track PAUSE | ⏸ planmäßig — 7 Quest-PRs warten auf Till |
+
+**Oscar-Outcome:** K20 bereit zum Vorlesen. Kernszene: Oscar hört im Stille-Experiment seinen eigenen Herzschlag. Florian erklärt: "Der war vor allem. Bevor Menschen Trommeln gebaut haben. Das war der erste Ton." Oscar fragt beim Rausgehen: "Denkst du dein Herzschlag klingt wie Dur oder wie Moll?" — Floriane hat heute Nacht noch daran gedacht.
+
+**Stand nach S123:**
+- **965 Quests** auf main (7 Quest-PRs warten auf Till's Merge-Block)
+- Hörspiel-Kette K17→K18→K19→K20: Vertrauen → Ruhe → Akzeptanz → Das Schweigen nach der Musik
+- NPC-Counter main: lokfuehrer 76 · alien 76 · maus 76 · bernd 74 · tommy 74 · mephisto 74 · neinhorn 71
+- ops-Branches mit Ceremonies: s120, s121, s122-review, s123-planning — alle auf origin, PRs ausstehend
+
+**PO-Entscheidung:**
+- S124: K21 Elefant — Thema Wanderung, was bleibt nach 300km
+- Quest-Track: bleibt pausiert bis Till #531 mergt
+- PRs für ops-Branches: S122-2 war ✅, jetzt auch s123-planning + s124-planning
+
+---
+
+## Sprint Retrospektive S123 (2026-05-01, autonomer Agent)
+
+**Was gut lief:**
+- K20 Floriane-Kapitel: stärkstes Floriane-Kapitel bisher. Die letzte Frage ("Denkst du dein Herzschlag klingt wie Dur oder wie Moll?") ist das schönste Ende das ein Hörspiel-Kapitel haben kann — Floriane sucht noch die Antwort
+- Hörspiel-Kette K17–K20: thematisch kohärent und wachsend. K17 (Vertrauen), K18 (Ruhe in Bewegung), K19 (Akzeptanz), K20 (Das Schweigen als Weiterführung der Musik)
+- K20 nutzt Florians Quest-Welt (Dur-Moll-Resonanz-Labor, Herzschlag-als-erstem-Rhythmus) — Kapitel und Quest-Content verzahnt
+
+**Was nicht gut lief:**
+- PRs für ops-Branches (S120–S123) noch ausstehend — Retro-Action R2 aus S122 nicht vollständig ausgeführt
+- Quest-Track-Pause läuft jetzt 4 Sprints — kein Signal von Till ob Merge kommt
+
+**Retro-Actions für S124:**
+- **R1**: K21 Elefant "Die lange Wanderung" — was bleibt nach 300km, was Wandern hinterlässt → S124-1
+- **R2**: PRs für ops-Branches nach diesem Commit erstellen (s123-planning + s124-planning)
+- **R3**: Quest-Track bleibt pausiert — erst wenn Till #531 mergt
 
 ---
 
