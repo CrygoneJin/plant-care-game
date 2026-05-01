@@ -1,3 +1,92 @@
+# Sprint 113 — "Neinhorn entdeckt was ohne Ende ist, Mephisto schreibt was niemand aufschreibt, Bug kartiert was unter uns lebt"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn entdeckt Dinge ohne Ende (Geysir-Hydraulik, Mondphasen-Mathematik, Erosion des Grand Canyon, Tiefseedruck), Mephisto sammelt was verloren geht (erste Gedanken, nicht ausgesprochene Abschiede, unbemerkte Wunder), Bug kartiert was unter der Insel lebt (Ameisenstaat, Grundwasser, Maulwurf-Tunnel). 965→975 Quests auf Branch.
+
+**Start:** 2026-05-01
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog S113
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Quest-Runde 95** — Neinhorn(71→75)/Mephisto(71→74)/Bug(72→75) → +10 Quests, 965→975. Neinhorn: „Was ohne Ende ist". Mephisto: „Was niemand aufschreibt". Bug: „Was unter uns lebt". | Artist | ✅ feat/sprint-113 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **Offene Branches S113-S119** — Till entscheidet ob schließen oder weiternutzen
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-05-01 (autonomer Agent, aus Retro S112)
+- [x] Daily Scrum: 2026-05-01 (autonomer Agent)
+- [x] Review: 2026-05-01 (autonomer Agent)
+- [x] Retro: 2026-05-01 (autonomer Agent)
+
+---
+
+## Daily Scrum S113 (2026-05-01, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S112 Retro abgeschlossen: Bernd/Elefant/Floriane-Quests stark, 965 Quests auf main
+- S113-1 implementiert: Quest-Runde 95, Neinhorn+4/Mephisto+3/Bug+3, 965→975
+
+**Was kommt als nächstes?**
+- PR für feat/sprint-113-2026-05-01 → Till mergt → 975 Quests auf main
+- S114: maus(72)/kraemerin(72)/spongebob(72) → Quest-Runde 96
+
+**Blocker?**
+- Smoke-Test CF-403 + Worker: bekannte Sandbox-Limitation, kein echter Outage.
+- 8 weitere S113-S119-Branches auf origin: Till entscheidet.
+
+---
+
+## Sprint Review S113 (2026-05-01, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅**
+
+| Item | Ergebnis |
+|------|---------|
+| S113-1 Quest-Runde 95 | ✅ feat/sprint-113-2026-05-01 — Neinhorn(71→75 +4) / Mephisto(71→74 +3) / Bug(72→75 +3), 965→975 Quests |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Neinhorn: Geysir-Forschungs-Station (Old Faithful alle 90 Minuten — Hydraulik, nicht Magie), Mondphasen-Beobachtungs-Turm (29 Tage 12h 44min — Mathematik, nicht Romantik), Erosions-Beobachtungs-Station (Colorado River hat 5 Mio Jahre gebraucht, Wasser gewinnt immer), Tiefsee-Druckkammer (1.100 bar im Mariana-Graben — Organismen leben WEIL des Drucks, nicht trotzdem). Mephisto: Erster-Gedanke-Depot (der ehrlichste Moment, bevor die Vernunft das Protokoll schreibt), Abschied-Stele (was nie ausgesprochen wurde — die schwersten Abschiede bleiben am längsten), Wunder-Register (täglich passiert was Wunder wäre, wenn man aufpasst). Bug: Ameisen-Staat-Observatorium (emergentes Verhalten — das Ganze weiß mehr als die Summe der Teile), Grundwasser-Such-Station (Wasserinsekten riechen Grundwasser durch den Boden — dokumentiert), Maulwurf-Tunnel-Kartierung (dreißig Meter Tunnel am Tag, kein Plan nötig wenn das Essen führt).
+
+**Stand nach S113:**
+- **975 Quests** auf feat/sprint-113-2026-05-01 (965 auf main + 10 neu)
+- NPC-Counter nach S113: neinhorn 75 · mephisto 74 · bug 75 · maus 72 · kraemerin 72 · spongebob 72
+
+**PO-Entscheidung:**
+- Quest-Runde 96: maus(72)/kraemerin(72)/spongebob(72) → S114-1, 975→985
+
+---
+
+## Sprint Retrospektive S113 (2026-05-01, autonomer Agent)
+
+**Was gut lief:**
+- Neinhorn-Thema "Was ohne Ende ist" — stärkste Neinhorn-Runde bisher: Geysir-Hydraulik ist exakt das Gegenteil von Romantik und trotzdem perfekt für ein Kind. Der Satz "Das ist keine Magie. Das ist Hydraulik." ist Kern des Spiels.
+- Mephisto lernt Geduld: Erster-Gedanke-Depot ist Figur-Vertiefung — Mephisto geht von "was nehme ich" zu "was beobachte ich ehrlich". Echte Charakterentwicklung.
+- Bug-Emergenz: Ameisenstaat "Das Ganze weiß mehr als die Summe der Teile" — Oscar-tauglicher Einstieg in Systemtheorie. Kein Lehrsatz, nur Beobachtung.
+- Branch-Strategie sauber: ein Branch, ein Datum, kein Merge-Chaos.
+
+**Was nicht gut lief:**
+- 8 weitere S113–S119-Branches auf origin — Quest-Content evtl. doppelt, Till muss bereinigen
+- Ceremony-State auf main lag hinter Branch-State (Daily/Review/Retro fehlten vor diesem Commit)
+
+**Retro-Actions für S114:**
+- **R1:** Quest-Runde 96: maus(72→76)/kraemerin(72→75)/spongebob(72→75) → S114-1, +10 Quests, 975→985
+- **R2:** Ceremonies immer im selben Commit wie Quest-Content
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -28,7 +117,25 @@
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
 - [ ] Daily Scrum
 - [x] Review: 2026-04-30 (autonomer Agent)
-- [ ] Retro
+- [x] Retro: 2026-05-01 (autonomer Agent)
+
+---
+
+## Sprint Retrospektive S112 (2026-05-01, autonomer Agent)
+
+**Was gut lief:**
+- S112-1 ✅ — 10 Quests (Bernd/Elefant/Floriane) auf main, 965 Quests gesamt
+- Bernd-Thema "Stille": stärkste Bernd-Runde seit S109 — Amsel 5:23 (zwei beste Sekunden des Tages), Regen 14,7mm (weiß nicht warum er das weiß), Mauersegler schlafen jahrelang in der Luft
+- Elefant-Generationsgedächtnis: pädagogisch dicht + kindgerecht gleichzeitig — 52 Jahre Wetterdaten, 300km Wanderroute in Füßen gespeichert
+- Floriane-Musik+Emotion: "Herzschlag war der erste Rhythmus" — naturwissenschaftlich und poetisch gleichzeitig, stärkste Floriane-Verbindung seit langem
+
+**Was nicht gut lief:**
+- Branches S113–S119 auf origin existieren noch — alle auf 965-Basis, alle kollisionsgefährdet; Till muss entscheiden
+- Daily Scrum S112 nie durchgeführt (kein Schaden bei 1-Item-Sprint, aber Ceremony-State inkonsistent)
+
+**Retro-Actions für S113:**
+- **R1:** Quest-Runde 95: Neinhorn(71→75)+Mephisto(71→74)+Bug(72→75) → S113-1, +10 Quests, 965→975
+- **R2:** Offene S113–S119-Branches — Till entscheidet ob schließen oder weiternutzen (Quest-Content ggf. doppelt wenn S113-Branch alt ist)
 
 ---
 
