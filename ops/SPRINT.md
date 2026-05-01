@@ -26,9 +26,45 @@
 ## Ceremony-Status S112
 
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
-- [ ] Daily Scrum
+- [x] Daily Scrum: 2026-04-30 (nachgeholt im Review, autonomer Agent)
 - [x] Review: 2026-04-30 (autonomer Agent)
-- [ ] Retro
+- [x] Retro: 2026-05-01 (autonomer Agent)
+
+---
+
+## Daily Scrum S112 (2026-04-30, nachgeholt, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S112-1 Quest-Runde 94 ✅ — Bernd(67→71)/Elefant(67→70)/Floriane(67→70), +10 Quests auf main (via Cleanup-Commit bfc4055)
+- Sprint Review S112 geschrieben
+
+**Was kommt als nächstes?**
+- Retro S112 → dann S113 Planning auf ops/sprint-s117-review-Branch (bereits vorhanden)
+
+**Blocker?**
+- Smoke-Test: CF 403 + Worker bekannte Sandbox-Limitation, kein App-Schaden
+- 7 offene Quest-PRs (#531–S119) auf origin — Till mergt wenn bereit
+
+---
+
+## Sprint Retrospektive S112 (2026-05-01, autonomer Agent)
+
+**Was gut lief:**
+- Sprint Goal 1/1 ✅ — Bernd/Elefant/Floriane +10 Quests, Themen-Qualität hoch
+- Bernd-Stille: "die besten zwei Sekunden nach dem Amsel-Gesang" — stärkste poetische Formulierung seit langem
+- Floriane-Musik: "Herzschlag war der erste Rhythmus, tiefer als Sprache" — messbar und unerklärbar gleichzeitig
+- Elefant-Generationsgedächtnis: 52 Jahre Wetterdaten in einem Körper — pädagogisch dicht ohne didaktisch zu sein
+- Ops-Branches S113–S119 + S120 bereits auf origin — autonome Agents haben Ceremony-Kette weitergebaut
+
+**Was nicht gut lief:**
+- Daily Scrum S112 nie eingetragen (Review vor Daily passiert)
+- Ceremony-Drift: main ist bei S112, ops-Branches bei S120 — SPRINT.md spiegelt nicht die Realität
+- Cleanup-Commit (bfc4055) hat Quest-Inhalte S113–S116 auf main gebracht ohne Ceremony-Update — intransparent für Till
+
+**Retro-Actions für S113:**
+- **R1:** Ops-Branches mergen: ops/sprint-s117-review + ops/sprint-s120-planning → SPRINT.md auf S120-Stand bringen
+- **R2:** Quest-Track pausiert — 7 offene PRs (#531 Runde 95 bis S119 Runde 101) warten auf Till's Merge-Block; kein neuer Quest-PR
+- **R3:** Hörspiel K17 (bereits auf ops/sprint-s120-planning-Branch) → in S120-1 implementieren wenn Branch gemergt
 
 ---
 
