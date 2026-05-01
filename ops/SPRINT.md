@@ -1,3 +1,60 @@
+# Sprint 113 — "Neinhorn entdeckt was ohne Ende ist, Mephisto sammelt was niemand aufschreibt"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn entdeckt was im Universum kein Ende hat, Mephisto sammelt was verloren geht bevor man es benennen kann, Spongebob taucht wo die Sonne nie war. 965→975 Quests auf main.
+
+**Start:** 2026-05-01
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog S113
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Quest-Runde 95** — Neinhorn(71→75)/Mephisto(71→74)/Spongebob(72→75) → +10 Quests, 965→975. Kanonischer PR: **#531** (direkt mergebar). | Artist | ✅ PR #531 wartet auf Merge |
+
+---
+
+## Explizit nicht im Sprint
+
+- **Runde-95-Varianten** (#558, #563, #564) — Till entscheidet ob merge (jede bringt 10 weitere Quests)
+- **Quest-Stack S114–S119** (#532, #541, #543, #550, #551, #555) — Till mergt in Reihenfolge nach #531
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-05-01 (autonomer Agent, aus Retro S112)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+## PR-Merge-Reihenfolge für Till (S113–S119)
+
+| Priorität | PR | Runde | NPCs | Quests |
+|-----------|-----|-------|------|--------|
+| 1 | **#531** | 95 | Neinhorn/Mephisto/Spongebob | 965→975 (direkt mergebar) |
+| 2 | **#532** | 96 | Maus/Kraemerin/Bug | 975→985 (stackt auf #531) |
+| 3 | **#541** | 97 | Krabs/Elefant/Floriane | rebase auf main nötig |
+| 4 | **#543** | 98 | Tommy/Bernd | rebase auf main nötig |
+| 5 | **#550** | 99 | Neinhorn/Mephisto/Spongebob | rebase auf main nötig |
+| 6 | **#551** | 100 | Maus/Kraemerin/Bug (Meilenstein) | stackt auf #550 |
+| 7 | **#555** | 101 | Alien/Lokführer/Krabs | direkt mergebar |
+| ∅ | **#552** | 99 dup | — | schließen nach #550-Merge |
+
+**Nach Vollmerge: 965 + 70 = 1035 Quests auf main.**
+
+**Runde-95-Varianten (optional):** #558, #563, #564 — alle direkt mergebar, je +10 Quests. Till entscheidet.
+
+**Redundante Ceremony-PRs schließen:** #544, #545, #546, #548, #549, #553, #554, #556, #559, #560
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -28,7 +85,7 @@
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
 - [ ] Daily Scrum
 - [x] Review: 2026-04-30 (autonomer Agent)
-- [ ] Retro
+- [x] Retro: 2026-05-01 (autonomer Agent)
 
 ---
 
@@ -52,6 +109,26 @@
 **PO-Entscheidung:**
 - Nächste Quest-Runde S113: Neinhorn(71) + Mephisto(71) — Thema frei
 - Offene Branches: Till entscheidet ob S113-S119 gemergt oder geschlossen werden (Quest-Inhalte bereits auf main via Cleanup)
+
+---
+
+## Sprint Retrospektive S112 (2026-05-01, autonomer Agent)
+
+**Was gut lief:**
+- Bernd-Thema "Stille" stärkste Runde seit langem — Amsel 5:23, Regen 14,7mm (er weiß nicht warum er das weiß), Mauersegler schlafen jahrelang in der Luft
+- Elefant-Generationsgedächtnis pädagogisch dicht: 52 Jahre Wetterdaten, 300km Wanderroute in den Füßen gespeichert
+- Floriane: "Herzschlag war der erste Rhythmus, tiefer als Sprache" — naturwiss. und poetisch gleichzeitig
+- 10/10 Quests geliefert, 965 auf main ✅
+
+**Was nicht gut lief:**
+- Ceremony-Debt: 10+ parallele Agents haben S112 Retro als eigenen PR erstellt — jetzt 10+ offene Ceremony-PRs für denselben Sprint
+- Quest-Stack S113–S119 (7 PRs, +70 Quests) wartet seit Tagen auf Merge — kein Fortschritt auf main
+- Zwei identische S113-Retro-Commits (ops-Branches) auf origin — Pattern aus S92/S103 wiederholt
+
+**Retro-Actions für S113:**
+- **R1:** Till mergt Quest-Stack in Reihenfolge: #531→#532→#541→#543→#550→#551→#555 → 1035 Quests
+- **R2:** Redundante Ceremony-PRs schließen: #544, #545, #546, #548, #549, #552, #553, #554, #556, #559, #560
+- **R3:** Nächste Runde (S114): Counter nach Merge prüfen — niedrigste NPCs nach Vollmerge als Kandidaten
 
 ---
 
