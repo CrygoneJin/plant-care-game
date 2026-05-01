@@ -1,3 +1,40 @@
+# Sprint 113 — "Neinhorn zweifelt, Mephisto lässt los, Spongebob leuchtet"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn zweifelt an Stein, Schlaf und Schmetterlingen (und hat jedes Mal unrecht), Mephisto beobachtet Geduld, Reife und Loslassen (und staunt über Menschen), Spongebob entdeckt die Tiefsee (Anglerfisch, Biolumineszenz, Leben ohne Sonne). 965→975 Quests auf Branch.
+
+**Start:** 2026-05-01
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Quest-Runde 95** — Neinhorn(71→75)/Mephisto(71→74)/Spongebob(72→75) → +10 Quests, 965→975. Neinhorn: Erosion/Schlaf/Symmetrie/Fäulnis. Mephisto: Geduld/Reife/Loslassen. Spongebob: Anglerfisch/Dinoflagellaten/Schwarzraucher. | Artist | ✅ feat/s113-quest-runde-95 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S114-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+- **Offene Branches feat/sprint-113 bis feat/sprint-119** — Till entscheidet ob merge oder close
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-05-01 (autonomer Agent, aus Retro S112)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -28,7 +65,7 @@
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
 - [ ] Daily Scrum
 - [x] Review: 2026-04-30 (autonomer Agent)
-- [ ] Retro
+- [x] Retro: 2026-05-01 (autonomer Agent)
 
 ---
 
@@ -52,6 +89,23 @@
 **PO-Entscheidung:**
 - Nächste Quest-Runde S113: Neinhorn(71) + Mephisto(71) — Thema frei
 - Offene Branches: Till entscheidet ob S113-S119 gemergt oder geschlossen werden (Quest-Inhalte bereits auf main via Cleanup)
+
+---
+
+## Sprint Retrospektive S112 (2026-05-01, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Runde 94 vollständig auf main: Bernd +4, Elefant +3, Floriane +3 = 10 Quests ✅
+- Themen waren stark: Bernd's Stille-Kammer und Amsel-Horchposten, Elefant's Brunnen, Floriane's Herzschlag-Erkenntnis
+- Review war präzise, NPC-Counter klar dokumentiert
+
+**Was nicht gut lief:**
+- Parallele Agents (S113–S119) haben sich mit Runde-94-Inhalt überschlagen — alle Branches auf 965er-Basis, alle kollidieren beim Merge
+- Sprint-Ziel war 915→925 aber tatsächlich 965 durch parallele Merges — Counter-Drift ohne PR-Kontrolle
+
+**Retro-Actions für S113:**
+- R1: Quest-Runde 95: Neinhorn(71) + Mephisto(71) + Spongebob(72) → S113-1 (+4/+3/+3 = +10)
+- R2: Offene Branches S113-S119 bleiben bis Till entscheidet — kein autonomes Merge ohne HITL
 
 ---
 
