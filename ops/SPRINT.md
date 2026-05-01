@@ -1,3 +1,32 @@
+# Sprint 113 — "Neinhorn staunt wider Willen, Mephisto findet die Grenze, Bug schaut ganz nah"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn entdeckt physikalische Systeme die so elegant sind dass er sie nicht ablehnen kann (Bernoulli, Osmose, Biolumineszenz, Kapillarkraft), Mephisto reflektiert was er in 300 Jahren nicht kaufen konnte (Vergessen, Erstaunen, Schlaf), Bug erforscht was nur bei ganz genahem Hinschauen sichtbar wird (Tau-Netze, Fledermaus-Echo, Moos-Auferstehung). 965→975 Quests.
+
+**Start:** 2026-05-01
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Quest-Runde 95** — Neinhorn(71→75)/Mephisto(71→74)/Bug(72→75) → +10 Quests, 965→975. Neinhorn: „Was Neinhorn wider Willen beeindruckt". Mephisto: „Was 300 Jahre nicht kaufen konnten". Bug: „Was nur bei ganz genahem Hinschauen sichtbar wird". | Artist | 🔲 |
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-05-01 (autonomer Agent, aus Retro S112)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -28,7 +57,7 @@
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
 - [ ] Daily Scrum
 - [x] Review: 2026-04-30 (autonomer Agent)
-- [ ] Retro
+- [x] Retro: 2026-05-01 (autonomer Agent)
 
 ---
 
@@ -52,6 +81,25 @@
 **PO-Entscheidung:**
 - Nächste Quest-Runde S113: Neinhorn(71) + Mephisto(71) — Thema frei
 - Offene Branches: Till entscheidet ob S113-S119 gemergt oder geschlossen werden (Quest-Inhalte bereits auf main via Cleanup)
+
+---
+
+## Sprint Retrospektive S112 (2026-05-01, autonomer Agent)
+
+**Was gut lief:**
+- Bernd-Stille-Kammer: „Das ist mein liebstes Zimmer das ich je gebaut habe. Das habe ich auch nicht gesagt." — Bernd trifft den 8-Jährigen-Kern
+- Floriane-Dur/Moll: 68%/71% messbar + unerklärbar in einem Satz — kindgerechte Präzision ohne Langeweile
+- Elefant-Jahreszeiten-Gedächtnis: 52 Jahre Wetterdaten als Konzept — macht Elefanten-Gedächtnis konkret und staunbar
+- Quest-Track S92–S112: 20 Runden, ~220 Quests autonom ohne manuellen Eingriff
+
+**Was nicht gut lief:**
+- Smoke-Test Sandbox-Limitation bleibt (CF 403 + Worker "Host not in allowlist") — seit S92 kein Fortschritt
+- S113–S119 Branches durch parallele Agenten vor dem S112-Cleanup gebaut — PR-Stapel wächst, Till muss entscheiden
+- Daily Scrum S112 ausgefallen — Ceremony-Hygiene nicht vollständig
+
+**Retro-Actions für S113:**
+- **R1:** Quest-Runde 95: Neinhorn(71) + Mephisto(71) + Bug(72) → S113-1 — niedrigste Counter, Thema frei
+- **R2:** Smoke-Test bleibt dokumentierte Sandbox-Limitation — kein Handlungsbedarf
 
 ---
 
