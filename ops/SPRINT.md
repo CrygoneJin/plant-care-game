@@ -1,3 +1,66 @@
+# Sprint 113 — "Merge-Block: 70 Quests warten, Hörspiel-Kette läuft"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscars Insel wächst — 7 Quest-PRs (70 neue Quests, 965→1035) warten auf Tills Merge-Block. Während Till mergt: Hörspiel K17 Tommy-Nacht bis K20 Floriane-Schweigen auf ops-Branches bereit.
+
+**Start:** 2026-05-01
+**Sprint-Prinzip:** Quest-Track pausiert — kein neuer Quest-Code bis #531 auf main. Hörspiel-Kette autonom auf ops-Branches.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Merge-Stapel: 7 Quest-PRs** — #531 (R95, direkt) → #532 (R96) → #541 (R97, rebase) → #543 (R98, rebase) → #550 (R99, rebase) → #551 (R100) → #555 (R101, direkt) → 965+70=**1035 Quests** | Till (merge) | ⏸ wartet auf Till |
+| S113-2 | **Hörspiel-Kette K17–K20** — K17 "Tommy erzählt die Nacht" (#557), K18 "Bernd+Mauersegler" (#568), K19 "Neinhorn+Unverhinderliche" (#570→#571), K20 "Floriane+Schweigen" (#574) | ops-Branches | ✅ bereit auf Branches |
+| S113-3 | **Duplicate-Cleanup** — R95-Duplikate schließen: #558, #563, #564, #572. Ceremony-Duplikate schließen: #547, #565, #566, #573 (nach Merge von diesem PR) | Till | 🔲 |
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-05-01 (autonomer Agent)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+## ✅ Merge-Reihenfolge für Till (Quest-PRs)
+
+| Priorität | PR | Runde | NPCs | Basis |
+|-----------|-----|-------|------|-------|
+| 1 | **#531** | 95 | neinhorn/mephisto/spongebob | main ✅ direkt |
+| 2 | **#532** | 96 | maus/kraemerin/bug | stacked auf #531 |
+| 3 | **#541** | 97 | krabs/elefant/floriane | rebase auf main nötig |
+| 4 | **#543** | 98 | tommy/bernd | rebase auf main nötig |
+| 5 | **#550** | 99 | neinhorn/mephisto/spongebob | rebase auf main nötig |
+| 6 | **#551** | 100 | maus/kraemerin/bug 🎉 | stacked auf #550 |
+| 7 | **#555** | 101 | alien/lokfuehrer/krabs | main ✅ direkt |
+
+Nach Vollmerge: **1035 Quests**
+
+## 🗑️ Schließen (Duplikate)
+
+Quest-R95-Duplikate (alle auf main, +10 Quests je): **#558, #563, #564, #572** — Till wählt einen oder keinen.
+Ceremony-Duplikate (nur SPRINT.md-Updates): **#547, #565, #566, #573** — nach Merge dieses PRs schließen.
+
+## 📖 Hörspiel-Kette (ops-Branches, direkt auf main mergebar)
+
+| PR | Kapitel | Kernbild |
+|----|---------|----------|
+| #557 | K17 Tommy-Nacht | "Die Welt macht weiter auch wenn ihr Pause macht" |
+| #568 | K18 Bernd+Mauersegler | "Ruhe ist kein Ort. Ruhe ist eine Richtung." |
+| #570→#571 | K19 Neinhorn+Gezeiten | Neinhorn sagt NEIN zum Meer. Das Meer kommt trotzdem. |
+| #574 | K20 Floriane+Schweigen | Herzschlag war der erste Rhythmus |
+
+Merge-Reihenfolge ops-Branches: #568 (base: main) → #570 → #571 → #574
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -26,9 +89,42 @@
 ## Ceremony-Status S112
 
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
-- [ ] Daily Scrum
+- [x] Daily Scrum: 2026-05-01 (autonomer Agent, nachgeholt)
 - [x] Review: 2026-04-30 (autonomer Agent)
-- [ ] Retro
+- [x] Retro: 2026-05-01 (autonomer Agent)
+
+---
+
+## Sprint Retrospektive S112 (2026-05-01, autonomer Agent)
+
+**Was gut lief:**
+- Sprint Goal 1/1 ✅ — Bernd/Elefant/Floriane +10 Quests, auf main
+- Bernd-Stille: "die besten zwei Sekunden nach dem Amsel-Gesang" — stärkste Formulierung seit Lokführer-Heimkehr
+- Floriane-Herzschlag: "Herzschlag war der erste Rhythmus, tiefer als Sprache" — hat K20-Thema vorgeahnt
+- Elefant-Generationsgedächtnis: 52 Jahre Wetterdaten in einem Körper — pädagogisch dicht
+
+**Was nicht gut lief:**
+- Ceremony-Drift: main bei S112, ops-Branches bei S123 — 10+ parallele Agents haben unabhängig gearbeitet
+- 20+ offene PRs: Quest-R95 allein 4 Versionen (#531, #558, #563, #564), Ceremony-PRs mind. 6 (#547, #565, #566, #572, #573 + dieser)
+- Duplicate-PR-Pattern wiederholt sich seit S102 — jede Session erstellt neue statt vorhandene zu referenzieren
+
+**Retro-Actions für S113:**
+- R1: Till mergt Quest-Stack #531→#532→#541→#543→#550→#551→#555 (965→1035 Quests)
+- R2: Hörspiel-Kette K17–K20 auf ops-Branches — Till mergt wenn Quest-Block durch
+- R3: Quest-Track pausiert bis #531 auf main — keine neue Quest-Runde vor diesem Merge
+
+---
+
+## Daily Scrum S112 (2026-05-01, nachgeholt)
+
+**Was wurde gemacht?**
+- S112-1 Quest-Runde 94 ✅ auf main (965 Quests, NPC-Counter s.o.)
+- Hörspiel K16 "Emma und der Berg" ✅ auf main
+- S113–S116 Quest-Content durch Cleanup-Merge (bfc4055) auf main gelandet — Counter bereits kumuliert
+
+**Blocker:**
+- Smoke Test CF-403 + Worker: bekannte Sandbox-Limitation (seit S92 dokumentiert)
+- 20+ offene PRs warten auf Till
 
 ---
 
