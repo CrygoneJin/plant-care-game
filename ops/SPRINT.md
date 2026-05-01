@@ -1,3 +1,39 @@
+# Sprint 113 — "Neinhorn entdeckt was ohne Ende ist, Mephisto schreibt was niemand aufschreibt, Bug kartiert was unter uns lebt"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn entdeckt Dinge ohne Ende (Geysir-Hydraulik, Mondphasen-Mathematik, Erosion des Grand Canyon, Tiefseedruck), Mephisto sammelt was verloren geht (erste Gedanken, nicht ausgesprochene Abschiede, unbemerkte Wunder), Bug kartiert was unter der Insel lebt (Ameisenstaat, Grundwasser, Maulwurf-Tunnel). 965→975 Quests auf Branch.
+
+**Start:** 2026-05-01
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog S113
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Quest-Runde 95** — Neinhorn(71→75)/Mephisto(71→74)/Bug(72→75) → +10 Quests, 965→975. Neinhorn: „Was ohne Ende ist". Mephisto: „Was niemand aufschreibt". Bug: „Was unter uns lebt". | Artist | ✅ feat/sprint-113 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **Offene Branches S113-S119** — Till entscheidet ob schließen oder weiternutzen
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-05-01 (autonomer Agent, aus Retro S112)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -28,7 +64,25 @@
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
 - [ ] Daily Scrum
 - [x] Review: 2026-04-30 (autonomer Agent)
-- [ ] Retro
+- [x] Retro: 2026-05-01 (autonomer Agent)
+
+---
+
+## Sprint Retrospektive S112 (2026-05-01, autonomer Agent)
+
+**Was gut lief:**
+- S112-1 ✅ — 10 Quests (Bernd/Elefant/Floriane) auf main, 965 Quests gesamt
+- Bernd-Thema "Stille": stärkste Bernd-Runde seit S109 — Amsel 5:23 (zwei beste Sekunden des Tages), Regen 14,7mm (weiß nicht warum er das weiß), Mauersegler schlafen jahrelang in der Luft
+- Elefant-Generationsgedächtnis: pädagogisch dicht + kindgerecht gleichzeitig — 52 Jahre Wetterdaten, 300km Wanderroute in Füßen gespeichert
+- Floriane-Musik+Emotion: "Herzschlag war der erste Rhythmus" — naturwissenschaftlich und poetisch gleichzeitig, stärkste Floriane-Verbindung seit langem
+
+**Was nicht gut lief:**
+- Branches S113–S119 auf origin existieren noch — alle auf 965-Basis, alle kollisionsgefährdet; Till muss entscheiden
+- Daily Scrum S112 nie durchgeführt (kein Schaden bei 1-Item-Sprint, aber Ceremony-State inkonsistent)
+
+**Retro-Actions für S113:**
+- **R1:** Quest-Runde 95: Neinhorn(71→75)+Mephisto(71→74)+Bug(72→75) → S113-1, +10 Quests, 965→975
+- **R2:** Offene S113–S119-Branches — Till entscheidet ob schließen oder weiternutzen (Quest-Content ggf. doppelt wenn S113-Branch alt ist)
 
 ---
 
