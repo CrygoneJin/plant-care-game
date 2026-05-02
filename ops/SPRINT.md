@@ -27,7 +27,7 @@
 
 - [x] Planning: 2026-05-02 (autonomer Agent, aus Retro S129)
 - [x] Daily Scrum: 2026-05-02 (autonomer Agent)
-- [ ] Review
+- [x] Review: 2026-05-02 (autonomer Agent)
 - [ ] Retro
 
 ---
@@ -45,6 +45,34 @@
 **Blocker?**
 - Smoke-Test: CF 403 + Worker bekannte Sandbox-Limitation, kein App-Schaden
 - Quest-Track-Pause: 7 offene Quest-PRs warten auf Till (#531 zuerst)
+
+---
+
+## Sprint Review S130 (2026-05-02, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅, 1 bewusst pausiert ⏸**
+
+| Item | Ergebnis |
+|------|---------|
+| S130-1 Hörspiel K27 — Bug und der unsichtbare Wald | ✅ docs/stories/kapitel-27-bug-und-der-unsichtbare-wald.md |
+| S130-2 Quest-Track PAUSE | ⏸ wartet auf Till (#531 zuerst) |
+
+**Oscar-Outcome:**
+K27 bereit zum Vorlesen. Bug führt Tommy um den alten Baum — unter einer morschen Rinde liegt das Myzel-Netz: der Wald unter dem Wald. Bug erklärt: „Niemand hat das gebaut. Und alle. Jeder der je ein Blatt hat fallen lassen." Tommy macht den nächsten Schritt daneben. Bug sagt: „Gut." — das höchste Lob das Bug vergeben kann.
+
+Themen-Kette K25→K26→K27:
+- K25 Lokführer: ein Gruß für jemanden der schon weg ist (Vergehen)
+- K26 Maus: etwas sehen das gleich weg ist (Wahrnehmen)
+- K27 Bug: was weg ist wird wieder wachsen (Werden)
+
+**Stand nach S130:**
+- **27 Hörspiel-Kapitel** auf ops-Branches (K17–K27 auf Branch-Kette, K1–K16 auf main)
+- Quest-Track: ⏸ pausiert — 7 Quest-PRs (#531/#532/#541/#543/#550/#551/S119) warten auf Till
+- Smoke: CF-403 + Worker bekannte Sandbox-Limitation, kein Outage
+
+**PO-Entscheidung:**
+- K28 in S131: nächstes Kapitel frei — Thema und NPC offen
+- Quest-Track Resume: sobald #531 auf main
 
 ---
 
