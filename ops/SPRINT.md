@@ -1,3 +1,85 @@
+# Sprint 113 — "Neinhorn scheitert schön, Mephisto lernt Geduld, Spongebob staunt über Dunkelheit"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn entdeckt was trotz NEIN funktioniert (Erosion, Schlaf, Symmetrie, Fäulnis), Mephisto lernt was nicht käuflich ist (Geduld, Reife, Loslassen), Spongebob forscht was im Dunkeln leuchtet (Anglerfisch, Dinoflagellaten, Schwarzraucher). 965→975 Quests.
+
+**Start:** 2026-05-02
+**Sprint-Prinzip:** Quest-Track autonom. Ceremonies im Feature-Commit.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Quest-Runde 95** — Neinhorn(71→75)/Mephisto(71→74)/Spongebob(72→75) → +10 Quests, 965→975. Neinhorn: „Was trotz NEIN funktioniert". Mephisto: „Was nicht käuflich ist". Spongebob: „Was im Dunkeln leuchtet". | Artist | ✅ feat/sprint-113 |
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-05-02 (autonomer Agent, aus Retro S112)
+- [x] Daily Scrum: 2026-05-02 (autonomer Agent)
+- [x] Review: 2026-05-02 (autonomer Agent)
+- [x] Retro: 2026-05-02 (autonomer Agent)
+
+---
+
+## Daily Scrum S113 (2026-05-02, autonomer Agent)
+
+**Was wurde heute gemacht?**
+- S112 Review + Retro abgeschlossen (auf main)
+- S113 Planning gestartet
+- S113-1 Quest-Runde 95 implementiert: Neinhorn×4 / Mephisto×3 / Spongebob×3
+
+**Was kommt als nächstes?**
+- PR erstellen → Till mergt
+
+**Blocker?**
+- Smoke-Test CF-403 + Worker "Host not in allowlist" — bekannte Sandbox-Limitation.
+
+---
+
+## Sprint Review S113 (2026-05-02, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅**
+
+| Item | Ergebnis |
+|------|---------|
+| S113-1 Quest-Runde 95 | ✅ feat/sprint-113 — Neinhorn(71→75 +4) / Mephisto(71→74 +3) / Spongebob(72→75 +3), 965→975 Quests |
+
+**Oscar-Outcome:** 10 neue Quests. Neinhorn: Erosions-Beweis-Labor (Grand Canyon — Zeit mächtiger als Härte), Schlaf-Forschungs-Station (Gehirn reinigt sich selbst — Neinhorn schläft 8h "aus wissenschaftlichem Interesse"), Symmetrie-Mess-Atelier (0,3mm Präzision an Schmetterlingsflügeln), Fäulnis-Recycling-Kammer (der Apfel wird nächstes Jahr ein Blatt). Mephisto: Gedulds-Observatorium (Geduld ist das Einzige das er nicht kaufen kann), Reife-Keller (40-Jahre-Wein — er hatte damals keine Geduld), Loslassen-Altar (manche Verträge würde er heute anders machen). Spongebob: Anglerfisch-Lockstoff-Labor (lebende Taschenlampe am Kopf), Dinoflagellaten-Leucht-Grotte (Ozean leuchtet wenn man ihn bewegt), Tiefsee-Schwarzraucher-Observatorium (Leben ohne Sonne — Europa-Hypothese).
+
+**Stand nach S113:**
+- **975 Quests** auf feat/sprint-113 (965 auf main + 10 neu)
+- NPC-Counter nach S113: neinhorn 75 · mephisto 74 · spongebob 75
+- Niedrigste Counter: maus 72 · kraemerin 72 · bug 72
+
+**PO-Entscheidung:**
+- Quest-Runde 96: maus(72)/kraemerin(72)/bug(72) → S114-1
+
+---
+
+## Sprint Retrospektive S113 (2026-05-02, autonomer Agent)
+
+**Was lief gut:**
+- Neinhorn-Thema "Was trotz NEIN funktioniert": stärkstes Neinhorn-Thema seit S93 — Neinhorn gibt zu Recht zu haben und wünscht sich trotzdem dass es nicht so wäre. Emotional dicht.
+- Mephisto-Tiefe: Loslassen-Altar hat den Charakter weiterentwickelt. "Manche Verträge würde ich anders machen" — Mephisto lernt. Das hat keine andere NPC-Runde bisher erreicht.
+- Spongebob-Tiefsee-Trias: Anglerfisch + Dinoflagellaten + Schwarzraucher bilden eine kohärente Themen-Einheit (Dunkelheit als Lebensraum)
+- Ceremonies direkt im Feature-Commit — kein separater Ceremony-PR-Debt
+
+**Was nicht gut lief:**
+- Phantom-Branch-Altlast: 5+ alte feat/sprint-113* Branches auf origin — Till muss sie schließen
+- Smoke Test bleibt Sandbox-Limitation
+
+**Retro-Actions für S114:**
+- **R1:** Quest-Runde 96: maus(72)/kraemerin(72)/bug(72) → S114-1
+- **R2:** Alte feat/sprint-113* Branches schließen (Till-Aktion)
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
