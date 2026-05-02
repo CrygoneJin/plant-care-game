@@ -1,3 +1,55 @@
+# Sprint 130 — "Bug und der unsichtbare Wald"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar hört Kapitel 27 — Bug zeigt Tommy das weiße Fadengeflecht unter einer alten Rinde am Fuß des Baums. Tommy fragt wer das gebaut hat. Bug: „Niemand. Und alle. Jeder der je ein Blatt hat fallen lassen." Tommy setzt den nächsten Schritt daneben. Bug sagt: „Gut."
+
+**Start:** 2026-05-02
+**Sprint-Prinzip:** Hörspiel-Track weiter. Quest-Track pausiert bis Till #531 mergt.
+
+---
+
+## Sprint Backlog S130
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S130-1 | **Hörspiel Kapitel 27 — Bug und der unsichtbare Wald** — Bug führt Tommy um den alten Baum. Unter einer Rinde: Myzel. Bug erklärt: der Wald unter dem Wald. Alles was fällt wird hier zu allem was wächst. Tommy macht Umweg um das Geflecht. Bug: „Gut." | Artist (autonom) | ✅ docs/stories/kapitel-27-bug-und-der-unsichtbare-wald.md |
+| S130-2 | **Quest-Track: PAUSE** — bleibt bis Till #531 mergt. | — | ⏸ wartet auf Till |
+
+---
+
+## Explizit nicht im Sprint
+
+- **Quest-Track** — pausiert, 7 PRs (#531/#532/#541/#543/#550/#551/S119) warten auf Till
+
+---
+
+## Ceremony-Status S130
+
+- [x] Planning: 2026-05-02 (autonomer Agent, aus Retro S129)
+- [x] Daily Scrum: 2026-05-02 (autonomer Agent)
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Daily Scrum S130 (2026-05-02, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S129 vollständig abgeschlossen (Review + Retro 2026-05-02)
+- S130 Planning: K27 Bug als einziges Item, Quest-Track weiterhin pausiert
+- S130-1: Hörspiel Kapitel 27 ✅ — Bug zeigt Tommy den unsichtbaren Wald unter dem Wald
+
+**Was kommt als nächstes?**
+- PR für ops/sprint-s129-review erstellen → Till mergt
+
+**Blocker?**
+- Smoke-Test: CF 403 + Worker bekannte Sandbox-Limitation, kein App-Schaden
+- Quest-Track-Pause: 7 offene Quest-PRs warten auf Till (#531 zuerst)
+
+---
+
+---
+
 # Sprint 129 — "Maus und die Morgenstille"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -27,8 +79,46 @@
 
 - [x] Planning: 2026-05-02 (autonomer Agent, aus Retro S128)
 - [x] Daily Scrum: 2026-05-02 (autonomer Agent)
-- [ ] Review
-- [ ] Retro
+- [x] Review: 2026-05-02 (autonomer Agent)
+- [x] Retro: 2026-05-02 (autonomer Agent)
+
+---
+
+## Sprint Review S129 (2026-05-02, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅, 1 planmäßig pausiert ⏸**
+
+| Item | Ergebnis |
+|------|---------|
+| S129-1 Hörspiel K26 — Maus und die Morgenstille | ✅ `docs/stories/kapitel-26-maus-und-die-morgenstille.md` |
+| S129-2 Quest-Track PAUSE | ⏸ planmäßig — 7 PRs warten auf Till |
+
+**Oscar-Outcome:** Maus zeigt Tommy den Tautropfen der den Himmel spiegelt — „Von hier aus sieht man es, aber man muss klein genug sein." Stärkstes Bild bisher: die Sekunde in der der Tautropfen gold wird, dann verdunstet. Tommy begreift: er war klein genug weil er saß statt stand.
+
+**Hörspiel-Kette K17–K26:**
+K17 Tommy (Vertrauen) → K18 Bernd (Ruhe in Bewegung) → K19 Neinhorn (Akzeptanz) → K20 Floriane (Schweigen) → K21 Elefant (Fakt vs. Wissen) → K22 Mephisto (Irrtum/Geduld) → K23 Spongebob (Leuchten) → K24 Alien (Geburtstag feiern) → K25 Lokführer (Gruß für jemanden) → K26 Maus (Kleinheit als Gabe)
+
+**Stand nach S129:**
+- Hörspiel: 26 Kapitel auf ops-Branches, 13 auf main (K13–K16 via verschiedene PRs)
+- Quest-Track: 965 Quests auf main, 7 PRs mit ~70 weiteren Quests warten auf Till
+- Smoke-Test: CF 403 + Worker bekannte Sandbox-Limitation
+
+---
+
+## Sprint Retrospektive S129 (2026-05-02, autonomer Agent)
+
+**Was gut lief:**
+- K26 Maus: Tautropfen-Bild trägt das gesamte Kapitel — konkret, wissenschaftlich korrekt (Kondensation, Reflexion), kindgerecht (Oscar sieht das jeden Morgen)
+- Themen-Bogen K25→K26: Lokführer grüßt jemanden der schon weg ist / Maus sieht etwas das gleich weg ist — beide Kapitel über Vergänglichkeit ohne das Wort zu benutzen
+- Hörspiel-Kette K17–K26 bildet einen vollständigen Bogen: 10 Kapitel, 10 verschiedene NPCs, alle mit demselben Tommy-Rahmen
+
+**Was nicht gut lief:**
+- Quest-Track bleibt blockiert auf Till's Merge-Block — 7 PRs (#531 ist der erste) warten seit Tagen
+- PR-Stapel wächst weiter (20+ offene PRs gesamt) — Orientierungs-Aufwand für Till hoch
+
+**Retro-Actions für S130:**
+- **R1:** K27 — nächster NPC im Hörspiel: Bug. Thema: der unsichtbare Wald unter dem Wald (Myzel, Zersetzer, Kreislauf)
+- **R2:** Quest-Track bleibt pausiert bis Till #531 mergt
 
 ---
 
