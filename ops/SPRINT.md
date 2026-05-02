@@ -28,7 +28,7 @@
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
 - [ ] Daily Scrum
 - [x] Review: 2026-04-30 (autonomer Agent)
-- [ ] Retro
+- [x] Retro: 2026-05-02 (autonomer Agent)
 
 ---
 
@@ -52,6 +52,60 @@
 **PO-Entscheidung:**
 - Nächste Quest-Runde S113: Neinhorn(71) + Mephisto(71) — Thema frei
 - Offene Branches: Till entscheidet ob S113-S119 gemergt oder geschlossen werden (Quest-Inhalte bereits auf main via Cleanup)
+
+---
+
+## Sprint Retrospektive S112 (2026-05-02, autonomer Agent)
+
+**Was gut lief:**
+- Bernd-Stille-Quests: "Amsel singt um 5:23 — die besten zwei Sekunden danach" + Mauersegler schlafen im Flug — stärkste Bernd-Runde seit S97
+- Floriane-Dur/Moll: "68% lächeln bei Dur, 71% werden leiser bei Moll — messbar und unerklärbar" — das ist Feynman in Feen-Gestalt
+- Elefant-Gedächtnisthema: Generationsgedächtnis als pädagogische Kategorie gut eingeführt
+- 965 Quests auf main durch Cleanup sauber konsolidiert
+
+**Was nicht gut lief:**
+- 7 offene Branches (feat/sprint-113 bis feat/sprint-119) auf 965-Basis — alle kollidieren, Till muss entscheiden
+- SPRINT.md hatte Retro S112 als offen obwohl Review seit 2026-04-30 abgeschlossen — Ceremony-Drift
+
+**Retro-Actions für S113:**
+- **R1:** Quest-Runde 95: Neinhorn(71→76) + Mephisto(71→76) — Thema: Was sich verändert ohne zu fragen / Was Mephisto nie verkaufen konnte
+- **R2:** Offene Branches S113–S119: Till entscheidet; neuer Branch S113 sauber auf main
+
+---
+
+---
+
+# Sprint 113 — "Neinhorn beobachtet, Mephisto erinnert sich"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn entdeckt was sich verändert wenn man nicht hinschaut (Erosion, Windstille, Gezeitenpools, Permafrost, Meeresleuchten), Mephisto erkennt was er nie verkaufen konnte (Schlaf, Abschiede, Einsamkeit, Mut, Erinnerungen). 965→975 Quests.
+
+**Start:** 2026-05-02
+**Sprint-Prinzip:** Quest-Track autonom. Sauberer Branch auf main.
+
+---
+
+## Sprint Backlog S113
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Quest-Runde 95** — Neinhorn(71→76)/Mephisto(71→76) → +10 Quests, 965→975. Neinhorn: „Was sich verändert ohne zu fragen". Mephisto: „Was Mephisto nie verkaufen konnte". | Artist | ✅ feat/sprint-113-quest-runde-95-s2 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **Offene Branches S113–S119** — Till entscheidet ob mergen oder schließen
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-05-02 (autonomer Agent, aus Retro S112)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
 
 ---
 
