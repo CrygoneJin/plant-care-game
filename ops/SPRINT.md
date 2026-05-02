@@ -28,7 +28,7 @@
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
 - [ ] Daily Scrum
 - [x] Review: 2026-04-30 (autonomer Agent)
-- [ ] Retro
+- [x] Retro: 2026-05-02 (autonomer Agent)
 
 ---
 
@@ -52,6 +52,61 @@
 **PO-Entscheidung:**
 - Nächste Quest-Runde S113: Neinhorn(71) + Mephisto(71) — Thema frei
 - Offene Branches: Till entscheidet ob S113-S119 gemergt oder geschlossen werden (Quest-Inhalte bereits auf main via Cleanup)
+
+---
+
+## Sprint Retrospektive S112 (2026-05-02, autonomer Agent)
+
+**Was gut lief:**
+- Quest-Goal präzise geliefert: Bernd/Elefant/Floriane +10, Themen-Wahl stark ("Stille", "Generationsgedächtnis", "Musik+Emotion")
+- Bernd-Amsel 5:23 + Stille-Kammer: stärkste Bernd-Stimme seit S102. Das "sehr leise" am Ende trifft immer.
+- Floriane-Herzschlag-Satz ("der erste Rhythmus, tiefer als Sprache") — portabel, kindgerecht, wahr
+- Elefant-Trockenzeit-Brunnen: "Oscar soll hier trinken können" als direkte Einladung ist ein neues Pattern
+
+**Was nicht gut lief:**
+- 7 Branches S113-S119 auf origin — kollidieren, Till muss entscheiden (noch offen)
+- Cleanup-Commit (bfc4055) hat Quest-Content gemergt ohne SPRINT.md zu updaten — Retro war nachzuholen
+- Daily Scrum S112 blieb leer — bei kurzen Quest-Sprints nicht kritisch, aber Pattern inkonsistent
+
+**Retro-Actions für S113:**
+- **R1:** Quest-Runde 95: Neinhorn(71) + Mephisto(71) — Thema: "Was Neinhorn wirklich interessiert" / "Was Mephisto noch nicht weiß"
+- **R2:** S113-S119 offene Branches — in PR-Beschreibung an Till erinnern: entweder mergen (Reihenfolge beachten) oder schließen
+
+---
+
+---
+
+# Sprint 113 — "Neinhorn forscht, Mephisto begreift"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn entdeckt was es eigentlich doch interessiert (Blitz, Fledermäuse, Mond, Permafrost, Biolumineszenz), Mephisto versteht was kein Deal erklären kann (Fehler, Worte, Verwandlung, Abschiede, Anfänge). 965→975 Quests auf Branch.
+
+**Start:** 2026-05-02
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Quest-Runde 95** — Neinhorn(71→76)/Mephisto(71→76) → +10 Quests, 965→975. Neinhorn: „Was es wirklich interessiert" (Blitz, Echolokation, Mondphasen, Permafrost, Biolumineszenz). Mephisto: „Was kein Deal erklären kann" (Fehler-Tribunal, Wort-Konservierung, Verwandlung, Abschiede, Anfänge). | Artist | ✅ feat/sprint-113 |
+
+---
+
+## Explizit nicht im Sprint
+
+- **S113-S119 Branch-Cleanup** — Till-Entscheidung, kein Agent-Task
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-05-02 (autonomer Agent, aus Retro S112)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
 
 ---
 
