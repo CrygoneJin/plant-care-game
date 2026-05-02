@@ -1,3 +1,57 @@
+# Sprint 113 — "Neinhorn lehnt ab, Mephisto berechnet, Spongebob taucht"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn entdeckt was es ablehnt und warum das tatsächlich richtig ist, Mephisto bietet an was das im Nachhinein wirklich kostet, Spongebob findet was im Ozean verborgen bleibt. 965→975 Quests.
+
+**Start:** 2026-05-02
+**Sprint-Prinzip:** Ein Branch. Kein Duplikat-Spawning. PR #531 ist das Deliverable.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Quest-Runde 95** — Neinhorn(71→75)/Mephisto(71→74)/Spongebob(72→75) → +10 Quests, 965→975. Neinhorn: was es ablehnt und warum das richtig ist. Mephisto: was er anbietet und was das kostet. Spongebob: was im Meer verborgen bleibt. | Artist | ✅ PR #531 offen (feat/sprint-113) |
+
+---
+
+## Explizit nicht im Sprint
+
+- **Neue Hörspiel-Kapitel schreiben** — K17–K27 bereits auf ops-Branches, wartet auf Till's Merge
+- **Parallele Quest-PRs** — #558, #563, #564, #572, #577, #579, #582, #589 sind Duplikate → Till schließt sie
+
+---
+
+## Till's Merge-Queue (2026-05-02)
+
+### Quest-PRs (Priorität)
+
+| Prio | PR | Was | Basis |
+|------|-----|-----|-------|
+| **1** | **#531** | Quest-Runde 95: Neinhorn/Mephisto/Spongebob +10 (965→975) | main ✅ |
+| 2 | **#532** | Quest-Runde 96 (nach #531) | nach #531 |
+
+Danach: **#558, #563, #564, #572, #577, #579, #582, #589 schließen** — alle Quest-R95-Duplikate.
+
+### Hörspiel-Stack (optional, ops-Branches)
+
+Ops-Branches S113–S130 haben K17–K27 + Ceremonies. Alle auf main basierend.
+Empfehlung: PR #583 (S119–S126 + K17–K23) → PR #586 (S127–S128 + K24–K25) → PR #588 (S129 + K26) → PR #590 (S130 + K27).
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-05-02 (autonomer Agent, aus Retro S112)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
