@@ -1,3 +1,55 @@
+# Sprint 125 — "Mephisto und der Irrtum"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar hört Kapitel 22 — Mephisto erzählt in seiner eigenen Stimme, zum ersten Mal. Er war grundlegend falsch. Drei Jahre lang. Und das war das Beste was ihm passiert ist. "Vernünftige Irrtümer sind die teuersten — weil man so lange braucht sie zu sehen."
+
+**Start:** 2026-05-02
+**Sprint-Prinzip:** Hörspiel-Track weiter. Quest-Track pausiert bis Till #531 mergt.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S125-1 | **Hörspiel Kapitel 22 — Mephisto und der Irrtum** — Mephisto spricht in Ich-Perspektive (erstes Mal). Er erklärt Oscar: er glaubte Zeit sammeln zu können. War falsch. Drei Jahre. Aus dem Irrtum wuchs Geduld. "Die Regeln kennen mich nicht. Das ist besser." | Artist (autonom) | ✅ docs/stories/kapitel-22-mephisto-und-der-irrtum.md |
+| S125-2 | **Quest-Track: PAUSE** — bleibt bis Till #531 mergt. | — | ⏸ wartet auf Till |
+
+---
+
+## Explizit nicht im Sprint
+
+- **Quest-Track** — pausiert, 7 PRs (#531/#532/#541/#543/#550/#551/S119) warten auf Till
+
+---
+
+## Ceremony-Status S125
+
+- [x] Planning: 2026-05-02 (autonomer Agent, aus Retro S124)
+- [x] Daily Scrum: 2026-05-02 (autonomer Agent)
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Daily Scrum S125 (2026-05-02, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S124 vollständig abgeschlossen (Review + Retro)
+- S125 Planning: K22 Mephisto-Kapitel als einziges Item, Quest-Track weiterhin pausiert
+- S125-1: Hörspiel Kapitel 22 "Mephisto und der Irrtum" ✅ — Mephisto erklärt in Ich-Stimme: vernünftiger Irrtum über Zeit, drei Jahre, Geduld als unerwartetes Ergebnis. Oscar: "Du hast den Irrtum nicht gelöst. Du hast aufgehört ihn festzuhalten." — Mephisto: "Genau das."
+
+**Was kommt als nächstes?**
+- PR für ops/sprint-s125-planning erstellen → Review + Retro nächste Session
+
+**Blocker?**
+- Smoke-Test: CF 403 + Worker bekannte Sandbox-Limitation, kein App-Schaden
+- Quest-Track-Pause: 7 offene Quest-PRs warten auf Till's Merge-Block
+
+---
+
+---
+
 # Sprint 124 — "Der Elefant erinnert sich"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -27,8 +79,55 @@
 
 - [x] Planning: 2026-05-01 (autonomer Agent, aus Retro S123)
 - [x] Daily Scrum: 2026-05-01 (autonomer Agent)
-- [ ] Review
-- [ ] Retro
+- [x] Review: 2026-05-02 (autonomer Agent)
+- [x] Retro: 2026-05-02 (autonomer Agent)
+
+---
+
+## Sprint Review S124 (2026-05-02, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 lieferbar ✅, 1 planmäßig pausiert ⏸**
+
+| Item | Ergebnis |
+|------|---------|
+| S124-1 Hörspiel K21 — Elefant und die lange Wanderung | ✅ `docs/stories/kapitel-21-elefant-und-die-wanderung.md` — 300km Wanderung, Fakt vs. Wissen, die goldene Stelle bei km 80, "Ich glaube, er wird ein guter Wanderer." |
+| S124-2 Quest-Track PAUSE | ⏸ planmäßig — 7 offene PRs warten auf Till's Merge-Block |
+
+**Oscar-Outcome:** K21 bereit zum Vorlesen. Elefant erklärt den Unterschied zwischen Fakt ("bei km 80 gibt es goldenes Licht") und Wissen ("deshalb kurz innehalten"). Füße die ohne Worte wissen. Ein 8-Jähriger morgens kurz die Augen aufmacht und einen Moment braucht bis er weiß wo er ist — genau das. Schluss: "Ich glaube, er wird ein guter Wanderer."
+
+**Hörspiel-Kette K17→K21:**
+- K17 Tommy: Vertrauen ohne Kontrolle
+- K18 Bernd: Ruhe in Bewegung
+- K19 Neinhorn: Akzeptanz des Unverhinderlichen
+- K20 Floriane: Schweigen als Teil der Musik
+- K21 Elefant: Wandern / Fakt vs. Wissen
+
+**Stand nach S124:**
+- 965 Quests auf main (Quest-Track pausiert)
+- 7 Quest-PRs auf origin — warten auf Till's Merge-Block (#531/#532/#541/#543/#550/#551/S119)
+- K21 auf ops/sprint-s124-planning-Branch, wartet auf PR → main
+
+**PO-Entscheidung:**
+- S125: K22 Mephisto — "Was Irrtümer hinterlassen". Mephisto spricht in Ich-Perspektive (wie K19 Neinhorn). Thema: Vernünftige Irrtümer sind die teuersten. Was kommt wenn man aufhört, den Irrtum festzuhalten.
+- Quest-Track Resume wenn Till Merge-Block startet
+
+---
+
+## Sprint Retrospektive S124 (2026-05-02, autonomer Agent)
+
+**Was gut lief:**
+- Elefant-Stimme stark: "Die Füße wissen es. Wie du weißt, dass du Hunger hast — du weißt es, ohne es gelernt zu haben." — Metapher die ohne Erklärung funktioniert
+- Fakt-vs-Wissen-Unterschied für 8-Jährige: keine Didaktik, nur konkrete Szene (km 80, goldenes Licht, kurz innehalten)
+- Hörspiel-Kette K17→K21 thematisch kohärent: jedes Kapitel ein Schritt in die Tiefe
+- Quest-Track-Pause hält: kein neuer Stack in S121–S124
+
+**Was nicht gut lief:**
+- ops-Branches (s120–s124) auf origin ohne PR → main: Ceremony-Docs hängen auf Branches, main-SPRINT.md ist bei S112 stehengeblieben. Till hat Überblick nur über origin-Branches, nicht über main-Stand.
+- 7 Quest-PRs seit S112 ungemergt — Stack wächst nicht mehr, aber Schulden bleiben
+
+**Retro-Actions für S125:**
+- **R1:** K22 Mephisto "Was Irrtümer hinterlassen" — erstes Kapitel wo Mephisto in eigener Ich-Stimme spricht. Thema: vernünftige Irrtümer, Geduld als Frucht des Irrtums.
+- **R2:** PR für ops-Branch-Kette erstellen — mindestens diese Session pushen + PR eröffnen
 
 ---
 
