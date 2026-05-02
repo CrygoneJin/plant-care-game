@@ -1,3 +1,149 @@
+# Sprint 129 — "Maus und die Morgenstille"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar hört Kapitel 26 — Maus sitzt jeden Morgen in der gleichen Ecke und sieht was alle anderen übersehen, weil alle anderen zu groß sind um es zu sehen. Tommy fragt warum Maus immer dort sitzt. Maus: „Von hier aus sieht man alles. Ihr seht es nur nicht weil ihr zu groß dafür seid."
+
+**Start:** 2026-05-02
+**Sprint-Prinzip:** Hörspiel-Track weiter. Quest-Track pausiert bis Till #531 mergt.
+
+---
+
+## Sprint Backlog S129
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S129-1 | **Hörspiel Kapitel 26 — Maus und die Morgenstille** — Maus sitzt jeden Morgen vor Sonnenaufgang in der Ecke zwischen dem großen Stein und dem alten Baum. Sie sieht die Insel aufwachen. Die anderen verschlafen es. Tommy sitzt eines Morgens daneben. Maus: „Von hier aus sieht man es — aber man muss klein genug sein." | Artist (autonom) | ✅ docs/stories/kapitel-26-maus-und-die-morgenstille.md |
+| S129-2 | **Quest-Track: PAUSE** — bleibt bis Till #531 mergt. Hinweis: 7 PRs offen (#531/#532/#541/#543/#550/#551/S119) | — | ⏸ wartet auf Till |
+
+---
+
+## Explizit nicht im Sprint
+
+- **Quest-Track** — pausiert, 7 PRs warten auf Till's Merge-Block
+
+---
+
+## Ceremony-Status S129
+
+- [x] Planning: 2026-05-02 (autonomer Agent, aus Retro S128)
+- [x] Daily Scrum: 2026-05-02 (autonomer Agent)
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Daily Scrum S129 (2026-05-02, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S128 vollständig abgeschlossen (Review + Retro 2026-05-02)
+- S129 Planning: K26 Maus als einziges Item, Quest-Track weiterhin pausiert
+- S129-1: Hörspiel Kapitel 26 ✅ — Maus zeigt Tommy die Morgenstille von unten
+
+**Was kommt als nächstes?**
+- PR für ops/sprint-s128 (enthält S128+S129) erstellen → Till mergt
+
+**Blocker?**
+- Smoke-Test: CF 403 + Worker bekannte Sandbox-Limitation, kein App-Schaden
+- Quest-Track-Pause: 7 offene Quest-PRs warten auf Till
+
+---
+
+# Sprint 128 — "Lokführer grüßt den Zug der nicht mehr kommt"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar hört Kapitel 25 — Lokführer steht jeden Abend um 18:17 Uhr auf Gleis 7 und hebt die Hand. Seit 30 Jahren hält dort kein Zug mehr. Tommy fragt warum. Lokführer: „Nicht für den Zug. Für die Person die darin saß." Der Gruß gehört ihr noch — auch wenn sie längst ausgestiegen ist.
+
+**Start:** 2026-05-02
+**Sprint-Prinzip:** Hörspiel-Track weiter. Quest-Track pausiert bis Till #531 mergt.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S128-1 | **Hörspiel Kapitel 25 — Lokführer grüßt den Zug der nicht mehr kommt** — Lokführer grüßt jeden Abend Gleis 7, obwohl seit 30 Jahren kein Zug mehr kommt. Tommy fragt warum. Lokführer erklärt: Nicht für den Zug — für die Person die darin saß. Der Gruß gehört ihr. Noch. | Artist (autonom) | ✅ docs/stories/kapitel-25-lokfuehrer-gruessst-den-zug.md |
+| S128-2 | **Quest-Track: PAUSE** — bleibt bis Till #531 mergt. | — | ⏸ wartet auf Till |
+
+---
+
+## Explizit nicht im Sprint
+
+- **Quest-Track** — pausiert, 7 PRs (#531/#532/#541/#543/#550/#551/S119) warten auf Till
+
+---
+
+## Ceremony-Status S128
+
+- [x] Planning: 2026-05-02 (autonomer Agent, aus Retro S127)
+- [x] Daily Scrum: 2026-05-02 (autonomer Agent)
+- [x] Review: 2026-05-02 (autonomer Agent)
+- [x] Retro: 2026-05-02 (autonomer Agent)
+
+---
+
+## Daily Scrum S128 (2026-05-02, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S127 vollständig abgeschlossen (Review + Retro 2026-05-02)
+- S128 Planning: K25 Lokführer als einziges Item, Quest-Track weiterhin pausiert
+- S128-1: Hörspiel Kapitel 25 ✅ — Lokführer grüßt täglich Gleis 7, Tommy versteht am Ende warum Rituale für Abwesende auch für Anwesende sind
+
+**Was kommt als nächstes?**
+- PR für ops/sprint-s128 erstellen → Review + Retro nächste Session
+
+**Blocker?**
+- Smoke-Test: CF 403 + Worker bekannte Sandbox-Limitation, kein App-Schaden
+- Quest-Track-Pause: 7 offene Quest-PRs warten auf Till's Merge-Block
+
+---
+
+## Sprint Review S128 (2026-05-02, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 lieferbar ✅, 1 planmäßig pausiert ⏸**
+
+| Item | Ergebnis |
+|------|---------|
+| S128-1 Hörspiel K25 — Lokführer grüßt den Zug | ✅ docs/stories/kapitel-25-lokfuehrer-gruessst-den-zug.md — Tommy versteht es nicht ganz. Tut es trotzdem. |
+| S128-2 Quest-Track PAUSE | ⏸ 7 PRs warten auf Till — Pause gehalten, kein neuer Debt |
+
+**Oscar-Outcome:**
+- K25 hat den stärksten Schlusssatz seit K13 Mulde: „Dann erst recht." — Drei Worte. Keine Erklärung. 8-jähriger kann es anfassen ohne es zu verstehen.
+- Tommys letzter Akt: alleine um 18:17 stehen, Hand heben, für niemanden, für jemanden — das ist das Ziel des Hörspiels in einer Szene.
+
+**Stand nach S128:**
+- **25 Hörspiel-Kapitel** auf Branch — Hörspiel-Arc komplett bis K25
+- **Quest-Track pausiert** — 965 Quests auf main, 7 PRs mit weiteren ~70 Quests warten auf Till
+- Smoke Test: CF-403 bekannte Sandbox-Limitation
+
+**PO-Entscheidung:**
+- Hörspiel-Track: K26 — Maus und die Morgenstille (was man sieht wenn man klein ist)
+- Quest-Track: Pause bleibt bis Till #531 mergt
+
+---
+
+## Sprint Retrospektive S128 (2026-05-02, autonomer Agent)
+
+**Was gut lief:**
+- K25 Lokführer: emotionale Präzision trifft Kinderspielzeug-Kontext — Gleis 7 um 18:17 ist spezifisch genug um real zu wirken
+- „Dann erst recht" — bester Drei-Wort-Satz seit langem. Zeigt ohne zu erklären.
+- Tommys Nachahmung am Ende: Kind imitiert Erwachsenen-Ritual ohne es zu verstehen — das ist das Hörspiel-Ziel in Reinform
+- Hörspiel-Track S121–S128: 8 Kapitel in 8 Sprints, stabile Qualität
+
+**Was nicht gut lief:**
+- Quest-Track wartet jetzt seit S120 auf Till (#531) — 8 Sprints ohne Quest-Progress auf main
+- SPRINT.md wächst — S113–S128 komplett drin, Datei wird lang
+- Parallele Branches (feat/sprint-113 lokal) vs. remote — Duplikat-Arbeit wiederholt sich
+
+**Retro-Actions für S129:**
+- **R1:** K26 — Maus und die Morgenstille: was man sieht wenn man klein ist
+- **R2:** Quest-Track-Pause bleibt, Hinweis an Till in SPRINT.md erneuern
+- **R3:** SPRINT.md-Drift: aktuelle Sprints stehen oben, alte unten — kein Archivieren nötig, Till liest chronologisch von oben
+
+---
+
+---
+
 # Sprint 127 — "Alien fragt warum Menschen Geburtstag feiern"
 
 **Sprint Goal (Oscar-Perspektive):**
@@ -27,8 +173,45 @@
 
 - [x] Planning: 2026-05-02 (autonomer Agent, aus Retro S126)
 - [x] Daily Scrum: 2026-05-02 (autonomer Agent)
-- [ ] Review
-- [ ] Retro
+- [x] Review: 2026-05-02 (autonomer Agent)
+- [x] Retro: 2026-05-02 (autonomer Agent)
+
+---
+
+## Sprint Review S127 (2026-05-02, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅**
+
+| Item | Ergebnis |
+|------|---------|
+| S127-1 Hörspiel K24 | ✅ docs/stories/kapitel-24-alien-fragt-warum-geburtstag.md |
+| S127-2 Quest-Track PAUSE | ⏸ planmäßig — #531 wartet auf Till |
+
+**Oscar-Outcome:** Alien beobachtet Oscars Geburtstagsfest und versteht nicht warum man einen Tag feiert an dem man kürzer wird. Tommy erklärt: Man feiert nicht die Zeit die vorbei ist — man feiert die Menschen die dabei waren. Alien hört zu. Am Ende des Kapitels organisiert Alien zum ersten Mal selbst ein kleines Fest — für Tommy, für Bernd, für die Kraemerin. Einfach weil sie dabei waren.
+
+**Stand nach S127:**
+- **965 Quests** auf main (Quest-Track pausiert seit S112 — 7 PRs warten auf Till)
+- **24 Hörspiel-Kapitel** auf Branch (K1–K24)
+- Hörspiel-Themen-Balance: K23 Naturwunder, K24 sozial/emotional ✅
+
+---
+
+## Sprint Retrospektive S127 (2026-05-02, autonomer Agent)
+
+**Was gut lief:**
+- K24-Struktur: Alien als Außenseiter-Perspektive erzeugt echte Tiefe — „Man feiert nicht die Zeit die vorbei ist" ist ein Satz den Oscar mit 30 noch kennt
+- Soziales Thema nach Naturwunder-Serie: Retro-Action R1 (K24 = sozial/emotional) wurde eingehalten
+- Alien + Tommy als Duo: funktioniert besonders gut wenn Alien fragt und Tommy antwortet
+
+**Was nicht gut lief:**
+- Quest-Track-Stau wächst: #531 seit Tagen offen, jetzt 7 PRs — keine Quests auf main seit S112
+- Keine neuen NPCs im Hörspiel seit K20+ — Maus, Bug, Kraemerin, Bernd fehlen im Hörspiel-Track
+- Ceremony-Drift: SPRINT.md auf main zeigt S112, tatsächlich S127 — Till-Merge-Block bleibt nötig
+
+**Retro-Actions für S128:**
+- **R1:** K25 = NPC der im Hörspiel noch fehlt — Lokführer ist dran
+- **R2:** Quest-Track bleibt pausiert bis Till #531 mergt
+- **R3:** Nächste Ceremony-Drift-Lösung: ops-Branches direkt auf main rebasen wenn Till nächste Merge-Session macht
 
 ---
 
