@@ -27,8 +27,126 @@
 
 - [x] Planning: 2026-05-02 (autonomer Agent, aus Retro S129)
 - [x] Daily Scrum: 2026-05-02 (autonomer Agent)
-- [ ] Review
-- [ ] Retro
+- [x] Review: 2026-05-02 (autonomer Agent)
+- [x] Retro: 2026-05-02 (autonomer Agent)
+
+---
+
+## Sprint Retrospektive S130 (2026-05-02, autonomer Agent)
+
+**Was gut lief:**
+- K27 Bug/Myzel: das stärkste Hörspiel-Kapitel seit K20 (Floriane/Schweigen) — "Niemand hat das gebaut. Und alle." trägt das ganze Kapitel in einem Satz
+- Themen-Bogen K25→K26→K27 geschlossen: Vergehen → Wahrnehmen → Werden. Dreiklang ohne ein abstraktes Wort
+- "Das ist das höchste Lob das Bug vergab." — stille Figur, stilles Lob. Oscar-würdig
+- Hörspiel-Kette jetzt 27 Kapitel — K17–K27 alle mit Tommy-Rahmen, alle NPCs haben mindestens ein Hauptkapitel
+
+**Was nicht gut lief:**
+- Quest-Track bleibt hart blockiert: 7 PRs (#531 zuerst) warten auf Till, kein Progress möglich ohne Merge
+- ops-Branch-Kette wächst weiter ohne auf main zu landen — Till sieht die Hörspiel-Kapitel erst nach Merge
+
+**Retro-Actions für S131:**
+- **R1:** K28 — nächster NPC: Kraemerin. Thema: die leere Stelle. Was fehlt sagt mehr als was da ist
+- **R2:** Quest-Track bleibt pausiert bis Till #531 mergt
+
+---
+
+---
+
+# Sprint 131 — "Kraemerin und die leere Stelle"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar hört Kapitel 28 — Kraemerin zählt jeden Abend ihre Waren. Tommy fragt warum sie zählt was sie sowieso kennt. Kraemerin zeigt auf ein leeres Regal: „Das hier erzählt mir was heute passiert ist. Das volle Regal erzählt mir nichts."
+
+**Start:** 2026-05-02
+**Sprint-Prinzip:** Hörspiel-Track weiter. Quest-Track pausiert bis Till #531 mergt.
+
+---
+
+## Sprint Backlog S131
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S131-1 | **Hörspiel Kapitel 28 — Kraemerin und die leere Stelle** — Kraemerin zählt jeden Abend. Tommy versteht nicht warum. Kraemerin erklärt: das Fehlende sagt mehr als das Vorhandene. Eine leere Stelle ist eine Geschichte. Ein volles Regal ist Stille. | Artist (autonom) | ✅ docs/stories/kapitel-28-kraemerin-und-die-leere-stelle.md |
+| S131-2 | **Quest-Track: PAUSE** — bleibt bis Till #531 mergt. | — | ⏸ wartet auf Till |
+
+---
+
+## Explizit nicht im Sprint
+
+- **Quest-Track** — pausiert, 7 PRs (#531/#532/#541/#543/#550/#551/S119) warten auf Till
+
+---
+
+## Ceremony-Status S131
+
+- [x] Planning: 2026-05-02 (autonomer Agent, aus Retro S130)
+- [x] Daily Scrum: 2026-05-02 (autonomer Agent)
+- [x] Review: 2026-05-02 (autonomer Agent)
+- [x] Retro: 2026-05-02 (autonomer Agent)
+
+---
+
+## Daily Scrum S131 (2026-05-02, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S130 vollständig abgeschlossen (Retro 2026-05-02)
+- S131 Planning: K28 Kraemerin als einziges Item, Quest-Track weiterhin pausiert
+- S131-1: Hörspiel Kapitel 28 ✅ — Kraemerin zeigt Tommy dass die leere Stelle mehr erzählt als das volle Regal
+
+**Was kommt als nächstes?**
+- PR für ops/sprint-s130-review erstellen → Till mergt
+
+**Blocker?**
+- Smoke-Test: CF 403 + Worker bekannte Sandbox-Limitation, kein App-Schaden
+- Quest-Track-Pause: 7 offene Quest-PRs warten auf Till (#531 zuerst)
+
+---
+
+## Sprint Review S131 (2026-05-02, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅, 1 bewusst pausiert ⏸**
+
+| Item | Ergebnis |
+|------|---------|
+| S131-1 Hörspiel K28 — Kraemerin und die leere Stelle | ✅ docs/stories/kapitel-28-kraemerin-und-die-leere-stelle.md |
+| S131-2 Quest-Track PAUSE | ⏸ wartet auf Till (#531 zuerst) |
+
+**Oscar-Outcome:**
+K28 bereit zum Vorlesen. Kraemerin zählt jeden Abend — Tommy fragt warum. Kraemerin zeigt auf ein leeres Regal: das blaue Garn. „Das hier erzählt mir was heute passiert ist. Das volle Regal erzählt mir nichts." Lotte hat das Garn — sie baut ein Netz. Die leere Stelle weiß es. Das volle Regal weiß es nicht. Tommy: „Du zählst nicht um zu wissen was da ist. Du zählst um zu wissen was fehlt." Kraemerin nickt. „Wenn alles immer voll ist — dann war ich nicht nützlich."
+
+Themen-Kette K25→K28:
+- K25 Lokführer: ein Gruß für jemanden der schon weg ist (Vergehen)
+- K26 Maus: etwas sehen das gleich weg ist (Wahrnehmen)
+- K27 Bug: was weg ist wird wieder wachsen (Werden)
+- K28 Kraemerin: was fehlt erzählt mehr als was da ist (Lesen)
+
+**Stand nach S131:**
+- **28 Hörspiel-Kapitel** auf ops-Branches (K17–K28 auf Branch-Kette, K1–K16 auf main)
+- Quest-Track: ⏸ pausiert — 7 Quest-PRs (#531/#532/#541/#543/#550/#551/S119) warten auf Till
+- Smoke: CF-403 + Worker bekannte Sandbox-Limitation, kein Outage
+
+**PO-Entscheidung:**
+- K29 in S132: nächstes Kapitel frei — Thema und NPC offen
+- Quest-Track Resume: sobald #531 auf main
+
+---
+
+## Sprint Retrospektive S131 (2026-05-02, autonomer Agent)
+
+**Was gut lief:**
+- K28 Kraemerin: Kerngedanke in einer Szene — leeres Regal vs. volles Regal. Kein abstraktes Wort, alles konkret sichtbar
+- „Wenn alles immer voll ist — dann war ich nicht nützlich." — stärkster Abschluss-Satz seit Bug's „Gut"
+- Themen-Bogen K25–K28 bildet jetzt eine vollständige vierteilige Kette: Vergehen / Wahrnehmen / Werden / Lesen
+
+**Was nicht gut lief:**
+- Quest-Track bleibt blockiert: #531 muss Till mergen, Kette kann nicht weiterlaufen
+- ops-Branch wächst auf 4 Sprints Abstand von main (S128–S131 auf Branch, K17–K28 noch nicht auf main)
+
+**Retro-Actions für S132:**
+- **R1:** K29 — nächster NPC und Thema frei
+- **R2:** Quest-Track bleibt pausiert bis Till #531 mergt
+
+---
 
 ---
 
@@ -45,6 +163,34 @@
 **Blocker?**
 - Smoke-Test: CF 403 + Worker bekannte Sandbox-Limitation, kein App-Schaden
 - Quest-Track-Pause: 7 offene Quest-PRs warten auf Till (#531 zuerst)
+
+---
+
+## Sprint Review S130 (2026-05-02, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅, 1 bewusst pausiert ⏸**
+
+| Item | Ergebnis |
+|------|---------|
+| S130-1 Hörspiel K27 — Bug und der unsichtbare Wald | ✅ docs/stories/kapitel-27-bug-und-der-unsichtbare-wald.md |
+| S130-2 Quest-Track PAUSE | ⏸ wartet auf Till (#531 zuerst) |
+
+**Oscar-Outcome:**
+K27 bereit zum Vorlesen. Bug führt Tommy um den alten Baum — unter einer morschen Rinde liegt das Myzel-Netz: der Wald unter dem Wald. Bug erklärt: „Niemand hat das gebaut. Und alle. Jeder der je ein Blatt hat fallen lassen." Tommy macht den nächsten Schritt daneben. Bug sagt: „Gut." — das höchste Lob das Bug vergeben kann.
+
+Themen-Kette K25→K26→K27:
+- K25 Lokführer: ein Gruß für jemanden der schon weg ist (Vergehen)
+- K26 Maus: etwas sehen das gleich weg ist (Wahrnehmen)
+- K27 Bug: was weg ist wird wieder wachsen (Werden)
+
+**Stand nach S130:**
+- **27 Hörspiel-Kapitel** auf ops-Branches (K17–K27 auf Branch-Kette, K1–K16 auf main)
+- Quest-Track: ⏸ pausiert — 7 Quest-PRs (#531/#532/#541/#543/#550/#551/S119) warten auf Till
+- Smoke: CF-403 + Worker bekannte Sandbox-Limitation, kein Outage
+
+**PO-Entscheidung:**
+- K28 in S131: nächstes Kapitel frei — Thema und NPC offen
+- Quest-Track Resume: sobald #531 auf main
 
 ---
 
