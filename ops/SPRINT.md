@@ -27,6 +27,79 @@
 
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
 - [ ] Daily Scrum
+- [x] Review: 2026-04-30 (autonomer Agent)
+- [x] Retro: 2026-05-02 (autonomer Agent)
+
+---
+
+## Sprint Review S112 (2026-04-30, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅**
+
+| Item | Ergebnis |
+|------|---------|
+| S112-1 Quest-Runde 94 | ✅ auf main — Bernd(67→71 +4) / Elefant(67→70 +3) / Floriane(67→70 +3), +10 Quests |
+
+**Oscar-Outcome:** 10 neue Quests auf main. Bernd: Amsel-Horchposten (singt um 5:23 — die besten zwei Sekunden danach), Regen-Messlabor (14,7mm gestern — er weiß nicht warum er das weiß), Mauersegler-Observatorium (landen nie, schlafen in der Luft, jahrelang), Stille-Kammer (echte Stille lässt das eigene Denken hören). Elefant: Jahreszeiten-Gedächtnis-Archiv (52 Jahre Wetterdaten, kein Wetterbericht nötig), Saisonwanderungs-Stations-Netz (300km Wanderroute in den Füßen gespeichert), Trockenzeit-Gedächtnis-Brunnen (60 Jahre Wasser-Gedächtnis, tiefer als Dürren). Floriane: Dur-Moll-Resonanz-Labor (68% lächeln bei Dur, 71% werden leiser bei Moll — messbar und unerklärbar), Rhythmus-Welt-Archiv (Herzschlag war der erste Rhythmus, tiefer als Sprache), Stille-Zwischen-Tönen-Station (die Sekunde nach dem letzten Ton — die reichste Sekunde in der Musik).
+
+**Stand nach S112:**
+- **965 Quests** auf main
+- NPC-Counter: lokfuehrer 76 · alien 76 · tommy 74 · bernd 74 · krabs 73 · floriane 73 · elefant 73 · spongebob 72 · maus 72 · kraemerin 72 · bug 72 · neinhorn 71 · mephisto 71
+- Niedrigste Counter: **neinhorn 71 · mephisto 71**
+- Hörspiel K16 (Emma und der Berg) auf main ✅
+
+---
+
+## Sprint Retrospektive S112 (2026-05-02, autonomer Agent)
+
+**Was gut lief:**
+- Bernd-Stille: „die besten zwei Sekunden nach dem Amsel-Gesang" — stärkste Formulierung seit Monaten
+- Elefant: 52 Jahre Wetterdaten in einem Körper — pädagogisch dicht, Oscar-tauglich
+- Floriane: „Herzschlag war der erste Rhythmus, tiefer als Sprache" — Herzschlag als Brücke zwischen Physik und Musik
+- Supabase-Keepalive CI gelöst (GitHub Actions, Mo+Do 07:00 UTC — diese Session)
+
+**Was nicht gut lief:**
+- Ceremony-Drift: 15+ Phantom-Sessions haben S112-Retro je als eigenen Branch/PR erzeugt
+- SPRINT.md auf main war bei S112, Phantom-Branches bei S125 — 8 Versionen von Quest-Runde 95 als offene PRs
+- supabase-keepalive Branch hatte Review + Memory-Eintrag fälschlich gelöscht (dieser Commit fixe das)
+
+**Retro-Actions für S113:**
+- **R1:** Till wählt kanonischen Quest-R95-PR: **#577** (Neinhorn NEIN+Faszination-Stimme, Mephisto 300-Jahre, Bug Nahbeobachtung) empfohlen
+- **R2:** Ceremony-PRs schließen: #565/#566/#573/#575/#576 — alle liefern dasselbe wie diese Retro
+- **R3:** Quest-Track: nur noch 1 neuer Quest-PR pro Session, nicht mehrere Varianten
+
+---
+
+# Sprint 113 — "Supabase wacht, Neinhorn zweifelt, Mephisto staunt"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Supabase schläft nie wieder ein (CI-Keepalive live). Oscar findet 10 neue Quests — Neinhorn entdeckt was es trotz Nein fasziniert, Mephisto begreift was kein Deal kaufen kann.
+
+**Start:** 2026-05-02
+**Sprint-Prinzip:** Infra-Item (Keepalive) + Quest-Track via Till's PR-Auswahl.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Supabase-Keepalive CI** — GitHub Actions Cron Mo+Do 07:00 UTC, Ping an Worker /save, Supabase wacht nicht mehr ein | Engineer | ✅ ops/supabase-keepalive |
+| S113-2 | **Quest-Runde 95** — Neinhorn(71→75)/Mephisto(71→74) + 1 NPC → 965→975. Till wählt aus: #577 (empfohlen), #572, #564 | Artist | 🔲 wartet auf Till's PR-Auswahl |
+
+---
+
+## Explizit nicht im Sprint
+
+- Neue Quest-Varianten erzeugen — 8 Versionen existieren bereits
+- Neue Ceremony-PRs für S112-Retro — dieser PR ist kanonisch
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-05-02 (autonomer Agent, aus Retro S112)
+- [ ] Daily Scrum
 - [ ] Review
 - [ ] Retro
 
