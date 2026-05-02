@@ -26,9 +26,59 @@
 ## Ceremony-Status S112
 
 - [x] Planning: 2026-04-25 (autonomer Agent, aus Retro S111)
-- [ ] Daily Scrum
+- [x] Daily Scrum: 2026-04-30 (nachgeholt — Quest-Runde 94 auf main, K16 auf main)
 - [x] Review: 2026-04-30 (autonomer Agent)
-- [ ] Retro
+- [x] Retro: 2026-05-02 (autonomer Agent)
+
+---
+
+## Sprint Retrospektive S112 (2026-05-02, autonomer Agent)
+
+**Was gut lief:**
+- Bernd-Thema "Stille": Amsel 5:23 / 14,7mm Regen / Mauersegler schlafen im Flug / eigenes Denken hören — poetisch und naturwissenschaftlich gleichzeitig. Stärkstes Bernd-Material seit S102.
+- Elefant-Thema "Generationsgedächtnis": 52 Jahre Wetterdaten im Körper gespeichert, 300km Wanderroute in den Füßen — konkret, messbar, für Oscar fassbar.
+- Floriane-Thema "Musik+Emotion": "Herzschlag war der erste Rhythmus, tiefer als Sprache" — beste Floriane-Formulierung bisher. Messbar und unerklärbar gleichzeitig.
+- Sprint Goal 10/10 ✅, K16 (Emma und der Berg) auf main ✅.
+
+**Was nicht gut lief:**
+- Ceremony-Drift: main bei S112, parallele Agents haben bereits bis S125 vorgezogen. Stand 2026-05-02 sind 15+ Ceremony-PRs offen, davon 6+ für dieselbe S112-Retro.
+- Quest-Runde-95 in 6 Varianten (andere NPCs, andere Themen): #531, #558, #563, #564, #572, #577, #579 — alle direkt mergebar, alle auf main-Basis.
+- Duplikat-Energie kostet Till Orientierung. Das Problem ist strukturell: autonome Agents beginnen dieselbe Ceremony parallel wenn main-SPRINT.md unvollständig ist.
+
+**Retro-Actions für S113:**
+- **R1:** Quest-Runde 95: neinhorn(71) + mephisto(71) — Till mergt einen der Quest-PRs (Empfehlung: #577 oder #579).
+- **R2:** Hörspiel-Kette K17–K22 wartet in gestackten PRs — Till mergt #568 (direkt auf main) als Einstieg.
+- **R3:** Ceremony-Drift-Fix: Parallele Agents sollen bei Session-Start PRs prüfen (`gh pr list`) bevor sie Ceremony-Branches erstellen. Bereits im PR #576 (#579) dokumentiert.
+
+---
+
+## Till's Merge-Guide (Stand 2026-05-02)
+
+### Quest-PRs (Runde 95, direkt mergebar, alle base: main)
+
+| PR | NPCs | Quests | Empfehlung |
+|----|------|--------|------------|
+| **#577** | Neinhorn×4/Mephisto×3/Bug×3 | Bernoulli·Osmose·Vergessen-Archiv·Tau-Netz | ✅ empfohlen |
+| #579 | Neinhorn/Mephisto/Bug | Geysir·Mondphasen·Erster-Gedanke·Ameisen | Alternative |
+| #572 | Neinhorn/Mephisto/Spongebob | Erosion·Schlaf·Gedulds-Observatorium | Alternative |
+| #558, #563, #564 | verschiedene Kombinationen | — | schließen wenn #577 gemergt |
+
+**→ Nur EINEN mergen. Rest schließen.**
+
+### Ceremony-PRs (Retro S112 + Ceremonies bis S125)
+
+| PR | Inhalt | Basis |
+|----|--------|-------|
+| **#576** | S112 Retro + S113 Planning (kanonisch) | main ✅ |
+| **#568** | K17+K18 + S120/S121 Ceremonies | main ✅ |
+| #570→#571→#574 | K19+K20 + S122/S123 | gestackt auf #568 |
+| **#578** | K21 + S124 | main ✅ |
+| **#580** | K22 + S125 | gestackt auf #578 |
+
+**→ #576 + #577 = minimaler Merge (Retro + Quest). Hörspiel-Stack optional.**
+
+### Schließen (Duplikate)
+`#573` `#575` `#565` `#566` `#563` `#564` `#558` `#572` `#569` `#567` `#561`
 
 ---
 
