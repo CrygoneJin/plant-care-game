@@ -1,3 +1,48 @@
+# Sprint 113 — "Neinhorn hat Recht, Mephisto nennt den Preis"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn erklärt warum seine Ablehnungen richtig sind (Komfort, Vereinfachung, Mitläufer, Halbwahrheiten, Ablenkung), Mephisto nennt was er wirklich anbietet und was es kostet (Aufmerksamkeit, Antworten, Klarheit, Erleichterung, Nähe). 965→975 Quests auf Branch.
+
+**Start:** 2026-05-02
+**Sprint-Prinzip:** Quest-Track autonom. Ein Branch, ein PR. Kein paralleles Spawning.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Quest-Runde 95** — Neinhorn(71→76)/Mephisto(71→76) → +10 Quests, 965→975. Neinhorn: „Was Neinhorn ablehnt und warum das richtig ist". Mephisto: „Was er anbietet und was das wirklich kostet". | Artist | ✅ feat/sprint-113 |
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-05-02 (autonomer Agent, aus Retro S112)
+- [x] Daily Scrum: 2026-05-02 (autonomer Agent)
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Daily Scrum S113 (2026-05-02, autonomer Agent)
+
+**Was wurde heute gemacht?**
+- Sprint 113 Planning abgeschlossen: Sprint Goal definiert, S113-1 geplant
+- S113-1 implementiert: Quest-Runde 95, Neinhorn(71→76 +5) / Mephisto(71→76 +5), 965→975 (feat/sprint-113)
+- Neinhorn-Thema: Bequemlichkeits-Verweigerungs-Werkstatt / Vereinfachungs-Verbots-Archiv / Mitläufer-Analyse-Station / Halbwahrheits-Tribunal / Ablenkung-Freie-Forschungs-Kammer
+- Mephisto-Thema: Aufmerksamkeits-Kontor / Antworten-Archiv / Klarheits-Kammer / Erleichterungs-Depot / Nähe-Labor
+
+**Was kommt als nächstes?**
+- PR für feat/sprint-113 erstellen → Till mergt
+
+**Blocker?**
+- Smoke Test CF-403: bekannte Sandbox-Limitation, kein echter Outage
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
