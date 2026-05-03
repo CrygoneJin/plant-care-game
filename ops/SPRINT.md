@@ -1,3 +1,94 @@
+# Sprint 113 — "Neinhorn hat Recht, Mephisto nennt den Preis"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn erklärt warum seine Ablehnungen richtig sind (Komfort, Vereinfachung, Mitläufer, Halbwahrheiten, Ablenkung), Mephisto nennt was er wirklich anbietet und was es kostet (Aufmerksamkeit, Antworten, Klarheit, Erleichterung, Nähe). 965→975 Quests auf Branch.
+
+**Start:** 2026-05-02
+**Sprint-Prinzip:** Quest-Track autonom. Ein Branch, ein PR. Kein paralleles Spawning.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Quest-Runde 95** — Neinhorn(71→76)/Mephisto(71→76) → +10 Quests, 965→975. Neinhorn: „Was Neinhorn ablehnt und warum das richtig ist". Mephisto: „Was er anbietet und was das wirklich kostet". | Artist | ✅ feat/sprint-113 |
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-05-02 (autonomer Agent, aus Retro S112)
+- [x] Daily Scrum: 2026-05-02 (autonomer Agent)
+- [x] Review: 2026-05-03 (autonomer Agent)
+- [x] Retro: 2026-05-03 (autonomer Agent)
+
+---
+
+## Sprint Review S113 (2026-05-03, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅**
+
+| Item | Ergebnis |
+|------|---------|
+| S113-1 Quest-Runde 95 | ✅ feat/s113-final — Neinhorn(71→76 +5) / Mephisto(71→76 +5), 965→975 Quests |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Neinhorn: Bequemlichkeits-Verweigerungs-Werkstatt (Kognitionspsychologie belegt — leichte Unannehmlichkeit erhöht Fokus, das ist Präzisions-Design), Vereinfachungs-Verbots-Archiv (einfache Erklärung ist manchmal eine Lüge — Komplexität ist Respekt), Mitläufer-Analyse-Station (Herdenirrtum ist skalierbar — ein Fehler vervielfacht sich mit jedem Mitläufer), Halbwahrheits-Tribunal (zwei Wahrheiten können zusammen lügen — selektive Darstellung), Ablenkung-Freie-Forschungs-Kammer (23 Minuten Wiederherstellungszeit nach jeder Unterbrechung — dokumentiert). Mephisto: Aufmerksamkeits-Kontor (bietet echte Aufmerksamkeit — kostet die Erkenntnis wie selten man sie selbst gab), Antworten-Archiv (bietet Antworten — kostet die Fähigkeit weiterzufragen), Klarheits-Kammer (bietet Klarheit — kostet den schützenden Nebel, zurück geht nicht), Erleichterungs-Depot (nimmt Lasten ab — wächst mit Zinsen), Nähe-Labor (bietet Nähe — kostet die schützende Distanz).
+
+**Stand nach S113:**
+- **975 Quests** auf feat/s113-final (PR #592, mergebar)
+- NPC-Counter auf Branch: neinhorn 76 · mephisto 76 · alien 76 · lokfuehrer 75 · tommy 74 · bernd 74 · krabs 73 · floriane 73 · elefant 73
+- Niedrigste Counter: **bug 72 · kraemerin 72 · maus 72 · spongebob 72**
+- PR-Debt: 20+ offene S113-Duplikat-PRs — Till: #592 mergen, Rest schließen
+
+**PO-Entscheidung:**
+- Nächste Quest-Runde S114: bug(72) + maus(72) + spongebob(72) — Thema frei
+
+---
+
+## Sprint Retrospektive S113 (2026-05-03, autonomer Agent)
+
+**Was lief gut:**
+- Quest-Runde 95 vollständig und thematisch stark: Neinhorn-Ablehnungen als Kognitionswissenschaft (nicht als Sturheit), Mephistos Angebote als psychologische Fallen — beide Figuren gewachsen
+- Ein Branch, ein PR (#592) — Retro-Maßnahme aus S112 gehalten
+- `feat/s113-final` auf aktuellem main (2555c26) — kein Rebase nötig, direkter Merge
+
+**Was lief nicht gut:**
+- PR-Chaos bleibt: 20+ S113-Duplikat-PRs (S113–S130-Ceremonies auf ops-Branches). Till sieht ein Wirrwarr, nicht ein klares Deliverable
+- `feat/s113-final` ist ein awkward Branch-Name für das Deliverable (Retro-Setup sagte `feat/sprint-113`)
+- SPRINT.md auf main zeigt S112, während Branches bei S130 sind — Drift setzt sich fort
+
+**Maßnahmen für S114:**
+- PR #592 ist der Eine zu mergenden Quest-PR — alle anderen S113-PRs danach schließen
+- S114: branch `feat/sprint-114` von main nach Merge von #592
+- Daily Scrum nicht überspringen
+
+**S114-Setup:**
+- NPCs: **bug(72) · maus(72) · spongebob(72)** — gleichauf, alle dran
+- Ziel: +10 Quests, 975→985 auf Branch
+- Thema: frei. Bug: was still wächst ohne Aufmerksamkeit. Maus: was klein ist und trotzdem zählt. Spongebob: was das Meer zeigt wenn man still genug ist.
+- Branch: `feat/sprint-114` — neu von main nach #592-Merge
+
+---
+
+## Daily Scrum S113 (2026-05-02, autonomer Agent)
+
+**Was wurde heute gemacht?**
+- Sprint 113 Planning abgeschlossen: Sprint Goal definiert, S113-1 geplant
+- S113-1 implementiert: Quest-Runde 95, Neinhorn(71→76 +5) / Mephisto(71→76 +5), 965→975 (feat/sprint-113)
+- Neinhorn-Thema: Bequemlichkeits-Verweigerungs-Werkstatt / Vereinfachungs-Verbots-Archiv / Mitläufer-Analyse-Station / Halbwahrheits-Tribunal / Ablenkung-Freie-Forschungs-Kammer
+- Mephisto-Thema: Aufmerksamkeits-Kontor / Antworten-Archiv / Klarheits-Kammer / Erleichterungs-Depot / Nähe-Labor
+
+**Was kommt als nächstes?**
+- PR für feat/sprint-113 erstellen → Till mergt
+
+**Blocker?**
+- Smoke Test CF-403: bekannte Sandbox-Limitation, kein echter Outage
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
