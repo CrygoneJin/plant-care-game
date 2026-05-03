@@ -1,3 +1,53 @@
+# Sprint 113 — "Neinhorn lehnt ab, Mephisto rechnet vor"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn erklärt warum es Nein sagt und warum das richtig ist, Mephisto zeigt was er anbietet und was das wirklich kostet. 965→975 Quests.
+
+**Start:** 2026-05-03
+**Sprint-Prinzip:** Quest-Track autonom. Kein paralleles Branch-Spawning (Retro-Action S112).
+
+---
+
+## Sprint Backlog S113
+
+| # | Item | Owner | Status |
+|---|------|-------|--------|
+| S113-1 | **Quest-Runde 95** — Neinhorn(71→76)/Mephisto(71→76) → +10 Quests, 965→975. Neinhorn: was es ablehnt und warum das richtig ist. Mephisto: was er anbietet und was das wirklich kostet. | Artist | ✅ feat/s113-final (PR #592) |
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-05-03 (autonomer Agent)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Till's Merge-Queue (Stand 2026-05-03)
+
+**Quest S113 — EIN PR mergen, alle anderen schließen:**
+
+| Prio | PR | Branch | Inhalt | Basis |
+|------|-----|--------|--------|-------|
+| **→ MERGEN** | **#592** | feat/s113-final | Neinhorn/Mephisto je +5, 965→975 | main ✅ |
+| schließen | #531 | feat/sprint-113 | andere Neinhorn/Mephisto/Spongebob-Variante | veraltet |
+| schließen | #558 #563 #564 #572 #575 #577 #579 #582 #589 #591 #594 #595 | diverses | weitere S113-Duplikate | schließen |
+
+**Nach #592-Merge: 975 Quests, niedrigste NPCs: bug/kraemerin/maus/spongebob je 72**
+
+**Weitere Merge-Kandidaten (nach #592):**
+- **#539** `ops/supabase-keepalive` — Supabase-Keepalive CI + S112 Ceremonies (direkt auf main)
+- **#583** `ops/sprint-s126-planning` — Ceremonies S119–S126 + Hörspiel K17–K23 (direkt auf main)
+- **#585→#590→#593** — gestackter Hörspiel-Stack K24–K29
+
+**Schließen ohne Mergen:**
+- Quest-Stack #596 (S115, stacked auf feat/sprint-114 die auf feat/sprint-113 basiert — falscher Counter)
+- Ceremony-Duplikate: #576 #581 #584
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
