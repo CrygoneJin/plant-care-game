@@ -1,3 +1,96 @@
+# Sprint 115 — "Krabs lernt was Patina ist, Floriane misst Herzschläge, Elefant erinnert Abschiede"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Krabs entdeckt was mehr wert ist als Geld (Patina, erste Münze, doppelte Buchführung, Grillgeruch-Vermächtnis), Floriane misst was Musik mit dem Körper macht (Herzschlag-Synchronisation, Musik-Gedächtnis, Klang-Landschaften), Elefant teilt was nach dem Abschied bleibt (Knochen-Gedenkstätte, Jungtier-Jubel, Matriarchin-Wissen). 965→975 Quests.
+
+**Start:** 2026-05-03
+**Sprint-Prinzip:** Quest-Track autonom. Sauberer Branch von main — feat/sprint-115 (Phantom, falscher Content) wird durch diesen PR ersetzt.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S115-1 | **Quest-Runde 97** — Krabs(73→77 +4)/Floriane(73→76 +3)/Elefant(73→76 +3) → +10 Quests, 965→975. Krabs: „Was mehr wert ist als Geld". Floriane: „Was Musik mit dem Körper macht". Elefant: „Was nach dem Abschied bleibt". | Artist | ✅ feat/sprint-115-correct |
+
+---
+
+## Ceremony-Status S115
+
+- [x] Planning: 2026-05-03 (autonomer Agent)
+- [x] Daily Scrum: 2026-05-03 (autonomer Agent)
+- [x] Review: 2026-05-03 (autonomer Agent)
+- [x] Retro: 2026-05-03 (autonomer Agent)
+
+---
+
+## Sprint Review S115 (2026-05-03, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅**
+
+| Item | Ergebnis |
+|------|---------|
+| S115-1 Quest-Runde 97 | ✅ feat/sprint-115-correct — Krabs(73→77 +4) / Floriane(73→76 +3) / Elefant(73→76 +3), 965→975 Quests |
+
+**Oscar-Outcome:** 10 neue Quests. Krabs: Patina-Handwerks-Archiv (Vaters Hammer mit Delle — das Einzige das er nicht verkaufen würde), Erste-Münze-Denkmal (erste verdiente Münze + Lächeln des ersten Kunden — ich wünschte ich wüsste wo er jetzt ist), Ausgleichs-Rechnung-Kammer (doppelte Buchführung: Geld + was nicht Geld ist — SpongeBob würde das gefallen), Vermächtnis-Kammer (SpongeBob: den Grillgeruch freitags — das bleibt, nicht das Geld). Floriane: Herzrhythmus-Synchron-Labor (14 Sekunden bis Herzschläge beim gemeinsamen Singen synchron sind), Musikgedächtnis-Kammer (Alzheimer-Patienten vergessen Namen, singen Lieder Wort für Wort — das messe ich nicht, das weiß ich einfach), Klang-Landschaft-Archiv (3 Sekunden Ton vom Kindheitsdorf: sofort da, 14 Jahre alt, Sommer). Elefant: Knochen-Gedenkstätte (jedes Jahr zurück zu denselben Knochen — nicht Trauer, tiefer als Trauer), Jungtier-Jubel-Platz (30 Minuten Stampfen für jedes Neugeborene — dazugehören ist das erste Geschenk), Matriarchin-Wissens-Station (das Wissen stirbt nicht mit dem Körper — es lebt weiter in dem was die nächste Generation kann).
+
+**Stand nach S115:**
+- **975 Quests** auf feat/sprint-115-correct (965 auf main + 10 neu)
+- NPC-Counter: krabs 77 · floriane 76 · elefant 76 · lokfuehrer 76 · alien 76
+- Niedrigste: **tommy 74 · bernd 74** (nach S113+S114+S115-Merge)
+- Hinweis für Till: PR #596 (feat/sprint-115, falsche NPCs) schließen
+
+**PO-Entscheidung:**
+- S116: Tommy(74)/Bernd(74) → Quest-Runde 98
+
+---
+
+## Sprint Retrospektive S115 (2026-05-03, autonomer Agent)
+
+**Was gut lief:**
+- Phantom-Branch feat/sprint-115 erkannt und durch sauberen Branch-von-main ersetzt
+- Krabs-Patina-Arc: stärkste Figur-Entwicklung seit Krabs-Gedenkstätte in S94 — von "ARR GELD" zu "Hmm, der Grillgeruch"
+- Elefant-Trauer-Arc: drei Quests die zusammengehören (Knochen → Jubel → Wissen) — ein vollständiger Bogen
+- Floriane-Körper-Arc: Musik ist nicht nur Emotion sondern Physiologie — das ist neu und stark
+
+**Was nicht gut lief:**
+- Phantom-Agent-Problem: feat/sprint-115 war bereits mit falschen NPCs (Mephisto/Neinhorn/Spongebob nochmal) belegt — NPC-Counter-Prüfung hätte das verhindert
+- PR-Debt: 30+ offene PRs, Till braucht Zeit. Till-Merge-Guide in PR-Body.
+- SPRINT.md auf main war 3 Sprints hinter Reality — S113+S114 fehlten komplett
+
+**Maßnahmen für S116:**
+- Beim nächsten Session-Start: `git show origin/feat/sprint-NNN:src/world/quests.js | grep -c "{ npc:"` prüfen BEVOR Branch erstellt wird
+- S116: Tommy(74)/Bernd(74) — Thema frei
+
+---
+
+## Sprint 114 — Quest-Runde 96 (Maus/Kraemerin/Bug)
+
+**Start:** 2026-05-03 | **Abgeschlossen:** 2026-05-03
+
+| # | Item | Status |
+|---|------|--------|
+| S114-1 | Quest-Runde 96 — Maus(72→76 +4)/Kraemerin(72→75 +3)/Bug(72→75 +3) → +10 Quests | ✅ PR #604 (feat/sprint-114) |
+
+**Ceremonies:** Planning ✅ Daily ✅ Review ✅ Retro ✅ (autonomer Agent 2026-05-03)
+**Merge-Reihenfolge:** PR #592 zuerst, dann PR #604 — beide auf 965-Basis (main).
+
+---
+
+## Sprint 113 — Quest-Runde 95 (Neinhorn/Mephisto)
+
+**Start:** 2026-05-03 | **Abgeschlossen:** 2026-05-03
+
+| # | Item | Status |
+|---|------|--------|
+| S113-1 | Quest-Runde 95 — Neinhorn(71→76 +5)/Mephisto(71→76 +5) → +10 Quests | ✅ PR #592 (feat/s113-final) |
+
+**Ceremonies:** Planning ✅ Daily ✅ Review ✅ Retro ✅ (autonomer Agent 2026-05-03)
+**Till:** PR #592 ist der kanonische S113-PR — alle anderen S113-Duplikate (#531, #558, #563 etc.) schließen.
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
