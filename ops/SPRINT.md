@@ -1,3 +1,136 @@
+# Sprint 116 — "Tommy sieht, Bernd schaut, Mephisto lernt"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Tommy entdeckt was Wasser und Magnete wirklich können, Bernd liest was der Himmel erzählt, Mephisto kartiert was er gelernt hat ohne es zu wollen. 995→1005 Quests nach Vollmerge.
+
+**Start:** 2026-05-03
+**Sprint-Prinzip:** Quest-Track autonom. Ein Branch pro Sprint — kein Phantom-Spawning.
+
+---
+
+## Sprint Backlog S116
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S116-1 | **Quest-Runde 98** — Tommy(74→78 +4)/Bernd(74→77 +3)/Mephisto(74→77 +3) → +10 Quests. Tommy: „Was Wasser und Magnete zeigen". Bernd: „Was der Himmel erzählt". Mephisto: „Was er gelernt hat ohne es zu wollen". | Artist | ✅ feat/sprint-116 |
+
+---
+
+## Ceremony-Status S116
+
+- [x] Planning: 2026-05-03 (autonomer Agent)
+- [x] Daily Scrum: 2026-05-03 (autonomer Agent)
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Daily Scrum S116 (2026-05-03, autonomer Agent)
+
+**Was wurde heute gemacht?**
+- S115 (Krabs/Floriane/Elefant, PR #605) abgeschlossen
+- S116-1 implementiert: Tommy(74→78)/Bernd(74→77)/Mephisto(74→77), +10 Quests (feat/sprint-116)
+
+**Was kommt als nächstes?**
+- PR für feat/sprint-116 erstellen → Till mergt
+
+**Blocker?**
+- Smoke Tests: CF-403 + Worker "Host not in allowlist" — bekannte Sandbox-Limitation (kein Outage, dokumentiert seit S92)
+
+---
+
+## Merge-Guide für Till (Stand 2026-05-03)
+
+Alle vier Quest-PRs direkt auf main basiert — in Reihenfolge mergen:
+
+| PR | Branch | Sprint | NPCs | Quests |
+|----|--------|--------|------|--------|
+| #592 | feat/s113-final | S113 | Neinhorn/Mephisto/Spongebob +10 | 965→975 |
+| #604 | feat/sprint-114 | S114 | Maus/Kraemerin/Bug +10 | 975→985 |
+| #605 | feat/sprint-115-correct | S115 | Krabs/Floriane/Elefant +10 | 985→995 |
+| S116-PR | feat/sprint-116 | S116 | Tommy/Bernd/Mephisto +10 | 995→1005 |
+
+**Nach Vollmerge: 1005 Quests auf main.** ✨ Erstmals über 1000!
+
+**Phantom-PRs zum Schließen** (alle Duplikate, kein unique content):
+`#531 #558 #563 #564 #572 #573 #575–#579 #581–#584 #589 #591 #594–#598 #602–#603 #606–#608 #610–#611`
+
+---
+
+---
+
+# Sprint 115 — "Krabs schätzt, Floriane hört nachts, Elefant fühlt"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Krabs entdeckt was mehr wert ist als Krabben-Taler, Floriane was in der Nacht blüht und klingt, Elefant was Elefanten fühlen wenn Worte fehlen. 985→995 Quests auf Branch.
+
+**Start:** 2026-05-03
+
+## Sprint Backlog S115
+
+| # | Item | Status |
+|---|------|--------|
+| S115-1 | Quest-Runde 97 — Krabs(73→77 +4)/Floriane(73→76 +3)/Elefant(73→76 +3) → +10. | ✅ feat/sprint-115-correct (PR #605) |
+
+## Ceremony-Status S115
+
+- [x] Planning: 2026-05-03 (autonomer Agent)
+- [x] Daily Scrum: 2026-05-03 (autonomer Agent)
+- [x] Review: 2026-05-03 (autonomer Agent)
+- [x] Retro: 2026-05-03 (autonomer Agent)
+
+---
+
+---
+
+# Sprint 114 — "Maus misst, Krämerin handelt, Bug beobachtet"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Maus misst was kleiner als klein ist (Eratosthenes, Regentropfen, Spinnenseide, Mondschatten), Krämerin weiß was ein Laden noch kann außer Verkaufen, Bug entdeckt wie Insekten ohne Worte navigieren. 975→985 Quests auf Branch.
+
+**Start:** 2026-05-03
+
+## Sprint Backlog S114
+
+| # | Item | Status |
+|---|------|--------|
+| S114-1 | Quest-Runde 96 — Maus(72→76 +4)/Kraemerin(72→75 +3)/Bug(72→75 +3) → +10. | ✅ feat/sprint-114 (PR #604) |
+
+## Ceremony-Status S114
+
+- [x] Planning: 2026-05-03 (autonomer Agent)
+- [x] Daily Scrum: 2026-05-03 (autonomer Agent)
+- [x] Review: 2026-05-03 (autonomer Agent)
+- [x] Retro: 2026-05-03 (autonomer Agent)
+
+---
+
+---
+
+# Sprint 113 — "Neinhorn erklärt, Mephisto zeigt"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn erklärt warum es Nein sagt und warum das richtig ist, Mephisto zeigt was er anbietet und was das wirklich kostet. 965→975 Quests auf Branch.
+
+**Start:** 2026-05-02
+
+## Sprint Backlog S113
+
+| # | Item | Status |
+|---|------|--------|
+| S113-1 | Quest-Runde 95 — Neinhorn(71→76 +5)/Mephisto(71→76 +5) → +10. | ✅ feat/s113-final (PR #592) |
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-05-02 (autonomer Agent)
+- [x] Daily Scrum: 2026-05-03 (autonomer Agent)
+- [x] Review: 2026-05-03 (autonomer Agent)
+- [x] Retro: 2026-05-03 (autonomer Agent)
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
