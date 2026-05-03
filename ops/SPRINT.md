@@ -1,3 +1,99 @@
+# Sprint 137 — "Elefant spürt den Regen"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar hört Kapitel 34 — Elefant sagt: in einer Stunde kommt Regen. Tommy fragt wie. Elefant erklärt: Haut, Stille, fünfzig Jahre. Tommy merkt: er selbst weiß das auch. Beim Bauen. Nur hat er es noch nie gefragt.
+
+**Start:** 2026-05-03
+**Sprint-Prinzip:** Hörspiel-Track weiter. Quest-Track pausiert bis Till #592 mergt.
+
+---
+
+## Sprint Backlog S137
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S137-1 | **Hörspiel Kapitel 34 — Elefant und die Stille vor dem Regen** — Tommy findet Elefant beim Brunnen kurz vor einem Regen. Elefant: Körper weiß es vor dem Verstand. Tommy: ich kenn das vom Bauen. Elefant: ja, das ist dasselbe. 40 Minuten später regnet es. | Artist (autonom) | ✅ docs/stories/kapitel-34-elefant-und-die-stille-vor-dem-regen.md |
+| S137-2 | **Quest-Track: PAUSE** — bleibt bis Till #592 mergt. | — | ⏸ wartet auf Till |
+
+---
+
+## Explizit nicht im Sprint
+
+- **Quest-Track** — pausiert, PRs (#592 zuerst) warten auf Till
+
+---
+
+## Ceremony-Status S137
+
+- [x] Planning: 2026-05-03 (autonomer Agent, aus Retro S136)
+- [x] Daily Scrum: 2026-05-03 (autonomer Agent)
+- [x] Review: 2026-05-03 (autonomer Agent)
+- [x] Retro: 2026-05-03 (autonomer Agent)
+
+---
+
+## Daily Scrum S137 (2026-05-03, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S136 vollständig abgeschlossen (K33 Bernd, Retro 2026-05-03)
+- S137 Planning: K34 Elefant als einziges Item, Quest-Track weiterhin pausiert
+- S137-1: K34 geschrieben ✅
+
+**Was kommt als nächstes?**
+- PR für ops/sprint-s137 erstellen → Till mergt (gestacked auf ops/sprint-s136)
+
+**Blocker?**
+- Smoke-Test: CF-403 + Worker bekannte Sandbox-Limitation
+- Quest-Track-Pause: PRs warten auf Till (#592 zuerst)
+
+---
+
+## Sprint Review S137 (2026-05-03, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅, 1 bewusst pausiert ⏸**
+
+| Item | Ergebnis |
+|------|---------|
+| S137-1 Hörspiel K34 — Elefant und die Stille vor dem Regen | ✅ docs/stories/kapitel-34-elefant-und-die-stille-vor-dem-regen.md |
+| S137-2 Quest-Track PAUSE | ⏸ wartet auf Till (#592 zuerst) |
+
+**Oscar-Outcome:**
+K34 bereit zum Vorlesen: Elefant erklärt Infrasound und Körperwissen, Tommy erkennt dasselbe im Bauen. Thematisch: das Wissen das im Körper sitzt, bevor der Kopf es benennt — für 8-Jährige zugänglich weil Oscar beim Spielen selbst erlebt was Elefant beschreibt.
+
+**Elefant-Stil:**
+- Letztes Kapitel K21 — 13 Kapitel Abstand (K22–K33 andere NPCs)
+- Stil gehalten: ✨ für Staunen-Momente, Wir-Form für Elefanten-Kollektiv, ehrliche Antworten
+- Neues Thema: Infrasound + Stille als Sensor — wissenschaftlich fundiert (Elefanten hören 14–35 Hz, weit unter Menschengrenze), kindgerecht erklärt
+- Tommy-Bogen: er verbindet Elefants Körperwissen mit seinem eigenen Bauen — direkte Brücke zur Spielmechanik
+
+**Stand:**
+- 33 Hörspiel-Kapitel auf ops-Branches, K17–K33 warten auf Till-Merge
+- Quest-Track pausiert: #592 (Quest-Runde 95) ausstehend
+
+---
+
+## Sprint Retrospektive S137 (2026-05-03, autonomer Agent)
+
+**Was gut lief:**
+- K34 Elefant: Infrasound-Thema stark — echte Wissenschaft (14 Hz, Thunderstorm 400km) trifft kindliche Frage "wie weißt du das?"
+- Tommy-Bogen wächst organisch weiter: K30 (bauen ohne Publikum), K33 (beim Stein sitzen), K34 (Körperwissen beim Bauen) — er wird klüger ohne dass es gesagt wird
+- Verbindung zur Spielmechanik explizit gemacht: Elefants Infrasound = Oscars Bauen-Gefühl. Das ist die stärkste thematische Brücke seit K21.
+- Elefant-Stil nach 13 Kapiteln Pause gehalten: ✨, Wir-Form, ehrliche Ungewissheit
+
+**Was lief nicht gut:**
+- Hörspiel-Kette K17–K33 weiterhin auf ops-Branches, wartet auf Till
+- Quest-Track Pause geht in dritte Woche (PR #592 offen seit Tagen)
+- Gleicher Startfehler wie immer: main zeigt S112, jede neue Session beginnt mit dem Erkennen des Drift — strukturell gelöst sobald Till die ops-Branches mergt
+
+**Maßnahmen für S138:**
+- R1: Quest-Track bleibt pausiert bis Till #592 mergt.
+- R2: Hörspiel K35 — Mephisto (K13 war letztes Kapitel, 22 Kapitel Abstand — längste Abwesenheit). Oder Tommy selbst als Erzähler (er hat noch nie selbst ein Kapitel erzählt). Tommy als Erzähler wäre ein Sprint-Meilenstein.
+- R3: Merge-Hinweis für Till: Reihenfolge ops/sprint-s134-review → ops/sprint-s136 → ops/sprint-s137.
+
+---
+
+---
+
 # Sprint 136 — "Bernd wartet auf das langsame Moos"
 
 **Sprint Goal (Oscar-Perspektive):**
