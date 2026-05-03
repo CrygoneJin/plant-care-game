@@ -1,3 +1,106 @@
+# Sprint 136 — "Bernd wartet auf das langsame Moos"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar hört Kapitel 33 — Bernd sitzt neben einem Stein und schaut aufs Moos. Tommy fragt wozu. Bernd: Es wächst auch wenn keiner schaut. Tommy: Dann siehst du nichts. Bernd: Nein. Tommy bleibt trotzdem.
+
+**Start:** 2026-05-03
+**Sprint-Prinzip:** Hörspiel-Track weiter. Quest-Track pausiert bis Till #592 mergt.
+
+---
+
+## Sprint Backlog S136
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S136-1 | **Hörspiel Kapitel 33 — Bernd und das langsame Moos** — Tommy findet Bernd beim Moos-Stein. 1mm/Jahr, 100 Jahre, 12cm. Bernd schaut seit 5 Jahren. Sieht nichts. Schaut trotzdem. Tommy: "Dann schaust du für jemanden der in 100 Jahren kommt." Bernd hatte das nicht gedacht. Tommy bleibt allein am Stein. | Artist (autonom) | ✅ docs/stories/kapitel-33-bernd-und-das-langsame-moos.md |
+| S136-2 | **Quest-Track: PAUSE** — bleibt bis Till #592 mergt. | — | ⏸ wartet auf Till |
+
+---
+
+## Explizit nicht im Sprint
+
+- **Quest-Track** — pausiert, PRs (#592 zuerst) warten auf Till
+
+---
+
+## Ceremony-Status S136
+
+- [x] Planning: 2026-05-03 (autonomer Agent, aus Retro S135)
+- [x] Daily Scrum: 2026-05-03 (autonomer Agent)
+- [x] Review: 2026-05-03 (autonomer Agent)
+- [x] Retro: 2026-05-03 (autonomer Agent)
+
+---
+
+## Daily Scrum S136 (2026-05-03, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S135 vollständig abgeschlossen (K32 Floriane, Retro 2026-05-03)
+- S136 Planning: K33 Bernd als einziges Item, Quest-Track weiterhin pausiert
+- S136-1: K33 geschrieben ✅
+
+**Was kommt als nächstes?**
+- PR für ops/sprint-s136 erstellen → Till mergt (gestacked auf ops/sprint-s134-review)
+
+**Blocker?**
+- Smoke-Test: CF-403 + Worker bekannte Sandbox-Limitation
+- Quest-Track-Pause: PRs warten auf Till (#592 zuerst)
+
+---
+
+## Sprint Review S136 (2026-05-03, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅, 1 bewusst pausiert ⏸**
+
+| Item | Ergebnis |
+|------|---------|
+| S136-1 Hörspiel K33 — Bernd und das langsame Moos | ✅ docs/stories/kapitel-33-bernd-und-das-langsame-moos.md |
+| S136-2 Quest-Track PAUSE | ⏸ wartet auf Till (#592 zuerst) |
+
+**Oscar-Outcome:**
+K33 bereit zum Vorlesen. Bernd sitzt neben einem Stein mit Moos seit hundert Jahren. 1mm pro Jahr. Tommy fragt wozu er schaut wenn er nichts sieht. Bernd hat keine gute Antwort — nur eine ehrliche: weil es noch da ist. Tommy: "Dann schaust du für jemanden der in hundert Jahren kommt." Bernd hatte das nicht so gedacht. Tommy bleibt allein beim Stein.
+
+Hörspiel-Kette K18/K26→K33:
+- K18 Bernd: Mauersegler — schläft in der Luft, braucht keinen Boden (Beobachten ohne Erklärung)
+- K26 Maus: Tautropfen der den Himmel spiegelt (sehen was gleich verschwindet)
+- K27 Bug: Myzel unter der Rinde (was verschwindet wird wieder)
+- K28 Kraemerin: was fehlt sagt mehr (Leere als Aussage)
+- K29 Krabs: Wert vs. Preis
+- K30 Tommy: Anfangen ohne Publikum
+- K31 Neinhorn: das kleinste Ja ohne Zeugen
+- K32 Floriane: ein Lied das nie wiederkehrt
+- K33 Bernd: was sich Zeit nimmt — 100 Jahre, 12cm, kein Zeuge nötig
+
+Bogen K18→K33: Bernd beobachtet Mauersegler (braucht keinen Beobachter) → Bernd beobachtet Moos (braucht keinen Beobachter). Gleiche Lektion, 15 Kapitel später, andere Geschwindigkeit.
+
+**Stand:**
+- **33 Hörspiel-Kapitel** auf ops-Branches (K17–K33 auf Branch-Kette, K1–K16 auf main)
+- Quest-Track ⏸ pausiert — PRs (#592 zuerst) warten auf Till
+
+---
+
+## Sprint Retrospektive S136 (2026-05-03, autonomer Agent)
+
+**Was gut lief:**
+- K33 Bernd: direkter Bogen zu K18 (Mauersegler) nach 15 Kapiteln — Bernd beobachtet was ihn nicht braucht. Konsistenz ohne Wiederholung.
+- Tommy als Lernender wächst weiter: In K30 hat er gebaut ohne Publikum, in K33 sitzt er beim Stein als Bernd weg ist. Er lernt Dinge die Bernd ihm nicht beibringen wollte.
+- Wissenschaftliche Grundlage (1mm/Jahr, Pionierorganismus, 100+ Jahre auf dem Stein) gibt dem Kinderthema Würde — kein Trick, Biologie.
+- Bernd-Stil gehalten: *seufz*, erste Person, kurze Sätze, "ich habe keine gute Antwort, ich habe eine ehrliche" — Charakterkontinuität zu K18.
+
+**Was lief nicht gut:**
+- Hörspiel-Kette K17–K33 vollständig auf ops-Branches, aber K17–K32 noch nicht auf main. Till hat 17 Kapitel warten.
+- Quest-Track-Pause hält an — #592 ist seit Tagen offen.
+- Jede Session startet S113-Planning neu weil main S112 zeigt. Duplikat-Arbeit entsteht strukturell.
+
+**Maßnahmen für S137:**
+- R1: Quest-Track bleibt pausiert bis Till #592 mergt.
+- R2: Hörspiel K34 — Elefant (K21 war letztes Kapitel, 12 Kapitel Abstand). Oder Alien (K24). Elefant hat längeren Abstand.
+- R3: Wenn Till kommt: **Schritt 1** PR #592 mergen (Quest-Runde 95). **Schritt 2** PR #539 (Supabase-Keepalive). **Schritt 3** Hörspiel-Stack #583→#585→#586→#588→#590→#593→#599→#600→ops-Branch-Stack→dieser PR.
+
+---
+
+---
+
 # Sprint 135 — "Floriane hört das einmalige Lied"
 
 **Sprint Goal (Oscar-Perspektive):**
