@@ -1,3 +1,102 @@
+# Sprint 135 — "Floriane hört das einmalige Lied"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar hört Kapitel 32 — Ein Vogel singt auf der Insel eine Phrase die es nur einmal gibt. Floriane hört zu. Tommy fragt: hast du es? Floriane sagt: Nein. Tommy: Dann hast du es verloren? Floriane: Nein. Ich hab's gehört.
+
+**Start:** 2026-05-03
+**Sprint-Prinzip:** Hörspiel-Track weiter. Quest-Track pausiert bis Till #592 mergt.
+
+---
+
+## Sprint Backlog S135
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S135-1 | **Hörspiel Kapitel 32 — Floriane und das einmalige Lied** — Ein unbekannter Vogel singt dreimal, dann nie wieder. Floriane hört zu. Tommy fragt ob sie es verloren hat. "Nein. Ich hab's gehört." | Artist (autonom) | ✅ docs/stories/kapitel-32-floriane-und-das-einmalige-lied.md |
+| S135-2 | **Quest-Track: PAUSE** — bleibt bis Till #592 mergt. | — | ⏸ wartet auf Till |
+
+---
+
+## Explizit nicht im Sprint
+
+- **Quest-Track** — pausiert, PRs (#592 zuerst) warten auf Till
+
+---
+
+## Ceremony-Status S135
+
+- [x] Planning: 2026-05-03 (autonomer Agent, aus Retro S134)
+- [x] Daily Scrum: 2026-05-03 (autonomer Agent)
+- [x] Review: 2026-05-03 (autonomer Agent)
+- [x] Retro: 2026-05-03 (autonomer Agent)
+
+---
+
+## Daily Scrum S135 (2026-05-03, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S134 vollständig abgeschlossen (K31 Neinhorn, Retro 2026-05-03)
+- S135 Planning: K32 Floriane als einziges Item, Quest-Track weiterhin pausiert
+- S135-1: K32 geschrieben ✅
+
+**Was kommt als nächstes?**
+- PR für ops/sprint-s134-review erstellen → Till mergt (gestacked auf ops/sprint-s133-review)
+
+**Blocker?**
+- Smoke-Test: CF-403 + Worker bekannte Sandbox-Limitation
+- Quest-Track-Pause: PRs warten auf Till (#592 zuerst)
+
+---
+
+## Sprint Review S135 (2026-05-03, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅, 1 bewusst pausiert ⏸**
+
+| Item | Ergebnis |
+|------|---------|
+| S135-1 Hörspiel K32 — Floriane und das einmalige Lied | ✅ docs/stories/kapitel-32-floriane-und-das-einmalige-lied.md |
+| S135-2 Quest-Track PAUSE | ⏸ wartet auf Till (#592 zuerst) |
+
+**Oscar-Outcome:**
+K32 bereit zum Vorlesen. Ein Vogel singt dreimal auf der Insel — Tommy kann es nicht benennen, Floriane kann es nicht notieren. Aber Floriane hat es gehört. Tommy lernt den Unterschied zwischen "haben" und "hören" — manches existiert nur im Moment.
+
+Hörspiel-Kette K26→K32:
+- K26 Maus: sehen was gleich verschwindet (Tautropfen wird gold)
+- K27 Bug: was verschwindet wird wieder wachsen (Myzel)
+- K28 Kraemerin: was fehlt sagt mehr als was da ist
+- K29 Krabs: Wert — was du verlierst wenn du es hergibst
+- K30 Tommy: Anfangen ohne Publikum — der erste Stein trägt alles
+- K31 Neinhorn: das kleinste Ja — privat, für ein Samenkorn
+- K32 Floriane: ein Lied das nie wiederkehrt — und trotzdem nicht verloren ist
+
+**Stand:**
+- **32 Hörspiel-Kapitel** auf ops-Branches (K17–K32 auf Branch-Kette, K1–K16 auf main)
+- Quest-Track ⏸ pausiert — PRs (#592 zuerst) warten auf Till
+
+---
+
+## Sprint Retrospektive S135 (2026-05-03, autonomer Agent)
+
+**Was gut lief:**
+- K32 Floriane: stärkster Anschluss an K20 (Das Schweigen zwischen den Tönen) seit 12 Kapiteln. Die Linie Floriane-K20→K32 ist ein vollständiger Bogen: K20 war über die Stille zwischen Tönen, K32 über den Ton der keine Noten hat. Beide sagen dasselbe auf verschiedenen Wegen.
+- Tommy als Lernender: sein Weg von K17 (Vertrauen) über K30 (Anfangen) zu K32 (Hören ohne Besitzen) zeigt Reife ohne sie zu benennen
+- Themen-Kette K26–K32: Vergehen → Werden → Lesen → Wert → Anfangen → Ja sagen → Hören — sieben Kapitel über das Gleiche aus sieben Perspektiven. Das ist ein Buch.
+- Verbindung zu K31: Neinhorn sagte Ja zu dem was keine Zeugen braucht. Floriane hört was kein Papier fassen kann. Beide Male geht es um etwas das im Moment lebt.
+
+**Was lief nicht gut:**
+- Hörspiel-Kette K17–K32 ist vollständig auf ops-Branches, aber K17–K31 noch nicht auf main. Till hat 16 Kapitel warten.
+- Quest-Track-Pause hält an — #592 ist seit Tagen offen.
+- Jede Session startet S113-Planning neu weil main S112 zeigt. 5+ Duplikat-PRs entstanden.
+
+**Maßnahmen für S136:**
+- R1: Quest-Track bleibt pausiert bis Till #592 mergt. Nächste Runde nach Merge: bug/maus/spongebob je 72.
+- R2: Hörspiel K33 — NPC mit längstem Abstand seit letztem Kapitel: Bernd (K18) oder Elefant (K21).
+- R3: Wenn Till kommt: **Schritt 1** PR #592 mergen (Quest-Runde 95). **Schritt 2** PR #539 (Supabase-Keepalive). **Schritt 3** Hörspiel-Stack #583→#585→#586→#588→#590→#593→#599→#600→dieser PR.
+
+---
+
+---
+
 # Sprint 134 — "Neinhorn sagt einmal Ja"
 
 **Sprint Goal (Oscar-Perspektive):**
