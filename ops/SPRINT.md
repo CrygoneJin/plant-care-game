@@ -1,3 +1,46 @@
+# Sprint 113 — "Neinhorn verweigert, Mephisto kalkuliert"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn erklärt warum es Nein sagt (und warum das richtig ist), Mephisto zeigt was er anbietet (und was das wirklich kostet). 965→975 Quests.
+
+**Start:** 2026-05-03
+**Sprint-Prinzip:** Quest-Track autonom. Ein Branch, ein PR. Kein Phantom-Spawning.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Quest-Runde 95** — Neinhorn(71→76)/Mephisto(71→76) → +10 Quests, 965→975. Neinhorn: „Was Neinhorn ablehnt und warum das richtig ist". Mephisto: „Was er anbietet und was das wirklich kostet". | Artist | 🔲 → PR #592 |
+
+---
+
+## Till's To-Do
+
+### Schritt 1 — Quest-Runde 95 mergen
+**→ PR #592** `feat/s113-final` — Neinhorn/Mephisto +10, alle Ceremonies, direkt mergebar auf aktuellem main.
+
+### Schritt 2 — Duplikate schließen (nach #592-Merge)
+`#589` `#582` `#579` `#577` `#591` `#584` `#581` `#576` `#575` `#573` `#572` `#531` `#558` `#563` `#564`
+
+### Schritt 3 — Hörspiel-Stack K17–K29 (optional, stacked)
+`#583` → `#585` → `#586` → `#588` → `#590` → `#593`
+*(K17–K29 Hörspiel-Kapitel, ops-Branches stacked auf alter main-Basis — beim Merge SPRINT.md beidseitig behalten)*
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-05-03 (autonomer Agent)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
