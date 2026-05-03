@@ -1,3 +1,74 @@
+# Sprint 115 — "Krabs taucht tief, Floriane lauscht der Nacht, Elefant trauert und tanzt"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Krabs entdeckt was tiefer als Gold ist (hydrothermale Quellen, Meeresströmungen, Biolumineszenz, Tier-Navigation), Floriane lauscht was nachts blüht und klingt (Nachtblüten, Mondkalender, Nacht-Sinfonik), Elefant zeigt was Elefanten fühlen (Trauer, Spiel, Begrüßung). 985→995 Quests.
+
+**Start:** 2026-05-03
+**Sprint-Prinzip:** Quest-Track autonom. Oscar-Smoke läuft via Tesla-Morgenritual.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S115-1 | **Quest-Runde 97** — Krabs(73→77 +4)/Floriane(73→76 +3)/Elefant(73→76 +3) → +10 Quests, 985→995. Krabs: „Was der Ozean mehr wert ist als Gold". Floriane: „Was in der Nacht blüht und singt". Elefant: „Was Elefanten fühlen". | Artist | ✅ feat/sprint-115-final |
+
+---
+
+## Explizit nicht im Sprint
+
+- **CEO-Input S116-Kette** — nach Feynman-Messung Oscar-Tesla-Feedback
+- **Physik-Erweiterungen** — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S115
+
+- [x] Planning: 2026-05-03 (autonomer Agent)
+- [x] Daily Scrum: 2026-05-03 (autonomer Agent)
+- [x] Review: 2026-05-03 (autonomer Agent)
+- [ ] Retro
+
+---
+
+## Daily Scrum S115 (2026-05-03, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S115 Sprint Planning durchgeführt (Phantom-Branch-Check: feat/sprint-115 hatte falsche NPCs Mephisto/Neinhorn/Spongebob → neuer Branch feat/sprint-115-final von S114-Basis)
+- S115-1 implementiert: Quest-Runde 97, Krabs+4/Floriane+3/Elefant+3, 985→995 (feat/sprint-115-final)
+
+**Was kommt als nächstes?**
+- PR für feat/sprint-115-final erstellen → Till mergt
+- S116: Mephisto(74)/Tommy(74)/Bernd(74) → Quest-Runde 98
+
+**Blocker?**
+- Smoke Test: CF-403 + Worker "Host not in allowlist" — bekannte Sandbox-Limitation, kein Outage.
+- Phantom-Branches feat/sprint-115 und feat/sprint-115-correct: falsche NPCs/Basis — ignorieren, PR aus feat/sprint-115-final ist kanonisch.
+
+---
+
+## Sprint Review S115 (2026-05-03, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅**
+
+| Item | Ergebnis |
+|------|---------|
+| S115-1 Quest-Runde 97 | ✅ feat/sprint-115-final — Krabs(73→77 +4) / Floriane(73→76 +3) / Elefant(73→76 +3), 985→995 Quests |
+
+**Oscar-Outcome:** 10 neue Quests bereit. Krabs: Hydrothermale-Quellen-Schatzhaus (Tubenwürmer 250 Jahre alt bei 400°C — unbezahlbar), Meeresströmungs-Handelsarchiv (Golfstrom + Polynesier ohne GPS), Biolumineszenz-Handels-Labor (80% Tiefsee leuchtet, Luciferin-Protein gratis), Tiernavigation-Schatz-Archiv (Lachse riechen nach Hause nach 5 Jahren, Vögel sehen Norden). Floriane: Nachtblüten-Observatorium (Mondblumen öffnen nur nachts, Sphinx-Motten-Rüssel passt exakt in die tiefste Orchidee), Mondkalender-Garten (Pflanzen folgen dem Mond — kein Aberglaube, Biologie), Nacht-Sinfonik-Station (Grillen messen Temperatur mit Dolbear's Law, Frösche singen ohne Dirigent). Elefant: Trauer-Gedenkplatz (fremde Herden berühren Knochen von Unbekannten), Spielplatz der Alten (Matriarchin 65 Jahre alt schleudert noch Wasser), Begrüßungs-Ritual-Station (40 Jahre dasselbe Begrüßungslied für dieselbe Schwester-Herde).
+
+**Stand nach S115:**
+- **995 Quests** auf feat/sprint-115-final
+- NPC-Counter: krabs 77 · floriane 76 · elefant 76 · alien 76 · lokfuehrer 76 · maus 76 · spongebob 75 · neinhorn 75 · kraemerin 75 · bug 75 · tommy 74 · bernd 74 · mephisto 74
+- Niedrigste Counter: **tommy 74 · bernd 74 · mephisto 74**
+
+**PO-Entscheidung:**
+- Nächste Quest-Runde S116: Tommy(74) + Bernd(74) + Mephisto(74) — Thema frei
+- Merge-Reihenfolge: feat/sprint-113-final (#531) → S114 → S115 → main
+
+---
+
 # Sprint 114 — "Maus entdeckt das Kleine, Kraemerin kennt die Zeit, Bug erinnert sich"
 
 **Sprint Goal (Oscar-Perspektive):**
