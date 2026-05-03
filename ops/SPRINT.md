@@ -1,3 +1,86 @@
+# Sprint 116 — "Krabs erbt, Floriane lauscht dem Körper, Elefant gibt weiter"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Krabs entdeckt was mehr wert ist als Geld (Patina, erste Münze, doppelte Buchhaltung, Vermächtnis), Floriane misst was Musik mit dem Körper macht (Herzsynchronisation, Musikgedächtnis, Klang-Landschaft), Elefant weiß was nach dem Abschied bleibt (Knochen-Gedenkstätte, Jungtier-Jubel, Matriarchin-Wissen). 995→**1005 Quests**. ✨ Erstmals über 1000!
+
+**Start:** 2026-05-03
+**Sprint-Prinzip:** Quest-Track autonom. Ceremonies direkt im Feature-Commit.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S116-1 | **Quest-Runde 98** — Krabs(73→77)/Floriane(73→76)/Elefant(73→76) → +10 Quests, 995→1005. Krabs: „Was mehr wert ist als Geld". Floriane: „Was Musik mit dem Körper macht". Elefant: „Was nach dem Abschied bleibt". | Artist | ✅ feat/sprint-116 |
+
+---
+
+## Ceremony-Status S116
+
+- [x] Planning: 2026-05-03 (autonomer Agent, aus Retro S115)
+- [x] Daily Scrum: 2026-05-03 (autonomer Agent)
+- [x] Review: 2026-05-03 (autonomer Agent)
+- [x] Retro: 2026-05-03 (autonomer Agent)
+
+---
+
+## Daily Scrum S116 (2026-05-03, autonomer Agent)
+
+**Was wurde heute gemacht?**
+- S115 abgeschlossen: Quest-Runde 97 ✅, alle Ceremonies ✅
+- S116 Planning: Krabs/Floriane/Elefant als nächste NPCs (je 73 auf der gestackten Kette)
+- S116-1 Quest-Runde 98 implementiert ✅ — 1005 Quests, erstmals über 1000
+
+**Was kommt als nächstes?**
+- PR erstellen (stacked auf feat/sprint-115) → Till mergt in Reihenfolge
+
+**Blocker?**
+- Smoke Test CF-403 + Worker bekannte Sandbox-Limitation.
+- Merge-Stack: PR #531 → PR #532 → PR #596 → dieser PR — Till mergt in Reihenfolge.
+
+---
+
+## Sprint Review S116 (2026-05-03, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅**
+
+| Item | Ergebnis |
+|------|---------|
+| S116-1 Quest-Runde 98 | ✅ feat/sprint-116 — Krabs(73→77 +4) / Floriane(73→76 +3) / Elefant(73→76 +3), 995→1005 Quests |
+
+**Oscar-Outcome:** 10 neue Quests + MEILENSTEIN: erstmals über 1000 Quests. Krabs: Patina-Handwerks-Archiv (Vaters Hammer mit Delle — das Einzige das ich nicht verkaufen würde), Erste-Münze-Denkmal (erste verdiente Münze + Lächeln des ersten Kunden), Ausgleichs-Rechnung-Kammer (doppelte Buchführung: Geld + was nicht Geld ist), Vermächtnis-Kammer (SpongeBob: "Ich werde den Grillgeruch am Freitag behalten" — Krabs: "Hmm."). Floriane: Herzrhythmus-Synchron-Labor (14 Sekunden bis Herzen synchron schlagen beim gemeinsamen Singen), Musikgedächtnis-Kammer (Alzheimer-Patienten vergessen Namen aber singen Lieder wort für wort — Musik sitzt tiefer), Klang-Landschaft-Archiv (drei Sekunden Ton vom Kindheitsdorf — und man ist sofort da). Elefant: Knochen-Gedenkstätte (jedes Jahr dieselben Knochen besuchen — kein Wort dafür, tiefer als Trauer), Jungtier-Jubel-Platz (30 Minuten Stampfen für jedes Neugeborene — Dazugehören als erstes Geschenk), Matriarchin-Wissens-Station (Wissen das nicht stirbt — es lebt weiter in denen die es lernen).
+
+**Stand nach S116:**
+- **1005 Quests** auf feat/sprint-116 (995 auf feat/sprint-115, 965 auf main)
+- NPC-Counter nach S116: krabs 77 · floriane 76 · elefant 76
+- Nächste niedrigste Counter auf Stacking-Basis: tommy 74 · bernd 74
+
+**PO-Entscheidung:**
+- Quest-Runde 99: tommy(74)/bernd(74) → S117-1
+
+---
+
+## Sprint Retrospektive S116 (2026-05-03, autonomer Agent)
+
+**Was lief gut:**
+- Krabs-Vermächtnis: "Freitag ist Grillgeruch" — beste Krabs-Zeile seit der Krabben-Gedenkstätte (Vater-Erinnerung). Der Charakter wächst weg vom Geld, hin zu Verbindung
+- Floriane-Musikgedächtnis: "Das messe ich nicht. Das weiß ich einfach." — Floriane bricht ihre eigene Wissenschaftler-Rolle auf, das ist Charakter-Tiefe
+- Elefant-Matriarchin: "Das Wissen stirbt nicht mit dem Körper" — konzentrierteste Elefant-Philosophie bisher
+- MEILENSTEIN: 1005 Quests — erste Sprint über 1000. Oscar hat jetzt tausend Dinge zu entdecken.
+
+**Was nicht gut lief:**
+- Phantom-Branches sprint-116/117 auf origin noch vorhanden (falsche Basis) — Till muss schließen
+- Merge-Stack wächst: 4 PRs (531→532→596→neu) — je länger Till wartet desto mehr Reihenfolge-Druck
+
+**Retro-Actions für S117:**
+- **R1:** Quest-Runde 99: tommy(74)/bernd(74) → S117-1
+- **R2:** Merge-Hinweis: Reihenfolge 531→532→596→S116-PR zwingend — Counter kumulieren
+
+---
+
+---
+
 # Sprint 115 — "Mephisto verschenkt, Neinhorn hört hin, Spongebob putzt"
 
 **Sprint Goal (Oscar-Perspektive):**
