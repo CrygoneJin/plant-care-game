@@ -1,3 +1,77 @@
+# Sprint 113 — "Neinhorn lehnt ab, Mephisto rechnet ab"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn erklärt warum es Nein sagt und warum das richtig ist, Mephisto zeigt was er anbietet und was das wirklich kostet. 965→975 Quests.
+
+**Start:** 2026-05-02
+**Sprint-Prinzip:** Ein Branch. Kein paralleles Spawning. Kein neuer Quest-Branch bis PR #592 gemergt.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Quest-Runde 95** — Neinhorn(71→76+5)/Mephisto(71→76+5) → +10 Quests, 965→975. Neinhorn: was es ablehnt und warum das richtig ist. Mephisto: was er anbietet und was das wirklich kostet. | Artist | ✅ PR #592 (feat/s113-final) |
+
+---
+
+## Explizit nicht im Sprint
+
+- **S114 (Bug/Maus/Spongebob/Kraemerin)** — nach Merge von #592
+- **Hörspiel K17–K29** — auf ops-Branches fertig (K17–K29), Till entscheidet Merge-Reihenfolge
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-05-02 (PR #591 + PR #594)
+- [x] Daily Scrum: 2026-05-03 (autonomer Agent, dieser Commit)
+- [x] Review: 2026-05-02 (dokumentiert in PR #592)
+- [x] Retro: 2026-05-02 (dokumentiert in PR #592)
+
+---
+
+## Daily Scrum S113 (2026-05-03, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S113-1 Quest-Runde 95 implementiert: Neinhorn(71→76+5)/Mephisto(71→76+5), 965→975 (PR #592, `feat/s113-final`)
+- S113 Planning-PRs erstellt (#591, #594) — gibt Till Merge-Guide
+- S114 Quest-Runde 96 bereit: Maus/Kraemerin/Bug +10 (PR #532, stacked auf #531 — falsch gebased)
+- Hörspiel K17–K29 auf ops-Branches fertig (PRs #583→#585→#586→#588→#590→#593)
+
+**Was kommt als nächstes?**
+- Till mergt PR #592 → 975 Quests auf main
+- Danach: S114 Planning → Bug/Maus/Spongebob je 72 (niedrigste Counter nach #592-Merge)
+
+**Blocker?**
+- Smoke-Test: CF-403 + Worker "Host not in allowlist" — bekannte Sandbox-Limitation (kein echter Outage, dokumentiert seit S92)
+- PR-Debt: 15+ offene S113-Duplikat-PRs warten auf Till zum Schließen (Liste in PR #592)
+- PR #532 (S114) hat falschen Base (`feat/sprint-113` statt `main`) → nach #592-Merge rebasen oder neu erstellen
+
+---
+
+## Till's Merge-Guide S113
+
+### Schritt 1 — Quest-Runde 95 mergen
+**→ PR #592** `feat/s113-final` — Neinhorn+5/Mephisto+5, direkt auf aktuellem main, alle Ceremonies drin.
+
+### Schritt 2 — Duplikate schließen (nach #592-Merge)
+`#531` `#558` `#563` `#564` `#572` `#573` `#575` `#576` `#577` `#579` `#581` `#582` `#584` `#589` `#591` `#594`
+
+### Schritt 3 — Hörspiel-Stack K17–K29 (optional, gestacked)
+`#583` (base: main) → `#585` → `#586` → `#588` → `#590` → `#593`
+*(beim SPRINT.md-Merge: beide Seiten behalten — S119–S132 oben, S112 darunter)*
+
+### Nach Vollmerge
+- **975 Quests** auf main
+- NPC-Counter (niedrigste): bug 72 · kraemerin 72 · maus 72 · spongebob 72
+- Nächste Quest-Runde S114: Bug/Maus/Spongebob +10
+
+---
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
