@@ -1,4 +1,57 @@
-# Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
+# Sprint 113 — "Neinhorn lehnt ab, Mephisto rechnet vor"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Neinhorn erklärt warum es Nein sagt und warum das richtig ist. Mephisto zeigt was er anbietet und was das wirklich kostet. 965→975 Quests.
+
+**Start:** 2026-05-03
+**Sprint-Prinzip:** Ein Branch. Ein PR. Kein paralleles Spawning.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S113-1 | **Quest-Runde 95** — Neinhorn(71→76)/Mephisto(71→76) → +10 Quests, 965→975. Neinhorn: „Was Neinhorn ablehnt und warum das richtig ist". Mephisto: „Was er anbietet und was das wirklich kostet". | Artist | 🔲 PR #592 (`feat/s113-final`) — mergebar, kein Conflict |
+
+---
+
+## Till's To-Do (1 Schritt)
+
+**→ PR #592 mergen** (`feat/s113-final`) → 975 Quests auf main
+
+Danach schließen (Duplikate): `#531 #558 #563 #564 #572 #573 #575 #576 #577 #579 #581 #582 #584 #589 #591 #594 #595 #596 #597`
+
+Optional:
+- **PR #539** (`ops/supabase-keepalive`) mergen
+- **Hörspiel-Stack** (stacked): #585 → #586 → #588 → #590 → #593
+
+---
+
+## Explizit nicht im Sprint
+
+- Neue Quest-Branches — PR #592 ist fertig, kein weiterer Branch nötig
+- Physik-Erweiterungen — pausiert bis Feynman misst
+
+---
+
+## Ceremony-Status S113
+
+- [x] Planning: 2026-05-03 (autonomer Agent)
+- [ ] Daily Scrum
+- [ ] Review
+- [ ] Retro
+
+---
+
+## Smoke Test (2026-05-03)
+
+- schatzinsel.app: HTTP 403 — bekannte CF-Bot-Schutz-Limitation (Sandbox, kein Outage)
+- Worker: "Host not in allowlist" — bekannte Sandbox-Limitation (seit S92 dokumentiert)
+
+---
+
+# Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik" [DONE]
 
 **Sprint Goal (Oscar-Perspektive):**
 > Oscar findet 10 neue Quests — Bernd entdeckt in der Stille was er nie gesucht hat (Amsel, Regen, Mauersegler, Stille), Elefant teilt was Generationen über Zeit wissen (Jahreszeiten, Wanderrouten, Trockenzeitwasser), Floriane misst was Musik mit Gefühlen macht (Dur/Moll, Rhythmus, Stille). 915→925 Quests auf Branch.
