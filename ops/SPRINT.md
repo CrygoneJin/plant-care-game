@@ -1,3 +1,132 @@
+# Sprint 132 — "Krabs und der Preis"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar hört Kapitel 29 — Tommy findet einen Kristall der das Licht in alle Farben zerlegt. Krabs: „Der Preis ist was ich dir geben würde. Der Wert ist was du verlierst wenn du ihn hergibst." Tommy steckt den Kristall in die Tasche. Krabs nickt.
+
+**Start:** 2026-05-03
+**Sprint-Prinzip:** Hörspiel-Track weiter. Quest-Track pausiert bis Till #531 mergt.
+
+---
+
+## Sprint Backlog S132
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S132-1 | **Hörspiel Kapitel 29 — Krabs und der Preis** — Krabs erklärt Tommy den Unterschied zwischen Preis und Wert. Tommy behält den Kristall. | Artist (autonom) | ✅ docs/stories/kapitel-29-krabs-und-der-preis.md |
+| S132-2 | **Quest-Track: PAUSE** — bleibt bis Till #531 mergt. | — | ⏸ wartet auf Till |
+
+---
+
+## Explizit nicht im Sprint
+
+- **Quest-Track** — pausiert, 7 PRs (#531/#532/#541/#543/#550/#551/S119) warten auf Till
+
+---
+
+## Ceremony-Status S132
+
+- [x] Planning: 2026-05-03 (autonomer Agent, aus Retro S131)
+- [x] Daily Scrum: 2026-05-03 (autonomer Agent)
+- [x] Review: 2026-05-03 (autonomer Agent)
+- [x] Retro: 2026-05-03 (autonomer Agent)
+
+---
+
+## Daily Scrum S132 (2026-05-03, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S131 vollständig abgeschlossen (Retro 2026-05-02)
+- S132 Planning: K29 Krabs als einziges Item, Quest-Track weiterhin pausiert
+- S132-1: Hörspiel Kapitel 29 ✅ — Krabs erklärt Preis vs. Wert, Tommy behält den Kristall
+
+**Was kommt als nächstes?**
+- PR für ops/sprint-s131-review erstellen → Till mergt
+
+**Blocker?**
+- Smoke-Test: CF 403 + Worker bekannte Sandbox-Limitation, kein App-Schaden
+- Quest-Track-Pause: 7 offene Quest-PRs warten auf Till (#531 zuerst)
+
+---
+
+## Sprint Review S132 (2026-05-03, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅, 1 bewusst pausiert ⏸**
+
+| Item | Ergebnis |
+|------|---------|
+| S132-1 Hörspiel K29 — Krabs und der Preis | ✅ docs/stories/kapitel-29-krabs-und-der-preis.md |
+| S132-2 Quest-Track PAUSE | ⏸ wartet auf Till (#531 zuerst) |
+
+**Oscar-Outcome:**
+K29 bereit zum Vorlesen. Tommy findet einen Kristall der das Licht in alle Farben zerlegt — so durchsichtig wie Wasser, so schwer wie nichts. Krabs legt ihn auf die Waage: „Fünf Goldmuscheln. Das ist der Preis." Dann: „Kannst du noch mal zeigen, wie er das Licht zerlegt?" Das Licht zerfällt auf der Holzplanke. Krabs schaut lange. Tommy steckt den Kristall in die Tasche. „Ich verkaufe ihn nicht." Krabs nickt: „Das ist der Wert."
+
+Themen-Kette K25→K29:
+- K25 Lokführer: Vergehen — ein Gruß für jemanden der schon weg ist
+- K26 Maus: Wahrnehmen — etwas sehen das gleich weg ist
+- K27 Bug: Werden — was weg ist wird wieder wachsen
+- K28 Kraemerin: Lesen — was fehlt erzählt mehr als was da ist
+- K29 Krabs: Wert — was du verlierst wenn du es hergibst
+
+**Stand:**
+- **29 Hörspiel-Kapitel** auf ops-Branches (K17–K29 auf Branch-Kette, K1–K16 auf main)
+- Quest-Track ⏸ pausiert — 7 PRs (#531 zuerst) warten auf Till
+
+---
+
+## Sprint Retrospektive S132 (2026-05-03, autonomer Agent)
+
+**Was gut lief:**
+- K29 Krabs: stärkste Wirtschafts-Ethik-Szene der Hörspiel-Kette — „Der Preis ist was andere zahlen. Der Wert ist was du verlierst wenn du es hergibst" trägt das Kapitel in einem Satz
+- Krabs hatte noch kein eigenes Kapitel — K29 schließt die letzte große Lücke im NPC-Hörspiel-Atlas
+- Themen-Bogen K25→K29 bildet jetzt eine fünfteilige Kette: Vergehen / Wahrnehmen / Werden / Lesen / Wert — ein vollständiger Bogen über Verlust und was bleibt
+- „dreihundert Jahre keinen gesehen der das so macht" — Krabs-Stimme konsistent: Händler, aber mit Gedächtnis und Staunen
+
+**Was nicht gut lief:**
+- Quest-Track bleibt blockiert: #531 muss Till mergen, Kette kann nicht weiterlaufen
+- ops-Branch-Kette wächst auf 5 Sprints Abstand von main (S128–S132 auf Branch, K17–K29 noch nicht auf main)
+
+**Retro-Actions für S133:**
+- **R1:** K30 — nächster NPC und Thema frei (Elefant, Tommy solo, oder Neinhorn wieder)
+- **R2:** Quest-Track bleibt pausiert bis Till #531 mergt
+
+---
+
+---
+
+# Sprint 131 — "Kraemerin und die leere Stelle"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar hört Kapitel 28 — Kraemerin zählt jeden Abend ihre Waren. Tommy fragt warum sie zählt was sie sowieso kennt. Kraemerin zeigt auf ein leeres Regal: „Das hier erzählt mir was heute passiert ist. Das volle Regal erzählt mir nichts."
+
+**Start:** 2026-05-02
+**Sprint-Prinzip:** Hörspiel-Track weiter. Quest-Track pausiert bis Till #531 mergt.
+
+---
+
+## Sprint Backlog S131
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S131-1 | **Hörspiel Kapitel 28 — Kraemerin und die leere Stelle** — Kraemerin zählt jeden Abend. Tommy versteht nicht warum. Kraemerin erklärt: das Fehlende sagt mehr als das Vorhandene. Eine leere Stelle ist eine Geschichte. Ein volles Regal ist Stille. | Artist (autonom) | ✅ docs/stories/kapitel-28-kraemerin-und-die-leere-stelle.md |
+| S131-2 | **Quest-Track: PAUSE** — bleibt bis Till #531 mergt. | — | ⏸ wartet auf Till |
+
+---
+
+## Explizit nicht im Sprint
+
+- **Quest-Track** — pausiert, 7 PRs (#531/#532/#541/#543/#550/#551/S119) warten auf Till
+
+---
+
+## Ceremony-Status S131
+
+- [x] Planning: 2026-05-02 (autonomer Agent, aus Retro S130)
+- [x] Daily Scrum: 2026-05-02 (autonomer Agent)
+- [x] Review: 2026-05-02 (autonomer Agent)
+- [x] Retro: 2026-05-02 (autonomer Agent)
+
+---
+
 # Sprint 130 — "Bug und der unsichtbare Wald"
 
 **Sprint Goal (Oscar-Perspektive):**
