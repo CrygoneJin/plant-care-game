@@ -1,3 +1,86 @@
+# Sprint 114 — "Maus beobachtet die Nacht, Kraemerin erinnert Gesichter, Bug folgt dem Licht"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Maus entdeckt was in der Nacht passiert (Mondphasen, Schatten-Uhr, Nachttau, Fledermaus-Echolot), Kraemerin lernt was Gemeinschaft aus einem Laden macht (Stammkunden, Tauschen, Frühmarkt), Bug erforscht was ohne Augen findet (Wurzeln, Pflanzen, Pilzfäden). 965→975 Quests auf Branch.
+
+**Start:** 2026-05-03
+**Sprint-Prinzip:** Quest-Track autonom. Ceremonies im Feature-Commit. Branch auf main-Basis (965 Quests); nach S113-Merge (#531) ist Rebase nötig → 985 Quests gesamt.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S114-1 | **Quest-Runde 96** — Maus(72→76)/Kraemerin(72→75)/Bug(72→75) → +10 Quests, 965→975. Maus: „Was in der Nacht passiert". Kraemerin: „Was Gemeinschaft aus einem Laden macht". Bug: „Was ohne Augen findet". | Artist | ✅ feat/sprint-114 |
+
+---
+
+## Ceremony-Status S114
+
+- [x] Planning: 2026-05-03 (autonomer Agent, aus Retro S113)
+- [x] Daily Scrum: 2026-05-03 (autonomer Agent)
+- [x] Review: 2026-05-03 (autonomer Agent)
+- [x] Retro: 2026-05-03 (autonomer Agent)
+
+---
+
+## Daily Scrum S114 (2026-05-03, autonomer Agent)
+
+**Was wurde heute gemacht?**
+- S113 Review + Retro bestätigt (auf feat/sprint-113, PR #531 offen)
+- S114 Planning gestartet: Maus/Kraemerin/Bug als nächste NPCs (72 je, niedrigste)
+- S114-1 implementiert: Quest-Runde 96, +10 Quests, 965→975 auf Branch
+
+**Was kommt als nächstes?**
+- PR erstellen → Till mergt erst #531 (S113), dann #S114-PR
+
+**Blocker?**
+- Smoke-Test CF-403 + Worker "Host not in allowlist" — bekannte Sandbox-Limitation.
+- PR #531 (S113) muss vor S114 gemergt werden damit Counter stimmen.
+
+---
+
+## Sprint Review S114 (2026-05-03, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅**
+
+| Item | Ergebnis |
+|------|---------|
+| S114-1 Quest-Runde 96 | ✅ feat/sprint-114 — Maus(72→76 +4) / Kraemerin(72→75 +3) / Bug(72→75 +3), 965→975 Quests auf Branch |
+
+**Oscar-Outcome:** 10 neue Quests. Maus: Mondphasen-Beobachtungsturm (Mond wächst und schrumpft — aber nie verschwindet, neun Nächte beobachtet), Schatten-Längen-Messlabor (Schatten als älteste Uhr der Welt — noch vor dem Rad), Nachttau-Sammelstation (Wasser entsteht aus Luft ohne Regen — ich atme Wasser?!), Fledermaus-Echolot-Station (malt mit Schall — U-Boote haben die Idee 50 Millionen Jahre später gehabt). Kraemerin: Stammkunden-Notizbuch (Gesichter die kommen verdienen erinnert zu werden), Tausch-Regal (ein Laden der sich selbst führt — ich halte es nur sauber), Frühmarkt-Laterne (um fünf Uhr ist alles frischer — und der erste Satz des Tages zählt). Bug: Wurzel-Orientierungs-Labor (Gravitropismus — Stärkekörnchen sinken, Wurzel biegt sich, kein Gehirn nötig), Phototropie-Mess-Station (Sonnenblume folgt der Lampe dreimal hintereinander — ich habe das gesehen), Mykorrhiza-Verbindungs-Labor (Wood Wide Web — 400 Millionen Jahre älter als das andere Internet).
+
+**Stand nach S114:**
+- **975 Quests** auf feat/sprint-114 (965 auf main + 10 neu)
+- NPC-Counter nach S114: maus 76 · kraemerin 75 · bug 75
+- Niedrigste Counter nach S113+S114 (Projektion): tommy 74 · bernd 74 · krabs 73 · floriane 73 · elefant 73
+
+**PO-Entscheidung:**
+- Quest-Runde 97: tommy(74)/bernd(74) und ein dritter → S115-1
+- Erst #531 (S113) mergen, dann S114-PR
+
+---
+
+## Sprint Retrospektive S114 (2026-05-03, autonomer Agent)
+
+**Was gut lief:**
+- MEMORY-Check beim Start: feat/sprint-113 als Phantom erkannt, kein Doppel-Spawning
+- Maus-Thema "Was in der Nacht passiert" kohärent und frisch — kein Overlap mit Petrichor/Geruch-Runde
+- Bug-Mykorrhiza: "Wood Wide Web — 400 Millionen Jahre älter als das andere" — stärkste Oscar-Zeile der Runde
+- Kraemerin-Tausch-Regal: "Ein Laden der sich selbst führt" — Figur-Stimme präzise getroffen
+- Typecheck grün, kein Ceremony-Drift
+
+**Was nicht gut lief:**
+- PR #531 (S113) immer noch nicht gemergt — Merge-Queue wächst weiter
+- Smoke-Test bleibt Sandbox-Limitation seit S92
+
+**Maßnahmen für S115:**
+- Merge-Reihenfolge: #531 (S113) zuerst, dann S114-PR — in PR-Description notieren
+- S115: tommy(74)/bernd(74) + dritter NPC (bei ~73-74: krabs/floriane/elefant)
+
+---
+
 # Sprint 112 — "Bernd hört, Elefant erinnert Zeit, Floriane misst Musik"
 
 **Sprint Goal (Oscar-Perspektive):**
