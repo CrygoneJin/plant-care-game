@@ -1,3 +1,86 @@
+# Sprint 115 — "Mephisto verschenkt, Neinhorn hört hin, Spongebob putzt"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar findet 10 neue Quests — Mephisto entdeckt was er verschenkt hat ohne Gegenleistung (Gabe, Stiftung, Destillat, Dankbarkeit), Neinhorn lernt dass Tiere wirklich sprechen (Präriehunde, Fledermäuse, Bienen), Spongebob erforscht Meeresgemeinschaft (Putzstation, Seegurken, Walgesang). 985→995 Quests.
+
+**Start:** 2026-05-03
+**Sprint-Prinzip:** Quest-Track autonom. Ceremonies direkt im Feature-Commit.
+
+---
+
+## Sprint Backlog
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S115-1 | **Quest-Runde 97** — Mephisto(74→78)/Neinhorn(75→78)/Spongebob(75→78) → +10 Quests, 985→995. Mephisto: „Was er verschenkt hat". Neinhorn: „Was Tiere sagen". Spongebob: „Meeresgemeinschaft". | Artist | ✅ feat/sprint-115 |
+
+---
+
+## Ceremony-Status S115
+
+- [x] Planning: 2026-05-03 (autonomer Agent, aus Retro S114)
+- [x] Daily Scrum: 2026-05-03 (autonomer Agent)
+- [x] Review: 2026-05-03 (autonomer Agent)
+- [x] Retro: 2026-05-03 (autonomer Agent)
+
+---
+
+## Daily Scrum S115 (2026-05-03, autonomer Agent)
+
+**Was wurde heute gemacht?**
+- Phantom-Branch-Analyse: feat/sprint-113 ✅ (PR #531, S113 full), feat/sprint-114 ✅ (stacked, S114 full), feat/sprint-115 (alt) ❌ (falsche Basis, falsche NPCs — ersetzt durch diesen Branch)
+- S115-1 Quest-Runde 97 implementiert: Mephisto×4 / Neinhorn×3 / Spongebob×3, 985→995
+
+**Was kommt als nächstes?**
+- PR erstellen → Till mergt (Reihenfolge: #531/sprint-113 → sprint-114 → sprint-115)
+
+**Blocker?**
+- Smoke-Test CF-403 + Worker "Host not in allowlist" — bekannte Sandbox-Limitation.
+- Alter feat/sprint-115 Phantom-Branch auf origin: Till schließen wenn dieser PR gemergt ist.
+
+---
+
+## Sprint Review S115 (2026-05-03, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅**
+
+| Item | Ergebnis |
+|------|---------|
+| S115-1 Quest-Runde 97 | ✅ feat/sprint-115 — Mephisto(74→78 +4) / Neinhorn(75→78 +3) / Spongebob(75→78 +3), 985→995 Quests |
+
+**Oscar-Outcome:** 10 neue Quests. Mephisto: Erste-Gabe-Observatorium (der eine Moment ohne Vertrag — er analysiert ihn seit Jahren), Anonyme-Stiftung (Krankenhaus, Brunnen, Bücher — niemand weiß das er es war; er sagt "strategisch"), Gegenmittel-Destillerie (zweimal umsonst gerettet — das Kind nannte seinen Namen, der alte Mann hielt seine Hand), Dankbarkeits-Messlabor (die einzige Formel die er nicht findet). Neinhorn: Tiersprache-Decodier-Station (Präriehund beschreibt Neinhorn auf Pfeifton — Neinhorn will wissen was er sagt), Echolot-Kartographier-Kammer (Fledermaus sieht besser mit geschlossenen Augen als Neinhorn mit offenen), Bienentanz-Archiv (Trigonometrie in Bienentanz — Neinhorn schreibt nur noch auf). Spongebob: Mantarochen-Reinigungs-Salon (das Riff hat einen Friseur — Warteschlange vor der Putzstation!), Seegurken-Boden-Sanierungswerk (50 kg Sand pro Seegurke pro Jahr — Spongebob will sich bewerben), Walgesang-Kulturarchiv (neue Wal-Alben verbreiten sich übers Meer — Spongebob wartet auf seinen Chart-Hit).
+
+**Stand nach S115:**
+- **995 Quests** auf feat/sprint-115 (985 auf main-Stack + 10 neu)
+- NPC-Counter nach S115: mephisto 78 · neinhorn 78 · spongebob 78
+- Nächste niedrigste Counter: tommy 74 · bernd 74 · krabs 73 · floriane 73 · elefant 73
+
+**PO-Entscheidung:**
+- Quest-Runde 98: krabs(73)/floriane(73)/elefant(73) → S116-1
+
+---
+
+## Sprint Retrospektive S115 (2026-05-03, autonomer Agent)
+
+**Was lief gut:**
+- Mephisto-Tiefe: "Was ich mir sage und was ich glaube sind manchmal nicht dasselbe" — beste Figuren-Entwicklung seit S113 Loslassen-Altar. Er wächst sichtbar.
+- Neinhorn-Tier-Trias kohärent: Präriehund + Fledermaus + Bienen alle mit demselben Kern (Tiere kommunizieren präziser als Neinhorn wahrhaben wollte) — starke Themen-Einheit
+- Spongebob-Walgesang: "Ich warte gespannt auf meinen ersten Chart-Hit im Pazifik" — Spongebob-Stimme auf Punkt
+- Phantom-Branch erkannt und korrekt ersetzt (kein Doppel-Spawning)
+
+**Was nicht gut lief:**
+- Phantom-Branches feat/sprint-115 (alt), sprint-116 bis sprint-119 auf origin — Till muss sie schließen
+- Stacking: feat/sprint-115 baut auf feat/sprint-114 auf feat/sprint-113 — Till muss in Reihenfolge mergen
+
+**Retro-Actions für S116:**
+- **R1:** Quest-Runde 98: krabs(73)/floriane(73)/elefant(73) → S116-1
+- **R2:** Alte Phantom-Branches (sprint-115 alt, 116-119) schließen (Till-Aktion)
+- **R3:** Merge-Reihenfolge: sprint-113 → sprint-114 → sprint-115 (stacked)
+
+---
+
+---
+
 # Sprint 114 — "Maus entdeckt das Kleine, Kraemerin kennt die Zeit, Bug erinnert sich"
 
 **Sprint Goal (Oscar-Perspektive):**
