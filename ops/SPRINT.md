@@ -1,3 +1,101 @@
+# Sprint 134 — "Neinhorn sagt einmal Ja"
+
+**Sprint Goal (Oscar-Perspektive):**
+> Oscar hört Kapitel 31 — Neinhorn trifft Maus mit einem Samenkorn. Maus fragt: darf ich deine Ecke benutzen? Neinhorn holt Luft. Und dann — sagt es zum ersten Mal in seinem Leben: Ja. Nur einmal. Und nur das Samenkorn weiß davon.
+
+**Start:** 2026-05-03
+**Sprint-Prinzip:** Hörspiel-Track weiter. Quest-Track pausiert bis Till #592 mergt.
+
+---
+
+## Sprint Backlog S134
+
+| # | Item | Owner(s) | Status |
+|---|------|----------|--------|
+| S134-1 | **Hörspiel Kapitel 31 — Neinhorn und das kleinste Ja** — Maus bittet Neinhorn um die Ecke mit dem weichen Boden für ein Samenkorn. Neinhorn fragt sich zum ersten Mal: wozu sage ich NEIN? Und sagt — einmal, leise — Ja. | Artist (autonom) | ✅ docs/stories/kapitel-31-neinhorn-und-das-kleinste-ja.md |
+| S134-2 | **Quest-Track: PAUSE** — bleibt bis Till #592 mergt. | — | ⏸ wartet auf Till |
+
+---
+
+## Explizit nicht im Sprint
+
+- **Quest-Track** — pausiert, 7 PRs (#592/#531/#532/#541/#543/#550/#551) warten auf Till
+
+---
+
+## Ceremony-Status S134
+
+- [x] Planning: 2026-05-03 (autonomer Agent, aus Retro S133)
+- [x] Daily Scrum: 2026-05-03 (autonomer Agent)
+- [x] Review: 2026-05-03 (autonomer Agent)
+- [x] Retro: 2026-05-03 (autonomer Agent)
+
+---
+
+## Daily Scrum S134 (2026-05-03, autonomer Agent)
+
+**Was wurde gestern/heute gemacht?**
+- S133 vollständig abgeschlossen (Retro 2026-05-03)
+- S134 Planning: K31 Neinhorn als einziges Item, Quest-Track weiterhin pausiert
+- S134-1: K31 geschrieben ✅
+
+**Was kommt als nächstes?**
+- PR für ops/sprint-s133-review erstellen → Till mergt (gestacked auf ops/sprint-s132-review)
+
+**Blocker?**
+- Smoke-Test: CF-403 + Worker bekannte Sandbox-Limitation, kein App-Schaden
+- Quest-Track-Pause: 7 offene Quest-PRs warten auf Till (#592 zuerst)
+
+---
+
+## Sprint Review S134 (2026-05-03, autonomer Agent)
+
+**Sprint Goal erfüllt: 1/1 ✅, 1 bewusst pausiert ⏸**
+
+| Item | Ergebnis |
+|------|---------|
+| S134-1 Hörspiel K31 — Neinhorn und das kleinste Ja | ✅ docs/stories/kapitel-31-neinhorn-und-das-kleinste-ja.md |
+| S134-2 Quest-Track PAUSE | ⏸ wartet auf Till (#592 zuerst) |
+
+**Oscar-Outcome:**
+K31 bereit zum Vorlesen. Neinhorn sagt zum ersten Mal Ja — aber nur zu einem Samenkorn, und nur weil das Samenkorn es nicht weiß. „Du weißt nicht dass ich Ja gesagt habe. Du bist ein Samenkorn." Das ist der Neinhorn-Charakter in seiner vollsten Form: der Wandel passiert, aber Neinhorn lässt keine Zeugen zu.
+
+Arc Neinhorn bisher:
+- K6: NEIN zu allem (Einführung, Charakter-Definition)
+- K19: NEIN zum Unverhinderlichen (Gezeiten, Mond) — NEIN kann manchmal nicht gewinnen, und das ist okay
+- K31: Wozu sage ich NEIN? — das erste Mal wo NEIN kein Reflex ist, sondern eine Frage. Und die Antwort ist: Ja.
+
+**Stand:**
+- **31 Hörspiel-Kapitel** auf ops-Branches (K17–K31 auf Branch-Kette, K1–K16 auf main)
+- Quest-Track ⏸ pausiert — 7 PRs (#592 zuerst) warten auf Till
+
+---
+
+## Sprint Retrospektive S134 (2026-05-03, autonomer Agent)
+
+**Was gut lief:**
+- K31 Neinhorn: stärkster Charaktermoment in der gesamten Hörspiel-Kette. Das erste Ja ist klein, privat, für ein Samenkorn — und genau deshalb groß. Kein großes Drama, keine Erklärung — Neinhorn denkt nach, findet keinen Grund für NEIN, und sagt leise Ja.
+- Maus als Gegenüber: K26 zeigte Maus als jemand der das Kleine sieht — jetzt bringt sie das Kleine zu Neinhorn. Roter Faden zwischen Kapiteln
+- Oscar-Spiegel: Maus bittet um "deine Ecke" — das ist Oscars Sprache. Sein Bauplatz, seine Insel. Das Thema Teilen ohne es zu nennen.
+- Arc-Vollständigkeit: K6→K19→K31 ist ein vollständiger Bogen. Könnte als Neinhorn-Trilogie gelesen werden.
+
+**Was lief nicht gut:**
+- Quest-Track-Stau wächst (7 PRs) — kein neuer Weg bis Till #592 mergt
+- ops-Branch-Kette wird lang: ops/sprint-s131-review → s132 → s133 gestacked — Till muss alles in Reihenfolge mergen
+
+**Maßnahmen für S135:**
+- R1: K32 — nächster NPC. Elefant oder Bug (Bug war K27, Elefant K21 — Elefant ist dran)
+- R2: Quest-Track bleibt pausiert bis Till #592 mergt
+
+**S135-Setup:**
+- NPC: **Elefant** (zuletzt K21 "Elefant und die Wanderung", 10 Kapitel her)
+- Thema frei. Elefant-Arc bisher: K1 (Einführung, fällt vom Himmel), K21 (Wanderrouten im Körper gespeichert, Zeit als Körperwissen)
+- K32-Idee aus Retro: Elefant und das was er vergessen hat — weil Elefanten für ihr Gedächtnis bekannt sind, ist das Vergessen das interessantere Thema
+
+---
+
+---
+
 # Sprint 133 — "Tommy baut allein"
 
 **Sprint Goal (Oscar-Perspektive):**
